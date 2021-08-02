@@ -48,11 +48,11 @@ namespace Azure.AI.Translation.Document.Samples
 
             await operation.WaitForCompletionAsync();
 
-            await foreach (DocumentStatusResult document in operation.GetValuesAsync())
+            await foreach (DocumentStatus document in operation.GetValuesAsync())
             {
-                Console.WriteLine($"Document with Id: {document.DocumentId}");
+                Console.WriteLine($"Document with Id: {document.Id}");
                 Console.WriteLine($"  Status:{document.Status}");
-                if (document.Status == TranslationStatus.Succeeded)
+                if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
                     Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");

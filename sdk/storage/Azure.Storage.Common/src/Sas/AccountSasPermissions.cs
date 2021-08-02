@@ -75,6 +75,11 @@ namespace Azure.Storage.Sas
         DeleteVersion = 1024,
 
         /// <summary>
+        /// Indicates that setting immutability policy is permitted.
+        /// </summary>
+        SetImmutabilityPolicy = 2048,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -139,6 +144,10 @@ namespace Azure.Storage
             if ((permissions & AccountSasPermissions.Filter) == AccountSasPermissions.Filter)
             {
                 sb.Append(Constants.Sas.Permissions.FilterByTags);
+            }
+            if ((permissions & AccountSasPermissions.SetImmutabilityPolicy) == AccountSasPermissions.SetImmutabilityPolicy)
+            {
+                sb.Append(Constants.Sas.Permissions.SetImmutabilityPolicy);
             }
             return sb.ToString();
         }

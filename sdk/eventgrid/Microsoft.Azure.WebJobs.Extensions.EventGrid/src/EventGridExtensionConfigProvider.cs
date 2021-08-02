@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 throw new ArgumentNullException(nameof(context));
             }
 
-            _logger = _loggerFactory.CreateLogger(LogCategories.CreateTriggerCategory("EventGrid"));
+            _logger = _loggerFactory.CreateLogger<EventGridExtensionConfigProvider>();
 
 #pragma warning disable 618
             Uri url = context.GetWebhookHandler();

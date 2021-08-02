@@ -1,5 +1,22 @@
 # Release History
 
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0 (2021-07-06)
+
+### Added
+- All section properties of the `AmqpAnnotatedMessage` are now lazily allocated to reflect that they are defined as optional in the AMQP specification, section 3.2.
+  
+- The `HasSection` method has been added to `AmqpAnnotatedMessage` to allow inspecting the property for a section to determine if it is populated without triggering an allocation.
+
 ## 1.1.0 (2021-06-16)
 
 ### Added

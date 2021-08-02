@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);RESOURCES_RP</DefineConstants>
-    <TestHelperProjects>;</TestHelperProjects>
+    <UseNewMgmtFramework>false</UseNewMgmtFramework>
   </PropertyGroup>
   <PropertyGroup>
     <NoWarn>SA1649</NoWarn>

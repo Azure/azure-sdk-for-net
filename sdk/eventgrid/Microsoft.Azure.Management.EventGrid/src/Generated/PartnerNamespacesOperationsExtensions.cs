@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.EventGrid
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -181,12 +179,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='partnerNamespaceName'>
             /// Name of the partner namespace.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the partner namespace.
+            /// <param name='partnerNamespaceUpdateParameters'>
+            /// Partner namespace update information.
             /// </param>
-            public static PartnerNamespace Update(this IPartnerNamespacesOperations operations, string resourceGroupName, string partnerNamespaceName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static PartnerNamespace Update(this IPartnerNamespacesOperations operations, string resourceGroupName, string partnerNamespaceName, PartnerNamespaceUpdateParameters partnerNamespaceUpdateParameters)
             {
-                return operations.UpdateAsync(resourceGroupName, partnerNamespaceName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, partnerNamespaceName, partnerNamespaceUpdateParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -204,15 +202,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='partnerNamespaceName'>
             /// Name of the partner namespace.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the partner namespace.
+            /// <param name='partnerNamespaceUpdateParameters'>
+            /// Partner namespace update information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PartnerNamespace> UpdateAsync(this IPartnerNamespacesOperations operations, string resourceGroupName, string partnerNamespaceName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PartnerNamespace> UpdateAsync(this IPartnerNamespacesOperations operations, string resourceGroupName, string partnerNamespaceName, PartnerNamespaceUpdateParameters partnerNamespaceUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, partnerNamespaceName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, partnerNamespaceName, partnerNamespaceUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -558,12 +556,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='partnerNamespaceName'>
             /// Name of the partner namespace.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the partner namespace.
+            /// <param name='partnerNamespaceUpdateParameters'>
+            /// Partner namespace update information.
             /// </param>
-            public static PartnerNamespace BeginUpdate(this IPartnerNamespacesOperations operations, string resourceGroupName, string partnerNamespaceName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static PartnerNamespace BeginUpdate(this IPartnerNamespacesOperations operations, string resourceGroupName, string partnerNamespaceName, PartnerNamespaceUpdateParameters partnerNamespaceUpdateParameters)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, partnerNamespaceName, tags).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, partnerNamespaceName, partnerNamespaceUpdateParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -581,15 +579,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='partnerNamespaceName'>
             /// Name of the partner namespace.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the partner namespace.
+            /// <param name='partnerNamespaceUpdateParameters'>
+            /// Partner namespace update information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PartnerNamespace> BeginUpdateAsync(this IPartnerNamespacesOperations operations, string resourceGroupName, string partnerNamespaceName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PartnerNamespace> BeginUpdateAsync(this IPartnerNamespacesOperations operations, string resourceGroupName, string partnerNamespaceName, PartnerNamespaceUpdateParameters partnerNamespaceUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, partnerNamespaceName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, partnerNamespaceName, partnerNamespaceUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

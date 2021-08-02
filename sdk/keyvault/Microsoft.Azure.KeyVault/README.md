@@ -6,9 +6,9 @@ This library has been replaced by the following new Azure SDKs. You can read abo
 
 The latest libraries to interact with the Azure Key Vault service are:
 
-* [Azure.Security.KeyVault.Certificates](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates)
-* [Azure.Security.KeyVault.Keys](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys)
-* [Azure.Security.KeyVault.Secrets](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets)
+* [Azure.Security.KeyVault.Certificates](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Certificates)
+* [Azure.Security.KeyVault.Keys](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Keys)
+* [Azure.Security.KeyVault.Secrets](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Secrets)
 
 It is **recommended** that you move to one or more of the new packages.
 

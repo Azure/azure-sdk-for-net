@@ -79,9 +79,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// scale set, which must be base-64 encoded. Customer should not pass
         /// any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2021-03-01</param>
-        /// <param name="applicationProfile">Specifies the gallery applications
-        /// that should be made available to the VM/VMSS</param>
-        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), ApplicationProfile applicationProfile = default(ApplicationProfile))
+        /// <param name="capacityReservation">Specifies the capacity
+        /// reservation related details of a scale set.
+        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01.</param>
+        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), ApplicationProfile applicationProfile = default(ApplicationProfile), CapacityReservationProfile capacityReservation = default(CapacityReservationProfile))
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -96,6 +97,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             ScheduledEventsProfile = scheduledEventsProfile;
             UserData = userData;
             ApplicationProfile = applicationProfile;
+            CapacityReservation = capacityReservation;
             CustomInit();
         }
 
@@ -220,6 +222,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "applicationProfile")]
         public ApplicationProfile ApplicationProfile { get; set; }
+      
+        /// Gets or sets specifies the capacity reservation related details of
+        /// a scale set. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
+        /// api-version: 2021-04-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "capacityReservation")]
+        public CapacityReservationProfile CapacityReservation { get; set; }
 
         /// <summary>
         /// Validate the object.

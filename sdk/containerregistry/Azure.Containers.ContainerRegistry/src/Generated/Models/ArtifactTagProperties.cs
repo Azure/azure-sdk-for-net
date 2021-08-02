@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ArtifactTagProperties
     {
         /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
-        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
+        /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
@@ -48,7 +48,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
-        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
+        /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
@@ -72,7 +72,7 @@ namespace Azure.Containers.ContainerRegistry
             CanRead = canRead;
         }
 
-        /// <summary> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </summary>
+        /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>
         public string RegistryLoginServer { get; }
         /// <summary> Image name. </summary>
         public string RepositoryName { get; }

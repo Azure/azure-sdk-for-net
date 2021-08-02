@@ -12,8 +12,11 @@ namespace Azure.Monitor.Query.Tests
 {
     public class MetricsTestData
     {
-        private static bool _initialized;
+        private static Task _initialization;
+        private static readonly object _initializationLock = new object();
+
         private readonly MonitorQueryClientTestEnvironment _testEnvironment;
+        private static TimeSpan AllowedMetricAge = TimeSpan.FromMinutes(25);
         public string Name1 { get; } = "Guinness";
         public string Name2 { get; } = "Bessie";
         public TimeSpan Duration { get; } = TimeSpan.FromMinutes(15);
@@ -36,24 +39,23 @@ namespace Azure.Monitor.Query.Tests
 
         public async Task InitializeAsync()
         {
-            if (_testEnvironment.Mode == RecordedTestMode.Playback || _initialized)
+            if (_testEnvironment.Mode == RecordedTestMode.Playback)
             {
                 return;
             }
 
-            _initialized = true;
-            var metricClient = new MetricsQueryClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
-
-            await SendData();
-
-            while (!await MetricsPropagated(metricClient))
+            lock (_initializationLock)
             {
-                await Task.Delay(TimeSpan.FromSeconds(5));
+                _initialization ??= Initialize();
             }
+
+            await _initialization;
         }
 
-        private async Task SendData()
+        private async Task Initialize()
         {
+            var metricClient = new MetricsQueryClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
+
             var senderClient = new MetricsSenderClient(
                 _testEnvironment.Location,
                 _testEnvironment.MetricsIngestionEndpoint,
@@ -64,7 +66,21 @@ namespace Azure.Monitor.Query.Tests
                     Diagnostics = { IsLoggingContentEnabled = true }
                 });
 
-            var names = new[] {Name1, Name2};
+            do
+            {
+                // Stop sending when we are past the allowed threshold
+                if (DateTimeOffset.UtcNow - StartTime < AllowedMetricAge)
+                {
+                    await SendData(senderClient);
+                }
+
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            } while (!await MetricsPropagated(metricClient));
+        }
+
+        private async Task SendData(MetricsSenderClient senderClient)
+        {
+            var names = new[] { Name1, Name2 };
 
             foreach (var name in names)
             {
@@ -76,7 +92,7 @@ namespace Azure.Monitor.Query.Tests
                         new[] { "Name" },
                         new SeriesValue[]
                         {
-                            new(new[] {name}, 5 * i, 20 * i, 30 * i,  1 + i)
+                            new(new[] { name }, 5 * i, 20 * i, 30 * i, 1 + i)
                         }))));
                 }
             }

@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// 
         /// should be specified when combining multiple detection conditions.
         /// </summary>
-        public DetectionConditionsOperator? ConditionOperator { get; set; }
+        public DetectionConditionOperator? ConditionOperator { get; set; }
         public SmartDetectionConditionPatch SmartDetectionCondition { get; set; }
         public HardThresholdConditionPatch HardThresholdCondition { get; set; }
         public ChangeThresholdConditionPatch ChangeThresholdCondition { get; set; }

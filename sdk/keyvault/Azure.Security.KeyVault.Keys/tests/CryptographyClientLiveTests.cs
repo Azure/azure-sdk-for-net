@@ -185,6 +185,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         // We do not test using ES256K below since macOS doesn't support it; various ideas to work around that adversely affect runtime code too much.
 
         [Test]
+        [Ignore("Regression in 7.3-preview returns 'BadParameter'. See https://github.com/Azure/azure-sdk-for-net/issues/22645 for details.")]
         public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
         {
 #if NET461
@@ -228,6 +229,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        [Ignore("Regression in 7.3-preview returns 'BadParameter'. See https://github.com/Azure/azure-sdk-for-net/issues/22645 for details.")]
         public async Task LocalSignVerifyRoundTripOnFramework([EnumValues(nameof(SignatureAlgorithm.PS256), nameof(SignatureAlgorithm.PS384), nameof(SignatureAlgorithm.PS512))]SignatureAlgorithm algorithm)
         {
 #if !NETFRAMEWORK

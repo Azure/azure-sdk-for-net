@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://kasoboltest.queue.core.windows.net/test-queue-f21ec946-2a81-7e98-5f46-176a6998a7d1",
@@ -48,7 +48,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
-      "RequestBody": "\uFEFF\u003CQueueMessage\u003E\u003CMessageText\u003Etest_content\u003C/MessageText\u003E\u003C/QueueMessage\u003E",
+      "RequestBody": "﻿<QueueMessage><MessageText>test_content</MessageText></QueueMessage>",
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
@@ -61,7 +61,7 @@
         "x-ms-request-id": "34729990-6003-0057-4d2a-f4bd7e000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003Eba88b4e4-7887-4e08-847c-d5ce88294dbf\u003C/MessageId\u003E\u003CInsertionTime\u003ETue, 26 Jan 2021 21:28:04 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003ETue, 02 Feb 2021 21:28:04 GMT\u003C/ExpirationTime\u003E\u003CPopReceipt\u003EAgAAAAMAAAAAAAAAQiG9ISr01gE=\u003C/PopReceipt\u003E\u003CTimeNextVisible\u003ETue, 26 Jan 2021 21:28:04 GMT\u003C/TimeNextVisible\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><QueueMessagesList><QueueMessage><MessageId>ba88b4e4-7887-4e08-847c-d5ce88294dbf</MessageId><InsertionTime>Tue, 26 Jan 2021 21:28:04 GMT</InsertionTime><ExpirationTime>Tue, 02 Feb 2021 21:28:04 GMT</ExpirationTime><PopReceipt>AgAAAAMAAAAAAAAAQiG9ISr01gE=</PopReceipt><TimeNextVisible>Tue, 26 Jan 2021 21:28:04 GMT</TimeNextVisible></QueueMessage></QueueMessagesList>"
     },
     {
       "RequestUri": "https://kasoboltest.queue.core.windows.net/test-queue-f21ec946-2a81-7e98-5f46-176a6998a7d1/messages",
@@ -81,7 +81,7 @@
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
-      "RequestBody": "\uFEFF\u003CQueueMessage\u003E\u003CMessageText\u003EdGVzdF9jb250ZW50\u003C/MessageText\u003E\u003C/QueueMessage\u003E",
+      "RequestBody": "﻿<QueueMessage><MessageText>dGVzdF9jb250ZW50</MessageText></QueueMessage>",
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
@@ -94,10 +94,10 @@
         "x-ms-request-id": "978d4c2f-3003-0000-462a-f454f3000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003E0dd9a7dc-5abe-40a3-a670-6aeeb6d59610\u003C/MessageId\u003E\u003CInsertionTime\u003ETue, 26 Jan 2021 21:28:04 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003ETue, 02 Feb 2021 21:28:04 GMT\u003C/ExpirationTime\u003E\u003CPopReceipt\u003EAgAAAAMAAAAAAAAAn17QISr01gE=\u003C/PopReceipt\u003E\u003CTimeNextVisible\u003ETue, 26 Jan 2021 21:28:04 GMT\u003C/TimeNextVisible\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><QueueMessagesList><QueueMessage><MessageId>0dd9a7dc-5abe-40a3-a670-6aeeb6d59610</MessageId><InsertionTime>Tue, 26 Jan 2021 21:28:04 GMT</InsertionTime><ExpirationTime>Tue, 02 Feb 2021 21:28:04 GMT</ExpirationTime><PopReceipt>AgAAAAMAAAAAAAAAn17QISr01gE=</PopReceipt><TimeNextVisible>Tue, 26 Jan 2021 21:28:04 GMT</TimeNextVisible></QueueMessage></QueueMessagesList>"
     },
     {
-      "RequestUri": "https://kasoboltest.queue.core.windows.net/test-queue-f21ec946-2a81-7e98-5f46-176a6998a7d1/messages?peekonly=true\u0026numofmessages=10",
+      "RequestUri": "https://kasoboltest.queue.core.windows.net/test-queue-f21ec946-2a81-7e98-5f46-176a6998a7d1/messages?peekonly=true&numofmessages=10",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -127,7 +127,7 @@
         "x-ms-request-id": "978d4c48-3003-0000-5c2a-f454f3000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003Eba88b4e4-7887-4e08-847c-d5ce88294dbf\u003C/MessageId\u003E\u003CInsertionTime\u003ETue, 26 Jan 2021 21:28:04 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003ETue, 02 Feb 2021 21:28:04 GMT\u003C/ExpirationTime\u003E\u003CDequeueCount\u003E0\u003C/DequeueCount\u003E\u003CMessageText\u003Etest_content\u003C/MessageText\u003E\u003C/QueueMessage\u003E\u003CQueueMessage\u003E\u003CMessageId\u003E0dd9a7dc-5abe-40a3-a670-6aeeb6d59610\u003C/MessageId\u003E\u003CInsertionTime\u003ETue, 26 Jan 2021 21:28:04 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003ETue, 02 Feb 2021 21:28:04 GMT\u003C/ExpirationTime\u003E\u003CDequeueCount\u003E0\u003C/DequeueCount\u003E\u003CMessageText\u003EdGVzdF9jb250ZW50\u003C/MessageText\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><QueueMessagesList><QueueMessage><MessageId>ba88b4e4-7887-4e08-847c-d5ce88294dbf</MessageId><InsertionTime>Tue, 26 Jan 2021 21:28:04 GMT</InsertionTime><ExpirationTime>Tue, 02 Feb 2021 21:28:04 GMT</ExpirationTime><DequeueCount>0</DequeueCount><MessageText>test_content</MessageText></QueueMessage><QueueMessage><MessageId>0dd9a7dc-5abe-40a3-a670-6aeeb6d59610</MessageId><InsertionTime>Tue, 26 Jan 2021 21:28:04 GMT</InsertionTime><ExpirationTime>Tue, 02 Feb 2021 21:28:04 GMT</ExpirationTime><DequeueCount>0</DequeueCount><MessageText>dGVzdF9jb250ZW50</MessageText></QueueMessage></QueueMessagesList>"
     },
     {
       "RequestUri": "https://kasoboltest.queue.core.windows.net/test-queue-f21ec946-2a81-7e98-5f46-176a6998a7d1",
@@ -162,6 +162,6 @@
   ],
   "Variables": {
     "RandomSeed": "203054038",
-    "Storage_TestConfigDefault": "ProductionTenant\nkasoboltest\nU2FuaXRpemVk\nhttps://kasoboltest.blob.core.windows.net\nhttps://kasoboltest.file.core.windows.net\nhttps://kasoboltest.queue.core.windows.net\nhttps://kasoboltest.table.core.windows.net\n\n\n\n\nhttps://kasoboltest-secondary.blob.core.windows.net\nhttps://kasoboltest-secondary.file.core.windows.net\nhttps://kasoboltest-secondary.queue.core.windows.net\nhttps://kasoboltest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://kasoboltest.blob.core.windows.net/;QueueEndpoint=https://kasoboltest.queue.core.windows.net/;FileEndpoint=https://kasoboltest.file.core.windows.net/;BlobSecondaryEndpoint=https://kasoboltest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://kasoboltest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://kasoboltest-secondary.file.core.windows.net/;AccountName=kasoboltest;AccountKey=Kg==;\nencryptionScope"
+    "Storage_TestConfigDefault": "ProductionTenant\nkasoboltest\nU2FuaXRpemVk\nhttps://kasoboltest.blob.core.windows.net\nhttps://kasoboltest.file.core.windows.net\nhttps://kasoboltest.queue.core.windows.net\nhttps://kasoboltest.table.core.windows.net\n\n\n\n\nhttps://kasoboltest-secondary.blob.core.windows.net\nhttps://kasoboltest-secondary.file.core.windows.net\nhttps://kasoboltest-secondary.queue.core.windows.net\nhttps://kasoboltest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://kasoboltest.blob.core.windows.net/;QueueEndpoint=https://kasoboltest.queue.core.windows.net/;FileEndpoint=https://kasoboltest.file.core.windows.net/;BlobSecondaryEndpoint=https://kasoboltest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://kasoboltest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://kasoboltest-secondary.file.core.windows.net/;AccountName=kasoboltest;AccountKey=Kg==;\nencryptionScope\n\n"
   }
 }

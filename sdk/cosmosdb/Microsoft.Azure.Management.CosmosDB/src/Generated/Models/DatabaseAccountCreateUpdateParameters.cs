@@ -85,6 +85,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// supported only for MongoDB API.</param>
         /// <param name="enableAnalyticalStorage">Flag to indicate whether to
         /// enable storage analytics.</param>
+        /// <param name="analyticalStorageConfiguration">Analytical storage
+        /// specific properties.</param>
+        /// <param name="createMode">Enum to indicate the mode of account
+        /// creation. Possible values include: 'Default', 'Restore'</param>
         /// <param name="backupPolicy">The object representing the policy for
         /// taking backups on an account.</param>
         /// <param name="cors">The CORS policy for the Cosmos DB database
@@ -95,7 +99,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="networkAclBypassResourceIds">An array that contains
         /// the Resource Ids for Network Acl Bypass for the Cosmos DB
         /// account.</param>
-        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string defaultIdentity = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>))
+        /// <param name="disableLocalAuth">Opt-out of local authentication and
+        /// ensure only MSI and AAD can be used exclusively for
+        /// authentication.</param>
+        /// <param name="restoreParameters">Parameters to indicate the
+        /// information about the restore.</param>
+        public DatabaseAccountCreateUpdateParameters(IList<Location> locations, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string defaultIdentity = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), AnalyticalStorageConfiguration analyticalStorageConfiguration = default(AnalyticalStorageConfiguration), string createMode = default(string), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>), bool? disableLocalAuth = default(bool?), RestoreParameters restoreParameters = default(RestoreParameters))
             : base(id, name, type, location, tags)
         {
             Kind = kind;
@@ -117,10 +126,14 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             EnableFreeTier = enableFreeTier;
             ApiProperties = apiProperties;
             EnableAnalyticalStorage = enableAnalyticalStorage;
+            AnalyticalStorageConfiguration = analyticalStorageConfiguration;
+            CreateMode = createMode;
             BackupPolicy = backupPolicy;
             Cors = cors;
             NetworkAclBypass = networkAclBypass;
             NetworkAclBypassResourceIds = networkAclBypassResourceIds;
+            DisableLocalAuth = disableLocalAuth;
+            RestoreParameters = restoreParameters;
             CustomInit();
         }
         /// <summary>
@@ -267,6 +280,19 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public bool? EnableAnalyticalStorage { get; set; }
 
         /// <summary>
+        /// Gets or sets analytical storage specific properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.analyticalStorageConfiguration")]
+        public AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets enum to indicate the mode of account creation.
+        /// Possible values include: 'Default', 'Restore'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createMode")]
+        public string CreateMode { get; set; }
+
+        /// <summary>
         /// Gets or sets the object representing the policy for taking backups
         /// on an account.
         /// </summary>
@@ -292,6 +318,20 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkAclBypassResourceIds")]
         public IList<string> NetworkAclBypassResourceIds { get; set; }
+
+        /// <summary>
+        /// Gets or sets opt-out of local authentication and ensure only MSI
+        /// and AAD can be used exclusively for authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets or sets parameters to indicate the information about the
+        /// restore.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.restoreParameters")]
+        public RestoreParameters RestoreParameters { get; set; }
 
         /// <summary>
         /// The offer type for the database

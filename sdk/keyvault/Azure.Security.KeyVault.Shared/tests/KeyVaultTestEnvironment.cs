@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Tests
         /// <summary>
         /// Gets the default polling interval to use in tests.
         /// </summary>
-        public static TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromSeconds(5);
+        public static TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromSeconds(10);
 
         /// <summary>
         /// Gets the URI to Key Vault.

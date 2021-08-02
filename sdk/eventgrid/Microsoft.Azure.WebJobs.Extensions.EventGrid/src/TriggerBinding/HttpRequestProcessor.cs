@@ -8,9 +8,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventGrid.SystemEvents;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using STJ = System.Text.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
 {
@@ -66,10 +67,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                             $"The request content should be parseable into a JSON object or array, but was {events.Type}.");
                 }
 
-                SubscriptionValidationResponse validationResponse = new(){ ValidationResponse = validationCode };
+                SubscriptionValidationResponse validationResponse = new SubscriptionValidationResponse{ ValidationResponse = validationCode };
                 var returnMessage = new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StringContent(JsonConvert.SerializeObject(validationResponse))
+                    // use System.Text.Json to leverage the custom converter so that the casing is correct.
+                    Content = new StringContent(STJ.JsonSerializer.Serialize(validationResponse))
                 };
                 _logger.LogInformation($"perform handshake with eventGrid for function: {functionName}");
                 return returnMessage;

@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> the unit of the metric. </summary>
+    /// <summary> The unit of the metric. </summary>
     [CodeGenModel("Unit")]
     public partial struct MetricUnit
     {

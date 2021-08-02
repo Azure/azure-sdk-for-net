@@ -198,7 +198,7 @@ namespace Azure.Security.Attestation
         /// </item>
         /// </list>
         /// To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
-        /// <code snippet="Snippet:VerifySigningHash">
+        /// <code snippet="Snippet:VerifySigningHash" language="csharp">
         /// // The SetPolicyAsync API will create an AttestationToken signed with the TokenSigningKey to transmit the policy.
         /// // To verify that the policy specified by the caller was received by the service inside the enclave, we
         /// // verify that the hash of the policy document returned from the Attestation Service matches the hash
@@ -282,7 +282,7 @@ namespace Azure.Security.Attestation
         /// </item>
         /// </list>
         /// To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
-        /// <code snippet="Snippet:VerifySigningHash">
+        /// <code snippet="Snippet:VerifySigningHash" language="csharp">
         /// // The SetPolicyAsync API will create an AttestationToken signed with the TokenSigningKey to transmit the policy.
         /// // To verify that the policy specified by the caller was received by the service inside the enclave, we
         /// // verify that the hash of the policy document returned from the Attestation Service matches the hash
