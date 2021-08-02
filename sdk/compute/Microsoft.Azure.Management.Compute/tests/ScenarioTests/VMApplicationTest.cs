@@ -21,6 +21,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -59,6 +60,7 @@ namespace Compute.Tests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }

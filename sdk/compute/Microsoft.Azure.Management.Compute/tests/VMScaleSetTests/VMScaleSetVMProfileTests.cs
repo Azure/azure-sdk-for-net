@@ -132,8 +132,10 @@ namespace Compute.Tests.VMScaleSetTests
         [Fact]
         public void TestVMScaleSetApplicationProfile()
         {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                 EnsureClientsInitialized(context);
 
                 // Create resource group
@@ -173,6 +175,7 @@ namespace Compute.Tests.VMScaleSetTests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
                 }
 
