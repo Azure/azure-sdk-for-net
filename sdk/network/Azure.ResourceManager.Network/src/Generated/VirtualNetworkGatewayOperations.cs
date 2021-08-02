@@ -53,6 +53,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VirtualNetworkGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -71,6 +73,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualNetworkGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -974,14 +978,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
+        /// <param name="peer"> The IP address of the peer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<GatewayRouteListResult>> GetAdvertisedRoutesAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="peer"/> is null. </exception>
+        public async virtual Task<Response<GatewayRouteListResult>> GetAdvertisedRoutesAsync(string peer, CancellationToken cancellationToken = default)
         {
+            if (peer == null)
+            {
+                throw new ArgumentNullException(nameof(peer));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.GetAdvertisedRoutes");
             scope.Start();
             try
             {
-                var operation = await StartGetAdvertisedRoutesAsync(cancellationToken).ConfigureAwait(false);
+                var operation = await StartGetAdvertisedRoutesAsync(peer, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -992,14 +1003,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
+        /// <param name="peer"> The IP address of the peer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GatewayRouteListResult> GetAdvertisedRoutes(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="peer"/> is null. </exception>
+        public virtual Response<GatewayRouteListResult> GetAdvertisedRoutes(string peer, CancellationToken cancellationToken = default)
         {
+            if (peer == null)
+            {
+                throw new ArgumentNullException(nameof(peer));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.GetAdvertisedRoutes");
             scope.Start();
             try
             {
-                var operation = StartGetAdvertisedRoutes(cancellationToken);
+                var operation = StartGetAdvertisedRoutes(peer, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -1010,15 +1028,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
+        /// <param name="peer"> The IP address of the peer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkGatewaysGetAdvertisedRoutesOperation> StartGetAdvertisedRoutesAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="peer"/> is null. </exception>
+        public async virtual Task<VirtualNetworkGatewaysGetAdvertisedRoutesOperation> StartGetAdvertisedRoutesAsync(string peer, CancellationToken cancellationToken = default)
         {
+            if (peer == null)
+            {
+                throw new ArgumentNullException(nameof(peer));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.StartGetAdvertisedRoutes");
             scope.Start();
             try
             {
-                var response = await _restClient.GetAdvertisedRoutesAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new VirtualNetworkGatewaysGetAdvertisedRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetAdvertisedRoutesRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _restClient.GetAdvertisedRoutesAsync(Id.ResourceGroupName, Id.Name, peer, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewaysGetAdvertisedRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetAdvertisedRoutesRequest(Id.ResourceGroupName, Id.Name, peer).Request, response);
             }
             catch (Exception e)
             {
@@ -1028,15 +1053,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
+        /// <param name="peer"> The IP address of the peer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkGatewaysGetAdvertisedRoutesOperation StartGetAdvertisedRoutes(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="peer"/> is null. </exception>
+        public virtual VirtualNetworkGatewaysGetAdvertisedRoutesOperation StartGetAdvertisedRoutes(string peer, CancellationToken cancellationToken = default)
         {
+            if (peer == null)
+            {
+                throw new ArgumentNullException(nameof(peer));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.StartGetAdvertisedRoutes");
             scope.Start();
             try
             {
-                var response = _restClient.GetAdvertisedRoutes(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new VirtualNetworkGatewaysGetAdvertisedRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetAdvertisedRoutesRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _restClient.GetAdvertisedRoutes(Id.ResourceGroupName, Id.Name, peer, cancellationToken);
+                return new VirtualNetworkGatewaysGetAdvertisedRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetAdvertisedRoutesRequest(Id.ResourceGroupName, Id.Name, peer).Request, response);
             }
             catch (Exception e)
             {

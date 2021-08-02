@@ -180,6 +180,8 @@ namespace Azure.ResourceManager.Network
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, natGatewayName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NatGateway(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,6 +207,8 @@ namespace Azure.ResourceManager.Network
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, natGatewayName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NatGateway(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,9 +222,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual NatGateway TryGet(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<NatGateway> GetIfExists(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("NatGatewayContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -229,11 +233,10 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(natGatewayName));
                 }
 
-                return Get(natGatewayName, expand, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, natGatewayName, expand, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<NatGateway>(null, response.GetRawResponse())
+                    : Response.FromValue(new NatGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,9 +249,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<NatGateway> TryGetAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NatGateway>> GetIfExistsAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NatGatewayContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("NatGatewayContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -257,11 +260,10 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(natGatewayName));
                 }
 
-                return await GetAsync(natGatewayName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, natGatewayName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<NatGateway>(null, response.GetRawResponse())
+                    : Response.FromValue(new NatGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +276,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NatGatewayContainer.CheckIfExists");
             scope.Start();
@@ -285,7 +287,8 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(natGatewayName));
                 }
 
-                return TryGet(natGatewayName, expand, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(natGatewayName, expand, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -298,7 +301,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NatGatewayContainer.CheckIfExists");
             scope.Start();
@@ -309,7 +312,8 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(natGatewayName));
                 }
 
-                return await TryGetAsync(natGatewayName, expand, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(natGatewayName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

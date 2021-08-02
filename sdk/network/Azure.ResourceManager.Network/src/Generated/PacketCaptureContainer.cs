@@ -179,6 +179,8 @@ namespace Azure.ResourceManager.Network
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PacketCapture(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,6 +205,8 @@ namespace Azure.ResourceManager.Network
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new PacketCapture(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,9 +219,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual PacketCapture TryGet(string packetCaptureName, CancellationToken cancellationToken = default)
+        public virtual Response<PacketCapture> GetIfExists(string packetCaptureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -226,11 +230,10 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(packetCaptureName));
                 }
 
-                return Get(packetCaptureName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<PacketCapture>(null, response.GetRawResponse())
+                    : Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,9 +245,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<PacketCapture> TryGetAsync(string packetCaptureName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<PacketCapture>> GetIfExistsAsync(string packetCaptureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -253,11 +256,10 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(packetCaptureName));
                 }
 
-                return await GetAsync(packetCaptureName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<PacketCapture>(null, response.GetRawResponse())
+                    : Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string packetCaptureName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string packetCaptureName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.CheckIfExists");
             scope.Start();
@@ -280,7 +282,8 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(packetCaptureName));
                 }
 
-                return TryGet(packetCaptureName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(packetCaptureName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -292,7 +295,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string packetCaptureName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string packetCaptureName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.CheckIfExists");
             scope.Start();
@@ -303,7 +306,8 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(packetCaptureName));
                 }
 
-                return await TryGetAsync(packetCaptureName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(packetCaptureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

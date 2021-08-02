@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NetworkWatcher(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -70,6 +72,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkWatcher(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -455,14 +459,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the configured and effective security group rules on the specified VM. </summary>
+        /// <param name="targetResourceId"> ID of the target VM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SecurityGroupViewResult>> GetVMSecurityRulesAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public async virtual Task<Response<SecurityGroupViewResult>> GetVMSecurityRulesAsync(string targetResourceId, CancellationToken cancellationToken = default)
         {
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.GetVMSecurityRules");
             scope.Start();
             try
             {
-                var operation = await StartGetVMSecurityRulesAsync(cancellationToken).ConfigureAwait(false);
+                var operation = await StartGetVMSecurityRulesAsync(targetResourceId, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -473,14 +484,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the configured and effective security group rules on the specified VM. </summary>
+        /// <param name="targetResourceId"> ID of the target VM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecurityGroupViewResult> GetVMSecurityRules(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public virtual Response<SecurityGroupViewResult> GetVMSecurityRules(string targetResourceId, CancellationToken cancellationToken = default)
         {
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.GetVMSecurityRules");
             scope.Start();
             try
             {
-                var operation = StartGetVMSecurityRules(cancellationToken);
+                var operation = StartGetVMSecurityRules(targetResourceId, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -491,15 +509,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the configured and effective security group rules on the specified VM. </summary>
+        /// <param name="targetResourceId"> ID of the target VM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkWatchersGetVMSecurityRulesOperation> StartGetVMSecurityRulesAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public async virtual Task<NetworkWatchersGetVMSecurityRulesOperation> StartGetVMSecurityRulesAsync(string targetResourceId, CancellationToken cancellationToken = default)
         {
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.StartGetVMSecurityRules");
             scope.Start();
             try
             {
-                var response = await _restClient.GetVMSecurityRulesAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new NetworkWatchersGetVMSecurityRulesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetVMSecurityRulesRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _restClient.GetVMSecurityRulesAsync(Id.ResourceGroupName, Id.Name, targetResourceId, cancellationToken).ConfigureAwait(false);
+                return new NetworkWatchersGetVMSecurityRulesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetVMSecurityRulesRequest(Id.ResourceGroupName, Id.Name, targetResourceId).Request, response);
             }
             catch (Exception e)
             {
@@ -509,15 +534,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the configured and effective security group rules on the specified VM. </summary>
+        /// <param name="targetResourceId"> ID of the target VM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkWatchersGetVMSecurityRulesOperation StartGetVMSecurityRules(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public virtual NetworkWatchersGetVMSecurityRulesOperation StartGetVMSecurityRules(string targetResourceId, CancellationToken cancellationToken = default)
         {
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.StartGetVMSecurityRules");
             scope.Start();
             try
             {
-                var response = _restClient.GetVMSecurityRules(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new NetworkWatchersGetVMSecurityRulesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetVMSecurityRulesRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _restClient.GetVMSecurityRules(Id.ResourceGroupName, Id.Name, targetResourceId, cancellationToken);
+                return new NetworkWatchersGetVMSecurityRulesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetVMSecurityRulesRequest(Id.ResourceGroupName, Id.Name, targetResourceId).Request, response);
             }
             catch (Exception e)
             {
@@ -627,14 +659,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Get the last completed troubleshooting result on a specified resource. </summary>
+        /// <param name="targetResourceId"> The target resource ID to query the troubleshooting result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<TroubleshootingResult>> GetTroubleshootingResultAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public async virtual Task<Response<TroubleshootingResult>> GetTroubleshootingResultAsync(string targetResourceId, CancellationToken cancellationToken = default)
         {
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.GetTroubleshootingResult");
             scope.Start();
             try
             {
-                var operation = await StartGetTroubleshootingResultAsync(cancellationToken).ConfigureAwait(false);
+                var operation = await StartGetTroubleshootingResultAsync(targetResourceId, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -645,14 +684,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Get the last completed troubleshooting result on a specified resource. </summary>
+        /// <param name="targetResourceId"> The target resource ID to query the troubleshooting result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TroubleshootingResult> GetTroubleshootingResult(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public virtual Response<TroubleshootingResult> GetTroubleshootingResult(string targetResourceId, CancellationToken cancellationToken = default)
         {
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.GetTroubleshootingResult");
             scope.Start();
             try
             {
-                var operation = StartGetTroubleshootingResult(cancellationToken);
+                var operation = StartGetTroubleshootingResult(targetResourceId, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -663,15 +709,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Get the last completed troubleshooting result on a specified resource. </summary>
+        /// <param name="targetResourceId"> The target resource ID to query the troubleshooting result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkWatchersGetTroubleshootingResultOperation> StartGetTroubleshootingResultAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public async virtual Task<NetworkWatchersGetTroubleshootingResultOperation> StartGetTroubleshootingResultAsync(string targetResourceId, CancellationToken cancellationToken = default)
         {
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.StartGetTroubleshootingResult");
             scope.Start();
             try
             {
-                var response = await _restClient.GetTroubleshootingResultAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new NetworkWatchersGetTroubleshootingResultOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetTroubleshootingResultRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _restClient.GetTroubleshootingResultAsync(Id.ResourceGroupName, Id.Name, targetResourceId, cancellationToken).ConfigureAwait(false);
+                return new NetworkWatchersGetTroubleshootingResultOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetTroubleshootingResultRequest(Id.ResourceGroupName, Id.Name, targetResourceId).Request, response);
             }
             catch (Exception e)
             {
@@ -681,15 +734,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Get the last completed troubleshooting result on a specified resource. </summary>
+        /// <param name="targetResourceId"> The target resource ID to query the troubleshooting result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkWatchersGetTroubleshootingResultOperation StartGetTroubleshootingResult(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public virtual NetworkWatchersGetTroubleshootingResultOperation StartGetTroubleshootingResult(string targetResourceId, CancellationToken cancellationToken = default)
         {
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.StartGetTroubleshootingResult");
             scope.Start();
             try
             {
-                var response = _restClient.GetTroubleshootingResult(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new NetworkWatchersGetTroubleshootingResultOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetTroubleshootingResultRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _restClient.GetTroubleshootingResult(Id.ResourceGroupName, Id.Name, targetResourceId, cancellationToken);
+                return new NetworkWatchersGetTroubleshootingResultOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetTroubleshootingResultRequest(Id.ResourceGroupName, Id.Name, targetResourceId).Request, response);
             }
             catch (Exception e)
             {
@@ -799,14 +859,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Queries status of flow log and traffic analytics (optional) on a specified resource. </summary>
+        /// <param name="targetResourceId"> The target resource where getting the flow log and traffic analytics (optional) status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<FlowLogInformation>> GetFlowLogStatusAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public async virtual Task<Response<FlowLogInformation>> GetFlowLogStatusAsync(string targetResourceId, CancellationToken cancellationToken = default)
         {
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.GetFlowLogStatus");
             scope.Start();
             try
             {
-                var operation = await StartGetFlowLogStatusAsync(cancellationToken).ConfigureAwait(false);
+                var operation = await StartGetFlowLogStatusAsync(targetResourceId, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -817,14 +884,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Queries status of flow log and traffic analytics (optional) on a specified resource. </summary>
+        /// <param name="targetResourceId"> The target resource where getting the flow log and traffic analytics (optional) status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FlowLogInformation> GetFlowLogStatus(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public virtual Response<FlowLogInformation> GetFlowLogStatus(string targetResourceId, CancellationToken cancellationToken = default)
         {
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.GetFlowLogStatus");
             scope.Start();
             try
             {
-                var operation = StartGetFlowLogStatus(cancellationToken);
+                var operation = StartGetFlowLogStatus(targetResourceId, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -835,15 +909,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Queries status of flow log and traffic analytics (optional) on a specified resource. </summary>
+        /// <param name="targetResourceId"> The target resource where getting the flow log and traffic analytics (optional) status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkWatchersGetFlowLogStatusOperation> StartGetFlowLogStatusAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public async virtual Task<NetworkWatchersGetFlowLogStatusOperation> StartGetFlowLogStatusAsync(string targetResourceId, CancellationToken cancellationToken = default)
         {
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.StartGetFlowLogStatus");
             scope.Start();
             try
             {
-                var response = await _restClient.GetFlowLogStatusAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new NetworkWatchersGetFlowLogStatusOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetFlowLogStatusRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _restClient.GetFlowLogStatusAsync(Id.ResourceGroupName, Id.Name, targetResourceId, cancellationToken).ConfigureAwait(false);
+                return new NetworkWatchersGetFlowLogStatusOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetFlowLogStatusRequest(Id.ResourceGroupName, Id.Name, targetResourceId).Request, response);
             }
             catch (Exception e)
             {
@@ -853,15 +934,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Queries status of flow log and traffic analytics (optional) on a specified resource. </summary>
+        /// <param name="targetResourceId"> The target resource where getting the flow log and traffic analytics (optional) status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkWatchersGetFlowLogStatusOperation StartGetFlowLogStatus(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public virtual NetworkWatchersGetFlowLogStatusOperation StartGetFlowLogStatus(string targetResourceId, CancellationToken cancellationToken = default)
         {
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.StartGetFlowLogStatus");
             scope.Start();
             try
             {
-                var response = _restClient.GetFlowLogStatus(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new NetworkWatchersGetFlowLogStatusOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetFlowLogStatusRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _restClient.GetFlowLogStatus(Id.ResourceGroupName, Id.Name, targetResourceId, cancellationToken);
+                return new NetworkWatchersGetFlowLogStatusOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetFlowLogStatusRequest(Id.ResourceGroupName, Id.Name, targetResourceId).Request, response);
             }
             catch (Exception e)
             {

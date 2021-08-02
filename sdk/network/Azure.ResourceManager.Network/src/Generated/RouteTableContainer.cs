@@ -180,6 +180,8 @@ namespace Azure.ResourceManager.Network
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RouteTable(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,6 +207,8 @@ namespace Azure.ResourceManager.Network
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new RouteTable(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,9 +222,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual RouteTable TryGet(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<RouteTable> GetIfExists(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -229,11 +233,10 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(routeTableName));
                 }
 
-                return Get(routeTableName, expand, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<RouteTable>(null, response.GetRawResponse())
+                    : Response.FromValue(new RouteTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,9 +249,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<RouteTable> TryGetAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<RouteTable>> GetIfExistsAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -257,11 +260,10 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(routeTableName));
                 }
 
-                return await GetAsync(routeTableName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<RouteTable>(null, response.GetRawResponse())
+                    : Response.FromValue(new RouteTable(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +276,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.CheckIfExists");
             scope.Start();
@@ -285,7 +287,8 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(routeTableName));
                 }
 
-                return TryGet(routeTableName, expand, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(routeTableName, expand, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -298,7 +301,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.CheckIfExists");
             scope.Start();
@@ -309,7 +312,8 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(routeTableName));
                 }
 
-                return await TryGetAsync(routeTableName, expand, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(routeTableName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

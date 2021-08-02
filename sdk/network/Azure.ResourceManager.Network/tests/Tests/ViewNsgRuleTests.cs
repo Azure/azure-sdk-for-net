@@ -95,8 +95,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Response<NetworkSecurityGroup> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //Get view security group rules
-            //SecurityGroupViewParameters sgvProperties = new SecurityGroupViewParameters(getVm.Value.Id);
-            NetworkWatchersGetVMSecurityRulesOperation viewNSGRulesOperation = await GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.StartGetVMSecurityRulesAsync();
+            NetworkWatchersGetVMSecurityRulesOperation viewNSGRulesOperation = await GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.StartGetVMSecurityRulesAsync(getVm.Value.Id);
             Response<SecurityGroupViewResult> viewNSGRules = await viewNSGRulesOperation.WaitForCompletionAsync();;
 
             //Verify effective security rule defined earlier

@@ -180,6 +180,8 @@ namespace Azure.ResourceManager.Network
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkVirtualAppliance(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,6 +207,8 @@ namespace Azure.ResourceManager.Network
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NetworkVirtualAppliance(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,9 +222,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual NetworkVirtualAppliance TryGet(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkVirtualAppliance> GetIfExists(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -229,11 +233,10 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(networkVirtualApplianceName));
                 }
 
-                return Get(networkVirtualApplianceName, expand, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<NetworkVirtualAppliance>(null, response.GetRawResponse())
+                    : Response.FromValue(new NetworkVirtualAppliance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,9 +249,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<NetworkVirtualAppliance> TryGetAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NetworkVirtualAppliance>> GetIfExistsAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -257,11 +260,10 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(networkVirtualApplianceName));
                 }
 
-                return await GetAsync(networkVirtualApplianceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<NetworkVirtualAppliance>(null, response.GetRawResponse())
+                    : Response.FromValue(new NetworkVirtualAppliance(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +276,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.CheckIfExists");
             scope.Start();
@@ -285,7 +287,8 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(networkVirtualApplianceName));
                 }
 
-                return TryGet(networkVirtualApplianceName, expand, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(networkVirtualApplianceName, expand, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -298,7 +301,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.CheckIfExists");
             scope.Start();
@@ -309,7 +312,8 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(networkVirtualApplianceName));
                 }
 
-                return await TryGetAsync(networkVirtualApplianceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(networkVirtualApplianceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
