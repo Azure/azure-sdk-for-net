@@ -29,7 +29,125 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await CreateTestResourceGroup();
             var workspaceName = Recording.GenerateAssetName("testmlCreate");
             var workspace = await CreateMLWorkspaceAsync(rg, workspaceName);
+            await PreparePrivateEndpoint(rg.Data.Name, workspace.Id.ToString());
 
+            // This operation only support update
+            var connectionParameter = new PrivateEndpointConnectionData()
+            {
+                PrivateLinkServiceConnectionState = new PrivateLinkServiceConnectionState()
+                {
+                    Status = PrivateEndpointServiceConnectionStatus.Rejected,
+                    Description = "Update Rejected"
+                }
+            };
+            // Connection name is a random value?
+            var connections = await workspace.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var connection = await workspace.GetPrivateEndpointConnections().CreateOrUpdateAsync(connections.FirstOrDefault().Data.Name, connectionParameter).ConfigureAwait(false);
+            Assert.IsTrue(connection.Value.Data.PrivateLinkServiceConnectionState.Status == PrivateEndpointServiceConnectionStatus.Rejected);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task StartCreateOrUpdate()
+        {
+            ResourceGroup rg = await CreateTestResourceGroup();
+            var workspaceName = Recording.GenerateAssetName("testmlCreate");
+            var workspace = await CreateMLWorkspaceAsync(rg, workspaceName);
+            await PreparePrivateEndpoint(rg.Data.Name, workspace.Id.ToString());
+
+            // This operation only support update
+            var connectionParameter = new PrivateEndpointConnectionData()
+            {
+                PrivateLinkServiceConnectionState = new PrivateLinkServiceConnectionState()
+                {
+                    Status = PrivateEndpointServiceConnectionStatus.Rejected,
+                    Description = "Update Rejected"
+                }
+            };
+            // Connection name is a random value?
+            var connections = await workspace.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var connection = await workspace.GetPrivateEndpointConnections().StartCreateOrUpdateAsync(connections.FirstOrDefault().Data.Name, connectionParameter);
+            Assert.IsTrue(connection.Value.Data.PrivateLinkServiceConnectionState.Status == PrivateEndpointServiceConnectionStatus.Rejected);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task List()
+        {
+            ResourceGroup rg = await CreateTestResourceGroup();
+            var workspaceName = Recording.GenerateAssetName("testmlCreate");
+            var workspace = await CreateMLWorkspaceAsync(rg, workspaceName);
+            await PreparePrivateEndpoint(rg.Data.Name, workspace.Id.ToString());
+
+            var connections = await workspace.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            Assert.NotZero(connections.Count);
+            foreach (var connection in connections)
+            {
+                Assert.NotNull(connection.Data.Name);
+                Assert.NotNull(connection.Data.PrivateLinkServiceConnectionState.Status == PrivateEndpointServiceConnectionStatus.Approved);
+            }
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Get()
+        {
+            ResourceGroup rg = await CreateTestResourceGroup();
+            var workspaceName = Recording.GenerateAssetName("testmlCreate");
+            var workspace = await CreateMLWorkspaceAsync(rg, workspaceName);
+            await PreparePrivateEndpoint(rg.Data.Name, workspace.Id.ToString());
+
+            var connections = await workspace.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var connection = await workspace.GetPrivateEndpointConnections().GetAsync(connections.FirstOrDefault().Data.Name).ConfigureAwait(false);
+            Assert.NotNull(connection.Value.Data.Name);
+            Assert.NotNull(connection.Value.Data.PrivateLinkServiceConnectionState.Status == PrivateEndpointServiceConnectionStatus.Approved);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task TryGet()
+        {
+            ResourceGroup rg = await CreateTestResourceGroup();
+            var workspaceName = Recording.GenerateAssetName("testmlCreate");
+            var workspace = await CreateMLWorkspaceAsync(rg, workspaceName);
+            await PreparePrivateEndpoint(rg.Data.Name, workspace.Id.ToString());
+
+            var connections = await workspace.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var connection = await workspace.GetPrivateEndpointConnections().TryGetAsync(connections.FirstOrDefault().Data.Name).ConfigureAwait(false);
+            Assert.NotNull(connection.Data.Name);
+            Assert.NotNull(connection.Data.PrivateLinkServiceConnectionState.Status == PrivateEndpointServiceConnectionStatus.Approved);
+            connection = await workspace.GetPrivateEndpointConnections().TryGetAsync("foo").ConfigureAwait(false);
+            Assert.IsNull(connection);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task CheckIfExists()
+        {
+            ResourceGroup rg = await CreateTestResourceGroup();
+            var workspaceName = Recording.GenerateAssetName("testmlCreate");
+            var workspace = await CreateMLWorkspaceAsync(rg, workspaceName);
+            await PreparePrivateEndpoint(rg.Data.Name, workspace.Id.ToString());
+
+            var connections = await workspace.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var connection = await workspace.GetPrivateEndpointConnections().CheckIfExistsAsync(connections.FirstOrDefault().Data.Name).ConfigureAwait(false);
+            Assert.IsTrue(connection);
+            connection = await workspace.GetPrivateEndpointConnections().CheckIfExistsAsync("foo").ConfigureAwait(false);
+            Assert.IsFalse(connection);
+        }
+
+        private async Task<ResourceGroup> CreateTestResourceGroup()
+        {
+            return await Client
+                .DefaultSubscription
+                .GetResourceGroups()
+                .CreateOrUpdateAsync(
+                    Recording.GenerateAssetName("testmlrg"),
+                    new ResourceGroupData(Location.WestUS2));
+        }
+
+        private async Task PreparePrivateEndpoint(string rgName, string workspaceId)
+        {
             var networkClient = new NetworkManagementClient(Client.DefaultSubscription.Id.SubscriptionId, TestEnvironment.Credential);
 
             // Create a VNet
@@ -42,95 +160,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 },
                 Location = TestEnvironment.Location,
                 Subnets = {
-                    new Network.Models.Subnet() { Name = "frontendSubnet", AddressPrefix = "10.0.1.0/24", PrivateLinkServiceNetworkPolicies = "Disabled"},
-                    new Network.Models.Subnet() { Name = "backendSubnet", AddressPrefix = "10.0.2.0/24", PrivateLinkServiceNetworkPolicies = "Disabled"},
+                    new Network.Models.Subnet() { Name = "frontendSubnet", AddressPrefix = "10.0.1.0/24", PrivateEndpointNetworkPolicies = "Disabled"},
+                    new Network.Models.Subnet() { Name = "backendSubnet", AddressPrefix = "10.0.2.0/24", PrivateEndpointNetworkPolicies = "Disabled"},
                 }
             };
-            var vnet = await (await networkClient.VirtualNetworks.StartCreateOrUpdateAsync(rg.Data.Name, vnetName, vnetParameter)).WaitForCompletionAsync();
+            var vnet = await (await networkClient.VirtualNetworks.StartCreateOrUpdateAsync(rgName, vnetName, vnetParameter)).WaitForCompletionAsync();
 
-            // Create a load balancer
-            var loadName = Recording.GenerateAssetName("testmlload");
-            var loadParameter = new Network.Models.LoadBalancer()
-            {
-                Location = TestEnvironment.Location,
-                Sku = new Network.Models.LoadBalancerSku() { Name = Network.Models.LoadBalancerSkuName.Standard },
-                FrontendIPConfigurations = {
-                    new Network.Models.FrontendIPConfiguration()
-                    {
-                        Name = "mlfrontend",
-                        PrivateIPAllocationMethod = Network.Models.IPAllocationMethod.Dynamic,
-                        Subnet = vnet.Value.Subnets.Where(x => x.Name.Equals("frontendSubnet")).FirstOrDefault()
-                    } },
-                BackendAddressPools = { new Network.Models.BackendAddressPool() { Name = "myBackEndPool" } },
-                InboundNatRules = {
-                    new Network.Models.InboundNatRule()
-                    {
-                        Name = "RDP-VM0",
-                        FrontendIPConfiguration = new Network.Models.FrontendIPConfiguration()
-                        {
-                            Id =  $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rg.Data.Name}/providers/Microsoft.Network/loadBalancers/{loadName}/frontendIPConfigurations/mlfrontend"
-                        },
-                        Protocol = Network.Models.TransportProtocol.Tcp,
-                        FrontendPort = 3389,
-                        BackendPort = 3389,
-                        EnableFloatingIP = false
-                    }
-                },
-                LoadBalancingRules = {
-                    new Network.Models.LoadBalancingRule()
-                    {
-                        Name = "myHTTPRule",
-                        FrontendIPConfiguration = new Network.Models.FrontendIPConfiguration()
-                        {
-                            Id =  $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rg.Data.Name}/providers/Microsoft.Network/loadBalancers/{loadName}/frontendIPConfigurations/mlfrontend"
-                        },
-                        BackendAddressPool = new Network.Models.BackendAddressPool()
-                        {
-                            Id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rg.Data.Name}/providers/Microsoft.Network/loadBalancers/{loadName}/backendAddressPools/myBackEndPool"
-                        },
-                        Probe = new Network.Models.Probe()
-                        {
-                            Id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rg.Data.Name}/providers/Microsoft.Network/loadBalancers/{loadName}/probes/myHealthProbe"
-                        },
-                        Protocol = Network.Models.TransportProtocol.Tcp,
-                        FrontendPort = 80,
-                        BackendPort = 80,
-                        IdleTimeoutInMinutes = 15
-                    }
-                },
-                Probes = {
-                    new Network.Models.Probe()
-                    {
-                        Name = "myHealthProbe",
-                        Protocol = Network.Models.ProbeProtocol.Tcp,
-                        Port = 80,
-                        IntervalInSeconds = 15,
-                        NumberOfProbes = 2
-                    }}
-            };
-            var loadBalancer = await (await networkClient.LoadBalancers.StartCreateOrUpdateAsync(rg.Data.Name, loadName, loadParameter)).WaitForCompletionAsync();
-
-            // Create a Private Link Service
-            var linkName = Recording.GenerateAssetName("testmllink");
-            var linkParameter = new Network.Models.PrivateLinkService()
-            {
-                Location = TestEnvironment.Location,
-                EnableProxyProtocol = false,
-                LoadBalancerFrontendIpConfigurations = { loadBalancer.Value.FrontendIPConfigurations.FirstOrDefault() },
-                IpConfigurations =
-                {
-                    new Network.Models.PrivateLinkServiceIpConfiguration()
-                    {
-                        Name = "snet-provider-default-1",
-                        PrivateIPAllocationMethod = Network.Models.IPAllocationMethod.Dynamic,
-                        PrivateIPAddressVersion = Network.Models.IPVersion.IPv4,
-                        Subnet = loadBalancer.Value.FrontendIPConfigurations.FirstOrDefault().Subnet,
-                        Primary = false
-                    }
-                }
-            };
-            var privateLink = await (await networkClient.PrivateLinkServices.StartCreateOrUpdateAsync(rg.Data.Name, linkName, linkParameter)).WaitForCompletionAsync();
             // Create a PrivateEndpoint
+            var connectionName = Recording.GenerateAssetName("testmlCon");
             var endpointName = Recording.GenerateAssetName("testmlep");
             var endpointParameter = new Network.Models.PrivateEndpoint()
             {
@@ -138,57 +175,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 PrivateLinkServiceConnections = {
                     new Network.Models.PrivateLinkServiceConnection()
                     {
-                        PrivateLinkServiceId = privateLink.Value.Id,
-                        GroupIds = { "blob" },
+                        Name = connectionName,
+                        PrivateLinkServiceId = workspaceId,
+                        GroupIds = { "amlworkspace" },
                         RequestMessage = "Please approve my connection."
                     }
                 },
                 Subnet = new Network.Models.Subnet() { Id = vnet.Value.Subnets.FirstOrDefault().Id }
             };
-            var endpoint = await (await networkClient.PrivateEndpoints.StartCreateOrUpdateAsync(rg.Data.Name, endpointName, endpointParameter)).WaitForCompletionAsync();
-
-            var connectionName = Recording.GenerateAssetName("testmlCon");
-            var connectionParameter = new PrivateEndpointConnectionData()
-            {
-                PrivateLinkServiceConnectionState = new PrivateLinkServiceConnectionState()
-                {
-                    Status = PrivateEndpointServiceConnectionStatus.Approved,
-                    Description = "Auto-Approved"
-                }
-            };
-            var connection = await workspace.GetPrivateEndpointConnections().CreateOrUpdateAsync(connectionName, connectionParameter).ConfigureAwait(false);
-            Assert.IsTrue(connection.Value.Data.Name.Equals(connectionName));
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartCreateOrUpdate()
-        {
-            ResourceGroup rg = await CreateTestResourceGroup();
-            var workspaceName = Recording.GenerateAssetName("testmlCreate");
-            var workspace = await CreateMLWorkspaceAsync(rg, workspaceName);
-
-            var connectionName = Recording.GenerateAssetName("testmlCon");
-            var connectionParameter = new PrivateEndpointConnectionData()
-            {
-                PrivateLinkServiceConnectionState = new PrivateLinkServiceConnectionState()
-                {
-                    Status = PrivateEndpointServiceConnectionStatus.Approved,
-                    Description = "Auto-Approved"
-                }
-            };
-            var connection = await workspace.GetPrivateEndpointConnections().StartCreateOrUpdateAsync(connectionName, connectionParameter);
-            Assert.IsTrue(connection.Value.Data.Name.Equals(connectionName));
-        }
-
-        private async Task<ResourceGroup> CreateTestResourceGroup()
-        {
-            return await Client
-                .DefaultSubscription
-                .GetResourceGroups()
-                .CreateOrUpdateAsync(
-                    Recording.GenerateAssetName("testmlrg"),
-                    new ResourceGroupData(Location.WestUS2));
+            var endpoint = await (await networkClient.PrivateEndpoints.StartCreateOrUpdateAsync(rgName, endpointName, endpointParameter)).WaitForCompletionAsync();
         }
     }
 }
