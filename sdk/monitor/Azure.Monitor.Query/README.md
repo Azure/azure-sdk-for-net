@@ -223,7 +223,7 @@ foreach (var resourceGroup in response.Value)
 }
 ```
 
-### Querying additional workspaces
+### Query additional workspaces
 
 If you'd like to run the same query against multiple workspaces use the `LogsQueryOptions.AdditionalCollection`.
 
