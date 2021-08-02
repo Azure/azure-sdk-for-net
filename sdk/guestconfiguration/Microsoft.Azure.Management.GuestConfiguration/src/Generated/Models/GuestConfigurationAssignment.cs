@@ -40,10 +40,13 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="properties">Properties of the Guest configuration
         /// assignment.</param>
-        public GuestConfigurationAssignment(string id = default(string), string name = default(string), string location = default(string), string type = default(string), GuestConfigurationAssignmentProperties properties = default(GuestConfigurationAssignmentProperties))
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        public GuestConfigurationAssignment(string id = default(string), string name = default(string), string location = default(string), string type = default(string), GuestConfigurationAssignmentProperties properties = default(GuestConfigurationAssignmentProperties), SystemData systemData = default(SystemData))
             : base(id, name, location, type)
         {
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -57,6 +60,13 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public GuestConfigurationAssignmentProperties Properties { get; set; }
+
+        /// <summary>
+        /// Gets azure Resource Manager metadata containing createdBy and
+        /// modifiedBy information.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

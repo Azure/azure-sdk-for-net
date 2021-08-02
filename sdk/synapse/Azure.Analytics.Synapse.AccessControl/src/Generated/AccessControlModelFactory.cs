@@ -7,45 +7,46 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.AccessControl.Models;
+using System.Linq;
 
-namespace Azure.Analytics.Synapse.AccessControl
+namespace Azure.Analytics.Synapse.AccessControl.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class AccessControlModelFactory
     {
-        /// <summary> Initializes new instance of CheckPrincipalAccessResponse class. </summary>
+        /// <summary> Initializes a new instance of CheckPrincipalAccessResponse. </summary>
         /// <param name="accessDecisions"> To check if the current user, group, or service principal has permission to read artifacts in the specified workspace. </param>
         /// <returns> A new <see cref="Models.CheckPrincipalAccessResponse"/> instance for mocking. </returns>
-        public static CheckPrincipalAccessResponse CheckPrincipalAccessResponse(IReadOnlyList<CheckAccessDecision> accessDecisions = default)
+        public static CheckPrincipalAccessResponse CheckPrincipalAccessResponse(IEnumerable<CheckAccessDecision> accessDecisions = null)
         {
             accessDecisions ??= new List<CheckAccessDecision>();
-            return new CheckPrincipalAccessResponse(accessDecisions);
+
+            return new CheckPrincipalAccessResponse(accessDecisions?.ToList());
         }
 
-        /// <summary> Initializes new instance of CheckAccessDecision class. </summary>
+        /// <summary> Initializes a new instance of CheckAccessDecision. </summary>
         /// <param name="accessDecision"> Access Decision. </param>
         /// <param name="actionId"> Action Id. </param>
         /// <param name="roleAssignment"> Role Assignment response details. </param>
         /// <returns> A new <see cref="Models.CheckAccessDecision"/> instance for mocking. </returns>
-        public static CheckAccessDecision CheckAccessDecision(string accessDecision = default, string actionId = default, RoleAssignmentDetails roleAssignment = default)
+        public static CheckAccessDecision CheckAccessDecision(string accessDecision = null, string actionId = null, RoleAssignmentDetails roleAssignment = null)
         {
             return new CheckAccessDecision(accessDecision, actionId, roleAssignment);
         }
 
-        /// <summary> Initializes new instance of RoleAssignmentDetails class. </summary>
+        /// <summary> Initializes a new instance of RoleAssignmentDetails. </summary>
         /// <param name="id"> Role Assignment ID. </param>
         /// <param name="roleDefinitionId"> Role ID of the Synapse Built-In Role. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope at the role assignment is created. </param>
         /// <param name="principalType"> Type of the principal Id: User, Group or ServicePrincipal. </param>
         /// <returns> A new <see cref="Models.RoleAssignmentDetails"/> instance for mocking. </returns>
-        public static RoleAssignmentDetails RoleAssignmentDetails(string id = default, Guid? roleDefinitionId = default, Guid? principalId = default, string scope = default, string principalType = default)
+        public static RoleAssignmentDetails RoleAssignmentDetails(string id = null, Guid? roleDefinitionId = null, Guid? principalId = null, string scope = null, string principalType = null)
         {
             return new RoleAssignmentDetails(id, roleDefinitionId, principalId, scope, principalType);
         }
 
-        /// <summary> Initializes new instance of SynapseRoleDefinition class. </summary>
+        /// <summary> Initializes a new instance of SynapseRoleDefinition. </summary>
         /// <param name="id"> Role Definition ID. </param>
         /// <param name="name"> Name of the Synapse role. </param>
         /// <param name="isBuiltIn"> Is a built-in role or not. </param>
@@ -54,36 +55,39 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="scopes"> Allowed scopes for the Synapse role. </param>
         /// <param name="availabilityStatus"> Availability of the Synapse role. </param>
         /// <returns> A new <see cref="Models.SynapseRoleDefinition"/> instance for mocking. </returns>
-        public static SynapseRoleDefinition SynapseRoleDefinition(Guid? id = default, string name = default, bool? isBuiltIn = default, string description = default, IReadOnlyList<SynapseRbacPermission> permissions = default, IReadOnlyList<string> scopes = default, string availabilityStatus = default)
+        public static SynapseRoleDefinition SynapseRoleDefinition(Guid? id = null, string name = null, bool? isBuiltIn = null, string description = null, IEnumerable<SynapseRbacPermission> permissions = null, IEnumerable<string> scopes = null, string availabilityStatus = null)
         {
             permissions ??= new List<SynapseRbacPermission>();
             scopes ??= new List<string>();
-            return new SynapseRoleDefinition(id, name, isBuiltIn, description, permissions, scopes, availabilityStatus);
+
+            return new SynapseRoleDefinition(id, name, isBuiltIn, description, permissions?.ToList(), scopes?.ToList(), availabilityStatus);
         }
 
-        /// <summary> Initializes new instance of SynapseRbacPermission class. </summary>
+        /// <summary> Initializes a new instance of SynapseRbacPermission. </summary>
         /// <param name="actions"> List of actions. </param>
         /// <param name="notActions"> List of Not actions. </param>
         /// <param name="dataActions"> List of data actions. </param>
         /// <param name="notDataActions"> List of Not data actions. </param>
         /// <returns> A new <see cref="Models.SynapseRbacPermission"/> instance for mocking. </returns>
-        public static SynapseRbacPermission SynapseRbacPermission(IReadOnlyList<string> actions = default, IReadOnlyList<string> notActions = default, IReadOnlyList<string> dataActions = default, IReadOnlyList<string> notDataActions = default)
+        public static SynapseRbacPermission SynapseRbacPermission(IEnumerable<string> actions = null, IEnumerable<string> notActions = null, IEnumerable<string> dataActions = null, IEnumerable<string> notDataActions = null)
         {
             actions ??= new List<string>();
             notActions ??= new List<string>();
             dataActions ??= new List<string>();
             notDataActions ??= new List<string>();
-            return new SynapseRbacPermission(actions, notActions, dataActions, notDataActions);
+
+            return new SynapseRbacPermission(actions?.ToList(), notActions?.ToList(), dataActions?.ToList(), notDataActions?.ToList());
         }
 
-        /// <summary> Initializes new instance of RoleAssignmentDetailsList class. </summary>
+        /// <summary> Initializes a new instance of RoleAssignmentDetailsList. </summary>
         /// <param name="count"> Number of role assignments. </param>
         /// <param name="value"> A list of role assignments. </param>
         /// <returns> A new <see cref="Models.RoleAssignmentDetailsList"/> instance for mocking. </returns>
-        public static RoleAssignmentDetailsList RoleAssignmentDetailsList(int? count = default, IReadOnlyList<RoleAssignmentDetails> value = default)
+        public static RoleAssignmentDetailsList RoleAssignmentDetailsList(int? count = null, IEnumerable<RoleAssignmentDetails> value = null)
         {
             value ??= new List<RoleAssignmentDetails>();
-            return new RoleAssignmentDetailsList(count, value);
+
+            return new RoleAssignmentDetailsList(count, value?.ToList());
         }
     }
 }

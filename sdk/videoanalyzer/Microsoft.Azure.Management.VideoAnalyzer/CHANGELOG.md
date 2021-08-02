@@ -1,4 +1,4 @@
-﻿# Microsoft.Azure.Management.VideoAnalyzer release notes
+# Microsoft.Azure.Management.VideoAnalyzer release notes
 
 ## Changes in 1.0.0-beta.1
 

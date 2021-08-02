@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
@@ -21,26 +20,25 @@ namespace Azure.Communication.CallingServer.Tests
 
         [Test]
         [AsyncOnly]
-        [Ignore("Ignore for now as we get build errors that block checkingin.")]
         public async Task CreateCallAsync()
         {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var source = await communicationIdentityClient.CreateUserAsync();
-            var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
+            var targets = new[] { new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber) };
             #region Snippet:Azure_Communication_Call_Tests_CreateCallOptions
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new List<CallModality> { CallModality.Audio },
-                   new List<EventSubscriptionType>
+                   new[] { MediaType.Audio },
+                   new[]
                    {
                        EventSubscriptionType.ParticipantsUpdated,
                        EventSubscriptionType.DtmfReceived
                    });
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCallOptions
-            CallClient callClient = CreateInstrumentedCallingServerClient();
-            Console.WriteLine("Performing CreateCall operation");
+            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
+            Console.WriteLine("Performing CreateCallConnection operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCallAsync
-            CreateCallResponse createCallResponse = await callClient.CreateCallAsync(
+            var callConnection = await callingServerClient.CreateCallConnectionAsync(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
                 //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
                 //@@ options: createCallOption // The options for creating a call.
@@ -48,29 +46,28 @@ namespace Azure.Communication.CallingServer.Tests
                 /*@@*/ targets: targets,
                 /*@@*/ options: createCallOption
                 );
-            Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
+            Console.WriteLine($"Call connection id: {callConnection.Value.CallConnectionId}");
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCallAsync
         }
 
         [Test]
         [SyncOnly]
-        [Ignore("Ignore for now as we get build errors that block checkingin.")]
         public void CreateCall()
         {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var source = communicationIdentityClient.CreateUser();
-            var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
+            var targets = new[] { new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
-                   new List<CallModality> { CallModality.Audio },
-                   new List<EventSubscriptionType> {
+                   new[] { MediaType.Audio },
+                   new[] {
                        EventSubscriptionType.ParticipantsUpdated,
                        EventSubscriptionType.DtmfReceived
                    });
-            CallClient callClient = CreateInstrumentedCallingServerClient();
-            Console.WriteLine("Performing CreateCall operation");
+            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
+            Console.WriteLine("Performing CreateCallConnection operation");
             #region Snippet:Azure_Communication_Call_Tests_CreateCall
-            CreateCallResponse createCallResponse = callClient.CreateCall(
+            var callConnection = callingServerClient.CreateCallConnection(
                 //@@ source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
                 //@@ targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
                 //@@ options: createCallOption // The options for creating a call.
@@ -78,7 +75,7 @@ namespace Azure.Communication.CallingServer.Tests
                 /*@@*/ targets: targets,
                 /*@@*/ options: createCallOption
                 );
-            Console.WriteLine($"Call Leg id: {createCallResponse.CallLegId}");
+            Console.WriteLine($"Call connection id: {callConnection.Value.CallConnectionId}");
             #endregion Snippet:Azure_Communication_Call_Tests_CreateCall
         }
     }

@@ -34,11 +34,11 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> Initializes a new instance of MetricQueryResult. </summary>
-        /// <param name="cost"> The integer value representing the cost of the query, for data case. </param>
+        /// <param name="cost"> The integer value representing the relative cost of the query. </param>
         /// <param name="Timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
-        /// <param name="namespace"> The namespace of the metrics been queried. </param>
-        /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
+        /// <param name="namespace"> The namespace of the metrics being queried. </param>
+        /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
         /// <param name="metrics"> the value of the collection. </param>
         internal MetricQueryResult(int? cost, string Timespan, TimeSpan? interval, string @namespace, string resourceRegion, IReadOnlyList<Metric> metrics)
         {
@@ -50,11 +50,11 @@ namespace Azure.Monitor.Query.Models
             Metrics = metrics;
         }
 
-        /// <summary> The integer value representing the cost of the query, for data case. </summary>
+        /// <summary> The integer value representing the relative cost of the query. </summary>
         public int? Cost { get; }
         /// <summary> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </summary>
         public TimeSpan? Interval { get; }
-        /// <summary> The namespace of the metrics been queried. </summary>
+        /// <summary> The namespace of the metrics being queried. </summary>
         public string Namespace { get; }
     }
 }

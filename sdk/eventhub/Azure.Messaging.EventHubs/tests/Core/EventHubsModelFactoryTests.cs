@@ -175,7 +175,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void EventDataBatchInitializesProperties()
         {
             var size = 1024;
-            var store = new List<EventData> { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>()) };
+            var store = new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) };
             var options = new CreateBatchOptions { MaximumSizeInBytes = 2048 };
             var batch = EventHubsModelFactory.EventDataBatch(size, store, options);
 
@@ -220,7 +220,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void EventDataBatchIsSafeToDispose()
         {
             var size = 1024;
-            var store = new List<EventData> { new EventData(Array.Empty<byte>()), new EventData(Array.Empty<byte>()) };
+            var store = new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) };
             var options = new CreateBatchOptions { MaximumSizeInBytes = 2048 };
             var batch = EventHubsModelFactory.EventDataBatch(size, store, options, _ => false);
 

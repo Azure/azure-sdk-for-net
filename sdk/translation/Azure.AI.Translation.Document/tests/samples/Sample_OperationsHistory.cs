@@ -13,7 +13,6 @@ namespace Azure.AI.Translation.Document.Samples
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
-        [Ignore("Samples not working yet")]
         public void OperationsHistory()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -31,11 +30,12 @@ namespace Azure.AI.Translation.Document.Samples
 
             TimeSpan pollingInterval = new(1000);
 
-            foreach (TranslationStatusResult translationStatus in client.GetAllTranslationStatuses())
+            foreach (TranslationStatus translationStatus in client.GetAllTranslationStatuses())
             {
-                if (!translationStatus.HasCompleted)
+                if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
+                    translationStatus.Status == DocumentTranslationStatus.Running)
                 {
-                    DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.TranslationId, client);
+                    DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
 
                     while (!operation.HasCompleted)
                     {

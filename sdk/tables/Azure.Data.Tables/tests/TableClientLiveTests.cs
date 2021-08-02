@@ -157,7 +157,7 @@ namespace Azure.Data.Tables.Tests
             TableSasBuilder sas = client.GetSasBuilder(TableSasPermissions.Read, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
             string token = sas.Sign(credential);
 
-            // Build SAS Uri.
+            // Build SAS Uri. Add the table name to the ServiceUri to validate it will be handled properly.
             UriBuilder sasUri = new UriBuilder(ServiceUri) { Query = token };
 
             // Create the TableServiceClient using the SAS URI.
@@ -183,6 +183,38 @@ namespace Azure.Data.Tables.Tests
             {
                 Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
             }
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public void TableClientRemovesTableNameFromEndpointUri()
+        {
+            var endpointWithTableName = ServiceUri + "/" + tableName;
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+            var credential = new TableSharedKeyCredential(AccountName, AccountKey);
+
+            // Build a shared access signature with only Read permissions.
+            TableSasBuilder sas = client.GetSasBuilder(TableSasPermissions.Read, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            string token = sas.Sign(credential);
+
+            // Build SAS Uri. Add the table name to the ServiceUri to validate it will be handled properly.
+            UriBuilder sasUri = new UriBuilder(endpointWithTableName) { Query = token };
+
+            // Create the TableServiceClient using the SAS URI.
+            // Intentionally add the SAS to the endpoint arg as well as the credential to validate de-duping
+            TableClient sasTableclient =
+                InstrumentClient(new TableClient(sasUri.Uri, new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are able to query the table from the service.
+            Assert.That(async () => await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false), Throws.Nothing);
+
+            var sharedKeyClient =
+                InstrumentClient(new TableClient(new Uri(ServiceUri), tableName, new TableSharedKeyCredential(AccountName, AccountKey), InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are able to query the table from the service.
+            Assert.That(async () => await sharedKeyClient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false), Throws.Nothing);
         }
 
         /// <summary>

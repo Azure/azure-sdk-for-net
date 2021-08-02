@@ -153,10 +153,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 DnsSettings.Validate();
             }
-            if (Sku != null)
-            {
-                Sku.Validate();
-            }
         }
     }
 }

@@ -58,7 +58,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(unwrapResult.Key)}");
             #endregion
 
-            #region Snippet:KeysSample6DeleteKey
             DeleteKeyOperation operation = keyClient.StartDeleteKey(rsaKeyName);
 
             // You only need to wait for completion if you want to purge or recover the key.
@@ -68,7 +67,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
                 operation.UpdateStatus();
             }
-            #endregion
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
             keyClient.PurgeDeletedKey(rsaKeyName);

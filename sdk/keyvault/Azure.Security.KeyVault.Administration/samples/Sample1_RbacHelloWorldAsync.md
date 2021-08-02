@@ -1,7 +1,7 @@
 # Creating, getting, and deleting role assignments (Async)
 
 This sample demonstrates how to create, get, and delete role assignments in Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
 
 ## Creating a KeyVaultAccessControlClient
 
@@ -44,7 +44,7 @@ Now let's assign a role to a service principal. To do this we'll need a role def
 
 A role definition Id can be obtained from the `Id` property of one of the role definitions returned from `GetRoleAssignments`.
 
-See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions on how to generate a new service principal and obtain it's object Id.
+See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions on how to generate a new service principal and obtain it's object Id.
 You can also get the object Id for your currently signed in account by running the following [Azure CLI][azure_cli] command.
 ```
 az ad signed-in-user show --query objectId
@@ -74,4 +74,4 @@ await client.DeleteRoleAssignmentAsync(KeyVaultRoleScope.Global, createdAssignme
 
 <!-- LINKS -->
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#defaultazurecredential
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential

@@ -15,7 +15,6 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static AnalyzeTasks DeserializeAnalyzeTasks(JsonElement element)
         {
-            Optional<TasksStateTasksDetails> details = default;
             int completed = default;
             int failed = default;
             int inProgress = default;
@@ -27,16 +26,6 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IReadOnlyList<SentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("details"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    details = TasksStateTasksDetails.DeserializeTasksStateTasksDetails(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("completed"))
                 {
                     completed = property.Value.GetInt32();
@@ -133,7 +122,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AnalyzeTasks(details.Value, completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks));
+            return new AnalyzeTasks(completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks));
         }
     }
 }

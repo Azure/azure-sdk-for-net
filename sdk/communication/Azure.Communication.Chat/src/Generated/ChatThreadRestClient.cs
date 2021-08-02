@@ -633,66 +633,6 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateSendTypingNotificationRequest(string chatThreadId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/chat/threads/", false);
-            uri.AppendPath(chatThreadId, true);
-            uri.AppendPath("/typing", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Posts a typing event to a thread, on behalf of a user. </summary>
-        /// <param name="chatThreadId"> Id of the thread. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response> SendTypingNotificationAsync(string chatThreadId, CancellationToken cancellationToken = default)
-        {
-            if (chatThreadId == null)
-            {
-                throw new ArgumentNullException(nameof(chatThreadId));
-            }
-
-            using var message = CreateSendTypingNotificationRequest(chatThreadId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Posts a typing event to a thread, on behalf of a user. </summary>
-        /// <param name="chatThreadId"> Id of the thread. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public Response SendTypingNotification(string chatThreadId, CancellationToken cancellationToken = default)
-        {
-            if (chatThreadId == null)
-            {
-                throw new ArgumentNullException(nameof(chatThreadId));
-            }
-
-            using var message = CreateSendTypingNotificationRequest(chatThreadId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateListChatParticipantsRequest(string chatThreadId, int? maxPageSize, int? skip)
         {
             var message = _pipeline.CreateMessage();
@@ -1072,6 +1012,76 @@ namespace Azure.Communication.Chat
                         value = ChatThreadPropertiesInternal.DeserializeChatThreadPropertiesInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateSendTypingNotificationRequest(string chatThreadId, string senderDisplayName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/typing", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new SendTypingNotificationRequest()
+            {
+                SenderDisplayName = senderDisplayName
+            };
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Posts a typing event to a thread, on behalf of a user. </summary>
+        /// <param name="chatThreadId"> Id of the thread. </param>
+        /// <param name="senderDisplayName"> The display name of the typing notification sender. This property is used to populate sender name for push notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        public async Task<Response> SendTypingNotificationAsync(string chatThreadId, string senderDisplayName = null, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+
+            using var message = CreateSendTypingNotificationRequest(chatThreadId, senderDisplayName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Posts a typing event to a thread, on behalf of a user. </summary>
+        /// <param name="chatThreadId"> Id of the thread. </param>
+        /// <param name="senderDisplayName"> The display name of the typing notification sender. This property is used to populate sender name for push notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
+        public Response SendTypingNotification(string chatThreadId, string senderDisplayName = null, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+
+            using var message = CreateSendTypingNotificationRequest(chatThreadId, senderDisplayName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

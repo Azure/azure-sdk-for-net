@@ -22,17 +22,17 @@ namespace Azure.Communication.CallingServer
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal const string CallLegStateChangedEventValue = "Microsoft.Communication.CallLegStateChanged";
+        internal const string CallConnectionStateChangedEventValue = "Microsoft.Communication.CallConnectionStateChanged";
         internal const string ToneReceivedEventValue = "Microsoft.Communication.DtmfReceived";
         internal const string PlayAudioResultEventValue = "Microsoft.Communication.PlayAudioResult";
         internal const string CallRecordingStateChangeEventValue = "Microsoft.Communication.CallRecordingStateChanged";
-        internal const string InviteParticipantsResultEventValue = "Microsoft.Communication.InviteParticipantResult";
+        internal const string AddParticipantResultEventValue = "Microsoft.Communication.AddParticipantResult";
         internal const string ParticipantsUpdatedEventValue = "Microsoft.Communication.ParticipantsUpdated";
 
         /// <summary>
-        /// The call leg state change event type.
+        /// The call connection state change event type.
         /// </summary>
-        public static CallingServerEventType CallLegStateChangedEvent { get; } = new CallingServerEventType(CallLegStateChangedEventValue);
+        public static CallingServerEventType CallConnectionStateChangedEvent { get; } = new CallingServerEventType(CallConnectionStateChangedEventValue);
 
         /// <summary>
         /// The subscribe to tone event type.
@@ -50,9 +50,9 @@ namespace Azure.Communication.CallingServer
         public static CallingServerEventType CallRecordingStateChangeEvent { get; } = new CallingServerEventType(CallRecordingStateChangeEventValue);
 
         /// <summary>
-        /// The invited participants result event type.
+        /// The add participant result event type.
         /// </summary>
-        public static CallingServerEventType InviteParticipantsResultEvent { get; } = new CallingServerEventType(InviteParticipantsResultEventValue);
+        public static CallingServerEventType AddParticipantResultEvent { get; } = new CallingServerEventType(AddParticipantResultEventValue);
 
         /// <summary>
         /// The call state change event type.
@@ -88,7 +88,7 @@ namespace Azure.Communication.CallingServer
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
-            return obj is CallState && Equals((CallingServerEventType)obj);
+            return obj is CallingServerEventType && Equals((CallingServerEventType)obj);
         }
 
         /// <inheritdoc/>

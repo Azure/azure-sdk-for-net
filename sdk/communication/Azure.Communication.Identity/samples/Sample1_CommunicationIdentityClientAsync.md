@@ -72,6 +72,6 @@ To see the full example source files, see:
 
 <!-- LINKS -->
 <!--
-[ReadMe](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Administration/samples/ReadMe.md)
-[GenerateUserTokenCode](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Administration/tests/samples/Sample1_CommunicationIdentityClient.cs)
+[ReadMe](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Administration/samples/ReadMe.md)
+[GenerateUserTokenCode](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Administration/tests/samples/Sample1_CommunicationIdentityClient.cs)
 -->
