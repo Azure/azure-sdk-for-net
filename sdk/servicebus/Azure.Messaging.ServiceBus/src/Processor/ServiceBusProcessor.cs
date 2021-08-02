@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -38,7 +39,7 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly SemaphoreSlim _messageHandlerSemaphore;
 
-        private readonly int _maxConcurrentCalls;
+        private readonly object _syncLock = new();
 
         /// <summary>
         /// The primitive for ensuring that the service is not overloaded with
@@ -110,7 +111,16 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>The maximum number of concurrent calls to the message handler.</value>
-        public virtual int MaxConcurrentCalls { get; }
+        public virtual int MaxConcurrentCalls => _maxConcurrentCalls;
+
+        private volatile int _maxConcurrentCalls;
+
+        internal int MaxConcurrentSessions => _maxConcurrentSessions;
+        private volatile int _maxConcurrentSessions;
+
+        internal int MaxConcurrentCallsPerSession => _maxConcurrentCallsPerSession;
+        private volatile int _maxConcurrentCallsPerSession;
+
         internal TimeSpan? MaxReceiveWaitTime { get; }
 
         /// <summary>
@@ -139,8 +149,6 @@ namespace Azure.Messaging.ServiceBus
         /// The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
         /// </summary>
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
-        internal int MaxConcurrentSessions { get; }
-        internal int MaxConcurrentCallsPerSession { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusProcessor"/> has been closed.
@@ -155,6 +163,12 @@ namespace Azure.Messaging.ServiceBus
             private set => _closed = value;
         }
 
+        // If the user has listed named sessions, and they
+        // have MaxConcurrentSessions greater or equal to the number
+        // of sessions, we can leave the sessions open at all times
+        // instead of cycling through them as receive calls time out.
+        internal bool KeepOpenOnReceiveTimeout => _sessionIds.Length > 0 && _maxConcurrentSessions >= _sessionIds.Length;
+
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private volatile bool _closed;
 
@@ -163,6 +177,8 @@ namespace Azure.Messaging.ServiceBus
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
         private readonly ServiceBusSessionProcessor _sessionProcessor;
+        private volatile List<(Task, CancellationTokenSource, CancellationTokenSource)> _tasks;
+        private readonly List<ReceiverManager> _orphanedReceiverManagers = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
@@ -202,22 +218,23 @@ namespace Azure.Messaging.ServiceBus
             ReceiveMode = Options.ReceiveMode;
             PrefetchCount = Options.PrefetchCount;
             MaxAutoLockRenewalDuration = Options.MaxAutoLockRenewalDuration;
-            MaxConcurrentCalls = Options.MaxConcurrentCalls;
+            _maxConcurrentCalls = Options.MaxConcurrentCalls;
             MaxReceiveWaitTime = Options.MaxReceiveWaitTime;
-            MaxConcurrentSessions = maxConcurrentSessions;
-            MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
+            _maxConcurrentSessions = maxConcurrentSessions;
+            _maxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
             _sessionProcessor = sessionProcessor;
 
-            _maxConcurrentCalls = isSessionEntity ?
-                (_sessionIds.Length > 0 ?
-                    Math.Min(_sessionIds.Length, MaxConcurrentSessions) :
-                    MaxConcurrentSessions) * MaxConcurrentCallsPerSession :
-                MaxConcurrentCalls;
+            if (isSessionEntity)
+            {
+                _maxConcurrentCalls = _sessionIds.Length > 0
+                    ? Math.Min(_sessionIds.Length, _maxConcurrentSessions)
+                    : _maxConcurrentSessions * _maxConcurrentCallsPerSession;
+            }
 
-            _messageHandlerSemaphore = new SemaphoreSlim(
-                _maxConcurrentCalls,
-                _maxConcurrentCalls);
+            // we use int.MaxValue as the maxCount since the concurrency can be changed dynamically by the user
+            _messageHandlerSemaphore = new SemaphoreSlim(_maxConcurrentCalls, int.MaxValue);
+
             var maxAcceptSessions = Math.Min(_maxConcurrentCalls, 2 * Environment.ProcessorCount);
             MaxConcurrentAcceptSessionsSemaphore = new SemaphoreSlim(
                 maxAcceptSessions,
@@ -568,16 +585,10 @@ namespace Azure.Messaging.ServiceBus
 
             if (IsSessionProcessor)
             {
-                var numReceivers = _sessionIds.Length > 0 ? _sessionIds.Length : MaxConcurrentSessions;
+                var numReceivers = _sessionIds.Length > 0 ? _sessionIds.Length : _maxConcurrentSessions;
                 for (int i = 0; i < numReceivers; i++)
                 {
                     var sessionId = _sessionIds.Length > 0 ? _sessionIds[i] : null;
-                    // If the user has listed named sessions, and they
-                    // have MaxConcurrentSessions greater or equal to the number
-                    // of sessions, we can leave the sessions open at all times
-                    // instead of cycling through them as receive calls time out.
-                    bool keepOpenOnReceiveTimeout = _sessionIds.Length > 0 &&
-                        MaxConcurrentSessions >= _sessionIds.Length;
 
                     _receiverManagers.Add(
                         new SessionReceiverManager(
@@ -585,8 +596,8 @@ namespace Azure.Messaging.ServiceBus
                             sessionId,
                             MaxConcurrentAcceptSessionsSemaphore,
                             _scopeFactory,
-                            MaxConcurrentCallsPerSession,
-                            keepOpenOnReceiveTimeout));
+                            _maxConcurrentCallsPerSession,
+                            KeepOpenOnReceiveTimeout));
                 }
             }
             else
@@ -689,12 +700,13 @@ namespace Azure.Messaging.ServiceBus
         private async Task RunReceiveTaskAsync(
             CancellationToken cancellationToken)
         {
-            List<Task> tasks = new List<Task>(_maxConcurrentCalls + _receiverManagers.Count);
+            _tasks = new List<(Task, CancellationTokenSource, CancellationTokenSource)>();
             try
             {
                 while (!cancellationToken.IsCancellationRequested && !Connection.IsClosed)
                 {
-                    foreach (ReceiverManager receiverManager in _receiverManagers)
+                    // create a new list of receiver managers as the underlying list can change while running
+                    foreach (ReceiverManager receiverManager in _receiverManagers.ToList())
                     {
                         // Do a quick synchronous check before we resort to async/await with the state-machine overhead.
                         if (!_messageHandlerSemaphore.Wait(0, CancellationToken.None))
@@ -704,12 +716,21 @@ namespace Azure.Messaging.ServiceBus
                         // hold onto all the tasks that we are starting so that when cancellation is requested,
                         // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                         // other than TaskCanceledExceptions
-                        tasks.Add(ReceiveAndProcessMessagesAsync(receiverManager, cancellationToken));
-                    }
-
-                    if (tasks.Count > _maxConcurrentCalls)
-                    {
-                        tasks.RemoveAll(t => t.IsCompleted);
+                        var tcs = new CancellationTokenSource();
+                        var linkedTcs = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, tcs.Token);
+                        lock (_syncLock)
+                        {
+                            _tasks.Add(
+                                (
+                                    ReceiveAndProcessMessagesAsync(receiverManager, linkedTcs.Token),
+                                    tcs,
+                                    linkedTcs)
+                            );
+                            if (_tasks.Count > _maxConcurrentCalls)
+                            {
+                                _tasks.RemoveAll(t => t.Item1.IsCompleted);
+                            }
+                        }
                     }
                 }
 
@@ -751,7 +772,13 @@ namespace Azure.Messaging.ServiceBus
             }
             finally
             {
-                await Task.WhenAll(tasks).ConfigureAwait(false);
+                // await and clean up the _tasks collection
+                await Task.WhenAll(_tasks.Select(t => t.Item1)).ConfigureAwait(false);
+                foreach (var (_, tcs, linkedTcs) in _tasks)
+                {
+                    tcs.Dispose();
+                    linkedTcs.Dispose();
+                }
             }
         }
 
@@ -817,7 +844,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 await StopProcessingAsync(cancellationToken).ConfigureAwait(false);
             }
-            foreach (ReceiverManager receiverManager in _receiverManagers)
+            foreach (ReceiverManager receiverManager in _receiverManagers.Concat(_orphanedReceiverManagers))
             {
                 await receiverManager.CloseReceiverIfNeeded(
                     cancellationToken,
@@ -834,6 +861,105 @@ namespace Azure.Messaging.ServiceBus
         {
             await CloseAsync().ConfigureAwait(false);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Updates the concurrency for the processor. This method can be used to dynamically change the concurrency of a running processor.
+        /// </summary>
+        /// <param name="maxConcurrentCalls">The new max concurrent calls value. This will be reflected in the <see cref="ServiceBusProcessor.MaxConcurrentCalls"/>
+        /// property.</param>
+        public void UpdateConcurrency(int maxConcurrentCalls)
+        {
+            Argument.AssertAtLeast(maxConcurrentCalls, 1, nameof(maxConcurrentCalls));
+            lock (_syncLock)
+            {
+                ReconcileConcurrency(maxConcurrentCalls);
+
+                _maxConcurrentCalls = maxConcurrentCalls;
+            }
+        }
+
+        internal void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession)
+        {
+            Argument.AssertAtLeast(maxConcurrentSessions, 1, nameof(maxConcurrentSessions));
+            Argument.AssertAtLeast(maxConcurrentCallsPerSession, 1, nameof(maxConcurrentCallsPerSession));
+
+            lock (_syncLock)
+            {
+                var newConcurrency = _sessionIds.Length > 0
+                    ? Math.Min(_sessionIds.Length, maxConcurrentSessions)
+                    : maxConcurrentSessions * maxConcurrentCallsPerSession;
+
+                ReconcileConcurrency(newConcurrency, maxConcurrentSessions);
+
+                _maxConcurrentSessions = maxConcurrentSessions;
+                _maxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
+                _maxConcurrentCalls = newConcurrency;
+            }
+        }
+
+        private void ReconcileConcurrency(int newConcurrency, int newMaxSessions = default)
+        {
+            int diff = newConcurrency - _maxConcurrentCalls;
+            // increasing concurrency
+            if (diff > 0)
+            {
+                if (IsSessionProcessor)
+                {
+                    var diffSessions = newMaxSessions - _maxConcurrentSessions;
+                    if (diffSessions > 0 && _sessionIds.Length == 0)
+                    {
+                        for (int i = 0; i < diffSessions; i++)
+                        {
+                            _receiverManagers.Add(
+                                new SessionReceiverManager(
+                                    _sessionProcessor,
+                                    null,
+                                    MaxConcurrentAcceptSessionsSemaphore,
+                                    _scopeFactory,
+                                    _maxConcurrentCallsPerSession,
+                                    KeepOpenOnReceiveTimeout));
+                        }
+                    }
+                }
+                _messageHandlerSemaphore.Release(diff);
+            }
+            // decreasing concurrency
+            else if (diff < 0)
+            {
+                // limit the number of new tasks that can spawn to newly specified concurrency
+                for (int i = 0; i < Math.Abs(diff); i++)
+                {
+                    // use the async method to avoid blocking user callback thread
+                    _ = _messageHandlerSemaphore.WaitAsync();
+                }
+
+                int excessTasks = _tasks.Select(t => !t.Item1.IsCompleted).Count() - newConcurrency;
+                if (excessTasks > 0)
+                {
+                    // cancel excess tasks
+                    for (int i = 0; i < excessTasks; i++)
+                    {
+                        _tasks[i].Item2.Cancel();
+                    }
+                }
+
+                if (IsSessionProcessor)
+                {
+                    var diffSessions = _maxConcurrentSessions - newMaxSessions;
+                    if (diffSessions > 0 && _sessionIds.Length == 0)
+                    {
+                        for (int i = 0; i < diffSessions; i++)
+                        {
+                            // These should generally be closed as part of the normal bookkeeping in SessionReceiverManager,
+                            // but we will track them so that they can be explicitly closed when stopping, just like we do with
+                            // _receiverManagers.
+                            _orphanedReceiverManagers.Add(_receiverManagers[0]);
+                            _receiverManagers.RemoveAt(0);
+                        }
+                    }
+                }
+            }
         }
     }
 }

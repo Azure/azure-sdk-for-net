@@ -191,7 +191,8 @@ namespace Azure.Messaging.ServiceBus
                     if ((_receiveTimeout && !_keepOpenOnReceiveTimeout) ||
                         // if the session is cancelled we should still close the receiver
                         // as this means the session lock was lost or the user requested to close the session.
-                        _sessionCancellationSource.IsCancellationRequested)
+                        _sessionCancellationSource.IsCancellationRequested ||
+                        processorCancellationToken.IsCancellationRequested)
                     {
                         await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
                     }
