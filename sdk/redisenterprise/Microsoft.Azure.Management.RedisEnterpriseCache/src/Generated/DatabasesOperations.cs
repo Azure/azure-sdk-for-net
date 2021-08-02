@@ -752,7 +752,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         }
 
         /// <summary>
-        /// Imports a database file to target database.
+        /// Imports database files to target database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -763,8 +763,8 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <param name='databaseName'>
         /// The name of the database.
         /// </param>
-        /// <param name='sasUri'>
-        /// SAS URI for the target blob to import from
+        /// <param name='sasUris'>
+        /// SAS URIs for the target blobs to import from
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -772,10 +772,10 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ImportWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string sasUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ImportWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, IList<string> sasUris, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginImportWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, sasUri, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginImportWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, sasUris, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1646,7 +1646,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         }
 
         /// <summary>
-        /// Imports a database file to target database.
+        /// Imports database files to target database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -1657,8 +1657,8 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <param name='databaseName'>
         /// The name of the database.
         /// </param>
-        /// <param name='sasUri'>
-        /// SAS URI for the target blob to import from
+        /// <param name='sasUris'>
+        /// SAS URIs for the target blobs to import from
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1678,7 +1678,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginImportWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string sasUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginImportWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, IList<string> sasUris, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1700,14 +1700,14 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (sasUri == null)
+            if (sasUris == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "sasUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "sasUris");
             }
             ImportClusterParameters parameters = new ImportClusterParameters();
-            if (sasUri != null)
+            if (sasUris != null)
             {
-                parameters.SasUri = sasUri;
+                parameters.SasUris = sasUris;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
