@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "cede58c6-e9b9-61f5-7ed7-8336da514e25",
         "x-ms-date": "Mon, 26 Apr 2021 22:15:21 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-10-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -24,7 +24,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "cede58c6-e9b9-61f5-7ed7-8336da514e25",
         "x-ms-request-id": "2b267e19-101e-0055-25e9-3ada3a000000",
-        "x-ms-version": "2020-10-02"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     },
@@ -42,7 +42,7 @@
         "x-ms-copy-source": "http://kasobolcanadacentral.blob.core.windows.net/test-container-091bb08e-d0ea-49ad-4da3-c16bda8ea814/test-blob-536a95aa-2854-a368-3cb8-b5731ec4658b",
         "x-ms-date": "Mon, 26 Apr 2021 22:15:22 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-10-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -54,7 +54,7 @@
         "x-ms-client-request-id": "b96df871-ccad-d075-3ab5-4b650a523b00",
         "x-ms-error-code": "CannotVerifyCopySource",
         "x-ms-request-id": "2b267ec1-101e-0055-36e9-3ada3a000000",
-        "x-ms-version": "2020-10-02"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>CannotVerifyCopySource</Code><Message>The specified blob does not exist.\n",
@@ -73,7 +73,7 @@
         "x-ms-client-request-id": "6ea363ab-cfcf-5b54-176d-13a13ae6949d",
         "x-ms-date": "Mon, 26 Apr 2021 22:15:22 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-10-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -83,7 +83,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "6ea363ab-cfcf-5b54-176d-13a13ae6949d",
         "x-ms-request-id": "2b267f24-101e-0055-0de9-3ada3a000000",
-        "x-ms-version": "2020-10-02"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": []
     }
