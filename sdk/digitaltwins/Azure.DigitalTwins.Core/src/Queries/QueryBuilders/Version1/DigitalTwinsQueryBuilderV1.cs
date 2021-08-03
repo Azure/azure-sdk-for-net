@@ -266,6 +266,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>String representation of the current state of the query builder.</returns>
         public string GetQueryText()
         {
+            if (string.IsNullOrEmpty(_queryText))
+            {
+                Build();
+            }
+
             return _queryText;
         }
     }
