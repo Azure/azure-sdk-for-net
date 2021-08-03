@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal ResourceGroupExportTemplateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<ResourceGroupExportResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupsExportTemplateOperation");
+            _operation = new OperationOrResponseInternals<ResourceGroupExportResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupExportTemplateOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

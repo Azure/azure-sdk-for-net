@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal ResourceGroupDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupsDeleteOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupDeleteOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

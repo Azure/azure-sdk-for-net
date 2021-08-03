@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal PredefinedTagDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PreDefinedTagDeleteOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PredefinedTagDeleteOperation");
         }
 
         /// <inheritdoc />

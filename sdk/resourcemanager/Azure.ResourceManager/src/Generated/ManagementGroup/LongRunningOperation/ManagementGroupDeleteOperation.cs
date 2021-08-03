@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Management.Models
 
         internal ManagementGroupDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupsDeleteOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupDeleteOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal ResourceCreateOrUpdateByIdOperation(ResourceOperations parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesCreateOrUpdateByIdOperation");
+            _operation = new OperationOrResponseInternals<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceCreateOrUpdateByIdOperation");
             _parentOperation = parentOperation;
         }
         /// <inheritdoc />

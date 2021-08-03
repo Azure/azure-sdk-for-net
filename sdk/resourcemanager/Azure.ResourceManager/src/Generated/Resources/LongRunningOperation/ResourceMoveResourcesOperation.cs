@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal ResourceMoveResourcesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesMoveResourcesOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceMoveResourcesOperation");
         }
 
         /// <inheritdoc />

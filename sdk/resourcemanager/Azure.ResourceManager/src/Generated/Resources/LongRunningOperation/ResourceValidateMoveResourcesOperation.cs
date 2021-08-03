@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal ResourceValidateMoveResourcesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesValidateMoveResourcesOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceValidateMoveResourcesOperation");
         }
         /// <inheritdoc />
         public override string Id => "";
