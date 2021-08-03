@@ -431,8 +431,7 @@ namespace Azure.AI.Translation.Document.Tests
             //changing the word First --> glossaryFirst and test --> glossaryTest
             string glossaryContent = "First, glossaryFirst\ntest, glossaryTest\n";
 
-            var glossaryContainerSasUri = await CreateGlossaryContainerAsync(new List<TestDocument> {new TestDocument (glossaryName, glossaryContent)});
-            Uri glossarySasUri = new Uri(String.Format("{0}{1}{2}{3}/{4}{5}", glossaryContainerSasUri.Scheme, Uri.SchemeDelimiter, glossaryContainerSasUri.Authority, glossaryContainerSasUri.AbsolutePath,glossaryName,glossaryContainerSasUri.Query));
+            var glossarySasUri = await CreateGlossaryAsync(new TestDocument (glossaryName, glossaryContent));
 
             //Perform Translation Process
             DocumentTranslationClient client = GetClient();

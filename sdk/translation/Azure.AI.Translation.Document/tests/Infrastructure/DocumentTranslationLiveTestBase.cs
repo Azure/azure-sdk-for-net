@@ -109,20 +109,21 @@ namespace Azure.AI.Translation.Document.Tests
             return Tuple.Create(containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write, expiresOn),containerClient);
         }
 
-        public async Task<Uri> CreateGlossaryContainerAsync(List<TestDocument> documents = default)
+        public async Task<Uri> CreateGlossaryAsync(TestDocument document = default)
         {
             Recording.DisableIdReuse();
             var glossaryContainerName = "glossary" + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(glossaryContainerName);
             await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
-            if (documents != default)
+            if (document != default)
             {
-                await UploadDocumentsAsync(containerClient, documents);
+                await UploadDocumentsAsync(containerClient, new List<TestDocument> { document });
             }
 
             var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
-            return containerClient.GenerateSasUri(BlobContainerSasPermissions.Read  | BlobContainerSasPermissions.Write, expiresOn);
+            var glossaryContainerSasUri = containerClient.GenerateSasUri(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write, expiresOn);
+            return new Uri(String.Format("{0}{1}{2}{3}/{4}{5}", glossaryContainerSasUri.Scheme, Uri.SchemeDelimiter, glossaryContainerSasUri.Authority, glossaryContainerSasUri.AbsolutePath, document.Name, glossaryContainerSasUri.Query));
         }
         private async Task UploadDocumentsAsync(BlobContainerClient containerClient, List<TestDocument> documents)
         {
