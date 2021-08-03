@@ -333,7 +333,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         /// <summary>
         /// Gets the string representation of the built query.
         /// </summary>
-        /// <returns>String represenation of query.</returns>
+        /// <returns>String representation of query.</returns>
         public string GetQueryText()
         {
             if (string.IsNullOrEmpty(_queryText))
@@ -347,7 +347,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         /// <summary>
         /// Gets the string representation of the built query.
         /// </summary>
-        /// <returns>String represenation of query.</returns>
+        /// <returns>String representation of query.</returns>
         public override string ToString() => GetQueryText();
 
         /// <summary>
@@ -357,23 +357,38 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         public DigitalTwinsQueryBuilder<T> Build()
         {
             QueryAssembler query = new QueryAssembler();
-            SelectClauseAssembler selectClause = _count
-                ? query.SelectCount()
-                : _top != null && _propertyNames != null
-                    ? query.SelectTop(_top.Value, _propertyNames.ToArray())
-                    : _top != null
-                        ? query.SelectTopAll(_top.Value)
-                        : _customSelect != null
-                            ? query.SelectCustom(_customSelect)
-                            : _propertyNames != null
-                                ? query.Select(_propertyNames.ToArray())
-                                : query.SelectAll();
+            SelectClauseAssembler selectClause;
+
+            if (_count)
+            {
+                selectClause = query.SelectCount();
+            }
+            else if (_top != null && _propertyNames != null)
+            {
+                selectClause = query.SelectTop(_top.Value, _propertyNames.ToArray());
+            }
+            else if (_top != null)
+            {
+                selectClause = query.SelectTopAll(_top.Value);
+            }
+            else if (_customSelect != null)
+            {
+                selectClause = query.SelectCustom(_customSelect);
+            }
+            else if (_propertyNames != null)
+            {
+                selectClause = query.Select(_propertyNames.ToArray());
+            }
+            else
+            {
+                selectClause = query.SelectAll();
+            }
 
             WhereClauseAssembler whereClause = selectClause.FromCustom(_collection);
 
             if (_clauses?.Count > 0)
             {
-                var custom = _clauses
+                QueryAssemblerLogicalOperator custom = _clauses
                      .Skip(1)
                      .Aggregate(
                          whereClause
