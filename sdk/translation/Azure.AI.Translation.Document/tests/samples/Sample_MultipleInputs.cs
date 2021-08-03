@@ -16,8 +16,13 @@ namespace Azure.AI.Translation.Document.Samples
         [Test]
         public void MultipleInputs()
         {
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+#endif
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -35,10 +40,8 @@ namespace Azure.AI.Translation.Document.Samples
             Uri frenchTargetSasUri = DocumentTranslationSampleHelper.CreateTargetContainer();
             Uri arabicTargetSasUri = DocumentTranslationSampleHelper.CreateTargetContainer();
             Uri spanishTargetSasUri = DocumentTranslationSampleHelper.CreateTargetContainer();
-            var glossaryName = "glossary.tsv";
-            var glossaries = new List<TestDocument> { new TestDocument(glossaryName, "test\tglossarytest")};
-            Uri frenchGlossaryContainerSasUri = DocumentTranslationSampleHelper.CreateGlossaryContainer(glossaries);
-            Uri frenchGlossarySasUri = new Uri(String.Format("{0}{1}{2}{3}/{4}{5}", frenchGlossaryContainerSasUri.Scheme, Uri.SchemeDelimiter, frenchGlossaryContainerSasUri.Authority, frenchGlossaryContainerSasUri.AbsolutePath, glossaryName, frenchGlossaryContainerSasUri.Query));
+            var glossary = new TestDocument("glossary.tsv", "test\tglossarytest");
+            Uri frenchGlossarySasUri = DocumentTranslationSampleHelper.CreateGlossary(glossary);
 #endif
             var glossaryFormat = "TSV";
 

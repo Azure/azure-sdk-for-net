@@ -44,8 +44,13 @@ namespace Azure.AI.Translation.Document.Samples
                 8) AZURE_DOCUMENT_PATH - (optional) the path and file extension of your document in this directory
                     e.g. "path/mydocument.txt"
             **/
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+#endif
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
