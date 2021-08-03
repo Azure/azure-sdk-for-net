@@ -11,6 +11,7 @@ using Azure.Core.TestFramework;
 using FluentAssertions;
 using NUnit.Framework;
 using Azure.DigitalTwins.Core.QueryBuilder;
+using Azure.DigitalTwins.Core.QueryBuilder.Fluent;
 
 namespace Azure.DigitalTwins.Core.Tests
 {
@@ -119,7 +120,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 await client.CreateOrReplaceDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
 
                 // Build query using AdtQueryBuilder helper object
-                DigitalTwinsQueryBuilderMethodDriven builtQuery = new DigitalTwinsQueryBuilderMethodDriven()
+                DigitalTwinsQueryBuilder builtQuery = new DigitalTwinsQueryBuilder()
                     .SelectAll()
                     .From(DigitalTwinsCollection.DigitalTwins)
                     .Build();

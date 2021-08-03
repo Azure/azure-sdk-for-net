@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core.QueryBuilder;
+using Azure.DigitalTwins.Core.QueryBuilder.Fluent;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 
 namespace Azure.DigitalTwins.Core.Samples
@@ -293,7 +294,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 // This code snippet demonstrates querying digital twin results using an AdtQueryBuilder, an object that allows for 
                 // fluent-style query construction that makes it easier to write queries.
                 AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilder = client.QueryAsync<BasicDigitalTwin>(
-                    new DigitalTwinsQueryBuilderMethodDriven()
+                    new DigitalTwinsQueryBuilder()
                         .SelectAll()
                         .From(DigitalTwinsCollection.DigitalTwins)
                         .Build());
