@@ -36,7 +36,7 @@ namespace Azure.AI.Translation.Document
             if (innerError != null)
             {
                 // Assigns the inner error, which should be only one level down.
-                ErrorCode = innerError.Code;
+                ErrorCode = new DocumentTranslationErrorCode(innerError.Code);
                 Message = innerError.Message;
                 Target = innerError.Target;
             }

@@ -2,10 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
+    /// <summary>
+    /// asdasdasd.
+    /// </summary>
     [CodeGenModel("SourceInput")]
     public partial class TranslationSource
     {
@@ -37,7 +41,7 @@ namespace Azure.AI.Translation.Document
             set
             {
                 if (Filter == null)
-                    Filter = new DocumentFilterInternal();
+                    Filter = new DocumentFilter();
                 Filter.Prefix = value;
             }
         }
@@ -52,7 +56,7 @@ namespace Azure.AI.Translation.Document
             set
             {
                 if (Filter == null)
-                    Filter = new DocumentFilterInternal();
+                    Filter = new DocumentFilter();
                 Filter.Suffix = value;
             }
         }
@@ -62,6 +66,6 @@ namespace Azure.AI.Translation.Document
         /// using prefix and suffix.
         /// </summary>
         [CodeGenMember("Filter")]
-        internal DocumentFilterInternal Filter { get; set; }
+        internal DocumentFilter Filter { get; set; }
     }
 }

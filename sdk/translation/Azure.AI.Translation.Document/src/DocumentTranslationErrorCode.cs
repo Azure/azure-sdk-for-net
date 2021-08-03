@@ -5,6 +5,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
+    /// <summary>
+    /// asd.
+    /// </summary>
     [CodeGenModel("TranslationErrorCode")]
     public readonly partial struct DocumentTranslationErrorCode
     {
