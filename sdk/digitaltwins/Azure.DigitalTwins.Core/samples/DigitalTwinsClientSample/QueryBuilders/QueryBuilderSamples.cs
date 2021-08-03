@@ -236,11 +236,11 @@ namespace Azure.DigitalTwins.Core.Samples
         {
             #region Snippet:DigitalTwinsQueryBuilderNonGeneric
             // Note that if no Select() method, SELECT("*") is the default
-            new DigitalTwinsQueryBuilderV2().Build();
+            new DigitalTwinsQueryBuilderLinqDriven().Build();
             new DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin>().Build();
 
             // SELECT * FROM DigitalTwins
-            new DigitalTwinsQueryBuilderV2().Build().GetQueryText();
+            new DigitalTwinsQueryBuilderLinqDriven().Build().GetQueryText();
             new DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin>().Build().GetQueryText();
             #endregion
 
@@ -259,10 +259,10 @@ namespace Azure.DigitalTwins.Core.Samples
             #endregion
 
             // SELECT * FROM DigitalTwins
-            DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin> simplestQueryLinq = new DigitalTwinsQueryBuilderV2().Build();
+            DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin> simplestQueryLinq = new DigitalTwinsQueryBuilderLinqDriven().Build();
 
             // SELECT * FROM Relationsips
-            DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin> simplestQueryRelationshipsLINQ = new DigitalTwinsQueryBuilderV2(DigitalTwinsCollection.Relationships)
+            DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin> simplestQueryRelationshipsLINQ = new DigitalTwinsQueryBuilderLinqDriven(DigitalTwinsCollection.Relationships)
                 .Build();
 
             // Use LINQ expressions to select defined properties in type T of DigitalTwinsQueryBuilder
@@ -335,7 +335,7 @@ namespace Azure.DigitalTwins.Core.Samples
             #endregion
 
             // SELECT Room, Temperature From DIGTIALTWINS
-            DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin> queryWithMultiplePropertiesLINQ = new DigitalTwinsQueryBuilderV2()
+            DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin> queryWithMultiplePropertiesLINQ = new DigitalTwinsQueryBuilderLinqDriven()
                 .Select("Room", "Temperature")
                 .Build();
 
@@ -345,7 +345,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Build();
 
             // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL('dtmi:example:room;1', exact)
-            DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin> queryWithIsOfModelExactLINQ = new DigitalTwinsQueryBuilderV2()
+            DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin> queryWithIsOfModelExactLINQ = new DigitalTwinsQueryBuilderLinqDriven()
                 .Where(_ => DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1", true))
                 .Build();
 
@@ -380,19 +380,19 @@ namespace Azure.DigitalTwins.Core.Samples
 
             #region Snippet:DigitalTwinsQueryBuilderOverrideLinqExpressions
             // SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
-            new DigitalTwinsQueryBuilderV2()
+            new DigitalTwinsQueryBuilderLinqDriven()
             .SelectCustom("TOP(3) Room, Temperature")
             .Build();
             #endregion
 
             // SELECT Temperature AS Temp, Humidity AS HUM FROM DigitalTwins
-            DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin> selectAsSampleLINQ = new DigitalTwinsQueryBuilderV2(DigitalTwinsCollection.DigitalTwins, "T")
+            DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin> selectAsSampleLINQ = new DigitalTwinsQueryBuilderLinqDriven(DigitalTwinsCollection.DigitalTwins, "T")
                 .SelectAs("Temperature", "Temp")
                 .SelectAs("Humidity", "Hum")
                 .Build();
 
             // SELECT Temperature, Humidity AS Hum FROM DigitalTwins
-            DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin> selectAndSelectAsLINQ = new DigitalTwinsQueryBuilderV2()
+            DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin> selectAndSelectAsLINQ = new DigitalTwinsQueryBuilderLinqDriven()
                 .Select("Temperature")
                 .SelectAs("Humidity", "Hum")
                 .From(DigitalTwinsCollection.DigitalTwins, "T")

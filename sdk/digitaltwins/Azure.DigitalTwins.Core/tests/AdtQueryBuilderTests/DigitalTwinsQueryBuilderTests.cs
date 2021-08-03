@@ -435,13 +435,13 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         [Test]
         public void Select_NonGeneric()
         {
-            new DigitalTwinsQueryBuilderV2().ToString().Should().Be("SELECT * FROM DigitalTwins");
+            new DigitalTwinsQueryBuilderLinqDriven().ToString().Should().Be("SELECT * FROM DigitalTwins");
         }
 
         [Test]
         public void Select_SingeProperty_NonGeneric()
         {
-            new DigitalTwinsQueryBuilderV2()
+            new DigitalTwinsQueryBuilderLinqDriven()
                 .Select("Room")
                 .ToString()
                 .Should()
@@ -451,20 +451,20 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         [Test]
         public void Where_NonGeneric()
         {
-            new DigitalTwinsQueryBuilderV2()
+            new DigitalTwinsQueryBuilderLinqDriven()
                 .Where(_ => DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1", true))
                 .ToString()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE IS_OF_MODEL('dtmi:example:room;1', exact)");
 
-            new DigitalTwinsQueryBuilderV2()
+            new DigitalTwinsQueryBuilderLinqDriven()
                 .Where($"Temperature >= {50}")
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE Temperature >= 50");
 
             string[] cities = new string[] { "Paris", "Tokyo", "Madrid", "Prague" };
-            new DigitalTwinsQueryBuilderV2()
+            new DigitalTwinsQueryBuilderLinqDriven()
                 .Where($"Location NIN {cities}")
                 .GetQueryText()
                 .Should()

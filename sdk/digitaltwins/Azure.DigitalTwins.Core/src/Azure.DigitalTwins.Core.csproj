@@ -54,8 +54,5 @@
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Queries\QueryBuilders\Version2\" />
-  </ItemGroup>
 
 </Project>

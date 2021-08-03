@@ -15,25 +15,25 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Azure DigitalTwins Query builder that facilitates writing queries against ADT instances. Redirects to generic version of this class using BasicDigitalTwin as type T.
     /// </summary>
-    public class DigitalTwinsQueryBuilderV2 : DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin>
+    public class DigitalTwinsQueryBuilderLinqDriven : DigitalTwinsQueryBuilderLinqDriven<BasicDigitalTwin>
     {
         /// <summary>
         /// Create a DigitalTwins query and set the queried collection to DigitalTwins by default.
         /// </summary>
-        public DigitalTwinsQueryBuilderV2() : base(DigitalTwinsCollection.DigitalTwins) { }
+        public DigitalTwinsQueryBuilderLinqDriven() : base(DigitalTwinsCollection.DigitalTwins) { }
 
         /// <summary>
         /// Create a DigitalTwins query and set the queried collection to a custom string.
         /// </summary>
         /// <param name="customColection">Collection to query from.</param>
-        public DigitalTwinsQueryBuilderV2(string customColection) : base(customColection) { }
+        public DigitalTwinsQueryBuilderLinqDriven(string customColection) : base(customColection) { }
 
         /// <summary>
         /// Create a DigitalTwins query and set the queried collection to DigitalTwins or Relationships.
         /// </summary>
         /// <param name="collection">Collection to query from.</param>
         /// <param name="alias">Optional collection alias.</param>
-        public DigitalTwinsQueryBuilderV2(DigitalTwinsCollection collection, string alias = null) : base(collection, alias) { }
+        public DigitalTwinsQueryBuilderLinqDriven(DigitalTwinsCollection collection, string alias = null) : base(collection, alias) { }
     }
 
     /// <summary>
