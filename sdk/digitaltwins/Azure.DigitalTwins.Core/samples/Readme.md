@@ -236,7 +236,7 @@ Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" 
 
 ### Query digital twins
 
-Query the Azure Digital Twins instance for digital twins using the [Azure Digital Twins Query Store lanaguage](https://review.docs.microsoft.com/azure/digital-twins-v2/concepts-query-language?branch=pr-en-us-114648). Query calls support paging. Here's an example of how to query for digital twins and how to iterate over the results.
+Query the Azure Digital Twins instance for digital twins using the [Azure Digital Twins Query Store language](https://review.docs.microsoft.com/azure/digital-twins-v2/concepts-query-language?branch=pr-en-us-114648). Query calls support paging. Here's an example of how to query for digital twins and how to iterate over the results.
 
 ```C# Snippet:DigitalTwinsSampleQueryTwins
 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
@@ -581,7 +581,7 @@ new DigitalTwinsQueryBuilder<ConferenceRoom>(DigitalTwinsCollection.Relationship
     .Build();
 ```
 
-In order to use [DigitalTwins functions](https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions), the `DigitalTwinsFunctions` class is called within a LINQ expression.
+In order to use [DigitalTwins functions](https://docs.microsoft.com/azure/digital-twins/reference-query-functions), the `DigitalTwinsFunctions` class is called within a LINQ expression.
 
 ```C# Snippet:DigitalTwinsQueryBuilderLinqExpressionsFunctions
 // SELECT * FROM DigitalTwins WHERE IS_DEFINED(Temperature)
