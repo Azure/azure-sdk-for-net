@@ -38,7 +38,7 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary>
-        /// Gets the tables returned as the result of the query.
+        /// Gets the multi-table result of the query.
         /// </summary>
         [CodeGenMember("Tables")]
         public IReadOnlyList<LogsQueryResultTable> AllTables { get; }
