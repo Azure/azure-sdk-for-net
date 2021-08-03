@@ -3,7 +3,7 @@
 ## 1.3.0-beta.1 (Unreleased)
 ### New Features
 
-- Added `DigitalTwinsQueryBuilderMethodDriven` and `DigitalTwinsQueryBuilderLinqDriven` to allow for the creation of ADT queries using fluent-style syntax to abstract the ADT query language from users. As of August 2021, these two query builders are trial features that will be shipped in preview before being potentially released in the future pending user feedback.
+- Added `DigitalTwinsQueryBuilder` under the  `Azure.DigitalTwins.Core.QueryBuilder.Fluent` and the `Azure.DigitalTwins.Core.QueryBuilder.Linq` namespaces to allow for the creation of ADT queries using fluent-style syntax to abstract the ADT query language from users. As of August 2021, these two query builders are trial features that will be shipped in preview before being potentially released in the future pending user feedback.
 
 ## 1.2.2 (2021-04-12)
 
