@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Captures the specified resource group as a template. </summary>
-    public partial class ResourceGroupsExportTemplateOperation : Operation<ResourceGroupExportResult>, IOperationSource<ResourceGroupExportResult>
+    public partial class ResourceGroupExportTemplateOperation : Operation<ResourceGroupExportResult>, IOperationSource<ResourceGroupExportResult>
     {
         private readonly OperationOrResponseInternals<ResourceGroupExportResult> _operation;
 
-        /// <summary> Initializes a new instance of ResourceGroupsExportTemplateOperation for mocking. </summary>
-        protected ResourceGroupsExportTemplateOperation()
+        /// <summary> Initializes a new instance of ResourceGroupExportTemplateOperation for mocking. </summary>
+        protected ResourceGroupExportTemplateOperation()
         {
         }
 
-        internal ResourceGroupsExportTemplateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ResourceGroupExportTemplateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<ResourceGroupExportResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupsExportTemplateOperation");
+            _operation = new OperationOrResponseInternals<ResourceGroupExportResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupExportTemplateOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

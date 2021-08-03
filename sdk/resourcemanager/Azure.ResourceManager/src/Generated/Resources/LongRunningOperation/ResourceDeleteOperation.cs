@@ -13,19 +13,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Deletes a resource by ID. </summary>
-    public partial class ResourcesDeleteByIdOperation : Operation
+    /// <summary> Deletes a resource. </summary>
+    public partial class ResourceDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ResourcesDeleteByIdOperation for mocking. </summary>
-        protected ResourcesDeleteByIdOperation()
+        /// <summary> Initializes a new instance of ResourceDeleteOperation for mocking. </summary>
+        protected ResourceDeleteOperation()
         {
         }
 
-        internal ResourcesDeleteByIdOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ResourceDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals( clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesDeleteByIdOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceDeleteOperation");
         }
         /// <inheritdoc />
         public override string Id => "";
