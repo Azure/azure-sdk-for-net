@@ -34,6 +34,7 @@ namespace Azure.Messaging.ServiceBus
         private CancellationTokenSource _sessionCancellationSource;
         private volatile bool _receiveTimeout;
 
+        internal CancellationTokenSource SessionCancellationTokenSource => _sessionCancellationSource;
         protected override ServiceBusReceiver Receiver => _receiver;
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
@@ -188,8 +189,7 @@ namespace Azure.Messaging.ServiceBus
                     if ((_receiveTimeout && !_keepOpenOnReceiveTimeout) ||
                         // if the session is cancelled we should still close the receiver
                         // as this means the session lock was lost or the user requested to close the session.
-                        _sessionCancellationSource.IsCancellationRequested ||
-                        processorCancellationToken.IsCancellationRequested)
+                        _sessionCancellationSource.IsCancellationRequested)
                     {
                         await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
                     }
