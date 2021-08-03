@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class PredefinedTagContainerTests : ResourceManagerTestBase
     {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var container = Client.DefaultSubscription.GetPredefinedTags();
             var operation = Client.DefaultSubscription.GetPreDefinedTagOperations();
-            var listResult = (await container.ListAsync().ToEnumerableAsync()).Where(x => x.Data.TagName.StartsWith("tagName"));
+            var listResult = (await container.GetAllAsync().ToEnumerableAsync()).Where(x => x.Data.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
             {
                 await item.DeleteAsync(item.Data.TagName).ConfigureAwait(false);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task List()
         {
             var container = Client.DefaultSubscription.GetPredefinedTags();
-            var result = await container.ListAsync().ToEnumerableAsync();
+            var result = await container.GetAllAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(result.Count, 1, "List result less than 1");
             var expectTag = result.Where(x => x.Data.TagName.StartsWith("tagName")).FirstOrDefault();
             Assert.NotNull(expectTag);

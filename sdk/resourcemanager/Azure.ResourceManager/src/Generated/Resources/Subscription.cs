@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
         /// <param name="subscriptionData"> The data model representing the generic azure resource. </param>
-        internal Subscription(OperationsBase operations, SubscriptionData subscriptionData)
+        internal Subscription(ResourceOperations operations, SubscriptionData subscriptionData)
             : base(operations, subscriptionData.Id)
         {
             Data = subscriptionData;

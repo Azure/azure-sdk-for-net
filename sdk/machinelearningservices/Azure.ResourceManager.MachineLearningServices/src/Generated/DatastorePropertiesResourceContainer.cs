@@ -21,7 +21,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of DatastorePropertiesResource and their operations over a Workspace. </summary>
-    public partial class DatastorePropertiesResourceContainer : ResourceContainerBase<DatastorePropertiesResource, DatastorePropertiesResourceData>
+    public partial class DatastorePropertiesResourceContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="DatastorePropertiesResourceContainer"/> class for mocking. </summary>
         protected DatastorePropertiesResourceContainer()
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Initializes a new instance of DatastorePropertiesResourceContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DatastorePropertiesResourceContainer(OperationsBase parent) : base(parent)
+        internal DatastorePropertiesResourceContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         // Container level operations.
 
         /// <summary> Create or update datastore. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="skipValidation"> Flag to skip validation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual Response<DatastorePropertiesResource> CreateOrUpdate(string workspaceName, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
+        public virtual Response<DatastorePropertiesResource> CreateOrUpdate(string name, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(name));
             }
             if (properties == null)
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var operation = StartCreateOrUpdate(workspaceName, properties, skipValidation, cancellationToken);
+                var operation = StartCreateOrUpdate(name, properties, skipValidation, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Create or update datastore. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="skipValidation"> Flag to skip validation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<Response<DatastorePropertiesResource>> CreateOrUpdateAsync(string workspaceName, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
+        public async virtual Task<Response<DatastorePropertiesResource>> CreateOrUpdateAsync(string name, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(name));
             }
             if (properties == null)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var operation = await StartCreateOrUpdateAsync(workspaceName, properties, skipValidation, cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(name, properties, skipValidation, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -108,16 +108,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Create or update datastore. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="skipValidation"> Flag to skip validation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual DatastoresCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
+        public virtual DatastoresCreateOrUpdateOperation StartCreateOrUpdate(string name, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(name));
             }
             if (properties == null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, workspaceName, properties, skipValidation, cancellationToken);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, name, properties, skipValidation, cancellationToken);
                 return new DatastoresCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
@@ -139,16 +139,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Create or update datastore. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="skipValidation"> Flag to skip validation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<DatastoresCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
+        public async virtual Task<DatastoresCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(name));
             }
             if (properties == null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, workspaceName, properties, skipValidation, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, properties, skipValidation, cancellationToken).ConfigureAwait(false);
                 return new DatastoresCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
@@ -170,20 +170,22 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<DatastorePropertiesResource> Get(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<DatastorePropertiesResource> Get(string name, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.Get");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (name == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(name));
                 }
 
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatastorePropertiesResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -194,20 +196,22 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<DatastorePropertiesResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DatastorePropertiesResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.Get");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (name == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(name));
                 }
 
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DatastorePropertiesResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,24 +222,23 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual DatastorePropertiesResource TryGet(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<DatastorePropertiesResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (name == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(name));
                 }
 
-                return Get(workspaceName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<DatastorePropertiesResource>(null, response.GetRawResponse())
+                    : Response.FromValue(new DatastorePropertiesResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,24 +248,23 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<DatastorePropertiesResource> TryGetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DatastorePropertiesResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (name == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(name));
                 }
 
-                return await GetAsync(workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<DatastorePropertiesResource>(null, response.GetRawResponse())
+                    : Response.FromValue(new DatastorePropertiesResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -272,20 +274,21 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string name, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (name == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(name));
                 }
 
-                return TryGet(workspaceName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(name, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -295,20 +298,21 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (name == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(name));
                 }
 
-                return await TryGetAsync(workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

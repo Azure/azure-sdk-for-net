@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        internal EnvironmentContainersCreateOrUpdateOperation(OperationsBase operationsBase, Response<EnvironmentContainerResourceData> response)
+        internal EnvironmentContainersCreateOrUpdateOperation(ResourceOperations operationsBase, Response<EnvironmentContainerResourceData> response)
         {
             _operation = new OperationOrResponseInternals<EnvironmentContainerResource>(Response.FromValue(new EnvironmentContainerResource(operationsBase, response.Value), response.GetRawResponse()));
         }

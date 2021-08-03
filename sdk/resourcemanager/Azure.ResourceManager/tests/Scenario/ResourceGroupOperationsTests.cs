@@ -9,7 +9,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class ResourceGroupOperationsTests : ResourceManagerTestBase
     {
@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.Core.Tests
 
             rg1.Id.Name = null;
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.GetAsync());
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetResourceGroupOperations(rg1.Data.Id + "x").GetAsync());
+            Assert.AreEqual(404, ex.Status);
         }
 
         [TestCase]
@@ -193,7 +196,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task ListAvailableLocations()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            var locations = await rg.ListAvailableLocationsAsync();
+            var locations = await rg.GetAvailableLocationsAsync();
             int count = 0;
             foreach (var location in locations)
             {

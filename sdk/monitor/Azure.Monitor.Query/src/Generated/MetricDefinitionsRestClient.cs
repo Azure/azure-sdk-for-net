@@ -28,9 +28,7 @@ namespace Azure.Monitor.Query
         /// <param name="endpoint"> server parameter. </param>
         public MetricDefinitionsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            endpoint ??= new Uri("https://management.azure.com");
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

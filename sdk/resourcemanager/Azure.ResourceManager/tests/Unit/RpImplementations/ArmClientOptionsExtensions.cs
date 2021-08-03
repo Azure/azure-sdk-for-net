@@ -1,8 +1,8 @@
-﻿namespace Azure.ResourceManager.Core.Tests
+﻿namespace Azure.ResourceManager.Tests
 {
     public static class AzureResourceManagerClientOptionsExtensions
     {
-        public static FakeRpApiVersions FakeRestApiVersions(this ArmClientOptions azureResourceManagerClientOptions)
+        internal static FakeRpApiVersions FakeRestApiVersions(this ArmClientOptions azureResourceManagerClientOptions)
         {
             return azureResourceManagerClientOptions.GetOverrideObject<FakeRpApiVersions>(() => new FakeRpApiVersions()) as FakeRpApiVersions;
         }

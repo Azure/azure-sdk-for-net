@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        internal BatchEndpointsCreateOrUpdateOperation(OperationsBase operationsBase, Response<BatchEndpointTrackedResourceData> response)
+        internal BatchEndpointsCreateOrUpdateOperation(ResourceOperations operationsBase, Response<BatchEndpointTrackedResourceData> response)
         {
             _operation = new OperationOrResponseInternals<BatchEndpointTrackedResource>(Response.FromValue(new BatchEndpointTrackedResource(operationsBase, response.Value), response.GetRawResponse()));
         }

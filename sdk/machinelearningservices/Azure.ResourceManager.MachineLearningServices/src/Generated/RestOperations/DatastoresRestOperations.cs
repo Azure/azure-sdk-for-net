@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string name, string workspaceName)
+        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string workspaceName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -190,26 +190,26 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete datastore. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Datastore name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string name, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreateDeleteRequest(resourceGroupName, name, workspaceName);
+            using var message = CreateDeleteRequest(resourceGroupName, workspaceName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -223,26 +223,26 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete datastore. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Datastore name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string name, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
+        public Response Delete(string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreateDeleteRequest(resourceGroupName, name, workspaceName);
+            using var message = CreateDeleteRequest(resourceGroupName, workspaceName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string name, string workspaceName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string workspaceName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -277,26 +277,26 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Get datastore. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Datastore name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<DatastorePropertiesResourceData>> GetAsync(string resourceGroupName, string name, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
+        public async Task<Response<DatastorePropertiesResourceData>> GetAsync(string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreateGetRequest(resourceGroupName, name, workspaceName);
+            using var message = CreateGetRequest(resourceGroupName, workspaceName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -307,6 +307,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                         value = DatastorePropertiesResourceData.DeserializeDatastorePropertiesResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((DatastorePropertiesResourceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -314,26 +316,26 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Get datastore. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Datastore name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response<DatastorePropertiesResourceData> Get(string resourceGroupName, string name, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
+        public Response<DatastorePropertiesResourceData> Get(string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreateGetRequest(resourceGroupName, name, workspaceName);
+            using var message = CreateGetRequest(resourceGroupName, workspaceName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -344,12 +346,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                         value = DatastorePropertiesResourceData.DeserializeDatastorePropertiesResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((DatastorePropertiesResourceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string name, string workspaceName, DatastoreProperties properties, bool? skipValidation)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string workspaceName, string name, DatastoreProperties properties, bool? skipValidation)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -381,32 +385,32 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Create or update datastore. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Datastore name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="skipValidation"> Flag to skip validation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workspaceName"/>, or <paramref name="properties"/> is null. </exception>
-        public async Task<Response<DatastorePropertiesResourceData>> CreateOrUpdateAsync(string resourceGroupName, string name, string workspaceName, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, or <paramref name="properties"/> is null. </exception>
+        public async Task<Response<DatastorePropertiesResourceData>> CreateOrUpdateAsync(string resourceGroupName, string workspaceName, string name, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
             }
             if (properties == null)
             {
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, name, workspaceName, properties, skipValidation);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, workspaceName, name, properties, skipValidation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -425,32 +429,32 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Create or update datastore. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Datastore name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="skipValidation"> Flag to skip validation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workspaceName"/>, or <paramref name="properties"/> is null. </exception>
-        public Response<DatastorePropertiesResourceData> CreateOrUpdate(string resourceGroupName, string name, string workspaceName, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, or <paramref name="properties"/> is null. </exception>
+        public Response<DatastorePropertiesResourceData> CreateOrUpdate(string resourceGroupName, string workspaceName, string name, DatastoreProperties properties, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
             }
             if (properties == null)
             {
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, name, workspaceName, properties, skipValidation);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, workspaceName, name, properties, skipValidation);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -467,7 +471,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetSecretsRequest(string resourceGroupName, string name, string workspaceName)
+        internal HttpMessage CreateGetSecretsRequest(string resourceGroupName, string workspaceName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -491,26 +495,26 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Get datastore secrets. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Datastore name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<DatastoreSecrets>> GetSecretsAsync(string resourceGroupName, string name, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
+        public async Task<Response<DatastoreSecrets>> GetSecretsAsync(string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreateGetSecretsRequest(resourceGroupName, name, workspaceName);
+            using var message = CreateGetSecretsRequest(resourceGroupName, workspaceName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -528,26 +532,26 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Get datastore secrets. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Datastore name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Datastore name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response<DatastoreSecrets> GetSecrets(string resourceGroupName, string name, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
+        public Response<DatastoreSecrets> GetSecrets(string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreateGetSecretsRequest(resourceGroupName, name, workspaceName);
+            using var message = CreateGetSecretsRequest(resourceGroupName, workspaceName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

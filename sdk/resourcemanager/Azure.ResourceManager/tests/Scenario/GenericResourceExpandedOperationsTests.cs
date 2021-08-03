@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core.Extensions;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
     public class GenericResourceExpandedOperationsTests : ResourceManagerTestBase
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Core.Tests
             string expand = default)
         {
             var resExp = await (Client.DefaultSubscription.GetGenericResources()
-                .ListAsync(filter, expand)
+                .GetAllAsync(filter, expand)
                 .FirstOrDefaultAsync(r => r.Id.Equals(resourceId)));
 
             Assert.NotNull(resExp);

@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of ComputeResource and their operations over a Workspace. </summary>
-    public partial class ComputeResourceContainer : ResourceContainerBase<ComputeResource, ComputeResourceData>
+    public partial class ComputeResourceContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="ComputeResourceContainer"/> class for mocking. </summary>
         protected ComputeResourceContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Initializes a new instance of ComputeResourceContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ComputeResourceContainer(OperationsBase parent) : base(parent)
+        internal ComputeResourceContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -179,6 +179,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, computeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ComputeResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,6 +205,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, computeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ComputeResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,9 +219,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="computeName"> Name of the Azure Machine Learning compute. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual ComputeResource TryGet(string computeName, CancellationToken cancellationToken = default)
+        public virtual Response<ComputeResource> GetIfExists(string computeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -226,11 +230,10 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(computeName));
                 }
 
-                return Get(computeName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, computeName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<ComputeResource>(null, response.GetRawResponse())
+                    : Response.FromValue(new ComputeResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,9 +245,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="computeName"> Name of the Azure Machine Learning compute. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<ComputeResource> TryGetAsync(string computeName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ComputeResource>> GetIfExistsAsync(string computeName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -253,11 +256,10 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(computeName));
                 }
 
-                return await GetAsync(computeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, computeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<ComputeResource>(null, response.GetRawResponse())
+                    : Response.FromValue(new ComputeResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="computeName"> Name of the Azure Machine Learning compute. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string computeName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string computeName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.CheckIfExists");
             scope.Start();
@@ -280,7 +282,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(computeName));
                 }
 
-                return TryGet(computeName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(computeName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -292,7 +295,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="computeName"> Name of the Azure Machine Learning compute. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string computeName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string computeName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceContainer.CheckIfExists");
             scope.Start();
@@ -303,7 +306,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(computeName));
                 }
 
-                return await TryGetAsync(computeName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(computeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

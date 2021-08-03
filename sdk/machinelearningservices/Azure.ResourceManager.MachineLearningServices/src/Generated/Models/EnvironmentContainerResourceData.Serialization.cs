@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        systemData = null;
                         continue;
                     }
                     systemData = SystemData.DeserializeSystemData(property.Value);

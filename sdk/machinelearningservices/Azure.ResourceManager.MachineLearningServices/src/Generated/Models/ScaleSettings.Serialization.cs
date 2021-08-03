@@ -25,8 +25,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             if (Optional.IsDefined(NodeIdleTimeBeforeScaleDown))
             {
-                writer.WritePropertyName("nodeIdleTimeBeforeScaleDown");
-                writer.WriteStringValue(NodeIdleTimeBeforeScaleDown.Value, "P");
+                if (NodeIdleTimeBeforeScaleDown != null)
+                {
+                    writer.WritePropertyName("nodeIdleTimeBeforeScaleDown");
+                    writer.WriteStringValue(NodeIdleTimeBeforeScaleDown.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("nodeIdleTimeBeforeScaleDown");
+                }
             }
             writer.WriteEndObject();
         }
@@ -35,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             int maxNodeCount = default;
             Optional<int> minNodeCount = default;
-            Optional<TimeSpan> nodeIdleTimeBeforeScaleDown = default;
+            Optional<TimeSpan?> nodeIdleTimeBeforeScaleDown = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxNodeCount"))
@@ -57,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        nodeIdleTimeBeforeScaleDown = null;
                         continue;
                     }
                     nodeIdleTimeBeforeScaleDown = property.Value.GetTimeSpan("P");

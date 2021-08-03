@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the operations that can be performed over a specific Workspace. </summary>
-    public partial class WorkspaceOperations : ResourceOperationsBase<Workspace>
+    public partial class WorkspaceOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private WorkspacesRestOperations _restClient { get; }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref="WorkspaceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal WorkspaceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal WorkspaceOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new WorkspacesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -48,14 +48,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<Workspace>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets the properties of the specified machine learning workspace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<Workspace>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.Get");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new Workspace(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -65,14 +68,17 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
-        public override Response<Workspace> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets the properties of the specified machine learning workspace. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Workspace> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WorkspaceOperations.Get");
             scope.Start();
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Workspace(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

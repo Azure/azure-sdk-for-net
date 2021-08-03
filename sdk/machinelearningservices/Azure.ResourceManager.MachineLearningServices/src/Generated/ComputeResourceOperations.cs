@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the operations that can be performed over a specific ComputeResource. </summary>
-    public partial class ComputeResourceOperations : ResourceOperationsBase<ComputeResource>
+    public partial class ComputeResourceOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ComputeRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref="ComputeResourceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ComputeResourceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal ComputeResourceOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ComputeRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -43,14 +43,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<ComputeResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use &apos;keys&apos; nested resource to get them. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<ComputeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Get");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ComputeResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -60,14 +63,17 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
-        public override Response<ComputeResource> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use &apos;keys&apos; nested resource to get them. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ComputeResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Get");
             scope.Start();
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ComputeResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -94,14 +100,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes specified Machine Learning compute. </summary>
+        /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> DeleteAsync(UnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Delete");
             scope.Start();
             try
             {
-                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
+                var operation = await StartDeleteAsync(underlyingResourceAction, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -112,14 +119,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes specified Machine Learning compute. </summary>
+        /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
+        public virtual Response Delete(UnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Delete");
             scope.Start();
             try
             {
-                var operation = StartDelete(cancellationToken);
+                var operation = StartDelete(underlyingResourceAction, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -130,15 +138,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes specified Machine Learning compute. </summary>
+        /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ComputeDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ComputeDeleteOperation> StartDeleteAsync(UnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartDelete");
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ComputeDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction, cancellationToken).ConfigureAwait(false);
+                return new ComputeDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction).Request, response);
             }
             catch (Exception e)
             {
@@ -148,15 +157,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes specified Machine Learning compute. </summary>
+        /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ComputeDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual ComputeDeleteOperation StartDelete(UnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartDelete");
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ComputeDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction, cancellationToken);
+                return new ComputeDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction).Request, response);
             }
             catch (Exception e)
             {

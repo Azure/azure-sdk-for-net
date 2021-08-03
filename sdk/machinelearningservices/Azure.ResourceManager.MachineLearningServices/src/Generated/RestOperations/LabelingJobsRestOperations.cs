@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string id, string resourceGroupName, string workspaceName)
+        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string workspaceName, string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -158,17 +158,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Delete a labeling job. </summary>
-        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string id, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -177,8 +173,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreateDeleteRequest(id, resourceGroupName, workspaceName);
+            using var message = CreateDeleteRequest(resourceGroupName, workspaceName, id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -191,17 +191,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Delete a labeling job. </summary>
-        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response Delete(string id, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public Response Delete(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -210,8 +206,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreateDeleteRequest(id, resourceGroupName, workspaceName);
+            using var message = CreateDeleteRequest(resourceGroupName, workspaceName, id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetRequest(string id, string resourceGroupName, string workspaceName, bool? includeJobInstructions, bool? includeLabelCategories)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string workspaceName, string id, bool? includeJobInstructions, bool? includeLabelCategories)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -253,19 +253,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets a labeling job by name/id. </summary>
-        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
         /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<LabelingJobResourceData>> GetAsync(string id, string resourceGroupName, string workspaceName, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public async Task<Response<LabelingJobResourceData>> GetAsync(string resourceGroupName, string workspaceName, string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -274,8 +270,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreateGetRequest(id, resourceGroupName, workspaceName, includeJobInstructions, includeLabelCategories);
+            using var message = CreateGetRequest(resourceGroupName, workspaceName, id, includeJobInstructions, includeLabelCategories);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -286,25 +286,23 @@ namespace Azure.ResourceManager.MachineLearningServices
                         value = LabelingJobResourceData.DeserializeLabelingJobResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((LabelingJobResourceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Gets a labeling job by name/id. </summary>
-        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
         /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response<LabelingJobResourceData> Get(string id, string resourceGroupName, string workspaceName, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public Response<LabelingJobResourceData> Get(string resourceGroupName, string workspaceName, string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -313,8 +311,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreateGetRequest(id, resourceGroupName, workspaceName, includeJobInstructions, includeLabelCategories);
+            using var message = CreateGetRequest(resourceGroupName, workspaceName, id, includeJobInstructions, includeLabelCategories);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -325,12 +327,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                         value = LabelingJobResourceData.DeserializeLabelingJobResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((LabelingJobResourceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string id, string resourceGroupName, string workspaceName, LabelingJob properties)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string workspaceName, string id, LabelingJob properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -357,18 +361,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Creates or updates a labeling job (asynchronous). </summary>
-        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="properties"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string id, string resourceGroupName, string workspaceName, LabelingJob properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/>, or <paramref name="properties"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string workspaceName, string id, LabelingJob properties, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -377,12 +377,16 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             if (properties == null)
             {
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateCreateOrUpdateRequest(id, resourceGroupName, workspaceName, properties);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, workspaceName, id, properties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -395,18 +399,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Creates or updates a labeling job (asynchronous). </summary>
-        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="properties"/> is null. </exception>
-        public Response CreateOrUpdate(string id, string resourceGroupName, string workspaceName, LabelingJob properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/>, or <paramref name="properties"/> is null. </exception>
+        public Response CreateOrUpdate(string resourceGroupName, string workspaceName, string id, LabelingJob properties, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -415,12 +415,16 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             if (properties == null)
             {
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateCreateOrUpdateRequest(id, resourceGroupName, workspaceName, properties);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, workspaceName, id, properties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -432,7 +436,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateExportLabelsRequest(string id, string resourceGroupName, string workspaceName, ExportSummary body)
+        internal HttpMessage CreateExportLabelsRequest(string resourceGroupName, string workspaceName, string id, ExportSummary body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -459,18 +463,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Export labels from a labeling job (asynchronous). </summary>
-        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="body"> The export summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="body"/> is null. </exception>
-        public async Task<Response> ExportLabelsAsync(string id, string resourceGroupName, string workspaceName, ExportSummary body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/>, or <paramref name="body"/> is null. </exception>
+        public async Task<Response> ExportLabelsAsync(string resourceGroupName, string workspaceName, string id, ExportSummary body, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -479,12 +479,16 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateExportLabelsRequest(id, resourceGroupName, workspaceName, body);
+            using var message = CreateExportLabelsRequest(resourceGroupName, workspaceName, id, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -497,18 +501,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Export labels from a labeling job (asynchronous). </summary>
-        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="body"> The export summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="body"/> is null. </exception>
-        public Response ExportLabels(string id, string resourceGroupName, string workspaceName, ExportSummary body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/>, or <paramref name="body"/> is null. </exception>
+        public Response ExportLabels(string resourceGroupName, string workspaceName, string id, ExportSummary body, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -517,12 +517,16 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateExportLabelsRequest(id, resourceGroupName, workspaceName, body);
+            using var message = CreateExportLabelsRequest(resourceGroupName, workspaceName, id, body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -534,7 +538,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreatePauseRequest(string id, string resourceGroupName, string workspaceName)
+        internal HttpMessage CreatePauseRequest(string resourceGroupName, string workspaceName, string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -557,17 +561,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Pause a labeling job. </summary>
-        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response> PauseAsync(string id, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public async Task<Response> PauseAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -576,8 +576,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreatePauseRequest(id, resourceGroupName, workspaceName);
+            using var message = CreatePauseRequest(resourceGroupName, workspaceName, id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -589,17 +593,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Pause a labeling job. </summary>
-        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response Pause(string id, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public Response Pause(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -608,8 +608,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreatePauseRequest(id, resourceGroupName, workspaceName);
+            using var message = CreatePauseRequest(resourceGroupName, workspaceName, id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -620,7 +624,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateResumeRequest(string id, string resourceGroupName, string workspaceName)
+        internal HttpMessage CreateResumeRequest(string resourceGroupName, string workspaceName, string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -643,17 +647,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Resume a labeling job (asynchronous). </summary>
-        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response> ResumeAsync(string id, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public async Task<Response> ResumeAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -662,8 +662,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreateResumeRequest(id, resourceGroupName, workspaceName);
+            using var message = CreateResumeRequest(resourceGroupName, workspaceName, id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -676,17 +680,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Resume a labeling job (asynchronous). </summary>
-        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response Resume(string id, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public Response Resume(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -695,8 +695,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreateResumeRequest(id, resourceGroupName, workspaceName);
+            using var message = CreateResumeRequest(resourceGroupName, workspaceName, id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

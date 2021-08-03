@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string name, string workspaceName, string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string workspaceName, string name, string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> List model versions. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Model name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Model name. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Maximum number of records to return. </param>
@@ -107,23 +107,23 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="properties"> Comma-separated list of property names (and optionally values). Example: prop1,prop2=value2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<ModelVersionResourceArmPaginatedResult>> GetAllAsync(string resourceGroupName, string name, string workspaceName, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
+        public async Task<Response<ModelVersionResourceArmPaginatedResult>> GetAllAsync(string resourceGroupName, string workspaceName, string name, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreateGetAllRequest(resourceGroupName, name, workspaceName, skip, orderBy, top, version, description, offset, tags, properties);
+            using var message = CreateGetAllRequest(resourceGroupName, workspaceName, name, skip, orderBy, top, version, description, offset, tags, properties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> List model versions. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Model name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Model name. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Maximum number of records to return. </param>
@@ -152,23 +152,23 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="properties"> Comma-separated list of property names (and optionally values). Example: prop1,prop2=value2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response<ModelVersionResourceArmPaginatedResult> GetAll(string resourceGroupName, string name, string workspaceName, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
+        public Response<ModelVersionResourceArmPaginatedResult> GetAll(string resourceGroupName, string workspaceName, string name, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreateGetAllRequest(resourceGroupName, name, workspaceName, skip, orderBy, top, version, description, offset, tags, properties);
+            using var message = CreateGetAllRequest(resourceGroupName, workspaceName, name, skip, orderBy, top, version, description, offset, tags, properties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string name, string workspaceName, string version)
+        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string workspaceName, string name, string version)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -209,31 +209,31 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Container name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workspaceName"/>, or <paramref name="version"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string name, string workspaceName, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string resourceGroupName, string workspaceName, string name, string version, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
             }
             if (version == null)
             {
                 throw new ArgumentNullException(nameof(version));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, name, workspaceName, version);
+            using var message = CreateDeleteRequest(resourceGroupName, workspaceName, name, version);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -247,31 +247,31 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Container name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workspaceName"/>, or <paramref name="version"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string name, string workspaceName, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        public Response Delete(string resourceGroupName, string workspaceName, string name, string version, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
             }
             if (version == null)
             {
                 throw new ArgumentNullException(nameof(version));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, name, workspaceName, version);
+            using var message = CreateDeleteRequest(resourceGroupName, workspaceName, name, version);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string name, string workspaceName, string version)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string workspaceName, string name, string version)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -308,31 +308,31 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Get version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Container name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workspaceName"/>, or <paramref name="version"/> is null. </exception>
-        public async Task<Response<ModelVersionResourceData>> GetAsync(string resourceGroupName, string name, string workspaceName, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        public async Task<Response<ModelVersionResourceData>> GetAsync(string resourceGroupName, string workspaceName, string name, string version, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
             }
             if (version == null)
             {
                 throw new ArgumentNullException(nameof(version));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, name, workspaceName, version);
+            using var message = CreateGetRequest(resourceGroupName, workspaceName, name, version);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -343,6 +343,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                         value = ModelVersionResourceData.DeserializeModelVersionResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ModelVersionResourceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -350,31 +352,31 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Get version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Container name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workspaceName"/>, or <paramref name="version"/> is null. </exception>
-        public Response<ModelVersionResourceData> Get(string resourceGroupName, string name, string workspaceName, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, or <paramref name="version"/> is null. </exception>
+        public Response<ModelVersionResourceData> Get(string resourceGroupName, string workspaceName, string name, string version, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
             }
             if (version == null)
             {
                 throw new ArgumentNullException(nameof(version));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, name, workspaceName, version);
+            using var message = CreateGetRequest(resourceGroupName, workspaceName, name, version);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -385,12 +387,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                         value = ModelVersionResourceData.DeserializeModelVersionResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ModelVersionResourceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string name, string workspaceName, string version, ModelVersion properties)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string workspaceName, string name, string version, ModelVersion properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -420,25 +424,25 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Create or update version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Container name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workspaceName"/>, <paramref name="version"/>, or <paramref name="properties"/> is null. </exception>
-        public async Task<Response<ModelVersionResourceData>> CreateOrUpdateAsync(string resourceGroupName, string name, string workspaceName, string version, ModelVersion properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/>, or <paramref name="properties"/> is null. </exception>
+        public async Task<Response<ModelVersionResourceData>> CreateOrUpdateAsync(string resourceGroupName, string workspaceName, string name, string version, ModelVersion properties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
             }
             if (version == null)
             {
@@ -449,7 +453,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, name, workspaceName, version, properties);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, workspaceName, name, version, properties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -468,25 +472,25 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Create or update version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Container name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Container name. </param>
         /// <param name="version"> Version identifier. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workspaceName"/>, <paramref name="version"/>, or <paramref name="properties"/> is null. </exception>
-        public Response<ModelVersionResourceData> CreateOrUpdate(string resourceGroupName, string name, string workspaceName, string version, ModelVersion properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/>, or <paramref name="properties"/> is null. </exception>
+        public Response<ModelVersionResourceData> CreateOrUpdate(string resourceGroupName, string workspaceName, string name, string version, ModelVersion properties, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
             }
             if (version == null)
             {
@@ -497,7 +501,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateCreateOrUpdateRequest(resourceGroupName, name, workspaceName, version, properties);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, workspaceName, name, version, properties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -514,7 +518,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string name, string workspaceName, string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string workspaceName, string name, string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -530,8 +534,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> List model versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Model name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Model name. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Maximum number of records to return. </param>
@@ -541,8 +545,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="properties"> Comma-separated list of property names (and optionally values). Example: prop1,prop2=value2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<ModelVersionResourceArmPaginatedResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string name, string workspaceName, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
+        public async Task<Response<ModelVersionResourceArmPaginatedResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string workspaceName, string name, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -552,16 +556,16 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, name, workspaceName, skip, orderBy, top, version, description, offset, tags, properties);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, workspaceName, name, skip, orderBy, top, version, description, offset, tags, properties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -580,8 +584,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> List model versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> Model name. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="name"> Model name. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Maximum number of records to return. </param>
@@ -591,8 +595,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="properties"> Comma-separated list of property names (and optionally values). Example: prop1,prop2=value2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response<ModelVersionResourceArmPaginatedResult> GetAllNextPage(string nextLink, string resourceGroupName, string name, string workspaceName, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="name"/> is null. </exception>
+        public Response<ModelVersionResourceArmPaginatedResult> GetAllNextPage(string nextLink, string resourceGroupName, string workspaceName, string name, string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -602,16 +606,16 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (workspaceName == null)
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, name, workspaceName, skip, orderBy, top, version, description, offset, tags, properties);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, workspaceName, name, skip, orderBy, top, version, description, offset, tags, properties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

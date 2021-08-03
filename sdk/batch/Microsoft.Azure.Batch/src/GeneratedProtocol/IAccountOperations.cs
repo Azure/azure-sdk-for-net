@@ -48,6 +48,8 @@ namespace Microsoft.Azure.Batch.Protocol
         Task<AzureOperationResponse<IPage<ImageInformation>,AccountListSupportedImagesHeaders>> ListSupportedImagesWithHttpMessagesAsync(AccountListSupportedImagesOptions accountListSupportedImagesOptions = default(AccountListSupportedImagesOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the number of Compute Nodes in each state, grouped by Pool.
+        /// Note that the numbers returned may not always be up to date. If you
+        /// need exact node counts, use a list query.
         /// </summary>
         /// <param name='accountListPoolNodeCountsOptions'>
         /// Additional parameters for the operation
@@ -96,6 +98,8 @@ namespace Microsoft.Azure.Batch.Protocol
         Task<AzureOperationResponse<IPage<ImageInformation>,AccountListSupportedImagesHeaders>> ListSupportedImagesNextWithHttpMessagesAsync(string nextPageLink, AccountListSupportedImagesNextOptions accountListSupportedImagesNextOptions = default(AccountListSupportedImagesNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the number of Compute Nodes in each state, grouped by Pool.
+        /// Note that the numbers returned may not always be up to date. If you
+        /// need exact node counts, use a list query.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

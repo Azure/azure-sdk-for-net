@@ -2,15 +2,13 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Tests.Extensions;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using ResourceIdentityType = Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityType;
-using Sku = Azure.ResourceManager.Resources.Models.Sku;
 
 namespace Azure.ResourceManager.MachineLearningServices.Tests
 {
@@ -18,19 +16,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests
     {
         private const string CommonResourceResourceGroup = "test-ml-common";
 
-        protected ResourceIdentifier CommonResourceGroupId { get; private set; }
+        public ResourceIdentifier CommonResourceGroupId { get; private set; }
 
-        protected string CommonStorageId { get; private set; }
+        public string CommonStorageId { get; private set; }
 
-        protected string CommonAppInsightId { get; private set; }
+        public string CommonAppInsightId { get; private set; }
 
-        protected string CommonKeyVaultId { get; private set; }
+        public string CommonKeyVaultId { get; private set; }
 
-        protected string CommonAcrId { get; private set; }
+        public string CommonAcrId { get; private set; }
 
         protected ArmClient Client { get; private set; }
 
-        protected string StorageAccount { get; }
+        protected ResourceDataCreationHelper DataHelper => new ResourceDataCreationHelper(this);
+
+        protected Location DefaultLocation => Location.WestUS2;
 
         protected MachineLearningServicesManagerTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests
         {
         }
 
-        public void OneTimeDependencySetup()
+        public void CreateDependency()
         {
             // NOTE: For initial setup, add [Test] for this method and run it once.
             CommonResourceGroupId = GlobalClient.DefaultSubscription
@@ -57,12 +57,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests
             StopSessionRecording();
         }
 
-        [SetUp]
-        public void CreateCommonClient()
+        [OneTimeSetUp]
+        public void SetupDependencyIds()
         {
-            Client = GetArmClient();
-
-            CommonResourceGroupId = Client.DefaultSubscription.Id + $"/resourceGroups/{CommonResourceResourceGroup}";
+            CommonResourceGroupId = GlobalClient.DefaultSubscription.Id + $"/resourceGroups/{CommonResourceResourceGroup}";
             CommonStorageId = CommonResourceGroupId.AppendProviderResource(
                 "Microsoft.Storage",
                 "storageAccounts",
@@ -81,28 +79,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests
                 "track2mlappinsight");
         }
 
-        protected async Task<Workspace> CreateMLWorkspaceAsync(ResourceGroup rg, string workspaceNameOverride = default)
+        [SetUp]
+        public void CreateCommonClient()
         {
-            var mlWorkspaceData = GenerateWorkspaceData();
-
-            return await rg
-                .GetWorkspaces()
-                .CreateOrUpdateAsync(
-                    workspaceNameOverride ?? Recording.GenerateAssetName("test-ml-workspace"),
-                    mlWorkspaceData);
-        }
-
-        protected WorkspaceData GenerateWorkspaceData()
-        {
-            return new WorkspaceData
-            {
-                Location = Location.WestUS2,
-                ApplicationInsights = CommonAppInsightId,
-                ContainerRegistry = CommonAcrId,
-                StorageAccount = CommonStorageId,
-                KeyVault = CommonKeyVaultId,
-                Identity = new Models.Identity { Type = ResourceIdentityType.SystemAssigned }
-            };
+            Client = GetArmClient();
         }
 
         #region Dependency Resource Creation with GlobalClient

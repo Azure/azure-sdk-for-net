@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        provisioningErrors = null;
                         continue;
                     }
                     List<ErrorResponse> array = new List<ErrorResponse>();

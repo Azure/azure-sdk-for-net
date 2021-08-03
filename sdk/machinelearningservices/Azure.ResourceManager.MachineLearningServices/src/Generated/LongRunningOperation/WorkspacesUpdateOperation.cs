@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        internal WorkspacesUpdateOperation(OperationsBase operationsBase, Response<WorkspaceData> response)
+        internal WorkspacesUpdateOperation(ResourceOperations operationsBase, Response<WorkspaceData> response)
         {
             _operation = new OperationOrResponseInternals<Workspace>(Response.FromValue(new Workspace(operationsBase, response.Value), response.GetRawResponse()));
         }

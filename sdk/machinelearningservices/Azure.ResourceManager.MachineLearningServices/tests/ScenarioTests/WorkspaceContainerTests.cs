@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -11,18 +11,37 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 {
     public class WorkspaceContainerTests : MachineLearningServicesManagerTestBase
     {
+        private const string ResourceGroupNamePrefix = "test-WorkspaceContainer";
+        private const string ResourceNamePrefix = "test-resource";
+        private readonly Location _defaultLocation = Location.WestUS2;
+        private string _resourceGroupName = ResourceGroupNamePrefix;
+        private string _resourceName = ResourceNamePrefix;
+
         public WorkspaceContainerTests(bool isAsync)
          : base(isAsync)
         {
+        }
+
+        [OneTimeSetUp]
+        public async Task SetupResources()
+        {
+            _resourceName = SessionRecording.GenerateAssetName(ResourceNamePrefix);
+            _resourceGroupName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
+
+            _ = await GlobalClient.DefaultSubscription.GetResourceGroups()
+                .CreateOrUpdateAsync(_resourceGroupName, new ResourceGroupData(_defaultLocation));
+            StopSessionRecording();
         }
 
         [TestCase]
         [RecordedTest]
         public async Task List()
         {
-            ResourceGroup rg = await CreateTestResourceGroup();
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
 
-            Assert.DoesNotThrowAsync(async () => _ = await CreateMLWorkspaceAsync(rg));
+            Assert.DoesNotThrowAsync(async () => _ = await rg.GetWorkspaces().CreateOrUpdateAsync(
+                _resourceName,
+                DataHelper.GenerateWorkspaceData()));
 
             var count = (await rg.GetWorkspaces().GetAllAsync().ToEnumerableAsync()).Count;
             Assert.AreEqual(count, 1);
@@ -32,62 +51,64 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         [RecordedTest]
         public async Task Get()
         {
-            ResourceGroup rg = await CreateTestResourceGroup();
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
 
-            Workspace workspace1 = await CreateMLWorkspaceAsync(rg);
-            Workspace workspace2 = await rg.GetWorkspaces().GetAsync(workspace1.Data.Name);
-            Assert.AreEqual(workspace1.Id, workspace2.Id);
+            Assert.DoesNotThrowAsync(async () => _ = await rg.GetWorkspaces().CreateOrUpdateAsync(
+                _resourceName,
+                DataHelper.GenerateWorkspaceData()));
 
+            Assert.DoesNotThrowAsync(async () => await rg.GetWorkspaces().GetAsync(_resourceName));
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await rg.GetWorkspaces().GetAsync("NonExistant"));
         }
-
-        //public Task TryGet();
 
         [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ResourceGroup rg = await CreateTestResourceGroup();
-            var workspaceName = Recording.GenerateAssetName("testmlCreate");
-            var workspace = await CreateMLWorkspaceAsync(rg, workspaceName);
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
 
-            Assert.AreEqual(rg.Id.AppendProviderResource("Microsoft.MachineLearningServices", "workspaces",workspaceName).ToString(), workspace.Data.Id.ToString());
-            Assert.AreEqual(workspaceName, workspace.Data.Name);
-            Assert.AreEqual(WorkspaceOperations.ResourceType, workspace.Data.Type);
+            Workspace resource = null;
+            Assert.DoesNotThrowAsync(async () => resource = await rg.GetWorkspaces().CreateOrUpdateAsync(
+                _resourceName,
+                DataHelper.GenerateWorkspaceData()));
+
+            resource.Data.Description = "Updated";
+            Assert.DoesNotThrowAsync(async () => resource = await rg.GetWorkspaces().CreateOrUpdateAsync(
+                _resourceName,
+                resource.Data));
+            Assert.AreEqual("Updated", resource.Data.Description);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task StartCreateOrUpdate()
         {
-            ResourceGroup rg = await CreateTestResourceGroup();
-            var workspaceName = Recording.GenerateAssetName("testmlCreate");
-            Workspace workspace = await (await rg.GetWorkspaces().StartCreateOrUpdateAsync(workspaceName, GenerateWorkspaceData())).WaitForCompletionAsync();
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
 
-            Assert.AreEqual(rg.Id.AppendProviderResource("Microsoft.MachineLearningServices", "workspaces", workspaceName), workspace.Data.Id.ToString());
-            Assert.AreEqual(workspaceName, workspace.Data.Name);
-            Assert.AreEqual(WorkspaceOperations.ResourceType, workspace.Data.Type);
+            Workspace resource = null;
+            Assert.DoesNotThrowAsync(async () => resource = await (await rg.GetWorkspaces().StartCreateOrUpdateAsync(
+                _resourceName,
+                DataHelper.GenerateWorkspaceData())).WaitForCompletionAsync());
+
+            resource.Data.Description = "Updated";
+            Assert.DoesNotThrowAsync(async () => resource = await (await rg.GetWorkspaces().StartCreateOrUpdateAsync(
+                _resourceName,
+                resource.Data)).WaitForCompletionAsync());
+            Assert.AreEqual("Updated", resource.Data.Description);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task CheckIfExists()
         {
-            ResourceGroup rg = await CreateTestResourceGroup();
-            var workspace = await CreateMLWorkspaceAsync(rg);
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
 
-            Assert.IsTrue(await rg.GetWorkspaces().CheckIfExistsAsync(workspace.Data.Name));
-            Assert.IsFalse(await rg.GetWorkspaces().CheckIfExistsAsync(workspace.Data.Name + "xyz"));
-        }
+            Assert.DoesNotThrowAsync(async () => _ = await (await rg.GetWorkspaces().StartCreateOrUpdateAsync(
+                _resourceName,
+                DataHelper.GenerateWorkspaceData())).WaitForCompletionAsync());
 
-        private async Task<ResourceGroup> CreateTestResourceGroup()
-        {
-            return await Client
-                .DefaultSubscription
-                .GetResourceGroups()
-                .CreateOrUpdateAsync(
-                    Recording.GenerateAssetName("testmlrg"),
-                    new ResourceGroupData(Location.WestUS2));
+            Assert.IsTrue(await rg.GetWorkspaces().CheckIfExistsAsync(_resourceName));
+            Assert.IsFalse(await rg.GetWorkspaces().CheckIfExistsAsync(_resourceName + "xyz"));
         }
     }
 }

@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of LabelingJobResource and their operations over a Workspace. </summary>
-    public partial class LabelingJobResourceContainer : ResourceContainerBase<LabelingJobResource, LabelingJobResourceData>
+    public partial class LabelingJobResourceContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="LabelingJobResourceContainer"/> class for mocking. </summary>
         protected LabelingJobResourceContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Initializes a new instance of LabelingJobResourceContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal LabelingJobResourceContainer(OperationsBase parent) : base(parent)
+        internal LabelingJobResourceContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         // Container level operations.
 
         /// <summary> Creates or updates a labeling job (asynchronous). </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual Response<LabelingJobResource> CreateOrUpdate(string workspaceName, LabelingJob properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="properties"/> is null. </exception>
+        public virtual Response<LabelingJobResource> CreateOrUpdate(string id, LabelingJob properties, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(id));
             }
             if (properties == null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var operation = StartCreateOrUpdate(workspaceName, properties, cancellationToken);
+                var operation = StartCreateOrUpdate(id, properties, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Creates or updates a labeling job (asynchronous). </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<Response<LabelingJobResource>> CreateOrUpdateAsync(string workspaceName, LabelingJob properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="properties"/> is null. </exception>
+        public async virtual Task<Response<LabelingJobResource>> CreateOrUpdateAsync(string id, LabelingJob properties, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(id));
             }
             if (properties == null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var operation = await StartCreateOrUpdateAsync(workspaceName, properties, cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(id, properties, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -105,15 +105,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Creates or updates a labeling job (asynchronous). </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual LabelingJobsCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, LabelingJob properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="properties"/> is null. </exception>
+        public virtual LabelingJobsCreateOrUpdateOperation StartCreateOrUpdate(string id, LabelingJob properties, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(id));
             }
             if (properties == null)
             {
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.Name, Id.ResourceGroupName, workspaceName, properties, cancellationToken);
-                return new LabelingJobsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.Name, Id.ResourceGroupName, workspaceName, properties).Request, response);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, id, properties, cancellationToken);
+                return new LabelingJobsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, id, properties).Request, response);
             }
             catch (Exception e)
             {
@@ -135,15 +135,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Creates or updates a labeling job (asynchronous). </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<LabelingJobsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, LabelingJob properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="properties"/> is null. </exception>
+        public async virtual Task<LabelingJobsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string id, LabelingJob properties, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(id));
             }
             if (properties == null)
             {
@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.Name, Id.ResourceGroupName, workspaceName, properties, cancellationToken).ConfigureAwait(false);
-                return new LabelingJobsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.Name, Id.ResourceGroupName, workspaceName, properties).Request, response);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, id, properties, cancellationToken).ConfigureAwait(false);
+                return new LabelingJobsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, id, properties).Request, response);
             }
             catch (Exception e)
             {
@@ -165,22 +165,24 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
         /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<LabelingJobResource> Get(string workspaceName, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
+        public virtual Response<LabelingJobResource> Get(string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.Get");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (id == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(id));
                 }
 
-                var response = _restClient.Get(Id.Name, Id.ResourceGroupName, workspaceName, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, id, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LabelingJobResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,22 +193,24 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
         /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<LabelingJobResource>> GetAsync(string workspaceName, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<LabelingJobResource>> GetAsync(string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.Get");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (id == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(id));
                 }
 
-                var response = await _restClient.GetAsync(Id.Name, Id.ResourceGroupName, workspaceName, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, id, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new LabelingJobResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,26 +221,25 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
         /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual LabelingJobResource TryGet(string workspaceName, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
+        public virtual Response<LabelingJobResource> GetIfExists(string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (id == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(id));
                 }
 
-                return Get(workspaceName, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, id, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<LabelingJobResource>(null, response.GetRawResponse())
+                    : Response.FromValue(new LabelingJobResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,26 +249,25 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
         /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<LabelingJobResource> TryGetAsync(string workspaceName, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<LabelingJobResource>> GetIfExistsAsync(string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (id == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(id));
                 }
 
-                return await GetAsync(workspaceName, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, id, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<LabelingJobResource>(null, response.GetRawResponse())
+                    : Response.FromValue(new LabelingJobResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -275,22 +277,23 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
         /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string workspaceName, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (id == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(id));
                 }
 
-                return TryGet(workspaceName, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(id, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -300,22 +303,23 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
         /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
         /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string workspaceName, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (id == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(id));
                 }
 
-                return await TryGetAsync(workspaceName, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(id, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

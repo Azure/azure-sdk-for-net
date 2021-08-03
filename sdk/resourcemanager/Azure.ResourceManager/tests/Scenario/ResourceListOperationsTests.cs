@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class ResourceListOperationsTests : ResourceManagerTestBase
     {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Core.Tests
 
             ResourceGroupOperations rgOp = Client.GetResourceGroupOperations(rg.Id);
             var result = 0;
-            var pageable = ResourceListOperations.ListAtContextAsync(rgOp);
+            var pageable = ResourceListOperations.GetAtContextAsync(rgOp);
             await foreach (var resource in pageable)
             {
                 result++;
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(1, result);
 
             result = 0;
-            pageable = ResourceListOperations.ListAtContextAsync(Client.DefaultSubscription);
+            pageable = ResourceListOperations.GetAtContextAsync(Client.DefaultSubscription);
             await foreach (var resource in pageable)
             {
                 result++;

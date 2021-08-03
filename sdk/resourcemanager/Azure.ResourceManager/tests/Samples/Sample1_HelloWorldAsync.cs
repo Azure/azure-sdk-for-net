@@ -6,7 +6,7 @@ using Azure.ResourceManager.Resources;
 #endregion
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests.Samples
+namespace Azure.ResourceManager.Tests.Samples
 {
     class Sample1_HelloWorldAsync
     {
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         public void GettingDefaultSubscription()
         {
             #region Snippet:Hello_World_Async_DefaultSubscription
-            var armClient = new ArmClient(new DefaultAzureCredential());
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.DefaultSubscription;
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_Async_DefaultSubscription
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         {
             #region Snippet:Hello_World_Async_SpecificSubscription
             string subscriptionId = "your-subscription-id";
-            var armClient = new ArmClient(new DefaultAzureCredential());
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = await armClient.GetSubscriptions().GetAsync(subscriptionId);
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_Async_SpecificSubscription
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public void RetrieveResourceGroupContainer()
         {
-            var armClient = new ArmClient(new DefaultAzureCredential());
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.DefaultSubscription;
             #region Snippet:Hello_World_Async_ResourceGroupContainer
             ResourceGroupContainer rgContainer = subscription.GetResourceGroups();

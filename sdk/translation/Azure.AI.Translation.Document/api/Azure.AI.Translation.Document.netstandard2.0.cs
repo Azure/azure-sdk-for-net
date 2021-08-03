@@ -87,6 +87,14 @@ namespace Azure.AI.Translation.Document
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationTarget> Targets { get { throw null; } }
         public void AddTarget(System.Uri targetUri, string languageCode, Azure.AI.Translation.Document.TranslationGlossary glossary = null) { }
     }
+    public static partial class DocumentTranslationModelFactory
+    {
+        public static Azure.AI.Translation.Document.DocumentStatus DocumentStatus(string id, System.Uri sourceDocumentUri, Azure.AI.Translation.Document.DocumentTranslationError error, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, string translatedTo, float progress, long charactersCharged) { throw null; }
+        public static Azure.AI.Translation.Document.DocumentStatus DocumentStatus(string id, System.Uri sourceDocumentUri, System.Uri translatedDocumentUri, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, string translatedTo, float progress, long charactersCharged) { throw null; }
+        public static Azure.AI.Translation.Document.DocumentTranslationError DocumentTranslationError(Azure.AI.Translation.Document.DocumentTranslationErrorCode errorCode, string message, string target) { throw null; }
+        public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IEnumerable<string> fileExtensions = null, System.Collections.Generic.IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IEnumerable<string> formatVersions = null) { throw null; }
+        public static Azure.AI.Translation.Document.TranslationStatus TranslationStatus(string id, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, Azure.AI.Translation.Document.DocumentTranslationError error, int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, long totalCharacterCharged) { throw null; }
+    }
     public partial class DocumentTranslationOperation : Azure.PageableOperation<Azure.AI.Translation.Document.DocumentStatus>
     {
         protected DocumentTranslationOperation() { }
@@ -194,12 +202,5 @@ namespace Azure.AI.Translation.Document
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationGlossary> Glossaries { get { throw null; } }
         public string LanguageCode { get { throw null; } }
         public System.Uri TargetUri { get { throw null; } }
-    }
-}
-namespace Azure.AI.Translation.Document.Models
-{
-    public static partial class BatchDocumentTranslationModelFactory
-    {
-        public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IEnumerable<string> fileExtensions = null, System.Collections.Generic.IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IEnumerable<string> formatVersions = null) { throw null; }
     }
 }

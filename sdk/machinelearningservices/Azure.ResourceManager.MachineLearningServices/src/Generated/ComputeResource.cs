@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref = "ComputeResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ComputeResource(OperationsBase options, ComputeResourceData resource) : base(options, resource.Id)
+        internal ComputeResource(ResourceOperations options, ComputeResourceData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

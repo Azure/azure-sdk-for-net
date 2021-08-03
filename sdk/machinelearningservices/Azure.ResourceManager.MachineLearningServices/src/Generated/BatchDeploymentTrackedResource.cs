@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref = "BatchDeploymentTrackedResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal BatchDeploymentTrackedResource(OperationsBase options, BatchDeploymentTrackedResourceData resource) : base(options, resource.Id)
+        internal BatchDeploymentTrackedResource(ResourceOperations options, BatchDeploymentTrackedResourceData resource) : base(options, resource.Id)
         {
             Data = resource;
         }
