@@ -97,22 +97,32 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                 return Expression.Equal(visited.Arguments[0], visited.Arguments[1], false, visited.Method);
             }
 
-            if (!visited.Method.IsStatic && visited.Method.Name == "Equals" && visited.Arguments.Count > 0)
+            if (!visited.Method.IsStatic
+                && visited.Method.Name == "Equals"
+                && visited.Arguments.Count > 0)
             {
                 return CreateRelationalOperator(ExpressionType.Equal, visited.Object, visited.Arguments[0]);
             }
 
-            if (visited.Method.IsStatic && visited.Method.Name == "CompareString" && visited.Method.DeclaringType.FullName == "Microsoft.VisualBasic.CompilerServices.Operators")
+            if (visited.Method.IsStatic
+                && visited.Method.Name == "CompareString"
+                && visited.Method.DeclaringType.FullName == "Microsoft.VisualBasic.CompilerServices.Operators")
             {
                 return CreateCompareExpression(visited.Arguments[0], visited.Arguments[1]);
             }
 
-            if (!visited.Method.IsStatic && visited.Method.Name == "CompareTo" && visited.Arguments.Count == 1 && visited.Method.ReturnType == typeof(int))
+            if (!visited.Method.IsStatic
+                && visited.Method.Name == "CompareTo"
+                && visited.Arguments.Count == 1
+                && visited.Method.ReturnType == typeof(int))
             {
                 return CreateCompareExpression(visited.Object, visited.Arguments[0]);
             }
 
-            if (visited.Method.IsStatic && visited.Method.Name == "Compare" && visited.Arguments.Count > 1 && visited.Method.ReturnType == typeof(int))
+            if (visited.Method.IsStatic
+                && visited.Method.Name == "Compare"
+                && visited.Arguments.Count > 1
+                && visited.Method.ReturnType == typeof(int))
             {
                 return CreateCompareExpression(visited.Arguments[0], visited.Arguments[1]);
             }
