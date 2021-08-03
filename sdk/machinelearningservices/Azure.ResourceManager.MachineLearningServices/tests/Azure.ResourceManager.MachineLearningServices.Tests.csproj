@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <UseNewMgmtFramework>true</UseNewMgmtFramework>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
+    <IsMgmtSubLibrary>true</IsMgmtSubLibrary>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.MachineLearningServices.csproj" />

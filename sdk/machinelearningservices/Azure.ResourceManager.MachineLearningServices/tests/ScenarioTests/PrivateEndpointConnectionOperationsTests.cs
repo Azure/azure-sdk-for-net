@@ -14,14 +14,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 {
     public class PrivateEndpointConnectionOperationsTests : MachineLearningServicesManagerTestBase
     {
-        private const string ResourceGroupNamePrefix = "test-PrivateEndpointConnectionOperations";
-        private const string WorkspacePrefix = "test-workspace";
-        private const string ResourceNamePrefix = "test-resource";
-        private readonly Location _defaultLocation = Location.WestUS2;
-        private string _resourceName = ResourceNamePrefix;
-        private string _workspaceName = WorkspacePrefix;
-        private string _resourceGroupName = ResourceGroupNamePrefix;
-
         public PrivateEndpointConnectionOperationsTests(bool isAsync)
             : base(isAsync)
         {
@@ -33,13 +25,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await CreateTestResourceGroup();
             var workspaceName = Recording.GenerateAssetName("testmlCreate");
-            var workspace = await CreateMLWorkspaceAsync(rg, workspaceName);
-            await PreparePrivateEndpoint(rg.Data.Name, workspace.Id.ToString());
+            var workspace = await rg.GetWorkspaces().CreateOrUpdateAsync(workspaceName, DataHelper.GenerateWorkspaceData());
+            await PreparePrivateEndpoint(rg.Data.Name, workspace.Value.Id.ToString());
 
             // Connection name is a random value?
-            var connections = await workspace.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var connections = await workspace.Value.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             await connections.FirstOrDefault().DeleteAsync();
-            connections = await workspace.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            connections = await workspace.Value.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.Zero(connections.Count);
         }
 
@@ -49,13 +41,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await CreateTestResourceGroup();
             var workspaceName = Recording.GenerateAssetName("testmlCreate");
-            var workspace = await CreateMLWorkspaceAsync(rg, workspaceName);
-            await PreparePrivateEndpoint(rg.Data.Name, workspace.Id.ToString());
+            var workspace = await rg.GetWorkspaces().CreateOrUpdateAsync(workspaceName, DataHelper.GenerateWorkspaceData());
+            await PreparePrivateEndpoint(rg.Data.Name, workspace.Value.Id.ToString());
 
             // Connection name is a random value?
-            var connections = await workspace.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var connections = await workspace.Value.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             await (await connections.FirstOrDefault().StartDeleteAsync()).WaitForCompletionResponseAsync();
-            connections = await workspace.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            connections = await workspace.Value.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.Zero(connections.Count);
         }
 
