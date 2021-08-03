@@ -155,7 +155,7 @@ namespace Azure.Core.TestFramework
         {
             if (TestEnvironment.GlobalIsRunningInCI)
             {
-                var tempFileName = Path.GetTempFileName();
+                var tempFileName = Path.GetTempFileName() + ".txt";
                 File.WriteAllText(tempFileName, TestExecutionContext.CurrentContext.CurrentResult.Output);
                 TestContext.AddTestAttachment(tempFileName, "Test Output");
             }
