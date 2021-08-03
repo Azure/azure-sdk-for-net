@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
         private readonly OperationOrResponseInternals<GenericResource> _operation;
         private readonly ResourceOperations _parentOperation;
 
-        /// <summary> Initializes a new instance of ResourcesUpdateByIdOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceUpdateByIdOperation for mocking. </summary>
         protected ResourceUpdateByIdOperation()
         {
         }

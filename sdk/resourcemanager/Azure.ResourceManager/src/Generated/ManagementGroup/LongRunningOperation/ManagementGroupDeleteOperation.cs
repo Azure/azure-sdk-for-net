@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Management.Models
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ManagementGroupsDeleteOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ManagementGroupDeleteOperation for mocking. </summary>
         protected ManagementGroupDeleteOperation()
         {
         }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ResourcesDeleteByIdOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceDeleteByIdOperation for mocking. </summary>
         protected ResourceDeleteByIdOperation()
         {
         }

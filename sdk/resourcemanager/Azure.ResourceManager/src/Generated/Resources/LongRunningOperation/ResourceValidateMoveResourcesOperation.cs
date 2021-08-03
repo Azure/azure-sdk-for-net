@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ResourcesValidateMoveResourcesOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceValidateMoveResourcesOperation for mocking. </summary>
         protected ResourceValidateMoveResourcesOperation()
         {
         }

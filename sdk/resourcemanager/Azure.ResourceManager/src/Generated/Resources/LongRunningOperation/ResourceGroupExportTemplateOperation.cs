@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationOrResponseInternals<ResourceGroupExportResult> _operation;
 
-        /// <summary> Initializes a new instance of ResourceGroupsExportTemplateOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceGroupExportTemplateOperation for mocking. </summary>
         protected ResourceGroupExportTemplateOperation()
         {
         }

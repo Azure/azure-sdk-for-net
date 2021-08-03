@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Management.Models
 
         private readonly ResourceOperations _operationBase;
 
-        /// <summary> Initializes a new instance of ManagementGroupsCreateOrUpdateOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ManagementGroupCreateOrUpdateOperation for mocking. </summary>
         protected ManagementGroupCreateOrUpdateOperation()
         {
         }
