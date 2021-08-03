@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     /// </remarks>
     ///
     [EventSource(Name = EventSourceName)]
-    internal class EventHubsEventSource : EventSource
+    internal class EventHubsEventSource : AzureEventSource
     {
         /// <summary>The name to use for the event source.</summary>
         private const string EventSourceName = "Azure-Messaging-EventHubs";
@@ -30,25 +30,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   use for logging.
         /// </summary>
         ///
-        public static EventHubsEventSource Log { get; } = new EventHubsEventSource(EventSourceName);
+        public static EventHubsEventSource Log { get; } = new EventHubsEventSource();
 
         /// <summary>
         ///   Prevents an instance of the <see cref="EventHubsEventSource"/> class from being created
         ///   outside the scope of the <see cref="Log" /> instance.
         /// </summary>
         ///
-        protected EventHubsEventSource()
-        {
-        }
-
-        /// <summary>
-        ///   Prevents an instance of the <see cref="EventHubsEventSource"/> class from being created
-        ///   outside the scope of the <see cref="Log" /> instance.
-        /// </summary>
-        ///
-        /// <param name="eventSourceName">The name to assign to the event source.</param>
-        ///
-        private EventHubsEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        protected EventHubsEventSource() : base(EventSourceName)
         {
         }
 

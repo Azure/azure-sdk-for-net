@@ -20,7 +20,7 @@ namespace Azure.Quantum.Jobs.Models
         }
 
         /// <summary> Initializes a new instance of JobDetailsList. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <param name="count"> Total records count number. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal JobDetailsList(IReadOnlyList<JobDetails> value, long? count, string nextLink)

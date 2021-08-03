@@ -31,22 +31,22 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [Test]
-        public void QueryKnowledgebaseProjectNameNull()
+        public void QueryKnowledgeBaseProjectNameNull()
         {
-            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => Client.QueryKnowledgebase(null, null));
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => Client.QueryKnowledgeBase(null, null));
             Assert.AreEqual("projectName", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.QueryKnowledgebaseAsync(null, null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.QueryKnowledgeBaseAsync(null, null));
             Assert.AreEqual("projectName", ex.ParamName);
         }
 
         [Test]
-        public void QueryKnowledgebaseOptionsNull()
+        public void QueryKnowledgeBaseOptionsNull()
         {
-            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => Client.QueryKnowledgebase("test", null));
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(() => Client.QueryKnowledgeBase("test", null));
             Assert.AreEqual("options", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.QueryKnowledgebaseAsync("test", null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.QueryKnowledgeBaseAsync("test", null));
             Assert.AreEqual("options", ex.ParamName);
         }
 

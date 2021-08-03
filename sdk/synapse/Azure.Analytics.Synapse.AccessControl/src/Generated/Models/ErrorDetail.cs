@@ -13,8 +13,8 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
     internal partial class ErrorDetail
     {
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
-        /// <param name="code"> . </param>
-        /// <param name="message"> . </param>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal ErrorDetail(string code, string message)
         {
@@ -32,9 +32,9 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
         }
 
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
-        /// <param name="code"> . </param>
-        /// <param name="message"> . </param>
-        /// <param name="target"> . </param>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <param name="target"></param>
         internal ErrorDetail(string code, string message, string target)
         {
             Code = code;
