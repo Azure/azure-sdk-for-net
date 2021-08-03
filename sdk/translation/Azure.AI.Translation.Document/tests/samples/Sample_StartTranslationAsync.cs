@@ -35,7 +35,6 @@ namespace Azure.AI.Translation.Document.Samples
 
             await operation.WaitForCompletionAsync();
 
-#if SNIPPET
             Console.WriteLine($"  Status: {operation.Status}");
             Console.WriteLine($"  Created on: {operation.CreatedOn}");
             Console.WriteLine($"  Last modified: {operation.LastModified}");
@@ -44,16 +43,6 @@ namespace Azure.AI.Translation.Document.Samples
             Console.WriteLine($"    Failed: {operation.DocumentsFailed}");
             Console.WriteLine($"    In Progress: {operation.DocumentsInProgress}");
             Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
-#else
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(1, operation.DocumentsTotal);
-            Assert.AreEqual(1, operation.DocumentsSucceeded);
-            Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
-            Assert.AreEqual(0, operation.DocumentsInProgress);
-            Assert.AreEqual(0, operation.DocumentsNotStarted);
-#endif
 
             await foreach (DocumentStatus document in operation.Value)
             {
@@ -72,7 +61,7 @@ namespace Azure.AI.Translation.Document.Samples
                 }
             }
 
-#endregion
+            #endregion
         }
     }
 }

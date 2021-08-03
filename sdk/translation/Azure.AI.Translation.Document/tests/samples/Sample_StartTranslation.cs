@@ -62,16 +62,6 @@ namespace Azure.AI.Translation.Document.Samples
                 }
             }
 
-#if !SNIPPET
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(1, operation.DocumentsTotal);
-            Assert.AreEqual(1, operation.DocumentsSucceeded);
-            Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
-            Assert.AreEqual(0, operation.DocumentsInProgress);
-            Assert.AreEqual(0, operation.DocumentsNotStarted);
-#endif
             foreach (DocumentStatus document in operation.GetValues())
             {
                 Console.WriteLine($"Document with Id: {document.Id}");
