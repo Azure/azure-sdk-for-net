@@ -167,5 +167,10 @@ namespace Azure.AI.Translation.Document.Tests
                 containerClient.UploadBlob(documents[i].Name, stream);
             }
         }
+
+        public static string GenerateRandomName(string baseName)
+        {
+            return baseName+random.Next().ToString();
+        }
     }
 }

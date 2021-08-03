@@ -9,6 +9,7 @@ using Azure.AI.Translation.Document.Tests;
 using Azure.Core.TestFramework;
 using Azure.Storage;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 
@@ -57,17 +58,22 @@ namespace Azure.AI.Translation.Document.Samples
             Uri storageEndpoint = new Uri(Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_ENDPOINT"));
             string storageAccountName = Environment.GetEnvironmentVariable("AZURE_STORAGE_ACCOUNT_NAME");
             string storageAccountKey = Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_KEY");
+#if SNIPPET
             string sourceContainerName = Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_CONTAINER_NAME");
             string targetContainerName = Environment.GetEnvironmentVariable("AZURE_STORAGE_TARGET_CONTAINER_NAME");
+#else
+            string sourceContainerName = DocumentTranslationSampleHelper.GenerateRandomName("source");
+            string targetContainerName = DocumentTranslationSampleHelper.GenerateRandomName("target");
+#endif
             string documentPath = Environment.GetEnvironmentVariable("AZURE_DOCUMENT_PATH");
 
             // Create source and target storage containers
             BlobServiceClient blobServiceClient = new BlobServiceClient(storageEndpoint, new StorageSharedKeyCredential(storageAccountName, storageAccountKey));
-            BlobContainerClient sourceContainerClient = await blobServiceClient.CreateBlobContainerAsync(sourceContainerName ?? "translation-source-container").ConfigureAwait(false);
-            BlobContainerClient targetContainerClient = await blobServiceClient.CreateBlobContainerAsync(targetContainerName ?? "translation-target-container").ConfigureAwait(false);
+            BlobContainerClient sourceContainerClient = await blobServiceClient.CreateBlobContainerAsync(sourceContainerName ?? "translation-source-container", PublicAccessType.BlobContainer).ConfigureAwait(false);
+            BlobContainerClient targetContainerClient = await blobServiceClient.CreateBlobContainerAsync(targetContainerName ?? "translation-target-container", PublicAccessType.BlobContainer).ConfigureAwait(false);
 
             // Upload blob (file) to the source container
-            BlobClient srcBlobClient = sourceContainerClient.GetBlobClient(string.IsNullOrWhiteSpace(documentPath) ? Path.GetFileName(documentPath) : "example_source_document.txt");
+            BlobClient srcBlobClient = sourceContainerClient.GetBlobClient(!string.IsNullOrWhiteSpace(documentPath) ? Path.GetFileName(documentPath) : "example_source_document.txt");
 
             if (!string.IsNullOrWhiteSpace(documentPath))
             {
