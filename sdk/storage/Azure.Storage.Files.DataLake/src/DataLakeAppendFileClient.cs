@@ -819,9 +819,10 @@ namespace Azure.Storage.Files.DataLake
                     {
                         response = await PathRestClient.ConcurrentAppendAsync(
                             body: content,
+                            appendMode: createIfNotExists ? AppendMode.AutoCreate : null,
                             timeout: null,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: null,
+                            transactionalContentHash: contentHash,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -829,9 +830,10 @@ namespace Azure.Storage.Files.DataLake
                     {
                         response = PathRestClient.ConcurrentAppend(
                             body: content,
+                            appendMode: createIfNotExists ? AppendMode.AutoCreate : null,
                             timeout: null,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: null,
+                            transactionalContentHash: contentHash,
                             cancellationToken: cancellationToken);
                     }
 

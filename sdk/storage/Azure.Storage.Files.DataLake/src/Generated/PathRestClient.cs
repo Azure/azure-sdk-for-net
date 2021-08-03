@@ -1395,7 +1395,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateConcurrentAppendRequest(Stream body, int? timeout, long? contentLength, byte[] transactionalContentHash)
+        internal HttpMessage CreateConcurrentAppendRequest(Stream body, int? timeout, AppendMode? appendMode, long? contentLength, byte[] transactionalContentHash)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1407,7 +1407,10 @@ namespace Azure.Storage.Files.DataLake
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
-            uri.AppendQuery("appendmode", "autoCreate", true);
+            if (appendMode != null)
+            {
+                uri.AppendQuery("appendmode", appendMode.Value.ToSerialString(), true);
+            }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
             request.Headers.Add("Accept", "application/json");
@@ -1427,18 +1430,19 @@ namespace Azure.Storage.Files.DataLake
         /// <summary> Appends data to the file. </summary>
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="appendMode"> Optional.  Indicates concurrent append mode. </param>
         /// <param name="contentLength"> Required for &quot;Append Data&quot; and &quot;Flush Data&quot;.  Must be 0 for &quot;Flush Data&quot;.  Must be the length of the request content in bytes for &quot;Append Data&quot;. </param>
         /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PathConcurrentAppendHeaders>> ConcurrentAppendAsync(Stream body, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathConcurrentAppendHeaders>> ConcurrentAppendAsync(Stream body, int? timeout = null, AppendMode? appendMode = null, long? contentLength = null, byte[] transactionalContentHash = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateConcurrentAppendRequest(body, timeout, contentLength, transactionalContentHash);
+            using var message = CreateConcurrentAppendRequest(body, timeout, appendMode, contentLength, transactionalContentHash);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathConcurrentAppendHeaders(message.Response);
             switch (message.Response.Status)
@@ -1453,18 +1457,19 @@ namespace Azure.Storage.Files.DataLake
         /// <summary> Appends data to the file. </summary>
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="appendMode"> Optional.  Indicates concurrent append mode. </param>
         /// <param name="contentLength"> Required for &quot;Append Data&quot; and &quot;Flush Data&quot;.  Must be 0 for &quot;Flush Data&quot;.  Must be the length of the request content in bytes for &quot;Append Data&quot;. </param>
         /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PathConcurrentAppendHeaders> ConcurrentAppend(Stream body, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathConcurrentAppendHeaders> ConcurrentAppend(Stream body, int? timeout = null, AppendMode? appendMode = null, long? contentLength = null, byte[] transactionalContentHash = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateConcurrentAppendRequest(body, timeout, contentLength, transactionalContentHash);
+            using var message = CreateConcurrentAppendRequest(body, timeout, appendMode, contentLength, transactionalContentHash);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathConcurrentAppendHeaders(message.Response);
             switch (message.Response.Status)

@@ -966,6 +966,7 @@ namespace Azure.Storage.Files.DataLake
                     {
                         response = PathRestClient.Create(
                             resource: resourceType,
+                            blobType: blobType,
                             cacheControl: httpHeaders?.CacheControl,
                             contentEncoding: httpHeaders?.ContentEncoding,
                             contentLanguage: httpHeaders?.ContentLanguage,
