@@ -13,6 +13,7 @@ parameters:
   type: string
   default: previousRun
   values:
+  - previousRun
   - empty
   - repo
 
@@ -202,9 +203,12 @@ stages:
               GdnBreakBaselines: $(PoliCheckBaselineName)
               GdnBreakSuppressionFiles: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnsuppress'
               GdnBreakSuppressionSets: policheck
-              GdnBreakOutputBaselineFile: '$(Pipeline.Workspace)\.gdn\a\policheck.gdnbaselines'
+              GdnBreakOutputBaselineFile: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnbaselines'
               GdnBreakOutputBaseline: policheck
             continueOnError: true
+          - pwsh: |
+              Copy-Item -Path $(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnbaselines -Destination $(Pipeline.Workspace)\.gdn\a\policheck.gdnbaselines
+            displayName: 'Stage baseline output for publishing'
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
             displayName: 'Publish Security Analysis Logs'
             condition: succeededOrFailed()
