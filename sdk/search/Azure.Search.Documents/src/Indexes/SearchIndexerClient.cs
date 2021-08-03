@@ -255,10 +255,11 @@ namespace Azure.Search.Documents.Indexes
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged,
-            CancellationToken cancellationToken)
-        {
-            return CreateOrUpdateDataSourceConnection(dataSourceConnection, onlyIfUnchanged, null, cancellationToken);
-        }
+            CancellationToken cancellationToken) => CreateOrUpdateDataSourceConnection(
+                dataSourceConnection,
+                onlyIfUnchanged,
+                ignoreResetRequirements: null,
+                cancellationToken);
 
         /// <summary>
         /// Creates a new data source or updates an existing data source connection.
@@ -325,15 +326,12 @@ namespace Azure.Search.Documents.Indexes
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged,
-            CancellationToken cancellationToken)
-        {
-            return await CreateOrUpdateDataSourceConnectionAsync(
+            CancellationToken cancellationToken) => await CreateOrUpdateDataSourceConnectionAsync(
                 dataSourceConnection,
                 onlyIfUnchanged,
-                null,
+                ignoreResetRequirements: null,
                 cancellationToken)
                 .ConfigureAwait(false);
-        }
 
         /// <summary>
         /// Creates a new data source or updates an existing data source connection.
@@ -780,10 +778,12 @@ namespace Azure.Search.Documents.Indexes
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             SearchIndexer indexer,
             bool onlyIfUnchanged,
-            CancellationToken cancellationToken)
-        {
-            return CreateOrUpdateIndexer(indexer, onlyIfUnchanged, null, null, cancellationToken);
-        }
+            CancellationToken cancellationToken) => CreateOrUpdateIndexer(
+                indexer,
+                onlyIfUnchanged,
+                disableCacheReprocessingChangeDetection: null,
+                ignoreResetRequirements: null,
+                cancellationToken);
 
         /// <summary>
         /// Creates a new indexer or updates an existing indexer.
@@ -853,16 +853,13 @@ namespace Azure.Search.Documents.Indexes
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             SearchIndexer indexer,
             bool onlyIfUnchanged,
-            CancellationToken cancellationToken)
-        {
-            return await CreateOrUpdateIndexerAsync(
+            CancellationToken cancellationToken) => await CreateOrUpdateIndexerAsync(
                 indexer,
                 onlyIfUnchanged,
-                null,
-                null,
+                disableCacheReprocessingChangeDetection: null,
+                ignoreResetRequirements: null,
                 cancellationToken).
                 ConfigureAwait(false);
-        }
 
         /// <summary>
         /// Creates a new indexer or updates an existing indexer.
@@ -1471,10 +1468,12 @@ namespace Azure.Search.Documents.Indexes
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged,
-            CancellationToken cancellationToken)
-        {
-            return CreateOrUpdateSkillset(skillset, onlyIfUnchanged,null, null, cancellationToken);
-        }
+            CancellationToken cancellationToken) => CreateOrUpdateSkillset(
+                skillset,
+                onlyIfUnchanged,
+                disableCacheReprocessingChangeDetection: null,
+                ignoreResetRequirements: null,
+                cancellationToken);
 
         /// <summary>
         /// Creates a new skillset or updates an existing skillset.
@@ -1544,16 +1543,13 @@ namespace Azure.Search.Documents.Indexes
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged,
-            CancellationToken cancellationToken)
-        {
-            return await CreateOrUpdateSkillsetAsync(
+            CancellationToken cancellationToken) => await CreateOrUpdateSkillsetAsync(
                 skillset,
                 onlyIfUnchanged,
-                null,
-                null,
+                disableCacheReprocessingChangeDetection: null,
+                ignoreResetRequirements: null,
                 cancellationToken).
                 ConfigureAwait(false);
-        }
 
         /// <summary>
         /// Creates a new skillset or updates an existing skillset.
