@@ -250,7 +250,6 @@ foreach (var resourceGroup in response.Value)
 }
 ```
 
-
 ### Query metrics
 
 You can query metrics using the `MetricsQueryClient.QueryAsync` method. For every requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
