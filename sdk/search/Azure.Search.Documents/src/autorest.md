@@ -51,7 +51,7 @@ directive:
     }
 ```
 
-### Make Loookup Document behave a little friendlier
+### Make Lookup Document behave a little friendlier
 It's currently an empty object and adding Additional Properties will generate
 a more useful model.
 ``` yaml
