@@ -79,7 +79,7 @@ namespace Azure.Storage
                 ServiceVersion.V2020_06_12 => "2018-11-09",
                 ServiceVersion.V2020_08_04 => "2018-11-09",
                 ServiceVersion.V2020_10_02 => "2018-11-09",
-                ServiceVersion.V2020_12_06 => "2020-11-09",
+                ServiceVersion.V2020_12_06 => "2018-11-09",
 #endif
                 _ => throw Errors.VersionNotSupported(nameof(version))
             };

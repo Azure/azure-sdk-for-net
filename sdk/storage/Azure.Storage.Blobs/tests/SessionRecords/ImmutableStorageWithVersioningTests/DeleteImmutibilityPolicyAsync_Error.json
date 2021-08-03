@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "50c235b1-ca17-103e-13d8-9f1ebf49b753",
         "x-ms-date": "Fri, 04 Jun 2021 19:05:25 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-10-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -29,7 +29,7 @@
         "x-ms-client-request-id": "50c235b1-ca17-103e-13d8-9f1ebf49b753",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "8afc4580-a01e-001a-6374-59a2b5000000",
-        "x-ms-version": "2020-10-02"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",
@@ -52,7 +52,7 @@
         "x-ms-client-request-id": "a066a2a3-7009-c9de-a06f-85bd4c549ac9",
         "x-ms-date": "Fri, 04 Jun 2021 19:05:25 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-10-02"
+        "x-ms-version": "2020-12-06"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -66,7 +66,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "a066a2a3-7009-c9de-a06f-85bd4c549ac9",
         "x-ms-request-id": "8afc4581-a01e-001a-6474-59a2b5000000",
-        "x-ms-version": "2020-10-02"
+        "x-ms-version": "2020-12-06"
       },
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://seanoauthstage.blob.core.windows.net/\" ContainerName=\"test-container-db3ee437-26cc-8c61-1f17-8744328fe5dd\"><Blobs /><NextMarker /></EnumerationResults>"
     }
