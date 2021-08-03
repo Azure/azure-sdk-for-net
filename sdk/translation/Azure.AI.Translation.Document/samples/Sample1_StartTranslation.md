@@ -25,7 +25,6 @@ See the [service documentation][Sas_token_permissions] for the supported SAS per
 ```C# Snippet:StartTranslationAsync
 Uri sourceUri = new Uri("<source SAS URI>");
 Uri targetUri = new Uri("<target SAS URI>");
-
 var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
 DocumentTranslationOperation operation = await client.StartTranslationAsync(input);

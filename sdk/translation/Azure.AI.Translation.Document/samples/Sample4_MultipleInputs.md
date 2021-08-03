@@ -23,7 +23,7 @@ To call `StartTranslationAsync` you need to initialize a list of `DocumentTransl
 See the [service documentation][Sas_token_permissions] for the supported SAS permissions.
 
 ```C# Snippet:MultipleInputsAsync
-Uri source1SasUriUri = new Uri("<source1 SAS URI>");
+Uri source1SasUri = new Uri("<source1 SAS URI>");
 Uri source2SasUri = new Uri("<source2 SAS URI>");
 Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
 Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
@@ -32,7 +32,7 @@ Uri frenchGlossarySasUri = new Uri("<french glossary SAS URI>");
 
 var glossaryFormat = "TSV";
 
-var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
+var input1 = new DocumentTranslationInput(source1SasUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
 input1.AddTarget(spanishTargetSasUri, "es");
 
 var input2 = new DocumentTranslationInput(source2SasUri, arabicTargetSasUri, "ar");
