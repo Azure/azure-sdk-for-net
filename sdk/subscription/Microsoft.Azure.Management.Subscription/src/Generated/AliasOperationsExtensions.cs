@@ -28,7 +28,9 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// Name for this subscription creation request also known as alias. Note that
+            /// this is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -44,7 +46,9 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// Name for this subscription creation request also known as alias. Note that
+            /// this is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -66,7 +70,9 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// Name for this subscription creation request also known as alias. Note that
+            /// this is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             public static PutAliasResponse Get(this IAliasOperations operations, string aliasName)
             {
@@ -80,7 +86,9 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// Name for this subscription creation request also known as alias. Note that
+            /// this is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -100,7 +108,9 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// Name for this subscription creation request also known as alias. Note that
+            /// this is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             public static void Delete(this IAliasOperations operations, string aliasName)
             {
@@ -114,7 +124,9 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// Name for this subscription creation request also known as alias. Note that
+            /// this is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -159,7 +171,9 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// Name for this subscription creation request also known as alias. Note that
+            /// this is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             /// <param name='body'>
             /// </param>
@@ -175,7 +189,9 @@ namespace Microsoft.Azure.Management.Subscription
             /// The operations group for this extension method.
             /// </param>
             /// <param name='aliasName'>
-            /// Alias Name
+            /// Name for this subscription creation request also known as alias. Note that
+            /// this is not the same as subscription name and this doesn’t have any other
+            /// lifecycle need beyond the request for subscription creation.
             /// </param>
             /// <param name='body'>
             /// </param>

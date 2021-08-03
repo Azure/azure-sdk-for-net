@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Subscription
         /// Create Alias Subscription.
         /// </summary>
         /// <param name='aliasName'>
-        /// Alias Name
+        /// Name for this subscription creation request also known as alias.
+        /// Note that this is not the same as subscription name and this
+        /// doesn’t have any other lifecycle need beyond the request for
+        /// subscription creation.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -51,7 +54,10 @@ namespace Microsoft.Azure.Management.Subscription
         /// Get Alias Subscription.
         /// </summary>
         /// <param name='aliasName'>
-        /// Alias Name
+        /// Name for this subscription creation request also known as alias.
+        /// Note that this is not the same as subscription name and this
+        /// doesn’t have any other lifecycle need beyond the request for
+        /// subscription creation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -73,7 +79,10 @@ namespace Microsoft.Azure.Management.Subscription
         /// Delete Alias.
         /// </summary>
         /// <param name='aliasName'>
-        /// Alias Name
+        /// Name for this subscription creation request also known as alias.
+        /// Note that this is not the same as subscription name and this
+        /// doesn’t have any other lifecycle need beyond the request for
+        /// subscription creation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -111,7 +120,10 @@ namespace Microsoft.Azure.Management.Subscription
         /// Create Alias Subscription.
         /// </summary>
         /// <param name='aliasName'>
-        /// Alias Name
+        /// Name for this subscription creation request also known as alias.
+        /// Note that this is not the same as subscription name and this
+        /// doesn’t have any other lifecycle need beyond the request for
+        /// subscription creation.
         /// </param>
         /// <param name='body'>
         /// </param>
