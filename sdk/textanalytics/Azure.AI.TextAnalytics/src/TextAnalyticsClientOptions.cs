@@ -80,7 +80,7 @@ namespace Azure.AI.TextAnalytics
             {
                 ServiceVersion.V3_0 => "v3.0",
                 ServiceVersion.V3_1 => "v3.1",
-                ServiceVersion.V3_2_Preview_1 => "v3.1",
+                ServiceVersion.V3_2_Preview_1 => "v3.2-preview.1",
 
                 _ => throw new ArgumentException($"Version {version} not supported."),
             };
