@@ -8,17 +8,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Translation.Document;
 
 namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Translation job submission batch request. </summary>
-    internal partial class StartTranslationDetails
+    public partial class StartTranslationDetails
     {
         /// <summary> Initializes a new instance of StartTranslationDetails. </summary>
         /// <param name="inputs"> The input list of documents or folders containing documents. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        public StartTranslationDetails(IEnumerable<DocumentTranslationInput> inputs)
+        public StartTranslationDetails(IEnumerable<BatchRequest> inputs)
         {
             if (inputs == null)
             {
@@ -29,6 +28,6 @@ namespace Azure.AI.Translation.Document.Models
         }
 
         /// <summary> The input list of documents or folders containing documents. </summary>
-        public IList<DocumentTranslationInput> Inputs { get; }
+        public IList<BatchRequest> Inputs { get; }
     }
 }

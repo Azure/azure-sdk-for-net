@@ -6,57 +6,60 @@
 #nullable disable
 
 using System;
-using Azure.AI.Translation.Document.Models;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Translation job status response. </summary>
     public partial class TranslationStatus
     {
         /// <summary> Initializes a new instance of TranslationStatus. </summary>
         /// <param name="id"> Id of the operation. </param>
-        /// <param name="createdOn"> Operation created date time. </param>
-        /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
+        /// <param name="createdDateTimeUtc"> Operation created date time. </param>
+        /// <param name="lastActionDateTimeUtc"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="summary"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="summary"/> is null. </exception>
-        internal TranslationStatus(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, StatusSummary summary)
+        /// <exception cref="ArgumentNullException"> <paramref name="summary"/> is null. </exception>
+        internal TranslationStatus(Guid id, DateTimeOffset createdDateTimeUtc, DateTimeOffset lastActionDateTimeUtc, Status status, StatusSummary summary)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (summary == null)
             {
                 throw new ArgumentNullException(nameof(summary));
             }
 
             Id = id;
-            CreatedOn = createdOn;
-            LastModified = lastModified;
+            CreatedDateTimeUtc = createdDateTimeUtc;
+            LastActionDateTimeUtc = lastActionDateTimeUtc;
             Status = status;
             Summary = summary;
         }
 
         /// <summary> Initializes a new instance of TranslationStatus. </summary>
         /// <param name="id"> Id of the operation. </param>
-        /// <param name="createdOn"> Operation created date time. </param>
-        /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
+        /// <param name="createdDateTimeUtc"> Operation created date time. </param>
+        /// <param name="lastActionDateTimeUtc"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
         /// <param name="summary"></param>
-        internal TranslationStatus(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, DocumentTranslationError? error, StatusSummary summary)
+        internal TranslationStatus(Guid id, DateTimeOffset createdDateTimeUtc, DateTimeOffset lastActionDateTimeUtc, Status status, TranslationError error, StatusSummary summary)
         {
             Id = id;
-            CreatedOn = createdOn;
-            LastModified = lastModified;
+            CreatedDateTimeUtc = createdDateTimeUtc;
+            LastActionDateTimeUtc = lastActionDateTimeUtc;
             Status = status;
             Error = error;
             Summary = summary;
         }
+
+        /// <summary> Id of the operation. </summary>
+        public Guid Id { get; }
+        /// <summary> Operation created date time. </summary>
+        public DateTimeOffset CreatedDateTimeUtc { get; }
+        /// <summary> Date time in which the operation&apos;s status has been updated. </summary>
+        public DateTimeOffset LastActionDateTimeUtc { get; }
         /// <summary> List of possible statuses for job or document. </summary>
-        public DocumentTranslationStatus Status { get; }
+        public Status Status { get; }
         /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
-        public DocumentTranslationError? Error { get; }
+        public TranslationError Error { get; }
+        public StatusSummary Summary { get; }
     }
 }

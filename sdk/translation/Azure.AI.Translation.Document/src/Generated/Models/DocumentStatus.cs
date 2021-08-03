@@ -7,67 +7,84 @@
 
 using System;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Document Status Response. </summary>
     public partial class DocumentStatus
     {
         /// <summary> Initializes a new instance of DocumentStatus. </summary>
-        /// <param name="sourceDocumentUri"> Location of the source document. </param>
-        /// <param name="createdOn"> Operation created date time. </param>
-        /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
+        /// <param name="sourcePath"> Location of the source document. </param>
+        /// <param name="createdDateTimeUtc"> Operation created date time. </param>
+        /// <param name="lastActionDateTimeUtc"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
-        /// <param name="translatedTo"> To language. </param>
+        /// <param name="to"> To language. </param>
         /// <param name="progress"> Progress of the translation if available. </param>
         /// <param name="id"> Document Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceDocumentUri"/>, <paramref name="translatedTo"/>, or <paramref name="id"/> is null. </exception>
-        internal DocumentStatus(Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedTo, float progress, string id)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourcePath"/> or <paramref name="to"/> is null. </exception>
+        internal DocumentStatus(string sourcePath, DateTimeOffset createdDateTimeUtc, DateTimeOffset lastActionDateTimeUtc, Status status, string to, float progress, Guid id)
         {
-            if (sourceDocumentUri == null)
+            if (sourcePath == null)
             {
-                throw new ArgumentNullException(nameof(sourceDocumentUri));
+                throw new ArgumentNullException(nameof(sourcePath));
             }
-            if (translatedTo == null)
+            if (to == null)
             {
-                throw new ArgumentNullException(nameof(translatedTo));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(to));
             }
 
-            SourceDocumentUri = sourceDocumentUri;
-            CreatedOn = createdOn;
-            LastModified = lastModified;
+            SourcePath = sourcePath;
+            CreatedDateTimeUtc = createdDateTimeUtc;
+            LastActionDateTimeUtc = lastActionDateTimeUtc;
             Status = status;
-            TranslatedTo = translatedTo;
+            To = to;
             Progress = progress;
             Id = id;
         }
 
         /// <summary> Initializes a new instance of DocumentStatus. </summary>
-        /// <param name="translatedDocumentUri"> Location of the document or folder. </param>
-        /// <param name="sourceDocumentUri"> Location of the source document. </param>
-        /// <param name="createdOn"> Operation created date time. </param>
-        /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
+        /// <param name="path"> Location of the document or folder. </param>
+        /// <param name="sourcePath"> Location of the source document. </param>
+        /// <param name="createdDateTimeUtc"> Operation created date time. </param>
+        /// <param name="lastActionDateTimeUtc"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
-        /// <param name="translatedTo"> To language. </param>
+        /// <param name="to"> To language. </param>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
         /// <param name="progress"> Progress of the translation if available. </param>
         /// <param name="id"> Document Id. </param>
-        /// <param name="charactersCharged"> Character charged by the API. </param>
-        internal DocumentStatus(Uri translatedDocumentUri, Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedTo, DocumentTranslationError error, float progress, string id, long charactersCharged)
+        /// <param name="characterCharged"> Character charged by the API. </param>
+        internal DocumentStatus(string path, string sourcePath, DateTimeOffset createdDateTimeUtc, DateTimeOffset lastActionDateTimeUtc, Status status, string to, TranslationError error, float progress, Guid id, long? characterCharged)
         {
-            TranslatedDocumentUri = translatedDocumentUri;
-            SourceDocumentUri = sourceDocumentUri;
-            CreatedOn = createdOn;
-            LastModified = lastModified;
+            Path = path;
+            SourcePath = sourcePath;
+            CreatedDateTimeUtc = createdDateTimeUtc;
+            LastActionDateTimeUtc = lastActionDateTimeUtc;
             Status = status;
-            TranslatedTo = translatedTo;
+            To = to;
             Error = error;
             Progress = progress;
             Id = id;
-            CharactersCharged = charactersCharged;
+            CharacterCharged = characterCharged;
         }
+
+        /// <summary> Location of the document or folder. </summary>
+        public string Path { get; }
+        /// <summary> Location of the source document. </summary>
+        public string SourcePath { get; }
+        /// <summary> Operation created date time. </summary>
+        public DateTimeOffset CreatedDateTimeUtc { get; }
+        /// <summary> Date time in which the operation&apos;s status has been updated. </summary>
+        public DateTimeOffset LastActionDateTimeUtc { get; }
+        /// <summary> List of possible statuses for job or document. </summary>
+        public Status Status { get; }
+        /// <summary> To language. </summary>
+        public string To { get; }
+        /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
+        public TranslationError Error { get; }
+        /// <summary> Progress of the translation if available. </summary>
+        public float Progress { get; }
+        /// <summary> Document Id. </summary>
+        public Guid Id { get; }
+        /// <summary> Character charged by the API. </summary>
+        public long? CharacterCharged { get; }
     }
 }

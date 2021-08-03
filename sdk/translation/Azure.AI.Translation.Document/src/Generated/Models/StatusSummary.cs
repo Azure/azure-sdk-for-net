@@ -8,7 +8,7 @@
 namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> The StatusSummary. </summary>
-    internal partial class StatusSummary
+    public partial class StatusSummary
     {
         /// <summary> Initializes a new instance of StatusSummary. </summary>
         /// <param name="total"> Total count. </param>

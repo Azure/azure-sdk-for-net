@@ -7,26 +7,25 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
     public partial class TranslationStatus
     {
         internal static TranslationStatus DeserializeTranslationStatus(JsonElement element)
         {
-            string id = default;
+            Guid id = default;
             DateTimeOffset createdDateTimeUtc = default;
             DateTimeOffset lastActionDateTimeUtc = default;
-            DocumentTranslationStatus status = default;
-            Optional<DocumentTranslationError> error = default;
+            Status status = default;
+            Optional<TranslationError> error = default;
             StatusSummary summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("createdDateTimeUtc"))
@@ -41,7 +40,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new DocumentTranslationStatus(property.Value.GetString());
+                    status = new Status(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"))
@@ -51,7 +50,7 @@ namespace Azure.AI.Translation.Document
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = DocumentTranslationError.DeserializeDocumentTranslationError(property.Value);
+                    error = TranslationError.DeserializeTranslationError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("summary"))
@@ -60,7 +59,7 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new TranslationStatus(id, createdDateTimeUtc, lastActionDateTimeUtc, status, Optional.ToNullable(error), summary);
+            return new TranslationStatus(id, createdDateTimeUtc, lastActionDateTimeUtc, status, error.Value, summary);
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Base type for List return in our api. </summary>
-    internal partial class SupportedStorageSources
+    public partial class SupportedStorageSources
     {
         /// <summary> Initializes a new instance of SupportedStorageSources. </summary>
         /// <param name="value"> list of objects. </param>

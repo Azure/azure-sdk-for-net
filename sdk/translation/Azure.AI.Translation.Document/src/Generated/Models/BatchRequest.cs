@@ -9,16 +9,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Definition for the input batch translation request. </summary>
-    public partial class DocumentTranslationInput
+    public partial class BatchRequest
     {
-        /// <summary> Initializes a new instance of DocumentTranslationInput. </summary>
+        /// <summary> Initializes a new instance of BatchRequest. </summary>
         /// <param name="source"> Source of the input documents. </param>
         /// <param name="targets"> Location of the destination for the output. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="targets"/> is null. </exception>
-        public DocumentTranslationInput(TranslationSource source, IEnumerable<TranslationTarget> targets)
+        public BatchRequest(SourceInput source, IEnumerable<TargetInput> targets)
         {
             if (source == null)
             {
@@ -34,9 +34,9 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary> Source of the input documents. </summary>
-        public TranslationSource Source { get; }
+        public SourceInput Source { get; }
         /// <summary> Location of the destination for the output. </summary>
-        public IList<TranslationTarget> Targets { get; }
+        public IList<TargetInput> Targets { get; }
         /// <summary> Storage type of the input documents source string. </summary>
         public StorageInputType? StorageType { get; set; }
     }

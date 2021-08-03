@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
-    public partial class DocumentTranslationInput : IUtf8JsonSerializable
+    public partial class BatchRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.AI.Translation.Document
             if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType");
-                writer.WriteStringValue(StorageType.Value.ToSerialString());
+                writer.WriteStringValue(StorageType.Value.ToString());
             }
             writer.WriteEndObject();
         }

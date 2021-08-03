@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class InnerTranslationError
+    public partial class InnerTranslationError
     {
         internal static InnerTranslationError DeserializeInnerTranslationError(JsonElement element)
         {

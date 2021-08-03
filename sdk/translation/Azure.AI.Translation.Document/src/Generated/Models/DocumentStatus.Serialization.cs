@@ -9,37 +9,32 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
     public partial class DocumentStatus
     {
         internal static DocumentStatus DeserializeDocumentStatus(JsonElement element)
         {
-            Optional<Uri> path = default;
-            Uri sourcePath = default;
+            Optional<string> path = default;
+            string sourcePath = default;
             DateTimeOffset createdDateTimeUtc = default;
             DateTimeOffset lastActionDateTimeUtc = default;
-            DocumentTranslationStatus status = default;
+            Status status = default;
             string to = default;
-            Optional<DocumentTranslationError> error = default;
+            Optional<TranslationError> error = default;
             float progress = default;
-            string id = default;
+            Guid id = default;
             Optional<long> characterCharged = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    path = new Uri(property.Value.GetString());
+                    path = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourcePath"))
                 {
-                    sourcePath = new Uri(property.Value.GetString());
+                    sourcePath = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("createdDateTimeUtc"))
@@ -54,7 +49,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new DocumentTranslationStatus(property.Value.GetString());
+                    status = new Status(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("to"))
@@ -69,7 +64,7 @@ namespace Azure.AI.Translation.Document
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = DocumentTranslationError.DeserializeDocumentTranslationError(property.Value);
+                    error = TranslationError.DeserializeTranslationError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("progress"))
@@ -79,7 +74,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("characterCharged"))
@@ -93,7 +88,7 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new DocumentStatus(path.Value, sourcePath, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error, progress, id, characterCharged);
+            return new DocumentStatus(path.Value, sourcePath, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error.Value, progress, id, Optional.ToNullable(characterCharged));
         }
     }
 }

@@ -8,22 +8,22 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
-    public partial class TranslationTarget : IUtf8JsonSerializable
+    public partial class TargetInput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetUrl");
-            writer.WriteStringValue(TargetUri.AbsoluteUri);
-            if (Optional.IsDefined(CategoryId))
+            writer.WriteStringValue(TargetUrl);
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category");
-                writer.WriteStringValue(CategoryId);
+                writer.WriteStringValue(Category);
             }
             writer.WritePropertyName("language");
-            writer.WriteStringValue(LanguageCode);
+            writer.WriteStringValue(Language);
             if (Optional.IsCollectionDefined(Glossaries))
             {
                 writer.WritePropertyName("glossaries");
@@ -37,7 +37,7 @@ namespace Azure.AI.Translation.Document
             if (Optional.IsDefined(StorageSource))
             {
                 writer.WritePropertyName("storageSource");
-                writer.WriteStringValue(StorageSource);
+                writer.WriteStringValue(StorageSource.Value.ToString());
             }
             writer.WriteEndObject();
         }

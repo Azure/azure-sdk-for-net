@@ -8,29 +8,29 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
-    public partial class TranslationSource : IUtf8JsonSerializable
+    public partial class SourceInput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceUrl");
-            writer.WriteStringValue(SourceUri.AbsoluteUri);
+            writer.WriteStringValue(SourceUrl);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter");
                 writer.WriteObjectValue(Filter);
             }
-            if (Optional.IsDefined(LanguageCode))
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language");
-                writer.WriteStringValue(LanguageCode);
+                writer.WriteStringValue(Language);
             }
             if (Optional.IsDefined(StorageSource))
             {
                 writer.WritePropertyName("storageSource");
-                writer.WriteStringValue(StorageSource);
+                writer.WriteStringValue(StorageSource.Value.ToString());
             }
             writer.WriteEndObject();
         }

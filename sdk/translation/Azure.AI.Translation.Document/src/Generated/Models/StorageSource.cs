@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Storage Source. </summary>
-    internal readonly partial struct StorageSource : IEquatable<StorageSource>
+    public readonly partial struct StorageSource : IEquatable<StorageSource>
     {
         private readonly string _value;
 
