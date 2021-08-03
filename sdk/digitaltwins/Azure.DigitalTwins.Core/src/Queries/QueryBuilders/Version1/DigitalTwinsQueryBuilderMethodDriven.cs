@@ -12,7 +12,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Azure DigitalTwins Query builder that facilitates writing queries against Digital Twins instances.
     /// </summary>
-    public class DigitalTwinsQueryBuilderV1
+    public class DigitalTwinsQueryBuilderMethodDriven
     {
         private readonly List<SelectClause> _selectClauses;
         private readonly List<string> _selectAsClauses;
@@ -26,7 +26,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Create a Digital Twins query without automatically specifying or aliasing a query-able collection.
         /// </summary>
-        public DigitalTwinsQueryBuilderV1()
+        public DigitalTwinsQueryBuilderMethodDriven()
         {
             _selectClauses = new List<SelectClause>();
             _selectAsClauses = new List<string>();
@@ -38,7 +38,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="collection">The collection being queried from.</param>
         /// <param name="alias">Alias for query-able collection.</param>
-        public DigitalTwinsQueryBuilderV1(DigitalTwinsCollection collection, string alias = null)
+        public DigitalTwinsQueryBuilderMethodDriven(DigitalTwinsCollection collection, string alias = null)
         {
             _selectClauses = new List<SelectClause>();
             _selectAsClauses = new List<string>();
@@ -51,8 +51,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Specifies the list of columns that the query will return.
         /// </summary>
         /// <param name="args">The arguments that can be queried (e.g., *, somePropertyName, etc.)</param>
-        /// <returns>The <see cref="DigitalTwinsQueryBuilderV1"/> object itself.</returns>
-        public DigitalTwinsQueryBuilderV1 Select(params string[] args)
+        /// <returns>The <see cref="DigitalTwinsQueryBuilderMethodDriven"/> object itself.</returns>
+        public DigitalTwinsQueryBuilderMethodDriven Select(params string[] args)
         {
             _selectClauses.Add(new SelectClause(args));
             return this;
@@ -61,8 +61,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Specifies the list of all possible columns to return.
         /// </summary>
-        /// <returns>The <see cref="DigitalTwinsQueryBuilderV1"/> object itself.</returns>
-        public DigitalTwinsQueryBuilderV1 SelectAll()
+        /// <returns>The <see cref="DigitalTwinsQueryBuilderMethodDriven"/> object itself.</returns>
+        public DigitalTwinsQueryBuilderMethodDriven SelectAll()
         {
             _selectClauses.Add(new SelectClause(new string[] { "*" }));
             return this;
@@ -74,8 +74,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="count">The argument for TOP(), i.e. the number of instances to return.</param>
         /// <param name="args">The arguments that can be optionally passed with top (e.g., property name).</param>
-        /// <returns>The <see cref="DigitalTwinsQueryBuilderV1"/> object itself.</returns>
-        public DigitalTwinsQueryBuilderV1 SelectTop(int count, params string[] args)
+        /// <returns>The <see cref="DigitalTwinsQueryBuilderMethodDriven"/> object itself.</returns>
+        public DigitalTwinsQueryBuilderMethodDriven SelectTop(int count, params string[] args)
         {
             var topArg = new StringBuilder().Append($"{QueryConstants.Top}({count})").Append(' ');
 
@@ -91,8 +91,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// but inserts TOP() into the query structure as well.
         /// </summary>
         /// <param name="count">The argument for TOP(), i.e. the number of results to return.</param>
-        /// <returns>The <see cref="DigitalTwinsQueryBuilderV1"/> object itself.</returns>
-        public DigitalTwinsQueryBuilderV1 SelectTopAll(int count)
+        /// <returns>The <see cref="DigitalTwinsQueryBuilderMethodDriven"/> object itself.</returns>
+        public DigitalTwinsQueryBuilderMethodDriven SelectTopAll(int count)
         {
             // turn into correct format -- e.g. SELECT TOP(3)
             var topArg = new StringBuilder().Append($"{QueryConstants.Top}({count})");
@@ -104,8 +104,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-count">COUNT()</see> aggregate from the Digital Twins query language.
         /// </summary>
-        /// <returns>The <see cref="DigitalTwinsQueryBuilderV1"/> object itself.</returns>
-        public DigitalTwinsQueryBuilderV1 SelectCount()
+        /// <returns>The <see cref="DigitalTwinsQueryBuilderMethodDriven"/> object itself.</returns>
+        public DigitalTwinsQueryBuilderMethodDriven SelectCount()
         {
             string countArg = $"{QueryConstants.Count}()";
 
@@ -117,8 +117,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Used when overriding the query builder with the literal query string.
         /// </summary>
         /// <param name="customQuery">Query in string format.</param>
-        /// <returns>The <see cref="DigitalTwinsQueryBuilderV1"/> object itself.</returns>
-        public DigitalTwinsQueryBuilderV1 SelectCustom(string customQuery)
+        /// <returns>The <see cref="DigitalTwinsQueryBuilderMethodDriven"/> object itself.</returns>
+        public DigitalTwinsQueryBuilderMethodDriven SelectCustom(string customQuery)
         {
             Argument.AssertNotNullOrWhiteSpace(customQuery, nameof(customQuery));
 
@@ -131,8 +131,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="field">The proper name for the selectable property in the Digital Twins Query Language.</param>
         /// <param name="alias">The alias to be assigned to the return contents in the query response.</param>
-        /// <returns>The <see cref="DigitalTwinsQueryBuilderV1"/> object itself.</returns>
-        public DigitalTwinsQueryBuilderV1 SelectAs(string field, string alias)
+        /// <returns>The <see cref="DigitalTwinsQueryBuilderMethodDriven"/> object itself.</returns>
+        public DigitalTwinsQueryBuilderMethodDriven SelectAs(string field, string alias)
         {
             Argument.AssertNotNullOrWhiteSpace(field, nameof(field));
             Argument.AssertNotNullOrWhiteSpace(alias, nameof(alias));
@@ -146,8 +146,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="collection">The collection being queried from.</param>
         /// <param name="alias">Collection alias (optional).</param>
-        /// <returns>The <see cref="DigitalTwinsQueryBuilderV1"/> object itself.</returns>
-        public DigitalTwinsQueryBuilderV1 From(DigitalTwinsCollection collection, string alias = default)
+        /// <returns>The <see cref="DigitalTwinsQueryBuilderMethodDriven"/> object itself.</returns>
+        public DigitalTwinsQueryBuilderMethodDriven From(DigitalTwinsCollection collection, string alias = default)
         {
             _fromClause = new FromClause(collection, alias);
             return this;
@@ -158,8 +158,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// that is being queried.
         /// </summary>
         /// <param name="collection">The collection being queried from.</param>
-        /// <returns>The <see cref="DigitalTwinsQueryBuilderV1"/> object itself.</returns>
-        public DigitalTwinsQueryBuilderV1 FromCustom(string collection)
+        /// <returns>The <see cref="DigitalTwinsQueryBuilderMethodDriven"/> object itself.</returns>
+        public DigitalTwinsQueryBuilderMethodDriven FromCustom(string collection)
         {
             Argument.AssertNotNullOrWhiteSpace(collection, nameof(collection));
 
@@ -171,8 +171,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Adds a WHERE clause to the query.
         /// </summary>
         /// <param name="whereLogic">Delegate that contains methods from the <see cref="WhereQuery"/> class.</param>
-        /// <returns>The <see cref="DigitalTwinsQueryBuilderV1"/> object itself.</returns>
-        public DigitalTwinsQueryBuilderV1 Where(Func<WhereQuery, WhereQuery> whereLogic)
+        /// <returns>The <see cref="DigitalTwinsQueryBuilderMethodDriven"/> object itself.</returns>
+        public DigitalTwinsQueryBuilderMethodDriven Where(Func<WhereQuery, WhereQuery> whereLogic)
         {
             whereLogic.Invoke(_whereQuery);
             return this;
@@ -181,8 +181,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Constructs the string representation of the current state of the query builder.
         /// </summary>
-        /// <returns>The <see cref="DigitalTwinsQueryBuilderV1"/> object itself.</returns>
-        public DigitalTwinsQueryBuilderV1 Build()
+        /// <returns>The <see cref="DigitalTwinsQueryBuilderMethodDriven"/> object itself.</returns>
+        public DigitalTwinsQueryBuilderMethodDriven Build()
         {
             var queryString = new StringBuilder();
 
