@@ -213,7 +213,7 @@ namespace Azure.DigitalTwins.Core.Samples
             // SELECT T.Temperature, T.Humdity FROM DigitalTwins T
             DigitalTwinsQueryBuilderV1 collectionAliasing = new DigitalTwinsQueryBuilderV1()
                 .Select("T.Temperature", "T.Humidity")
-                .From(DigitalTwinsCollection.DigitalTwins)
+                .From(DigitalTwinsCollection.DigitalTwins, "T")
                 .Build();
 
 
@@ -235,6 +235,7 @@ namespace Azure.DigitalTwins.Core.Samples
         public static void DigitalTwinsQueryBuilderV2Samples()
         {
             #region Snippet:DigitalTwinsQueryBuilderNonGeneric
+            // Note that if no Select() method, SELECT("*") is the default
             new DigitalTwinsQueryBuilderV2().Build();
             new DigitalTwinsQueryBuilderV2<BasicDigitalTwin>().Build();
 
@@ -250,14 +251,12 @@ namespace Azure.DigitalTwins.Core.Samples
                 .From(DigitalTwinsCollection.DigitalTwins)
                 .Build();
 
-            // Note how C# operators like == can be used directly in a query
+            // Note how C# operators like == can be used directly in the Where() method
             // SELECT * FROM DigitalTwins WHERE Temperature = 50
             new DigitalTwinsQueryBuilderV2<ConferenceRoom>()
                 .Where(r => r.Temperature == 50)
                 .Build();
             #endregion
-
-            #region Snippet:DigitalTwinsQueryBuilderLinqExpressions
 
             // SELECT * FROM DigitalTwins
             DigitalTwinsQueryBuilderV2<BasicDigitalTwin> simplestQueryLINQ = new DigitalTwinsQueryBuilderV2().Build();
@@ -294,8 +293,6 @@ namespace Azure.DigitalTwins.Core.Samples
             DigitalTwinsQueryBuilderV2<ConferenceRoom> queryWithIsOfModelLINQ = new DigitalTwinsQueryBuilderV2<ConferenceRoom>()
                 .Where(_ => DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1"))
                 .Build();
-
-            #endregion Snippet:DigitalTwinsQueryBuilder
 
             #region Snippet:DigitalTwinsQueryBuilderLinqExpressionsFunctions
             // SELECT * FROM DigitalTwins WHERE IS_DEFINED(Temperature)
