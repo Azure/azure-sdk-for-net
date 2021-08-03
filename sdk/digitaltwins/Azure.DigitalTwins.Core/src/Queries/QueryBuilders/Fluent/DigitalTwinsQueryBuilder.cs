@@ -19,7 +19,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Fluent
         private readonly string _alias;
 
         private FromClause _fromClause;
-        private WhereQuery _whereQuery;
+        private readonly WhereStatement _whereQuery;
 
         private string _queryText;
 
@@ -30,7 +30,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Fluent
         {
             _selectClauses = new List<SelectClause>();
             _selectAsClauses = new List<string>();
-            _whereQuery = new WhereQuery();
+            _whereQuery = new WhereStatement();
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Fluent
             _selectAsClauses = new List<string>();
             _alias = alias;
             _fromClause = new FromClause(collection);
-            _whereQuery = new WhereQuery();
+            _whereQuery = new WhereStatement();
         }
 
         /// <summary>
@@ -170,9 +170,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Fluent
         /// <summary>
         /// Adds a WHERE clause to the query.
         /// </summary>
-        /// <param name="whereLogic">Delegate that contains methods from the <see cref="WhereQuery"/> class.</param>
+        /// <param name="whereLogic">Delegate that contains methods from the <see cref="WhereStatement"/> class.</param>
         /// <returns>The <see cref="DigitalTwinsQueryBuilder"/> object itself.</returns>
-        public DigitalTwinsQueryBuilder Where(Func<WhereQuery, WhereQuery> whereLogic)
+        public DigitalTwinsQueryBuilder Where(Func<WhereStatement, WhereStatement> whereLogic)
         {
             whereLogic.Invoke(_whereQuery);
             return this;
