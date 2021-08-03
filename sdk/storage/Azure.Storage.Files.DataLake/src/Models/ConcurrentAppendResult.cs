@@ -11,6 +11,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// The number of blocks that have been commited to this Append File.
         /// </summary>
-        public long CommitedBlockCount { get; internal set; }
+        public long CommittedBlockCount { get; internal set; }
     }
 }

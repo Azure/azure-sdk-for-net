@@ -248,7 +248,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<ConcurrentAppendResult> concurrentAppendResponse = await file.AppendAsync(stream);
 
             // Assert
-            Assert.AreEqual(1, concurrentAppendResponse.Value.CommitedBlockCount);
+            Assert.AreEqual(1, concurrentAppendResponse.Value.CommittedBlockCount);
 
             // Assert
             Response<FileDownloadInfo> downloadResponse = await file.ReadAsync();

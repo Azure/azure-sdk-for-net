@@ -421,7 +421,7 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class ConcurrentAppendResult
     {
         public ConcurrentAppendResult() { }
-        public long CommitedBlockCount { get { throw null; } }
+        public long CommittedBlockCount { get { throw null; } }
     }
     public enum CopyStatus
     {

@@ -841,7 +841,7 @@ namespace Azure.Storage.Files.DataLake
 
             return new ConcurrentAppendResult
             {
-                CommitedBlockCount = response.Headers.CommitedBlockCount.GetValueOrDefault()
+                CommittedBlockCount = response.Headers.CommitedBlockCount.GetValueOrDefault()
             };
         }
 
