@@ -10,12 +10,18 @@ namespace Azure.DigitalTwins.Core.Samples
             #region Snippet:DigitalTwinsQueryBuilder
 
             // SELECT * FROM DIGITALTWINS
-            DigitalTwinsQueryBuilder simplestQuery = new DigitalTwinsQueryBuilder().Select("*").From(DigitalTwinsCollection.DigitalTwins).Build();
+            DigitalTwinsQueryBuilder simplestQuery = new DigitalTwinsQueryBuilder()
+                .Select("*")
+                .From(DigitalTwinsCollection.DigitalTwins)
+                .Build();
 
             // SELECT * FROM DIGITALTWINS
             // Note that the this is the same as the previous query, just with the pre-built SelectAll() method that can be used
             // interchangeably with Select("*")
-            DigitalTwinsQueryBuilder simplestQuerySelectAll = new DigitalTwinsQueryBuilder().SelectAll().From(DigitalTwinsCollection.DigitalTwins).Build();
+            DigitalTwinsQueryBuilder simplestQuerySelectAll = new DigitalTwinsQueryBuilder()
+                .SelectAll()
+                .From(DigitalTwinsCollection.DigitalTwins)
+                .Build();
 
             // SELECT TOP(3) FROM DIGITALTWINS
             // Note that if no property is specified, the SelectTopAll() method can be used instead of SelectTop()
@@ -211,7 +217,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Build();
 
 
-            // SELECT T.Temperature, T.Humdity FROM DigitalTwins T
+            // SELECT T.Temperature, T.Humidity FROM DigitalTwins T
             DigitalTwinsQueryBuilder collectionAliasing = new DigitalTwinsQueryBuilder()
                 .Select("T.Temperature", "T.Humidity")
                 .From(DigitalTwinsCollection.DigitalTwins, "T")
@@ -219,7 +225,7 @@ namespace Azure.DigitalTwins.Core.Samples
 
 
             // SELECT T.Temperature AS Temp, T.Humidity AS Hum FROM DigitalTwins T
-            // WHERE T.Temerpature = 50 AND T.Humidity = 30
+            // WHERE T.Temperature = 50 AND T.Humidity = 30
             DigitalTwinsQueryBuilder bothAliasingTypes = new DigitalTwinsQueryBuilder()
                 .SelectAs("T.Temperature", "Temp")
                 .SelectAs("T.Humidity", "Hum")

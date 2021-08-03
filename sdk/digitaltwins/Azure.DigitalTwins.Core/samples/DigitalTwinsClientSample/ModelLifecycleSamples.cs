@@ -71,7 +71,7 @@ namespace Azure.DigitalTwins.Samples
 
             // Now we decommission the model
 
-            #region Snippet:DigitalTwinsSampleDecommisionModel
+            #region Snippet:DigitalTwinsSampleDecommissionModel
 
             try
             {
@@ -80,10 +80,10 @@ namespace Azure.DigitalTwins.Samples
             }
             catch (RequestFailedException ex)
             {
-                FatalError($"Failed to decommision model '{sampleModelId}' due to:\n{ex}");
+                FatalError($"Failed to decommission model '{sampleModelId}' due to:\n{ex}");
             }
 
-            #endregion Snippet:DigitalTwinsSampleDecommisionModel
+            #endregion Snippet:DigitalTwinsSampleDecommissionModel
 
             // Now delete created model
 

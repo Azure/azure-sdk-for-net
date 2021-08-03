@@ -136,20 +136,27 @@ namespace Azure.DigitalTwins.Core.Samples.QueryBuilders
             #region Snippet:DigitalTwinsQueryBuilder_ComplexConditionsLinqExpressions
             // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
             DigitalTwinsQueryBuilder<ConferenceRoom> logicalOps_MultipleOrLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
-                .Where(r => r.Temperature == 50 ||
-                DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1", true) ||
-                DigitalTwinsFunctions.IsNumber(r.Temperature))
+                .Where(r =>
+                    r.Temperature == 50 ||
+                    DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1", true) ||
+                    DigitalTwinsFunctions.IsNumber(r.Temperature))
                 .Build();
 
             // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
             // OR (IS_OF_MODEL("dtmi:example:hvac;1") AND IS_NULL(Occupants))
             DigitalTwinsQueryBuilder<ConferenceRoom> logicalOpsNestedLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
-                .Where(r =>
-                    (DigitalTwinsFunctions.IsNumber(r.Humidity)
-                        || DigitalTwinsFunctions.IsDefined(r.Humidity))
-                    &&
-                    (DigitalTwinsFunctions.IsOfModel("dtmi:example:hvac;1")
-                        && DigitalTwinsFunctions.IsNull(r.Occupants)))
+                .Where(
+                    r =>
+                        (
+                            DigitalTwinsFunctions.IsNumber(r.Humidity)
+                            ||
+                            DigitalTwinsFunctions.IsDefined(r.Humidity)
+                        )
+                        &&
+                        DigitalTwinsFunctions.IsOfModel("dtmi:example:hvac;1")
+                        &&
+                        DigitalTwinsFunctions.IsNull(r.Occupants)
+                    )
                 .Build();
 
             #endregion

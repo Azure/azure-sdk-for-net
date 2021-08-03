@@ -1,6 +1,6 @@
 # Introduction
 
-Azure Digital Twins is a developer platform for next-generation IoT solutions that lets you create, run, and manage digital representations of your business environment, securely and efficiently in the cloud. With Azure Digital Twins, creating live operational state representations is quick and cost-effective, and digital representations stay current with real-time data from IoT and other data sources. If you are new to Azure Digital Twins and would like to learn more about the platform, please make sure you check out the Azure Digital Twins [official documentation page](https://docs.microsoft.com/azure/digital-twins/overview). 
+Azure Digital Twins is a developer platform for next-generation IoT solutions that lets you create, run, and manage digital representations of your business environment, securely and efficiently in the cloud. With Azure Digital Twins, creating live operational state representations is quick and cost-effective, and digital representations stay current with real-time data from IoT and other data sources. If you are new to Azure Digital Twins and would like to learn more about the platform, please make sure you check out the Azure Digital Twins [official documentation page](https://docs.microsoft.com/azure/digital-twins/overview).
 
 For an introduction on how to program against the Azure Digital Twins service, visit the [coding tutorial page](https://docs.microsoft.com/azure/digital-twins/tutorial-code) for an easy step-by-step guide. Visit [this tutorial](https://docs.microsoft.com/azure/digital-twins/tutorial-command-line-app) to learn how to interact with an Azure Digital Twin instance using a command-line client application. Finally, for a quick guide on how to build an end-to-end Azure Digital Twins solution that is driven by live data from your environment, make sure you check out [this helpful guide](https://docs.microsoft.com/azure/digital-twins/tutorial-end-to-end).
 
@@ -104,9 +104,9 @@ Console.WriteLine($"Retrieved model '{sampleModelResponse.Value.Id}'.");
 
 ### Decommission models
 
-To decommision a model, pass in a model Id for the model you want to decommision.
+To decommission a model, pass in a model Id for the model you want to decommission.
 
-```C# Snippet:DigitalTwinsSampleDecommisionModel
+```C# Snippet:DigitalTwinsSampleDecommissionModel
 try
 {
     await client.DecommissionModelAsync(sampleModelId);
@@ -114,7 +114,7 @@ try
 }
 catch (RequestFailedException ex)
 {
-    FatalError($"Failed to decommision model '{sampleModelId}' due to:\n{ex}");
+    FatalError($"Failed to decommission model '{sampleModelId}' due to:\n{ex}");
 }
 ```
 
@@ -199,7 +199,6 @@ Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value
 
 ### Get and deserialize a digital twin
 
-
 You can get a digital twin and deserialize it into a BasicDigitalTwin.
 It works well for basic stuff, but as you can see it gets more difficult when delving into more complex properties, like components.
 
@@ -283,7 +282,7 @@ await foreach (Page<BasicDigitalTwin> page in asyncPageableResponseWithCharge.As
 }
 ```
 
-In addition to passing strings as a query parameter, it is possible to pass in an `AdtQueryBuilder` ([see following section](#build-adt-queries)) object instead of a query in string format. 
+In addition to passing strings as a query parameter, it is possible to pass in an `AdtQueryBuilder` ([see following section](#build-adt-queries)) object instead of a query in string format.
 
 ```C# Snippet:DigitalTwinsSampleQueryTwinsAdtQueryBuilder
 // This code snippet demonstrates querying digital twin results using an AdtQueryBuilder, an object that allows for 
@@ -311,18 +310,24 @@ using Azure.DigitalTwins.Core.QueryBuilder.Fluent;
 using Azure.DigitalTwins.Core.QueryBuilder.Linq;
 ```
 
-
 #### **Fluent Namespace**
-Use a `DigitalTwinsQueryBuilder` under the `Azure.DigitalTwins.Core.QueryBuilder.Fluent` namespace to construct DigitalTwins queryies via method chaining on the `DigitalTwinsQueryBuilder` object. When using a `Where` clause, conditions are separated with the `Where` keyword.
+
+Use a `DigitalTwinsQueryBuilder` under the `Azure.DigitalTwins.Core.QueryBuilder.Fluent` namespace to construct DigitalTwins queries via method chaining on the `DigitalTwinsQueryBuilder` object. When using a `Where` clause, conditions are separated with the `Where` keyword.
 
 ```C# Snippet:DigitalTwinsQueryBuilder
 // SELECT * FROM DIGITALTWINS
-DigitalTwinsQueryBuilder simplestQuery = new DigitalTwinsQueryBuilder().Select("*").From(DigitalTwinsCollection.DigitalTwins).Build();
+DigitalTwinsQueryBuilder simplestQuery = new DigitalTwinsQueryBuilder()
+    .Select("*")
+    .From(DigitalTwinsCollection.DigitalTwins)
+    .Build();
 
 // SELECT * FROM DIGITALTWINS
 // Note that the this is the same as the previous query, just with the pre-built SelectAll() method that can be used
 // interchangeably with Select("*")
-DigitalTwinsQueryBuilder simplestQuerySelectAll = new DigitalTwinsQueryBuilder().SelectAll().From(DigitalTwinsCollection.DigitalTwins).Build();
+DigitalTwinsQueryBuilder simplestQuerySelectAll = new DigitalTwinsQueryBuilder()
+    .SelectAll()
+    .From(DigitalTwinsCollection.DigitalTwins)
+    .Build();
 
 // SELECT TOP(3) FROM DIGITALTWINS
 // Note that if no property is specified, the SelectTopAll() method can be used instead of SelectTop()
@@ -451,7 +456,7 @@ DigitalTwinsQueryBuilder anotherSelectAsSample = new DigitalTwinsQueryBuilder()
     .Build();
 
 
-// SELECT T.Temperature, T.Humdity FROM DigitalTwins T
+// SELECT T.Temperature, T.Humidity FROM DigitalTwins T
 DigitalTwinsQueryBuilder collectionAliasing = new DigitalTwinsQueryBuilder()
     .Select("T.Temperature", "T.Humidity")
     .From(DigitalTwinsCollection.DigitalTwins, "T")
@@ -459,7 +464,7 @@ DigitalTwinsQueryBuilder collectionAliasing = new DigitalTwinsQueryBuilder()
 
 
 // SELECT T.Temperature AS Temp, T.Humidity AS Hum FROM DigitalTwins T
-// WHERE T.Temerpature = 50 AND T.Humidity = 30
+// WHERE T.Temperature = 50 AND T.Humidity = 30
 DigitalTwinsQueryBuilder bothAliasingTypes = new DigitalTwinsQueryBuilder()
     .SelectAs("T.Temperature", "Temp")
     .SelectAs("T.Humidity", "Hum")
@@ -505,9 +510,11 @@ builtQuery.Build().GetQueryText();
 ```
 
 #### **Linq Namespace**
+
 The `DigitalTwinsQueryBuilder` object within the `Azure.DigitalTwins.Core.QueryBuilder.Linq` namespace is another way to construct queries. This version differs from `Fluent` namespace through the usage of [LINQ expressions](https://docs.microsoft.com/dotnet/api/system.linq.expressions.expression?view=net-5.0) and a generic type to help intelligently build queries.
 
 Consider the `ConferenceRoom` class defined below:
+
 ```C# Snippet:DigitalTwinsQueryBuilderConferenceRoom
 public class ConferenceRoom
 {
@@ -519,6 +526,7 @@ public class ConferenceRoom
     public bool IsOccupied { get; set; }
 }
 ```
+
 By passing in `ConferenceRoom` as a generic type into `DigitalTwinsQueryBuilder`, [LINQ expressions](https://docs.microsoft.com/dotnet/api/system.linq.expressions.expression?view=net-5.0) can be utilized to build queries efficiently and intelligently.
 
 ```C# Snippet:DigitalTwinsQueryBuilderLinqExpressionBenefits
@@ -547,9 +555,9 @@ new DigitalTwinsQueryBuilder().Build().GetQueryText();
 new DigitalTwinsQueryBuilder<BasicDigitalTwin>().Build().GetQueryText();
 ```
 
-Queryable collections (DigitalTwins, Relationships, or some custom collection) are specified in the `DigitalTwinsQueryBuilder` constructor. If no collection is specified, the query will select from `DigitalTwins` by default. The usage of this, essentially, is to define a query's FROM clause through the constructor rather than in a seperate `From()` method.
+Queryable collections (DigitalTwins, Relationships, or some custom collection) are specified in the `DigitalTwinsQueryBuilder` constructor. If no collection is specified, the query will select from `DigitalTwins` by default. The usage of this, essentially, is to define a query's FROM clause through the constructor rather than in a separate `From()` method.
 
-However, if desired, the `From()` and `FromCustom()` methods can be used to set or, in the case of already having been assinged via the constructor, reset a queryable collection.
+However, if desired, the `From()` and `FromCustom()` methods can be used to set or, in the case of already having been assigned via the constructor, reset a queryable collection.
 
 ```C# Snippet:DigitalTwinsQueryBuilderFromMethodLinqExpressions
 // SELECT Temperature FROM DigitalTwins
@@ -602,25 +610,32 @@ new DigitalTwinsQueryBuilder()
 .Build();
 ```
 
-For queries with multiple conditions, C# logical operators can be used to construct conditional statements rather than having to rely on `And()`/`Or()` methods (unlike in `Fluent`). Additionally, complex conditions can be seperated by typing literal parenthesis in the LINQ expression rather than using a `Precedence()` method.
+For queries with multiple conditions, C# logical operators can be used to construct conditional statements rather than having to rely on `And()`/`Or()` methods (unlike in `Fluent`). Additionally, complex conditions can be separated by typing literal parenthesis in the LINQ expression rather than using a `Precedence()` method.
 
 ```C# Snippet:DigitalTwinsQueryBuilder_ComplexConditionsLinqExpressions
 // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
 DigitalTwinsQueryBuilder<ConferenceRoom> logicalOps_MultipleOrLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
-    .Where(r => r.Temperature == 50 ||
-    DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1", true) ||
-    DigitalTwinsFunctions.IsNumber(r.Temperature))
+    .Where(r =>
+        r.Temperature == 50 ||
+        DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1", true) ||
+        DigitalTwinsFunctions.IsNumber(r.Temperature))
     .Build();
 
 // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
 // OR (IS_OF_MODEL("dtmi:example:hvac;1") AND IS_NULL(Occupants))
 DigitalTwinsQueryBuilder<ConferenceRoom> logicalOpsNestedLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
-    .Where(r =>
-        (DigitalTwinsFunctions.IsNumber(r.Humidity)
-            || DigitalTwinsFunctions.IsDefined(r.Humidity))
-        &&
-        (DigitalTwinsFunctions.IsOfModel("dtmi:example:hvac;1")
-            && DigitalTwinsFunctions.IsNull(r.Occupants)))
+    .Where(
+        r =>
+            (
+                DigitalTwinsFunctions.IsNumber(r.Humidity)
+                ||
+                DigitalTwinsFunctions.IsDefined(r.Humidity)
+            )
+            &&
+            DigitalTwinsFunctions.IsOfModel("dtmi:example:hvac;1")
+            &&
+            DigitalTwinsFunctions.IsNull(r.Occupants)
+        )
     .Build();
 ```
 
@@ -637,7 +652,7 @@ Console.WriteLine($"Deleted digital twin '{digitalTwinId}'.");
 
 ### Update digital twin components
 
-To update a component or in other words to replace, remove and/or add a component property or subproperty within Digital Twin, you would need Id of a digital twin, component name and application/json-patch+json operations to be performed on the specified digital twin's component. Here is the sample code on how to do it.
+To update a component or in other words to replace, remove and/or add a component property or sub-property within Digital Twin, you would need Id of a digital twin, component name and application/json-patch+json operations to be performed on the specified digital twin's component. Here is the sample code on how to do it.
 
 ```C# Snippet:DigitalTwinsSampleUpdateComponent
 // Update Component1 by replacing the property ComponentProp1 value,
@@ -663,7 +678,7 @@ Console.WriteLine($"Retrieved component for digital twin '{basicDtId}'.");
 
 `CreateRelationshipAsync` creates a relationship on a digital twin provided with Id of a digital twin, name of relationship such as "contains", Id of an relationship such as "FloorContainsRoom" and an application/json relationship to be created. Must contain property with key "$targetId" to specify the target of the relationship. Sample payloads for relationships can be found [here](https://github.com/Azure/azure-sdk-for-net-pr/blob/feature/IoT-ADT/sdk/iot/Azure.Iot.DigitalTwins/samples/DigitalTwinServiceClientSample/DTDL/Relationships/HospitalRelationships.json "RelationshipExamples").
 
-One option is to use the provided class BasicRelationship for serialization and deserialization. 
+One option is to use the provided class BasicRelationship for serialization and deserialization.
 It uses functionality from the `System.Text.Json` library to maintain any unmapped json properties to a dictionary.
 
 ```C# Snippet:DigitalTwinsSampleCreateBasicRelationship
@@ -708,6 +723,7 @@ Console.WriteLine($"Created a digital twin relationship '{createCustomRelationsh
 ```
 
 ### Get and deserialize a digital twin relationship
+
 You can get a digital twin relationship and deserialize it into a BasicRelationship.
 
 ```C# Snippet:DigitalTwinsSampleGetBasicRelationship
@@ -724,6 +740,7 @@ if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.
 ```
 
 Getting and deserializing a digital twin relationship into a custom data type is as easy.
+
 ```C# Snippet:DigitalTwinsSampleGetCustomRelationship
 Response<CustomRelationship> getCustomRelationshipResponse = await client.GetRelationshipAsync<CustomRelationship>(
     "floorTwinId",

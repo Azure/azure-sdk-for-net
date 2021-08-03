@@ -1756,7 +1756,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleDecommisionModel" language="csharp">
+        /// <code snippet="Snippet:DigitalTwinsSampleDecommissionModel" language="csharp">
         /// try
         /// {
         ///     await client.DecommissionModelAsync(sampleModelId);
@@ -1764,7 +1764,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// catch (RequestFailedException ex)
         /// {
-        ///     FatalError($&quot;Failed to decommision model &apos;{sampleModelId}&apos; due to:\n{ex}&quot;);
+        ///     FatalError($&quot;Failed to decommission model &apos;{sampleModelId}&apos; due to:\n{ex}&quot;);
         /// }
         /// </code>
         /// </example>
