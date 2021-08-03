@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
+#if NETCOREAPP
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp
 {
-    public class Startup
+    public partial class Startup
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -21,33 +21,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebAp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-            {
-#if NETCOREAPP
-                options.EnableEndpointRouting = false;
-#endif
-#pragma warning disable 618
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-#pragma warning restore 618
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-#pragma warning disable 618
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-#pragma warning restore 618
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseMvc();
+                endpoints.MapControllers();
+            });
         }
     }
 }
+#endif
