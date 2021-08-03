@@ -13,5 +13,5 @@ namespace Azure.DigitalTwins.Core.Samples
         public int Occupants { get; set; }
         public bool IsOccupied { get; set; }
     }
-    #endregion
+    #endregion Snippet:DigitalTwinsQueryBuilderConferenceRoom
 }

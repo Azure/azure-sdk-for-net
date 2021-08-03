@@ -123,7 +123,7 @@ namespace Azure.DigitalTwins.Core.Samples
             // string representation updated after Build() called again
             // SELECT TOP(5) Humidity From DigitalTwins WHERE Temperature > 50
             builtQuery.Build().GetQueryText();
-            #endregion
+            #endregion Snippet:DigitalTwinsQueryBuilderBuild
 
             #region Snippet:DigitalTwinsQueryBuilder_ComplexConditions
             // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
