@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.Tests.Samples
             // With the container, we can create a new resource group with an specific name
             string rgName = "myRgName";
             Location location = Location.WestUS2;
-            ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
+            ResourceGroupData rgData = new ResourceGroupData(location);
+            ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
             #endregion Snippet:Managing_Resource_Groups_CreateAResourceGroup
         }
 
@@ -57,7 +58,8 @@ namespace Azure.ResourceManager.Tests.Samples
             if (rg == null)
             {
                 Location location = Location.WestUS2;
-                _ = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
+                ResourceGroupData rgData = new ResourceGroupData(location);
+                _ = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
             }
 #endif
             ResourceGroup resourceGroup = await rgContainer.GetAsync(rgName);
@@ -99,7 +101,8 @@ namespace Azure.ResourceManager.Tests.Samples
             {
                 Location location = Location.WestUS2;
                 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-                _ = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
+                ResourceGroupData rgData = new ResourceGroupData(location);
+                _ = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
             }
 #endif
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);

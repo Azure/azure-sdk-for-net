@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TestHelperProjects>Rbac1.6;</TestHelperProjects>
     <UseNewMgmtFramework>false</UseNewMgmtFramework>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.KeyVault.csproj" />

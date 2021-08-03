@@ -403,7 +403,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (amqpMessage.Properties.AbsoluteExpiryTime != null)
                 {
-                    annotatedMessage.Properties.AbsoluteExpiryTime = amqpMessage.Properties.AbsoluteExpiryTime;
+                    annotatedMessage.Properties.AbsoluteExpiryTime =
+                        amqpMessage.Properties.AbsoluteExpiryTime >= DateTimeOffset.MaxValue.UtcDateTime
+                        ? DateTimeOffset.MaxValue
+                        : amqpMessage.Properties.AbsoluteExpiryTime;
                 }
             }
 

@@ -9,6 +9,7 @@
     <PackageTags>azure;management;eventhub</PackageTags>
     <NoWarn>$(NoWarn);AZC0008</NoWarn>
     <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
 
   <ItemGroup>

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await RestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
                 return Response.FromValue(new TagResource(this, response.Value), response.GetRawResponse());
             }
