@@ -30,7 +30,7 @@ namespace Azure.Monitor.Query.Models
             {
                 if (AllTables.Count != 1)
                 {
-                    throw new InvalidOperationException($"The result contains multiple tables, please use the {nameof(AllTables)} collection to access all tables.");
+                    throw new InvalidOperationException($"The result contains multiple tables. Use the {nameof(AllTables)} collection to access all tables.");
                 }
 
                 return AllTables[0];
