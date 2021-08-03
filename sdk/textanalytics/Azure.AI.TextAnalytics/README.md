@@ -19,7 +19,6 @@ Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 ```PowerShell
 dotnet add package Azure.AI.TextAnalytics
 ```
-> Note: This version of the client library defaults to the `v3.1` version of the service.
 
 This table shows the relationship between SDK versions and supported API versions of the service:
 
