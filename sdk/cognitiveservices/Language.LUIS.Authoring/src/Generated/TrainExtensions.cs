@@ -39,12 +39,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='versionId'>
             /// The version ID.
             /// </param>
+            /// <param name='mode'>
+            /// An enum value specifying mode of training.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EnqueueTrainingResponse> TrainVersionAsync(this ITrain operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EnqueueTrainingResponse> TrainVersionAsync(this ITrain operations, System.Guid appId, string versionId, string mode = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TrainVersionWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TrainVersionWithHttpMessagesAsync(appId, versionId, mode, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
