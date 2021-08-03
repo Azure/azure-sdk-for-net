@@ -233,7 +233,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
         public async Task AppendAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -245,7 +245,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             using Stream stream = new MemoryStream(data);
 
             // Act
-            await file.AppendAsync(stream);
+            Response<ConcurrentAppendResult> concurrentAppendResponse = await file.AppendAsync(stream);
+
+            // Assert
+            Assert.AreEqual(1, concurrentAppendResponse.Value.CommitedBlockCount);
 
             // Assert
             Response<FileDownloadInfo> downloadResponse = await file.ReadAsync();
