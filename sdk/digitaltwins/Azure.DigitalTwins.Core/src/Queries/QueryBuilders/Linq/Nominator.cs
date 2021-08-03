@@ -4,52 +4,51 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     internal class Nominator : LinqExpressionVisitor
     {
-        private Func<Expression, bool> functionCanBeEvaluated;
+        private Func<Expression, bool> _functionCanBeEvaluated;
 
-        private HashSet<Expression> candidates;
+        private HashSet<Expression> _candidates;
 
-        private bool cannotBeEvaluated;
+        private bool _cannotBeEvaluated;
 
         internal Nominator(Func<Expression, bool> functionCanBeEvaluated)
         {
-            this.functionCanBeEvaluated = functionCanBeEvaluated;
+            _functionCanBeEvaluated = functionCanBeEvaluated;
         }
 
         internal HashSet<Expression> Nominate(Expression expression)
         {
-            candidates = new HashSet<Expression>(EqualityComparer<Expression>.Default);
+            _candidates = new HashSet<Expression>(EqualityComparer<Expression>.Default);
             Visit(expression);
-            return candidates;
+            return _candidates;
         }
 
         internal override Expression Visit(Expression expression)
         {
             if (expression != null)
             {
-                bool saveCannotBeEvaluated = cannotBeEvaluated;
-                cannotBeEvaluated = false;
+                bool saveCannotBeEvaluated = _cannotBeEvaluated;
+                _cannotBeEvaluated = false;
 
                 base.Visit(expression);
 
-                if (!cannotBeEvaluated)
+                if (!_cannotBeEvaluated)
                 {
-                    if (functionCanBeEvaluated(expression))
+                    if (_functionCanBeEvaluated(expression))
                     {
-                        candidates.Add(expression);
+                        _candidates.Add(expression);
                     }
                     else
                     {
-                        cannotBeEvaluated = true;
+                        _cannotBeEvaluated = true;
                     }
                 }
 
-                cannotBeEvaluated |= saveCannotBeEvaluated;
+                _cannotBeEvaluated |= saveCannotBeEvaluated;
             }
 
             return expression;
