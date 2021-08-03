@@ -8,7 +8,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     internal class QueryAssemblerLogicalOperator
     {
-        private WhereClauseAssemblerLogic _whereLogic;
+        private readonly WhereClauseAssemblerLogic _whereLogic;
 
         internal QueryAssemblerLogicalOperator(WhereClauseAssemblerLogic whereLogic)
         {

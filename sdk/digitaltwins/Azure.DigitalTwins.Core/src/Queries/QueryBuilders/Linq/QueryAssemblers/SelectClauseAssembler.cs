@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
@@ -12,14 +10,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     internal sealed class SelectClauseAssembler
     {
-        private FromClauseAssembler _fromQuery;
-        private QueryAssembler _parent;
-        private List<string> _clauses;
+        private readonly FromClauseAssembler _fromQuery;
+        private readonly List<string> _clauses;
 
-        internal SelectClauseAssembler(QueryAssembler parent, FromClauseAssembler fromQuery)
+        internal SelectClauseAssembler(FromClauseAssembler fromQuery)
         {
             _fromQuery = fromQuery;
-            _parent = parent;
             _clauses = new List<string>();
         }
 

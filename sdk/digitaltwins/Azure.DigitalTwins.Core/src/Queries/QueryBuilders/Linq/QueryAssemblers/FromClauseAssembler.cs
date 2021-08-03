@@ -11,12 +11,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     internal sealed class FromClauseAssembler
     {
         private readonly WhereClauseAssembler _upsteamWhereStatement;
-        private readonly QueryAssembler _parent;
         private FromClause _clause;
 
-        internal FromClauseAssembler(QueryAssembler parent, WhereClauseAssembler upsteamWhereStatement)
+        internal FromClauseAssembler(WhereClauseAssembler upsteamWhereStatement)
         {
-            _parent = parent;
             _upsteamWhereStatement = upsteamWhereStatement;
         }
 
