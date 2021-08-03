@@ -35,7 +35,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                 bool saveCannotBeEvaluated = cannotBeEvaluated;
                 cannotBeEvaluated = false;
 
-                Visit(expression);
+                base.Visit(expression);
 
                 if (!cannotBeEvaluated)
                 {

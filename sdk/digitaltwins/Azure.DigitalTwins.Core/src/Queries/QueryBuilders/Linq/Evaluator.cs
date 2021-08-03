@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Linq;
+using System.Text;
 using System.Diagnostics;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
@@ -12,14 +14,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     {
         internal static Expression PartialEval(Expression expression, Func<Expression, bool> canBeEvaluated)
         {
-            Nominator nominator = new(canBeEvaluated);
+            Nominator nominator = new Nominator(canBeEvaluated);
             HashSet<Expression> candidates = nominator.Nominate(expression);
             return new SubtreeEvaluator(candidates).Eval(expression);
         }
 
         internal static Expression PartialEval(Expression expression)
         {
-            return PartialEval(expression, CanBeEvaluatedLocally);
+            return PartialEval(expression, Evaluator.CanBeEvaluatedLocally);
         }
 
         internal static bool CanBeEvaluatedLocally(Expression expression)
@@ -32,11 +34,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
         internal class SubtreeEvaluator : LinqExpressionVisitor
         {
-            private readonly HashSet<Expression> _candidates;
+            private HashSet<Expression> candidates;
 
             internal SubtreeEvaluator(HashSet<Expression> candidates)
             {
-                _candidates = candidates;
+                this.candidates = candidates;
             }
 
             internal Expression Eval(Expression exp)
@@ -51,12 +53,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                     return null;
                 }
 
-                if (_candidates.Contains(exp))
+                if (candidates.Contains(exp))
                 {
                     return Evaluate(exp);
                 }
 
-                return Visit(exp);
+                return base.Visit(exp);
             }
 
             private static Expression Evaluate(Expression e)
