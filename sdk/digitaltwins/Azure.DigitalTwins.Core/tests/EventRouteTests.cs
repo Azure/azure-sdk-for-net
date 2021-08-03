@@ -21,7 +21,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
         // Infrastructure setup script uses this hard-coded value when linking the test eventhub to the test digital twins instance
         private const string EndpointName = "someEventHubEndpoint";
-        private readonly TimeSpan _creationDelay = TimeSpan.FromSeconds(10);
+        private readonly TimeSpan _delay = TimeSpan.FromSeconds(10);
 
         [Test]
         public async Task EventRoutes_Lifecycle()
@@ -41,7 +41,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             // Wait certain amount of time to test if the issue is with propagation.
             // TODO: azabbasi: remove this logic once experiment is over.
-            await WaitIfLiveAsync(_creationDelay);
+            await WaitIfLiveAsync(_delay);
 
             // Test GetEventRoute
             DigitalTwinsEventRoute getEventRouteResult = await client.GetEventRouteAsync(eventRouteId);
@@ -70,6 +70,10 @@ namespace Azure.DigitalTwins.Core.Tests
             deleteEventRouteResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
 
             // Verify event route was deleted by trying to get it again
+
+            // Wait certain amount of time to test if the issue is with propagation.
+            // TODO: azabbasi: remove this logic once experiment is over.
+            await WaitIfLiveAsync(_delay);
 
             // act
             Func<Task> act = async () => await client.GetEventRouteAsync(eventRouteId).ConfigureAwait(false);
