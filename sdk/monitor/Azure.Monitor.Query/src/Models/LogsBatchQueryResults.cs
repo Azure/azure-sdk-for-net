@@ -70,7 +70,7 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="RequestFailedException">When the query <paramref name="queryId"/> failed.</exception>
         public IReadOnlyList<T> GetResult<T>(string queryId)
         {
-            return RowBinder.Shared.BindResults<T>(GetResult(queryId).Tables);
+            return RowBinder.Shared.BindResults<T>(GetResult(queryId).AllTables);
         }
     }
 }

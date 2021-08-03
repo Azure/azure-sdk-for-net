@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Monitor.Query.Models
 {
     [CodeGenModel("Response")]
-    public partial class MetricQueryResult
+    public partial class MetricsQueryResult
     {
         [CodeGenMember("Timespan")]
         private readonly string _timespan;
