@@ -99,7 +99,7 @@ namespace Azure.AI.Translation.Document.Tests
 
             // create test jobs
             await CreateTranslationJobsAsync(client, jobsCount: 5, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
-            var timestamp = DateTimeOffset.UtcNow;
+            var timestamp = Recording.UtcNow;
             var targetIds = await CreateTranslationJobsAsync(client, jobsCount: 5, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
             // list translations with filter
@@ -121,7 +121,7 @@ namespace Azure.AI.Translation.Document.Tests
 
             // create test jobs
             var targetIds = await CreateTranslationJobsAsync(client, jobsCount: 2, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
-            var timestamp = DateTimeOffset.UtcNow;
+            var timestamp = Recording.UtcNow;
             await CreateTranslationJobsAsync(client, jobsCount: 2, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
             // list translations with filter
