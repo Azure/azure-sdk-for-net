@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,6 +23,21 @@ namespace Azure.Test.Perf
         private string _recordingId;
 
         protected TOptions Options { get; private set; }
+
+        private int _completedOperations;
+        public int CompletedOperations
+        {
+            get
+            {
+                return _completedOperations;
+            }
+            set
+            {
+                Interlocked.Exchange(ref _completedOperations, value);
+            }
+        }
+
+        public TimeSpan LastCompletionTime { get; set; }
 
         public PerfTest(TOptions options)
         {
@@ -117,6 +133,29 @@ namespace Azure.Test.Perf
 
             _testProxyPolicy.Mode = "playback";
             _testProxyPolicy.RecordingId = _recordingId;
+        }
+
+        public void RunAll(CancellationToken cancellationToken)
+        {
+            var sw = Stopwatch.StartNew();
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                Run(cancellationToken);
+                Interlocked.Increment(ref _completedOperations);
+                LastCompletionTime = sw.Elapsed;
+            }
+        }
+
+        public async Task RunAllAsync(CancellationToken cancellationToken)
+        {
+            var sw = Stopwatch.StartNew();
+
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                await RunAsync(cancellationToken);
+                CompletedOperations++;
+                LastCompletionTime = sw.Elapsed;
+            }
         }
 
         public abstract void Run(CancellationToken cancellationToken);

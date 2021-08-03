@@ -9,11 +9,14 @@ namespace Azure.Test.Perf
 {
     internal interface IPerfTest : IDisposable, IAsyncDisposable
     {
+        int CompletedOperations { get; set; }
+        TimeSpan LastCompletionTime { get; set; }
+
         Task GlobalSetupAsync();
         Task SetupAsync();
         Task RecordAndStartPlayback();
-        void Run(CancellationToken cancellationToken);
-        Task RunAsync(CancellationToken cancellationToken);
+        void RunAll(CancellationToken cancellationToken);
+        Task RunAllAsync(CancellationToken cancellationToken);
         Task StopPlayback();
         Task CleanupAsync();
         Task GlobalCleanupAsync();

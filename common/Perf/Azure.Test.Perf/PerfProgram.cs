@@ -19,8 +19,9 @@ namespace Azure.Test.Perf
 {
     public static class PerfProgram
     {
-        private static int[] _completedOperations;
-        private static TimeSpan[] _lastCompletionTimes;
+        private static IPerfTest[] _perfTests;
+        private static IEnumerable<int> _completedOperations => _perfTests.Select(p => p.CompletedOperations);
+        private static IEnumerable<TimeSpan> _lastCompletionTimes => _perfTests.Select(p => p.LastCompletionTime);
         private static List<TimeSpan>[] _latencies;
         private static List<TimeSpan>[] _correctedLatencies;
         private static Channel<(TimeSpan, Stopwatch)> _pendingOperations;
@@ -94,6 +95,8 @@ namespace Azure.Test.Perf
             Thread cleanupStatusThread = null;
 
             var tests = new IPerfTest[options.Parallel];
+            _perfTests = tests;
+
             for (var i = 0; i < options.Parallel; i++)
             {
                 tests[i] = (IPerfTest)Activator.CreateInstance(testType, options);
@@ -305,8 +308,13 @@ namespace Azure.Test.Perf
             var jobStatistics = warmup ? false : options.JobStatistics;
             var latency = warmup ? false : options.Latency;
 
-            _completedOperations = new int[options.Parallel];
-            _lastCompletionTimes = new TimeSpan[options.Parallel];
+            // _completedOperations = new int[options.Parallel];
+            // _lastCompletionTimes = new TimeSpan[options.Parallel];
+            foreach (var test in tests)
+            {
+                test.CompletedOperations = 0;
+                test.LastCompletionTime = default;
+            }
 
             if (latency)
             {
@@ -364,7 +372,24 @@ namespace Azure.Test.Perf
                 for (var i = 0; i < options.Parallel; i++)
                 {
                     var j = i;
-                    threads[i] = new Thread(() => RunLoop(tests[j], j, latency, cancellationToken));
+                    threads[i] = new Thread(() =>
+                    {
+                        try
+                        {
+                            tests[j].RunAll(cancellationToken);
+                        }
+                        catch (Exception e)
+                        {
+                            if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                            {
+                                // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+                            }
+                            else
+                            {
+                                throw;
+                            }
+                        }
+                    });
                     threads[i].Start();
                 }
                 for (var i = 0; i < options.Parallel; i++)
@@ -380,7 +405,24 @@ namespace Azure.Test.Perf
                     var j = i;
                     // Call Task.Run() instead of directly calling RunLoopAsync(), to ensure the requested
                     // level of parallelism is achieved even if the test RunAsync() completes synchronously.
-                    tasks[j] = Task.Run(() => RunLoopAsync(tests[j], j, latency, cancellationToken));
+                    tasks[j] = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await tests[j].RunAllAsync(cancellationToken);
+                        }
+                        catch (Exception e)
+                        {
+                            if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                            {
+                                // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+                            }
+                            else
+                            {
+                                throw;
+                            }
+                        }
+                    });
                 }
                 await Task.WhenAll(tasks);
             }
@@ -453,91 +495,91 @@ namespace Azure.Test.Perf
             Console.WriteLine();
         }
 
-        private static void RunLoop(IPerfTest test, int index, bool latency, CancellationToken cancellationToken)
-        {
-            var sw = Stopwatch.StartNew();
-            var latencySw = new Stopwatch();
-            try
-            {
-                while (!cancellationToken.IsCancellationRequested)
-                {
-                    if (latency)
-                    {
-                        latencySw.Restart();
-                    }
+        //private static void RunLoop(IPerfTest test, int index, bool latency, CancellationToken cancellationToken)
+        //{
+        //    var sw = Stopwatch.StartNew();
+        //    var latencySw = new Stopwatch();
+        //    try
+        //    {
+        //        while (!cancellationToken.IsCancellationRequested)
+        //        {
+        //            if (latency)
+        //            {
+        //                latencySw.Restart();
+        //            }
 
-                    test.Run(cancellationToken);
+        //            test.Run(cancellationToken);
 
-                    if (latency)
-                    {
-                        _latencies[index].Add(latencySw.Elapsed);
-                    }
+        //            if (latency)
+        //            {
+        //                _latencies[index].Add(latencySw.Elapsed);
+        //            }
 
-                    _completedOperations[index]++;
-                    _lastCompletionTimes[index] = sw.Elapsed;
-                }
-            }
-            catch (Exception e)
-            {
-                if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
-                {
-                    // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
+        //            _completedOperations[index]++;
+        //            _lastCompletionTimes[index] = sw.Elapsed;
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+        //        {
+        //            // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+        //}
 
-        private static async Task RunLoopAsync(IPerfTest test, int index, bool latency, CancellationToken cancellationToken)
-        {
-            var sw = Stopwatch.StartNew();
-            var latencySw = new Stopwatch();
-            (TimeSpan Start, Stopwatch Stopwatch) operation = (TimeSpan.Zero, null);
+        //private static async Task RunLoopAsync(IPerfTest test, int index, bool latency, CancellationToken cancellationToken)
+        //{
+        //    var sw = Stopwatch.StartNew();
+        //    var latencySw = new Stopwatch();
+        //    (TimeSpan Start, Stopwatch Stopwatch) operation = (TimeSpan.Zero, null);
 
-            try
-            {
-                while (!cancellationToken.IsCancellationRequested)
-                {
-                    if (_pendingOperations != null)
-                    {
-                        operation = await _pendingOperations.Reader.ReadAsync(cancellationToken);
-                    }
+        //    try
+        //    {
+        //        while (!cancellationToken.IsCancellationRequested)
+        //        {
+        //            if (_pendingOperations != null)
+        //            {
+        //                operation = await _pendingOperations.Reader.ReadAsync(cancellationToken);
+        //            }
 
-                    if (latency)
-                    {
-                        latencySw.Restart();
-                    }
+        //            if (latency)
+        //            {
+        //                latencySw.Restart();
+        //            }
 
-                    await test.RunAsync(cancellationToken);
+        //            await test.RunAsync(cancellationToken);
 
-                    if (latency)
-                    {
-                        _latencies[index].Add(latencySw.Elapsed);
+        //            if (latency)
+        //            {
+        //                _latencies[index].Add(latencySw.Elapsed);
 
-                        if (_pendingOperations != null)
-                        {
-                            _correctedLatencies[index].Add(operation.Stopwatch.Elapsed - operation.Start);
-                        }
-                    }
+        //                if (_pendingOperations != null)
+        //                {
+        //                    _correctedLatencies[index].Add(operation.Stopwatch.Elapsed - operation.Start);
+        //                }
+        //            }
 
-                    _completedOperations[index]++;
-                    _lastCompletionTimes[index] = sw.Elapsed;
-                }
-            }
-            catch (Exception e)
-            {
-                if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
-                {
-                    // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
+        //            _completedOperations[index]++;
+        //            _lastCompletionTimes[index] = sw.Elapsed;
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+        //        {
+        //            // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+        //}
 
         private static Thread WritePendingOperations(int rate, CancellationToken token)
         {
