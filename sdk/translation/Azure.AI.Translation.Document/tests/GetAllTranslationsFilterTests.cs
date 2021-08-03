@@ -64,7 +64,7 @@ namespace Azure.AI.Translation.Document.Tests
                 statuses: cancelledStatusList
             );
             var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
-            var filteredIds = new HashSet<string>(filteredTranslations.Select(t => t.Id).ToList());
+            var filteredIds = filteredTranslations.Select(t => t.Id).ToList();
 
             // assert
             Assert.That(filteredTranslations.All(t => cancelledStatusList.Contains(t.Status)));
