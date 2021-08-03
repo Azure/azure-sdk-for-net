@@ -90,7 +90,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             MethodCallExpression visited = (MethodCallExpression)base.VisitMethodCall(call);
 
-            if (visited.Method.IsStatic && visited.Method.Name == "Equals" && visited.Arguments.Count > 1)
+            if (visited.Method.IsStatic
+                && visited.Method.Name == "Equals"
+                && visited.Arguments.Count > 1)
             {
                 return Expression.Equal(visited.Arguments[0], visited.Arguments[1], false, visited.Method);
             }
