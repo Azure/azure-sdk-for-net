@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Tests
             return await genericResources.CreateOrUpdateAsync(asetId, data);
         }
 
-        protected async Task<ResourcesCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
+        protected async Task<ResourceCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
             var genericResources = Client.DefaultSubscription.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();

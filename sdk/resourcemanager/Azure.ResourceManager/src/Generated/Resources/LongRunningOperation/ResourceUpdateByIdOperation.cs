@@ -15,20 +15,20 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Create a resource by ID. </summary>
-    public partial class ResourcesCreateOrUpdateByIdOperation : Operation<GenericResource>, IOperationSource<GenericResource>
+    /// <summary> Updates a resource by ID. </summary>
+    public partial class ResourceUpdateByIdOperation : Operation<GenericResource>, IOperationSource<GenericResource>
     {
         private readonly OperationOrResponseInternals<GenericResource> _operation;
         private readonly ResourceOperations _parentOperation;
 
-        /// <summary> Initializes a new instance of ResourcesCreateOrUpdateByIdOperation for mocking. </summary>
-        protected ResourcesCreateOrUpdateByIdOperation()
+        /// <summary> Initializes a new instance of ResourcesUpdateByIdOperation for mocking. </summary>
+        protected ResourceUpdateByIdOperation()
         {
         }
 
-        internal ResourcesCreateOrUpdateByIdOperation(ResourceOperations parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ResourceUpdateByIdOperation(ResourceOperations parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesCreateOrUpdateByIdOperation");
+            _operation = new OperationOrResponseInternals<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesUpdateByIdOperation");
             _parentOperation = parentOperation;
         }
         /// <inheritdoc />

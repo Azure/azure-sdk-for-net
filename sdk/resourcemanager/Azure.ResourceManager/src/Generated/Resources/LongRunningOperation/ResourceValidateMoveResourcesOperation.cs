@@ -11,28 +11,24 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Delete management group.
-    /// If a management group contains child resources, the request will fail.
-    /// .
-    /// </summary>
-    public partial class ManagementGroupsDeleteOperation : Operation
+    /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to move must be in the same source resource group. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
+    public partial class ResourceValidateMoveResourcesOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ManagementGroupsDeleteOperation for mocking. </summary>
-        protected ManagementGroupsDeleteOperation()
+        /// <summary> Initializes a new instance of ResourcesValidateMoveResourcesOperation for mocking. </summary>
+        protected ResourceValidateMoveResourcesOperation()
         {
         }
 
-        internal ManagementGroupsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ResourceValidateMoveResourcesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupsDeleteOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesValidateMoveResourcesOperation");
         }
         /// <inheritdoc />
-        public override string Id => _operation.Id;
+        public override string Id => "";
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

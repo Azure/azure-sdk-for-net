@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Management
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagementGroupsDeleteOperation StartDelete(string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual ManagementGroupDeleteOperation StartDelete(string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.StartDelete");
             scope.Start();
             try
             {
                 var originalResponse = _restClient.Delete(Id.Name, cacheControl, cancellationToken);
-                return new ManagementGroupsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name, cacheControl).Request, originalResponse);
+                return new ManagementGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name, cacheControl).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.Management
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagementGroupsDeleteOperation> StartDeleteAsync(string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagementGroupDeleteOperation> StartDeleteAsync(string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.StartDelete");
             scope.Start();
             try
             {
                 var originalResponse = await _restClient.DeleteAsync(Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
-                return new ManagementGroupsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name, cacheControl).Request, originalResponse);
+                return new ManagementGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name, cacheControl).Request, originalResponse);
             }
             catch (Exception e)
             {

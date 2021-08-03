@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.Management.Models
     /// If a management group is already created and a subsequent create request is issued with different properties, the management group properties will be updated.
     /// .
     /// </summary>
-    public partial class ManagementGroupsCreateOrUpdateOperation : Operation<ManagementGroup>, IOperationSource<ManagementGroup>
+    public partial class ManagementGroupCreateOrUpdateOperation : Operation<ManagementGroup>, IOperationSource<ManagementGroup>
     {
         private readonly OperationOrResponseInternals<ManagementGroup> _operation;
 
         private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of ManagementGroupsCreateOrUpdateOperation for mocking. </summary>
-        protected ManagementGroupsCreateOrUpdateOperation()
+        protected ManagementGroupCreateOrUpdateOperation()
         {
         }
 
-        internal ManagementGroupsCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagementGroupCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationOrResponseInternals<ManagementGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupsCreateOrUpdateOperation");
             _operationBase = operationsBase;
