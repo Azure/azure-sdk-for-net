@@ -28,7 +28,7 @@ namespace Azure.AI.Translation.Document.Samples
             #region Snippet:StartTranslationAsync
 #if SNIPPET
             Uri sourceUri = new Uri("<source SAS URI>");
-            Uri targetUri = new Uri("<target SAS URI>")
+            Uri targetUri = new Uri("<target SAS URI>");
 #else
             DocumentTranslationSampleHelper.TestEnvironment = TestEnvironment;
             Uri sourceUri = await DocumentTranslationSampleHelper.CreateSourceContainerAsync(DocumentTranslationSampleHelper.oneTestDocuments);
