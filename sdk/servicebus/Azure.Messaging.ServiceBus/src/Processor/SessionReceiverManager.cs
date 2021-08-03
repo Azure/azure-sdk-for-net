@@ -34,7 +34,6 @@ namespace Azure.Messaging.ServiceBus
         private CancellationTokenSource _sessionCancellationSource;
         private volatile bool _receiveTimeout;
 
-        internal CancellationTokenSource SessionCancellationTokenSource => _sessionCancellationSource;
         protected override ServiceBusReceiver Receiver => _receiver;
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
@@ -399,6 +398,11 @@ namespace Azure.Messaging.ServiceBus
         internal void ReleaseSession()
         {
             _sessionCancellationSource.Cancel();
+        }
+
+        internal void CancelSession()
+        {
+            _sessionCancellationSource?.Cancel();
         }
     }
 }

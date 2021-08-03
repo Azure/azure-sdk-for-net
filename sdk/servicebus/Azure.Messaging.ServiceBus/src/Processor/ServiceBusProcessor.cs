@@ -180,9 +180,9 @@ namespace Azure.Messaging.ServiceBus
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
         private readonly ServiceBusSessionProcessor _sessionProcessor;
-        internal readonly List<(Task Task, CancellationTokenSource Cts, CancellationTokenSource LinkedCts)> _tasks = new();
+        internal readonly List<(Task Task, CancellationTokenSource Cts)> _tasks = new();
         private readonly List<ReceiverManager> _orphanedReceiverManagers = new();
-        private CancellationTokenSource _handlerCts;
+        private CancellationTokenSource _handlerCts = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
@@ -594,36 +594,70 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private void EnsureReceiverManagersInitialized()
+        private void ReconcileReceiverManagers(int maxConcurrentSessions)
         {
-            if (_receiverManagers.Count > 0)
+            if (_receiverManagers.Count == 0)
             {
-                // already initialized - this can happen if stopping and then restarting
-                return;
-            }
-
-            if (IsSessionProcessor)
-            {
-                var numReceivers = _sessionIds.Length > 0 ? _sessionIds.Length : _maxConcurrentSessions;
-                for (int i = 0; i < numReceivers; i++)
+                if (IsSessionProcessor)
                 {
-                    var sessionId = _sessionIds.Length > 0 ? _sessionIds[i] : null;
+                    var numReceivers = _sessionIds.Length > 0 ? _sessionIds.Length : _maxConcurrentSessions;
+                    for (int i = 0; i < numReceivers; i++)
+                    {
+                        var sessionId = _sessionIds.Length > 0 ? _sessionIds[i] : null;
 
+                        _receiverManagers.Add(
+                            new SessionReceiverManager(
+                                _sessionProcessor,
+                                sessionId,
+                                MaxConcurrentAcceptSessionsSemaphore,
+                                _scopeFactory,
+                                KeepOpenOnReceiveTimeout));
+                    }
+                }
+                else
+                {
                     _receiverManagers.Add(
-                        new SessionReceiverManager(
-                            _sessionProcessor,
-                            sessionId,
-                            MaxConcurrentAcceptSessionsSemaphore,
-                            _scopeFactory,
-                            KeepOpenOnReceiveTimeout));
+                        new ReceiverManager(
+                            this,
+                            _scopeFactory));
                 }
             }
             else
             {
-                _receiverManagers.Add(
-                    new ReceiverManager(
-                        this,
-                        _scopeFactory));
+                if (IsSessionProcessor)
+                {
+                    var diffSessions = maxConcurrentSessions - _currentConcurrentSessions;
+
+                    if (_sessionIds.Length == 0)
+                    {
+                        if (diffSessions > 0)
+                        {
+                            for (int i = 0; i < diffSessions; i++)
+                            {
+                                _receiverManagers.Add(
+                                    new SessionReceiverManager(
+                                        _sessionProcessor,
+                                        null,
+                                        MaxConcurrentAcceptSessionsSemaphore,
+                                        _scopeFactory,
+                                        KeepOpenOnReceiveTimeout));
+                            }
+                        }
+                        else
+                        {
+                            int diffSessionsLimit = Math.Abs(diffSessions);
+                            for (int i = 0; i < diffSessionsLimit; i++)
+                            {
+                                // These should generally be closed as part of the normal bookkeeping in SessionReceiverManager,
+                                // but we will track them so that they can be explicitly closed when stopping, just like we do with
+                                // _receiverManagers.
+                                _orphanedReceiverManagers.Add(_receiverManagers[0]);
+                                ((SessionReceiverManager) _receiverManagers[0]).CancelSession();
+                                _receiverManagers.RemoveAt(0);
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -726,34 +760,27 @@ namespace Azure.Messaging.ServiceBus
             {
                 while (!cancellationToken.IsCancellationRequested && !Connection.IsClosed)
                 {
-                    ReconcileConcurrency();
-                    _handlerCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                    await ReconcileConcurrencyAsync().ConfigureAwait(false);
                     foreach (ReceiverManager receiverManager in _receiverManagers)
                     {
-                        // Do a quick synchronous check before we resort to async/await with the state-machine overhead.
-                        if (!_messageHandlerSemaphore.Wait(0, CancellationToken.None))
+                        try
                         {
-                            try
-                            {
-                                await _messageHandlerSemaphore.WaitAsync(_handlerCts.Token).ConfigureAwait(false);
-                            }
-                            catch (OperationCanceledException)
-                            {
-                                // allow the loop to wake up when tcs is signaled
-                                break;
-                            }
+                            await _messageHandlerSemaphore.WaitAsync(_handlerCts.Token).ConfigureAwait(false);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            // allow the loop to wake up when tcs is signaled
+                            break;
                         }
 
                         // hold onto all the tasks that we are starting so that when cancellation is requested,
                         // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                         // other than TaskCanceledExceptions
-                        var cts = new CancellationTokenSource();
-                        var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, cts.Token);
+                        var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
                         _tasks.Add(
                             (
                                 ReceiveAndProcessMessagesAsync(receiverManager, linkedCts.Token),
-                                cts,
                                 linkedCts)
                         );
 
@@ -805,10 +832,9 @@ namespace Azure.Messaging.ServiceBus
             {
                 // await and clean up the _tasks collection
                 await Task.WhenAll(_tasks.Select(t => t.Task)).ConfigureAwait(false);
-                foreach (var (_, tcs, linkedTcs) in _tasks)
+                foreach (var (_, tcs) in _tasks)
                 {
                     tcs.Dispose();
-                    linkedTcs.Dispose();
                 }
 
                 _tasks.Clear();
@@ -908,8 +934,7 @@ namespace Azure.Messaging.ServiceBus
             lock (_maxConcurrencySyncLock)
             {
                 _maxConcurrentCalls = maxConcurrentCalls;
-                // wake up the handler loop
-                _handlerCts.Cancel();
+                WakeLoop();
             }
         }
 
@@ -925,16 +950,24 @@ namespace Azure.Messaging.ServiceBus
                     : maxConcurrentSessions * maxConcurrentCallsPerSession;
                 _maxConcurrentSessions = maxConcurrentSessions;
                 _maxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
-                // wake up the handler loop
-                _handlerCts.Cancel();
+                WakeLoop();
             }
         }
 
-        private void ReconcileConcurrency()
+        private void WakeLoop()
         {
-            EnsureReceiverManagersInitialized();
+            // wake up the handler loop
+            var handlerCts = Interlocked.Exchange(ref _handlerCts, new CancellationTokenSource());
+            handlerCts.Cancel();
+        }
 
-            int diff = _maxConcurrentCalls - _currentConcurrentCalls;
+        private async Task ReconcileConcurrencyAsync()
+        {
+            // read synchronized values once to avoid race conditions
+            int maxConcurrentCalls = _maxConcurrentCalls;
+            int maxConcurrentSessions = _maxConcurrentSessions;
+
+            int diff = maxConcurrentCalls - _currentConcurrentCalls;
 
             // increasing concurrency
             if (diff > 0)
@@ -944,14 +977,6 @@ namespace Azure.Messaging.ServiceBus
             // decreasing concurrency
             else if (diff < 0)
             {
-                int diffLimit = Math.Abs(diff);
-                // limit the number of new tasks that can spawn to newly specified concurrency
-                for (int i = 0; i < diffLimit; i++)
-                {
-                    // use the async method to avoid blocking user callback thread
-                    _ = _messageHandlerSemaphore.WaitAsync();
-                }
-
                 var activeTasks = _tasks.Where(t => !t.Task.IsCompleted).ToList();
                 int excessTasks = activeTasks.Count - _maxConcurrentCalls;
 
@@ -960,44 +985,19 @@ namespace Azure.Messaging.ServiceBus
                 {
                     activeTasks[i].Cts.Cancel();
                 }
-            }
 
-            if (IsSessionProcessor)
-            {
-                var diffSessions = _maxConcurrentSessions - _currentConcurrentSessions;
-
-                if (_sessionIds.Length == 0)
+                int diffLimit = Math.Abs(diff);
+                // limit the number of new tasks that can spawn to newly specified concurrency
+                for (int i = 0; i < diffLimit; i++)
                 {
-                    if (diffSessions > 0)
-                    {
-                        for (int i = 0; i < diffSessions; i++)
-                        {
-                            _receiverManagers.Add(
-                                new SessionReceiverManager(
-                                    _sessionProcessor,
-                                    null,
-                                    MaxConcurrentAcceptSessionsSemaphore,
-                                    _scopeFactory,
-                                    KeepOpenOnReceiveTimeout));
-                        }
-                    }
-                    else
-                    {
-                        int diffSessionsLimit = Math.Abs(diffSessions);
-                        for (int i = 0; i < diffSessionsLimit; i++)
-                        {
-                            // These should generally be closed as part of the normal bookkeeping in SessionReceiverManager,
-                            // but we will track them so that they can be explicitly closed when stopping, just like we do with
-                            // _receiverManagers.
-                            _orphanedReceiverManagers.Add(_receiverManagers[0]);
-                            ((SessionReceiverManager) _receiverManagers[0]).SessionCancellationTokenSource.Cancel();
-                            _receiverManagers.RemoveAt(0);
-                        }
-                    }
+                    await _messageHandlerSemaphore.WaitAsync().ConfigureAwait(false);
                 }
             }
-            _currentConcurrentCalls = _maxConcurrentCalls;
-            _currentConcurrentSessions = _maxConcurrentSessions;
+
+            ReconcileReceiverManagers(maxConcurrentSessions);
+
+            _currentConcurrentCalls = maxConcurrentCalls;
+            _currentConcurrentSessions = maxConcurrentSessions;
         }
     }
 }
