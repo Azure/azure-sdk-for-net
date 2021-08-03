@@ -173,17 +173,26 @@ stages:
               result: PoliCheck.sarif
               optionsFC: 0
               optionsXS: 1
+          - task: PowerShell@2
+            displayName: 'Setup PostAnalysis Variables'
+            inputs:
+              pwsh: true
+              filePath: 'eng/scripts/SetupPostAnalysisVariables.ps1'
+              arguments: >
+                -PipelineWorkSpace $(Pipeline.Workspace)
+                -SourceDirectory $(Build.SourcesDirectory)
+                -PoliCheckBaseLineSource $(PoliCheck.BaseLineSource)
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
-            displayName: 'Guardian Break'
+            displayName: 'Guardian Break (PoliCheck)'
             inputs:
               GdnBreakAllTools: false
               GdnBreakGdnToolPoliCheck: true
               GdnBreakGdnToolPoliCheckSeverity: Warning
-              GdnBreakBaselineFiles: '$(Pipeline.Workspace)/policheck.gdnbaselines'
-              GdnBreakBaselines: policheck
+              GdnBreakBaselineFiles: $(PoliCheckBaselineFile)
+              GdnBreakBaselines: $(PoliCheckBaselineName)
               GdnBreakSuppressionFiles: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnsuppress'
               GdnBreakSuppressionSets: policheck
-              GdnBreakOutputBaselineFile: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnbaselines'
+              GdnBreakOutputBaselineFile: '$(Pipeline.Workspace)\.gdn\a\policheck.gdnbaselines'
               GdnBreakOutputBaseline: policheck
             continueOnError: true
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3

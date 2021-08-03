@@ -1,8 +1,8 @@
 {
   "version": "latest",
-  "suppressionSets": {
-    "policheck": {
-      "name": "policheck",
+  "baselines": {
+    "empty": {
+      "name": "empty",
       "createdDate": "2021-08-02 22:47:58Z",
       "lastUpdatedDate": "2021-08-02 22:47:58Z"
     }
