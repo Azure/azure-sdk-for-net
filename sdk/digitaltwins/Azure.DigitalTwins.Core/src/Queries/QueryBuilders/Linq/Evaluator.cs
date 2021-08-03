@@ -8,6 +8,9 @@ using System.Diagnostics;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
+    /// <summary>
+    /// Evaluates different forms of LINQ expressions.
+    /// </summary>
     internal static class Evaluator
     {
         internal static Expression PartialEval(Expression expression, Func<Expression, bool> canBeEvaluated)

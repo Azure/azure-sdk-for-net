@@ -296,7 +296,7 @@ AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilder = client.Query
 
 ### Build ADT Queries
 
-Build an [Azure DigitalTwins Query](https://docs.microsoft.com/azure/digital-twins/concepts-query-language) using a `DigitalTwinsQueryBuilder`. Two different objects entitled `DigitalTwinsQueryBuilder` exist in two namespaces, each with their own unique functionality and features. We encourage testing both objects and determining which works best given a specific set of needs.
+Build an [Azure DigitalTwins Query](https://docs.microsoft.com/azure/digital-twins/concepts-query-language) using a `DigitalTwinsQueryBuilder`. Two different objects entitled `DigitalTwinsQueryBuilder` exist in two namespaces, each with their own unique functionality and features. We encourage testing both objects and determining which works best given a specific set of needs. It should be noted that though both versions of the DigitalTwin query builder currently (August 2021) reside in their own respective namespaces, if/when a DigitalTwins query builder is officially supported it will be a single object that in one namespace.
 
 ```C#
 // The common namespace for DigitalTwins query builders
@@ -310,7 +310,7 @@ using Azure.DigitalTwins.Core.QueryBuilder.Fluent;
 using Azure.DigitalTwins.Core.QueryBuilder.Linq;
 ```
 
-#### **Fluent Namespace**
+#### Fluent Namespace
 
 Use a `DigitalTwinsQueryBuilder` under the `Azure.DigitalTwins.Core.QueryBuilder.Fluent` namespace to construct DigitalTwins queries via method chaining on the `DigitalTwinsQueryBuilder` object. When using a `Where` clause, conditions are separated with the `Where` keyword.
 
@@ -509,7 +509,7 @@ builtQuery.Select("Humidity").GetQueryText();
 builtQuery.Build().GetQueryText();
 ```
 
-#### **Linq Namespace**
+#### Linq Namespace
 
 The `DigitalTwinsQueryBuilder` object within the `Azure.DigitalTwins.Core.QueryBuilder.Linq` namespace is another way to construct queries. This version differs from `Fluent` namespace through the usage of [LINQ expressions](https://docs.microsoft.com/dotnet/api/system.linq.expressions.expression?view=net-5.0) and a generic type to help intelligently build queries.
 

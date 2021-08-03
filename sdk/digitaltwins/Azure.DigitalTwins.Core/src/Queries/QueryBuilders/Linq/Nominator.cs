@@ -7,6 +7,9 @@ using System.Linq.Expressions;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
+    /// <summary>
+    /// Prepares a LINQ expression for evaluation by checking whether or not it can be parsed.
+    /// </summary>
     internal class Nominator : LinqExpressionVisitor
     {
         private Func<Expression, bool> _functionCanBeEvaluated;

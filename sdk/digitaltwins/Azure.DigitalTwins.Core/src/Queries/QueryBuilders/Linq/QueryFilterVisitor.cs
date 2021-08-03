@@ -10,6 +10,9 @@ using System.Diagnostics;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
+    /// <summary>
+    /// Outlines how to represent DigitalTwins specific keywords and expression types into a query string.
+    /// </summary>
     internal class QueryFilterVisitor : LinqExpressionVisitor
     {
         private StringBuilder _filter = new StringBuilder();

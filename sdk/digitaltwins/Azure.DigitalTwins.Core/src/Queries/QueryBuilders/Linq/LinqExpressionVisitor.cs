@@ -9,6 +9,9 @@ using System.Linq.Expressions;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
+    /// <summary>
+    /// Parses different types of LINQ expressions.
+    /// </summary>
     internal abstract class LinqExpressionVisitor
     {
         internal virtual Expression Visit(Expression exp)

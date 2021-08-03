@@ -9,6 +9,9 @@ using System.Reflection;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
+    /// <summary>
+    /// Prepares LINQ expressions to be parsed by <see cref="LinqExpressionVisitor"/> and its children.
+    /// </summary>
     internal class ExpressionNormalizer : LinqExpressionVisitor
     {
         private const bool LiftToNull = false;
