@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.MetricsAdvisor.Administration;
-using Azure.AI.MetricsAdvisor.Models;
 
-namespace Azure.AI.MetricsAdvisor
+namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
     /// A factory that builds Azure.AI.MetricsAdvisor and Azure.AI.MetricsAdvisor.Administration
