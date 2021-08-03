@@ -4,7 +4,7 @@ param (
     [string] $PipelineWorkSpace,
     [Parameter(Mandatory=$True)]
     [string] $SourceDirectory,
-    [string] $PoliCheckBaseLineSource,
+    [string] $PoliCheckBaseLineSource
 )
 
 $poliCheckBaselineFile = Join-Path $PipelineWorkSpace "policheck.gdnbaselines"

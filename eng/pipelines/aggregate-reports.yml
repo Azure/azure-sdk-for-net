@@ -7,6 +7,15 @@ resources:
     tags: 
     - scheduled
 
+parameters:
+- name: poliCheckBaselineSource
+  displayName: PoliCheck Baseline Source
+  type: string
+  default: previousRun
+  values:
+  - empty
+  - repo
+
 trigger: none
 
 pr:
@@ -151,6 +160,7 @@ stages:
   - stage: GuardianTools
     displayName: Guardian Tools
     dependsOn: []
+
     jobs:
       - job: GuardianTools
         timeoutInMinutes: 120
@@ -181,7 +191,7 @@ stages:
               arguments: >
                 -PipelineWorkSpace $(Pipeline.Workspace)
                 -SourceDirectory $(Build.SourcesDirectory)
-                -PoliCheckBaseLineSource $(PoliCheck.BaseLineSource)
+                -PoliCheckBaseLineSource ${{ parameters.poliCheckBaselineSource }}
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
             displayName: 'Guardian Break (PoliCheck)'
             inputs:
