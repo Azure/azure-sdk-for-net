@@ -4,8 +4,7 @@ namespace Azure.DigitalTwins.Core.Samples
 {
     public static class QueryBuilderSamples
     {
-        // Seperate into two parts
-        public static void Main()
+        public static void DigitalTwinsQueryBuilderV1Samples()
         {
             #region Snippet:DigitalTwinsQueryBuilder
 
@@ -231,7 +230,10 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Build();
 
             #endregion
+        }
 
+        public static void DigitalTwinsQueryBuilderV2Samples()
+        {
             #region Snippet:DigitalTwinsQueryBuilderNonGeneric
             new DigitalTwinsQueryBuilderV2().Build();
             new DigitalTwinsQueryBuilderV2<BasicDigitalTwin>().Build();
