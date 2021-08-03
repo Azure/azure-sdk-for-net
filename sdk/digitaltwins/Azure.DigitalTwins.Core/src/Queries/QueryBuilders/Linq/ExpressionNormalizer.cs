@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
@@ -59,7 +58,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             if (leftVisisted && pattern.Kind == PatternKind.Compare && IsConstantZero(visited.Right))
             {
                 ComparePattern comparePattern = (ComparePattern)pattern;
-                if (TryCreateRelationalOperator(visited.NodeType, comparePattern.Left, comparePattern.Right, out BinaryExpression relationalExpression))
+                if (TryCreateRelationalOperator(visited.NodeType, comparePattern._left, comparePattern._right, out BinaryExpression relationalExpression))
                 {
                     visited = relationalExpression;
                 }
@@ -162,12 +161,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                 ((ConstantExpression)expression).Value.Equals(0);
         }
 
-        private static readonly MethodInfo StaticRelationalOperatorPlaceholderMethod = typeof(ExpressionNormalizer).GetMethod("RelationalOperatorPlaceholder", BindingFlags.Static | BindingFlags.NonPublic);
+        private static readonly MethodInfo s_staticRelationalOperatorPlaceholderMethod = typeof(ExpressionNormalizer)
+            .GetMethod("RelationalOperatorPlaceholder", BindingFlags.Static | BindingFlags.NonPublic);
 
         private static bool RelationalOperatorPlaceholder<TLeft, TRight>(TLeft left, TRight right)
         {
             Debug.Assert(false, "This method should never be called. It exists merely to support creation of relational LINQ expressions.");
-            return object.ReferenceEquals(left, right);
+            return ReferenceEquals(left, right);
         }
 
         private static BinaryExpression CreateRelationalOperator(ExpressionType op, Expression left, Expression right)
@@ -182,7 +182,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
         private static bool TryCreateRelationalOperator(ExpressionType op, Expression left, Expression right, out BinaryExpression result)
         {
-            MethodInfo relationalOperatorPlaceholderMethod = StaticRelationalOperatorPlaceholderMethod.MakeGenericMethod(left.Type, right.Type);
+            MethodInfo relationalOperatorPlaceholderMethod = s_staticRelationalOperatorPlaceholderMethod.MakeGenericMethod(left.Type, right.Type);
 
             switch (op)
             {
@@ -257,13 +257,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             internal ComparePattern(Expression left, Expression right)
             {
-                Left = left;
-                Right = right;
+                _left = left;
+                _right = right;
             }
 
-            internal readonly Expression Left;
+            internal readonly Expression _left;
 
-            internal readonly Expression Right;
+            internal readonly Expression _right;
 
             internal override PatternKind Kind
             {

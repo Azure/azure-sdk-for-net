@@ -285,7 +285,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 
             return Where(query);
 
-            bool CanEvaluate(Expression e)
+            static bool CanEvaluate(Expression e)
             {
                 if (e is MethodCallExpression call && call.Method.DeclaringType == typeof(DigitalTwinsFunctions))
                 {
@@ -306,7 +306,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 
         private static string GetPropertyName(Expression<Func<T, object>> selector)
         {
-            LambdaExpression lambda = selector as LambdaExpression;
+            LambdaExpression lambda = selector;
             Ensure(lambda != null);
             Ensure(lambda.Parameters.Count == 1);
 
@@ -314,9 +314,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
             Ensure(param.Type == typeof(T));
 
             Expression body = lambda.Body;
-            UnaryExpression conversion = body as UnaryExpression;
 
-            if (conversion != null)
+            if (body is UnaryExpression conversion)
             {
                 Ensure(conversion.NodeType == ExpressionType.Convert);
                 body = conversion.Operand;
@@ -333,7 +332,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         /// <summary>
         /// Gets the string representation of the built query.
         /// </summary>
-        /// <returns>String represenation of query.</returns>
+        /// <returns>String representation of query.</returns>
         public string GetQueryText()
         {
             if (string.IsNullOrEmpty(_queryText))
@@ -347,7 +346,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         /// <summary>
         /// Gets the string representation of the built query.
         /// </summary>
-        /// <returns>String represenation of query.</returns>
+        /// <returns>String representation of query.</returns>
         public override string ToString() => GetQueryText();
 
         /// <summary>
@@ -356,7 +355,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         /// <returns>Query with updated string representation.</returns>
         public DigitalTwinsQueryBuilder<T> Build()
         {
-            QueryAssembler query = new QueryAssembler();
+            QueryAssembler query = new();
             SelectClauseAssembler selectClause = _count
                 ? query.SelectCount()
                 : _top != null && _propertyNames != null
@@ -373,7 +372,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 
             if (_clauses?.Count > 0)
             {
-                var custom = _clauses
+                QueryAssemblerLogicalOperator custom = _clauses
                      .Skip(1)
                      .Aggregate(
                          whereClause
