@@ -36,7 +36,7 @@
         "premiumFileAccountName": "[concat(parameters('baseName'), 'pfile')]",
         "webjobsPrimaryAccountName": "[concat(parameters('baseName'), 'wjprim')]",
         "webjobsSecondaryAccountName": "[concat(parameters('baseName'), 'wjsec')]",
-        "vmName": "[concat(parameters('baseName'), 'vm')]",
+        "vmName": "[concat(take(parameters('baseName'), 13), 'vm')]",
         "keyvaultName": "[concat(parameters('baseName'), 'kvlt')]",
         "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', variables('keyvaultName'))]",
         "location": "[resourceGroup().location]",
