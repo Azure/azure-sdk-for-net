@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/86226c53-b7a6-416f-876b-226b2b5ab07d/versions?skip=0&take=100",
+      "RequestUri": "/luis/authoring/v3.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07d/versions?skip=0&take=100",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzg2MjI2YzUzLWI3YTYtNDE2Zi04NzZiLTIyNmIyYjVhYjA3ZC92ZXJzaW9ucz9za2lwPTAmdGFrZT0xMDA=",
       "RequestMethod": "GET",
       "RequestBody": "",

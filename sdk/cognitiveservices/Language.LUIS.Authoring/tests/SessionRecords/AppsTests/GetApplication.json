@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "RequestUri": "/luis/authoring/v3.0/apps/",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"Existing LUIS App\"\r\n}",
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/85b0146a-a08b-4403-9d7e-65bc76942f9f"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0/apps/85b0146a-a08b-4403-9d7e-65bc76942f9f"
         ],
         "Apim-Request-Id": [
           "1c14a6a0-4140-4965-aa0e-a1f7244673be"
@@ -39,7 +39,7 @@
           "1c14a6a0-4140-4965-aa0e-a1f7244673be"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/85b0146a-a08b-4403-9d7e-65bc76942f9f"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0/apps/85b0146a-a08b-4403-9d7e-65bc76942f9f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -67,7 +67,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/85b0146a-a08b-4403-9d7e-65bc76942f9f",
+      "RequestUri": "/luis/authoring/v3.0/apps/85b0146a-a08b-4403-9d7e-65bc76942f9f",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzg1YjAxNDZhLWEwOGItNDQwMy05ZDdlLTY1YmM3Njk0MmY5Zg==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -121,7 +121,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/85b0146a-a08b-4403-9d7e-65bc76942f9f?force=false",
+      "RequestUri": "/luis/authoring/v3.0/apps/85b0146a-a08b-4403-9d7e-65bc76942f9f?force=false",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzg1YjAxNDZhLWEwOGItNDQwMy05ZDdlLTY1YmM3Njk0MmY5Zj9mb3JjZT1mYWxzZQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",

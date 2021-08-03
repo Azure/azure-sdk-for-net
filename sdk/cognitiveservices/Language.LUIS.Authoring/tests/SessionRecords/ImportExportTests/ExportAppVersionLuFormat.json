@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "RequestUri": "/luis/authoring/v3.0/apps/",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"LUIS App to be exported in Lu format\"\r\n}",
@@ -33,7 +33,7 @@
           "1b0d03a9-7bae-4dea-97f5-dd01cbe3537f"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/be22f945-ae3a-4010-a562-f4cd341ffd72"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/be22f945-ae3a-4010-a562-f4cd341ffd72"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -54,7 +54,7 @@
           "Sun, 05 Apr 2020 16:09:13 GMT"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/be22f945-ae3a-4010-a562-f4cd341ffd72"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/be22f945-ae3a-4010-a562-f4cd341ffd72"
         ],
         "Content-Length": [
           "38"
@@ -67,7 +67,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/be22f945-ae3a-4010-a562-f4cd341ffd72/versions/0.1/export?format=lu",
+      "RequestUri": "/luis/authoring/v3.0/apps/be22f945-ae3a-4010-a562-f4cd341ffd72/versions/0.1/export?format=lu",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2JlMjJmOTQ1LWFlM2EtNDAxMC1hNTYyLWY0Y2QzNDFmZmQ3Mi92ZXJzaW9ucy8wLjEvZXhwb3J0P2Zvcm1hdD1sdQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -124,7 +124,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/be22f945-ae3a-4010-a562-f4cd341ffd72?force=false",
+      "RequestUri": "/luis/authoring/v3.0/apps/be22f945-ae3a-4010-a562-f4cd341ffd72?force=false",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2JlMjJmOTQ1LWFlM2EtNDAxMC1hNTYyLWY0Y2QzNDFmZmQ3Mj9mb3JjZT1mYWxzZQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",

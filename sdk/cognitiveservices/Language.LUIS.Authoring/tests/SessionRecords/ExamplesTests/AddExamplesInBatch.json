@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "RequestUri": "/luis/authoring/v3.0/apps/",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"Examples Test App\"\r\n}",
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/2f63e121-0315-4fb7-a8be-935507a39d78"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/2f63e121-0315-4fb7-a8be-935507a39d78"
         ],
         "Apim-Request-Id": [
           "4b05a7e4-ae48-459d-98ef-6f23013748e7"
@@ -39,7 +39,7 @@
           "4b05a7e4-ae48-459d-98ef-6f23013748e7"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/2f63e121-0315-4fb7-a8be-935507a39d78"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/2f63e121-0315-4fb7-a8be-935507a39d78"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -67,7 +67,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/intents",
+      "RequestUri": "/luis/authoring/v3.0/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/intents",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzJmNjNlMTIxLTAzMTUtNGZiNy1hOGJlLTkzNTUwN2EzOWQ3OC92ZXJzaW9ucy8wLjEvaW50ZW50cw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"name\": \"WeatherInPlace\"\r\n}",
@@ -96,7 +96,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/intents/4ff28c78-3603-4026-9f3e-4cbd328eb83f"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/intents/4ff28c78-3603-4026-9f3e-4cbd328eb83f"
         ],
         "Apim-Request-Id": [
           "56666131-a736-4d20-9733-0a0137a697a0"
@@ -105,7 +105,7 @@
           "56666131-a736-4d20-9733-0a0137a697a0"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/intents/4ff28c78-3603-4026-9f3e-4cbd328eb83f"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/intents/4ff28c78-3603-4026-9f3e-4cbd328eb83f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -133,7 +133,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/entities",
+      "RequestUri": "/luis/authoring/v3.0/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/entities",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzJmNjNlMTIxLTAzMTUtNGZiNy1hOGJlLTkzNTUwN2EzOWQ3OC92ZXJzaW9ucy8wLjEvZW50aXRpZXM=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"name\": \"Place\"\r\n}",
@@ -162,7 +162,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/entities/7e8d1102-4ab3-4d44-91c0-2eb4ac501d0c"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/entities/7e8d1102-4ab3-4d44-91c0-2eb4ac501d0c"
         ],
         "Apim-Request-Id": [
           "6a401e14-619d-4c6d-8882-f4eb1af0990b"
@@ -171,7 +171,7 @@
           "6a401e14-619d-4c6d-8882-f4eb1af0990b"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/entities/7e8d1102-4ab3-4d44-91c0-2eb4ac501d0c"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/entities/7e8d1102-4ab3-4d44-91c0-2eb4ac501d0c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -199,7 +199,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/examples?enableNestedChildren=false",
+      "RequestUri": "/luis/authoring/v3.0/apps/2f63e121-0315-4fb7-a8be-935507a39d78/versions/0.1/examples?enableNestedChildren=false",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzJmNjNlMTIxLTAzMTUtNGZiNy1hOGJlLTkzNTUwN2EzOWQ3OC92ZXJzaW9ucy8wLjEvZXhhbXBsZXM/ZW5hYmxlTmVzdGVkQ2hpbGRyZW49ZmFsc2U=",
       "RequestMethod": "POST",
       "RequestBody": "[\r\n  {\r\n    \"text\": \"whats the weather in seattle?\",\r\n    \"entityLabels\": [\r\n      {\r\n        \"entityName\": \"Place\",\r\n        \"startCharIndex\": 21,\r\n        \"endCharIndex\": 29\r\n      }\r\n    ],\r\n    \"intentName\": \"WeatherInPlace\"\r\n  },\r\n  {\r\n    \"text\": \"whats the weather in buenos aires?\",\r\n    \"entityLabels\": [\r\n      {\r\n        \"entityName\": \"Place\",\r\n        \"startCharIndex\": 21,\r\n        \"endCharIndex\": 34\r\n      }\r\n    ],\r\n    \"intentName\": \"WeatherInPlace\"\r\n  }\r\n]",
@@ -259,7 +259,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/2f63e121-0315-4fb7-a8be-935507a39d78?force=false",
+      "RequestUri": "/luis/authoring/v3.0/apps/2f63e121-0315-4fb7-a8be-935507a39d78?force=false",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzJmNjNlMTIxLTAzMTUtNGZiNy1hOGJlLTkzNTUwN2EzOWQ3OD9mb3JjZT1mYWxzZQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",

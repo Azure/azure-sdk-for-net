@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/domains",
+      "RequestUri": "/luis/authoring/v3.0/apps/domains",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2RvbWFpbnM=",
       "RequestMethod": "GET",
       "RequestBody": "",

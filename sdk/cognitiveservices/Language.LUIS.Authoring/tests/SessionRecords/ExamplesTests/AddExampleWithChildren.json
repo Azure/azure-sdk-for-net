@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "RequestUri": "/luis/authoring/v3.0/apps/",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"Examples Test App\"\r\n}",
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c"
         ],
         "Apim-Request-Id": [
           "81cd6a9b-d129-4914-820b-d95fca9e19ad"
@@ -39,7 +39,7 @@
           "81cd6a9b-d129-4914-820b-d95fca9e19ad"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -67,7 +67,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/intents",
+      "RequestUri": "/luis/authoring/v3.0/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/intents",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQ2YTUxYjczLTY0ZTEtNDdkMS1iMmEzLTJlYjRkODY2NWU3Yy92ZXJzaW9ucy8wLjEvaW50ZW50cw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"name\": \"WeatherInPlace\"\r\n}",
@@ -96,7 +96,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/intents/33d25319-9471-4142-a92e-5922881b2911"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/intents/33d25319-9471-4142-a92e-5922881b2911"
         ],
         "Apim-Request-Id": [
           "d51e9f6e-0904-4b15-9e7f-a2add77d09b6"
@@ -105,7 +105,7 @@
           "d51e9f6e-0904-4b15-9e7f-a2add77d09b6"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/intents/33d25319-9471-4142-a92e-5922881b2911"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/intents/33d25319-9471-4142-a92e-5922881b2911"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -133,7 +133,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/entities",
+      "RequestUri": "/luis/authoring/v3.0/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/entities",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQ2YTUxYjczLTY0ZTEtNDdkMS1iMmEzLTJlYjRkODY2NWU3Yy92ZXJzaW9ucy8wLjEvZW50aXRpZXM=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"children\": [\r\n    {\r\n      \"name\": \"City\"\r\n    },\r\n    {\r\n      \"name\": \"Country\"\r\n    }\r\n  ],\r\n  \"name\": \"Place\"\r\n}",
@@ -162,7 +162,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/entities/4224a47a-9948-43e8-b04a-4715506db3be"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/entities/4224a47a-9948-43e8-b04a-4715506db3be"
         ],
         "Apim-Request-Id": [
           "f9c4f2be-6057-49ba-86cc-34a128f74f5c"
@@ -171,7 +171,7 @@
           "f9c4f2be-6057-49ba-86cc-34a128f74f5c"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/entities/4224a47a-9948-43e8-b04a-4715506db3be"
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/entities/4224a47a-9948-43e8-b04a-4715506db3be"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -199,7 +199,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/example?enableNestedChildren=true",
+      "RequestUri": "/luis/authoring/v3.0/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/example?enableNestedChildren=true",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQ2YTUxYjczLTY0ZTEtNDdkMS1iMmEzLTJlYjRkODY2NWU3Yy92ZXJzaW9ucy8wLjEvZXhhbXBsZT9lbmFibGVOZXN0ZWRDaGlsZHJlbj10cnVl",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"text\": \"whats the weather in buenos aires, argentina?\",\r\n  \"entityLabels\": [\r\n    {\r\n      \"entityName\": \"Place\",\r\n      \"startCharIndex\": 21,\r\n      \"endCharIndex\": 43,\r\n      \"children\": [\r\n        {\r\n          \"entityName\": \"City\",\r\n          \"startCharIndex\": 21,\r\n          \"endCharIndex\": 32\r\n        },\r\n        {\r\n          \"entityName\": \"Country\",\r\n          \"startCharIndex\": 35,\r\n          \"endCharIndex\": 43\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"intentName\": \"WeatherInPlace\"\r\n}",
@@ -259,7 +259,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/examples?skip=0&take=100&enableNestedChildren=true",
+      "RequestUri": "/luis/authoring/v3.0/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c/versions/0.1/examples?skip=0&take=100&enableNestedChildren=true",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQ2YTUxYjczLTY0ZTEtNDdkMS1iMmEzLTJlYjRkODY2NWU3Yy92ZXJzaW9ucy8wLjEvZXhhbXBsZXM/c2tpcD0wJnRha2U9MTAwJmVuYWJsZU5lc3RlZENoaWxkcmVuPXRydWU=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -313,7 +313,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c?force=false",
+      "RequestUri": "/luis/authoring/v3.0/apps/46a51b73-64e1-47d1-b2a3-2eb4d8665e7c?force=false",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQ2YTUxYjczLTY0ZTEtNDdkMS1iMmEzLTJlYjRkODY2NWU3Yz9mb3JjZT1mYWxzZQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",

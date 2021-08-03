@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "RequestUri": "/luis/authoring/v3.0/apps/",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"LUIS App to be exported\"\r\n}",
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/cb00a3f9-8fac-442d-b56f-43bb617b9825"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0/apps/cb00a3f9-8fac-442d-b56f-43bb617b9825"
         ],
         "Apim-Request-Id": [
           "b5a16f73-5fb6-4864-86a0-e682ad4caed6"
@@ -39,7 +39,7 @@
           "b5a16f73-5fb6-4864-86a0-e682ad4caed6"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/cb00a3f9-8fac-442d-b56f-43bb617b9825"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0/apps/cb00a3f9-8fac-442d-b56f-43bb617b9825"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -67,7 +67,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/cb00a3f9-8fac-442d-b56f-43bb617b9825/versions/0.1/export",
+      "RequestUri": "/luis/authoring/v3.0/apps/cb00a3f9-8fac-442d-b56f-43bb617b9825/versions/0.1/export",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2NiMDBhM2Y5LThmYWMtNDQyZC1iNTZmLTQzYmI2MTdiOTgyNS92ZXJzaW9ucy8wLjEvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -124,7 +124,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/cb00a3f9-8fac-442d-b56f-43bb617b9825?force=false",
+      "RequestUri": "/luis/authoring/v3.0/apps/cb00a3f9-8fac-442d-b56f-43bb617b9825?force=false",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2NiMDBhM2Y5LThmYWMtNDQyZC1iNTZmLTQzYmI2MTdiOTgyNT9mb3JjZT1mYWxzZQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",

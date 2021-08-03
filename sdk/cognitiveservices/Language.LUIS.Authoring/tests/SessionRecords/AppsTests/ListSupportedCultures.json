@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/cultures",
+      "RequestUri": "/luis/authoring/v3.0/apps/cultures",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2N1bHR1cmVz",
       "RequestMethod": "GET",
       "RequestBody": "",

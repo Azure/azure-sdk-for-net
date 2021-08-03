@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/customprebuiltdomains/en-us",
+      "RequestUri": "/luis/authoring/v3.0/apps/customprebuiltdomains/en-us",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2N1c3RvbXByZWJ1aWx0ZG9tYWlucy9lbi11cw==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -55,7 +55,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/customprebuiltdomains/zh-cn",
+      "RequestUri": "/luis/authoring/v3.0/apps/customprebuiltdomains/zh-cn",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2N1c3RvbXByZWJ1aWx0ZG9tYWlucy96aC1jbg==",
       "RequestMethod": "GET",
       "RequestBody": "",

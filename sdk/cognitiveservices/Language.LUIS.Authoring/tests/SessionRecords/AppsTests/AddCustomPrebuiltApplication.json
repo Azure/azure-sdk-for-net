@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/customprebuiltdomains",
+      "RequestUri": "/luis/authoring/v3.0/apps/customprebuiltdomains",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2N1c3RvbXByZWJ1aWx0ZG9tYWlucw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"domainName\": \"Calendar\",\r\n  \"culture\": \"en-us\"\r\n}",
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/customprebuiltdomains/43933e78-a4ad-4aee-a9d3-9707ee95ec23"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0/apps/customprebuiltdomains/43933e78-a4ad-4aee-a9d3-9707ee95ec23"
         ],
         "Apim-Request-Id": [
           "4c4156cc-eee3-467b-9775-8d4f48819858"
@@ -39,7 +39,7 @@
           "4c4156cc-eee3-467b-9775-8d4f48819858"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/customprebuiltdomains/43933e78-a4ad-4aee-a9d3-9707ee95ec23"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0/apps/customprebuiltdomains/43933e78-a4ad-4aee-a9d3-9707ee95ec23"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -67,7 +67,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/43933e78-a4ad-4aee-a9d3-9707ee95ec23?force=false",
+      "RequestUri": "/luis/authoring/v3.0/apps/43933e78-a4ad-4aee-a9d3-9707ee95ec23?force=false",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzQzOTMzZTc4LWE0YWQtNGFlZS1hOWQzLTk3MDdlZTk1ZWMyMz9mb3JjZT1mYWxzZQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",

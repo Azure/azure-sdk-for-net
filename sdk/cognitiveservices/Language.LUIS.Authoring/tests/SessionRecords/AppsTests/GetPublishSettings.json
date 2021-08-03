@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "RequestUri": "/luis/authoring/v3.0/apps/",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"LUIS App for Settings test\"\r\n}",
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/f2a8926f-7e0c-490c-87b7-727772509b7d"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0/apps/f2a8926f-7e0c-490c-87b7-727772509b7d"
         ],
         "Apim-Request-Id": [
           "1dc11f89-06fc-400f-b842-593c4d45340f"
@@ -39,7 +39,7 @@
           "1dc11f89-06fc-400f-b842-593c4d45340f"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/f2a8926f-7e0c-490c-87b7-727772509b7d"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0/apps/f2a8926f-7e0c-490c-87b7-727772509b7d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -67,7 +67,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/f2a8926f-7e0c-490c-87b7-727772509b7d/publishsettings",
+      "RequestUri": "/luis/authoring/v3.0/apps/f2a8926f-7e0c-490c-87b7-727772509b7d/publishsettings",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2YyYTg5MjZmLTdlMGMtNDkwYy04N2I3LTcyNzc3MjUwOWI3ZC9wdWJsaXNoc2V0dGluZ3M=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -121,7 +121,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/f2a8926f-7e0c-490c-87b7-727772509b7d?force=false",
+      "RequestUri": "/luis/authoring/v3.0/apps/f2a8926f-7e0c-490c-87b7-727772509b7d?force=false",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2YyYTg5MjZmLTdlMGMtNDkwYy04N2I3LTcyNzc3MjUwOWI3ZD9mb3JjZT1mYWxzZQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",

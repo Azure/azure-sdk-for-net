@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "RequestUri": "/luis/authoring/v3.0/apps/",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"LUIS App for Query Logs test\"\r\n}",
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/a94057c9-3079-4b65-979a-c697b30c1fe7"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0/apps/a94057c9-3079-4b65-979a-c697b30c1fe7"
         ],
         "Apim-Request-Id": [
           "5083a62f-29a3-433d-bcce-3b6e750826d9"
@@ -39,7 +39,7 @@
           "5083a62f-29a3-433d-bcce-3b6e750826d9"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/a94057c9-3079-4b65-979a-c697b30c1fe7"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0/apps/a94057c9-3079-4b65-979a-c697b30c1fe7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -67,7 +67,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/a94057c9-3079-4b65-979a-c697b30c1fe7/querylogs",
+      "RequestUri": "/luis/authoring/v3.0/apps/a94057c9-3079-4b65-979a-c697b30c1fe7/querylogs",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2E5NDA1N2M5LTMwNzktNGI2NS05NzlhLWM2OTdiMzBjMWZlNy9xdWVyeWxvZ3M=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -124,7 +124,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/authoring/v3.0-preview/apps/a94057c9-3079-4b65-979a-c697b30c1fe7?force=false",
+      "RequestUri": "/luis/authoring/v3.0/apps/a94057c9-3079-4b65-979a-c697b30c1fe7?force=false",
       "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2E5NDA1N2M5LTMwNzktNGI2NS05NzlhLWM2OTdiMzBjMWZlNz9mb3JjZT1mYWxzZQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
