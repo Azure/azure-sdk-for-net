@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Azure.Core;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
@@ -20,8 +24,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             _whereLogic = new WhereClauseAssemblerLogic(this);
             _whereStatement = new WhereClauseAssembler(this, _whereLogic);
-            _fromQuery = new FromClauseAssembler(_whereStatement);
-            _selectAs = new SelectClauseAssembler(_fromQuery);
+            _fromQuery = new FromClauseAssembler(this, _whereStatement);
+            _selectAs = new SelectClauseAssembler(this, _fromQuery);
         }
 
         /// <summary>
