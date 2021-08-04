@@ -2,7 +2,7 @@ namespace Azure.AI.Translation.Document
 {
     public partial class DocumentFilter
     {
-        public DocumentFilter(System.DateTimeOffset createdAfter = default(System.DateTimeOffset), System.DateTimeOffset createdBefore = default(System.DateTimeOffset), System.Collections.Generic.IList<string> ids = null, System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentFilterOrder> orderBy = null, System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentTranslationStatus> statuses = null) { }
+        public DocumentFilter() { }
         public System.DateTimeOffset CreatedAfter { get { throw null; } set { } }
         public System.DateTimeOffset CreatedBefore { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Ids { get { throw null; } }
@@ -12,9 +12,7 @@ namespace Azure.AI.Translation.Document
     public partial class DocumentFilterOrder
     {
         public DocumentFilterOrder(Azure.AI.Translation.Document.DocumentFilterProperty property, bool asc = true) { }
-        public bool Asc { get { throw null; } set { } }
         public Azure.AI.Translation.Document.DocumentFilterProperty Property { get { throw null; } set { } }
-        public override string ToString() { throw null; }
     }
     public enum DocumentFilterProperty
     {
@@ -186,7 +184,7 @@ namespace Azure.AI.Translation.Document
     }
     public partial class TranslationFilter
     {
-        public TranslationFilter(System.DateTimeOffset? createdAfter = default(System.DateTimeOffset?), System.DateTimeOffset? createdBefore = default(System.DateTimeOffset?), System.Collections.Generic.IList<string> ids = null, System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationFilterOrder> orderBy = null, System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentTranslationStatus> statuses = null) { }
+        public TranslationFilter() { }
         public System.DateTimeOffset? CreatedAfter { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedBefore { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Ids { get { throw null; } }
@@ -196,9 +194,7 @@ namespace Azure.AI.Translation.Document
     public partial class TranslationFilterOrder
     {
         public TranslationFilterOrder(Azure.AI.Translation.Document.TranslationFilterProperty property, bool asc = true) { }
-        public bool Asc { get { throw null; } set { } }
         public Azure.AI.Translation.Document.TranslationFilterProperty Property { get { throw null; } set { } }
-        public override string ToString() { throw null; }
     }
     public enum TranslationFilterProperty
     {
