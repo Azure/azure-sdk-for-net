@@ -3,6 +3,7 @@
 ## Version 4.22.0
 ###  Feature Additions
 - Added Sql table lock and upsert properties
+- Added isServerVersionAbove32 in CosmosDbMongoDbApi linked service
 - Changed additionalColumns/compressionType to type of object
 - Support cleanup property for integration runtime resource from DataFactory
 - Unify IR vNet injection experience
