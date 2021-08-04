@@ -199,8 +199,8 @@ stages:
               GdnBreakAllTools: false
               GdnBreakGdnToolPoliCheck: true
               GdnBreakGdnToolPoliCheckSeverity: Warning
-              GdnBreakBaselineFiles: $(PoliCheckBaselineFile)
-              GdnBreakBaselines: $(PoliCheckBaselineName)
+              GdnBreakBaselineFiles: ''
+              GdnBreakBaselines: ''
               GdnBreakSuppressionFiles: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnsuppress'
               GdnBreakSuppressionSets: policheck
               GdnBreakOutputBaselineFile: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnbaselines'
