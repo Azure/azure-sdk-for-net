@@ -9,7 +9,9 @@ using System.Diagnostics;
 namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 {
     /// <summary>
-    /// Evaluates different forms of LINQ expressions.
+    /// Partially evaluate subexpressions that don't depend on the query parameter.
+    /// This allows queries to use arbitrary C# code that are turned into constants before
+    /// we build our queries.
     /// </summary>
     internal static class Evaluator
     {

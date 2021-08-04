@@ -10,7 +10,7 @@ using System.Reflection;
 namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 {
     /// <summary>
-    /// Prepares LINQ expressions to be parsed by <see cref="LinqExpressionVisitor"/> and its children.
+    /// Transform LINQ expressions into a normal form that's easier to process by <see cref="LinqExpressionVisitor"/>s.
     /// </summary>
     internal class ExpressionNormalizer : LinqExpressionVisitor
     {
