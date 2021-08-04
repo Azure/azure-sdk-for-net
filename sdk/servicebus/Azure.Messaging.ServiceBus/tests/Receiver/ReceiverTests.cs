@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Moq;
 using NUnit.Framework;
@@ -119,6 +119,48 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.That(
                 async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(-1)),
                 Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        [Test]
+        public async Task ReceiveValidatesMaxWaitTimePrefetchMode()
+        {
+            var mockTransportReceiver = new Mock<TransportReceiver>();
+            var mockConnection = CreateMockConnection();
+            mockConnection.Setup(
+                    connection => connection.CreateTransportReceiver(
+                        It.IsAny<string>(),
+                        It.IsAny<ServiceBusRetryPolicy>(),
+                        It.IsAny<ServiceBusReceiveMode>(),
+                        It.IsAny<uint>(),
+                        It.IsAny<string>(),
+                        It.IsAny<string>(),
+                        It.IsAny<bool>(),
+                        It.IsAny<bool>(),
+                        It.IsAny<CancellationToken>()))
+                .Returns(mockTransportReceiver.Object);
+            IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = new[]
+            {
+                ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: Guid.NewGuid().ToString())
+            };
+            mockTransportReceiver.Setup(transportReceiver =>
+                    transportReceiver.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(),
+                        It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(receivedMessages));
+
+            var receiver = new ServiceBusReceiver(mockConnection.Object, "queue", default,
+                new ServiceBusReceiverOptions {PrefetchCount = 10});
+
+            Assert.That(
+                async () => await receiver.ReceiveMessagesAsync(10, TimeSpan.FromSeconds(-1)),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(-1)),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+
+            var actuallyReceivedMessages =
+                await receiver.ReceiveMessagesAsync(10, TimeSpan.FromSeconds(0)).ConfigureAwait(false);
+            Assert.AreEqual(receivedMessages.Count, actuallyReceivedMessages.Count);
+            Assert.AreEqual(receivedMessages[0].MessageId, actuallyReceivedMessages[0].MessageId);
         }
 
         [Test]
