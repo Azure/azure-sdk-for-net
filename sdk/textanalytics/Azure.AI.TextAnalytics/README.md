@@ -8,6 +8,7 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Linked Entity Recognition
 * Healthcare Recognition
 * Running multiple actions in one or more documents
+* Extractive Text Summarization
 
 [Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
 
@@ -161,6 +162,7 @@ The following section provides several code snippets using the `client` [created
 * [Recognize Entities Asynchronously](#recognize-entities-asynchronously)
 * [Analyze Healthcare Entities Asynchronously](#analyze-healthcare-entities-asynchronously)
 * [Run multiple actions Asynchronously](#run-multiple-actions-asynchronously)
+* [Perform Extractive Text Summarization Asynchronously](#perform-extractive-text-summarization-asynchronously)
 
 ### Detect Language
 Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
@@ -710,6 +712,12 @@ This functionality allows running multiple actions in one or more documents. Act
 }
 ```
 
+### Perform Extractive Text Summarization Asynchronously
+Get a summary for the input documents by extracting their most relevant sentences. Note that this API can only be used as part of an [Analyze Operation](#run-multiple-actions-asynchronously).
+
+```C# Snippet:TextAnalyticsExtractSummaryConvenienceAsyncAll
+```
+
 ## Troubleshooting
 
 ### General
@@ -773,6 +781,7 @@ Samples are provided for each main functional area, and for each area, samples a
 - [Recognize Linked Entities][recognize_linked_entities_sample]
 - [Recognize Healthcare Entities][analyze_healthcare_sample]
 - [Run multiple actions][analyze_operation_sample]
+- [Perform Extractive Text Summarization][extract_summary_sample]
 
 ### Advanced samples
 - [Analyze Sentiment with Opinion Mining][analyze_sentiment_opinion_mining_sample]
@@ -827,6 +836,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [analyze_sentiment_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2_AnalyzeSentiment.md
 [analyze_sentiment_opinion_mining_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md
 [extract_key_phrases_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample3_ExtractKeyPhrases.md
+[extract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/feature/textanalytics/summarization/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md
 [recognize_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md
 [recognize_pii_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md
 [recognize_linked_entities_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample6_RecognizeLinkedEntities.md
