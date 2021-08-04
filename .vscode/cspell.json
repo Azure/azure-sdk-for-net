@@ -75,6 +75,29 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/search/**/*.cs",
+      "words": [
+        "Adls",
+        "Bangla",
+        "Bokmaal",
+        "Cyrl",
+        "Decompounder",
+        "Haase",
+        "Hant",
+        "Koelner",
+        "Latn",
+        "Lovins",
+        "Nysiis",
+        "Phonetik",
+        "Piqd",
+        "Reranker",
+        "Rslp",
+        "Soundex",
+        "Sorani",
+        "Unprocessable"
+      ]
+    },
+    {
       "filename": "**/sdk/storage/**/*.cs",
       "words": [
         "Aadds",

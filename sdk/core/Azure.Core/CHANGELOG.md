@@ -1,12 +1,11 @@
 # Release History
 
-## 1.17.0-beta.1 (Unreleased)
+## 1.17.0 (2021-08-10)
 
 ### Features Added
 
-### Breaking Changes
-
-### Key Bugs Fixed
+- Added `ClientOptions.Default` to configure defaults process-wide.
+- Added `HttpPipelinePosition.BeforeTransport` to be able to add policies at the end of the pipeline before the transport.
 
 ### Fixed
 

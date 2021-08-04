@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
 
         public JobBase GenerateJobBaseResourceData()
         {
-            return new CommandJob("cd ~", new ComputeConfiguration());
+            return new CommandJob("cd ~", new ComputeConfiguration() { IsLocal = true }) { Tags = { { "key1", "value1" } } };
         }
 
         public LabelingJob GenerateLabelingJobResourceData()

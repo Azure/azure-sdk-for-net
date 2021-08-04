@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             Assert.NotNull(connection.Value.Data.Name);
             Assert.NotNull(connection.Value.Data.PrivateLinkServiceConnectionState.Status == PrivateEndpointServiceConnectionStatus.Approved);
             connection = await workspace.Value.GetPrivateEndpointConnections().GetIfExistsAsync("foo").ConfigureAwait(false);
-            Assert.IsNull(connection);
+            Assert.IsNull(connection.Value);
         }
 
         [TestCase]
