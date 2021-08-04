@@ -842,7 +842,9 @@ namespace Azure.Storage.Files.DataLake
 
             return new BlobContainerEncryptionScopeOptions
             {
-                DefaultEncryptionScope = encryptionScopeOptions.DefaultEncryptionScope
+                DefaultEncryptionScope = encryptionScopeOptions.DefaultEncryptionScope,
+                // DFS endpoint does not support blob-level encryption scopes.
+                PreventEncryptionScopeOverride = true
             };
         }
 

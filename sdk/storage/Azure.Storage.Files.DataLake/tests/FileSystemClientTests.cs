@@ -274,18 +274,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateAsync_EncryptionScopeOptions()
         {
             // Arrange
-            DataLakeServiceClient service = GetServiceClient_SharedKey();
-            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
             DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
             {
                 DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
             };
-
-            // Act
-            await fileSystemClient.CreateAsync(encryptionScopeOptions: encryptionScopeOptions);
+            await using DisposingFileSystem test = await GetNewFileSystem(encryptionScopeOptions: encryptionScopeOptions);
 
             // Assert
-            Response<FileSystemProperties> response = await fileSystemClient.GetPropertiesAsync();
+            Response<FileSystemProperties> response = await test.FileSystem.GetPropertiesAsync();
             Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, response.Value.DefaultEncryptionScope);
         }
 
@@ -733,6 +729,20 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("bar", paths[0].Name);
             Assert.AreEqual("baz", paths[1].Name);
             Assert.AreEqual("foo", paths[2].Name);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task GetPathsAsync_EncryptionScopeOptions()
+        {
+            // Arrange
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
+            };
+            await using DisposingFileSystem test = await GetNewFileSystem(encryptionScopeOptions: encryptionScopeOptions);
+            DataLakeFileClient fileClient = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await fileClient.CreateAsync();
         }
 
         [RecordedTest]
