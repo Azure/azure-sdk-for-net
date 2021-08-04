@@ -52,8 +52,8 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetClient();
 
             // create test jobs
-            await CreateTranslationJobsAsync(client, jobsCount: 5, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
-            var cancelledIds = await CreateTranslationJobsAsync(client, jobsCount: 2, jobTerminalStatus: DocumentTranslationStatus.Cancelled);
+            await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
+            var cancelledIds = await CreateTranslationJobsAsync(client, jobsCount: 1, jobTerminalStatus: DocumentTranslationStatus.Cancelled);
 
             // list translations with filter
             var cancelledStatusList = new List<DocumentTranslationStatus> {
@@ -79,13 +79,13 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetClient();
 
             // create test jobs
-            var allIds = await CreateTranslationJobsAsync(client, jobsCount: 5, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
-            var targetIds = allIds.GetRange(0, 2);
+            var allIds = await CreateTranslationJobsAsync(client, jobsCount: 2, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
+            var targetIds = allIds.GetRange(0, 1);
 
             // list translations with filter
             var filter = new TranslationFilter
             {
-                Ids = { targetIds[0], targetIds[1] }
+                Ids = { targetIds[0] }
             };
             var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
 
@@ -100,9 +100,9 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetClient();
 
             // create test jobs
-            await CreateTranslationJobsAsync(client, jobsCount: 5, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
+            await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
             var timestamp = Recording.UtcNow;
-            var targetIds = await CreateTranslationJobsAsync(client, jobsCount: 5, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
+            var targetIds = await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
             // list translations with filter
             var filter = new TranslationFilter
@@ -123,9 +123,9 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetClient();
 
             // create test jobs
-            var targetIds = await CreateTranslationJobsAsync(client, jobsCount: 2, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
+            var targetIds = await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
             var timestamp = Recording.UtcNow;
-            await CreateTranslationJobsAsync(client, jobsCount: 2, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
+            await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
             // list translations with filter
             var filter = new TranslationFilter
@@ -146,7 +146,7 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetClient();
 
             // create test jobs
-            await CreateTranslationJobsAsync(client, jobsCount: 5, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
+            await CreateTranslationJobsAsync(client, jobsCount: 3, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
             // list translations with filter
             var filter = new TranslationFilter
