@@ -8,7 +8,8 @@ using System.Linq.Expressions;
 namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 {
     /// <summary>
-    /// Prepares a LINQ expression for evaluation by checking whether or not it can be parsed.
+    /// Determines whether expression subtrees contain references to the
+    /// query parameter and can be eagerly partially evaluated.
     /// </summary>
     internal class Nominator : LinqExpressionVisitor
     {
