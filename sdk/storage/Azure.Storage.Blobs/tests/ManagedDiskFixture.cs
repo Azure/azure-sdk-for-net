@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         private ManagedDiskConfiguration _config;
         private ComputeManagementClient _computeClient;
         private Snapshot _snapshot1;
-        private Snapshot snapshot2;
+        private Snapshot _snapshot2;
 
         public Uri Snapshot1SASUri { get; private set; }
         public Uri Snapshot2SASUri { get; private set; }
@@ -51,10 +51,10 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
                 // The disk is attached to VM, wait some time to let OS background jobs write something to disk to create delta.
                 await Task.Delay(TimeSpan.FromSeconds(60));
 
-                snapshot2 = await CreateSnapshot(disk, _config.DiskNamePrefix + Guid.NewGuid().ToString().Replace("-", ""));
+                _snapshot2 = await CreateSnapshot(disk, _config.DiskNamePrefix + Guid.NewGuid().ToString().Replace("-", ""));
 
                 Snapshot1SASUri = await GrantAccess(_snapshot1);
-                Snapshot2SASUri = await GrantAccess(snapshot2);
+                Snapshot2SASUri = await GrantAccess(_snapshot2);
 
                 Instance = this;
             }
@@ -66,10 +66,10 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             if (TestEnvironment.GlobalTestMode != RecordedTestMode.Playback)
             {
                 await RevokeAccess(_snapshot1);
-                await RevokeAccess(snapshot2);
+                await RevokeAccess(_snapshot2);
 
                 await DeleteSnapshot(_snapshot1);
-                await DeleteSnapshot(snapshot2);
+                await DeleteSnapshot(_snapshot2);
             }
         }
 
