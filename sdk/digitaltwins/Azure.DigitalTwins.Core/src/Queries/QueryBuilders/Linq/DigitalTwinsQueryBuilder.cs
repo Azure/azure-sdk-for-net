@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Globalization;
-using System.Text;
 using Azure.Core;
-using System.Diagnostics.CodeAnalysis;
+
+#pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 {
@@ -39,7 +39,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
     /// <summary>
     /// Azure DigitalTwins Query builder that facilitates writing queries against ADT instances.
     /// </summary>
-    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Required for default behavior")]
     public class DigitalTwinsQueryBuilder<T>
     {
         private string _collection;
@@ -403,4 +402,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
             return this;
         }
     }
+
+#pragma warning restore SA1402 // File may only contain a single type
 }
