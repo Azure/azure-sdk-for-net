@@ -25,11 +25,11 @@ operation-group-to-resource-type:
   StorageAccount: Microsoft.MachineLearningServices/workspaces/storageAccounts
 operation-group-to-resource:
   Quotas: NonResource # POST and GET
-  Usage: NonResource
+  Usages: NonResource
   VirtualMachineSizes: NonResource
 operation-group-to-parent:
   Quotas: subscriptions
-  Usage: subscriptions
+  Usages: subscriptions
   VirtualMachineSizes: subscriptions
 directive:
   - from: swagger-document
