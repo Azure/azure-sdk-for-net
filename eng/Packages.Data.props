@@ -75,7 +75,7 @@
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Common" Version="1.0.0" />
-    <PackageReference Update="Azure.Core" Version="1.14.0" />
+    <PackageReference Update="Azure.Core" Version="1.17.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.1.0-beta.1" Condition="'$(HasReleaseVersion)' == 'false'"/>
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.12" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.4.1" />
