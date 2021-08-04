@@ -35,12 +35,10 @@ namespace Azure.AI.Translation.Document.Tests
             await operation.WaitForCompletionAsync();
 
             // list docs
-            var filter = new DocumentFilter(
-                statuses: new List<DocumentTranslationStatus>()
-                {
-                    DocumentTranslationStatus.Succeeded
-                }
-            );
+            var filter = new DocumentFilter
+            {
+                Statuses = {DocumentTranslationStatus.Succeeded}
+            };
             var result = operation.GetAllDocumentStatuses(filter: filter);
 
             // assert.
@@ -59,9 +57,11 @@ namespace Azure.AI.Translation.Document.Tests
             var testIds = operation.GetAllDocumentStatuses().Select(d => d.Id).ToList().GetRange(0, 1);
 
             // list docs
-            var filter = new DocumentFilter(
-                ids: testIds
-            );
+            var filter = new DocumentFilter
+            {
+                Ids = { testIds[0] }
+            };
+
             var result = operation.GetAllDocumentStatuses(filter: filter);
 
             // assert
@@ -91,11 +91,11 @@ namespace Azure.AI.Translation.Document.Tests
             await operation.WaitForCompletionAsync();
 
             // list docs
-            var filter = new DocumentFilter(
-                orderBy: new List<DocumentFilterOrder> {
-                  new DocumentFilterOrder(property: DocumentFilterProperty.CreatedOn, asc: false)
-                }
-            );
+            var filter = new DocumentFilter
+            {
+                OrderBy = { new DocumentFilterOrder(property: DocumentFilterProperty.CreatedOn, asc: false) }
+            };
+
             var filterResults = operation.GetAllDocumentStatuses(filter: filter);
 
             // assert

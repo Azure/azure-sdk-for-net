@@ -15,23 +15,8 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Initializes and instance of <see cref="TranslationFilter"/>.
         /// </summary>
-        /// <param name="createdAfter">Filter translations by <see cref="TranslationStatus.CreatedOn"/>. Get translations created after a certain date in UTC format.</param>
-        /// <param name="createdBefore">Filter translations by <see cref="TranslationStatus.CreatedOn"/>. Get translations created before a certain date in UTC format.</param>
-        /// <param name="ids">Filter results by <see cref="TranslationStatus.Id"/>. Get translations with certain IDs.</param>
-        /// <param name="orderBy">Defines sorting options for the result. See <see cref="TranslationFilterOrder"/> for more information on which sorting options to use.</param>
-        /// <param name="statuses">Filter results by <see cref="TranslationStatus.Status"/>.</param>
-        public TranslationFilter(
-            DateTimeOffset? createdAfter = null,
-            DateTimeOffset? createdBefore = null,
-            IList<string> ids = null,
-            IList<TranslationFilterOrder> orderBy = null,
-            IList<DocumentTranslationStatus> statuses = null)
+        public TranslationFilter()
         {
-            CreatedAfter = createdAfter;
-            CreatedBefore = createdBefore;
-            Ids = ids;
-            OrderBy = orderBy;
-            Statuses = statuses;
         }
         /// <summary>
         /// Filter results by <see cref="TranslationStatus.CreatedOn"/>.

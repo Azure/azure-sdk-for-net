@@ -60,9 +60,10 @@ namespace Azure.AI.Translation.Document.Tests
                     DocumentTranslationStatus.Cancelled,
                     DocumentTranslationStatus.Cancelling
             };
-            var filter = new TranslationFilter(
-                statuses: cancelledStatusList
-            );
+            var filter = new TranslationFilter
+            {
+                Statuses = { cancelledStatusList[0], cancelledStatusList[1] }
+            };
             var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
             var filteredIds = filteredTranslations.Select(t => t.Id).ToList();
 
@@ -78,13 +79,14 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetClient();
 
             // create test jobs
-            var allIds = await CreateTranslationJobsAsync(client, jobsCount: 10, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
-            var targetIds = allIds.GetRange(0, 5);
+            var allIds = await CreateTranslationJobsAsync(client, jobsCount: 5, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
+            var targetIds = allIds.GetRange(0, 2);
 
             // list translations with filter
-            var filter = new TranslationFilter(
-                ids: targetIds
-            );
+            var filter = new TranslationFilter
+            {
+                Ids = { targetIds[0], targetIds[1] }
+            };
             var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
 
             // assert
@@ -103,9 +105,10 @@ namespace Azure.AI.Translation.Document.Tests
             var targetIds = await CreateTranslationJobsAsync(client, jobsCount: 5, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
             // list translations with filter
-            var filter = new TranslationFilter(
-                createdAfter: timestamp
-            );
+            var filter = new TranslationFilter
+            {
+                CreatedAfter = timestamp
+            };
             var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
 
             // assert
@@ -125,9 +128,10 @@ namespace Azure.AI.Translation.Document.Tests
             await CreateTranslationJobsAsync(client, jobsCount: 2, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
             // list translations with filter
-            var filter = new TranslationFilter(
-                createdBefore: timestamp
-            );
+            var filter = new TranslationFilter
+            {
+                CreatedBefore = timestamp
+            };
             var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
 
             // assert
@@ -145,11 +149,10 @@ namespace Azure.AI.Translation.Document.Tests
             await CreateTranslationJobsAsync(client, jobsCount: 5, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
             // list translations with filter
-            var filter = new TranslationFilter(
-                orderBy: new List<TranslationFilterOrder> {
-                  new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, asc: false)
-                }
-            );
+            var filter = new TranslationFilter
+            {
+                OrderBy = { new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, asc: false) }
+            };
             var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
 
             // assert
