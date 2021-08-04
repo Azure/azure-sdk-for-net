@@ -76,8 +76,8 @@ update the API key without creating a new client.
 With the value of the endpoint and an `AzureKeyCredential`, you can create the [DocumentTranslationClient][documenttranslation_client_class]:
 
 ```C# Snippet:CreateDocumentTranslationClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
+string endpoint = "<Document Translator Resource Endpoint>";
+string apiKey = "<Document Translator Resource API Key>";
 var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
@@ -98,7 +98,7 @@ You will also need to [register a new AAD application][register_aad_app] and [gr
 Set the values of the `client ID`, `tenant ID`, and `client secret` of the AAD application as environment variables: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_CLIENT_SECRET`.
 
 ```C# Snippet:CreateDocumentTranslationClientTokenCredential
-string endpoint = "<endpoint>";
+string endpoint = "<Document Translator Resource Endpoint>";
 var client = new DocumentTranslationClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 

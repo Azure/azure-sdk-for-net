@@ -119,7 +119,7 @@ namespace Azure.AI.Translation.Document.Tests
         private BlobContainerClient CreateContainer(string name, List<TestDocument> documents)
         {
             Recording.DisableIdReuse();
-            var containerName = "source" + Recording.GenerateId();
+            var containerName = name + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(containerName);
             containerClient.Create(PublicAccessType.BlobContainer);
 

@@ -18,8 +18,8 @@ namespace Azure.AI.Translation.Document.Samples
         public void DocumentStatus()
         {
 #if SNIPPET
-            string endpoint = "<endpoint>";
-            string apiKey = "<apiKey>";
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
 #else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;

@@ -20,8 +20,8 @@ namespace Azure.AI.Translation.Document.Samples
         {
             #region Snippet:CreateDocumentTranslationClient
 #if SNIPPET
-            string endpoint = "<endpoint>";
-            string apiKey = "<apiKey>";
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
 #else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -35,7 +35,7 @@ namespace Azure.AI.Translation.Document.Samples
         {
             #region Snippet:CreateDocumentTranslationClientTokenCredential
 #if SNIPPET
-            string endpoint = "<endpoint>";
+            string endpoint = "<Document Translator Resource Endpoint>";
 #else
             string endpoint = TestEnvironment.Endpoint;
 #endif
@@ -47,8 +47,8 @@ namespace Azure.AI.Translation.Document.Samples
         public void BadRequestSnippet()
         {
 #if SNIPPET
-            string endpoint = "<endpoint>";
-            string apiKey = "<apiKey>";
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
 #else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
