@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of EnvironmentSpecificationVersionResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"></param>
+        /// <param name="nextLink"> The link to the next page of EnvironmentSpecificationVersion objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type EnvironmentSpecificationVersion. </param>
         internal EnvironmentSpecificationVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<EnvironmentSpecificationVersionResourceData> value)
         {
@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Value = value;
         }
 
+        /// <summary> The link to the next page of EnvironmentSpecificationVersion objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type EnvironmentSpecificationVersion. </summary>
         public IReadOnlyList<EnvironmentSpecificationVersionResourceData> Value { get; }

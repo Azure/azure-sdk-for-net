@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             EndpointComputeType = EndpointComputeType.K8S;
         }
 
-        /// <summary> The resource requirements for the container (cpu and memory). </summary>
+        /// <summary> Resource requirements for each container instance within an online deployment. </summary>
         public ContainerResourceRequirements ContainerResourceRequirements { get; set; }
     }
 }

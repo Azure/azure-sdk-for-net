@@ -16,12 +16,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of DeploymentLogs. </summary>
-        /// <param name="content"></param>
+        /// <param name="content"> The retrieved online deployment logs. </param>
         internal DeploymentLogs(string content)
         {
             Content = content;
         }
 
+        /// <summary> The retrieved online deployment logs. </summary>
         public string Content { get; }
     }
 }

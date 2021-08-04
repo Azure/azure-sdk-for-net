@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="endpointComputeType"> The compute type of the endpoint. </param>
         /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
-        /// <param name="livenessProbe"></param>
+        /// <param name="livenessProbe"> Deployment container liveness/readiness probe configuration. </param>
         /// <param name="model"> Reference to the model asset for the endpoint deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
-        /// <param name="requestSettings"></param>
-        /// <param name="scaleSettings"></param>
-        /// <param name="instanceType"></param>
-        /// <param name="readinessProbe"></param>
+        /// <param name="requestSettings"> Online deployment scoring requests configuration. </param>
+        /// <param name="scaleSettings"> Online deployment scaling configuration. </param>
+        /// <param name="instanceType"> Compute instance type. </param>
+        /// <param name="readinessProbe"> Deployment container liveness/readiness probe configuration. </param>
         internal ManagedOnlineDeployment(bool? appInsightsEnabled, CodeConfiguration codeConfiguration, string description, EndpointComputeType endpointComputeType, string environmentId, IDictionary<string, string> environmentVariables, ProbeSettings livenessProbe, AssetReferenceBase model, IDictionary<string, string> properties, DeploymentProvisioningState? provisioningState, OnlineRequestSettings requestSettings, OnlineScaleSettings scaleSettings, string instanceType, ProbeSettings readinessProbe) : base(appInsightsEnabled, codeConfiguration, description, endpointComputeType, environmentId, environmentVariables, livenessProbe, model, properties, provisioningState, requestSettings, scaleSettings)
         {
             InstanceType = instanceType;
@@ -40,7 +40,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             EndpointComputeType = endpointComputeType;
         }
 
+        /// <summary> Compute instance type. </summary>
         public string InstanceType { get; set; }
+        /// <summary> Deployment container liveness/readiness probe configuration. </summary>
         public ProbeSettings ReadinessProbe { get; set; }
     }
 }

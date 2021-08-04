@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The OnlineRequestSettings. </summary>
+    /// <summary> Online deployment scoring requests configuration. </summary>
     public partial class OnlineRequestSettings
     {
         /// <summary> Initializes a new instance of OnlineRequestSettings. </summary>
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of OnlineRequestSettings. </summary>
-        /// <param name="maxConcurrentRequestsPerInstance"></param>
+        /// <param name="maxConcurrentRequestsPerInstance"> The number of requests allowed to queue at once for this deployment. </param>
         /// <param name="maxQueueWait"> The maximum queue wait time in ISO 8601 format. Supports millisecond precision. </param>
         /// <param name="requestTimeout"> The request timeout in ISO 8601 format. Supports millisecond precision. </param>
         internal OnlineRequestSettings(int? maxConcurrentRequestsPerInstance, TimeSpan? maxQueueWait, TimeSpan? requestTimeout)
@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             RequestTimeout = requestTimeout;
         }
 
+        /// <summary> The number of requests allowed to queue at once for this deployment. </summary>
         public int? MaxConcurrentRequestsPerInstance { get; set; }
         /// <summary> The maximum queue wait time in ISO 8601 format. Supports millisecond precision. </summary>
         public TimeSpan? MaxQueueWait { get; set; }

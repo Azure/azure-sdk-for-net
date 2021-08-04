@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="progressMetrics"> Progress metrics of the job. </param>
         /// <param name="projectId"> Internal id of the job(Previously called project). </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Specifies the labeling job provisioning state. </param>
         /// <param name="status"> Status of the job. </param>
         /// <param name="statusMessages"> Status messages of the job. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -93,6 +93,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Guid? ProjectId { get; }
         /// <summary> The asset property dictionary. </summary>
         public IDictionary<string, string> Properties { get; }
+        /// <summary> Specifies the labeling job provisioning state. </summary>
         public JobProvisioningState? ProvisioningState { get; }
         /// <summary> Status of the job. </summary>
         public JobStatus? Status { get; }

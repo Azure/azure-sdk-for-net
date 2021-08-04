@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="endpointComputeType"> The compute type of the endpoint. </param>
         /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
-        /// <param name="livenessProbe"></param>
+        /// <param name="livenessProbe"> Deployment container liveness/readiness probe configuration. </param>
         /// <param name="model"> Reference to the model asset for the endpoint deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
-        /// <param name="requestSettings"></param>
-        /// <param name="scaleSettings"></param>
+        /// <param name="requestSettings"> Online deployment scoring requests configuration. </param>
+        /// <param name="scaleSettings"> Online deployment scaling configuration. </param>
         internal OnlineDeployment(bool? appInsightsEnabled, CodeConfiguration codeConfiguration, string description, EndpointComputeType endpointComputeType, string environmentId, IDictionary<string, string> environmentVariables, ProbeSettings livenessProbe, AssetReferenceBase model, IDictionary<string, string> properties, DeploymentProvisioningState? provisioningState, OnlineRequestSettings requestSettings, OnlineScaleSettings scaleSettings)
         {
             AppInsightsEnabled = appInsightsEnabled;
@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string EnvironmentId { get; set; }
         /// <summary> Environment variables configuration for the deployment. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; }
+        /// <summary> Deployment container liveness/readiness probe configuration. </summary>
         public ProbeSettings LivenessProbe { get; set; }
         /// <summary> Reference to the model asset for the endpoint deployment. </summary>
         public AssetReferenceBase Model { get; set; }
@@ -68,7 +69,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public IDictionary<string, string> Properties { get; }
         /// <summary> Provisioning state for the endpoint deployment. </summary>
         public DeploymentProvisioningState? ProvisioningState { get; }
+        /// <summary> Online deployment scoring requests configuration. </summary>
         public OnlineRequestSettings RequestSettings { get; set; }
+        /// <summary> Online deployment scaling configuration. </summary>
         public OnlineScaleSettings ScaleSettings { get; set; }
     }
 }

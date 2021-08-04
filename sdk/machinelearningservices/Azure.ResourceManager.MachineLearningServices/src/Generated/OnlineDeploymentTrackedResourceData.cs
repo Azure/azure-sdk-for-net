@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="identity"> Service identity associated with a resource. </param>
-        /// <param name="kind"></param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="systemData"> System data associated with resource provider. </param>
         internal OnlineDeploymentTrackedResourceData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, Models.ResourceIdentity identity, string kind, OnlineDeployment properties, SystemData systemData) : base(id, name, type, location, tags)
@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Service identity associated with a resource. </summary>
         public Models.ResourceIdentity Identity { get; set; }
+        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
         public string Kind { get; set; }
         /// <summary> Additional attributes of the entity. </summary>
         public OnlineDeployment Properties { get; set; }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             EndpointComputeType = EndpointComputeType.Managed;
         }
 
+        /// <summary> Deployment container liveness/readiness probe configuration. </summary>
         public ProbeSettings ReadinessProbe { get; set; }
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// </param>
         /// <param name="jobType"> Specifies the type of job. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Specifies the job provisioning state. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
         /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
