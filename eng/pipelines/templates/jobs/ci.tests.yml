@@ -24,9 +24,6 @@ parameters:
 - name: CloudConfig
   type: object
   default: {}
-- name: AdditionalTestArguments
-  type: string
-  default: ''
 
 jobs:
   - job:
