@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.DigitalTwins.Core.QueryBuilder;
 using Azure.DigitalTwins.Core.QueryBuilder.Linq;
 
@@ -107,6 +108,15 @@ namespace Azure.DigitalTwins.Core.Samples.QueryBuilders
             new DigitalTwinsQueryBuilder<ConferenceRoom>(DigitalTwinsCollection.Relationships)
                 .Select(r => r.Temperature)
                 .FromCustom("DigitalTwins")
+                .Build();
+            #endregion
+
+            #region Snippet:DigitalTwinsQueryBuilderLinqStringInterpolation
+            Console.Write("Max temp: ");
+            int maxTemp = int.Parse(Console.ReadLine());
+            new DigitalTwinsQueryBuilder<ConferenceRoom>()
+                .Select(nameof(ConferenceRoom.Temperature))
+                .Where($"{nameof(ConferenceRoom.Temperature)} lt {maxTemp}")
                 .Build();
             #endregion
 

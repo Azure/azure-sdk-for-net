@@ -610,11 +610,22 @@ new DigitalTwinsQueryBuilder()
 .Build();
 ```
 
+The `DigitalTwinsQueryBuilder` in the Linq namespace also supports using string interpolation:
+
+```C# Snippet:DigitalTwinsQueryBuilderLinqStringInterpolation
+Console.Write("Max temp: ");
+int maxTemp = int.Parse(Console.ReadLine());
+new DigitalTwinsQueryBuilder<ConferenceRoom>()
+    .Select(nameof(ConferenceRoom.Temperature))
+    .Where($"{nameof(ConferenceRoom.Temperature)} lt {maxTemp}")
+    .Build();
+```
+
 For queries with multiple conditions, C# logical operators can be used to construct conditional statements rather than having to rely on `And()`/`Or()` methods (unlike in `Fluent`). Additionally, complex conditions can be separated by typing literal parenthesis in the LINQ expression rather than using a `Precedence()` method.
 
 ```C# Snippet:DigitalTwinsQueryBuilder_ComplexConditionsLinqExpressions
 // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
-DigitalTwinsQueryBuilder<ConferenceRoom> logicalOps_MultipleOrLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
+DigitalTwinsQueryBuilder<ConferenceRoom> logicalOps_MultipleOrLinq = new DigitalTwinsQueryBuilder<ConferenceRoom>()
     .Where(r =>
         r.Temperature == 50 ||
         DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1", true) ||
@@ -623,7 +634,7 @@ DigitalTwinsQueryBuilder<ConferenceRoom> logicalOps_MultipleOrLINQ = new Digital
 
 // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
 // OR (IS_OF_MODEL("dtmi:example:hvac;1") AND IS_NULL(Occupants))
-DigitalTwinsQueryBuilder<ConferenceRoom> logicalOpsNestedLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
+DigitalTwinsQueryBuilder<ConferenceRoom> logicalOpsNestedLinq = new DigitalTwinsQueryBuilder<ConferenceRoom>()
     .Where(
         r =>
             (
