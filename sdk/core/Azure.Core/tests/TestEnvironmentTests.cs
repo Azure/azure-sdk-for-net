@@ -118,7 +118,7 @@ namespace Azure.Core.Tests
         public void RecordedVariableSanitized()
         {
             var tempFile = Path.GetTempFileName();
-            var env = new MockTestEnvironment();
+            var env = new SimpleRecordedTest().TestEnvironment;
             var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
             env.Mode = RecordedTestMode.Record;
             env.SetRecording(testRecording);
@@ -142,7 +142,7 @@ namespace Azure.Core.Tests
         public void RecordedOptionalVariableNotSanitizedIfMissing()
         {
             var tempFile = Path.GetTempFileName();
-            var env = new MockTestEnvironment();
+            var env = new SimpleRecordedTest().TestEnvironment;
             var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
             env.Mode = RecordedTestMode.Record;
             env.SetRecording(testRecording);
@@ -199,6 +199,13 @@ namespace Azure.Core.Tests
                 }
 
                 Assert.AreEqual(1, WaitForEnvironmentTestEnvironmentFailureMode.InvocationCount);
+            }
+        }
+
+        private class SimpleRecordedTest : RecordedTestBase<MockTestEnvironment>
+        {
+            public SimpleRecordedTest() : base(false)
+            {
             }
         }
 

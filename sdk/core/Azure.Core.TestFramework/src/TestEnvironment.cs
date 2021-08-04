@@ -353,7 +353,6 @@ namespace Azure.Core.TestFramework
         {
             _credential = null;
             _recording = recording;
-            IsInRecordedTest = true;
         }
 
         private string GetRecordedValue(string name)
