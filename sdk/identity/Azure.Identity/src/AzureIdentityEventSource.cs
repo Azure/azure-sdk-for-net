@@ -29,7 +29,6 @@ namespace Azure.Identity
         private const int InteractiveAuthenticationInlineExecutionEvent = 12;
 
         private AzureIdentityEventSource() : base(EventSourceName) { }
- { }
 
         public static AzureIdentityEventSource Singleton { get; } = new AzureIdentityEventSource();
 
