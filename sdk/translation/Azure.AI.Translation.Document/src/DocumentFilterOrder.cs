@@ -24,9 +24,8 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Sort results ascendingly if true, or descendingly if false.
         /// </summary>
-        public bool Asc { get; set; }
+        internal bool Asc { get; set; }
         /// <summary>
-        /// The <see cref="DocumentStatus"/> property to use in sorting.
         /// See <see cref="DocumentFilterProperty"/> for list of properties supported.
         /// </summary>
         public DocumentFilterProperty Property { get; set; }
@@ -34,7 +33,7 @@ namespace Azure.AI.Translation.Document
         /// Convert the order filter to string.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        internal string ToGenerated()
         {
             // convert enum property to corresponding <see cref="DocumentStatus"/> model attribute
             var property = string.Empty;

@@ -233,7 +233,7 @@ namespace Azure.AI.Translation.Document
                         statuses: filter?.Statuses?.Select(status => status.ToString()),
                         createdDateTimeUtcStart: filter?.CreatedAfter,
                         createdDateTimeUtcEnd: filter?.CreatedBefore,
-                        orderBy: filter?.OrderBy?.Select(order => order.ToString()),
+                        orderBy: filter?.OrderBy?.Select(order => order.ToGenerated()),
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -283,7 +283,7 @@ namespace Azure.AI.Translation.Document
                         statuses: filter?.Statuses?.Select(status => status.ToString()),
                         createdDateTimeUtcStart: filter?.CreatedAfter,
                         createdDateTimeUtcEnd: filter?.CreatedBefore,
-                        orderBy: filter?.OrderBy?.Select(order => order.ToString()),
+                        orderBy: filter?.OrderBy?.Select(order => order.ToGenerated()),
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
