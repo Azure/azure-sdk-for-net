@@ -16,32 +16,33 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about an error.
+    /// The error detail.
     /// </summary>
-    public partial class ODataError
+    public partial class ErrorDetail
     {
         /// <summary>
-        /// Initializes a new instance of the ODataError class.
+        /// Initializes a new instance of the ErrorDetail class.
         /// </summary>
-        public ODataError()
+        public ErrorDetail()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ODataError class.
+        /// Initializes a new instance of the ErrorDetail class.
         /// </summary>
-        /// <param name="code">A language-independent error name.</param>
+        /// <param name="code">The error code.</param>
         /// <param name="message">The error message.</param>
-        /// <param name="target">The target of the error (for example, the name
-        /// of the property in error).</param>
+        /// <param name="target">The error target.</param>
         /// <param name="details">The error details.</param>
-        public ODataError(string code = default(string), string message = default(string), string target = default(string), IList<ODataError> details = default(IList<ODataError>))
+        /// <param name="additionalInfo">The error additional info.</param>
+        public ErrorDetail(string code = default(string), string message = default(string), string target = default(string), IList<ErrorDetail> details = default(IList<ErrorDetail>), IList<ErrorAdditionalInfo> additionalInfo = default(IList<ErrorAdditionalInfo>))
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
+            AdditionalInfo = additionalInfo;
             CustomInit();
         }
 
@@ -51,29 +52,34 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a language-independent error name.
+        /// Gets the error code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        public string Code { get; private set; }
 
         /// <summary>
-        /// Gets or sets the error message.
+        /// Gets the error message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
         /// <summary>
-        /// Gets or sets the target of the error (for example, the name of the
-        /// property in error).
+        /// Gets the error target.
         /// </summary>
         [JsonProperty(PropertyName = "target")]
-        public string Target { get; set; }
+        public string Target { get; private set; }
 
         /// <summary>
-        /// Gets or sets the error details.
+        /// Gets the error details.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
-        public IList<ODataError> Details { get; set; }
+        public IList<ErrorDetail> Details { get; private set; }
+
+        /// <summary>
+        /// Gets the error additional info.
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalInfo")]
+        public IList<ErrorAdditionalInfo> AdditionalInfo { get; private set; }
 
     }
 }

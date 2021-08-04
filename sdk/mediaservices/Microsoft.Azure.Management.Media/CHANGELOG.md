@@ -1,5 +1,13 @@
 # Microsoft.Azure.Management.Media release notes
 
+## Changes in 5.0.0
+
+-
+
+### Breaking changes
+
+- ApiErrorException has been replaced with ErrorResponseException to be consistant with all other Azure SDKs. Exception body has not changed.
+
 ## Changes in 4.0.0
 
 - Added KeyDelivery Access control property to Media Services that allows restricting KeyDelivery requests by IP address ranges

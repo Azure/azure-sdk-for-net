@@ -14,23 +14,28 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// The API error.
+    /// Error response
     /// </summary>
-    public partial class ApiError
+    /// <remarks>
+    /// Common error response for all Azure Resource Manager APIs to return
+    /// error details for failed operations. (This also follows the OData error
+    /// response format.).
+    /// </remarks>
+    public partial class ErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the ApiError class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public ApiError()
+        public ErrorResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApiError class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="error">The error properties.</param>
-        public ApiError(ODataError error = default(ODataError))
+        /// <param name="error">The error object.</param>
+        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
         {
             Error = error;
             CustomInit();
@@ -42,10 +47,10 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error properties.
+        /// Gets or sets the error object.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public ODataError Error { get; set; }
+        public ErrorDetail Error { get; set; }
 
     }
 }

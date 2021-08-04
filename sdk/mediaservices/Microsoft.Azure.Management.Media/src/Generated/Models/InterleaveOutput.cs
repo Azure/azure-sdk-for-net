@@ -13,38 +13,38 @@ namespace Microsoft.Azure.Management.Media.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Defines values for ManagedIdentityType.
+    /// Defines values for InterleaveOutput.
     /// </summary>
     /// <summary>
     /// Determine base value for a given allowed value if exists, else return
     /// the value itself
     /// </summary>
-    [JsonConverter(typeof(ManagedIdentityTypeConverter))]
-    public struct ManagedIdentityType : System.IEquatable<ManagedIdentityType>
+    [JsonConverter(typeof(InterleaveOutputConverter))]
+    public struct InterleaveOutput : System.IEquatable<InterleaveOutput>
     {
-        private ManagedIdentityType(string underlyingValue)
+        private InterleaveOutput(string underlyingValue)
         {
             UnderlyingValue=underlyingValue;
         }
 
         /// <summary>
-        /// A system-assigned managed identity.
+        /// The output is video-only or audio-only.
         /// </summary>
-        public static readonly ManagedIdentityType SystemAssigned = "SystemAssigned";
+        public static readonly InterleaveOutput NonInterleavedOutput = "NonInterleavedOutput";
 
         /// <summary>
-        /// No managed identity.
+        /// The output includes both audio and video.
         /// </summary>
-        public static readonly ManagedIdentityType None = "None";
+        public static readonly InterleaveOutput InterleavedOutput = "InterleavedOutput";
 
 
         /// <summary>
-        /// Underlying value of enum ManagedIdentityType
+        /// Underlying value of enum InterleaveOutput
         /// </summary>
         private readonly string UnderlyingValue;
 
         /// <summary>
-        /// Returns string representation for ManagedIdentityType
+        /// Returns string representation for InterleaveOutput
         /// </summary>
         public override string ToString()
         {
@@ -52,55 +52,55 @@ namespace Microsoft.Azure.Management.Media.Models
         }
 
         /// <summary>
-        /// Compares enums of type ManagedIdentityType
+        /// Compares enums of type InterleaveOutput
         /// </summary>
-        public bool Equals(ManagedIdentityType e)
+        public bool Equals(InterleaveOutput e)
         {
             return UnderlyingValue.Equals(e.UnderlyingValue);
         }
 
         /// <summary>
-        /// Implicit operator to convert string to ManagedIdentityType
+        /// Implicit operator to convert string to InterleaveOutput
         /// </summary>
-        public static implicit operator ManagedIdentityType(string value)
+        public static implicit operator InterleaveOutput(string value)
         {
-            return new ManagedIdentityType(value);
+            return new InterleaveOutput(value);
         }
 
         /// <summary>
-        /// Implicit operator to convert ManagedIdentityType to string
+        /// Implicit operator to convert InterleaveOutput to string
         /// </summary>
-        public static implicit operator string(ManagedIdentityType e)
+        public static implicit operator string(InterleaveOutput e)
         {
             return e.UnderlyingValue;
         }
 
         /// <summary>
-        /// Overriding == operator for enum ManagedIdentityType
+        /// Overriding == operator for enum InterleaveOutput
         /// </summary>
-        public static bool operator == (ManagedIdentityType e1, ManagedIdentityType e2)
+        public static bool operator == (InterleaveOutput e1, InterleaveOutput e2)
         {
             return e2.Equals(e1);
         }
 
         /// <summary>
-        /// Overriding != operator for enum ManagedIdentityType
+        /// Overriding != operator for enum InterleaveOutput
         /// </summary>
-        public static bool operator != (ManagedIdentityType e1, ManagedIdentityType e2)
+        public static bool operator != (InterleaveOutput e1, InterleaveOutput e2)
         {
             return !e2.Equals(e1);
         }
 
         /// <summary>
-        /// Overrides Equals operator for ManagedIdentityType
+        /// Overrides Equals operator for InterleaveOutput
         /// </summary>
         public override bool Equals(object obj)
         {
-            return obj is ManagedIdentityType && Equals((ManagedIdentityType)obj);
+            return obj is InterleaveOutput && Equals((InterleaveOutput)obj);
         }
 
         /// <summary>
-        /// Returns for hashCode ManagedIdentityType
+        /// Returns for hashCode InterleaveOutput
         /// </summary>
         public override int GetHashCode()
         {

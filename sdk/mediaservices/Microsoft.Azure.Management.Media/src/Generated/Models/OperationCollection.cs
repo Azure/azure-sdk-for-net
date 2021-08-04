@@ -10,26 +10,31 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class Location
+    /// <summary>
+    /// A collection of Operation items.
+    /// </summary>
+    public partial class OperationCollection
     {
         /// <summary>
-        /// Initializes a new instance of the Location class.
+        /// Initializes a new instance of the OperationCollection class.
         /// </summary>
-        public Location()
+        public OperationCollection()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Location class.
+        /// Initializes a new instance of the OperationCollection class.
         /// </summary>
-        public Location(string name)
+        /// <param name="value">A collection of Operation items.</param>
+        public OperationCollection(IList<Operation> value = default(IList<Operation>))
         {
-            Name = name;
+            Value = value;
             CustomInit();
         }
 
@@ -39,22 +44,10 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets a collection of Operation items.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<Operation> Value { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-        }
     }
 }
