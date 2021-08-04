@@ -551,7 +551,7 @@ await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in heal
 ```
 
 ### Run multiple actions Asynchronously
-This functionality allows running multiple actions in one or more documents. Actions include entity recognition, linked entity recognition, key phrase extraction, Personally Identifiable Information (PII) Recognition, and sentiment analysis. For more information see [Using analyze][analyze_operation_howto].
+This functionality allows running multiple actions in one or more documents. Actions include entity recognition, linked entity recognition, key phrase extraction, Personally Identifiable Information (PII) Recognition, sentiment analysis, and Extractive Text Summarization. For more information see [Using analyze][analyze_operation_howto].
 
 ```C# Snippet:AnalyzeOperationConvenienceAsync
     string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
@@ -573,9 +573,6 @@ This functionality allows running multiple actions in one or more documents. Act
     {
         ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
         RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
-        RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() },
-        RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
-        AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
         DisplayName = "AnalyzeOperationSample"
     };
 
@@ -598,9 +595,6 @@ This functionality allows running multiple actions in one or more documents. Act
     {
         IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesResults = documentsInPage.ExtractKeyPhrasesResults;
         IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesResults = documentsInPage.RecognizeEntitiesResults;
-        IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiResults = documentsInPage.RecognizePiiEntitiesResults;
-        IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingResults = documentsInPage.RecognizeLinkedEntitiesResults;
-        IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentResults = documentsInPage.AnalyzeSentimentResults;
 
         Console.WriteLine("Recognized Entities");
         int docNumber = 1;
@@ -612,28 +606,6 @@ This functionality allows running multiple actions in one or more documents. Act
                 Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");
 
                 foreach (CategorizedEntity entity in documentResults.Entities)
-                {
-                    Console.WriteLine($"  Entity: {entity.Text}");
-                    Console.WriteLine($"  Category: {entity.Category}");
-                    Console.WriteLine($"  Offset: {entity.Offset}");
-                    Console.WriteLine($"  Length: {entity.Length}");
-                    Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                    Console.WriteLine($"  SubCategory: {entity.SubCategory}");
-                }
-                Console.WriteLine("");
-            }
-        }
-
-        Console.WriteLine("Recognized PII Entities");
-        docNumber = 1;
-        foreach (RecognizePiiEntitiesActionResult piiActionResults in piiResults)
-        {
-            foreach (RecognizePiiEntitiesResult documentResults in piiActionResults.DocumentsResults)
-            {
-                Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} PII entities:");
-
-                foreach (PiiEntity entity in documentResults.Entities)
                 {
                     Console.WriteLine($"  Entity: {entity.Text}");
                     Console.WriteLine($"  Category: {entity.Category}");
@@ -659,52 +631,6 @@ This functionality allows running multiple actions in one or more documents. Act
                 {
                     Console.WriteLine($"  {keyphrase}");
                 }
-                Console.WriteLine("");
-            }
-        }
-
-        Console.WriteLine("Recognized Linked Entities");
-        docNumber = 1;
-        foreach (RecognizeLinkedEntitiesActionResult linkedEntitiesActionResults in entityLinkingResults)
-        {
-            foreach (RecognizeLinkedEntitiesResult documentResults in linkedEntitiesActionResults.DocumentsResults)
-            {
-                Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} linked entities:");
-
-                foreach (LinkedEntity entity in documentResults.Entities)
-                {
-                    Console.WriteLine($"  Entity: {entity.Name}");
-                    Console.WriteLine($"  DataSource: {entity.DataSource}");
-                    Console.WriteLine($"  DataSource EntityId: {entity.DataSourceEntityId}");
-                    Console.WriteLine($"  Language: {entity.Language}");
-                    Console.WriteLine($"  DataSource Url: {entity.Url}");
-
-                    Console.WriteLine($"  Total Matches: {entity.Matches.Count()}");
-                    foreach (LinkedEntityMatch match in entity.Matches)
-                    {
-                        Console.WriteLine($"    Match Text: {match.Text}");
-                        Console.WriteLine($"    ConfidenceScore: {match.ConfidenceScore}");
-                        Console.WriteLine($"    Offset: {match.Offset}");
-                        Console.WriteLine($"    Length: {match.Length}");
-                    }
-                    Console.WriteLine("");
-                }
-                Console.WriteLine("");
-            }
-        }
-
-        Console.WriteLine("Analyze Sentiment");
-        docNumber = 1;
-        foreach (AnalyzeSentimentActionResult analyzeSentimentActionsResult in analyzeSentimentResults)
-        {
-            foreach (AnalyzeSentimentResult documentResults in analyzeSentimentActionsResult.DocumentsResults)
-            {
-                Console.WriteLine($" Document #{docNumber++}");
-                Console.WriteLine($"  Sentiment is {documentResults.DocumentSentiment.Sentiment}, with confidence scores: ");
-                Console.WriteLine($"    Positive confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Positive}.");
-                Console.WriteLine($"    Neutral confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Neutral}.");
-                Console.WriteLine($"    Negative confidence score: {documentResults.DocumentSentiment.ConfidenceScores.Negative}.");
                 Console.WriteLine("");
             }
         }
