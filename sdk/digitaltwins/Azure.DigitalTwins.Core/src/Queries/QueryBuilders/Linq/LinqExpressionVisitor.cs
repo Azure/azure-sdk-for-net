@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 {
     /// <summary>
-    /// Parses different types of LINQ expressions.
+    /// Visitor that makes it easy to traverse and rewrite LINQ expressions.
     /// </summary>
     internal abstract class LinqExpressionVisitor
     {
