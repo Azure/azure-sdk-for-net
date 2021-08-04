@@ -40,7 +40,8 @@ namespace Azure.Storage.Files.DataLake
                     ETag = containerProperties.ETag,
                     Metadata = containerProperties.Metadata,
                     DeletedOn = containerProperties.DeletedOn,
-                    RemainingRetentionDays = containerProperties.RemainingRetentionDays
+                    RemainingRetentionDays = containerProperties.RemainingRetentionDays,
+                    DefaultEncryptionScope = containerProperties.DefaultEncryptionScope
                 };
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties) =>
@@ -829,6 +830,19 @@ namespace Azure.Storage.Files.DataLake
                 IndexDocument = dataLakeStaticWebsite.IndexDocument,
                 ErrorDocument404Path = dataLakeStaticWebsite.ErrorDocument404Path,
                 DefaultIndexDocumentPath = dataLakeStaticWebsite.DefaultIndexDocumentPath
+            };
+        }
+
+        internal static BlobContainerEncryptionScopeOptions ToBlobContainerEncryptionScopeOptions(this DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions)
+        {
+            if (encryptionScopeOptions == null)
+            {
+                return null;
+            }
+
+            return new BlobContainerEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = encryptionScopeOptions.DefaultEncryptionScope
             };
         }
 
