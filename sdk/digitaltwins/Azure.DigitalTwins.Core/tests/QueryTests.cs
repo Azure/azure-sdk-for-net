@@ -250,5 +250,60 @@ namespace Azure.DigitalTwins.Core.Tests
                 }
             }
         }
+
+        [Test]
+        public async Task Query_GetTwinAliasing()
+        {
+            DigitalTwinsClient client = GetClient();
+
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+
+            try
+            {
+                // arrange
+
+                // Create room model
+                string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
+
+                // Create a room twin, with property "IsOccupied": true
+                string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+                BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+                await client.CreateOrReplaceDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
+
+                await WaitIfLiveAsync(TimeSpan.FromSeconds(10));
+
+                // Construct a query string to find the twins with the EXACT model id and provided version. If EXACT is not specified, the query
+                // call will get all twins with the same model id but that implement any version higher than the provided version
+                string queryString = $"SELECT * FROM DIGITALTWINS";
+
+                // act
+                AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(queryString);
+                await foreach (BasicDigitalTwin twin in asyncPageableResponse)
+                {
+                    twin.Id.Should().NotBeNull();
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+            }
+            finally
+            {
+                // clean up
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(roomModelId))
+                    {
+                        await client.DeleteModelAsync(roomModelId).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                }
+            }
+        }
     }
 }
