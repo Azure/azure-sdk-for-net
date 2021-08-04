@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     internal partial class ArrowTextConfigurationInternal
     {
         /// <summary> Initializes a new instance of ArrowTextConfigurationInternal. </summary>
-        /// <param name="schema"> . </param>
+        /// <param name="schema"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="schema"/> is null. </exception>
         public ArrowTextConfigurationInternal(IEnumerable<ArrowFieldInternal> schema)
         {

@@ -20,8 +20,6 @@ namespace Azure.AI.Translation.Document.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:OperationsHistory
-
             int operationsCount = 0;
             int totalDocs = 0;
             int docsCancelled = 0;
@@ -61,8 +59,6 @@ namespace Azure.AI.Translation.Document.Samples
             Console.WriteLine($"Succeeded Document: {docsSucceeded}");
             Console.WriteLine($"Failed Document: {docsFailed}");
             Console.WriteLine($"Cancelled Documents: {docsCancelled}");
-
-            #endregion
         }
     }
 }

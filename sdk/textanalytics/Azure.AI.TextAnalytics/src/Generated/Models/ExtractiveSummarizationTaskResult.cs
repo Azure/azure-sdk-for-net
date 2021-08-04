@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of ExtractiveSummarizationTaskResult. </summary>
-        /// <param name="results"> . </param>
+        /// <param name="results"></param>
         internal ExtractiveSummarizationTaskResult(ExtractiveSummarizationResult results)
         {
             Results = results;

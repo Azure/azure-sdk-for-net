@@ -13,9 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary>
     /// condition operator
     /// 
-    /// 
-    /// 
-    /// should be specified when combining multiple detection conditions.
+    /// should be specified when combining multiple detection conditions
     /// </summary>
     public readonly partial struct DetectionConditionOperator : IEquatable<DetectionConditionOperator>
     {

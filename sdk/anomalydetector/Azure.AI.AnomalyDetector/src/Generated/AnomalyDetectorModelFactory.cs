@@ -91,8 +91,8 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of DiagnosticsInfo. </summary>
-        /// <param name="modelState"> . </param>
-        /// <param name="variableStates"> . </param>
+        /// <param name="modelState"></param>
+        /// <param name="variableStates"></param>
         /// <returns> A new <see cref="Models.DiagnosticsInfo"/> instance for mocking. </returns>
         public static DiagnosticsInfo DiagnosticsInfo(ModelState modelState = null, IEnumerable<VariableState> variableStates = null)
         {
@@ -103,9 +103,9 @@ namespace Azure.AI.AnomalyDetector.Models
 
         /// <summary> Initializes a new instance of ModelState. </summary>
         /// <param name="epochIds"> Epoch id. </param>
-        /// <param name="trainLosses"> . </param>
-        /// <param name="validationLosses"> . </param>
-        /// <param name="latenciesInSeconds"> . </param>
+        /// <param name="trainLosses"></param>
+        /// <param name="validationLosses"></param>
+        /// <param name="latenciesInSeconds"></param>
         /// <returns> A new <see cref="Models.ModelState"/> instance for mocking. </returns>
         public static ModelState ModelState(IEnumerable<int> epochIds = null, IEnumerable<float> trainLosses = null, IEnumerable<float> validationLosses = null, IEnumerable<float> latenciesInSeconds = null)
         {
@@ -144,7 +144,7 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of DetectionResult. </summary>
-        /// <param name="resultId"> . </param>
+        /// <param name="resultId"></param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> anomaly status of each timestamp. </param>
         /// <returns> A new <see cref="Models.DetectionResult"/> instance for mocking. </returns>
@@ -158,7 +158,7 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <summary> Initializes a new instance of DetectionResultSummary. </summary>
         /// <param name="status"> Multivariate anomaly detection status. </param>
         /// <param name="errors"> Error message when creating or training model fails. </param>
-        /// <param name="variableStates"> . </param>
+        /// <param name="variableStates"></param>
         /// <param name="setupInfo"> Request when creating the model. </param>
         /// <returns> A new <see cref="Models.DetectionResultSummary"/> instance for mocking. </returns>
         public static DetectionResultSummary DetectionResultSummary(DetectionStatus status = default, IEnumerable<ErrorResponse> errors = null, IEnumerable<VariableState> variableStates = null, DetectionRequest setupInfo = null)
@@ -171,7 +171,7 @@ namespace Azure.AI.AnomalyDetector.Models
 
         /// <summary> Initializes a new instance of AnomalyState. </summary>
         /// <param name="timestamp"> timestamp. </param>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <param name="errors"> Error message when inference this timestamp. </param>
         /// <returns> A new <see cref="Models.AnomalyState"/> instance for mocking. </returns>
         public static AnomalyState AnomalyState(DateTimeOffset timestamp = default, AnomalyValue value = null, IEnumerable<ErrorResponse> errors = null)
@@ -208,7 +208,7 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
         /// <param name="status"> Model training status. </param>
-        /// <param name="displayName"> . </param>
+        /// <param name="displayName"></param>
         /// <param name="variablesCount"> Count of variables. </param>
         /// <returns> A new <see cref="Models.ModelSnapshot"/> instance for mocking. </returns>
         public static ModelSnapshot ModelSnapshot(Guid modelId = default, DateTimeOffset createdTime = default, DateTimeOffset lastUpdatedTime = default, ModelStatus status = default, string displayName = null, int variablesCount = default)

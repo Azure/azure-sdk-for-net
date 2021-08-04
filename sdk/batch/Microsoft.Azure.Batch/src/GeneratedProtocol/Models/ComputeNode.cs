@@ -82,7 +82,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="nodeAgentInfo">Information about the Compute Node
         /// agent version and the time the Compute Node upgraded to a new
         /// version.</param>
-        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? runningTaskSlotsCount = default(int?), int? totalTasksSucceeded = default(int?), IList<TaskInformation> recentTasks = default(IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ComputeNodeError> errors = default(IList<ComputeNodeError>), bool? isDedicated = default(bool?), ComputeNodeEndpointConfiguration endpointConfiguration = default(ComputeNodeEndpointConfiguration), NodeAgentInformation nodeAgentInfo = default(NodeAgentInformation))
+        /// <param name="virtualMachineInfo">Info about the current state of
+        /// the virtual machine.</param>
+        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? runningTaskSlotsCount = default(int?), int? totalTasksSucceeded = default(int?), IList<TaskInformation> recentTasks = default(IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ComputeNodeError> errors = default(IList<ComputeNodeError>), bool? isDedicated = default(bool?), ComputeNodeEndpointConfiguration endpointConfiguration = default(ComputeNodeEndpointConfiguration), NodeAgentInformation nodeAgentInfo = default(NodeAgentInformation), VirtualMachineInfo virtualMachineInfo = default(VirtualMachineInfo))
         {
             Id = id;
             Url = url;
@@ -106,6 +108,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             IsDedicated = isDedicated;
             EndpointConfiguration = endpointConfiguration;
             NodeAgentInfo = nodeAgentInfo;
+            VirtualMachineInfo = virtualMachineInfo;
             CustomInit();
         }
 
@@ -324,6 +327,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "nodeAgentInfo")]
         public NodeAgentInformation NodeAgentInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets info about the current state of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "virtualMachineInfo")]
+        public VirtualMachineInfo VirtualMachineInfo { get; set; }
 
     }
 }

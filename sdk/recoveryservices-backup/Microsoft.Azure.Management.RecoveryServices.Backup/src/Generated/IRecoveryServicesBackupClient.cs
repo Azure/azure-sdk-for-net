@@ -69,11 +69,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
 
         /// <summary>
-        /// Gets the IBackupResourceStorageConfigsNonCRROperations.
-        /// </summary>
-        IBackupResourceStorageConfigsNonCRROperations BackupResourceStorageConfigsNonCRR { get; }
-
-        /// <summary>
         /// Gets the IProtectionIntentOperations.
         /// </summary>
         IProtectionIntentOperations ProtectionIntent { get; }
