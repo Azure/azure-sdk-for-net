@@ -181,7 +181,7 @@ namespace Azure.Messaging.ServiceBus
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
         private readonly ServiceBusSessionProcessor _sessionProcessor;
-        internal readonly List<(Task Task, CancellationTokenSource Cts)> _tasks = new();
+        internal readonly List<(Task Task, CancellationTokenSource Cts, ReceiverManager ReceiverManager)> _tasks = new();
         private readonly List<ReceiverManager> _orphanedReceiverManagers = new();
         private CancellationTokenSource _handlerCts = new();
 
@@ -789,7 +789,8 @@ namespace Azure.Messaging.ServiceBus
                         _tasks.Add(
                             (
                                 ReceiveAndProcessMessagesAsync(receiverManager, linkedCts.Token),
-                                linkedCts)
+                                linkedCts,
+                                receiverManager)
                         );
 
                         if (_tasks.Count > _maxConcurrentCalls)
@@ -846,7 +847,7 @@ namespace Azure.Messaging.ServiceBus
                 }
                 finally
                 {
-                    foreach (var (_, tcs) in _tasks)
+                    foreach (var (_, tcs, _) in _tasks)
                     {
                         tcs.Dispose();
                     }
@@ -1006,6 +1007,14 @@ namespace Azure.Messaging.ServiceBus
                 // cancel excess tasks
                 for (int i = 0; i < excessTasks; i++)
                 {
+                    if (IsSessionProcessor)
+                    {
+                        // Session managers have CTS that are managed internally when a new
+                        // session is accepted. Cancel these in addition to the CTS that we pass
+                        // from the processor. We can't combine them because sessions should not always
+                        // be canceled when the linkedToken is canceled (i.e. when StopProcessingAsync is called).
+                        ((SessionReceiverManager) activeTasks[i].ReceiverManager).CancelSession();
+                    }
                     activeTasks[i].Cts.Cancel();
                 }
 
