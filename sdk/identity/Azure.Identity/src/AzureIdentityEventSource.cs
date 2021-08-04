@@ -28,7 +28,8 @@ namespace Azure.Identity
         private const int InteractiveAuthenticationThreadPoolExecutionEvent = 11;
         private const int InteractiveAuthenticationInlineExecutionEvent = 12;
 
-        private AzureIdentityEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
+        private AzureIdentityEventSource() : base(EventSourceName) { }
+ { }
 
         public static AzureIdentityEventSource Singleton { get; } = new AzureIdentityEventSource();
 
