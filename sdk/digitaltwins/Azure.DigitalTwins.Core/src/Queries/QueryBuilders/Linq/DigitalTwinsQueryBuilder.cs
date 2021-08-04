@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Globalization;
 using Azure.Core;
 
-#pragma warning disable SA1402 // File may only contain a single type
+#pragma warning disable SA1402 // File may only contain a single type.
 
 namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 {
@@ -335,11 +335,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         /// <returns>String representation of query.</returns>
         public string GetQueryText()
         {
-            if (string.IsNullOrEmpty(_queryText))
-            {
-                Build();
-            }
-
+            Build();
             return _queryText;
         }
 
