@@ -11,6 +11,7 @@ using Azure.Core.TestFramework;
 using FluentAssertions;
 using NUnit.Framework;
 using Azure.DigitalTwins.Core.QueryBuilder;
+using Azure.DigitalTwins.Core.QueryBuilder.Fluent;
 
 namespace Azure.DigitalTwins.Core.Tests
 {

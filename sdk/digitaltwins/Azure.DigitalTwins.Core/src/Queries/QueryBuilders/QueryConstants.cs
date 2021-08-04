@@ -23,6 +23,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
         public const string IsDefined = "IS_DEFINED";
         public const string IsNull = "IS_NULL";
+        public const string IsBool = "IS_BOOL";
+        public const string IsNumber = "IS_NUMBER";
+        public const string IsString = "IS_STRING";
+        public const string IsObject = "IS_OBJECT";
+        public const string IsPrimitive = "IS_PRIMITIVE";
         public const string StartsWith = "STARTSWITH";
         public const string EndsWith = "ENDSWITH";
         public const string IsOfModel = "IS_OF_MODEL";

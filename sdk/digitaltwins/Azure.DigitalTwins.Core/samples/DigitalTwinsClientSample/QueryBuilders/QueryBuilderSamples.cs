@@ -1,29 +1,27 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using Azure.DigitalTwins.Core.QueryBuilder;
+﻿using Azure.DigitalTwins.Core.QueryBuilder;
+using Azure.DigitalTwins.Core.QueryBuilder.Fluent;
 
 namespace Azure.DigitalTwins.Core.Samples
 {
-    /// <summary>
-    /// Samples for QueryBuilder.
-    /// </summary>
     public static class QueryBuilderSamples
     {
-        /// <summary>
-        /// Main method.
-        /// </summary>
-        public static void Main()
+        public static void DigitalTwinsQueryBuilderMethodDrivenSamples()
         {
             #region Snippet:DigitalTwinsQueryBuilder
 
             // SELECT * FROM DIGITALTWINS
-            DigitalTwinsQueryBuilder simplestQuery = new DigitalTwinsQueryBuilder().Select("*").From(DigitalTwinsCollection.DigitalTwins).Build();
+            DigitalTwinsQueryBuilder simplestQuery = new DigitalTwinsQueryBuilder()
+                .Select("*")
+                .From(DigitalTwinsCollection.DigitalTwins)
+                .Build();
 
             // SELECT * FROM DIGITALTWINS
             // Note that the this is the same as the previous query, just with the pre-built SelectAll() method that can be used
             // interchangeably with Select("*")
-            DigitalTwinsQueryBuilder simplestQuerySelectAll = new DigitalTwinsQueryBuilder().SelectAll().From(DigitalTwinsCollection.DigitalTwins).Build();
+            DigitalTwinsQueryBuilder simplestQuerySelectAll = new DigitalTwinsQueryBuilder()
+                .SelectAll()
+                .From(DigitalTwinsCollection.DigitalTwins)
+                .Build();
 
             // SELECT TOP(3) FROM DIGITALTWINS
             // Note that if no property is specified, the SelectTopAll() method can be used instead of SelectTop()
@@ -105,6 +103,27 @@ namespace Azure.DigitalTwins.Core.Samples
                     .Or()
                     .IsOfModel("dtmi:example:room;1", true))
                 .Build();
+
+            #region Snippet:DigitalTwinsQueryBuilderBuild
+            // construct query and build string representation
+            DigitalTwinsQueryBuilder builtQuery = new DigitalTwinsQueryBuilder()
+                .SelectTopAll(5)
+                .From(DigitalTwinsCollection.DigitalTwins)
+                .Where(q => q
+                    .Compare("Temperature", QueryComparisonOperator.GreaterThan, 50))
+                .Build();
+
+            // SELECT TOP(5) From DigitalTwins WHERE Temperature > 50
+            string builtQueryString = builtQuery.GetQueryText();
+
+            // if not rebuilt, string representation does not update, even if new methods are chained
+            // SELECT TOP(5) From DigitalTwins WHERE Temperature > 50
+            builtQuery.Select("Humidity").GetQueryText();
+
+            // string representation updated after Build() called again
+            // SELECT TOP(5) Humidity From DigitalTwins WHERE Temperature > 50
+            builtQuery.Build().GetQueryText();
+            #endregion Snippet:DigitalTwinsQueryBuilderBuild
 
             #region Snippet:DigitalTwinsQueryBuilder_ComplexConditions
             // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
@@ -198,15 +217,15 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Build();
 
 
-            // SELECT T.Temperature, T.Humdity FROM DigitalTwins T
+            // SELECT T.Temperature, T.Humidity FROM DigitalTwins T
             DigitalTwinsQueryBuilder collectionAliasing = new DigitalTwinsQueryBuilder()
                 .Select("T.Temperature", "T.Humidity")
-                .From(DigitalTwinsCollection.DigitalTwins)
+                .From(DigitalTwinsCollection.DigitalTwins, "T")
                 .Build();
 
 
             // SELECT T.Temperature AS Temp, T.Humidity AS Hum FROM DigitalTwins T
-            // WHERE T.Temerpature = 50 AND T.Humidity = 30
+            // WHERE T.Temperature = 50 AND T.Humidity = 30
             DigitalTwinsQueryBuilder bothAliasingTypes = new DigitalTwinsQueryBuilder()
                 .SelectAs("T.Temperature", "Temp")
                 .SelectAs("T.Humidity", "Hum")

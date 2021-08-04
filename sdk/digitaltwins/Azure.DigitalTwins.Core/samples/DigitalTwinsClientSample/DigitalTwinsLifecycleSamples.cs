@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core.QueryBuilder;
+using Azure.DigitalTwins.Core.QueryBuilder.Fluent;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 
 namespace Azure.DigitalTwins.Core.Samples

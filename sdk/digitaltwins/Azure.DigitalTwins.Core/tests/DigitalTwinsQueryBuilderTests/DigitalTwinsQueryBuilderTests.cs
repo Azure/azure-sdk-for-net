@@ -3,6 +3,7 @@
 
 using System;
 using Azure.DigitalTwins.Core.QueryBuilder;
+using Azure.DigitalTwins.Core.QueryBuilder.Fluent;
 using FluentAssertions;
 using NUnit.Framework;
 
