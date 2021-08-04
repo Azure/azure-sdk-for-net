@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Threading;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task ExtractSummaryAsync()
+        public void ExtractSummary()
         {
             // create a text analytics client
             string endpoint = TestEnvironment.Endpoint;
@@ -54,9 +54,22 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // start analysis process
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
+            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchDocuments, actions);
 
-            await operation.WaitForCompletionAsync();
+            // wait for completion with manual polling
+            TimeSpan pollingInterval = new TimeSpan(1000);
+
+            while (true)
+            {
+                Console.WriteLine($"Status: {operation.Status}");
+                operation.UpdateStatus();
+                if (operation.HasCompleted)
+                {
+                    break;
+                }
+
+                Thread.Sleep(pollingInterval);
+            }
 
             // view operation status
             Console.WriteLine($"AnalyzeActions operation has completed");
@@ -70,7 +83,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
 
             // view operation results
-            await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
+            foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
             {
                 IReadOnlyCollection<ExtractSummaryActionResult> summaryResults = documentsInPage.ExtractSummaryResults;
 

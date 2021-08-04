@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task ExtractSummaryAsync()
+        public async Task ExtractSummaryConvenienceAsync()
         {
             // create a text analytics client
             string endpoint = TestEnvironment.Endpoint;
@@ -34,27 +34,18 @@ namespace Azure.AI.TextAnalytics.Samples
                                 “Being able to improve healthcare, being able to improve education, economic development is going to improve the quality of life in the communities.”";
 
             // prepare analyze operation input
-            var batchDocuments = new List<TextDocumentInput>
+            var batchInput = new List<string>
             {
-                new TextDocumentInput("1", document)
-                {
-                     Language = "en",
-                }
-            };
-
-            var summaryAction = new ExtractSummaryAction()
-            {
-                MaxSentenceCount = 5,
-                OrderBy = SummarySentencesOrder.Rank
+                document
             };
 
             TextAnalyticsActions actions = new TextAnalyticsActions()
             {
-                ExtractSummaryActions = new List<ExtractSummaryAction>() { summaryAction }
+                ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() }
             };
 
             // start analysis process
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchInput, actions);
 
             await operation.WaitForCompletionAsync();
 
@@ -70,7 +61,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
 
             // view operation results
-            await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
+            foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
             {
                 IReadOnlyCollection<ExtractSummaryActionResult> summaryResults = documentsInPage.ExtractSummaryResults;
 
