@@ -11,7 +11,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
     /// <summary>
     /// Partially evaluate subexpressions that don't depend on the query parameter.
     /// This allows queries to use arbitrary C# code that are turned into constants before
-    /// we build our queries.
+    /// we build our queries. This code is taken from <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/tables/Azure.Data.Tables/src/Queryable">Azure SDK for .NET repository</see>.
     /// </summary>
     internal static class Evaluator
     {

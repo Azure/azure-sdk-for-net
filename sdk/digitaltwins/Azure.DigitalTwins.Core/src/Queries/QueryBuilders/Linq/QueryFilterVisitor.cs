@@ -12,6 +12,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 {
     /// <summary>
     /// Outlines how to represent DigitalTwins specific keywords and expression types into a query string.
+    /// This code is taken from <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/tables/Azure.Data.Tables/src/Queryable">Azure SDK for .NET repository</see>.
     /// </summary>
     internal class QueryFilterVisitor : LinqExpressionVisitor
     {

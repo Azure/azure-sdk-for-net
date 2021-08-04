@@ -11,6 +11,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 {
     /// <summary>
     /// Visitor that makes it easy to traverse and rewrite LINQ expressions.
+    /// This code is taken from <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/tables/Azure.Data.Tables/src/Queryable">Azure SDK for .NET repository</see>.
     /// </summary>
     internal abstract class LinqExpressionVisitor
     {

@@ -11,6 +11,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 {
     /// <summary>
     /// Transform LINQ expressions into a normal form that's easier to process by <see cref="LinqExpressionVisitor"/>s.
+    /// This code is taken from <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/tables/Azure.Data.Tables/src/Queryable">Azure SDK for .NET repository</see>.
     /// </summary>
     internal class ExpressionNormalizer : LinqExpressionVisitor
     {
@@ -127,6 +128,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
                 && visited.Arguments.Count > 1
                 && visited.Method.ReturnType == typeof(int))
             {
+                // In a future update, it would be pertinent to support normalization of things like:
+                // r => r.IsOccupied is bool ------> r => DigitalTwinsFunctions.IsBool(r.IsOccupied)
                 return CreateCompareExpression(visited.Arguments[0], visited.Arguments[1]);
             }
 
