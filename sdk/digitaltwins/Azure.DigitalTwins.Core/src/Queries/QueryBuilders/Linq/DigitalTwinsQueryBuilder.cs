@@ -17,9 +17,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
     /// </summary>
     public class DigitalTwinsQueryBuilder : DigitalTwinsQueryBuilder<BasicDigitalTwin>
     {
-        /// <summary>
-        /// Create a DigitalTwins query and set the queried collection to DigitalTwins by default.
-        /// </summary>
+        /// <inherit />
         public DigitalTwinsQueryBuilder() : base(DigitalTwinsCollection.DigitalTwins) { }
 
         /// <summary>
@@ -284,6 +282,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 
             return Where(query);
 
+            // Prevent the partial evaluator from trying to compile calls to DigitalTwinsFunctions
+            // into constants since they're not implemented on the client
             bool CanEvaluate(Expression e)
             {
                 if (e is MethodCallExpression call && call.Method.DeclaringType == typeof(DigitalTwinsFunctions))
