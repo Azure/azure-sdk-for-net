@@ -14,7 +14,7 @@ namespace Azure
     /// </summary>
     public class RequestOptions
     {
-        private List<HttpMessageClassifier> _classifiers = new();
+        private List<HttpMessageClassifier>? _classifiers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestOptions"/> class.
@@ -72,6 +72,7 @@ namespace Azure
         /// <param name="classifier"></param>
         public void AddClassifier(Func<HttpMessage, ResponseClassification?> classifier)
         {
+            _classifiers ??= new();
             _classifiers.Add(new FuncHttpMessageClassifier(classifier));
         }
 
@@ -98,17 +99,21 @@ namespace Azure
         public HttpPipelinePolicy? PerCallPolicy { get; set; }
 
         /// <summary>
-        ///
+        /// Applies options from <see cref="RequestOptions"/> instance to a <see cref="HttpMessage"/>.
         /// </summary>
+        /// <param name="requestOptions"></param>
         /// <param name="message"></param>
-        public void Apply(HttpMessage message)
+        public static void Apply(RequestOptions requestOptions, HttpMessage message)
         {
-            if (PerCallPolicy != null)
+            if (requestOptions.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
 
-            message.ResponseClassifier = new PerCallResponseClassifier(message.ResponseClassifier, this);
+            if (requestOptions._classifiers != null)
+            {
+                message.ResponseClassifier = new PerCallResponseClassifier(message.ResponseClassifier, requestOptions._classifiers);
+            }
         }
 
         /// <summary>
@@ -126,12 +131,12 @@ namespace Azure
         internal class PerCallResponseClassifier : ResponseClassifier
         {
             private readonly ResponseClassifier _inner;
-            private readonly RequestOptions _options;
+            private readonly List<HttpMessageClassifier> _classifiers;
 
-            public PerCallResponseClassifier(ResponseClassifier inner, RequestOptions options)
+            public PerCallResponseClassifier(ResponseClassifier inner, List<HttpMessageClassifier> classifiers)
             {
                 _inner = inner;
-                _options = options;
+                _classifiers = classifiers;
             }
 
             public override bool IsRetriableResponse(HttpMessage message)
@@ -163,7 +168,7 @@ namespace Azure
 
             private bool Applies(HttpMessage message, ResponseClassification responseClassification)
             {
-                foreach (var classifier in _options._classifiers)
+                foreach (var classifier in _classifiers)
                 {
                     if (classifier.TryClassify(message, null, out var c) &&
                         c == responseClassification)
@@ -197,11 +202,9 @@ namespace Azure
                     classification = c;
                     return true;
                 }
-                else
-                {
-                    classification = default;
-                    return false;
-                }
+
+                classification = default;
+                return false;
             }
         }
     }
