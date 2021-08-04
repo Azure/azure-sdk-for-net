@@ -1864,7 +1864,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (ct == 50)
                     {
-                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 40);
+                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 20);
                     }
                     if (ct == 90)
                     {
@@ -1907,11 +1907,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 int receivedCount = 0;
                 var tcs = new TaskCompletionSource<bool>();
 
-                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
                     if (args.CancellationToken.IsCancellationRequested)
                     {
-                        return Task.CompletedTask;
+                        await args.AbandonMessageAsync(args.Message);
                     }
 
                     var ct = Interlocked.Increment(ref receivedCount);
@@ -1928,7 +1928,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     if (ct == 50)
                     {
-                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 100);
+                        // tasks will generally be 100 here, but allow some forgiveness as this is not deterministic
+                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 50);
                         processor.UpdateConcurrency(1, 1);
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
                         Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
@@ -1937,7 +1938,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
-                    return Task.CompletedTask;
                 }
 
                 processor.ProcessMessageAsync += ProcessMessage;

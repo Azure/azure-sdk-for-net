@@ -918,7 +918,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                     if (ct == 175)
                     {
-                        Assert.GreaterOrEqual(processor._tasks.Where(t => !t.Task.IsCompleted).Count(), 10);
+                        Assert.GreaterOrEqual(processor._tasks.Where(t => !t.Task.IsCompleted).Count(), 5);
                     }
                 }
 
