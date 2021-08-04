@@ -1,6 +1,6 @@
 # Azure Quantum Jobs client library for .NET
 
-Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs or solve optimization problems in the cloud.  Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines.  You can use the Azure.Quantum.Jobs client library to:
+Azure Quantum is a Microsoft Azure service that you can use to run quantum computing programs or solve optimization problems in the cloud. Using the Azure Quantum tools and SDKs, you can create quantum programs and run them against different quantum simulators and machines. You can use the Azure.Quantum.Jobs client library t
 - Create, enumerate, and cancel quantum jobs
 - Enumerate provider status and quotas
 
@@ -12,7 +12,7 @@ This section should include everything a developer needs to do to install and cr
 
 ### Install the package
 
-Install the Azure Quantum Jobs client library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Quantum Jobs client library for .NET with [NuGet][nuget]:
 
 ```Powershell
 dotnet add package Azure.Quantum.Jobs --prerelease -v 1.0.0-beta.1
@@ -180,11 +180,11 @@ testing, and contributing to this library.
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
 the right to, and actually do, grant us the rights to use your contribution. For
-details, visit <https://cla.microsoft.com>.
+details, visit [cla.microsoft.com][cla].
 
 This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
-or contact opencode@microsoft.com with any
+or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
 
