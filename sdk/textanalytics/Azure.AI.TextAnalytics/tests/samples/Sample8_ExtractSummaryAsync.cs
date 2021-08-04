@@ -6,55 +6,21 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
-    /// <summary>
-    /// Samples that are used in the associated README.md file.
-    /// </summary>
-    public partial class Snippets: SamplesBase<TextAnalyticsTestEnvironment>
+    [LiveOnly]
+    public partial class TextAnalyticsSamples : SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public void CreateTextAnalyticsClient()
+        public async Task ExtractSummaryAsync()
         {
-            #region Snippet:CreateTextAnalyticsClient
-#if SNIPPET
-            string endpoint = "<endpoint>";
-            string apiKey = "<apiKey>";
-#else
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-#endif
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            #endregion
-        }
-
-        [Test]
-        public void CreateTextAnalyticsClientTokenCredential()
-        {
-            #region Snippet:CreateTextAnalyticsClientTokenCredential
-#if SNIPPET
-            string endpoint = "<endpoint>";
-#else
-            string endpoint = TestEnvironment.Endpoint;
-#endif
-            var client = new TextAnalyticsClient(new Uri(endpoint), new DefaultAzureCredential());
-            #endregion
-        }
-
-        [Test]
-        public async Task ExtractSummaryWithoutErrorHandling()
-        {
-            // Shorter than other Extractive Summarization samples. Used in README for simplicity.
-
             // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:TextAnalyticsExtractSummaryWithoutErrorHandlingAsync
             // Get input document.
             string document = @"Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure solutions to support employees suddenly forced to work from home, but “what really put the firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained that customers were asking, “’How do we create an experience for people that makes them still feel connected to the company without the physical presence of being there?”
                                 In this new world of Windows 365, remote workers flip the lid on their laptop, bootup the family workstation or clip a keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365 account.From there, their Cloud PC appears with their background, apps, settings and content just as they left it when they last were last there – in the office, at home or a coffee shop.
@@ -69,18 +35,27 @@ namespace Azure.AI.TextAnalytics.Samples
 
             // Prepare analyze operation input. You can add multiple documents to this list and perform the same
             // operation to all of them.
-            var batchInput = new List<string>
+            var batchDocuments = new List<TextDocumentInput>
             {
-                document
+                new TextDocumentInput("1", document)
+                {
+                     Language = "en",
+                }
+            };
+
+            var summaryAction = new ExtractSummaryAction()
+            {
+                MaxSentenceCount = 5,
+                OrderBy = SummarySentencesOrder.Rank
             };
 
             TextAnalyticsActions actions = new TextAnalyticsActions()
             {
-                ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() }
+                ExtractSummaryActions = new List<ExtractSummaryAction>() { summaryAction }
             };
 
             // Start analysis process.
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchInput, actions);
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
 
             await operation.WaitForCompletionAsync();
 
@@ -102,8 +77,24 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 foreach (ExtractSummaryActionResult summaryActionResults in summaryResults)
                 {
+                    if (summaryActionResults.HasError)
+                    {
+                        Console.WriteLine($"  Error!");
+                        Console.WriteLine($"  Action error code: {summaryActionResults.Error.ErrorCode}.");
+                        Console.WriteLine($"  Message: {summaryActionResults.Error.Message}");
+                        continue;
+                    }
+
                     foreach (ExtractSummaryResult documentResults in summaryActionResults.DocumentsResults)
                     {
+                        if (documentResults.HasError)
+                        {
+                            Console.WriteLine($"  Error!");
+                            Console.WriteLine($"  Document error code: {documentResults.Error.ErrorCode}.");
+                            Console.WriteLine($"  Message: {documentResults.Error.Message}");
+                            continue;
+                        }
+
                         Console.WriteLine($"  Extracted the following {documentResults.Sentences.Count} sentence(s):");
                         Console.WriteLine();
 
@@ -118,29 +109,6 @@ namespace Azure.AI.TextAnalytics.Samples
                     }
                 }
             }
-            #endregion Snippet:TextAnalyticsExtractSummaryWithoutErrorHandlingAsync
-        }
-
-        [Test]
-        public void BadRequestSnippet()
-        {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-
-            var credentials = new AzureKeyCredential(apiKey);
-            var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
-            string document = "Este documento está en español.";
-
-            #region Snippet:BadRequest
-            try
-            {
-                DetectedLanguage result = client.DetectLanguage(document);
-            }
-            catch (RequestFailedException e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-            #endregion
         }
     }
 }
