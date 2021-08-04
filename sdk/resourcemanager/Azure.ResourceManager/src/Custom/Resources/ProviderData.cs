@@ -7,14 +7,17 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Resource provider information. </summary>
+    [PropertyReferenceType]
     public partial class ProviderData : SubResource
     {
         /// <summary> Initializes a new instance of Provider. </summary>
+        [InitializationConstructor]
         internal ProviderData()
         {
             ResourceTypes = new ChangeTrackingList<ProviderResourceType>();
@@ -26,6 +29,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="registrationState"> The registration state of the resource provider. </param>
         /// <param name="registrationPolicy"> The registration policy of the resource provider. </param>
         /// <param name="resourceTypes"> The collection of provider resource types. </param>
+        [SerializationConstructor]
         internal ProviderData(string id, string @namespace, string registrationState, string registrationPolicy, IReadOnlyList<ProviderResourceType> resourceTypes)
             : base(id)
         {
