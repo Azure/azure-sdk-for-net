@@ -58,8 +58,8 @@ namespace Azure.AI.Translation.Document.Samples
 
             var storageConnectionString = Environment.GetEnvironmentVariable("DOCUMENT_TRANSLATION_CONNECTION_STRING");
 #if SNIPPET
-            string sourceContainerName = Environment.GetEnvironmentVariable("DOCUMENT_TRANSLATION_SOURCE_CONTAINER_NAME");
-            string targetContainerName = Environment.GetEnvironmentVariable("DOCUMENT_TRANSLATION_TARGET_CONTAINER_NAME");
+            string sourceContainerName = "<Source Container Name>";
+            string targetContainerName = "<Target Container Name>";
 #else
             string sourceContainerName = GenerateRandomName("source");
             string targetContainerName = GenerateRandomName("target");
