@@ -33,7 +33,7 @@ namespace Azure.Storage.Test.Shared
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
-        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion, StorageVersionExtensions.MaxVersion })]
+        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
     public abstract class BlobTestBase : StorageTestBase<BlobTestEnvironment>
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
@@ -48,7 +48,7 @@ namespace Azure.Storage.Test.Shared
             new Uri(TestConfigSecondary.BlobServiceSecondaryEndpoint).Host;
 
         public BlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Live)
+            : base(async, mode)
         {
             _serviceVersion = serviceVersion;
         }
