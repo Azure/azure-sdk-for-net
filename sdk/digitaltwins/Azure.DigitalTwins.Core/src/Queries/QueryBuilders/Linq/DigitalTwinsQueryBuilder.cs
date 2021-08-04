@@ -244,11 +244,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
             for (int i = 0; i < args.Length; i++)
             {
                 args[i] = DigitalTwinsFunctions.Convert(filter.GetArgument(i), formatProvider);
-
-                if (args[i] == "null")
-                {
-                    throw new InvalidOperationException();
-                }
             }
 
             string text = string.Format(formatProvider, filter.Format, args);

@@ -108,7 +108,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         {
             return value switch
             {
-                null => "null",
+                null => throw new InvalidOperationException(),
                 bool x => x.ToString(formatProvider).ToLowerInvariant(),
                 int x => x.ToString(formatProvider),
                 double x => x.ToString(formatProvider),
