@@ -79,8 +79,8 @@ namespace Azure.AI.Translation.Document.Samples
             Uri sourceSasUri = new Uri("<source SAS URI>");
             Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
 #else
-            Uri sourceSasUri = new Uri("https://www.github.com");
-            Uri frenchTargetSasUri = new Uri("https://www.github.com");
+            Uri sourceSasUri = new Uri("https://soure.storage.blob.core.windows.net/source1");
+            Uri frenchTargetSasUri = new Uri("https://target.storage.blob.core.windows.net/frenchcontainer");
 #endif
             var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr");
             #endregion
@@ -93,10 +93,10 @@ namespace Azure.AI.Translation.Document.Samples
             Uri source1SasUri = new Uri("<source1 SAS URI>");
             Uri source2SasUri = new Uri("<source2 SAS URI>");
 #else
-            Uri source1SasUri = new Uri("https://www.github.com");
-            Uri source2SasUri = new Uri("https://www.github.com");
-            Uri arabicTargetSasUri = new Uri("https://www.github.com");
-            Uri spanishTargetSasUri = new Uri("https://www.github.com");
+            Uri source1SasUri = new Uri("https://soure.storage.blob.core.windows.net/source1");
+            Uri source2SasUri = new Uri("https://soure.storage.blob.core.windows.net/source2");
+            Uri arabicTargetSasUri = new Uri("https://target.storage.blob.core.windows.net/arabiccontainer");
+            Uri spanishTargetSasUri = new Uri("https://target.storage.blob.core.windows.net/spanishcontainer");
 #endif
 
             var inputs = new List<DocumentTranslationInput>
