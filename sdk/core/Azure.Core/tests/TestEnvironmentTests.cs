@@ -85,9 +85,10 @@ namespace Azure.Core.Tests
         [TestCase(RecordedTestMode.Playback)]
         [TestCase(RecordedTestMode.Record)]
         [TestCase(RecordedTestMode.None)]
-        public void ReadingRecordedValueInCtorDoesNotWorkForSamples(RecordedTestMode mode)
+        public void ReadingRecordedValueInCtorWorksForSamples(RecordedTestMode mode)
         {
-            Assert.Throws<InvalidOperationException>(() => new SampleTestClass());
+            var test = new SampleTestClass();
+            Assert.AreEqual("1", test.Value);
         }
 
         [Theory]
@@ -95,15 +96,16 @@ namespace Azure.Core.Tests
         [TestCase(RecordedTestMode.Playback)]
         [TestCase(RecordedTestMode.Record)]
         [TestCase(RecordedTestMode.None)]
-        public void ReadingRecordedValueInCtorDoesNotWorkForLiveTests(RecordedTestMode mode)
+        public void ReadingRecordedValueInCtorWorksForLiveTests(RecordedTestMode mode)
         {
-            Assert.Throws<InvalidOperationException>(() => new LiveTestClass());
+            var test = new LiveTestClass();
+            Assert.AreEqual("1", test.Value);
         }
 
         [Test]
-        public void ReadingRecordedValueOutsideRecordedTestDoesNotWork()
+        public void ReadingRecordedValueOutsideRecordedTestWorks()
         {
-            Assert.Throws<InvalidOperationException>(() => { var _ = MockTestEnvironment.Instance.RecordedValue; });
+            Assert.AreEqual("1", MockTestEnvironment.Instance.RecordedValue);
         }
 
         [Test]
@@ -156,11 +158,7 @@ namespace Azure.Core.Tests
         [Test]
         public void RecordedOptionalVariablePrefersPrefix()
         {
-            var tempFile = Path.GetTempFileName();
             var env = new MockTestEnvironment();
-            var testRecording = new TestRecording(RecordedTestMode.Record, tempFile, new RecordedTestSanitizer(), new RecordMatcher());
-            env.Mode = RecordedTestMode.Record;
-            env.SetRecording(testRecording);
             Assert.AreEqual("1", env.RecordedValue);
             if (_envFilePath != null)
             {
