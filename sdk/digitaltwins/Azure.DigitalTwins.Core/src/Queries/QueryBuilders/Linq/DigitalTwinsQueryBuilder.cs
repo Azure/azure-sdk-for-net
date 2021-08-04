@@ -17,9 +17,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
     /// </summary>
     public class DigitalTwinsQueryBuilder : DigitalTwinsQueryBuilder<BasicDigitalTwin>
     {
-        /// <summary>
-        /// Create a DigitalTwins query and set the queried collection to DigitalTwins by default.
-        /// </summary>
+        /// <inherit />
         public DigitalTwinsQueryBuilder() : base(DigitalTwinsCollection.DigitalTwins) { }
 
         /// <summary>
