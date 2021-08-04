@@ -102,6 +102,30 @@ namespace Azure.Identity.Tests
             return new TestFileSystemService { FileExistsHandler = p => Path.HasExtension("json"), ReadAllHandler = s => sb.ToString() };
         }
 
+        public static TestFileSystemService CreateFileSystemForVisualStudioCodeFromEnv(IdentityTestEnvironment testEnvironment, string cloudName = default)
+        {
+            var sb = new StringBuilder("{");
+
+            if (testEnvironment.TestTenantIdFromEnv != default)
+            {
+                sb.AppendFormat("\"azure.tenant\": \"{0}\"", testEnvironment.TestTenantIdFromEnv);
+            }
+
+            if (testEnvironment.TestTenantIdFromEnv != default && cloudName != default)
+            {
+                sb.Append(',');
+            }
+
+            if (cloudName != default)
+            {
+                sb.AppendFormat("\"azure.cloud\": \"{0}\"", cloudName);
+            }
+
+            sb.Append('}');
+
+            return new TestFileSystemService { FileExistsHandler = p => Path.HasExtension("json"), ReadAllHandler = s => sb.ToString() };
+        }
+
         public static async ValueTask<AuthenticationRecord> GetAuthenticationRecordAsync(IdentityTestEnvironment testEnvironment, RecordedTestMode mode)
         {
             var clientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
