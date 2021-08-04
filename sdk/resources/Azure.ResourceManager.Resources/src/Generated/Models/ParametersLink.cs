@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Entity representing the reference to the deployment parameters. </summary>
     public partial class ParametersLink

@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment script parameters to be updated. </summary>
-    public partial class DeploymentScriptUpdateParameter : Resource<TenantResourceIdentifier>
+    public partial class DeploymentScriptUpdateParameter : Resource
     {
         /// <summary> Initializes a new instance of DeploymentScriptUpdateParameter. </summary>
         public DeploymentScriptUpdateParameter()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="tags"> Resource tags to be updated. </param>
-        internal DeploymentScriptUpdateParameter(TenantResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags) : base(id, name, type)
+        internal DeploymentScriptUpdateParameter(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags) : base(id, name, type)
         {
             Tags = tags;
         }

@@ -7,12 +7,11 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment dependency information. </summary>
-    public partial class Dependency : SubResource<ResourceIdentifier>
+    public partial class Dependency : SubResource
     {
         /// <summary> Initializes a new instance of Dependency. </summary>
         internal Dependency()

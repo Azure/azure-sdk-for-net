@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class CloudError
     {
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = JsonSerializer.Deserialize<ErrorResponse>(property.Value.ToString());
                     continue;
                 }
             }
-            return new CloudError(error.Value);
+            return new CloudError(error);
         }
     }
 }

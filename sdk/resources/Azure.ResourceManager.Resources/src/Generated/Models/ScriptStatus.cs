@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Generic object modeling results of script execution. </summary>
     public partial class ScriptStatus
@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="startTime"> Start time of the script execution. </param>
         /// <param name="endTime"> End time of the script execution. </param>
         /// <param name="expirationTime"> Time the deployment script resource will expire. </param>
-        /// <param name="error"> Error that is relayed from the script execution. </param>
-        internal ScriptStatus(string containerInstanceId, string storageAccountId, DateTimeOffset? startTime, DateTimeOffset? endTime, DateTimeOffset? expirationTime, ErrorResponse error)
+        /// <param name="errorResponse"> Error that is relayed from the script execution. </param>
+        internal ScriptStatus(string containerInstanceId, string storageAccountId, DateTimeOffset? startTime, DateTimeOffset? endTime, DateTimeOffset? expirationTime, ErrorResponse errorResponse)
         {
             ContainerInstanceId = containerInstanceId;
             StorageAccountId = storageAccountId;
             StartTime = startTime;
             EndTime = endTime;
             ExpirationTime = expirationTime;
-            Error = error;
+            ErrorResponse = errorResponse;
         }
 
         /// <summary> ACI resource Id. </summary>
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Time the deployment script resource will expire. </summary>
         public DateTimeOffset? ExpirationTime { get; }
         /// <summary> Error that is relayed from the script execution. </summary>
-        public ErrorResponse Error { get; }
+        public ErrorResponse ErrorResponse { get; }
     }
 }

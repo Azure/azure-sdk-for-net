@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Provisioning status of the managed application. </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>

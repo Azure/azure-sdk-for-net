@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "JitRequestDefinition"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal JitRequestDefinition(OperationsBase options, JitRequestDefinitionData resource) : base(options, resource.Id)
+        internal JitRequestDefinition(ResourceOperations options, JitRequestDefinitionData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

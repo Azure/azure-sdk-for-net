@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application notification endpoint. </summary>
     public partial class ApplicationNotificationEndpoint

@@ -9,9 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     public partial class AzureCliScript : IUtf8JsonSerializable
     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Resources
             Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
             Optional<SystemData> systemData = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<ContainerConfiguration> containerSettings = default;

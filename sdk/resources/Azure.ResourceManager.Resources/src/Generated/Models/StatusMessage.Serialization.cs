@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     public partial class StatusMessage
     {
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = JsonSerializer.Deserialize<ErrorResponse>(property.Value.ToString());
                     continue;
                 }
             }
-            return new StatusMessage(status.Value, error.Value);
+            return new StatusMessage(status.Value, error);
         }
     }
 }

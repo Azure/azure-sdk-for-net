@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Type of the managed identity. </summary>
     public readonly partial struct ManagedServiceIdentityType : IEquatable<ManagedServiceIdentityType>

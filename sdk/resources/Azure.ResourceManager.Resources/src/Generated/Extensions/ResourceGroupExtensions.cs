@@ -5,33 +5,11 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
-
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region DeploymentExtended
-        /// <summary> Gets an object representing a DeploymentExtendedContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentExtendedContainer" /> object. </returns>
-        public static DeploymentExtendedContainer GetDeploymentExtendeds(this ResourceGroupOperations resourceGroup)
-        {
-            return new DeploymentExtendedContainer(resourceGroup);
-        }
-        #endregion
-
-        #region DeploymentScript
-        /// <summary> Gets an object representing a DeploymentScriptContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentScriptContainer" /> object. </returns>
-        public static DeploymentScriptContainer GetDeploymentScripts(this ResourceGroupOperations resourceGroup)
-        {
-            return new DeploymentScriptContainer(resourceGroup);
-        }
-        #endregion
-
         #region Application
         /// <summary> Gets an object representing a ApplicationContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
@@ -59,6 +37,16 @@ namespace Azure.ResourceManager.Resources
         public static JitRequestDefinitionContainer GetJitRequestDefinitions(this ResourceGroupOperations resourceGroup)
         {
             return new JitRequestDefinitionContainer(resourceGroup);
+        }
+        #endregion
+
+        #region DeploymentScript
+        /// <summary> Gets an object representing a DeploymentScriptContainer along with the instance operations that can be performed on it. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="DeploymentScriptContainer" /> object. </returns>
+        public static DeploymentScriptContainer GetDeploymentScripts(this ResourceGroupOperations resourceGroup)
+        {
+            return new DeploymentScriptContainer(resourceGroup);
         }
         #endregion
     }

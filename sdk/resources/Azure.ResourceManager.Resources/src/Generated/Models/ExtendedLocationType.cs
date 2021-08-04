@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The extended location type. </summary>
-    internal readonly partial struct ExtendedLocationType : IEquatable<ExtendedLocationType>
+    public readonly partial struct ExtendedLocationType : IEquatable<ExtendedLocationType>
     {
         private readonly string _value;
 

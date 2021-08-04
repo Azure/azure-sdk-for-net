@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The Jit approval mode. </summary>
     public readonly partial struct JitApprovalMode : IEquatable<JitApprovalMode>

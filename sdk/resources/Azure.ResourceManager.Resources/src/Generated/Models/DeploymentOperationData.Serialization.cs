@@ -7,7 +7,8 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Resources
         {
             Optional<string> operationId = default;
             Optional<DeploymentOperationProperties> properties = default;
-            TenantResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"))

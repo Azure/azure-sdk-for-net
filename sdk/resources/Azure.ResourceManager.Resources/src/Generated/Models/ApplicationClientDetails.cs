@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The application client details to track the entity creating/updating the managed app resource. </summary>
     public partial class ApplicationClientDetails

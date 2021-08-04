@@ -6,18 +6,18 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of DeploymentScript and their operations over a ResourceGroup. </summary>
-    public partial class DeploymentScriptContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, DeploymentScript, DeploymentScriptData>
+    public partial class DeploymentScriptContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="DeploymentScriptContainer"/> class for mocking. </summary>
         protected DeploymentScriptContainer()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Initializes a new instance of DeploymentScriptContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DeploymentScriptContainer(OperationsBase parent) : base(parent)
+        internal DeploymentScriptContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -35,9 +35,6 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Represents the REST operations. </summary>
         private DeploymentScriptsRestOperations _restClient => new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -179,6 +176,8 @@ namespace Azure.ResourceManager.Resources
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, scriptName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeploymentScript(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,6 +202,8 @@ namespace Azure.ResourceManager.Resources
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, scriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DeploymentScript(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,9 +216,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual DeploymentScript TryGet(string scriptName, CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentScript> GetIfExists(string scriptName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -226,11 +227,10 @@ namespace Azure.ResourceManager.Resources
                     throw new ArgumentNullException(nameof(scriptName));
                 }
 
-                return Get(scriptName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, scriptName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<DeploymentScript>(null, response.GetRawResponse())
+                    : Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,9 +242,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<DeploymentScript> TryGetAsync(string scriptName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DeploymentScript>> GetIfExistsAsync(string scriptName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -253,11 +253,10 @@ namespace Azure.ResourceManager.Resources
                     throw new ArgumentNullException(nameof(scriptName));
                 }
 
-                return await GetAsync(scriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, scriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<DeploymentScript>(null, response.GetRawResponse())
+                    : Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,9 +268,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string scriptName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string scriptName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -280,7 +279,8 @@ namespace Azure.ResourceManager.Resources
                     throw new ArgumentNullException(nameof(scriptName));
                 }
 
-                return TryGet(scriptName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(scriptName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string scriptName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string scriptName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -303,89 +303,14 @@ namespace Azure.ResourceManager.Resources
                     throw new ArgumentNullException(nameof(scriptName));
                 }
 
-                return await TryGetAsync(scriptName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(scriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Lists deployments scripts. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeploymentScript" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<DeploymentScript> List(CancellationToken cancellationToken = default)
-        {
-            Page<DeploymentScript> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeploymentScript> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists deployments scripts. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeploymentScript" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<DeploymentScript> ListAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<DeploymentScript>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeploymentScript>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Filters the list of <see cref="DeploymentScript" /> for this resource group represented as generic resources. </summary>
@@ -394,15 +319,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<Core.GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(DeploymentScriptOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -417,15 +342,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<Core.GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(DeploymentScriptOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -435,6 +360,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, DeploymentScript, DeploymentScriptData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, DeploymentScript, DeploymentScriptData> Construct() { }
     }
 }

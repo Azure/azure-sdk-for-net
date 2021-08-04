@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Result of the request to calculate template hash. It contains a string of minified template and its hash. </summary>
     public partial class TemplateHashResult

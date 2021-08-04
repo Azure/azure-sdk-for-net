@@ -8,9 +8,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     public partial class DeploymentScriptUpdateParameter : IUtf8JsonSerializable
     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
         internal static DeploymentScriptUpdateParameter DeserializeDeploymentScriptUpdateParameter(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
-            TenantResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             foreach (var property in element.EnumerateObject())

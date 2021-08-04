@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
-
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Common properties for all Azure resources. </summary>
-    public partial class AzureResourceBase : SubResource<ResourceGroupResourceIdentifier>
+    public partial class AzureResourceBase : SubResource
     {
         /// <summary> Initializes a new instance of AzureResourceBase. </summary>
         public AzureResourceBase()

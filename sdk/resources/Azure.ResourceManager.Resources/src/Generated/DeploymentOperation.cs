@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "DeploymentOperation"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DeploymentOperation(OperationsBase options, DeploymentOperationData resource) : base(options, resource.Id)
+        internal DeploymentOperation(ResourceOperations options, DeploymentOperationData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

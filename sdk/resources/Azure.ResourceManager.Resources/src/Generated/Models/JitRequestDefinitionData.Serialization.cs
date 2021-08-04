@@ -8,7 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Resources
         {
             IDictionary<string, string> tags = default;
             Location location = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<string> applicationResourceId = default;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Resources
                             List<JitAuthorizationPolicies> array = new List<JitAuthorizationPolicies>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Resources.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item));
+                                array.Add(Models.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item));
                             }
                             jitAuthorizationPolicies = array;
                             continue;

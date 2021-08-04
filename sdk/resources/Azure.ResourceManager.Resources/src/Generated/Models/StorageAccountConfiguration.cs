@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Settings to use an existing storage account. Valid storage account kinds are: Storage, StorageV2 and FileStorage. </summary>
     public partial class StorageAccountConfiguration

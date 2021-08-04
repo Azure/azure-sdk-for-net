@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Properties of the Azure PowerShell script object. </summary>
     internal partial class AzurePowerShellScriptProperties : DeploymentScriptPropertiesBase

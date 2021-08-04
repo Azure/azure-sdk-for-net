@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Common configuration settings for both Azure PowerShell and Azure CLI scripts. </summary>
     internal partial class ScriptConfigurationBase

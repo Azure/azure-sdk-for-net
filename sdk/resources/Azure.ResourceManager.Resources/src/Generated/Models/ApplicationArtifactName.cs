@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The managed application artifact name. </summary>
     public readonly partial struct ApplicationArtifactName : IEquatable<ApplicationArtifactName>

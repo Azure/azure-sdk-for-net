@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
-
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment dependency information. </summary>
-    public partial class BasicDependency : SubResource<ResourceIdentifier>
+    public partial class BasicDependency : SubResource
     {
         /// <summary> Initializes a new instance of BasicDependency. </summary>
         internal BasicDependency()

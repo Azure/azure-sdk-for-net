@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Threading.Tasks;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the operations that can be performed over a specific ScriptLog. </summary>
-    public partial class ScriptLogOperations : SingletonOperationsBase<ResourceGroupResourceIdentifier, ScriptLog>
+    public partial class ScriptLogOperations : SingletonOperations
     {
         /// <summary> Initializes a new instance of the <see cref="ScriptLogOperations"/> class for mocking. </summary>
         protected ScriptLogOperations()
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Initializes a new instance of the <see cref="ScriptLogOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        protected internal ScriptLogOperations(OperationsBase options) : base(options)
+        protected internal ScriptLogOperations(ResourceOperations options) : base(options)
         {
         }
 

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
-
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> JIT approver definition. </summary>
-    public partial class JitApproverDefinition : WritableSubResource<ResourceIdentifier>
+    public partial class JitApproverDefinition : WritableSubResource
     {
         /// <summary> Initializes a new instance of JitApproverDefinition. </summary>
         public JitApproverDefinition()

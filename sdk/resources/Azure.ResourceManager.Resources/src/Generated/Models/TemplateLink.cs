@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
-
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Entity representing the reference to the template. </summary>
-    public partial class TemplateLink : WritableSubResource<ResourceIdentifier>
+    public partial class TemplateLink : WritableSubResource
     {
         /// <summary> Initializes a new instance of TemplateLink. </summary>
         public TemplateLink()

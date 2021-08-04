@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Resource provider operation&apos;s display properties. </summary>
     internal partial class ResourceProviderOperationDisplayProperties

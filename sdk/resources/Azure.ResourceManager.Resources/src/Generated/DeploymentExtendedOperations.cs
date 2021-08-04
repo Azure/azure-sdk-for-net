@@ -11,12 +11,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Management;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the operations that can be performed over a specific DeploymentExtended. </summary>
-    public partial class DeploymentExtendedOperations : ResourceOperationsBase<TenantResourceIdentifier, DeploymentExtended>
+    public partial class DeploymentExtendedOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private DeploymentsRestOperations _restClient { get; }
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref="DeploymentExtendedOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal DeploymentExtendedOperations(OperationsBase options, TenantResourceIdentifier id) : base(options, id)
+        protected internal DeploymentExtendedOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DeploymentsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
@@ -40,14 +43,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<DeploymentExtended>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets a deployment. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<DeploymentExtended>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.GetAtScope");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DeploymentExtended(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -57,14 +63,17 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc />
-        public override Response<DeploymentExtended> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets a deployment. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DeploymentExtended> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.GetAtScope");
             scope.Start();
             try
             {
                 var response = _restClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeploymentExtended(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -77,7 +86,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -85,7 +94,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -487,12 +496,22 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                if (Id.GetType() == typeof(TenantResourceIdentifier))
+                if (Id.TryGetResourceGroupName(out _))
+                {
+                    var response = await _restClient.WhatIfAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
+                    return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, properties, location).Request, response);
+                }
+                else if (Id.TryGetSubscriptionId(out _))
+                {
+                    var response = await _restClient.WhatIfAtSubscriptionScopeAsync(Id.Parent.Name, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
+                    return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Parent.Name, Id.Name, properties, location).Request, response);
+                }
+                else
                 {
                     var parent = Id;
                     while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
                     {
-                        parent = parent.Parent as TenantResourceIdentifier;
+                        parent = parent.Parent;
                     }
                     if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
                     {
@@ -504,20 +523,6 @@ namespace Azure.ResourceManager.Resources
                         var response = await _restClient.WhatIfAtTenantScopeAsync(Id.Name, location, properties, cancellationToken).ConfigureAwait(false);
                         return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response);
                     }
-                }
-                else if (Id.GetType() == typeof(SubscriptionResourceIdentifier))
-                {
-                    var response = await _restClient.WhatIfAtSubscriptionScopeAsync(Id.Parent.Name, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
-                    return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Parent.Name, Id.Name, properties, location).Request, response);
-                }
-                else if (Id.GetType() == typeof(ResourceGroupResourceIdentifier))
-                {
-                    var response = await _restClient.WhatIfAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, properties, location, cancellationToken).ConfigureAwait(false);
-                    return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, properties, location).Request, response);
-                }
-                else
-                {
-                    throw new ArgumentException($"Invalid Id: {Id}.");
                 }
             }
             catch (Exception e)
@@ -543,12 +548,22 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                if (Id.GetType() == typeof(TenantResourceIdentifier))
+                if (Id.TryGetResourceGroupName(out _))
+                {
+                    var response = _restClient.WhatIf(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, properties, location, cancellationToken);
+                    return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, properties, location).Request, response);
+                }
+                else if (Id.TryGetSubscriptionId(out _))
+                {
+                    var response = _restClient.WhatIfAtSubscriptionScope(Id.Parent.Name, Id.Name, properties, location, cancellationToken);
+                    return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Parent.Name, Id.Name, properties, location).Request, response);
+                }
+                else
                 {
                     var parent = Id;
                     while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
                     {
-                        parent = parent.Parent as TenantResourceIdentifier;
+                        parent = parent.Parent;
                     }
                     if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
                     {
@@ -560,20 +575,6 @@ namespace Azure.ResourceManager.Resources
                         var response = _restClient.WhatIfAtTenantScope(Id.Name, location, properties, cancellationToken);
                         return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfAtTenantScopeRequest(Id.Name, location, properties).Request, response);
                     }
-                }
-                else if (Id.GetType() == typeof(SubscriptionResourceIdentifier))
-                {
-                    var response = _restClient.WhatIfAtSubscriptionScope(Id.Parent.Name, Id.Name, properties, location, cancellationToken);
-                    return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfAtSubscriptionScopeRequest(Id.Parent.Name, Id.Name, properties, location).Request, response);
-                }
-                else if (Id.GetType() == typeof(ResourceGroupResourceIdentifier))
-                {
-                    var response = _restClient.WhatIf(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, properties, location, cancellationToken);
-                    return new DeploymentsWhatIfOperation(_clientDiagnostics, Pipeline, _restClient.CreateWhatIfRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, properties, location).Request, response);
-                }
-                else
-                {
-                    throw new ArgumentException($"Invalid Id: {Id}.");
                 }
             }
             catch (Exception e)

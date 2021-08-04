@@ -6,18 +6,18 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of JitRequestDefinition and their operations over a ResourceGroup. </summary>
-    public partial class JitRequestDefinitionContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, JitRequestDefinition, JitRequestDefinitionData>
+    public partial class JitRequestDefinitionContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="JitRequestDefinitionContainer"/> class for mocking. </summary>
         protected JitRequestDefinitionContainer()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Initializes a new instance of JitRequestDefinitionContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal JitRequestDefinitionContainer(OperationsBase parent) : base(parent)
+        internal JitRequestDefinitionContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -35,9 +35,6 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Represents the REST operations. </summary>
         private JitRequestsRestOperations _restClient => new JitRequestsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -179,6 +176,8 @@ namespace Azure.ResourceManager.Resources
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, jitRequestName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new JitRequestDefinition(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,6 +202,8 @@ namespace Azure.ResourceManager.Resources
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, jitRequestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new JitRequestDefinition(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,9 +216,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual JitRequestDefinition TryGet(string jitRequestName, CancellationToken cancellationToken = default)
+        public virtual Response<JitRequestDefinition> GetIfExists(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -226,11 +227,10 @@ namespace Azure.ResourceManager.Resources
                     throw new ArgumentNullException(nameof(jitRequestName));
                 }
 
-                return Get(jitRequestName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, jitRequestName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<JitRequestDefinition>(null, response.GetRawResponse())
+                    : Response.FromValue(new JitRequestDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,9 +242,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<JitRequestDefinition> TryGetAsync(string jitRequestName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<JitRequestDefinition>> GetIfExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -253,11 +253,10 @@ namespace Azure.ResourceManager.Resources
                     throw new ArgumentNullException(nameof(jitRequestName));
                 }
 
-                return await GetAsync(jitRequestName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, jitRequestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<JitRequestDefinition>(null, response.GetRawResponse())
+                    : Response.FromValue(new JitRequestDefinition(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,9 +268,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string jitRequestName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -280,7 +279,8 @@ namespace Azure.ResourceManager.Resources
                     throw new ArgumentNullException(nameof(jitRequestName));
                 }
 
-                return TryGet(jitRequestName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(jitRequestName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string jitRequestName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -303,43 +303,8 @@ namespace Azure.ResourceManager.Resources
                     throw new ArgumentNullException(nameof(jitRequestName));
                 }
 
-                return await TryGetAsync(jitRequestName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves all JIT requests within the resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<JitRequestDefinition>>> ListByResourceGroupAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.ListByResourceGroup");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(data => new JitRequestDefinition(Parent, data)).ToArray() as IReadOnlyList<JitRequestDefinition>, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves all JIT requests within the resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<JitRequestDefinition>> ListByResourceGroup(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.ListByResourceGroup");
-            scope.Start();
-            try
-            {
-                var response = _restClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(data => new JitRequestDefinition(Parent, data)).ToArray() as IReadOnlyList<JitRequestDefinition>, response.GetRawResponse());
+                var response = await GetIfExistsAsync(jitRequestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -354,15 +319,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<Core.GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(JitRequestDefinitionOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -377,15 +342,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<Core.GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(JitRequestDefinitionOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -395,6 +360,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, JitRequestDefinition, JitRequestDefinitionData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, JitRequestDefinition, JitRequestDefinitionData> Construct() { }
     }
 }

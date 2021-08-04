@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The JIT request state. </summary>
     public readonly partial struct JitRequestState : IEquatable<JitRequestState>

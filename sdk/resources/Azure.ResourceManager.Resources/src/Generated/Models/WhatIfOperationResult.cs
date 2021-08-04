@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Result of the What-If operation. Contains a list of predicted changes and a URL link to get to the next set of results. </summary>
     public partial class WhatIfOperationResult
@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Initializes a new instance of WhatIfOperationResult. </summary>
         /// <param name="status"> Status of the What-If operation. </param>
-        /// <param name="error"> Error when What-If operation fails. </param>
+        /// <param name="errorResponse"> Error when What-If operation fails. </param>
         /// <param name="changes"> List of resource changes predicted by What-If operation. </param>
-        internal WhatIfOperationResult(string status, ErrorResponse error, IReadOnlyList<WhatIfChange> changes)
+        internal WhatIfOperationResult(string status, ErrorResponse errorResponse, IReadOnlyList<WhatIfChange> changes)
         {
             Status = status;
-            Error = error;
+            ErrorResponse = errorResponse;
             Changes = changes;
         }
 
         /// <summary> Status of the What-If operation. </summary>
         public string Status { get; }
         /// <summary> Error when What-If operation fails. </summary>
-        public ErrorResponse Error { get; }
+        public ErrorResponse ErrorResponse { get; }
         /// <summary> List of resource changes predicted by What-If operation. </summary>
         public IReadOnlyList<WhatIfChange> Changes { get; }
     }

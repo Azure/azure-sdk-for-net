@@ -12,12 +12,14 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of DeploymentExtended and their operations over a Tenant. </summary>
-    public partial class DeploymentExtendedContainer : ResourceContainerBase<TenantResourceIdentifier, DeploymentExtended, DeploymentExtendedData>
+    public partial class DeploymentExtendedContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="DeploymentExtendedContainer"/> class for mocking. </summary>
         protected DeploymentExtendedContainer()
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Initializes a new instance of DeploymentExtendedContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DeploymentExtendedContainer(OperationsBase parent) : base(parent)
+        internal DeploymentExtendedContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -41,9 +43,6 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Represents the REST operations. </summary>
         private DeploymentsRestOperations _restClient => new DeploymentsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new TenantResourceIdentifier Id => base.Id as TenantResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
@@ -185,6 +184,8 @@ namespace Azure.ResourceManager.Resources
                 }
 
                 var response = _restClient.GetAtScope(Id, deploymentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeploymentExtended(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -209,6 +210,8 @@ namespace Azure.ResourceManager.Resources
                 }
 
                 var response = await _restClient.GetAtScopeAsync(Id, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DeploymentExtended(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -221,9 +224,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual DeploymentExtended TryGet(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentExtended> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -232,11 +235,10 @@ namespace Azure.ResourceManager.Resources
                     throw new ArgumentNullException(nameof(deploymentName));
                 }
 
-                return Get(deploymentName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.GetAtScope(Id, deploymentName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<DeploymentExtended>(null, response.GetRawResponse())
+                    : Response.FromValue(new DeploymentExtended(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -248,9 +250,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<DeploymentExtended> TryGetAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DeploymentExtended>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -259,11 +261,10 @@ namespace Azure.ResourceManager.Resources
                     throw new ArgumentNullException(nameof(deploymentName));
                 }
 
-                return await GetAsync(deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAtScopeAsync(Id, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<DeploymentExtended>(null, response.GetRawResponse())
+                    : Response.FromValue(new DeploymentExtended(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -275,9 +276,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -286,7 +287,8 @@ namespace Azure.ResourceManager.Resources
                     throw new ArgumentNullException(nameof(deploymentName));
                 }
 
-                return TryGet(deploymentName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(deploymentName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -298,9 +300,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -309,7 +311,8 @@ namespace Azure.ResourceManager.Resources
                     throw new ArgumentNullException(nameof(deploymentName));
                 }
 
-                return await TryGetAsync(deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -323,15 +326,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeploymentExtended" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<DeploymentExtended> List(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<DeploymentExtended> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<DeploymentExtended> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListAtScope(Id, filter, top, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAtScope(Id, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DeploymentExtended(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -342,11 +345,11 @@ namespace Azure.ResourceManager.Resources
             }
             Page<DeploymentExtended> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListAtScopeNextPage(nextLink, Id, filter, top, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAtScopeNextPage(nextLink, Id, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DeploymentExtended(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -363,15 +366,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeploymentExtended" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<DeploymentExtended> ListAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<DeploymentExtended> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DeploymentExtended>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAtScopeAsync(Id, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAtScopeAsync(Id, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DeploymentExtended(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -382,11 +385,11 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<DeploymentExtended>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAtScopeNextPageAsync(nextLink, Id, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAtScopeNextPageAsync(nextLink, Id, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DeploymentExtended(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -398,7 +401,53 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// <summary> Filters the list of <see cref="DeploymentExtended" /> for this resource group represented as generic resources. </summary>
+        /// <param name="nameFilter"> The filter used in this operation. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
+        /// <param name="top"> The number of results to return. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.GetAsGenericResources");
+            scope.Start();
+            try
+            {
+                var filters = new ResourceFilterCollection(DeploymentExtendedOperations.ResourceType);
+                filters.SubstringFilter = nameFilter;
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Filters the list of <see cref="DeploymentExtended" /> for this resource group represented as generic resources. </summary>
+        /// <param name="nameFilter"> The filter used in this operation. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
+        /// <param name="top"> The number of results to return. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.GetAsGenericResources");
+            scope.Start();
+            try
+            {
+                var filters = new ResourceFilterCollection(DeploymentExtendedOperations.ResourceType);
+                filters.SubstringFilter = nameFilter;
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         // Builders.
-        // public ArmBuilder<TenantResourceIdentifier, DeploymentExtended, DeploymentExtendedData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, DeploymentExtended, DeploymentExtendedData> Construct() { }
     }
 }

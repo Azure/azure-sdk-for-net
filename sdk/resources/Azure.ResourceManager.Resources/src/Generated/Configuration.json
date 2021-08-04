@@ -1,14 +1,13 @@
 {
   "OutputFolder": ".",
   "Namespace": "Azure.ResourceManager.Resources",
-  "LibraryName": null,
+  "LibraryName": "Resources",
   "SharedSourceFolders": [
     "..\\..\\..\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Generator.Shared",
     "..\\..\\..\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Azure.Core.Shared"
   ],
   "azure-arm": true,
   "public-clients": true,
-  "model-namespace": false,
   "skip-csproj-packagereference": true,
   "OperationGroupToResourceType": {
     "DeploymentOperations": "Microsoft.Resources/deployments/operations",
@@ -43,5 +42,14 @@
       "Deployments_WhatIfAtManagementGroupScope_POST",
       "Deployments_WhatIfAtSubscriptionScope_POST"
     ]
-  }
+  },
+  "OperationGroupsToOmit": [
+    "Providers",
+    "ProviderResourceTypes",
+    "Resources",
+    "ResourceGroups",
+    "Tags",
+    "Subscriptions",
+    "Tenants"
+  ]
 }

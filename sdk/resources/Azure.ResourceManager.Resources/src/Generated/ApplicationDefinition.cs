@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "ApplicationDefinition"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ApplicationDefinition(OperationsBase options, ApplicationDefinitionData resource) : base(options, resource.Id)
+        internal ApplicationDefinition(ResourceOperations options, ApplicationDefinitionData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

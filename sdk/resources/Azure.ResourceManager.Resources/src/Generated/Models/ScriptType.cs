@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Type of the script. </summary>
     public readonly partial struct ScriptType : IEquatable<ScriptType>

@@ -8,15 +8,24 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of resource types of a resource provider. </summary>
-    internal partial class ProviderResourceTypeListResult
+    public partial class ProviderResourceTypeListResult
     {
         /// <summary> Initializes a new instance of ProviderResourceTypeListResult. </summary>
         internal ProviderResourceTypeListResult()
         {
             Value = new ChangeTrackingList<ProviderResourceType>();
+        }
+
+        /// <summary> Initializes a new instance of ProviderResourceTypeListResult. </summary>
+        /// <param name="value"> An array of resource types. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        internal ProviderResourceTypeListResult(IReadOnlyList<ProviderResourceType> value, string nextLink)
+        {
+            Value = value;
+            NextLink = nextLink;
         }
 
         /// <summary> An array of resource types. </summary>

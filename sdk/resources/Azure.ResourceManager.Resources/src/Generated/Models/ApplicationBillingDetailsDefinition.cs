@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application billing details definition. </summary>
     public partial class ApplicationBillingDetailsDefinition

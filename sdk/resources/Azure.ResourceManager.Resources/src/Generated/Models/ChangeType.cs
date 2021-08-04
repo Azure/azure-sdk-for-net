@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Type of change that will be made to the resource when the deployment is executed. </summary>
     public enum ChangeType

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> State of the script execution. This only appears in the response. </summary>
     public readonly partial struct ScriptProvisioningState : IEquatable<ScriptProvisioningState>
