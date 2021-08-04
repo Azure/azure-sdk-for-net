@@ -23,11 +23,7 @@ namespace Azure.Core.Tests
             Page<TestResource> pageFunc(int? pageSizeHint)
             {
                 //simulates forwarding with todays wrapper.  This should go away after codegen is finished
-<<<<<<< HEAD
-                using var scope = _diagnostic.CreateScope("TestResourceContainer.GetSyncResults");
-=======
                 using var scope = _diagnostic.CreateScope("TestResourceContainer.GetAll");
->>>>>>> 89c2dd1d28bf5e247bd1dd20dbea3bf85f660105
                 scope.Start();
 
                 try
@@ -44,20 +40,11 @@ namespace Azure.Core.Tests
             return PageableHelpers.CreateEnumerable(pageFunc, null);
         }
 
-<<<<<<< HEAD
-        [ForwardsClientCalls]
-        public virtual AsyncPageable<TestResource> ListAsync(int pages = 1, CancellationToken cancellation = default)
-        {
-            async Task<Page<TestResource>> pageFunc(int? pageSizeHint)
-            {
-                using var scope = _diagnostic.CreateScope("TestResourceContainer.GetAsyncResults");
-=======
         public virtual AsyncPageable<TestResource> GetAllAsync(int pages = 1, CancellationToken cancellation = default)
         {
             async Task<Page<TestResource>> pageFunc(int? pageSizeHint)
             {
                 using var scope = _diagnostic.CreateScope("TestResourceContainer.GetAll");
->>>>>>> 89c2dd1d28bf5e247bd1dd20dbea3bf85f660105
                 scope.Start();
 
                 try
