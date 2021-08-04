@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         private readonly Location _defaultLocation = Location.WestUS2;
         private string _resourceGroupName = ResourceGroupNamePrefix;
         private string _workspaceName = WorkspacePrefix;
-        private string _resourceName = ResourceNamePrefix;
-        private string _parentPrefix = ParentPrefix;
+        private string _resourceName = "1"; // version expect numeric value
+        private string _parentName = ParentPrefix;
 
         public CodeVersionResourceContainerTests(bool isAsync)
          : base(isAsync)
@@ -29,8 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         [OneTimeSetUp]
         public async Task SetupResources()
         {
-            _parentPrefix = SessionRecording.GenerateAssetName(ParentPrefix);
-            _resourceName = SessionRecording.GenerateAssetName(ResourceNamePrefix);
+            _parentName = SessionRecording.GenerateAssetName(ParentPrefix);
             _workspaceName = SessionRecording.GenerateAssetName(WorkspacePrefix);
             _resourceGroupName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
 
@@ -41,9 +40,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 _workspaceName,
                 DataHelper.GenerateWorkspaceData());
 
-            _ = await ws.GetEnvironmentContainerResources().CreateOrUpdateAsync(
-                _parentPrefix,
-                DataHelper.GenerateEnvironmentContainerResourceData());
+            _ = await ws.GetCodeContainerResources().CreateOrUpdateAsync(
+                _parentName,
+                DataHelper.GenerateCodeContainerResourceData());
             StopSessionRecording();
         }
 
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            CodeContainerResource parent = await ws.GetCodeContainerResources().GetAsync(_parentPrefix);
+            CodeContainerResource parent = await ws.GetCodeContainerResources().GetAsync(_parentName);
 
             Assert.DoesNotThrowAsync(async () => _ = await parent.GetCodeVersionResources().CreateOrUpdateAsync(
                 _resourceName,
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            CodeContainerResource parent = await ws.GetCodeContainerResources().GetAsync(_parentPrefix);
+            CodeContainerResource parent = await ws.GetCodeContainerResources().GetAsync(_parentName);
 
             Assert.DoesNotThrowAsync(async () => _ = await parent.GetCodeVersionResources().CreateOrUpdateAsync(
                 _resourceName,
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            CodeContainerResource parent = await ws.GetCodeContainerResources().GetAsync(_parentPrefix);
+            CodeContainerResource parent = await ws.GetCodeContainerResources().GetAsync(_parentName);
 
             CodeVersionResource resource = null;
             Assert.DoesNotThrowAsync(async () => resource = await parent.GetCodeVersionResources().CreateOrUpdateAsync(
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            CodeContainerResource parent = await ws.GetCodeContainerResources().GetAsync(_parentPrefix);
+            CodeContainerResource parent = await ws.GetCodeContainerResources().GetAsync(_parentName);
 
             CodeVersionResource resource = null;
             Assert.DoesNotThrowAsync(async () => resource = await (await parent.GetCodeVersionResources().StartCreateOrUpdateAsync(
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            CodeContainerResource parent = await ws.GetCodeContainerResources().GetAsync(_parentPrefix);
+            CodeContainerResource parent = await ws.GetCodeContainerResources().GetAsync(_parentName);
 
             Assert.DoesNotThrowAsync(async () => _ = await (await parent.GetCodeVersionResources().StartCreateOrUpdateAsync(
                 _resourceName,

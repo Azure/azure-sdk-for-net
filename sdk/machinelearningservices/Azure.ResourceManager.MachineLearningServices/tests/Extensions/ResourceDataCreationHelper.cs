@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
 
         public CodeVersion GenerateCodeVersion()
         {
-            throw new NotImplementedException();
+            return new CodeVersion("hello.py");
         }
 
         public ComputeResourceData GenerateComputeResourceData()
