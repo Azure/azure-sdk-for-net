@@ -258,7 +258,7 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken) => CreateOrUpdateDataSourceConnection(
                 dataSourceConnection,
                 onlyIfUnchanged,
-                ignoreResetRequirements: null,
+                ignoreCacheResetRequirements: null,
                 cancellationToken);
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Azure.Search.Documents.Indexes
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="ignoreResetRequirements"><c>True</c> if the cache reset requirements should be ignored.</param>
+        /// <param name="ignoreCacheResetRequirements"><c>True</c> if the cache reset requirements should be ignored.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
@@ -280,7 +280,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
-            bool? ignoreResetRequirements = null,
+            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -295,7 +295,7 @@ namespace Azure.Search.Documents.Indexes
                     dataSourceConnection,
                     onlyIfUnchanged ? dataSourceConnection?.ETag?.ToString() : null,
                     null,
-                    ignoreResetRequirements,
+                    ignoreCacheResetRequirements,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -329,7 +329,7 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken) => await CreateOrUpdateDataSourceConnectionAsync(
                 dataSourceConnection,
                 onlyIfUnchanged,
-                ignoreResetRequirements: null,
+                ignoreCacheResetRequirements: null,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -341,7 +341,7 @@ namespace Azure.Search.Documents.Indexes
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="ignoreResetRequirements"><c>True</c> if the cache reset requirements should be ignored.</param>
+        /// <param name="ignoreCacheResetRequirements"><c>True</c> if the cache reset requirements should be ignored.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
@@ -352,7 +352,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
-            bool? ignoreResetRequirements = null,
+            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -367,7 +367,7 @@ namespace Azure.Search.Documents.Indexes
                     dataSourceConnection,
                     onlyIfUnchanged ? dataSourceConnection?.ETag?.ToString() : null,
                     null,
-                    ignoreResetRequirements,
+                    ignoreCacheResetRequirements,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -782,7 +782,7 @@ namespace Azure.Search.Documents.Indexes
                 indexer,
                 onlyIfUnchanged,
                 disableCacheReprocessingChangeDetection: null,
-                ignoreResetRequirements: null,
+                ignoreCacheResetRequirements: null,
                 cancellationToken);
 
         /// <summary>
@@ -794,7 +794,7 @@ namespace Azure.Search.Documents.Indexes
         /// otherwise, the current service version will be overwritten.
         /// </param>
         /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
-        /// <param name="ignoreResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
@@ -806,7 +806,7 @@ namespace Azure.Search.Documents.Indexes
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
             bool? disableCacheReprocessingChangeDetection = null,
-            bool? ignoreResetRequirements = null,
+            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -822,7 +822,7 @@ namespace Azure.Search.Documents.Indexes
                     onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
                     null,
                     disableCacheReprocessingChangeDetection,
-                    ignoreResetRequirements,
+                    ignoreCacheResetRequirements,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -857,7 +857,7 @@ namespace Azure.Search.Documents.Indexes
                 indexer,
                 onlyIfUnchanged,
                 disableCacheReprocessingChangeDetection: null,
-                ignoreResetRequirements: null,
+                ignoreCacheResetRequirements: null,
                 cancellationToken).
                 ConfigureAwait(false);
 
@@ -870,7 +870,7 @@ namespace Azure.Search.Documents.Indexes
         /// otherwise, the current service version will be overwritten.
         /// </param>
         /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
-        /// <param name="ignoreResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
@@ -882,7 +882,7 @@ namespace Azure.Search.Documents.Indexes
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
             bool? disableCacheReprocessingChangeDetection = null,
-            bool? ignoreResetRequirements = null,
+            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -898,7 +898,7 @@ namespace Azure.Search.Documents.Indexes
                     onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
                     null,
                     disableCacheReprocessingChangeDetection,
-                    ignoreResetRequirements,
+                    ignoreCacheResetRequirements,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1472,7 +1472,7 @@ namespace Azure.Search.Documents.Indexes
                 skillset,
                 onlyIfUnchanged,
                 disableCacheReprocessingChangeDetection: null,
-                ignoreResetRequirements: null,
+                ignoreCacheResetRequirements: null,
                 cancellationToken);
 
         /// <summary>
@@ -1484,7 +1484,7 @@ namespace Azure.Search.Documents.Indexes
         /// otherwise, the current service version will be overwritten.
         /// </param>
         /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
-        /// <param name="ignoreResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
@@ -1496,7 +1496,7 @@ namespace Azure.Search.Documents.Indexes
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
             bool? disableCacheReprocessingChangeDetection = null,
-            bool? ignoreResetRequirements = null,
+            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -1512,7 +1512,7 @@ namespace Azure.Search.Documents.Indexes
                     onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
                     null,
                     disableCacheReprocessingChangeDetection,
-                    ignoreResetRequirements,
+                    ignoreCacheResetRequirements,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1547,7 +1547,7 @@ namespace Azure.Search.Documents.Indexes
                 skillset,
                 onlyIfUnchanged,
                 disableCacheReprocessingChangeDetection: null,
-                ignoreResetRequirements: null,
+                ignoreCacheResetRequirements: null,
                 cancellationToken).
                 ConfigureAwait(false);
 
@@ -1560,7 +1560,7 @@ namespace Azure.Search.Documents.Indexes
         /// otherwise, the current service version will be overwritten.
         /// </param>
         /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
-        /// <param name="ignoreResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
@@ -1572,7 +1572,7 @@ namespace Azure.Search.Documents.Indexes
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
             bool? disableCacheReprocessingChangeDetection = null,
-            bool? ignoreResetRequirements = null,
+            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -1588,7 +1588,7 @@ namespace Azure.Search.Documents.Indexes
                     onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
                     null,
                     disableCacheReprocessingChangeDetection,
-                    ignoreResetRequirements,
+                    ignoreCacheResetRequirements,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
