@@ -551,7 +551,7 @@ await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in heal
 ```
 
 ### Run multiple actions Asynchronously
-This functionality allows running multiple actions in one or more documents. Actions include entity recognition, linked entity recognition, key phrase extraction, Personally Identifiable Information (PII) Recognition, and sentiment analysis. For more information see [Using analyze][analyze_operation_howto].
+This functionality allows running multiple actions in one or more documents. Actions include entity recognition, linked entity recognition, key phrase extraction, Personally Identifiable Information (PII) Recognition, sentiment analysis, and Extractive Text Summarization. For more information see [Using analyze][analyze_operation_howto].
 
 ```C# Snippet:AnalyzeOperationConvenienceAsync
     string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
