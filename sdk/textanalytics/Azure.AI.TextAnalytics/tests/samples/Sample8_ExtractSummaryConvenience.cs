@@ -16,12 +16,12 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void ExtractSummaryConvenience()
         {
-            // create a text analytics client
+            // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            // get input document
+            // Get input document.
             string document = @"Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure solutions to support employees suddenly forced to work from home, but “what really put the firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained that customers were asking, “’How do we create an experience for people that makes them still feel connected to the company without the physical presence of being there?”
                                 In this new world of Windows 365, remote workers flip the lid on their laptop, bootup the family workstation or clip a keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365 account.From there, their Cloud PC appears with their background, apps, settings and content just as they left it when they last were last there – in the office, at home or a coffee shop.
                                 And then, when you’re done, you’re done.You won’t have any issues around security because you’re not saving anything on your device,” McKelvey said, noting that all the data is stored in the cloud.
@@ -33,7 +33,8 @@ namespace Azure.AI.TextAnalytics.Samples
                                 “The impact that I believe we are finding, and the impact that we’re going to find going forward, is being able to access specialists from outside the territory and organizations outside the territory to come in and help us with our projects, being able to get people on staff with us to help us deliver the day-to-day expertise that we need to run the government,” he said.
                                 “Being able to improve healthcare, being able to improve education, economic development is going to improve the quality of life in the communities.”";
 
-            // prepare analyze operation input
+            // Prepare analyze operation input. You can add multiple documents to this list and perform the same
+            // operation to all of them.
             var batchInput = new List<string>
             {
                 document
@@ -44,10 +45,10 @@ namespace Azure.AI.TextAnalytics.Samples
                 ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() }
             };
 
-            // start analysis process
+            // Start analysis process.
             AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchInput, actions);
 
-            // wait for completion with manual polling
+            // Wait for completion with manual polling.
             TimeSpan pollingInterval = new TimeSpan(1000);
 
             while (true)
@@ -62,7 +63,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 Thread.Sleep(pollingInterval);
             }
 
-            // view operation status
+            // View operation status.
             Console.WriteLine($"AnalyzeActions operation has completed");
             Console.WriteLine();
 
@@ -73,7 +74,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
 
-            // view operation results
+            // View operation results.
             foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
             {
                 IReadOnlyCollection<ExtractSummaryActionResult> summaryResults = documentsInPage.ExtractSummaryResults;
