@@ -39,6 +39,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         internal override Expression VisitBinary(BinaryExpression b)
         {
             BinaryExpression visited = (BinaryExpression)base.VisitBinary(b);
+            Debug.Assert(visited != null);
 
             switch (visited.NodeType)
             {
@@ -76,6 +77,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         internal override Expression VisitUnary(UnaryExpression u)
         {
             UnaryExpression visited = (UnaryExpression)base.VisitUnary(u);
+            Debug.Assert(visited != null);
             Expression result = visited;
 
             RecordRewrite(u, result);
@@ -86,6 +88,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         internal override Expression VisitMethodCall(MethodCallExpression call)
         {
             Expression visited = VisitMethodCallNoRewrite(call);
+            Debug.Assert(visited != null);
             RecordRewrite(call, visited);
             return visited;
         }
@@ -93,6 +96,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         internal Expression VisitMethodCallNoRewrite(MethodCallExpression call)
         {
             MethodCallExpression visited = (MethodCallExpression)base.VisitMethodCall(call);
+            Debug.Assert(visited != null);
 
             if (visited.Method.IsStatic
                 && visited.Method.Name == "Equals"
