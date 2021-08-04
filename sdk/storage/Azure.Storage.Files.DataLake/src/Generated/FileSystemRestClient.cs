@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="resource"> The value must be &quot;filesystem&quot; for all filesystem operations. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="resource"/>, or <paramref name="version"/> is null. </exception>
-        public FileSystemRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string resource = "filesystem", string version = "2020-06-12")
+        public FileSystemRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string resource = "filesystem", string version = "2020-10-02")
         {
             this.url = url ?? throw new ArgumentNullException(nameof(url));
             this.resource = resource ?? throw new ArgumentNullException(nameof(resource));

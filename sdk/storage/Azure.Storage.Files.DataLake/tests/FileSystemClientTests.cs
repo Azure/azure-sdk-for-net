@@ -740,9 +740,18 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
             };
+            string directoryName = GetNewDirectoryName();
             await using DisposingFileSystem test = await GetNewFileSystem(encryptionScopeOptions: encryptionScopeOptions);
-            DataLakeFileClient fileClient = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await fileClient.CreateAsync();
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
+            await directoryClient.CreateAsync();
+
+            // Act
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync();
+            IList<PathItem> paths = await response.ToListAsync();
+            PathItem pathItem = paths.Single(r => r.Name == directoryName);
+
+            // Assert
+            Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, pathItem.EncryptionScope);
         }
 
         [RecordedTest]
