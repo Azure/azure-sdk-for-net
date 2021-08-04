@@ -889,8 +889,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 int receivedCount = 0;
                 var tcs = new TaskCompletionSource<bool>();
 
-                Task ProcessMessage(ProcessMessageEventArgs args)
+                async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        await args.AbandonMessageAsync(args.Message);
+                    }
+
                     var ct = Interlocked.Increment(ref receivedCount);
                     if (ct == messageCount)
                     {
@@ -915,8 +920,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         Assert.GreaterOrEqual(processor._tasks.Where(t => !t.Task.IsCompleted).Count(), 10);
                     }
-
-                    return Task.CompletedTask;
                 }
 
                 processor.ProcessMessageAsync += ProcessMessage;

@@ -1844,6 +1844,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        return Task.CompletedTask;
+                    }
+
                     var ct = Interlocked.Increment(ref receivedCount);
                     if (ct == messageCount)
                     {
@@ -1904,6 +1909,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        return Task.CompletedTask;
+                    }
+
                     var ct = Interlocked.Increment(ref receivedCount);
                     if (ct == messageCount)
                     {
