@@ -275,8 +275,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
             e = ExpressionNormalizer.Normalize(e, new Dictionary<Expression, Expression>());
 
             LambdaExpression l = e as LambdaExpression;
-            Ensure(l != null);
-            Ensure(l.Parameters.Count == 1);
+            Ensure(l != null, $"{nameof(Where)} input requires a not null lambda expression with a single parameter.");
+            Ensure(l.Parameters.Count == 1, $"{nameof(Where)} expects a lambda expression with a single parameter.");
 
             query = QueryFilterVisitor.Translate(l.Body);
 
@@ -306,11 +306,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
         private static string GetPropertyName(Expression<Func<T, object>> selector)
         {
             LambdaExpression lambda = selector as LambdaExpression;
-            Ensure(lambda != null);
-            Ensure(lambda.Parameters.Count == 1);
+            Ensure(lambda != null, $"{nameof(Select)} expects a lambda expression with a single parameter.");
+            Ensure(lambda.Parameters.Count == 1, $"{nameof(Select)} expects a lambda expression with a single parameter.");
 
             ParameterExpression param = lambda.Parameters[0];
-            Ensure(param.Type == typeof(T));
+            Ensure(param.Type == typeof(T), $"{nameof(Select)} expects a lambda expression of type {typeof(T).Name}.");
 
             Expression body = lambda.Body;
             UnaryExpression conversion = body as UnaryExpression;
