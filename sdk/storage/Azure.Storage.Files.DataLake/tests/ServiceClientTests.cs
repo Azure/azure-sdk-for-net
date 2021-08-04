@@ -214,6 +214,32 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task GetFileSystemsAsync_EncryptionScope()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            string fileSystemName = GetNewFileSystemName();
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(fileSystemName));
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
+            };
+
+            await fileSystemClient.CreateAsync(encryptionScopeOptions: encryptionScopeOptions);
+
+            // Act
+            IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
+            FileSystemItem fileSystemItem = fileSystems.Single(r => r.Name == fileSystemName);
+
+            // Assert
+            Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, fileSystemItem.Properties.DefaultEncryptionScope);
+
+            // Cleanup
+            await fileSystemClient.DeleteIfExistsAsync();
+        }
+
+        [RecordedTest]
         public async Task GetFileSystemsAsync_Marker()
         {
             DataLakeServiceClient service = GetServiceClient_SharedKey();
