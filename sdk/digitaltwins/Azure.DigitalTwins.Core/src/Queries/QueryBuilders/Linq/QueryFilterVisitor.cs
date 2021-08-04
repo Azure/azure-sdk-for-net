@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Diagnostics;
 
-namespace Azure.DigitalTwins.Core.QueryBuilder
+namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 {
     /// <summary>
     /// Outlines how to represent DigitalTwins specific keywords and expression types into a query string.

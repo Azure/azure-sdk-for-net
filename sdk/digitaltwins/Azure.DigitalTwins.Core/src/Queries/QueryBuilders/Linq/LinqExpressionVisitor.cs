@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq.Expressions;
 
-namespace Azure.DigitalTwins.Core.QueryBuilder
+namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 {
     /// <summary>
     /// Parses different types of LINQ expressions.

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Azure.DigitalTwins.Core.QueryBuilder
+namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 {
     /// <summary>
     /// DigitalTwins Query Language <see href="https://docs.microsoft.com/azure/digital-twins/reference-query-functions">Functions</see>.
