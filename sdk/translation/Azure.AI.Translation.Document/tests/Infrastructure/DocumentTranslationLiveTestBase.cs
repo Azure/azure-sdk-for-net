@@ -62,7 +62,10 @@ namespace Azure.AI.Translation.Document.Tests
 
         public BlobContainerClient GetBlobContainerClient(string containerName)
         {
-            return InstrumentClient(new BlobContainerClient(TestEnvironment.StorageConnectionString, containerName, InstrumentClientOptions(new BlobClientOptions())));
+            return InstrumentClient(new BlobContainerClient(
+                TestEnvironment.StorageConnectionString,
+                containerName,
+                InstrumentClientOptions(new BlobClientOptions(BlobClientOptions.ServiceVersion.V2020_04_08))));
         }
 
         public Uri CreateSourceContainer(List<TestDocument> documents)
