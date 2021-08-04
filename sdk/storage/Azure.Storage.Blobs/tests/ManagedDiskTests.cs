@@ -98,7 +98,6 @@ namespace Azure.Storage.Blobs.Tests
             // Assert
             Assert.IsNotNull(pageRangesInfo.LastModified);
             Assert.IsNotNull(pageRangesInfo.ETag);
-            CollectionAssert.IsNotEmpty(pageRangesInfo.ClearRanges);
             CollectionAssert.IsNotEmpty(pageRangesInfo.PageRanges);
 
             // Assert page diff
@@ -107,14 +106,6 @@ namespace Azure.Storage.Blobs.Tests
             var range2 = await DownloadRange(snapshot2Client, pageRange);
 
             Assert.AreNotEqual(range1, range2);
-
-            // Assert page clean
-            var cleanRange = pageRangesInfo.ClearRanges.First();
-            range2 = await DownloadRange(snapshot2Client, cleanRange);
-            foreach (byte b in range2)
-            {
-                Assert.AreEqual(0, b);
-            }
         }
 
         private async Task<byte[]> DownloadRange(PageBlobClient client, HttpRange range)
