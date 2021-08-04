@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.DigitalTwins.Core.QueryBuilder
+namespace Azure.DigitalTwins.Core.QueryBuilder.Fluent
 {
     /// <summary>
     /// Represents the WHERE condition logic. Used to express conditional statements in the DigitalTwins query.

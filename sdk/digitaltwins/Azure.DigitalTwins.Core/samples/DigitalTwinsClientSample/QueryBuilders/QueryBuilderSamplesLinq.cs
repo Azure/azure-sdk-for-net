@@ -38,7 +38,7 @@ namespace Azure.DigitalTwins.Core.Samples.QueryBuilders
             DigitalTwinsQueryBuilder<BasicDigitalTwin> simplestQueryLinq = new DigitalTwinsQueryBuilder().Build();
 
             // SELECT * FROM Relationsips
-            DigitalTwinsQueryBuilder<BasicDigitalTwin> simplestQueryRelationshipsLINQ = new DigitalTwinsQueryBuilder(DigitalTwinsCollection.Relationships)
+            DigitalTwinsQueryBuilder<BasicDigitalTwin> simplestQueryRelationshipsLinq = new DigitalTwinsQueryBuilder(DigitalTwinsCollection.Relationships)
                 .Build();
 
             // Use LINQ expressions to select defined properties in type T of DigitalTwinsQueryBuilder
@@ -49,24 +49,24 @@ namespace Azure.DigitalTwins.Core.Samples.QueryBuilders
 
             // Note that SelectTop() and SelectTopAll() are replaced with Take()
             // SELECT TOP(3) FROM DIGITALTWINS
-            DigitalTwinsQueryBuilder<ConferenceRoom> queryWithSelectTopLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
+            DigitalTwinsQueryBuilder<ConferenceRoom> queryWithSelectTopLinq = new DigitalTwinsQueryBuilder<ConferenceRoom>()
                 .Take(3)
                 .Build();
 
             // Strings are valid ways to denote selectable properties as an alternative to LINQ expressions
             // SELECT TOP(3) Temperature, Humidity FROM DIGITALTWINS
-            DigitalTwinsQueryBuilder<ConferenceRoom> queryWithSelectTopPropertyLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
+            DigitalTwinsQueryBuilder<ConferenceRoom> queryWithSelectTopPropertyLinq = new DigitalTwinsQueryBuilder<ConferenceRoom>()
                 .Select("Temperature", "Humidity")
                 .Take(3)
                 .Build();
 
             // SELECT COUNT() FROM RELATIONSHIPS
-            DigitalTwinsQueryBuilder<ConferenceRoom> queryWithSelectRelationshipsLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>(DigitalTwinsCollection.Relationships)
+            DigitalTwinsQueryBuilder<ConferenceRoom> queryWithSelectRelationshipsLinq = new DigitalTwinsQueryBuilder<ConferenceRoom>(DigitalTwinsCollection.Relationships)
                 .Count()
                 .Build();
 
             // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("dtmi:example:room;1")
-            DigitalTwinsQueryBuilder<ConferenceRoom> queryWithIsOfModelLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
+            DigitalTwinsQueryBuilder<ConferenceRoom> queryWithIsOfModelLinq = new DigitalTwinsQueryBuilder<ConferenceRoom>()
                 .Where(_ => DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1"))
                 .Build();
 
@@ -111,31 +111,31 @@ namespace Azure.DigitalTwins.Core.Samples.QueryBuilders
             #endregion
 
             // SELECT Room, Temperature From DIGTIALTWINS
-            DigitalTwinsQueryBuilder<BasicDigitalTwin> queryWithMultiplePropertiesLINQ = new DigitalTwinsQueryBuilder()
+            DigitalTwinsQueryBuilder<BasicDigitalTwin> queryWithMultiplePropertiesLinq = new DigitalTwinsQueryBuilder()
                 .Select("Room", "Temperature")
                 .Build();
 
             // SELECT * FROM DIGITALTWINS WHERE TEMPERATURE < 5
-            DigitalTwinsQueryBuilder<ConferenceRoom> queryWithComparisonWhereClauseLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
+            DigitalTwinsQueryBuilder<ConferenceRoom> queryWithComparisonWhereClauseLinq = new DigitalTwinsQueryBuilder<ConferenceRoom>()
                 .Where(r => r.Temperature < 5)
                 .Build();
 
             // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL('dtmi:example:room;1', exact)
-            DigitalTwinsQueryBuilder<BasicDigitalTwin> queryWithIsOfModelExactLINQ = new DigitalTwinsQueryBuilder()
+            DigitalTwinsQueryBuilder<BasicDigitalTwin> queryWithIsOfModelExactLinq = new DigitalTwinsQueryBuilder()
                 .Where(_ => DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1", true))
                 .Build();
 
             // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 AND IS_OF_MODEL("dtmi..", exact)
-            DigitalTwinsQueryBuilder<ConferenceRoom> logicalOps_SingleAndLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
+            DigitalTwinsQueryBuilder<ConferenceRoom> logicalOps_SingleAndLinq = new DigitalTwinsQueryBuilder<ConferenceRoom>()
                 .Where(r => r.Temperature == 50 && DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1", true)).Build();
 
             // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact)
-            DigitalTwinsQueryBuilder<ConferenceRoom> logicalOps_SingleOrLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
+            DigitalTwinsQueryBuilder<ConferenceRoom> logicalOps_SingleOrLinq = new DigitalTwinsQueryBuilder<ConferenceRoom>()
                 .Where(r => (r.Temperature == 50 || DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1", true)) && r.IsOccupied == true).Build();
 
             #region Snippet:DigitalTwinsQueryBuilder_ComplexConditionsLinqExpressions
             // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
-            DigitalTwinsQueryBuilder<ConferenceRoom> logicalOps_MultipleOrLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
+            DigitalTwinsQueryBuilder<ConferenceRoom> logicalOps_MultipleOrLinq = new DigitalTwinsQueryBuilder<ConferenceRoom>()
                 .Where(r =>
                     r.Temperature == 50 ||
                     DigitalTwinsFunctions.IsOfModel("dtmi:example:room;1", true) ||
@@ -144,7 +144,7 @@ namespace Azure.DigitalTwins.Core.Samples.QueryBuilders
 
             // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
             // OR (IS_OF_MODEL("dtmi:example:hvac;1") AND IS_NULL(Occupants))
-            DigitalTwinsQueryBuilder<ConferenceRoom> logicalOpsNestedLINQ = new DigitalTwinsQueryBuilder<ConferenceRoom>()
+            DigitalTwinsQueryBuilder<ConferenceRoom> logicalOpsNestedLinq = new DigitalTwinsQueryBuilder<ConferenceRoom>()
                 .Where(
                     r =>
                         (
@@ -169,13 +169,13 @@ namespace Azure.DigitalTwins.Core.Samples.QueryBuilders
             #endregion
 
             // SELECT Temperature AS Temp, Humidity AS HUM FROM DigitalTwins
-            DigitalTwinsQueryBuilder<BasicDigitalTwin> selectAsSampleLINQ = new DigitalTwinsQueryBuilder(DigitalTwinsCollection.DigitalTwins, "T")
+            DigitalTwinsQueryBuilder<BasicDigitalTwin> selectAsSampleLinq = new DigitalTwinsQueryBuilder(DigitalTwinsCollection.DigitalTwins, "T")
                 .SelectAs("Temperature", "Temp")
                 .SelectAs("Humidity", "Hum")
                 .Build();
 
             // SELECT Temperature, Humidity AS Hum FROM DigitalTwins
-            DigitalTwinsQueryBuilder<BasicDigitalTwin> selectAndSelectAsLINQ = new DigitalTwinsQueryBuilder()
+            DigitalTwinsQueryBuilder<BasicDigitalTwin> selectAndSelectAsLinq = new DigitalTwinsQueryBuilder()
                 .Select("Temperature")
                 .SelectAs("Humidity", "Hum")
                 .From(DigitalTwinsCollection.DigitalTwins, "T")
