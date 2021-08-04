@@ -760,7 +760,8 @@ namespace Azure.Messaging.ServiceBus
 
                     foreach (ReceiverManager receiverManager in _receiverManagers)
                     {
-                        // // reset the linkedHandlerTcs if it was already cancelled due to user updating the concurrency
+                        // reset the linkedHandlerTcs if it was already cancelled due to user updating the concurrency
+                        // do this before the synchronous Wait call as that does not respect the TCS.
                         if (linkedHandlerTcs.IsCancellationRequested)
                         {
                             linkedHandlerTcs = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _handlerCts.Token);
@@ -776,6 +777,8 @@ namespace Azure.Messaging.ServiceBus
                             }
                             catch (OperationCanceledException)
                             {
+                                // reset the linkedHandlerTcs if it was already cancelled due to user updating the concurrency
+                                linkedHandlerTcs = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _handlerCts.Token);
                                 // allow the loop to wake up when tcs is signaled
                                 break;
                             }
