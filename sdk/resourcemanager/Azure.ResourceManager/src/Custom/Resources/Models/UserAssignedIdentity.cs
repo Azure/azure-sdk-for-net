@@ -4,12 +4,15 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary>
     /// A class representing an Identity assigned by the user.
     /// </summary>
+    [ReferenceType]
+    [PropertyReferenceType]
     public sealed partial class UserAssignedIdentity : IEquatable<UserAssignedIdentity>
     {
         /// <summary>
