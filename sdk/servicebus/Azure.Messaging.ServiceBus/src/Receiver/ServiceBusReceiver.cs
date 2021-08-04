@@ -260,7 +260,15 @@ namespace Azure.Messaging.ServiceBus
 
             if (maxWaitTime.HasValue)
             {
-                Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
+                // maxWaitTime could be zero only when prefetch enabled
+                if (PrefetchCount > 0)
+                {
+                    Argument.AssertNotNegative(maxWaitTime.Value, nameof(maxWaitTime));
+                }
+                else
+                {
+                    Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
+                }
             }
             if (PrefetchCount > 0 && maxMessages > PrefetchCount)
             {
@@ -299,7 +307,7 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            Logger.ReceiveMessageComplete(Identifier, messages.Count);
+            Logger.ReceiveMessageComplete(Identifier, messages);
             scope.SetMessageData(messages);
 
             return messages;

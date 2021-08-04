@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.15 (Unreleased)
+## 12.0.0-preview.16 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,9 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.0.0-preview.15 (2021-07-23)
+- This release contains bug fixes to improve quality.
 
 ## 12.0.0-preview.14 (2021-07-22)
 - TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.

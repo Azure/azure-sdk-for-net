@@ -10,21 +10,30 @@ using NUnit.Framework;
 namespace Azure.AI.Translation.Document.Samples
 {
     [LiveOnly]
-    public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
+    public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
-        [Ignore("Samples not working yet")]
+        [AsyncOnly]
         public async Task StartTranslationAsync()
         {
+#if SNIPPET
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+#endif
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:StartTranslationAsync
+#if SNIPPET
             Uri sourceUri = new Uri("<source SAS URI>");
             Uri targetUri = new Uri("<target SAS URI>");
-
+#else
+            Uri sourceUri = await CreateSourceContainerAsync(oneTestDocuments);
+            Uri targetUri = await CreateTargetContainerAsync();
+#endif
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);

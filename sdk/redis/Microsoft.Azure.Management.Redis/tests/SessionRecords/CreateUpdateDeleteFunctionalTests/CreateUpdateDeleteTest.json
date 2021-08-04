@@ -1,0 +1,2744 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/CheckNameAvailability?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvQ2hlY2tOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "39b246c9-4ded-4ca2-b282-8a5a40400e13"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "75"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:01:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "0b41bafe-7d3f-4e31-9e5a-ce8c393b1004"
+        ],
+        "x-rp-server-mvid": [
+          "c3683564-281d-4923-9674-19b300a088a1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "5236ef52-815e-4743-a6f8-6c05888c663e"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140107Z:5236ef52-815e-4743-a6f8-6c05888c663e"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    }\r\n  },\r\n  \"location\": \"West Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e205f0c0-d1ec-4af0-b4f1-81c305061972"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "150"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:01:15 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "5f74bec8-cb8f-49d1-babd-567f6f0363b1"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "bedb1b13-9af1-47e3-acb0-75415817db97"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140116Z:bedb1b13-9af1-47e3-acb0-75415817db97"
+        ],
+        "Content-Length": [
+          "865"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": {\r\n      \"primaryKey\": \"*****\",\r\n      \"secondaryKey\": \"*****\"\r\n    },\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:01:46 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "921573ed-1584-444d-b17d-ba520a5fe6b2"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "2004e7f6-642a-4d44-8369-295f8409b44f"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140146Z:2004e7f6-642a-4d44-8369-295f8409b44f"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:02:16 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "1145d588-90e3-48dd-a90a-71f571a4ddf3"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "163c8adc-c39f-46a5-a541-32191af28c30"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140216Z:163c8adc-c39f-46a5-a541-32191af28c30"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:02:46 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "613235be-d427-4b41-a3a6-5d8c58b5c6c8"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-correlation-request-id": [
+          "8446f9ed-2990-424f-9034-c6b65ccac9fd"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140247Z:8446f9ed-2990-424f-9034-c6b65ccac9fd"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:03:16 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "1ac3b49c-c3cc-4e20-822a-de82dbd78220"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-correlation-request-id": [
+          "7e9cfd8a-0856-409e-8b2e-294d8f789f17"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140317Z:7e9cfd8a-0856-409e-8b2e-294d8f789f17"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:03:47 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "5fe80d73-28ab-400c-aa81-c87d2a4a58c3"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-correlation-request-id": [
+          "0ac744b3-7507-4fa1-a3d0-143970d644e1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140347Z:0ac744b3-7507-4fa1-a3d0-143970d644e1"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:04:17 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "5d818363-05d1-4066-b6d2-f35e5942d85c"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-correlation-request-id": [
+          "ae8872a7-6105-4112-9ae3-e95a8f9ae46c"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140417Z:ae8872a7-6105-4112-9ae3-e95a8f9ae46c"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:04:47 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "fe42f01a-d0e2-4b2c-9b03-1f0554786563"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-correlation-request-id": [
+          "9bc5fde0-52ba-47f8-b88b-2349e4eb6d6e"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140448Z:9bc5fde0-52ba-47f8-b88b-2349e4eb6d6e"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:05:18 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "087a279c-c817-467f-b194-917a9340e179"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "x-ms-correlation-request-id": [
+          "d4ab9224-e4e4-4577-a5f8-98858a5bc29b"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140518Z:d4ab9224-e4e4-4577-a5f8-98858a5bc29b"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:05:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "f4addb75-9fc2-4ad5-ac19-c79a3392d91d"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "x-ms-correlation-request-id": [
+          "f0a99a2d-38cf-48bb-a7eb-84f6d5bcd5e6"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140548Z:f0a99a2d-38cf-48bb-a7eb-84f6d5bcd5e6"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:06:18 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "4af37cf5-c6c0-45f4-8ba9-36c4710309df"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11990"
+        ],
+        "x-ms-correlation-request-id": [
+          "bca43139-0325-4178-afa1-68631e4b9e50"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140618Z:bca43139-0325-4178-afa1-68631e4b9e50"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:06:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "5cdf4b3e-10b2-4a68-86ce-288c8ddd0ef8"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11989"
+        ],
+        "x-ms-correlation-request-id": [
+          "e6635bee-ca45-48df-ba9b-b60d543eff1e"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140649Z:e6635bee-ca45-48df-ba9b-b60d543eff1e"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:07:19 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "a5976426-1855-4098-b1b9-589f29edf285"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11988"
+        ],
+        "x-ms-correlation-request-id": [
+          "cbc0e5a6-9c25-46a7-b347-e3f41937eb57"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140719Z:cbc0e5a6-9c25-46a7-b347-e3f41937eb57"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:07:49 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "ec48519b-e4fa-47cc-8a08-4be711ea3588"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11987"
+        ],
+        "x-ms-correlation-request-id": [
+          "2101de2b-204d-4891-8f39-fdef8d56c948"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140750Z:2101de2b-204d-4891-8f39-fdef8d56c948"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:08:20 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "d5720079-16dc-4a5d-a487-301870c6400b"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11986"
+        ],
+        "x-ms-correlation-request-id": [
+          "072f734a-6048-4be5-be8b-b09d0bb06eda"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140820Z:072f734a-6048-4be5-be8b-b09d0bb06eda"
+        ],
+        "Content-Length": [
+          "746"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": false,\r\n        \"isPrimary\": false\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:08:50 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "468c7ff7-3a24-44e0-8a80-0aba9e1224b7"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11985"
+        ],
+        "x-ms-correlation-request-id": [
+          "8757c8d5-c9b8-40f7-9afe-e0b152cbc3cc"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140851Z:8757c8d5-c9b8-40f7-9afe-e0b152cbc3cc"
+        ],
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:09:21 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "c2b4e486-1f7f-4efa-a614-1ef4af5d85a0"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11984"
+        ],
+        "x-ms-correlation-request-id": [
+          "69c8ac74-819e-4fe8-8e03-31ee56dbea66"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140921Z:69c8ac74-819e-4fe8-8e03-31ee56dbea66"
+        ],
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:09:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "b38b2290-ff47-43b1-8e28-acde1688df8b"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11983"
+        ],
+        "x-ms-correlation-request-id": [
+          "6fcb00ab-a757-4b2a-878d-090b0d2f23c9"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T140952Z:6fcb00ab-a757-4b2a-878d-090b0d2f23c9"
+        ],
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:10:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "ad81ce1b-7488-430a-a0b1-6260d7e6474a"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11982"
+        ],
+        "x-ms-correlation-request-id": [
+          "989e3fec-c543-4f5c-80e3-71bcaa1981cc"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141022Z:989e3fec-c543-4f5c-80e3-71bcaa1981cc"
+        ],
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:10:52 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "e351f608-7620-47a0-bc1e-6a672ae5a2cb"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11981"
+        ],
+        "x-ms-correlation-request-id": [
+          "cdf642dc-4490-4c85-9089-e8805ff34606"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141053Z:cdf642dc-4490-4c85-9089-e8805ff34606"
+        ],
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:11:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "c4127c19-5982-46ca-8f22-1b5c29a5d8ca"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11980"
+        ],
+        "x-ms-correlation-request-id": [
+          "bd66195d-73b8-40cd-bd8a-cfe152894af4"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141123Z:bd66195d-73b8-40cd-bd8a-cfe152894af4"
+        ],
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:11:53 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "7eff3e28-4c9e-44b1-911b-555c3eb1e11d"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11979"
+        ],
+        "x-ms-correlation-request-id": [
+          "c869a3a7-58ac-4620-9993-2a3a647664e9"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141154Z:c869a3a7-58ac-4620-9993-2a3a647664e9"
+        ],
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:12:24 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "f6507e68-6028-4077-9729-506378379a8b"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11978"
+        ],
+        "x-ms-correlation-request-id": [
+          "29b604c9-f306-4a5f-84c9-6df6ac816e7d"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141224Z:29b604c9-f306-4a5f-84c9-6df6ac816e7d"
+        ],
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:12:55 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "fd658f90-be4b-4dca-a45c-242727c67d40"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11977"
+        ],
+        "x-ms-correlation-request-id": [
+          "ea258755-1b70-4481-8b67-58622a43d3ca"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141255Z:ea258755-1b70-4481-8b67-58622a43d3ca"
+        ],
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:13:24 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "15e1fa6d-5863-415d-8acd-10e990b803c4"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11976"
+        ],
+        "x-ms-correlation-request-id": [
+          "43fda921-0b91-4da1-8157-99aec6286bc5"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141325Z:43fda921-0b91-4da1-8157-99aec6286bc5"
+        ],
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:13:55 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "4fe91fb2-a316-4ca9-b8a5-9a53ed5a60f2"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11975"
+        ],
+        "x-ms-correlation-request-id": [
+          "a27f5ec9-360a-42bf-8cc0-bf13fc2cc9d4"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141356Z:a27f5ec9-360a-42bf-8cc0-bf13fc2cc9d4"
+        ],
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:14:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "3381f8ae-32ab-4f85-bad6-cc3c7213922c"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11974"
+        ],
+        "x-ms-correlation-request-id": [
+          "7921de20-ce8e-4407-a544-51344ffa5d4d"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141427Z:7921de20-ce8e-4407-a544-51344ffa5d4d"
+        ],
+        "Content-Length": [
+          "744"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:14:57 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "10e11982-915b-495c-ab14-994e9de67037"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11973"
+        ],
+        "x-ms-correlation-request-id": [
+          "28198da3-6d5f-4b0c-a544-6d4e10620236"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141457Z:28198da3-6d5f-4b0c-a544-6d4e10620236"
+        ],
+        "Content-Length": [
+          "745"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"redisConfiguration\": {\r\n      \"maxmemory-policy\": \"allkeys-lru\"\r\n    },\r\n    \"enableNonSslPort\": true,\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1ca775ef-ab08-4307-83cd-fcf560575297"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "225"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:14:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "5e355b5f-c4c2-4fcc-9b0b-00d4bef14094"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "55daaf1c-8c8a-4ad7-b561-a8272d7776bd"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141459Z:55daaf1c-8c8a-4ad7-b561-a8272d7776bd"
+        ],
+        "Content-Length": [
+          "796"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/Redis/RedisCreateUpdate2324\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisCreateUpdate2324\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": \"C\",\r\n      \"capacity\": 0\r\n    },\r\n    \"enableNonSslPort\": true,\r\n    \"instances\": [\r\n      {\r\n        \"sslPort\": 15000,\r\n        \"nonSslPort\": 13000,\r\n        \"isMaster\": true,\r\n        \"isPrimary\": true\r\n      }\r\n    ],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"256\",\r\n      \"maxmemory-reserved\": \"2\",\r\n      \"maxfragmentationmemory-reserved\": \"12\",\r\n      \"maxmemory-policy\": \"allkeys-lru\",\r\n      \"maxmemory-delta\": \"2\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisCreateUpdate2324.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796/providers/Microsoft.Cache/redis/RedisCreateUpdate2324?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlR3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0LkNhY2hlL3JlZGlzL1JlZGlzQ3JlYXRlVXBkYXRlMjMyND9hcGktdmVyc2lvbj0yMDIwLTEyLTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "346c339e-a772-43b5-a857-30bee0456d32"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:15:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "6ff9584e-0684-4a15-8549-574761a7ec3c"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "b7c3926a-27ae-44a6-96da-c4ae8dcce06e"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141501Z:b7c3926a-27ae-44a6-96da-c4ae8dcce06e"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:15:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "4025e07c-de41-43f5-8202-779c309a5f6f"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11972"
+        ],
+        "x-ms-correlation-request-id": [
+          "c3ab9864-6576-49db-b77e-ea69a0f34a07"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141531Z:c3ab9864-6576-49db-b77e-ea69a0f34a07"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:16:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "a72036ac-e727-4350-a924-4a64cce70bbb"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11971"
+        ],
+        "x-ms-correlation-request-id": [
+          "f7a82a46-12a6-4137-9b7b-c3a87e44d08b"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141602Z:f7a82a46-12a6-4137-9b7b-c3a87e44d08b"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:16:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "d7b1b2e6-33a6-4065-9235-6f2c6c286474"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11970"
+        ],
+        "x-ms-correlation-request-id": [
+          "41aeb1b8-13b1-4c77-aa3a-127802b2f3e0"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141632Z:41aeb1b8-13b1-4c77-aa3a-127802b2f3e0"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:17:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "2523e9b5-b606-4510-9d9b-756606f2be13"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11969"
+        ],
+        "x-ms-correlation-request-id": [
+          "0a72dc15-aec2-4301-872d-dbe7001dcfea"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141702Z:0a72dc15-aec2-4301-872d-dbe7001dcfea"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:17:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "0f2bd3b4-fff2-4e8c-8019-ad4640ab7658"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11968"
+        ],
+        "x-ms-correlation-request-id": [
+          "108eae38-a63d-4c4e-a97c-2ba3d06d2e4c"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141732Z:108eae38-a63d-4c4e-a97c-2ba3d06d2e4c"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:18:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "2ff7438b-9063-4088-b703-9e529f8768b4"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11967"
+        ],
+        "x-ms-correlation-request-id": [
+          "00ba349b-e0b1-4ea5-a9a3-78df5ab95b2b"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141803Z:00ba349b-e0b1-4ea5-a9a3-78df5ab95b2b"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:18:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "1ff2fa57-9d1b-4be1-b064-8ed13cf924b4"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11966"
+        ],
+        "x-ms-correlation-request-id": [
+          "3ffdba7c-18ef-45f5-a523-95c394304a35"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141833Z:3ffdba7c-18ef-45f5-a523-95c394304a35"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:19:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "46688b02-0d1d-4240-a93f-83603211d437"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11965"
+        ],
+        "x-ms-correlation-request-id": [
+          "a0fc9591-212c-4878-b751-a8d20d3c6799"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141903Z:a0fc9591-212c-4878-b751-a8d20d3c6799"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:19:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "aee44336-8510-4f75-bcc8-9dbfddff5de1"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11964"
+        ],
+        "x-ms-correlation-request-id": [
+          "86f65782-285f-498c-9832-f301febe7a33"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T141933Z:86f65782-285f-498c-9832-f301febe7a33"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:20:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "2aa92862-58ed-4cd9-a84c-2b36b32f55c1"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11963"
+        ],
+        "x-ms-correlation-request-id": [
+          "6638b8f3-8d19-4e94-8c02-676cc5e22757"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T142004Z:6638b8f3-8d19-4e94-8c02-676cc5e22757"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:20:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "dc535aa9-2fc9-4ce5-b31d-e423465dbed7"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11962"
+        ],
+        "x-ms-correlation-request-id": [
+          "17b4c2b4-dd2d-4708-a73a-3c570b40afb1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T142034Z:17b4c2b4-dd2d-4708-a73a-3c570b40afb1"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:21:05 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "52db1fd6-6aa0-43e8-a5fb-c0f9a57dd3d2"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11961"
+        ],
+        "x-ms-correlation-request-id": [
+          "0d8f0366-aa31-4dd5-8717-a8dc47c1cc04"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T142105Z:0d8f0366-aa31-4dd5-8717-a8dc47c1cc04"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:21:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "1e3c42c5-646c-4ef7-964a-7ed8f0f302ec"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11960"
+        ],
+        "x-ms-correlation-request-id": [
+          "12723872-9b71-4589-b8b3-ac1479a345e1"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T142135Z:12723872-9b71-4589-b8b3-ac1479a345e1"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/providers/Microsoft.Cache/locations/West%20Central%20US/operationresults/6ff9584e-0684-4a15-8549-574761a7ec3c?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL1dlc3QlMjBDZW50cmFsJTIwVVMvb3BlcmF0aW9ucmVzdWx0cy82ZmY5NTg0ZS0wNjg0LTRhMTUtODU0OS01NzQ3NjFhN2VjM2M/YXBpLXZlcnNpb249MjAyMC0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/6.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jul 2021 14:21:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "214aeb15-4ff2-4b7a-93ff-148efa0a00f4"
+        ],
+        "x-rp-server-mvid": [
+          "91694a99-5a72-41df-9431-8f5234edfb7e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11959"
+        ],
+        "x-ms-correlation-request-id": [
+          "52949d6e-5b8a-46a2-a30b-0b6a5726e901"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210722T142135Z:52949d6e-5b8a-46a2-a30b-0b6a5726e901"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "1ab2d901-67b8-442a-99dc-1fee16302453"
+  }
+}

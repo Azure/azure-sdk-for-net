@@ -28,9 +28,7 @@ namespace Azure.Monitor.Query
         /// <param name="endpoint"> server parameter. </param>
         public QueryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            endpoint ??= new Uri("https://api.loganalytics.io/v1");
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? new Uri("https://api.loganalytics.io/v1");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

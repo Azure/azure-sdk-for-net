@@ -3,6 +3,8 @@
 ## 5.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- The client defaults to the latest supported service version, which currently is `3.2-preview.1`.
+- Added property `ExtractSummaryActions` to `TextAnalyticsActions` to support the new 'extractive text summarization' API. This action can be used to get a summary for the input document by extracting the most relevant sentences.
 
 ### Breaking Changes
 

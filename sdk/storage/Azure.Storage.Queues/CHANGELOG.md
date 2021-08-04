@@ -1,6 +1,6 @@
 # Release History
 
-## 12.8.0-beta.2 (Unreleased)
+## 12.8.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,9 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.8.0-beta.2 (2021-07-23)
+- This release contains bug fixes to improve quality.
 
 ## 12.8.0-beta.1 (2021-07-22)
 - TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.

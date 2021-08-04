@@ -94,6 +94,11 @@ namespace Microsoft.Azure.Management.Authorization
         IDenyAssignmentsOperations DenyAssignments { get; }
 
         /// <summary>
+        /// Gets the IRoleAssignmentMetricsOperations.
+        /// </summary>
+        IRoleAssignmentMetricsOperations RoleAssignmentMetrics { get; }
+
+        /// <summary>
         /// Gets the IRoleAssignmentsOperations.
         /// </summary>
         IRoleAssignmentsOperations RoleAssignments { get; }

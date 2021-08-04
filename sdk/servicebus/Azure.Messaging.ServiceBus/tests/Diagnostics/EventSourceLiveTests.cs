@@ -69,6 +69,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 var messageEnum = messages.GetEnumerator();
                 var remainingMessages = messageCount;
+                List<string> lockTokens = new();
                 while (remainingMessages > 0)
                 {
                     foreach (var item in await receiver.ReceiveMessagesAsync(remainingMessages))
@@ -77,6 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         Assert.AreEqual(item.DeliveryCount, 1);
+                        lockTokens.Add(item.LockToken);
                     }
                 }
                 _listener.SingleEventById(ServiceBusEventSource.CreateReceiveLinkStartEvent, e => e.Payload.Contains(receiver.Identifier));
@@ -85,6 +87,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateReceiveLinkCompleteEvent, e => e.Payload.Contains(receiver.Identifier));
                 Assert.IsTrue(_listener.EventsById(ServiceBusEventSource.ReceiveMessageStartEvent).Any());
                 Assert.IsTrue(_listener.EventsById(ServiceBusEventSource.ReceiveMessageCompleteEvent).Any());
+
+                var receiveCompleteEvents = _listener.EventsById(ServiceBusEventSource.ReceiveMessageCompleteEvent);
+                foreach (string lockToken in lockTokens)
+                {
+                    bool found = false;
+                    foreach (var evt in receiveCompleteEvents)
+                    {
+                        if (evt.Payload.Any(m => m.ToString().Contains(lockToken)))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    Assert.IsTrue(found, $"Locktoken {lockToken} not found in event logs");
+                }
+
                 Assert.AreEqual(0, remainingMessages);
                 messageEnum.Reset();
 
@@ -175,6 +193,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 var msg = await sessionReceiver.ReceiveMessageAsync();
                 _listener.SingleEventById(ServiceBusEventSource.ReceiveMessageStartEvent, e => e.Payload.Contains(sessionReceiver.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.ReceiveMessageCompleteEvent, e => e.Payload.Contains(sessionReceiver.Identifier) && e.Payload.Contains($"<LockToken>{msg.LockToken}</LockToken>"));
 
                 msg = await sessionReceiver.PeekMessageAsync();
                 _listener.SingleEventById(ServiceBusEventSource.CreateManagementLinkStartEvent, e => e.Payload.Contains(sessionReceiver.Identifier));
@@ -235,9 +254,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await sender.SendMessageAsync(GetMessage());
                 await using var processor = client.CreateProcessor(scope.QueueName);
                 var tcs = new TaskCompletionSource<bool>();
-
+                string lockToken = null;
                 Task ProcessMessage(ProcessMessageEventArgs args)
                 {
+                    lockToken = args.Message.LockToken;
                     tcs.SetResult(true);
                     return Task.CompletedTask;
                 }
@@ -253,8 +273,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
-                _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerStartEvent);
-                _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerCompleteEvent);
+                _listener.SingleEventById(
+                    ServiceBusEventSource.ReceiveMessageCompleteEvent,
+                    e => e.Payload.Contains($"<LockToken>{lockToken}</LockToken>"));
+                _listener.SingleEventById(
+                    ServiceBusEventSource.ProcessorMessageHandlerStartEvent,
+                    e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
+                _listener.SingleEventById(
+                    ServiceBusEventSource.ProcessorMessageHandlerCompleteEvent,
+                    e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
             }
         }
 
