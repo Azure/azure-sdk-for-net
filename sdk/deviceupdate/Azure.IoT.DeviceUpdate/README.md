@@ -40,7 +40,7 @@ You can learn more about Device Update for IoT Hub by visiting [Device Update fo
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/deviceupdate/Azure.IoT.DeviceUpdate/samples).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk).
 
 ## Troubleshooting
 
