@@ -7,13 +7,16 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource management error response. </summary>
+    [PropertyReferenceType]
     public partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
+        [InitializationConstructor]
         internal ErrorResponse()
         {
             Details = new ChangeTrackingList<ErrorResponse>();
@@ -26,6 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="target"> The error target. </param>
         /// <param name="details"> The error details. </param>
         /// <param name="additionalInfo"> The error additional info. </param>
+        [SerializationConstructor]
         internal ErrorResponse(string code, string message, string target, IReadOnlyList<ErrorResponse> details, IReadOnlyList<ErrorAdditionalInfo> additionalInfo)
         {
             Code = code;
