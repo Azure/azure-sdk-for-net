@@ -187,7 +187,6 @@
         "uniqueDataLakeStorageAccountName": "[concat(parameters('defaultDataLakeStorageAccountNamePrefix'), parameters('baseName'))]",
         "uniqueDataLakeStorageFilesystemName": "[concat(parameters('defaultDataLakeStorageFilesystemNamePrefix'), parameters('baseName'))]",
         "storageBlobDataContributorRoleID": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
-        "defaultDataLakeStorageAccountUrl": "[concat('https://', variables('uniqueDataLakeStorageAccountName'), '.dfs.core.windows.net')]",
         "uniqueSparkPoolName": "[take(concat(parameters('sparkPoolPrefix'), parameters('baseName')), 15)]"
     },
     "resources": [
@@ -206,7 +205,7 @@
             },
             "properties": {
                 "defaultDataLakeStorage": {
-                    "accountUrl": "[variables('defaultDataLakeStorageAccountUrl')]",
+                    "accountUrl": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('uniqueDataLakeStorageAccountName')), '2019-06-01').primaryEndpoints.dfs]",
                     "filesystem": "[variables('uniqueDataLakeStorageFilesystemName')]"
                 },
                 "sqlAdministratorLogin": "[parameters('sqlAdministratorLogin')]",
