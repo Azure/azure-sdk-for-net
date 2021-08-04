@@ -715,7 +715,7 @@ This functionality allows running multiple actions in one or more documents. Act
 ### Perform Extractive Text Summarization Asynchronously
 Get a summary for the input documents by extracting their most relevant sentences. Note that this API can only be used as part of an [Analyze Operation](#run-multiple-actions-asynchronously).
 
-```C# Snippet:TextAnalyticsExtractSummaryConvenienceAsyncAll
+```C# Snippet:TextAnalyticsExtractSummaryWithoutErrorHandlingAsync
 // Get input document.
 string document = @"Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure solutions to support employees suddenly forced to work from home, but “what really put the firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained that customers were asking, “’How do we create an experience for people that makes them still feel connected to the company without the physical presence of being there?”
                     In this new world of Windows 365, remote workers flip the lid on their laptop, bootup the family workstation or clip a keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365 account.From there, their Cloud PC appears with their background, apps, settings and content just as they left it when they last were last there – in the office, at home or a coffee shop.
@@ -757,30 +757,14 @@ Console.WriteLine($"Last Modified: {operation.LastModified}");
 Console.WriteLine();
 
 // View operation results.
-foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
+await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
 {
     IReadOnlyCollection<ExtractSummaryActionResult> summaryResults = documentsInPage.ExtractSummaryResults;
 
     foreach (ExtractSummaryActionResult summaryActionResults in summaryResults)
     {
-        if (summaryActionResults.HasError)
-        {
-            Console.WriteLine($"  Error!");
-            Console.WriteLine($"  Action error code: {summaryActionResults.Error.ErrorCode}.");
-            Console.WriteLine($"  Message: {summaryActionResults.Error.Message}");
-            continue;
-        }
-
         foreach (ExtractSummaryResult documentResults in summaryActionResults.DocumentsResults)
         {
-            if (documentResults.HasError)
-            {
-                Console.WriteLine($"  Error!");
-                Console.WriteLine($"  Document error code: {documentResults.Error.ErrorCode}.");
-                Console.WriteLine($"  Message: {documentResults.Error.Message}");
-                continue;
-            }
-
             Console.WriteLine($"  Extracted the following {documentResults.Sentences.Count} sentence(s):");
             Console.WriteLine();
 

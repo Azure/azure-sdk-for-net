@@ -21,7 +21,6 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = TestEnvironment.ApiKey;
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:TextAnalyticsExtractSummaryConvenienceAsyncAll
             #region Snippet:TextAnalyticsExtractSummaryAsync
             // Get input document.
             string document = @"Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure solutions to support employees suddenly forced to work from home, but “what really put the firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained that customers were asking, “’How do we create an experience for people that makes them still feel connected to the company without the physical presence of being there?”
@@ -68,7 +67,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             #region Snippet:TextAnalyticsExtractSummaryAsyncViewResults
             // View operation results.
-            foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
+            await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
                 IReadOnlyCollection<ExtractSummaryActionResult> summaryResults = documentsInPage.ExtractSummaryResults;
 
@@ -107,7 +106,6 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             }
             #endregion Snippet:TextAnalyticsExtractSummaryAsyncViewResults
-            #endregion Snippet:TextAnalyticsExtractSummaryConvenienceAsyncAll
         }
     }
 }
