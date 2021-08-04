@@ -28,12 +28,13 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task UpdateServiceConfiguration()
         {
+
             PersonalizerAdministrationClient client = await GetPersonalizerAdministrationClientAsync(isSingleSlot: true);
             TimeSpan newExperimentalUnitDuration = TimeSpan.FromMinutes(1);
             TimeSpan modelExportFrequency = TimeSpan.FromHours(1);
             double newDefaultReward = 1.0;
             string newRewardFuntion = "average";
-            float newExplorationPercentage = 0.200000003f;
+            float newExplorationPercentage = 0.2f;
             var config = new PersonalizerServiceProperties (
                 rewardAggregation: newRewardFuntion,
                 modelExportFrequency: modelExportFrequency,
