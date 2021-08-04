@@ -56,12 +56,10 @@ namespace Azure.AI.Translation.Document.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            Uri storageEndpoint = new Uri(Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_ENDPOINT"));
-            string storageAccountName = Environment.GetEnvironmentVariable("AZURE_STORAGE_ACCOUNT_NAME");
-            string storageAccountKey = Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_KEY");
+            var storageConnectionString = Environment.GetEnvironmentVariable("DOCUMENT_TRANSLATION_CONNECTION_STRING");
 #if SNIPPET
-            string sourceContainerName = Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_CONTAINER_NAME");
-            string targetContainerName = Environment.GetEnvironmentVariable("AZURE_STORAGE_TARGET_CONTAINER_NAME");
+            string sourceContainerName = Environment.GetEnvironmentVariable("DOCUMENT_TRANSLATION_SOURCE_CONTAINER_NAME");
+            string targetContainerName = Environment.GetEnvironmentVariable("DOCUMENT_TRANSLATION_TARGET_CONTAINER_NAME");
 #else
             string sourceContainerName = GenerateRandomName("source");
             string targetContainerName = GenerateRandomName("target");
@@ -69,7 +67,7 @@ namespace Azure.AI.Translation.Document.Samples
             string documentPath = Environment.GetEnvironmentVariable("AZURE_DOCUMENT_PATH");
 
             // Create source and target storage containers
-            BlobServiceClient blobServiceClient = new BlobServiceClient(storageEndpoint, new StorageSharedKeyCredential(storageAccountName, storageAccountKey));
+            BlobServiceClient blobServiceClient = new BlobServiceClient(storageConnectionString);
             BlobContainerClient sourceContainerClient = await blobServiceClient.CreateBlobContainerAsync(sourceContainerName ?? "translation-source-container", PublicAccessType.BlobContainer).ConfigureAwait(false);
             BlobContainerClient targetContainerClient = await blobServiceClient.CreateBlobContainerAsync(targetContainerName ?? "translation-target-container", PublicAccessType.BlobContainer).ConfigureAwait(false);
 
