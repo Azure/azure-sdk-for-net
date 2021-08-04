@@ -13,13 +13,8 @@ namespace Azure.AI.Translation.Document.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class SampleSnippets : DocumentTranslationLiveTestBase
+    public partial class SampleSnippets : SamplesBase<DocumentTranslationTestEnvironment>
     {
-        public SampleSnippets(bool async)
-            : base(async, RecordedTestMode.Live)
-        {
-        }
-
         [Test]
         public void CreateDocumentTranslationClient()
         {
@@ -77,7 +72,6 @@ namespace Azure.AI.Translation.Document.Samples
         }
 
         [Test]
-        [SyncOnly]
         public void DocumentTranslationInput()
         {
             #region Snippet:DocumentTranslationSingleInput
@@ -85,8 +79,8 @@ namespace Azure.AI.Translation.Document.Samples
             Uri sourceSasUri = new Uri("<source SAS URI>");
             Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
 #else
-            Uri sourceSasUri = CreateSourceContainer(oneTestDocuments);
-            Uri frenchTargetSasUri = CreateSourceContainer(oneTestDocuments);
+            Uri sourceSasUri = new Uri("https://www.github.com");
+            Uri frenchTargetSasUri = new Uri("https://www.github.com");
 #endif
             var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr");
             #endregion
@@ -99,10 +93,10 @@ namespace Azure.AI.Translation.Document.Samples
             Uri source1SasUri = new Uri("<source1 SAS URI>");
             Uri source2SasUri = new Uri("<source2 SAS URI>");
 #else
-            Uri source1SasUri = CreateSourceContainer(oneTestDocuments);
-            Uri source2SasUri = CreateSourceContainer(oneTestDocuments);
-            Uri arabicTargetSasUri = CreateTargetContainer();
-            Uri spanishTargetSasUri = CreateTargetContainer();
+            Uri source1SasUri = new Uri("https://www.github.com");
+            Uri source2SasUri = new Uri("https://www.github.com");
+            Uri arabicTargetSasUri = new Uri("https://www.github.com");
+            Uri spanishTargetSasUri = new Uri("https://www.github.com");
 #endif
 
             var inputs = new List<DocumentTranslationInput>

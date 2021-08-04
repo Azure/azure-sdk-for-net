@@ -14,7 +14,7 @@ namespace Azure.AI.Translation.Document.Samples
     public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         public DocumentTranslationSamples(bool async)
-            : base(async, RecordedTestMode.Live)
+            : base(async)
         {
         }
     }
