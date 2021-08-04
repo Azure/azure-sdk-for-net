@@ -274,15 +274,14 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 await WaitIfLiveAsync(TimeSpan.FromSeconds(10));
 
-                // Construct a query string to find the twins with the EXACT model id and provided version. If EXACT is not specified, the query
-                // call will get all twins with the same model id but that implement any version higher than the provided version
-                string queryString = $"SELECT * FROM DIGITALTWINS";
+                // Use aliasing in the query to test deserialization when each digital twin in the response will be wrapped by the alias name.
+                string queryString = $"SELECT D FROM DIGITALTWINS D";
 
                 // act
-                AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(queryString);
-                await foreach (BasicDigitalTwin twin in asyncPageableResponse)
+                AsyncPageable<AliasedBasicDigitalTwin> asyncPageableResponse = client.QueryAsync<AliasedBasicDigitalTwin>(queryString);
+                await foreach (AliasedBasicDigitalTwin twin in asyncPageableResponse)
                 {
-                    twin.Id.Should().NotBeNull();
+                    twin.Twin.Id.Should().NotBeNull();
                 }
             }
             catch (Exception ex)
