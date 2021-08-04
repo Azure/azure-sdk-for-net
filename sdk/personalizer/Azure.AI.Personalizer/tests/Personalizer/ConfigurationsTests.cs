@@ -28,7 +28,6 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task UpdateServiceConfiguration()
         {
-
             PersonalizerAdministrationClient client = await GetPersonalizerAdministrationClientAsync(isSingleSlot: true);
             TimeSpan newExperimentalUnitDuration = TimeSpan.FromMinutes(1);
             TimeSpan modelExportFrequency = TimeSpan.FromHours(1);
