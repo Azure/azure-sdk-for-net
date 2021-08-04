@@ -1817,5 +1817,136 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await AsyncAssert.ThrowsAsync<ServiceBusException>(async () => await client.AcceptNextSessionAsync(scope.QueueName));
             }
         }
+
+        [Test]
+        public async Task CanUpdateSessionConcurrency()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 100;
+
+                for (int i = 0; i < messageCount / 2; i++)
+                {
+                    await sender.SendMessagesAsync(GetMessages(2, $"session{i}"));
+                }
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = 1,
+                    MaxConcurrentCallsPerSession = 1,
+                    SessionIdleTimeout = TimeSpan.FromSeconds(5)
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        return Task.CompletedTask;
+                    }
+
+                    var ct = Interlocked.Increment(ref receivedCount);
+                    if (ct == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    if (ct == 5)
+                    {
+                        processor.UpdateConcurrency(20, 2);
+                        Assert.AreEqual(20, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(2, processor.MaxConcurrentCallsPerSession);
+                    }
+
+                    if (ct == 50)
+                    {
+                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 20);
+                    }
+                    if (ct == 90)
+                    {
+                        processor.UpdateConcurrency(1, 1);
+                        Assert.AreEqual(1, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
+                    }
+                    if (ct == 95)
+                    {
+                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
+                    }
+                    return Task.CompletedTask;
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
+        public async Task CanUpdateMaxCallsPerSessionConcurrency()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 100;
+                await sender.SendMessagesAsync(GetMessages(messageCount, "sessionId"));
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = 1,
+                    MaxConcurrentCallsPerSession = 1
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        await args.AbandonMessageAsync(args.Message);
+                    }
+
+                    var ct = Interlocked.Increment(ref receivedCount);
+                    if (ct == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    if (ct == 5)
+                    {
+                        processor.UpdateConcurrency(5, 20);
+                        Assert.AreEqual(5, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
+                    }
+                    if (ct == 50)
+                    {
+                        // tasks will generally be 100 here, but allow some forgiveness as this is not deterministic
+                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 50);
+                        processor.UpdateConcurrency(1, 1);
+                        Assert.AreEqual(1, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
+                    }
+                    if (ct == 95)
+                    {
+                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
+                    }
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
     }
 }
