@@ -282,6 +282,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 
             return Where(query);
 
+            // Prevent the partial evaluator from trying to compile calls to DigitalTwinsFunctions
+            // into constants since they're not implemented on the client
             bool CanEvaluate(Expression e)
             {
                 if (e is MethodCallExpression call && call.Method.DeclaringType == typeof(DigitalTwinsFunctions))
