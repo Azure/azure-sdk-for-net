@@ -64,16 +64,16 @@ namespace Azure.Identity.Tests
         {
             using var env = new TestEnvVar(new Dictionary<string, string> {{"TENANT_ID", TenantId}});
             var environment = new IdentityTestEnvironment();
-            var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantIdFromEnv, Transport = new MockTransport(), AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
+            var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantId, Transport = new MockTransport(), AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(environment.TenantIdFromEnv, context, options.AllowMultiTenantAuthentication);
+            expectedTenantId = TenantIdResolver.Resolve(environment.TenantId, context, options.AllowMultiTenantAuthentication);
 
             VisualStudioCodeCredential credential = InstrumentClient(
                 new VisualStudioCodeCredential(
                     options,
                     null,
                     mockMsalClient,
-                    CredentialTestHelpers.CreateFileSystemForVisualStudioCodeFromEnv(environment),
+                    CredentialTestHelpers.CreateFileSystemForVisualStudioCode(environment),
                     new TestVscAdapter("VS Code Azure", "AzureCloud", expectedToken)));
 
             var actualToken = await credential.GetTokenAsync(context, CancellationToken.None);

@@ -194,7 +194,7 @@ namespace Azure.Identity.Tests
             var cred = InstrumentClient(new DeviceCodeCredential(ThrowingDeviceCodeCallback, null, ClientId, options, null, mockMsalClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
-                async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { testEnvironment.KeyvaultScopeFromEnv }), cancelSource.Token));
+                async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { testEnvironment.KeyvaultScope }), cancelSource.Token));
             Assert.IsInstanceOf(typeof(MockException), ex.InnerException);
         }
 

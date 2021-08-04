@@ -31,9 +31,7 @@ namespace Azure.Identity.Tests
 
         public string TestPassword => GetOptionalVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
         public string TestTenantId => GetRecordedOptionalVariable("TENANT_ID") ?? GetRecordedVariable("AZURE_IDENTITY_TEST_TENANTID");
-        public string TestTenantIdFromEnv => GetOptionalVariable("TENANT_ID") ?? GetVariable("AZURE_IDENTITY_TEST_TENANTID");
         public string KeyvaultScope => GetRecordedOptionalVariable("AZURE_KEYVAULT_SCOPE") ?? "SANITIZED";
-        public string KeyvaultScopeFromEnv => GetOptionalVariable("AZURE_KEYVAULT_SCOPE") ?? "SANITIZED";
 
         public string ServicePrincipalClientId => GetRecordedVariable("IDENTITY_SP_CLIENT_ID");
         public string ServicePrincipalTenantId => GetRecordedVariable("IDENTITY_SP_TENANT_ID");
@@ -41,6 +39,5 @@ namespace Azure.Identity.Tests
         public string ServicePrincipalCertificatePfxPath => GetOptionalVariable("IDENTITY_SP_CERT_PFX") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
         public string ServicePrincipalCertificatePemPath => GetOptionalVariable("IDENTITY_SP_CERT_PEM") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
         public string ServicePrincipalSniCertificatePath => GetOptionalVariable("IDENTITY_SP_CERT_SNI") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
-        public string TenantIdFromEnv => GetOptionalVariable("TENANT_ID");
     }
 }
