@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// </param>
         /// <param name="jobType"> Specifies the type of job. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Specifies the job provisioning state. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         internal JobBase(string description, IReadOnlyDictionary<string, JobEndpoint> interactionEndpoints, JobType jobType, IDictionary<string, string> properties, JobProvisioningState? provisioningState, IDictionary<string, string> tags)
         {
@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal JobType JobType { get; set; }
         /// <summary> The asset property dictionary. </summary>
         public IDictionary<string, string> Properties { get; }
+        /// <summary> Specifies the job provisioning state. </summary>
         public JobProvisioningState? ProvisioningState { get; }
         /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
         public IDictionary<string, string> Tags { get; }

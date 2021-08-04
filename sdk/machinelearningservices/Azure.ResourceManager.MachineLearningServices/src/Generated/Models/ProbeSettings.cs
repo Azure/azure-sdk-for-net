@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The ProbeSettings. </summary>
+    /// <summary> Deployment container liveness/readiness probe configuration. </summary>
     public partial class ProbeSettings
     {
         /// <summary> Initializes a new instance of ProbeSettings. </summary>

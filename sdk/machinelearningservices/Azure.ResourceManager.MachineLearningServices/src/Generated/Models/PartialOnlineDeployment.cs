@@ -15,11 +15,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
+        /// <summary> Whether AppInsights telemetry is enabled for this online deployment. </summary>
         public bool? AppInsightsEnabled { get; set; }
-        /// <summary> Enum to determine endpoint compute type. </summary>
+        /// <summary> The compute type of the endpoint. </summary>
         internal EndpointComputeType EndpointComputeType { get; set; }
+        /// <summary> Deployment container liveness/readiness probe configuration. </summary>
         public ProbeSettings LivenessProbe { get; set; }
+        /// <summary> Online deployment scoring requests configuration. </summary>
         public OnlineRequestSettings RequestSettings { get; set; }
+        /// <summary> Online deployment scaling configuration. </summary>
         public OnlineScaleSettings ScaleSettings { get; set; }
     }
 }

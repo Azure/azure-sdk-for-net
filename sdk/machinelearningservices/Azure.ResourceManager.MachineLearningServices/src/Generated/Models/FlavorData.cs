@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of FlavorData. </summary>
-        /// <param name="data"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="data"> Model flavor-specific data. </param>
         internal FlavorData(IDictionary<string, string> data)
         {
             Data = data;
         }
 
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary> Model flavor-specific data. </summary>
         public IDictionary<string, string> Data { get; }
     }
 }

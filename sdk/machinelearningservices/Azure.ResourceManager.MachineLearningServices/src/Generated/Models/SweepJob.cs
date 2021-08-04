@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of SweepJob. </summary>
         /// <param name="algorithm"> Type of the hyperparameter sampling algorithms. </param>
         /// <param name="compute"> Compute binding for the job. </param>
-        /// <param name="objective"></param>
+        /// <param name="objective"> Optimization objective. </param>
         /// <param name="searchSpace"> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="compute"/>, <paramref name="objective"/>, or <paramref name="searchSpace"/> is null. </exception>
         public SweepJob(SamplingAlgorithm algorithm, ComputeConfiguration compute, Objective objective, IDictionary<string, object> searchSpace)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// </param>
         /// <param name="jobType"> Specifies the type of job. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Specifies the job provisioning state. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="algorithm"> Type of the hyperparameter sampling algorithms. </param>
         /// <param name="compute"> Compute binding for the job. </param>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity or null.
         /// Defaults to AmlToken if null.
         /// </param>
-        /// <param name="maxConcurrentTrials"></param>
-        /// <param name="maxTotalTrials"></param>
-        /// <param name="objective"></param>
+        /// <param name="maxConcurrentTrials"> An upper bound on the number of trials performed in parallel. </param>
+        /// <param name="maxTotalTrials"> An upper bound on the number of trials to perform. </param>
+        /// <param name="objective"> Optimization objective. </param>
         /// <param name="output"> Location of the job output logs and artifacts. </param>
         /// <param name="priority">
         /// Job priority for scheduling policy. Only applies to AMLCompute.
@@ -103,8 +103,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Defaults to AmlToken if null.
         /// </summary>
         public IdentityConfiguration Identity { get; set; }
+        /// <summary> An upper bound on the number of trials performed in parallel. </summary>
         public int? MaxConcurrentTrials { get; set; }
+        /// <summary> An upper bound on the number of trials to perform. </summary>
         public int? MaxTotalTrials { get; set; }
+        /// <summary> Optimization objective. </summary>
         public Objective Objective { get; set; }
         /// <summary> Location of the job output logs and artifacts. </summary>
         public JobOutput Output { get; }

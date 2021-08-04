@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of BanditPolicy. </summary>
-        /// <param name="delayEvaluation"></param>
-        /// <param name="evaluationInterval"></param>
+        /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
+        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> Name of policy configuration. </param>
-        /// <param name="slackAmount"></param>
-        /// <param name="slackFactor"></param>
+        /// <param name="slackAmount"> Absolute distance allowed from the best performing run. </param>
+        /// <param name="slackFactor"> Ratio of the allowed distance from the best performing run. </param>
         internal BanditPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, float? slackAmount, float? slackFactor) : base(delayEvaluation, evaluationInterval, policyType)
         {
             SlackAmount = slackAmount;
@@ -29,7 +29,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             PolicyType = policyType;
         }
 
+        /// <summary> Absolute distance allowed from the best performing run. </summary>
         public float? SlackAmount { get; set; }
+        /// <summary> Ratio of the allowed distance from the best performing run. </summary>
         public float? SlackFactor { get; set; }
     }
 }

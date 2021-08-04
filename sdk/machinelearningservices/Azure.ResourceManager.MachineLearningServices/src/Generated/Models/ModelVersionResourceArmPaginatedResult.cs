@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ModelVersionResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"></param>
+        /// <param name="nextLink"> The link to the next page of ModelVersion objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type ModelVersion. </param>
         internal ModelVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<ModelVersionResourceData> value)
         {
@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Value = value;
         }
 
+        /// <summary> The link to the next page of ModelVersion objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type ModelVersion. </summary>
         public IReadOnlyList<ModelVersionResourceData> Value { get; }

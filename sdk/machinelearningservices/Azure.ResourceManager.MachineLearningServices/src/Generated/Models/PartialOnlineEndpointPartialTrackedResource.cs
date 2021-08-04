@@ -21,11 +21,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Service identity associated with a resource. </summary>
         public ResourceIdentity Identity { get; set; }
+        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
         public string Kind { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
         public string Location { get; set; }
         /// <summary> Additional attributes of the entity. </summary>
         public PartialOnlineEndpoint Properties { get; set; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

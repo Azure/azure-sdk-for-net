@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="endpoint"> Url for endpoint. </param>
         /// <param name="jobEndpointType"> Endpoint type. </param>
         /// <param name="port"> Port for endpoint. </param>
-        /// <param name="properties"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="properties"> Additional properties to set on the endpoint. </param>
         internal JobEndpoint(string endpoint, string jobEndpointType, int? port, IReadOnlyDictionary<string, string> properties)
         {
             Endpoint = endpoint;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string JobEndpointType { get; }
         /// <summary> Port for endpoint. </summary>
         public int? Port { get; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary> Additional properties to set on the endpoint. </summary>
         public IReadOnlyDictionary<string, string> Properties { get; }
     }
 }
