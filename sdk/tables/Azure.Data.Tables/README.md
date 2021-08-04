@@ -275,7 +275,7 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 <!-- LINKS -->
 [tables_rest]: https://docs.microsoft.com/rest/api/storageservices/table-service-rest-api
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [table_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Data.Tables
 [table_client_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples
 [table_client_src]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/src

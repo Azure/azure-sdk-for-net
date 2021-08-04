@@ -179,11 +179,9 @@ namespace DataFactory.Tests.ScenarioTests
                             },
                             Path = "fakedPath"
                         },
-                        ManagedCredential = new EntityReference
+                        Credential = new CredentialReference
                         {
-                            Type = "CredentialReference",
                             ReferenceName=  "credentialReference"
-
                         }
                     }
                 }

@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of ArtifactManifestProperties. </summary>
-        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
+        /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="digest"> Manifest. </param>
         /// <param name="size"> Image size. </param>
@@ -70,7 +70,7 @@ namespace Azure.Containers.ContainerRegistry
             QuarantineDetails = quarantineDetails;
         }
 
-        /// <summary> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </summary>
+        /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>
         public string RegistryLoginServer { get; }
         /// <summary> Repository name. </summary>
         public string RepositoryName { get; }

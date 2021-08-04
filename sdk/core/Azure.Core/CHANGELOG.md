@@ -1,7 +1,31 @@
 # Release History
 
-## 1.16.0-beta.1 (Unreleased)
+## 1.18.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.17.0 (2021-08-10)
+
+### Features Added
+
+- Added `ClientOptions.Default` to configure defaults process-wide.
+- Added `HttpPipelinePosition.BeforeTransport` to be able to add policies at the end of the pipeline before the transport.
+
+### Fixed
+
+- Fixed `NotSupportedException` when running in Unity.
+
+## 1.16.0 (2021-06-30)
+
+### Changed
+
+- Added `TenantId` to the properties on `TokenRequestContext` to enable multi-tenant support in Azure.Identity.
 
 ## 1.15.0 (2021-06-08)
 

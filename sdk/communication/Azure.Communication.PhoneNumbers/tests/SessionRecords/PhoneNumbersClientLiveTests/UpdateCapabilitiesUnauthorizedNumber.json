@@ -8,15 +8,14 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "Date": "Tue, 15 Jun 2021 17:50:45 GMT",
-        "traceparent": "00-2c9032ace66c694389eee1b2e30c3abe-2fc9e3dbf65bac41-00",
+        "traceparent": "00-dda3413713bcc34b98b122a02d4c17fb-72d63b050a868142-00",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210615.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "00c7ab476812b2f120ea8960906289f6",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 15 Jun 2021 17:50:45 GMT",
+        "x-ms-date": "Tue, 22 Jun 2021 22:03:21 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -24,17 +23,17 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07",
         "Content-Type": "application/json",
-        "Date": "Tue, 15 Jun 2021 17:50:45 GMT",
-        "MS-CV": "42pZvcgIvEm2G9ta2IK53A.0",
+        "Date": "Tue, 22 Jun 2021 22:03:21 GMT",
+        "MS-CV": "/5QS4e0ftEyGAHK\u002B43yBDg.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0dejIYAAAAADDW/7TBI6dSabPikbht7KzWVZSMzBFREdFMDQxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0KV7SYAAAAADhh1mFgmLvTYrPlJWYHutwWVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "16ms"
+        "X-Processing-Time": "49ms"
       },
       "ResponseBody": {
         "error": {
-          "code": "InvalidInput",
+          "code": "MissingInput",
           "message": "At least one of Sms or Calling must exist.",
           "target": "phonenumbercapabilitiesrequest"
         }

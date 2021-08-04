@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var lastEvent = new EventData
             (
-                eventBody: Array.Empty<byte>(),
+                eventBody: new BinaryData(Array.Empty<byte>()),
                 lastPartitionSequenceNumber: 1234,
                 lastPartitionOffset: 42,
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task TheConsumerIsNotKeptAlive()
         {
             var partitionId = "id-value";
-            var mockConsumer = new LastEventConsumerMock(new EventData(Array.Empty<byte>()));
+            var mockConsumer = new LastEventConsumerMock(new EventData(new BinaryData(Array.Empty<byte>())));
             var context = new PartitionContext(partitionId, mockConsumer);
 
             // Attempt to clear out the consumer and force GC.

@@ -2,6 +2,7 @@
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);RESOURCES_RP</DefineConstants>
     <UseNewMgmtFramework>false</UseNewMgmtFramework>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
   <PropertyGroup>
     <NoWarn>SA1649</NoWarn>

@@ -15,29 +15,29 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAlertsOptions"/> class.
         /// </summary>
-        /// <param name="startTime">Filters the result. Only alerts triggered from this point in time, in UTC, will be returned.</param>
-        /// <param name="endTime">Filters the result. Only alerts triggered up to this point in time, in UTC, will be returned.</param>
-        /// <param name="timeMode">Specifies to which time property of an <see cref="AnomalyAlert"/> the filters <paramref name="startTime"/> and <paramref name="endTime"/> will be applied.</param>
-        public GetAlertsOptions(DateTimeOffset startTime, DateTimeOffset endTime, AlertQueryTimeMode timeMode)
+        /// <param name="startsOn">Filters the result. Only alerts triggered from this point in time, in UTC, will be returned.</param>
+        /// <param name="endsOn">Filters the result. Only alerts triggered up to this point in time, in UTC, will be returned.</param>
+        /// <param name="timeMode">Specifies to which time property of an <see cref="AnomalyAlert"/> the filters <paramref name="startsOn"/> and <paramref name="endsOn"/> will be applied.</param>
+        public GetAlertsOptions(DateTimeOffset startsOn, DateTimeOffset endsOn, AlertQueryTimeMode timeMode)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             TimeMode = timeMode;
         }
 
         /// <summary>
         /// Filters the result. Only alerts triggered from this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset StartTime { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary>
         /// Filters the result. Only alerts triggered up to this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset EndTime { get; }
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary>
-        /// Specifies to which time property of an <see cref="AnomalyAlert"/> the filters <see cref="StartTime"/>
-        /// and <see cref="EndTime"/> will be applied.
+        /// Specifies to which time property of an <see cref="AnomalyAlert"/> the filters <see cref="StartsOn"/>
+        /// and <see cref="EndsOn"/> will be applied.
         /// </summary>
         public AlertQueryTimeMode TimeMode { get; }
 

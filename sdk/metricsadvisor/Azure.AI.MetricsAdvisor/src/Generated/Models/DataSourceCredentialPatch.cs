@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Type of data source credential. </summary>
-        internal DataSourceCredentialType DataSourceCredentialType { get; set; }
+        internal DataSourceCredentialKind DataSourceCredentialType { get; set; }
         /// <summary> Name of data source credential. </summary>
         public string DataSourceCredentialName { get; set; }
         /// <summary> Description of data source credential. </summary>

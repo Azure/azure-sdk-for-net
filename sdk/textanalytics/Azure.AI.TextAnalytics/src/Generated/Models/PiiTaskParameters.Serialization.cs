@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             if (Optional.IsCollectionDefined(PiiCategories))
             {
-                writer.WritePropertyName("pii-categories");
+                writer.WritePropertyName("piiCategories");
                 writer.WriteStartArray();
                 foreach (var item in PiiCategories)
                 {

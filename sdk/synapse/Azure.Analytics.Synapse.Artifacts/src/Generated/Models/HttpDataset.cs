@@ -41,9 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="requestBody"> The body for the HTTP request. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalHeaders">
         /// The headers for the HTTP Request. e.g. request-header-name-1:request-header-value-1
-        /// 
         /// ...
-        /// 
         /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
         /// </param>
         /// <param name="format"> The format of files. </param>
@@ -67,9 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object RequestBody { get; set; }
         /// <summary>
         /// The headers for the HTTP Request. e.g. request-header-name-1:request-header-value-1
-        /// 
         /// ...
-        /// 
         /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
         /// </summary>
         public object AdditionalHeaders { get; set; }

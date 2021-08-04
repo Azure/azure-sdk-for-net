@@ -32,7 +32,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             Assert.Contains(tag, properties.Tags.ToList());
             Assert.AreEqual(_repositoryName, properties.RepositoryName);
-            Assert.GreaterOrEqual(helloWorldRelatedArtifacts, properties.RelatedArtifacts.Count);
+            Assert.GreaterOrEqual(properties.RelatedArtifacts.Count, helloWorldRelatedArtifacts);
 
             Assert.IsTrue(properties.RelatedArtifacts.Any(
                 artifact =>

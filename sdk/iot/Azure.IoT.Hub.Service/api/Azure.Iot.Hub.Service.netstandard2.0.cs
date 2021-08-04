@@ -60,20 +60,6 @@ namespace Azure.IoT.Hub.Service
         UnconditionalIfMatch = 0,
         IfMatch = 1,
     }
-    public static partial class IotHubGatewayServiceAPIsModelFactory
-    {
-        public static Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse BulkRegistryOperationResponse(bool? isSuccessful = default(bool?), System.Collections.Generic.IReadOnlyList<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError> errors = null, System.Collections.Generic.IReadOnlyList<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning> warnings = null) { throw null; }
-        public static Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse CloudToDeviceMethodResponse(int? status = default(int?), object payload = null) { throw null; }
-        public static Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse ConfigurationQueriesTestResponse(string targetConditionError = null, System.Collections.Generic.IReadOnlyDictionary<string, string> customMetricQueryErrors = null) { throw null; }
-        public static Azure.IoT.Hub.Service.Models.DeviceJobStatistics DeviceJobStatistics(int? deviceCount = default(int?), int? failedCount = default(int?), int? succeededCount = default(int?), int? runningCount = default(int?), int? pendingCount = default(int?)) { throw null; }
-        public static Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError DeviceRegistryOperationError(string deviceId = null, Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode? errorCode = default(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode?), string errorStatus = null, string moduleId = null, string operation = null) { throw null; }
-        public static Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning DeviceRegistryOperationWarning(string deviceId = null, string warningCode = null, string warningStatus = null) { throw null; }
-        public static Azure.IoT.Hub.Service.Models.DevicesStatistics DevicesStatistics(long? totalDeviceCount = default(long?), long? enabledDeviceCount = default(long?), long? disabledDeviceCount = default(long?)) { throw null; }
-        public static Azure.IoT.Hub.Service.Models.JobResponse JobResponse(string jobId = null, string queryCondition = null, System.DateTimeOffset? createdTime = default(System.DateTimeOffset?), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), long? maxExecutionTimeInSeconds = default(long?), Azure.IoT.Hub.Service.Models.JobResponseType? type = default(Azure.IoT.Hub.Service.Models.JobResponseType?), Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest cloudToDeviceMethod = null, Azure.IoT.Hub.Service.Models.TwinData updateTwin = null, Azure.IoT.Hub.Service.Models.JobResponseStatus? status = default(Azure.IoT.Hub.Service.Models.JobResponseStatus?), string failureReason = null, string statusMessage = null, Azure.IoT.Hub.Service.Models.DeviceJobStatistics deviceJobStatistics = null) { throw null; }
-        public static Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult PurgeMessageQueueResult(int? totalMessagesPurged = default(int?), string deviceId = null, string moduleId = null) { throw null; }
-        public static Azure.IoT.Hub.Service.Models.QueryResult QueryResult(Azure.IoT.Hub.Service.Models.QueryResultType? type = default(Azure.IoT.Hub.Service.Models.QueryResultType?), System.Collections.Generic.IReadOnlyList<object> items = null, string continuationToken = null) { throw null; }
-        public static Azure.IoT.Hub.Service.Models.ServiceStatistics ServiceStatistics(long? connectedDeviceCount = default(long?)) { throw null; }
-    }
     public partial class IotHubServiceClient
     {
         protected IotHubServiceClient() { }
@@ -634,6 +620,20 @@ namespace Azure.IoT.Hub.Service.Models
         public ImportJobRequestOptions() { }
         public string InputBlobName { get { throw null; } set { } }
         public string OutputBlobName { get { throw null; } set { } }
+    }
+    public static partial class IotHubGatewayServiceAPIsModelFactory
+    {
+        public static Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse BulkRegistryOperationResponse(bool? isSuccessful = default(bool?), System.Collections.Generic.IEnumerable<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError> errors = null, System.Collections.Generic.IEnumerable<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning> warnings = null) { throw null; }
+        public static Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse CloudToDeviceMethodResponse(int? status = default(int?), object payload = null) { throw null; }
+        public static Azure.IoT.Hub.Service.Models.ConfigurationQueriesTestResponse ConfigurationQueriesTestResponse(string targetConditionError = null, System.Collections.Generic.IReadOnlyDictionary<string, string> customMetricQueryErrors = null) { throw null; }
+        public static Azure.IoT.Hub.Service.Models.DeviceJobStatistics DeviceJobStatistics(int? deviceCount = default(int?), int? failedCount = default(int?), int? succeededCount = default(int?), int? runningCount = default(int?), int? pendingCount = default(int?)) { throw null; }
+        public static Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError DeviceRegistryOperationError(string deviceId = null, Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode? errorCode = default(Azure.IoT.Hub.Service.Models.DeviceRegistryOperationErrorCode?), string errorStatus = null, string moduleId = null, string operation = null) { throw null; }
+        public static Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning DeviceRegistryOperationWarning(string deviceId = null, string warningCode = null, string warningStatus = null) { throw null; }
+        public static Azure.IoT.Hub.Service.Models.DevicesStatistics DevicesStatistics(long? totalDeviceCount = default(long?), long? enabledDeviceCount = default(long?), long? disabledDeviceCount = default(long?)) { throw null; }
+        public static Azure.IoT.Hub.Service.Models.JobResponse JobResponse(string jobId = null, string queryCondition = null, System.DateTimeOffset? createdTime = default(System.DateTimeOffset?), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), long? maxExecutionTimeInSeconds = default(long?), Azure.IoT.Hub.Service.Models.JobResponseType? type = default(Azure.IoT.Hub.Service.Models.JobResponseType?), Azure.IoT.Hub.Service.Models.CloudToDeviceMethodRequest cloudToDeviceMethod = null, Azure.IoT.Hub.Service.Models.TwinData updateTwin = null, Azure.IoT.Hub.Service.Models.JobResponseStatus? status = default(Azure.IoT.Hub.Service.Models.JobResponseStatus?), string failureReason = null, string statusMessage = null, Azure.IoT.Hub.Service.Models.DeviceJobStatistics deviceJobStatistics = null) { throw null; }
+        public static Azure.IoT.Hub.Service.Models.PurgeMessageQueueResult PurgeMessageQueueResult(int? totalMessagesPurged = default(int?), string deviceId = null, string moduleId = null) { throw null; }
+        public static Azure.IoT.Hub.Service.Models.QueryResult QueryResult(Azure.IoT.Hub.Service.Models.QueryResultType? type = default(Azure.IoT.Hub.Service.Models.QueryResultType?), System.Collections.Generic.IEnumerable<object> items = null, string continuationToken = null) { throw null; }
+        public static Azure.IoT.Hub.Service.Models.ServiceStatistics ServiceStatistics(long? connectedDeviceCount = default(long?)) { throw null; }
     }
     public partial class JobProperties
     {

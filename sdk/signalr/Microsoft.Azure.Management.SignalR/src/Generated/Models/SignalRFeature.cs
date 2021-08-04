@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// Feature of a SignalR resource, which controls the SignalR runtime
-    /// behavior.
+    /// Feature of a resource, which controls the runtime behavior.
     /// </summary>
     public partial class SignalRFeature
     {

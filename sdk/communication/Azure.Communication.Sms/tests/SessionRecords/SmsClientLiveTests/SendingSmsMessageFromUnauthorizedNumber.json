@@ -8,15 +8,14 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "Date": "Tue, 15 Jun 2021 17:54:43 GMT",
-        "traceparent": "00-866122fdb025ee40a6720e2bed90da76-33068ec7a7bebd4a-00",
+        "traceparent": "00-8d2d6d66598f8242bc0170eb9d70af2e-917ecd4c0453e942-00",
         "User-Agent": [
-          "azsdk-net-Communication.Sms/1.1.0-alpha.20210615.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Communication.Sms/1.1.0-alpha.20210622.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "07041c006777da44a4e98ec8aecb0d65",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 15 Jun 2021 17:54:43 GMT",
+        "x-ms-date": "Tue, 22 Jun 2021 22:05:59 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -33,15 +32,21 @@
       "StatusCode": 401,
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
-        "Content-Length": "0",
-        "Date": "Tue, 15 Jun 2021 17:54:42 GMT",
-        "MS-CV": "jUpIstxHt0SSSrhL5cG7eg.0",
+        "Content-Type": "application/json",
+        "Date": "Tue, 22 Jun 2021 22:05:58 GMT",
+        "MS-CV": "Hv5ujXkLaEKGOoVEPm4SgQ.0",
         "Request-Context": "appId=",
-        "X-Azure-Ref": "0YunIYAAAAABI6\u002BIiLfMvTK\u002Bq55W1OgkEWVZSMzBFREdFMDQxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0x17SYAAAAABgN2dXXF\u002BrR4iadeEIoUNlWVZSMzBFREdFMDQxNAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "288ms"
+        "X-Processing-Time": "308ms"
       },
-      "ResponseBody": []
+      "ResponseBody": {
+        "error": {
+          "code": "InternalError",
+          "message": "The server encountered an internal error."
+        }
+      }
     }
   ],
   "Variables": {

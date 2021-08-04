@@ -7,14 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Quantum.Jobs.Models;
+using System.Linq;
 
-namespace Azure.Quantum.Jobs
+namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class QuantumModelFactory
     {
-        /// <summary> Initializes new instance of JobDetails class. </summary>
+        /// <summary> Initializes a new instance of JobDetails. </summary>
         /// <param name="id"> The job id. </param>
         /// <param name="name"> The job name. Is not required for the name to be unique and it&apos;s only used for display purposes. </param>
         /// <param name="containerUri"> The blob container SAS uri, the container is used to host job data. </param>
@@ -33,52 +33,54 @@ namespace Azure.Quantum.Jobs
         /// <param name="cancellationTime"> The time when a job was successfully cancelled. </param>
         /// <param name="errorData"> The error data for the job. This is expected only when Status &apos;Failed&apos;. </param>
         /// <returns> A new <see cref="Models.JobDetails"/> instance for mocking. </returns>
-        public static JobDetails JobDetails(string id = default, string name = default, string containerUri = default, string inputDataUri = default, string inputDataFormat = default, object inputParams = default, string providerId = default, string target = default, IDictionary<string, string> metadata = default, string outputDataUri = default, string outputDataFormat = default, JobStatus? status = default, DateTimeOffset? creationTime = default, DateTimeOffset? beginExecutionTime = default, DateTimeOffset? endExecutionTime = default, DateTimeOffset? cancellationTime = default, ErrorData errorData = default)
+        public static JobDetails JobDetails(string id = null, string name = null, string containerUri = null, string inputDataUri = null, string inputDataFormat = null, object inputParams = null, string providerId = null, string target = null, IDictionary<string, string> metadata = null, string outputDataUri = null, string outputDataFormat = null, JobStatus? status = null, DateTimeOffset? creationTime = null, DateTimeOffset? beginExecutionTime = null, DateTimeOffset? endExecutionTime = null, DateTimeOffset? cancellationTime = null, ErrorData errorData = null)
         {
             metadata ??= new Dictionary<string, string>();
+
             return new JobDetails(id, name, containerUri, inputDataUri, inputDataFormat, inputParams, providerId, target, metadata, outputDataUri, outputDataFormat, status, creationTime, beginExecutionTime, endExecutionTime, cancellationTime, errorData);
         }
 
-        /// <summary> Initializes new instance of ErrorData class. </summary>
+        /// <summary> Initializes a new instance of ErrorData. </summary>
         /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the error, intended to be suitable for displaying in a user interface. </param>
         /// <returns> A new <see cref="Models.ErrorData"/> instance for mocking. </returns>
-        public static ErrorData ErrorData(string code = default, string message = default)
+        public static ErrorData ErrorData(string code = null, string message = null)
         {
             return new ErrorData(code, message);
         }
 
-        /// <summary> Initializes new instance of ProviderStatus class. </summary>
+        /// <summary> Initializes a new instance of ProviderStatus. </summary>
         /// <param name="id"> Provider id. </param>
         /// <param name="currentAvailability"> Provider availability. </param>
         /// <param name="targets"> Job target. </param>
         /// <returns> A new <see cref="Models.ProviderStatus"/> instance for mocking. </returns>
-        public static ProviderStatus ProviderStatus(string id = default, ProviderAvailability? currentAvailability = default, IReadOnlyList<TargetStatus> targets = default)
+        public static ProviderStatus ProviderStatus(string id = null, ProviderAvailability? currentAvailability = null, IEnumerable<TargetStatus> targets = null)
         {
             targets ??= new List<TargetStatus>();
-            return new ProviderStatus(id, currentAvailability, targets);
+
+            return new ProviderStatus(id, currentAvailability, targets?.ToList());
         }
 
-        /// <summary> Initializes new instance of TargetStatus class. </summary>
+        /// <summary> Initializes a new instance of TargetStatus. </summary>
         /// <param name="id"> Target id. </param>
         /// <param name="currentAvailability"> Target availability. </param>
         /// <param name="averageQueueTime"> Average queue time in seconds. </param>
         /// <param name="statusPage"> A page with detailed status of the provider. </param>
         /// <returns> A new <see cref="Models.TargetStatus"/> instance for mocking. </returns>
-        public static TargetStatus TargetStatus(string id = default, TargetAvailability? currentAvailability = default, long? averageQueueTime = default, string statusPage = default)
+        public static TargetStatus TargetStatus(string id = null, TargetAvailability? currentAvailability = null, long? averageQueueTime = null, string statusPage = null)
         {
             return new TargetStatus(id, currentAvailability, averageQueueTime, statusPage);
         }
 
-        /// <summary> Initializes new instance of SasUriResponse class. </summary>
+        /// <summary> Initializes a new instance of SasUriResponse. </summary>
         /// <param name="sasUri"> A URL with a SAS token to upload a blob for execution in the given workspace. </param>
         /// <returns> A new <see cref="Models.SasUriResponse"/> instance for mocking. </returns>
-        public static SasUriResponse SasUriResponse(string sasUri = default)
+        public static SasUriResponse SasUriResponse(string sasUri = null)
         {
             return new SasUriResponse(sasUri);
         }
 
-        /// <summary> Initializes new instance of QuantumJobQuota class. </summary>
+        /// <summary> Initializes a new instance of QuantumJobQuota. </summary>
         /// <param name="dimension"> The name of the dimension associated with the quota. </param>
         /// <param name="scope"> The scope at which the quota is applied. </param>
         /// <param name="providerId"> The unique identifier for the provider. </param>
@@ -87,7 +89,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="limit"> The maximum amount of usage allowed for the current period. </param>
         /// <param name="period"> The time period in which the quota&apos;s underlying meter is accumulated. Based on calendar year. &apos;None&apos; is used for concurrent quotas. </param>
         /// <returns> A new <see cref="Models.QuantumJobQuota"/> instance for mocking. </returns>
-        public static QuantumJobQuota QuantumJobQuota(string dimension = default, DimensionScope? scope = default, string providerId = default, float? utilization = default, float? holds = default, float? limit = default, MeterPeriod? period = default)
+        public static QuantumJobQuota QuantumJobQuota(string dimension = null, DimensionScope? scope = null, string providerId = null, float? utilization = null, float? holds = null, float? limit = null, MeterPeriod? period = null)
         {
             return new QuantumJobQuota(dimension, scope, providerId, utilization, holds, limit, period);
         }

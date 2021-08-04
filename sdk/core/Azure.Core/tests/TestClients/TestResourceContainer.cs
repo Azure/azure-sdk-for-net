@@ -7,20 +7,27 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
 {
-    public class TestResourceContainer
+    public class TestResourceContainer : ResourceContainer
     {
         private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
 
-        [ForwardsClientCalls]
-        public virtual Pageable<TestResource> List(int pages = 1, CancellationToken cancellation = default)
+        protected override ResourceType ValidResourceType => "MyFake.Namespace/testResource";
+
+        public virtual Pageable<TestResource> GetAll(int pages = 1, CancellationToken cancellation = default)
         {
             Page<TestResource> pageFunc(int? pageSizeHint)
             {
                 //simulates forwarding with todays wrapper.  This should go away after codegen is finished
+<<<<<<< HEAD
                 using var scope = _diagnostic.CreateScope("TestResourceContainer.GetSyncResults");
+=======
+                using var scope = _diagnostic.CreateScope("TestResourceContainer.GetAll");
+>>>>>>> 89c2dd1d28bf5e247bd1dd20dbea3bf85f660105
                 scope.Start();
 
                 try
@@ -37,12 +44,20 @@ namespace Azure.Core.Tests
             return PageableHelpers.CreateEnumerable(pageFunc, null);
         }
 
+<<<<<<< HEAD
         [ForwardsClientCalls]
         public virtual AsyncPageable<TestResource> ListAsync(int pages = 1, CancellationToken cancellation = default)
         {
             async Task<Page<TestResource>> pageFunc(int? pageSizeHint)
             {
                 using var scope = _diagnostic.CreateScope("TestResourceContainer.GetAsyncResults");
+=======
+        public virtual AsyncPageable<TestResource> GetAllAsync(int pages = 1, CancellationToken cancellation = default)
+        {
+            async Task<Page<TestResource>> pageFunc(int? pageSizeHint)
+            {
+                using var scope = _diagnostic.CreateScope("TestResourceContainer.GetAll");
+>>>>>>> 89c2dd1d28bf5e247bd1dd20dbea3bf85f660105
                 scope.Start();
 
                 try

@@ -158,6 +158,9 @@ image.UpdateTagProperties("latest", new ArtifactTagProperties()
 ### Delete images
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImage
+using Azure.Containers.ContainerRegistry;
+using Azure.Identity;
+
 // Get the service endpoint from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -177,13 +180,15 @@ foreach (string repositoryName in repositoryNames)
     // Delete images older than the first three.
     foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
     {
+        RegistryArtifact image = repository.GetArtifact(imageManifest.Digest);
         Console.WriteLine($"Deleting image with digest {imageManifest.Digest}.");
-        Console.WriteLine($"   This image has the following tags: ");
+        Console.WriteLine($"   Deleting the following tags from the image: ");
         foreach (var tagName in imageManifest.Tags)
         {
             Console.WriteLine($"        {imageManifest.RepositoryName}:{tagName}");
+            image.DeleteTag(tagName);
         }
-        repository.GetArtifact(imageManifest.Digest).Delete();
+        image.Delete();
     }
 }
 ```
@@ -251,6 +256,10 @@ await image.UpdateTagPropertiesAsync("latest", new ArtifactTagProperties()
 ### Delete images asynchronously
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImageAsync
+using System.Linq;
+using Azure.Containers.ContainerRegistry;
+using Azure.Identity;
+
 // Get the service endpoint from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -270,13 +279,15 @@ await foreach (string repositoryName in repositoryNames)
     // Delete images older than the first three.
     await foreach (ArtifactManifestProperties imageManifest in imageManifests.Skip(3))
     {
+        RegistryArtifact image = repository.GetArtifact(imageManifest.Digest);
         Console.WriteLine($"Deleting image with digest {imageManifest.Digest}.");
-        Console.WriteLine($"   This image has the following tags: ");
+        Console.WriteLine($"   Deleting the following tags from the image: ");
         foreach (var tagName in imageManifest.Tags)
         {
             Console.WriteLine($"        {imageManifest.RepositoryName}:{tagName}");
+            await image.DeleteTagAsync(tagName);
         }
-        await repository.GetArtifact(imageManifest.Digest).DeleteAsync();
+        await image.DeleteAsync();
     }
 }
 ```
@@ -362,7 +373,7 @@ additional questions or comments.
 [container_registry_create_portal]: https://docs.microsoft.com/azure/container-registry/container-registry-get-started-portal
 [container_registry_concepts]: https://docs.microsoft.com/azure/container-registry/container-registry-concepts
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
 [samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/

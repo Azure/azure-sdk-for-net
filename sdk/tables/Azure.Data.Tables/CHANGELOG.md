@@ -1,17 +1,20 @@
 # Release History
 
-## 12.1.0-beta.1 (Unreleased)
+## 12.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.1.0 (2021-07-07)
 
 ### Features Added
 
 - Support for Azure Active Directory (AAD) authorization has been added to `TableServiceClient` and `TableClient`. This enables use of `TokenCredential` credentials. Note: Only Azure Storage API endpoints currently support AAD authorization.
-
-### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
-
 
 ## 12.0.1 (2021-06-10)
 

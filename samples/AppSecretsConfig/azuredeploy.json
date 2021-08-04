@@ -1,0 +1,181 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.451.19169",
+      "templateHash": "9923986087503436347"
+    }
+  },
+  "parameters": {
+    "name": {
+      "type": "string",
+      "defaultValue": "[uniqueString(resourceGroup().id)]",
+      "metadata": {
+        "description": "The base name for resources"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "The location for resources"
+      }
+    },
+    "secret": {
+      "type": "secureString",
+      "defaultValue": "[newGuid()]",
+      "metadata": {
+        "description": "A secret to use in the web application"
+      }
+    },
+    "sku": {
+      "type": "string",
+      "defaultValue": "F1",
+      "metadata": {
+        "description": "The web site hosting plan"
+      }
+    },
+    "configSku": {
+      "type": "string",
+      "defaultValue": "standard",
+      "allowedValues": [
+        "free",
+        "standard"
+      ],
+      "metadata": {
+        "description": "The App Configuration SKU. Only \"standard\" supports customer-managed keys from Key Vault"
+      }
+    }
+  },
+  "functions": [],
+  "resources": [
+    {
+      "type": "Microsoft.AppConfiguration/configurationStores/keyValues",
+      "apiVersion": "2020-07-01-preview",
+      "name": "[format('{0}/{1}', format('{0}config', parameters('name')), 'APPCONFIG_VALUE')]",
+      "properties": {
+        "contentType": "text/plain",
+        "value": "not a secret"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.AppConfiguration/configurationStores', format('{0}config', parameters('name')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.AppConfiguration/configurationStores/keyValues",
+      "apiVersion": "2020-07-01-preview",
+      "name": "[format('{0}/{1}', format('{0}config', parameters('name')), 'KEYVAULT_SECRET')]",
+      "properties": {
+        "contentType": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8",
+        "value": "[format('{{\"uri\":\"{0}\"}}', reference(resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}secret', format('kv{0}', parameters('name')), parameters('name')), '/')[0], split(format('{0}/{1}secret', format('kv{0}', parameters('name')), parameters('name')), '/')[1])).secretUri)]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.AppConfiguration/configurationStores', format('{0}config', parameters('name')))]",
+        "[resourceId('Microsoft.KeyVault/vaults/secrets', split(format('{0}/{1}secret', format('kv{0}', parameters('name')), parameters('name')), '/')[0], split(format('{0}/{1}secret', format('kv{0}', parameters('name')), parameters('name')), '/')[1])]"
+      ]
+    },
+    {
+      "type": "Microsoft.AppConfiguration/configurationStores",
+      "apiVersion": "2020-06-01",
+      "name": "[format('{0}config', parameters('name'))]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('configSku')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults",
+      "apiVersion": "2019-09-01",
+      "name": "[format('kv{0}', parameters('name'))]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "sku": {
+          "family": "A",
+          "name": "standard"
+        },
+        "tenantId": "[subscription().tenantId]",
+        "accessPolicies": [
+          {
+            "tenantId": "[subscription().tenantId]",
+            "objectId": "[reference(resourceId('Microsoft.Web/sites', format('{0}web', parameters('name'))), '2020-12-01', 'full').identity.principalId]",
+            "permissions": {
+              "secrets": [
+                "get"
+              ]
+            }
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', format('{0}web', parameters('name')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2019-09-01",
+      "name": "[format('{0}/{1}secret', format('kv{0}', parameters('name')), parameters('name'))]",
+      "properties": {
+        "contentType": "text/plain",
+        "value": "[parameters('secret')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', format('kv{0}', parameters('name')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}plan', parameters('name'))]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('sku')]"
+      },
+      "kind": "linux",
+      "properties": {
+        "reserved": true
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}web', parameters('name'))]",
+      "location": "[parameters('location')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "httpsOnly": true,
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}plan', parameters('name')))]",
+        "siteConfig": {
+          "linuxFxVersion": "DOTNETCORE|3.1",
+          "connectionStrings": [
+            {
+              "name": "AppConfig",
+              "connectionString": "[listKeys(resourceId('Microsoft.AppConfiguration/configurationStores', format('{0}config', parameters('name'))), '2020-06-01').value[0].connectionString]"
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.AppConfiguration/configurationStores', format('{0}config', parameters('name')))]",
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}plan', parameters('name')))]"
+      ]
+    }
+  ],
+  "outputs": {
+    "appConfigConnectionString": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.AppConfiguration/configurationStores', format('{0}config', parameters('name'))), '2020-06-01').value[0].connectionString]"
+    },
+    "siteUrl": {
+      "type": "string",
+      "value": "[format('https://{0}/', reference(resourceId('Microsoft.Web/sites', format('{0}web', parameters('name')))).defaultHostName)]"
+    },
+    "vaultUrl": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.KeyVault/vaults', format('kv{0}', parameters('name')))).vaultUri]"
+    }
+  }
+}

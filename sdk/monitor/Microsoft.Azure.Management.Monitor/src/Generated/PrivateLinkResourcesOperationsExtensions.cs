@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='scopeName'>
             /// The name of the Azure Monitor PrivateLinkScope resource.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='scopeName'>
             /// The name of the Azure Monitor PrivateLinkScope resource.
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='scopeName'>
             /// The name of the Azure Monitor PrivateLinkScope resource.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='scopeName'>
             /// The name of the Azure Monitor PrivateLinkScope resource.

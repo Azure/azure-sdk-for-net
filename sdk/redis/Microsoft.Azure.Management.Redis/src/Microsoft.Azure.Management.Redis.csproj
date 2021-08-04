@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+  <!-- Please do not move/edit code below this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.Redis</PackageId>
+    <Description>Provides redis cache management capabilities for Microsoft Azure.</Description>
+    <Version>7.0.0</Version>
+    <AssemblyName>Microsoft.Azure.Management.Redis</AssemblyName>
+    <PackageTags>Microsoft Azure Redis Cache management;Redis Management;</PackageTags>
+    <PackageReleaseNotes>Added support for specifying ports to RedisRebootParameters to enable rebooting cache instances based on their exposed port information.</PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>
