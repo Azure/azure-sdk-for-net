@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -12,76 +13,107 @@ namespace Azure.AI.Personalizer.Tests
         public EvaluationsTests(bool isAsync) : base(isAsync)
         {
         }
+        private const string EvaluationName = "SDKEvaluation";
 
         [Test]
-        public async Task GetEvaluations()
+        public async Task EvaluationTests()
         {
-            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
+            PersonalizerAdministrationClient client = await GetPersonalizerAdministrationClientAsync(isSingleSlot: true);
+            string evaluationId = await SubmitEvaluation(client);
+            await ApplyEvaluation(client, evaluationId);
+            await GetEvaluation(client, evaluationId);
+            await GetEvaluations(client);
+            await DeleteEvaluation(client, evaluationId);
+        }
+
+        private async Task<string> SubmitEvaluation(PersonalizerAdministrationClient client)
+        {
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            {
+                await SendNRankRequests(10);
+                //sleep for 60 seconds so cooked logs are uploaded for evaluation in Record mode
+                await Task.Delay(60000);
+            }
+            var evaluation = new PersonalizerEvaluationOptions(
+                name: EvaluationName,
+                startTime: DateTime.SpecifyKind(new DateTime(2021, 08, 01), DateTimeKind.Utc),
+                endTime: DateTime.SpecifyKind(new DateTime(2120, 08, 01), DateTimeKind.Utc),
+                policies: new PersonalizerPolicy[]
+                {
+                    new PersonalizerPolicy(name: "CustomPolicy1", arguments: "--cb_explore_adf --epsilon 0.2 --dsjson --cb_type ips -l 0.5 --l1 1E-07 --power_t 0.5")
+                });
+            evaluation.EnableOfflineExperimentation = true;
+            PersonalizerCreateEvaluationOperation createdEvaluation = await client.CreatePersonalizerEvaluationAsync(evaluation);
+            await createdEvaluation.WaitForCompletionAsync();
+            Assert.AreEqual(evaluation.Name, createdEvaluation.Value.Name);
+            return createdEvaluation.Value.Id;
+        }
+
+        private async Task ApplyEvaluation(PersonalizerAdministrationClient client, string evaluationId)
+        {
+            //apply policy from evaluation
+            PersonalizerPolicyReferenceOptions policyReferenceContract = new PersonalizerPolicyReferenceOptions(evaluationId, "Hyper1");
+            await client.ApplyPersonalizerEvaluationAsync(policyReferenceContract);
+        }
+
+        private async Task GetEvaluation(PersonalizerAdministrationClient client, string evaluationId)
+        {
+            PersonalizerEvaluation evaluation = await client.GetPersonalizerEvaluationAsync(evaluationId);
+            Assert.AreEqual(evaluationId, evaluation.Id);
+        }
+
+        private async Task GetEvaluations(PersonalizerAdministrationClient client)
+        {
             AsyncPageable<PersonalizerEvaluation> evaluations = client.GetPersonalizerEvaluationsAsync();
             int numEvaluations = 0;
             PersonalizerEvaluation eval0 = null;
-            PersonalizerEvaluation eval1 = null;
             await foreach (PersonalizerEvaluation evaluation in evaluations)
             {
                 numEvaluations++;
                 if (numEvaluations == 1)
                 {
                     eval0 = evaluation;
-                }
-                else if (numEvaluations == 2)
-                {
-                    eval1 = evaluation;
                     break;
                 }
             }
             Assert.NotNull(eval0);
-            Assert.NotNull(eval1);
             Assert.AreEqual("PersonalizerEvaluation", eval0.GetType().Name);
             Assert.AreEqual("Azure.AI.Personalizer.PersonalizerEvaluation", eval0.GetType().FullName);
-            Assert.False(evaluations.Equals(eval1));
             var policyResult = eval0.PolicyResults;
-            Assert.AreEqual(1, policyResult.Count);
-            Assert.AreEqual("Custom Policy 1", policyResult[0].Name);
-            Assert.AreEqual(0, policyResult[0].Summary.Count);
-            Assert.AreEqual(85, policyResult[0].Arguments.Length);
-            Assert.Null(policyResult[0].PolicySource);
-            Assert.Null(policyResult[0].TotalSummary);
-            Assert.AreEqual("myFirstEvaluation", eval0.Name);
+            Assert.AreEqual("CustomPolicy1", policyResult[0].Name);
+            Assert.AreEqual(EvaluationName, eval0.Name);
         }
 
-        [Test]
-        public async Task CreateEvaluation()
+        private async Task DeleteEvaluation(PersonalizerAdministrationClient client, string evaluationId)
         {
-            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
-            var evaluation = new PersonalizerEvaluationOptions(
-                name: "sdkTestEvaluation",
-                startTime: DateTime.SpecifyKind(new DateTime(2021, 06, 01), DateTimeKind.Utc),
-                endTime: DateTime.SpecifyKind(new DateTime(2021, 06, 30), DateTimeKind.Utc),
-                policies: new PersonalizerPolicy[]
-                {
-                    new PersonalizerPolicy(name: "Custom Policy 1", arguments: "--cb_explore_adf --epsilon 0.2 --dsjson --cb_type ips -l 0.5 --l1 1E-07 --power_t 0.5")
-                });
-            evaluation.EnableOfflineExperimentation = true;
-            PersonalizerCreateEvaluationOperation createdEvaluation = await client.CreatePersonalizerEvaluationAsync(evaluation);
-            await createdEvaluation.WaitForCompletionAsync();
-            Assert.AreEqual(evaluation.Name, createdEvaluation.Value.Name);
-        }
-
-        [Test]
-        public async Task GetEvaluation()
-        {
-            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
-            string evaluationId = "014fd077-b5ab-495b-8ef9-f6d2dce9c624";
-            PersonalizerEvaluation evaluation = await client.GetPersonalizerEvaluationAsync(evaluationId);
-            Assert.AreEqual(evaluationId, evaluation.Id);
-        }
-
-        [Test]
-        public async Task DeleteEvaluation()
-        {
-            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
-            string evaluationId = "b58c6d92-b727-48c1-9487-4be2782c9e0a";
             await client.DeletePersonalizerEvaluationAsync(evaluationId);
+        }
+
+        private async Task SendNRankRequests(int n)
+        {
+            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true);
+            IList<object> contextFeatures = new List<object>() {
+            new { Features = new { day = "tuesday", time = "night", weather = "rainy" } },
+            new { Features = new { userId = "1234", payingUser = true, favoriteGenre = "documentary", hoursOnSite = 0.12, lastwatchedType = "movie" } }
+            };
+            IList<PersonalizerRankableAction> actions = new List<PersonalizerRankableAction>();
+            actions.Add(
+                new PersonalizerRankableAction(
+                    id: "Person1",
+                    features:
+                    new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "30-35" } }
+            ));
+            actions.Add(
+                new PersonalizerRankableAction(
+                    id: "Person2",
+                    features:
+                        new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "40-45" } }
+            ));
+
+            for (int i = 0; i < n; i++)
+            {
+                await client.RankAsync(actions, contextFeatures);
+            }
         }
     }
 }

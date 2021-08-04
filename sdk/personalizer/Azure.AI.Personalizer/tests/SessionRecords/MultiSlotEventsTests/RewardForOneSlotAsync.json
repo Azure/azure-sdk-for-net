@@ -1,16 +1,246 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdktestrecorder.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/events/123456789/reward",
+      "RequestUri": "https://personalizersdktestrecordermultislot.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/service",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-e56f497a84c5ee48b8aa21afc8dfa2ea-129aed30e5a9eb48-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210804.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "b836fd252b61d2dee6d1031a5c635416",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a04ab5e8-8f65-4c09-a8e1-50f72d9c043d",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "349",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Aug 2021 21:21:13 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "4"
+      },
+      "ResponseBody": {
+        "rewardWaitTime": "PT5S",
+        "defaultReward": 0.0,
+        "rewardAggregation": "earliest",
+        "explorationPercentage": 0.2,
+        "modelExportFrequency": "PT5M",
+        "logRetentionDays": 90,
+        "lastConfigurationEditDate": "2021-08-04T21:21:12",
+        "learningMode": "Online",
+        "isAutoOptimizationEnabled": false,
+        "autoOptimizationFrequency": "P28D",
+        "autoOptimizationStartDate": "2021-08-18T21:43:46"
+      }
+    },
+    {
+      "RequestUri": "https://personalizersdktestrecordermultislot.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/service",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b86eb6502fa36a4bbdb63347802b6e99-2ecc00cc2bfc3840-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210804.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "853a6f6e8cb177334c7e9bde6ed8fa32",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "167ffaef-339e-4a0f-859f-67370f126c71",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "349",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Aug 2021 21:21:13 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "5"
+      },
+      "ResponseBody": {
+        "rewardWaitTime": "PT5S",
+        "defaultReward": 0.0,
+        "rewardAggregation": "earliest",
+        "explorationPercentage": 0.2,
+        "modelExportFrequency": "PT5M",
+        "logRetentionDays": 90,
+        "lastConfigurationEditDate": "2021-08-04T21:21:12",
+        "learningMode": "Online",
+        "isAutoOptimizationEnabled": false,
+        "autoOptimizationFrequency": "P28D",
+        "autoOptimizationStartDate": "2021-08-18T21:43:46"
+      }
+    },
+    {
+      "RequestUri": "https://personalizersdktestrecordermultislot.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/service",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "357",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-97da25e7e85c6342b608363de42b22b4-6a425bbe7b880f43-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210804.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "0eed58578f9ef55b5131785c0b83bf93",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "rewardWaitTime": "PT5S",
+        "defaultReward": 0,
+        "rewardAggregation": "earliest",
+        "explorationPercentage": 0.200000003,
+        "modelExportFrequency": "PT5M",
+        "logRetentionDays": 90,
+        "lastConfigurationEditDate": "2021-08-04T21:21:12Z",
+        "learningMode": "Online",
+        "isAutoOptimizationEnabled": false,
+        "autoOptimizationFrequency": "P28D",
+        "autoOptimizationStartDate": "2021-08-18T21:43:46Z"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "0468cc1c-3f68-4467-9583-15a52b966fea",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "350",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Aug 2021 21:21:13 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "208"
+      },
+      "ResponseBody": {
+        "rewardWaitTime": "PT5S",
+        "defaultReward": 0.0,
+        "rewardAggregation": "earliest",
+        "explorationPercentage": 0.2,
+        "modelExportFrequency": "PT5M",
+        "logRetentionDays": 90,
+        "lastConfigurationEditDate": "2021-08-04T21:21:12",
+        "learningMode": "Online",
+        "isAutoOptimizationEnabled": false,
+        "autoOptimizationFrequency": "P28D",
+        "autoOptimizationStartDate": "2021-08-18T21:43:46Z"
+      }
+    },
+    {
+      "RequestUri": "https://personalizersdktestrecordermultislot.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/policy",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "107",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-1cf300e3aef67242837cd6aad6fe3e93-dcc582c016aee445-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210804.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "46967a8ec20f996bcabe6ce28fff630d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "multiSlot",
+        "arguments": "--ccb_explore_adf --epsilon 0.2 --power_t 0 -l 0.001 --cb_type mtr -q ::"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "dbd2f20d-878b-40d5-bfb5-9071d7755e47",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "130",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Aug 2021 21:21:14 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "4"
+      },
+      "ResponseBody": {
+        "name": "12101140dd64410ea42cd6a086ec9b5b",
+        "arguments": "--ccb_explore_adf --epsilon 0.2 --power_t 0 -l 0.001 --cb_type mtr -q ::"
+      }
+    },
+    {
+      "RequestUri": "https://personalizersdktestrecordermultislot.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/service",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-721d331b0bfe7f45b3a38609d4012c22-d2e3dd66623e254a-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210804.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "03c2d0d74575de781345338013d66cc9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d9952cd3-7142-4aa5-be45-7e433d166787",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "349",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Aug 2021 21:21:14 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "4"
+      },
+      "ResponseBody": {
+        "rewardWaitTime": "PT5S",
+        "defaultReward": 0.0,
+        "rewardAggregation": "earliest",
+        "explorationPercentage": 0.2,
+        "modelExportFrequency": "PT5M",
+        "logRetentionDays": 90,
+        "lastConfigurationEditDate": "2021-08-04T21:21:12",
+        "learningMode": "Online",
+        "isAutoOptimizationEnabled": false,
+        "autoOptimizationFrequency": "P28D",
+        "autoOptimizationStartDate": "2021-08-18T21:43:46"
+      }
+    },
+    {
+      "RequestUri": "https://personalizersdktestrecordermultislot.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/events/123456789/reward",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "44",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2cbb29c8a4ae664e890e981314735cac-d14080be2633d24c-00",
-        "User-Agent": "azsdk-net-AI.Personalizer/1.1.0-alpha.20210727.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "b836fd252b61d2dee6d1031a5c635416",
+        "traceparent": "00-521501d9107cb746821a82f3c90c0a80-82ad0939bf9c8d4b-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210804.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "f45008beb3429522ed5444df23796652",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,26 +253,26 @@
       },
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "067a024e-89a9-4a75-a351-f53b53b9c217",
+        "apim-request-id": "4aa28bcc-f448-46a0-b9b5-877f984565b5",
         "Cache-Control": [
           "no-cache",
           "no-store",
           "must-revalidate"
         ],
         "Content-Length": "0",
-        "Date": "Tue, 27 Jul 2021 21:03:36 GMT",
+        "Date": "Wed, 04 Aug 2021 21:21:14 GMT",
         "Expires": "0",
         "pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "3"
+        "x-envoy-upstream-service-time": "230"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "PERSONALIZER_API_KEY": "Sanitized",
-    "PERSONALIZER_ENDPOINT": "https://sdktestrecorder.cognitiveservices.azure.com/",
+    "PERSONALIZER_API_KEY_MULTI_SLOT": "Sanitized",
+    "PERSONALIZER_ENDPOINT_MULTI_SLOT": "https://personalizersdktestrecordermultislot.cognitiveservices.azure.com/",
     "RandomSeed": "1617717941"
   }
 }

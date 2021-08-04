@@ -16,22 +16,21 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task GetModel()
         {
-            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
-            Stream stream = await client.GetPersonalizerModelAsync();
-            Assert.AreNotEqual(-1 , stream.ReadByte());
+            PersonalizerAdministrationClient client = await GetPersonalizerAdministrationClientAsync();
+            await client.GetPersonalizerModelAsync();
         }
 
         [Test]
         public async Task ResetModel()
         {
-            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
+            PersonalizerAdministrationClient client = await GetPersonalizerAdministrationClientAsync(isSingleSlot: true);
             await client.ResetPersonalizerModelAsync();
         }
 
         [Test]
         public async Task GetModelProperties()
         {
-            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
+            PersonalizerAdministrationClient client = await GetPersonalizerAdministrationClientAsync(isSingleSlot: true);
             PersonalizerModelProperties modelProperties = await client.GetPersonalizerModelPropertiesAsync();
             Assert.True(modelProperties.CreationTime != null);
             Assert.True(modelProperties.LastModifiedTime != null);

@@ -37,9 +37,9 @@
       "ResponseBody": []
     }
   ],
-  "Variables": {
-    "PERSONALIZER_API_KEY": "Sanitized",
-    "PERSONALIZER_ENDPOINT": "https://autooptsdktest.cognitiveservices.azure.com/",
-    "RandomSeed": "1745087283"
-  }
+    "Variables": {
+        "PERSONALIZER_API_KEY_SINGLE_SLOT": "Sanitized",
+        "PERSONALIZER_ENDPOINT_SINGLE_SLOT": "https://autooptsdktest.cognitiveservices.azure.com/",
+        "RandomSeed": "1745087283"
+    }
 }

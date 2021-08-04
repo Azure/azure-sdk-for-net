@@ -15,14 +15,14 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task Reward()
         {
-            PersonalizerClient client = GetPersonalizerClient();
+            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true);
             await client.RewardAsync("123456789", (float)0.5);
         }
 
         [Test]
         public async Task Activate()
         {
-            PersonalizerClient client = GetPersonalizerClient();
+            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true);
             await client.ActivateAsync("123456789");
         }
     }

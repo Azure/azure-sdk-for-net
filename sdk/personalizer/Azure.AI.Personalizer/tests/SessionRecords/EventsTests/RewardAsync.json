@@ -1,54 +1,133 @@
 {
   "Entries": [
     {
-        "RequestUri": "/personalizer/v1.1-preview.1/events/123456789/reward",
-        "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2V2ZW50cy8xMjM0NTY3ODkvcmV3YXJk",
-        "RequestMethod": "POST",
-        "RequestBody": "{\r\n  \"value\": 0.5\r\n}",
-        "RequestHeaders": {
-            "Ocp-Apim-Subscription-Key": [
-                "000"
-            ],
-            "User-Agent": [
-                "FxVersion/4.6.26614.01",
-                "OSName/Windows",
-                "OSVersion/Microsoft.Windows.10.0.17763.",
-                "Microsoft.Azure.AI.Personalizer.PersonalizerClient/0.8.0.0"
-            ],
-            "Content-Type": [
-                "application/json; charset=utf-8"
-            ],
-            "Content-Length": [
-                "20"
-            ]
-        },
-        "ResponseHeaders": {
-            "Cache-Control": [
-                "no-store, must-revalidate, no-cache"
-            ],
-            "Date": [
-                "Sat, 27 Apr 2019 04:31:47 GMT"
-            ],
-            "Pragma": [
-                "no-cache"
-            ],
-            "Server": [
-                "Kestrel"
-            ],
-            "Set-Cookie": [
-                "pid=f8cbf86992b34c2eb8bdadf7abe66628; expires=Thu, 24 Oct 2019 04:31:47 GMT; domain=; path=/; samesite=lax"
-            ],
-            "Expires": [
-                "0"
-            ]
-        },
-        "ResponseBody": "",
-        "StatusCode": 204
+      "RequestUri": "https://personalizersdktestrecordermultislot.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/service",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-5252c6c82e49344e8e23df3c604d4dea-89216b1ff76ffe4f-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210804.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "89685e25d6f022e471b14627f0f03f6d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ae48c33f-f68d-429f-b118-6e83831356cd",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "348",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Aug 2021 21:10:27 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
+      },
+      "ResponseBody": {
+        "rewardWaitTime": "PT5S",
+        "defaultReward": 0.0,
+        "rewardAggregation": "earliest",
+        "explorationPercentage": 0.2,
+        "modelExportFrequency": "PT5M",
+        "logRetentionDays": 90,
+        "lastConfigurationEditDate": "2021-08-04T17:51:15",
+        "learningMode": "Online",
+        "isAutoOptimizationEnabled": true,
+        "autoOptimizationFrequency": "P28D",
+        "autoOptimizationStartDate": "2021-08-18T21:43:46"
+      }
+    },
+    {
+      "RequestUri": "https://personalizersdktestrecordermultislot.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/service",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-a2a58d4004d78541ac6719c04ae623a0-937d283342ac164a-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210804.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "c50f93eaf1cafd6f934a1cec1f103dc3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a1c94089-3204-48d3-a04d-8e56a2498c4a",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "348",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Aug 2021 21:10:27 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "4"
+      },
+      "ResponseBody": {
+        "rewardWaitTime": "PT5S",
+        "defaultReward": 0.0,
+        "rewardAggregation": "earliest",
+        "explorationPercentage": 0.2,
+        "modelExportFrequency": "PT5M",
+        "logRetentionDays": 90,
+        "lastConfigurationEditDate": "2021-08-04T17:51:15",
+        "learningMode": "Online",
+        "isAutoOptimizationEnabled": true,
+        "autoOptimizationFrequency": "P28D",
+        "autoOptimizationStartDate": "2021-08-18T21:43:46"
+      }
+    },
+    {
+      "RequestUri": "https://personalizersdktestrecordersingleslot.cognitiveservices.azure.com/personalizer/v1.1-preview.1/events/123456789/reward",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "13",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-30fd4c52e79d1847b788203bd6b80b88-ad0fc1b11bb4b043-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210804.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "ca32e3f981b3d8c93a732b5f62988287",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "value": 0.5
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "apim-request-id": "e1612484-dc9d-427e-a968-49e7b01c2c17",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "0",
+        "Date": "Wed, 04 Aug 2021 21:10:28 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "131"
+      },
+      "ResponseBody": []
     }
   ],
-  "Names": {},
-    "Variables": {
-        "PERSONALIZER_API_KEY": "Sanitized",
-        "PERSONALIZER_ENDPOINT": "https://sdktestrecorder.cognitiveservices.azure.com/"
-    }
+  "Variables": {
+    "PERSONALIZER_API_KEY_MULTI_SLOT": "Sanitized",
+    "PERSONALIZER_API_KEY_SINGLE_SLOT": "Sanitized",
+    "PERSONALIZER_ENDPOINT_MULTI_SLOT": "https://personalizersdktestrecordermultislot.cognitiveservices.azure.com/",
+    "PERSONALIZER_ENDPOINT_SINGLE_SLOT": "https://personalizersdktestrecordersingleslot.cognitiveservices.azure.com/",
+    "RandomSeed": "1529909258"
+  }
 }

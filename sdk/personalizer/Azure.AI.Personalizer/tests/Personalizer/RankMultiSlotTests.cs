@@ -74,7 +74,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task RankMultiSlotNullParameters()
         {
-            PersonalizerClient client = GetPersonalizerClient();
+            PersonalizerClient client = await GetPersonalizerClientAsync();
             PersonalizerRankMultiSlotOptions request = new PersonalizerRankMultiSlotOptions(actions, slots);
             // Action
             PersonalizerMultiSlotRankResult response = await client.RankMultiSlotAsync(request);
@@ -93,7 +93,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task RankMultiSlot()
         {
-            PersonalizerClient client = GetPersonalizerClient();
+            PersonalizerClient client = await GetPersonalizerClientAsync();
             string eventId = "sdkTestEventId";
             PersonalizerRankMultiSlotOptions request = new PersonalizerRankMultiSlotOptions(actions, slots, contextFeatures, eventId);
             // Action
@@ -113,7 +113,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task RankMultiSlotNoOptions()
         {
-            PersonalizerClient client = GetPersonalizerClient();
+            PersonalizerClient client = await GetPersonalizerClientAsync();
             // Action
             PersonalizerMultiSlotRankResult response = await client.RankMultiSlotAsync(actions, slots, contextFeatures);
             // Assert

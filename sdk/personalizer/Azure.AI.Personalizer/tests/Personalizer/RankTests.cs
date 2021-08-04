@@ -16,7 +16,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task RankNullParameters()
         {
-            PersonalizerClient client = GetPersonalizerClient();
+            PersonalizerClient client = await GetPersonalizerClientAsync();
             IList<PersonalizerRankableAction> actions = new List<PersonalizerRankableAction>();
             actions.Add
                 (new PersonalizerRankableAction(
@@ -38,7 +38,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task RankServerFeatures()
         {
-            PersonalizerClient client = GetPersonalizerClient();
+            PersonalizerClient client = await GetPersonalizerClientAsync (isSingleSlot: true);
             IList<object> contextFeatures = new List<object>() {
                 new { Features = new { day = "tuesday", time = "night", weather = "rainy" } },
                 new { Features = new { userId = "1234", payingUser = true, favoriteGenre = "documentary", hoursOnSite = 0.12, lastwatchedType = "movie" } }
@@ -73,7 +73,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task RankWithNoOptions()
         {
-            PersonalizerClient client = GetPersonalizerClient();
+            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true);
             IList<object> contextFeatures = new List<object>() {
             new { Features = new { day = "tuesday", time = "night", weather = "rainy" } },
             new { Features = new { userId = "1234", payingUser = true, favoriteGenre = "documentary", hoursOnSite = 0.12, lastwatchedType = "movie" } }
@@ -94,10 +94,6 @@ namespace Azure.AI.Personalizer.Tests
             // Action
             PersonalizerRankResult response = await client.RankAsync(actions, contextFeatures);
             Assert.AreEqual(actions.Count, response.Ranking.Count);
-            for (int i = 0; i < response.Ranking.Count; i++)
-            {
-                Assert.AreEqual(actions[i].Id, response.Ranking[i].Id);
-            }
         }
     }
 }
