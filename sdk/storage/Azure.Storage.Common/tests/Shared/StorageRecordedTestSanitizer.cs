@@ -28,7 +28,7 @@ namespace Azure.Storage.Test.Shared
                 query[SignatureQueryName] = SanitizeValue;
                 builder.Query = query.ToString();
             }
-            return builder.Uri.ToString();
+            return builder.Uri.AbsoluteUri;
         }
 
         public string SanitizeQueryParameters(string queryParameters)

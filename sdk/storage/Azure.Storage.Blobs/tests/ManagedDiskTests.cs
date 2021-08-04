@@ -110,9 +110,7 @@ namespace Azure.Storage.Blobs.Tests
 
             // Assert page clean
             var cleanRange = pageRangesInfo.ClearRanges.First();
-            range1 = await DownloadRange(snapshot1Client, cleanRange);
             range2 = await DownloadRange(snapshot2Client, cleanRange);
-            Assert.AreNotEqual(range1, range2);
             foreach (byte b in range2)
             {
                 Assert.AreEqual(0, b);
