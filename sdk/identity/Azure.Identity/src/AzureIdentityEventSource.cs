@@ -11,7 +11,7 @@ using Azure.Core.Diagnostics;
 namespace Azure.Identity
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class AzureIdentityEventSource : EventSource
+    internal sealed class AzureIdentityEventSource : AzureEventSource
     {
         private const string EventSourceName = "Azure-Identity";
 

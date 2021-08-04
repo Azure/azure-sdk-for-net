@@ -1,5 +1,11 @@
 # Release History
 
+## 1.4.1 (2021-08-04)
+
+### Fixes and improvements
+
+- Fixed issue resulting in duplicate event source names when executing in Azure Functions
+
 ## 1.4.0 (2021-05-12)
 
 ### New Features
