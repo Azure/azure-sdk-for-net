@@ -201,14 +201,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
             return this;
         }
 
-        private DigitalTwinsQueryBuilder<T> Where(string filter)
-        {
-            _clauses ??= new List<string>();
-            _clauses.Add(filter);
-
-            return this;
-        }
-
         /// <summary>
         /// An alternative way to add a WHERE clause to the query by directly providing a string that contains the condition.
         /// </summary>
@@ -260,7 +252,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
             }
 
             string text = string.Format(formatProvider, filter.Format, args);
-            return Where(text);
+            return WhereCustom(text);
         }
 
         /// <summary>
@@ -280,7 +272,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder.Linq
 
             query = QueryFilterVisitor.Translate(l.Body);
 
-            return Where(query);
+            return WhereCustom(query);
 
             // Prevent the partial evaluator from trying to compile calls to DigitalTwinsFunctions
             // into constants since they're not implemented on the client
