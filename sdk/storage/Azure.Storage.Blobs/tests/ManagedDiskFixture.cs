@@ -24,6 +24,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
     {
         public static ManagedDiskFixture Instance { get; private set; }
 
+        private readonly BlobTestEnvironment _environment = new BlobTestEnvironment();
         private ManagedDiskConfiguration _config;
         private ComputeManagementClient _computeClient;
         private Snapshot _snapshot1;
@@ -35,7 +36,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         [OneTimeSetUp]
         public async Task Setup()
         {
-            if (TestEnvironment.GlobalTestMode != RecordedTestMode.Playback)
+            if (_environment.Mode != RecordedTestMode.Playback)
             {
                 _config = TestConfigurations.DefaultTargetManagedDisk;
 
@@ -63,7 +64,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         [OneTimeTearDown]
         public async Task Cleanup()
         {
-            if (TestEnvironment.GlobalTestMode != RecordedTestMode.Playback)
+            if (_environment.Mode != RecordedTestMode.Playback)
             {
                 await RevokeAccess(_snapshot1);
                 await RevokeAccess(_snapshot2);
