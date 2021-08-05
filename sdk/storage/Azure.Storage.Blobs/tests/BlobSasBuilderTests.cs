@@ -566,12 +566,12 @@ namespace Azure.Storage.Blobs.Test
                 SasQueryParametersInternals.DefaultSasVersionInternal,
                 resource,
                 includeSnapshot ? Snapshot : null,
+                constants.Sas.EncryptionScope,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,
                 constants.Sas.ContentLanguage,
-                constants.Sas.ContentType,
-                constants.Sas.EncryptionScope);
+                constants.Sas.ContentType);
 
             return StorageSharedKeyCredentialInternals.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }
@@ -611,12 +611,12 @@ namespace Azure.Storage.Blobs.Test
                 SasQueryParametersInternals.DefaultSasVersionInternal,
                 resource,
                 includeSnapshot ? Snapshot : null,
+                constants.Sas.EncryptionScope,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,
                 constants.Sas.ContentLanguage,
-                constants.Sas.ContentType,
-                constants.Sas.EncryptionScope);
+                constants.Sas.ContentType);
 
             return ComputeHMACSHA256(constants.Sas.KeyValue, stringToSign);
         }

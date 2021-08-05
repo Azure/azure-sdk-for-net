@@ -430,6 +430,7 @@ namespace Azure.Storage.Sas
                 Version,
                 Resource,
                 Snapshot ?? BlobVersionId,
+                EncryptionScope,
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,
