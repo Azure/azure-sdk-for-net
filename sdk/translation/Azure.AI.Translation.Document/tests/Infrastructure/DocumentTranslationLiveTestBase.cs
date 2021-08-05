@@ -34,6 +34,18 @@ namespace Azure.AI.Translation.Document.Tests
             new TestDocument("File2.txt", "Second english test file"),
         };
 
+        public List<TestDocument> CreateDummyTestDocuments(int count)
+        {
+            var result = new List<TestDocument>();
+            for (int i = 0; i < count; i++)
+            {
+                var fileName = $"File_{i}.txt";
+                var text = "some random text";
+                result.Add( new TestDocument(fileName, text) );
+            }
+            return result;
+        }
+
         public DocumentTranslationClient GetClient(
             AzureKeyCredential credential = default,
             DocumentTranslationClientOptions options = default,
@@ -62,7 +74,10 @@ namespace Azure.AI.Translation.Document.Tests
 
         public BlobContainerClient GetBlobContainerClient(string containerName)
         {
-            return InstrumentClient(new BlobContainerClient(TestEnvironment.StorageConnectionString, containerName, InstrumentClientOptions(new BlobClientOptions())));
+            return InstrumentClient(new BlobContainerClient(
+                TestEnvironment.StorageConnectionString,
+                containerName,
+                InstrumentClientOptions(new BlobClientOptions(BlobClientOptions.ServiceVersion.V2020_04_08))));
         }
 
         public Uri CreateSourceContainer(List<TestDocument> documents)

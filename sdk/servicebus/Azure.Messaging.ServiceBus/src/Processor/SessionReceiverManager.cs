@@ -25,7 +25,6 @@ namespace Azure.Messaging.ServiceBus
     {
         private int _threadCount;
         private readonly SemaphoreSlim _concurrentAcceptSessionsSemaphore;
-        private readonly int _maxCallsPerSession;
         private readonly ServiceBusSessionReceiverOptions _sessionReceiverOptions;
         private readonly string _sessionId;
         private readonly bool _keepOpenOnReceiveTimeout;
@@ -45,12 +44,10 @@ namespace Azure.Messaging.ServiceBus
             string sessionId,
             SemaphoreSlim concurrentAcceptSessionsSemaphore,
             EntityScopeFactory scopeFactory,
-            int maxCallsPerSession,
             bool keepOpenOnReceiveTimeout)
             : base(sessionProcessor.InnerProcessor, scopeFactory)
         {
             _concurrentAcceptSessionsSemaphore = concurrentAcceptSessionsSemaphore;
-            _maxCallsPerSession = maxCallsPerSession;
             _sessionReceiverOptions = new ServiceBusSessionReceiverOptions
             {
                 ReceiveMode = sessionProcessor.InnerProcessor.Options.ReceiveMode,
@@ -72,7 +69,7 @@ namespace Azure.Messaging.ServiceBus
                 // If a receive call timed out for this session, avoid adding more threads
                 // if we don't intend to leave the receiver open on receive timeouts. This
                 // will help ensure other sessions get a chance to be processed.
-                if (_threadCount >= _maxCallsPerSession ||
+                if (_threadCount >= _sessionProcessor.MaxConcurrentCallsPerSession ||
                     (_receiveTimeout && !_keepOpenOnReceiveTimeout) ||
                     // If cancellation was requested but the receiver has not been closed yet,
                     // do not initiate new processing.
@@ -401,6 +398,11 @@ namespace Azure.Messaging.ServiceBus
         internal void ReleaseSession()
         {
             _sessionCancellationSource.Cancel();
+        }
+
+        internal void CancelSession()
+        {
+            _sessionCancellationSource?.Cancel();
         }
     }
 }

@@ -49,7 +49,7 @@
   <PropertyGroup>
     <OriginalReadmeMdPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))README.md</OriginalReadmeMdPath>
     <ProcessedReadmeMdPath>$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
-    <EnableNuGetReadmeMd Condition="'$(IsDesignTimeBuild)' == 'false' and Exists('$(OriginalReadmeMdPath)')">true</EnableNuGetReadmeMd>
+    <EnableNuGetReadmeMd Condition="'$(DesignTimeBuild)' != 'true' and Exists('$(OriginalReadmeMdPath)')">true</EnableNuGetReadmeMd>
     <PackageReadmeFile Condition="'$(EnableNuGetReadmeMd)' == 'true'">README.md</PackageReadmeFile>
   </PropertyGroup>
 
