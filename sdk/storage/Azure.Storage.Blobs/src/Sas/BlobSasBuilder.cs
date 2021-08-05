@@ -177,6 +177,11 @@ namespace Azure.Storage.Sas
         public string CorrelationId { get; set; }
 
         /// <summary>
+        /// Optional.  Encryption scope to use when sending requests authorized with this SAS URI.
+        /// </summary>
+        public string EncryptionScope { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
         /// class.
         /// </summary>
@@ -355,7 +360,8 @@ namespace Azure.Storage.Sas
                 ContentDisposition,
                 ContentEncoding,
                 ContentLanguage,
-                ContentType);
+                ContentType,
+                EncryptionScope);
 
             var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
 
@@ -375,7 +381,8 @@ namespace Azure.Storage.Sas
                 contentDisposition: ContentDisposition,
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
-                contentType: ContentType);
+                contentType: ContentType,
+                encryptionScope: EncryptionScope);
             return p;
         }
 
@@ -427,7 +434,8 @@ namespace Azure.Storage.Sas
                 ContentDisposition,
                 ContentEncoding,
                 ContentLanguage,
-                ContentType);
+                ContentType,
+                EncryptionScope);
 
             var signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
@@ -455,7 +463,8 @@ namespace Azure.Storage.Sas
                 contentLanguage: ContentLanguage,
                 contentType: ContentType,
                 authorizedAadObjectId: PreauthorizedAgentObjectId,
-                correlationId: CorrelationId);
+                correlationId: CorrelationId,
+                encryptionScope: EncryptionScope);
             return p;
         }
 
@@ -581,7 +590,8 @@ namespace Azure.Storage.Sas
                 ContentLanguage = originalBlobSasBuilder.ContentLanguage,
                 ContentType = originalBlobSasBuilder.ContentType,
                 PreauthorizedAgentObjectId = originalBlobSasBuilder.PreauthorizedAgentObjectId,
-                CorrelationId = originalBlobSasBuilder.CorrelationId
+                CorrelationId = originalBlobSasBuilder.CorrelationId,
+                EncryptionScope = originalBlobSasBuilder.EncryptionScope
             };
     }
 }
