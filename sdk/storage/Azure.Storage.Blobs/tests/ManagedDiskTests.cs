@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test.Shared;
@@ -26,18 +25,8 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         [SetUp]
         public void Setup()
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                snapshot1SASUri = new Uri(Recording.GetVariable(nameof(snapshot1SASUri), ""));
-                snapshot2SASUri = new Uri(Recording.GetVariable(nameof(snapshot2SASUri), ""));
-            }
-            else
-            {
-                snapshot1SASUri = ManagedDiskFixture.Instance.Snapshot1SASUri;
-                snapshot2SASUri = ManagedDiskFixture.Instance.Snapshot2SASUri;
-                Recording.SetVariable(nameof(snapshot1SASUri), Sanitizer.SanitizeUri(snapshot1SASUri.AbsoluteUri));
-                Recording.SetVariable(nameof(snapshot2SASUri), Sanitizer.SanitizeUri(snapshot2SASUri.AbsoluteUri));
-            }
+            snapshot1SASUri = new Uri(Recording.GetVariable(nameof(snapshot1SASUri), ManagedDiskFixture.Instance.Snapshot1SASUri?.AbsoluteUri, v => Sanitizer.SanitizeUri(v)));
+            snapshot2SASUri = new Uri(Recording.GetVariable(nameof(snapshot2SASUri), ManagedDiskFixture.Instance.Snapshot2SASUri?.AbsoluteUri, v => Sanitizer.SanitizeUri(v)));
         }
 
         [Test]

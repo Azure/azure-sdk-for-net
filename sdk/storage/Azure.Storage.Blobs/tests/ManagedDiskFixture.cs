@@ -57,9 +57,9 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
 
                 Snapshot1SASUri = await GrantAccess(_snapshot1);
                 Snapshot2SASUri = await GrantAccess(_snapshot2);
-
-                Instance = this;
             }
+
+            Instance = this;
         }
 
         public override async Task TearDown()
