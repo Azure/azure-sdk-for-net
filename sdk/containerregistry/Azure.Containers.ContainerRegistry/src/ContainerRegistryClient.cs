@@ -72,6 +72,11 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
+            if (options.Audience == null)
+            {
+                throw new InvalidOperationException("ContainerRegistryClientOptions.Audience property must be set to initialize ContainerRegistryClient.");
+            }
+
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
             _clientDiagnostics = new ClientDiagnostics(options);
