@@ -932,7 +932,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Returns a checkpoint for the Event Hub, consumer group, and identifier of the partition associated with the
         ///   event processor instance, so that processing for a given partition can be properly initialized.
         ///   The default implementation calls the <see cref="ListCheckpointsAsync"/> and filters results by <see cref="EventProcessorCheckpoint.PartitionId"/>.
-        ///   It's recommended that this method is overriden in <see cref="EventProcessor{TPartition}"/> implementations to achieve an optimal performance.
+        ///   It's recommended that this method is overridden in <see cref="EventProcessor{TPartition}"/> implementations to achieve an optimal performance.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition for which to retrieve the checkpoint.</param>

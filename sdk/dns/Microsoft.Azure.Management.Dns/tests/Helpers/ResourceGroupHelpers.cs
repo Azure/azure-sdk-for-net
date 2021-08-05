@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
         ///  using the TestSupport Infrastructure
         /// </summary>
         /// <param name="handler"></param>
-        /// <returns>A netowrk management client, created from the current context (environment variables)</returns>
+        /// <returns>A network management client, created from the current context (environment variables)</returns>
         public static NetworkManagementClient GetNetworkClient(
             MockContext context,
             RecordedDelegatingHandler handler)

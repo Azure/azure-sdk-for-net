@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="clientGroupInfo">The information of AAD security
         /// group.</param>
         /// <param name="configurationOverride">The configurations that need to
-        /// be overriden.</param>
+        /// be overridden.</param>
         public KafkaRestProperties(ClientGroupInfo clientGroupInfo = default(ClientGroupInfo), IDictionary<string, string> configurationOverride = default(IDictionary<string, string>))
         {
             ClientGroupInfo = clientGroupInfo;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public ClientGroupInfo ClientGroupInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the configurations that need to be overriden.
+        /// Gets or sets the configurations that need to be overridden.
         /// </summary>
         [JsonProperty(PropertyName = "configurationOverride")]
         public IDictionary<string, string> ConfigurationOverride { get; set; }
