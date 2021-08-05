@@ -220,12 +220,12 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 await RaiseExceptionReceived(
-                        new ProcessErrorEventArgs(
-                            exception,
-                            ServiceBusErrorSource.CloseSession,
-                            Processor.FullyQualifiedNamespace,
-                            Processor.EntityPath,
-                            cancellationToken))
+                    new ProcessErrorEventArgs(
+                        exception,
+                        ServiceBusErrorSource.CloseSession,
+                        Processor.FullyQualifiedNamespace,
+                        Processor.EntityPath,
+                        cancellationToken))
                     .ConfigureAwait(false);
             }
             finally
