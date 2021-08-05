@@ -135,7 +135,7 @@ namespace Azure.Storage.DataMovement
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
             BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(sourceLocalPath, destinationClient, uploadOptions, token);
-            _toScanQueue.Enqueue(transferJob);
+            _jobsToProcess.Enqueue(transferJob);
 
             // TODO; remove stub
             return new StorageTransferResults();
@@ -168,6 +168,23 @@ namespace Azure.Storage.DataMovement
 
             // TODO; remove stub
             return new StorageTransferResults();
+        }
+
+        /// <summary>
+        /// Pauses transfers that are currently being processed.
+        /// Does not allow any other transfer start.
+        /// </summary>
+        /// TODO: Returns actual object, or at least in a designated log
+        /// file we have a place where people can continue transfers
+        public async Task StartTransfersAsync()
+        {
+            TaskThrottler throttler = new TaskThrottler(2);
+            while (_jobsToProcess.Count > 0)
+            {
+                StorageTransferJob job = await _jobsToProcess.DequeueAsync().ConfigureAwait(false);
+                throttler.AddTask(job.GetTransferTask());
+            }
+            await throttler.WaitAsync().ConfigureAwait(false);
         }
 
         /// <summary>

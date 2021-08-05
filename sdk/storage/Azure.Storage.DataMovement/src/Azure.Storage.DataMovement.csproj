@@ -25,6 +25,9 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageSharedSources)Constants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)PathScanner.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)PathScannerFactory.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)TaskThrottler.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

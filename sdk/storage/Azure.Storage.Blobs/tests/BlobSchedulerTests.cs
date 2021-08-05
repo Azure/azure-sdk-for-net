@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.DataMovement;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -198,6 +199,55 @@ namespace Azure.Storage.Blobs.Tests
                 CollectionAssert.Contains(blobs, destName + "/" + lockedChild.Substring(folder.Length + 1).Replace('\\', '/'));
                 CollectionAssert.Contains(blobs, destName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
                 CollectionAssert.Contains(blobs, destName + "/" + lockedSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
+            });
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
+        public async Task TransferManager_UploadTwoDirectories()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobName();
+            BlobDirectoryClient client = test.Container.GetBlobDirectoryClient(dirName);
+
+            string dirTwoName = GetNewBlobName();
+            BlobDirectoryClient clientTwo = test.Container.GetBlobDirectoryClient(dirTwoName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+            string openChild = CreateRandomFile(folder);
+            string lockedChild = CreateRandomFile(folder);
+
+            string openSubfolder = CreateRandomDirectory(folder);
+            string openSubchild = CreateRandomFile(openSubfolder);
+
+            string lockedSubfolder = CreateRandomDirectory(folder);
+            string lockedSubchild = CreateRandomFile(lockedSubfolder);
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+
+            // Act
+            StorageTransferManager manager = new StorageTransferManager();
+            await manager.ScheduleUploadDirectoryAsync(folder, client, options);
+            await manager.ScheduleUploadDirectoryAsync(folder, clientTwo, options);
+
+            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
+                .Select((BlobItem blob) => blob.Name).ToList();
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                CollectionAssert.Contains(blobs, dirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + lockedChild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + lockedSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirTwoName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirTwoName + "/" + lockedChild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirTwoName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirTwoName + "/" + lockedSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
             });
 
             // Cleanup

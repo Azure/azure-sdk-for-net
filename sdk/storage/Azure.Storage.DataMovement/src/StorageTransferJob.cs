@@ -31,6 +31,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public CancellationToken CancellationToken;
 
+        public Func<Task> GetTransferTask()
+        {
+            return () => StartTransferTaskAsync();
+        }
+
         /// <summary>
         /// Create next TransferItem/Task to be processed.
         /// </summary>
