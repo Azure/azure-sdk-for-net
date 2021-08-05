@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
     /// <summary> Client options for ManagedPrivateEndpointsClient. </summary>
     public partial class ManagedPrivateEndpointsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2019_06_01_preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2021_06_01_preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2019-06-01-preview". </summary>
-            V2019_06_01_preview = 1,
+            /// <summary> Service version "2021-06-01-preview". </summary>
+            V2021_06_01_preview = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         {
             Version = version switch
             {
-                ServiceVersion.V2019_06_01_preview => "2019-06-01-preview",
+                ServiceVersion.V2021_06_01_preview => "2021-06-01-preview",
                 _ => throw new NotSupportedException()
             };
         }
