@@ -635,9 +635,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // complete it, we will get a session lock
                     // lost exception. We are still able to verify
                     // that the message will be completed eventually.
-                    var exception = (ServiceBusException)args.Exception;
                     if (!(args.Exception is ServiceBusException sbEx) ||
-                    sbEx.Reason != ServiceBusFailureReason.SessionLockLost)
+                        sbEx.Reason != ServiceBusFailureReason.SessionLockLost)
                     {
                         Assert.Fail(args.Exception.ToString());
                     }
@@ -1518,21 +1517,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ConcurrentDictionary<string, int> sessionDict = new ConcurrentDictionary<string, int>();
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += args =>
-                {
-                    // If the connection drops due to network flakiness
-                    // after the message is received but before we
-                    // complete it, we will get a session lock
-                    // lost exception. We are still able to verify
-                    // that the message will be completed eventually.
-                    var exception = (ServiceBusException)args.Exception;
-                    if (!(args.Exception is ServiceBusException sbEx) ||
-                    sbEx.Reason != ServiceBusFailureReason.SessionLockLost)
-                    {
-                        Assert.Fail(args.Exception.ToString());
-                    }
-                    return Task.CompletedTask;
-                };
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
                 await processor.StartProcessingAsync();
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -1880,7 +1866,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
@@ -1939,14 +1925,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
                 }
-
+                
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += SessionErrorHandler;
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
             }
+        }
+
+        private Task SessionErrorHandler(ProcessErrorEventArgs args)
+        {
+            // If the connection drops due to network flakiness
+            // after the message is received but before we
+            // complete it, we will get a session lock
+            // lost exception. We are still able to verify
+            // that the message will be completed eventually.
+            if (args.Exception is not ServiceBusException { Reason: ServiceBusFailureReason.SessionLockLost })
+            {
+                Assert.Fail(args.Exception.ToString());
+            }
+            return Task.CompletedTask;
         }
     }
 }
