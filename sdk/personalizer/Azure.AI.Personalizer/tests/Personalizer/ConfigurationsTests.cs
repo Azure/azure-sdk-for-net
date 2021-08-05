@@ -14,27 +14,14 @@ namespace Azure.AI.Personalizer.Tests
         }
 
         [Test]
-        public async Task GetServiceConfiguration()
+        public async Task ConfigurationTests()
         {
-            PersonalizerAdministrationClient client = await GetPersonalizerAdministrationClientAsync(isSingleSlot: true);
-            PersonalizerServiceProperties  defaultConfig = await client.GetPersonalizerPropertiesAsync();
-            Assert.AreEqual(TimeSpan.FromSeconds(5), defaultConfig.RewardWaitTime);
-            Assert.AreEqual(TimeSpan.FromMinutes(5), defaultConfig.ModelExportFrequency);
-            Assert.AreEqual(0, defaultConfig.DefaultReward);
-            Assert.AreEqual(0.2, defaultConfig.ExplorationPercentage, 0.00000001);
-            Assert.AreEqual(90, defaultConfig.LogRetentionDays);
-        }
-
-        [Test]
-        public async Task UpdateServiceConfiguration()
-        {
-            PersonalizerAdministrationClient client = await GetPersonalizerAdministrationClientAsync(isSingleSlot: true);
-            TimeSpan newExperimentalUnitDuration = TimeSpan.FromMinutes(1);
-            TimeSpan modelExportFrequency = TimeSpan.FromHours(1);
+            TimeSpan newExperimentalUnitDuration = TimeSpan.FromSeconds(7);
+            TimeSpan modelExportFrequency = TimeSpan.FromMinutes(3);
             double newDefaultReward = 1.0;
             string newRewardFuntion = "average";
             float newExplorationPercentage = 0.2f;
-            var config = new PersonalizerServiceProperties (
+            var properties = new PersonalizerServiceProperties(
                 rewardAggregation: newRewardFuntion,
                 modelExportFrequency: modelExportFrequency,
                 defaultReward: (float)newDefaultReward,
@@ -42,18 +29,39 @@ namespace Azure.AI.Personalizer.Tests
                 explorationPercentage: newExplorationPercentage,
                 logRetentionDays: int.MaxValue
             );
-            PersonalizerServiceProperties  result = await client.UpdatePersonalizerPropertiesAsync(config);
-            Assert.AreEqual(config.DefaultReward, result.DefaultReward);
-            Assert.True(Math.Abs(config.ExplorationPercentage - result.ExplorationPercentage) < 1e-3);
-            Assert.AreEqual(config.ModelExportFrequency, result.ModelExportFrequency);
-            Assert.AreEqual(config.RewardAggregation, result.RewardAggregation);
-            Assert.AreEqual(config.RewardWaitTime, result.RewardWaitTime);
+            PersonalizerAdministrationClient client = GetAdministrationClient(isSingleSlot: true);
+            await UpdateProperties(client, properties);
+            await GetProperties(client, properties);
+            await UpdateAndGetPolicy(client);
+            await ResetPolicy(client);
         }
 
-        [Test]
-        public async Task UpdateAndGetPolicy()
+        private async Task GetProperties(PersonalizerAdministrationClient client, PersonalizerServiceProperties properties)
         {
-            PersonalizerAdministrationClient client = await GetPersonalizerAdministrationClientAsync(isSingleSlot: true);
+            PersonalizerServiceProperties result = await client.GetPersonalizerPropertiesAsync();
+            Assert.AreEqual(properties.DefaultReward, result.DefaultReward);
+            Assert.True(Math.Abs(properties.ExplorationPercentage - result.ExplorationPercentage) < 1e-3);
+            Assert.AreEqual(properties.ModelExportFrequency, result.ModelExportFrequency);
+            Assert.AreEqual(properties.RewardAggregation, result.RewardAggregation);
+            Assert.AreEqual(properties.RewardWaitTime, result.RewardWaitTime);
+        }
+
+        private async Task UpdateProperties(PersonalizerAdministrationClient client, PersonalizerServiceProperties properties)
+        {
+            PersonalizerServiceProperties result = await client.UpdatePersonalizerPropertiesAsync(properties);
+            Assert.AreEqual(properties.DefaultReward, result.DefaultReward);
+            Assert.True(Math.Abs(properties.ExplorationPercentage - result.ExplorationPercentage) < 1e-3);
+            Assert.AreEqual(properties.ModelExportFrequency, result.ModelExportFrequency);
+            Assert.AreEqual(properties.RewardAggregation, result.RewardAggregation);
+            Assert.AreEqual(properties.RewardWaitTime, result.RewardWaitTime);
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            {
+                await Task.Delay(60000);
+            }
+        }
+
+        private async Task UpdateAndGetPolicy(PersonalizerAdministrationClient client)
+        {
             var newPolicy = new PersonalizerPolicy(
                 name: "app1",
                 arguments: "--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2"
@@ -65,10 +73,8 @@ namespace Azure.AI.Personalizer.Tests
             Assert.AreEqual(newPolicy.Arguments, policy.Arguments);
         }
 
-        [Test]
-        public async Task ResetPolicy()
+        private async Task ResetPolicy(PersonalizerAdministrationClient client)
         {
-            PersonalizerAdministrationClient client = await GetPersonalizerAdministrationClientAsync(isSingleSlot: true);
             PersonalizerPolicy policy = await client.ResetPersonalizerPolicyAsync();
             Assert.AreEqual("--cb_explore_adf --epsilon 0.2 --power_t 0 -l 0.001 --cb_type mtr -q ::",
             policy.Arguments);

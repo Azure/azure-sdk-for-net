@@ -16,7 +16,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task RankNullParameters()
         {
-            PersonalizerClient client = await GetPersonalizerClientAsync();
+            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: true);
             IList<PersonalizerRankableAction> actions = new List<PersonalizerRankableAction>();
             actions.Add
                 (new PersonalizerRankableAction(

@@ -22,12 +22,14 @@ namespace Azure.AI.Personalizer.Tests
         {
             string endpoint = isSingleSlot ? TestEnvironment.SingleSlotEndpoint : TestEnvironment.MultiSlotEndpoint;
             string apiKey = isSingleSlot ? TestEnvironment.SingleSlotApiKey : TestEnvironment.MultiSlotApiKey;
-            PersonalizerAdministrationClient adminClient = await GetPersonalizerAdministrationClientAsync(false);
-            if (! isSingleSlot)
+            PersonalizerAdministrationClient adminClient = GetAdministrationClient(isSingleSlot);
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
             {
-                await EnableMultiSlot(adminClient);
+                if (!isSingleSlot)
+                {
+                    await EnableMultiSlot(adminClient);
+                }
             }
-            await SetTestInstanceProperties(adminClient);
             var credential = new AzureKeyCredential(apiKey);
             var options = InstrumentClientOptions(new PersonalizerClientOptions());
             PersonalizerClient personalizerClient = new PersonalizerClient(new Uri(endpoint), credential, options);
@@ -35,7 +37,7 @@ namespace Azure.AI.Personalizer.Tests
             return personalizerClient;
         }
 
-        protected async Task<PersonalizerAdministrationClient> GetPersonalizerAdministrationClientAsync(bool isSingleSlot = false, bool shouldSetProperties = true)
+        protected PersonalizerAdministrationClient GetAdministrationClient(bool isSingleSlot = false)
         {
             string endpoint = isSingleSlot ? TestEnvironment.SingleSlotEndpoint : TestEnvironment.MultiSlotEndpoint;
             string apiKey = isSingleSlot ? TestEnvironment.SingleSlotApiKey : TestEnvironment.MultiSlotApiKey;
@@ -43,29 +45,19 @@ namespace Azure.AI.Personalizer.Tests
             var options = InstrumentClientOptions(new PersonalizerClientOptions());
             PersonalizerAdministrationClient personalizerAdministrationClient = new PersonalizerAdministrationClient(new Uri(endpoint), credential, options);
             personalizerAdministrationClient = InstrumentClient(personalizerAdministrationClient);
-            if (shouldSetProperties)
-            {
-                await SetTestInstanceProperties(personalizerAdministrationClient);
-            }
             return personalizerAdministrationClient;
         }
 
         private async Task EnableMultiSlot(PersonalizerAdministrationClient adminClient)
         {
             PersonalizerServiceProperties properties = await adminClient.GetPersonalizerPropertiesAsync();
-            properties.IsAutoOptimizationEnabled = false;
-            await adminClient.UpdatePersonalizerPropertiesAsync(properties);
-            await adminClient.UpdatePersonalizerPolicyAsync(new PersonalizerPolicy("multiSlot", "--ccb_explore_adf --epsilon 0.2 --power_t 0 -l 0.001 --cb_type mtr -q ::"));
-        }
-
-        private async Task SetTestInstanceProperties(PersonalizerAdministrationClient adminClient)
-        {
-            PersonalizerServiceProperties properties = await adminClient.GetPersonalizerPropertiesAsync();
-            TimeSpan eud = new TimeSpan(hours: 0, minutes: 0, seconds: 5);
-            if (properties.RewardWaitTime != eud)
+            if (properties.IsAutoOptimizationEnabled == true)
             {
-                properties.RewardWaitTime = eud;
+                properties.IsAutoOptimizationEnabled = false;
                 await adminClient.UpdatePersonalizerPropertiesAsync(properties);
+                await adminClient.UpdatePersonalizerPolicyAsync(new PersonalizerPolicy("multiSlot", "--ccb_explore_adf --epsilon 0.2 --power_t 0 -l 0.001 --cb_type mtr -q ::"));
+                //sleep 60 seconds to allow setting to propagte
+                await Task.Delay(30000);
             }
         }
     }
