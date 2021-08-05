@@ -66,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 links,
                 startTime: DateTime.UtcNow);
 
-            string expectedMSlinks = $"[{{\"operation_Id\":\"{activityLink.Context.TraceId}\",\"id\":\"{activityLink.Context.SpanId}\"}}]";
+            string expectedMSlinks = GetExpectedMSlinks(links);
             var telemetryPartBRequestData = TelemetryPartB.GetRequestData(activity);
 
             Assert.True(telemetryPartBRequestData.Properties.TryGetValue(msLinks, out var actualMSlinks));
@@ -107,7 +107,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 links,
                 startTime: DateTime.UtcNow);
 
-            string expectedMSlinks = $"[{{\"operation_Id\":\"{activityLink.Context.TraceId}\",\"id\":\"{activityLink.Context.SpanId}\"}}]";
+            string expectedMSlinks = GetExpectedMSlinks(links);
             var telemetryPartBRemoteDependencyData = TelemetryPartB.GetRemoteDependencyData(activity);
 
             Assert.True(telemetryPartBRemoteDependencyData.Properties.TryGetValue(msLinks, out var actualMSlinks));
@@ -120,9 +120,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             List<ActivityLink> links = new List<ActivityLink>();
 
+            int numberOfLinks = 150; //arbitrary number > 100
+            int maxLinksAllowed = 100;
             int maxLength = 8192;
 
-            for (int i = 0; i < maxLength; i++)
+            for (int i = 0; i < numberOfLinks; i++)
             {
                 ActivityLink activityLink = new ActivityLink(new ActivityContext(
                 ActivityTraceId.CreateRandom(),
@@ -130,6 +132,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 ActivityTraceFlags.None), null);
                 links.Add(activityLink);
             }
+
+            string expectedMSlinks = GetExpectedMSlinks(links.GetRange(0, maxLinksAllowed));
 
             using var activity = activitySource.StartActivity(
                 ActivityName,
@@ -141,18 +145,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             // Only checking dependency here. The flow will be same for other telemetry types.
             var telemetryPartBRemoteDependencyData = TelemetryPartB.GetRemoteDependencyData(activity);
-
             Assert.True(telemetryPartBRemoteDependencyData.Properties.TryGetValue(msLinks, out var actualMSlinks));
+            // Check for valid JSON string
             try
             {
                 JsonDocument document = JsonDocument.Parse(actualMSlinks);
-                Assert.Equal(1, 1);
             }
             catch (Exception)
             {
-                Assert.Equal(0, 1);
+                Assert.True(1 == 0);
             }
             Assert.True(actualMSlinks.Length <= maxLength);
+            Assert.Equal(actualMSlinks, expectedMSlinks);
         }
 
         [Fact]
@@ -161,7 +165,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             List<ActivityLink> links = new List<ActivityLink>();
 
-            int maxLinks = 107; // based on assumption that traceId and SpanId will be of fixed length 32 and 16 respectively.
+            int maxLinks = 100;
             int maxLength = 8192;
 
             for (int i = 0; i < maxLinks; i++)
@@ -187,14 +191,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             var telemetryPartBRemoteDependencyData = TelemetryPartB.GetRemoteDependencyData(activity);
 
             Assert.True(telemetryPartBRemoteDependencyData.Properties.TryGetValue(msLinks, out var actualMSlinks));
+            // Check for valid JSON string
             try
             {
                 JsonDocument document = JsonDocument.Parse(actualMSlinks);
-                Assert.Equal(1, 1);
             }
             catch (Exception)
             {
-                Assert.Equal(0, 1);
+                Assert.True(1 == 0);
             }
             Assert.True(actualMSlinks.Length <= maxLength);
             Assert.Equal(expectedMslinks, actualMSlinks);

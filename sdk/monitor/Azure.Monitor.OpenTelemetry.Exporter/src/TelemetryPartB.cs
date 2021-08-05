@@ -132,8 +132,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private static void AddActivityLinksToPartCTags(IEnumerable<ActivityLink> links, ref AzMonList PartCTags)
         {
             string msLinks = "_MS.links";
-            int maxLength = 8192;
-            int prevIndex = 0;
+            // json string length with just one link will be 76 so, max number of links that can fit is 8192/76 = 106. Keeping max at 100.
+            int maxLinksAllowed =100; // todo: define this as constant.
 
             if (links != null && links.Any())
             {
@@ -155,18 +155,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         .Append('\"');
                     linksJson.Append("},");
 
-                    if (linksJson.Length > maxLength)
+                    maxLinksAllowed--;
+                    if (maxLinksAllowed == 0)
                     {
                         break;
                     }
-
-                    prevIndex = linksJson.Length;
-                }
-
-                if (linksJson.Length > maxLength)
-                {
-                    // Remove the link that caused linksJson to exceed maxLength.
-                    linksJson.Remove(prevIndex, linksJson.Length - prevIndex);
                 }
 
                 if (linksJson.Length > 0)
