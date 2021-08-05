@@ -242,17 +242,12 @@ namespace Azure.Core.TestFramework
         /// </summary>
         protected string GetRecordedOptionalVariable(string name, Action<RecordedVariableOptions> options)
         {
-            if (Mode == RecordedTestMode.Playback && IsInRecordedTest)
+            if (Mode == RecordedTestMode.Playback)
             {
                 return GetRecordedValue(name);
             }
 
             string value = GetOptionalVariable(name);
-
-            if (!IsInRecordedTest)
-            {
-                return value;
-            }
 
             if (_recording == null)
             {
@@ -353,7 +348,6 @@ namespace Azure.Core.TestFramework
         {
             _credential = null;
             _recording = recording;
-            IsInRecordedTest = true;
         }
 
         private string GetRecordedValue(string name)
@@ -446,10 +440,5 @@ namespace Azure.Core.TestFramework
                 return disableAutoRecording || GlobalIsRunningInCI;
             }
         }
-
-        /// <summary>
-        /// Indicates if environment is used withing <see cref="RecordedTestBase{TEnvironment}"/>.
-        /// </summary>
-        internal bool IsInRecordedTest { get; set; } = false;
     }
 }

@@ -15,7 +15,6 @@ namespace Azure.Core.TestFramework
         {
             TestEnvironment = new TEnvironment();
             TestEnvironment.Mode = Mode;
-            TestEnvironment.IsInRecordedTest = true;
         }
 
         public override void StartTestRecording()
