@@ -104,7 +104,11 @@ Iterate through the collection of repositories in the registry.
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzurePublicCloud
+    });
 
 // Get the collection of repository names from the registry
 Pageable<string> repositories = client.GetRepositoryNames();
