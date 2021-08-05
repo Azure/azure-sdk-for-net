@@ -17,6 +17,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
+using Azure.Storage.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
@@ -872,6 +873,35 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.Size);
             Assert.AreEqual(0, contentRange.Start);
             Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.End);
+        }
+
+        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        public async Task DownloadWorksWithTransactionalHashing(TransactionalHashAlgorithm algorithm)
+        {
+            var data = GetRandomBuffer(Constants.KB);
+            var mockKey = GetIKeyEncryptionKey();
+            var mockKeyResolver = GetIKeyEncryptionKeyResolver(mockKey.Object).Object;
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                {
+                    KeyEncryptionKey = mockKey.Object,
+                    KeyResolver = mockKeyResolver,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
+
+                // upload with encryption
+                await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
+
+                // download with decryption and transactionalhashing
+                var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+                var result = await blob.DownloadContentAsync(new BlobBaseDownloadOptions { TransactionalHashingOptions = hashingOptions });
+
+                // compare data
+                Assert.IsTrue(Enumerable.SequenceEqual(data, result.Value.Content.ToArray()));
+            }
         }
     }
 }
