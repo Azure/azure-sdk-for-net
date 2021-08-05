@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using Azure.Core;
@@ -20,11 +21,27 @@ namespace Azure.Monitor.Query.Models
         [CodeGenMember("render")]
         private readonly JsonElement _visualization;
 
-        // TODO: Handle not found
         /// <summary>
-        /// Returns the primary result of the query.
+        /// Gets the single table result of the query.
         /// </summary>
-        public LogsQueryResultTable PrimaryTable => Tables.Single(t => t.Name == "PrimaryResult");
+        public LogsQueryResultTable Table
+        {
+            get
+            {
+                if (AllTables.Count != 1)
+                {
+                    throw new InvalidOperationException($"The result contains multiple tables. Use the {nameof(AllTables)} collection to access all tables.");
+                }
+
+                return AllTables[0];
+            }
+        }
+
+        /// <summary>
+        /// Gets the multi-table result of the query.
+        /// </summary>
+        [CodeGenMember("Tables")]
+        public IReadOnlyList<LogsQueryResultTable> AllTables { get; }
 
         /// <summary>
         /// Returns the query statistics if the <see cref="LogsQueryOptions.IncludeStatistics"/> is set to <c>true</c>. <c>null</c> otherwise.
