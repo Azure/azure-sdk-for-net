@@ -144,5 +144,41 @@ namespace Azure.ResourceManager.Core
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
             return theResource.Locations.Select(l => (Location)l);
         }
+
+        #region PolicyAssignment
+        /// <summary> Gets an object representing a PolicyAssignmentContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="PolicyAssignmentContainer" /> object. </returns>
+        public virtual PolicyAssignmentContainer GetPolicyAssignments()
+        {
+            return new PolicyAssignmentContainer(this);
+        }
+        #endregion
+
+        #region PolicyExemption
+        /// <summary> Gets an object representing a PolicyExemptionContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="PolicyExemptionContainer" /> object. </returns>
+        public virtual PolicyExemptionContainer GetPolicyExemptions()
+        {
+            return new PolicyExemptionContainer(this);
+        }
+        #endregion
+
+        #region ManagementLockObject
+        /// <summary> Gets an object representing a ManagementLockObjectContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="ManagementLockObjectContainer" /> object. </returns>
+        public virtual ManagementLockObjectContainer GetManagementLocks()
+        {
+            return new ManagementLockObjectContainer(this);
+        }
+        #endregion
+
+        #region ResourceLink
+        /// <summary> Gets an object representing a ResourceLinkContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="ResourceLinkContainer" /> object. </returns>
+        public virtual ResourceLinkContainer GetResourceLinks()
+        {
+            return new ResourceLinkContainer(this);
+        }
+        #endregion
     }
 }

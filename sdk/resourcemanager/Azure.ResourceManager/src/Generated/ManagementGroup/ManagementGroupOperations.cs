@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Management
         #region PolicyDefinition
         /// <summary> Gets an object representing a PolicyDefinitionContainer along with the instance operations that can be performed on it. </summary>
         /// <returns> Returns a <see cref="PolicyDefinitionContainer" /> object. </returns>
-        public virtual PolicyDefinitionContainer GetPolicyDefinitionContainer()
+        public virtual PolicyDefinitionContainer GetPolicyDefinitions()
         {
             return new PolicyDefinitionContainer(this);
         }
@@ -345,27 +345,9 @@ namespace Azure.ResourceManager.Management
         #region PolicySetDefinition
         /// <summary> Gets an object representing a PolicySetDefinitionContainer along with the instance operations that can be performed on it. </summary>
         /// <returns> Returns a <see cref="PolicySetDefinitionContainer" /> object. </returns>
-        public virtual PolicySetDefinitionContainer GetPolicySetDefinitionContainer()
+        public virtual PolicySetDefinitionContainer GetPolicySetDefinitions()
         {
             return new PolicySetDefinitionContainer(this);
-        }
-        #endregion
-
-        #region PolicyAssignment
-        /// <summary> Gets an object representing a PolicyAssignmentContainer along with the instance operations that can be performed on it. </summary>
-        /// <returns> Returns a <see cref="PolicyAssignmentContainer" /> object. </returns>
-        public virtual PolicyAssignmentContainer GetPolicyAssignmentContainer()
-        {
-            return new PolicyAssignmentContainer(this);
-        }
-        #endregion
-
-        #region PolicyExemption
-        /// <summary> Gets an object representing a PolicyExemptionContainer along with the instance operations that can be performed on it. </summary>
-        /// <returns> Returns a <see cref="PolicyExemptionContainer" /> object. </returns>
-        public virtual PolicyExemptionContainer GetPolicyExemptionContainer()
-        {
-            return new PolicyExemptionContainer(this);
         }
         #endregion
     }
