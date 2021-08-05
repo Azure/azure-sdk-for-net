@@ -866,6 +866,12 @@ namespace Azure.ResourceManager.Resources.Models
         PlainText = 1,
         Mask = 2,
     }
+    public partial class ApiProfile
+    {
+        internal ApiProfile() { }
+        public string ApiVersion { get { throw null; } }
+        public string ProfileVersion { get { throw null; } }
+    }
     public partial class ErrorAdditionalInfo
     {
         internal ErrorAdditionalInfo() { }
@@ -1043,6 +1049,13 @@ namespace Azure.ResourceManager.Resources.Models
         public string Id { get { throw null; } }
         public string TagValueValue { get { throw null; } }
     }
+    public partial class ProviderExtendedLocation
+    {
+        internal ProviderExtendedLocation() { }
+        public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
+        public string Location { get { throw null; } }
+        public string Type { get { throw null; } }
+    }
     public partial class ProviderInfo
     {
         internal ProviderInfo() { }
@@ -1053,8 +1066,11 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal ProviderResourceType() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Alias> Aliases { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApiProfile> ApiProfiles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
         public string Capabilities { get { throw null; } }
+        public string DefaultApiVersion { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ProviderExtendedLocation> LocationMappings { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Properties { get { throw null; } }
         public string ResourceType { get { throw null; } }
