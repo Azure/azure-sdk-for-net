@@ -699,6 +699,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
+        [Ignore("TODO, waiting for working test account.")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public async Task AppendBlockAsync_EncryptionScopeAccountSAS()
