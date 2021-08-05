@@ -26,19 +26,25 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
 
-        public ContainerRegistryClient CreateClient(bool anonymousAccess = false, string authenticationScope = null)
+        public ContainerRegistryClient CreateClient(ContainerRegistryAudience audience, bool anonymousAccess = false)
         {
             return anonymousAccess ?
 
                 InstrumentClient(new ContainerRegistryClient(
                     new Uri(TestEnvironment.AnonymousAccessEndpoint),
-                    InstrumentClientOptions(new ContainerRegistryClientOptions())
+                    InstrumentClientOptions(new ContainerRegistryClientOptions()
+                    {
+                        Audience = audience
+                    })
                 )) :
 
                 InstrumentClient(new ContainerRegistryClient(
                     new Uri(TestEnvironment.Endpoint),
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new ContainerRegistryClientOptions())
+                    InstrumentClientOptions(new ContainerRegistryClientOptions()
+                    {
+                        Audience = audience
+                    })
                 ));
         }
 

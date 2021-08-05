@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// </summary>
-        public ContainerRegistryAudience Audience { get; set; }
+        public ContainerRegistryAudience? Audience { get; set; }
 
         /// <summary>
         /// Create an instance of the options for configuring request sent to the Container Registry service.

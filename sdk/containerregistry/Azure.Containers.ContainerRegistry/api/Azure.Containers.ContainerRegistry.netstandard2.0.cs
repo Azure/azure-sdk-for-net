@@ -148,7 +148,7 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ContainerRegistryClientOptions : Azure.Core.ClientOptions
     {
         public ContainerRegistryClientOptions(Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions.ServiceVersion version = Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions.ServiceVersion.V1_0) { }
-        public Azure.Containers.ContainerRegistry.ContainerRegistryAudience Audience { get { throw null; } set { } }
+        public Azure.Containers.ContainerRegistry.ContainerRegistryAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1_0 = 1,

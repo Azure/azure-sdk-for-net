@@ -301,7 +301,7 @@ await foreach (string repositoryName in repositoryNames)
 To authenticate with a registry in a [National Cloud](https://docs.microsoft.com/azure/active-directory/develop/authentication-national-cloud), you will need to make the following additions to your client configuration:
 
 - Set the `AuthorityHost` in the credential options or via the `AZURE_AUTHORITY_HOST` environment variable
-- Set the `AuthenticationScope` in `ContainerRegistryClientOptions`
+- Set the `Audience` in `ContainerRegistryClientOptions`
 
 ```C#
 // Create a ContainerRegistryClient that will authenticate through AAD in the China national cloud
@@ -314,7 +314,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint,
         }),
     new ContainerRegistryClientOptions()
     {
-        AuthenticationScope = "https://management.chinacloudapi.cn/.default"
+        Audience = ContainerRegistryAudience.AzurePublicCloud
     });
 ```
 
