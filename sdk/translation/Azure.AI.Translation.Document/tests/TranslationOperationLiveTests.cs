@@ -7,6 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.IO;
+using Azure.Storage.Blobs;
 
 namespace Azure.AI.Translation.Document.Tests
 {
@@ -411,6 +413,42 @@ namespace Azure.AI.Translation.Document.Tests
             await operation.WaitForCompletionAsync();
 
             Assert.Throws(expectedException, () => operation.GetDocumentStatus(invalidGuid));
+        }
+
+        [RecordedTest]
+        public async Task DocumentTranslationWithGlossary()
+        {
+            Uri source = await CreateSourceContainerAsync(oneTestDocuments);
+            var targetUriAndClient = await CreateTargetContainerWithClientAsync();
+            Uri target = targetUriAndClient.Item1;
+
+            //We will need this client later for reading the output translated document
+            BlobContainerClient targetContainerClient = targetUriAndClient.Item2;
+
+            //Constructing and uploading glossary on the fly
+            string glossaryName = "validGlossary.csv";
+
+            //changing the word First --> glossaryFirst and test --> glossaryTest
+            string glossaryContent = "First, glossaryFirst\ntest, glossaryTest\n";
+
+            var glossarySasUri = await CreateGlossaryAsync(new TestDocument (glossaryName, glossaryContent));
+
+            //Perform Translation Process
+            DocumentTranslationClient client = GetClient();
+            var input = new DocumentTranslationInput(source, target, "es", new TranslationGlossary(glossarySasUri, "csv"));
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+            await operation.WaitForCompletionAsync();
+
+            //stream translated text into string
+            var blobClient = targetContainerClient.GetBlobClient(oneTestDocuments[0].Name);
+            var translatedResultStream = await blobClient.OpenReadAsync();
+            StreamReader streamReader = new StreamReader(translatedResultStream);
+            string translatedText = streamReader.ReadToEnd();
+
+            //Assert glossary has taken effect
+            var translatedTextSplitBySpaces = translatedText.Split(' ');
+            CollectionAssert.Contains(translatedTextSplitBySpaces, "glossaryFirst");
+            CollectionAssert.Contains(translatedTextSplitBySpaces, "glossaryTest");
         }
 
         private async Task PrintNotSucceededDocumentsAsync(DocumentTranslationOperation operation)
