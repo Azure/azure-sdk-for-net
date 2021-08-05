@@ -12,13 +12,12 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Resource type managed by the resource provider. </summary>
-    [ReferenceType]
     [PropertyReferenceType]
     public partial class ProviderResourceType
     {
         /// <summary> Initializes a new instance of ProviderResourceType. </summary>
         [InitializationConstructor]
-        internal ProviderResourceType()
+        public ProviderResourceType()
         {
             Locations = new ChangeTrackingList<string>();
             LocationMappings = new ChangeTrackingList<ProviderExtendedLocation>();

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources
     {
         /// <summary> Initializes a new instance of Provider. </summary>
         [InitializationConstructor]
-        internal ProviderData()
+        public ProviderData()
         {
             ResourceTypes = new ChangeTrackingList<ProviderResourceType>();
         }

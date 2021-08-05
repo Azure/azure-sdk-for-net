@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         [InitializationConstructor]
-        internal ErrorResponse()
+        public ErrorResponse()
         {
             Details = new ChangeTrackingList<ErrorResponse>();
             AdditionalInfo = new ChangeTrackingList<ErrorAdditionalInfo>();
