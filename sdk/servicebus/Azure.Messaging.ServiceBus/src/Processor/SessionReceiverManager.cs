@@ -108,8 +108,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private async Task CreateAndInitializeSessionReceiver(
-            CancellationToken processorCancellationToken)
+        private async Task CreateAndInitializeSessionReceiver(CancellationToken processorCancellationToken)
         {
             await CreateReceiver(processorCancellationToken).ConfigureAwait(false);
             _sessionCancellationSource = new CancellationTokenSource();
@@ -205,10 +204,11 @@ namespace Azure.Messaging.ServiceBus
 
         private async Task CloseReceiver(CancellationToken cancellationToken)
         {
-            if (_receiver == null || _receiver.IsClosed)
+            if (_receiver == null)
             {
                 return;
             }
+
             try
             {
                 if (Processor._sessionClosingAsync != null)
@@ -220,12 +220,12 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception exception)
             {
                 await RaiseExceptionReceived(
-                    new ProcessErrorEventArgs(
-                        exception,
-                        ServiceBusErrorSource.CloseSession,
-                        Processor.FullyQualifiedNamespace,
-                        Processor.EntityPath,
-                        cancellationToken))
+                        new ProcessErrorEventArgs(
+                            exception,
+                            ServiceBusErrorSource.CloseSession,
+                            Processor.FullyQualifiedNamespace,
+                            Processor.EntityPath,
+                            cancellationToken))
                     .ConfigureAwait(false);
             }
             finally
@@ -233,10 +233,18 @@ namespace Azure.Messaging.ServiceBus
                 // cancel the automatic session lock renewal
                 await CancelTask(_sessionLockRenewalCancellationSource, _sessionLockRenewalTask).ConfigureAwait(false);
 
-                // Always at least attempt to dispose. If this fails, it won't be retried.
-                await _receiver.DisposeAsync().ConfigureAwait(false);
-                _receiver = null;
-                _receiveTimeout = false;
+                try
+                {
+                    // Always at least attempt to dispose. If this fails, it won't be retried.
+                    await _receiver.DisposeAsync().ConfigureAwait(false);
+                }
+                finally
+                {
+                    // If we call DisposeAsync, we need to reset to null even if DisposeAsync throws, otherwise we can
+                    // end up in a bad state.
+                    _receiver = null;
+                    _receiveTimeout = false;
+                }
             }
         }
 
@@ -287,7 +295,7 @@ namespace Azure.Messaging.ServiceBus
                 }
             }
             catch (Exception ex)
-            when (!(ex is TaskCanceledException) ||
+            when (ex is not TaskCanceledException ||
             // If the user manually throws a TCE, then we should log it.
             (!_sessionCancellationSource.IsCancellationRequested &&
              !processorCancellationToken.IsCancellationRequested))
@@ -321,18 +329,17 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (canProcess)
                 {
-                    await CloseReceiverIfNeeded(
-                        processorCancellationToken).ConfigureAwait(false);
+                    await CloseReceiverIfNeeded(processorCancellationToken).ConfigureAwait(false);
                 }
             }
         }
 
         private async Task RenewSessionLock()
         {
-            _sessionLockRenewalCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(
-                _sessionCancellationSource.Token);
+            _sessionLockRenewalCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(_sessionCancellationSource.Token);
             _sessionLockRenewalCancellationSource.CancelAfter(ProcessorOptions.MaxAutoLockRenewalDuration);
             CancellationToken sessionLockRenewalCancellationToken = _sessionLockRenewalCancellationSource.Token;
+
             while (!sessionLockRenewalCancellationToken.IsCancellationRequested)
             {
                 try
@@ -348,7 +355,7 @@ namespace Azure.Messaging.ServiceBus
                             TaskContinuationOptions.ExecuteSynchronously,
                             TaskScheduler.Default)
                         .ConfigureAwait(false);
-                    if (Receiver.IsClosed || delayTask.IsCanceled)
+                    if (delayTask.IsCanceled)
                     {
                         break;
                     }
@@ -356,7 +363,7 @@ namespace Azure.Messaging.ServiceBus
                     ServiceBusEventSource.Log.ProcessorRenewSessionLockComplete(Processor.Identifier);
                 }
 
-                catch (Exception ex) when (!(ex is TaskCanceledException))
+                catch (Exception ex) when (ex is not TaskCanceledException)
                 {
                     ServiceBusEventSource.Log.ProcessorRenewSessionLockException(Processor.Identifier, ex.ToString());
                     await HandleRenewLockException(ex, sessionLockRenewalCancellationToken).ConfigureAwait(false);
