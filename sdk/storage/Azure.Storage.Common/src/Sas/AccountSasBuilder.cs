@@ -86,6 +86,11 @@ namespace Azure.Storage.Sas
         public AccountSasResourceTypes ResourceTypes { get; set; }
 
         /// <summary>
+        /// Optional.  Encryption scope to use when sending requests authorized with this SAS URI.
+        /// </summary>
+        public string EncryptionScope { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AccountSasBuilder"/>
         /// class.
         /// </summary>
@@ -209,7 +214,8 @@ namespace Azure.Storage.Sas
                 IPRange.ToString(),
                 Protocol.ToProtocolString(),
                 Version,
-                "");  // That's right, the account SAS requires a terminating extra newline
+                EncryptionScope,
+                string.Empty);  // That's right, the account SAS requires a terminating extra newline
 
             var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
             var p = SasQueryParametersInternals.Create(
@@ -220,10 +226,11 @@ namespace Azure.Storage.Sas
                 StartsOn,
                 ExpiresOn,
                 IPRange,
-                null, // Identifier
-                null, // Resource
+                identifier: null,
+                resource: null,
                 Permissions,
-                signature);
+                signature,
+                encryptionScope: EncryptionScope);
             return p;
         }
 
