@@ -5,17 +5,21 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests.ManagedDisk
 {
+    [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
     public class ManagedDiskTests : BlobTestBase
     {
         private Uri snapshot1SASUri;
         private Uri snapshot2SASUri;
+        private long snapshot1Size;
 
         public ManagedDiskTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
@@ -27,6 +31,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         {
             snapshot1SASUri = new Uri(Recording.GetVariable(nameof(snapshot1SASUri), ManagedDiskFixture.Instance.Snapshot1SASUri?.AbsoluteUri, v => Sanitizer.SanitizeUri(v)));
             snapshot2SASUri = new Uri(Recording.GetVariable(nameof(snapshot2SASUri), ManagedDiskFixture.Instance.Snapshot2SASUri?.AbsoluteUri, v => Sanitizer.SanitizeUri(v)));
+            snapshot1Size = long.Parse(Recording.GetVariable(nameof(snapshot1Size), ManagedDiskFixture.Instance.Snapshot1?.DiskSizeBytes.ToString()));
         }
 
         [Test]
@@ -59,6 +64,23 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             {
                 Assert.AreEqual(0, b);
             }
+        }
+
+        [Test]
+        public async Task GetManagedDiskPageRangesDiffAsync_Error()
+        {
+            // Arrange
+            var snapshot1Client = InstrumentClient(new PageBlobClient(snapshot1SASUri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                snapshot1Client.GetManagedDiskPageRangesDiffAsync(range: new HttpRange(snapshot1Size + Constants.MB, 4 * Constants.KB)),
+                e =>
+                {
+                    Assert.AreEqual("InvalidRange", e.ErrorCode);
+                    Assert.AreEqual("The range specified is invalid for the current size of the resource.",
+                        e.Message.Split('\n')[0]);
+                });
         }
 
         private async Task<byte[]> DownloadRange(PageBlobClient client, HttpRange range)
