@@ -1250,6 +1250,11 @@ namespace Azure.ResourceManager.Resources.Models
         UserAssigned = 2,
         SystemAssignedUserAssigned = 3,
     }
+    public static partial class ResourceIdentityTypeExtensions
+    {
+        public static Azure.ResourceManager.Resources.Models.ResourceIdentityType ToResourceIdentityType(this string value) { throw null; }
+        public static string ToSerialString(this Azure.ResourceManager.Resources.Models.ResourceIdentityType value) { throw null; }
+    }
     public partial class ResourceMoveResourcesOperation : Azure.Operation
     {
         protected ResourceMoveResourcesOperation() { }
