@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Test;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -82,6 +84,45 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
                         e.Message.Split('\n')[0]);
                 });
         }
+
+        [Test]
+        public async Task GetManagedDiskPageRangesDiffAsync_AccessConditions()
+        {
+            var snapshot2Client = InstrumentClient(new PageBlobClient(snapshot2SASUri, GetOptions()));
+
+            foreach (var parameters in Reduced_AccessConditions_Data)
+            {
+                parameters.Match = await SetupBlobMatchCondition(snapshot2Client, parameters.Match);
+
+                PageBlobRequestConditions accessConditions = PageBlobClientTests.BuildAccessConditions(
+                    parameters: parameters,
+                    lease: false);
+
+                // Act
+                Response<PageRangesInfo> response = await snapshot2Client.GetManagedDiskPageRangesDiffAsync(
+                    range: new HttpRange(0, Constants.KB),
+                    previousSnapshotUri: snapshot1SASUri,
+                    conditions: accessConditions);
+
+                // Assert
+                Assert.IsNotNull(response.Value.PageRanges);
+            }
+        }
+
+        /// <summary>
+        /// Data for CreateAsync, GetPageRangesAsync, GetPageRangesDiffAsync, ResizeAsync, and
+        /// UpdateSequenceNumber AccessConditions tests.
+        /// </summary>
+        public IEnumerable<PageBlobClientTests.AccessConditionParameters> Reduced_AccessConditions_Data
+            => new[]
+            {
+                new PageBlobClientTests.AccessConditionParameters(),
+                new PageBlobClientTests.AccessConditionParameters { IfModifiedSince = OldDate },
+                new PageBlobClientTests.AccessConditionParameters { IfUnmodifiedSince = NewDate },
+                new PageBlobClientTests.AccessConditionParameters { Match = ReceivedETag },
+                new PageBlobClientTests.AccessConditionParameters { NoneMatch = GarbageETag },
+                new PageBlobClientTests.AccessConditionParameters { LeaseId = ReceivedLeaseId }
+            };
 
         private async Task<byte[]> DownloadRange(PageBlobClient client, HttpRange range)
         {
