@@ -280,7 +280,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             await using DisposingFileSystem test = await GetNewFileSystem(encryptionScopeOptions: encryptionScopeOptions);
 
-            // Assert
+            // Assert - We are also testing GetPropertiesAsync() in this test.
             Response<FileSystemProperties> response = await test.FileSystem.GetPropertiesAsync();
             Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, response.Value.DefaultEncryptionScope);
         }
@@ -454,6 +454,34 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Assert
                 Assert.IsNull(response);
+            }
+            finally
+            {
+                // Cleanup
+                await fileSystemClient.DeleteIfExistsAsync();
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task CreateIfNotExists_EncryptionScopeOptions()
+        {
+            // Arrange
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
+            };
+
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+            try
+            {
+                // Act
+                await fileSystemClient.CreateIfNotExistsAsync(encryptionScopeOptions: encryptionScopeOptions);
+
+                // Assert - We are also testing GetPropertiesAsync() in this test.
+                Response<FileSystemProperties> response = await fileSystemClient.GetPropertiesAsync();
+                Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, response.Value.DefaultEncryptionScope);
             }
             finally
             {
