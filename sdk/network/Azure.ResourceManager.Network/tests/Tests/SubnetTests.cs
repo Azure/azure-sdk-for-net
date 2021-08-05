@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/virtualNetworks");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnet1Name = Recording.GenerateAssetName("azsmnet");
             string subnet2Name = Recording.GenerateAssetName("azsmnet");
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnet1Name, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroupName);
+            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             // Create a Subnet
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/virtualNetworks");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroupName);
+            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Response<Subnet> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnetName);

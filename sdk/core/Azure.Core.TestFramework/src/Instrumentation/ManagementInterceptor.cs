@@ -63,7 +63,7 @@ namespace Azure.Core.TestFramework
             }
             else if (invocation.Method.Name.EndsWith("Value") && type.BaseType.Name.EndsWith("Operations"))
             {
-                invocation.ReturnValue = _testBase.InstrumentClient(type, result, new IInterceptor[] { new ManagementInterceptor(_testBase) });
+                invocation.ReturnValue = _testBase.InstrumentClient(type, invocation.ReturnValue, new IInterceptor[] { new ManagementInterceptor(_testBase) });
             }
             else if (type.BaseType.Name.StartsWith("AsyncPageable"))
             {

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/virtualNetworks");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnet1Name = Recording.GenerateAssetName("azsmnet");
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put Vnet
-            var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroupName);
+            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/virtualNetworks");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put Vnet
-            var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroupName);
+            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 }
             };
 
-            NetworkInterfacesCreateOrUpdateOperation putNicResponseOperation = await GetNetworkInterfaceContainer(resourceGroupName).StartCreateOrUpdateAsync(nicName, nicParameters);
+            NetworkInterfacesCreateOrUpdateOperation putNicResponseOperation = await resourceGroup.Value.GetNetworkInterfaces().StartCreateOrUpdateAsync(nicName, nicParameters);
             await putNicResponseOperation.WaitForCompletionAsync();;
 
             // Check Ip Address availability API
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/virtualNetworks");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string vnet1Name = Recording.GenerateAssetName("azsmnet");
             string vnet2Name = Recording.GenerateAssetName("azsmnet");
             string subnet1Name = Recording.GenerateAssetName("azsmnet");
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put Vnet
-            var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroupName);
+            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnet1Name, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/virtualNetworks");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
 
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put Vnet
-            var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroupName);
+            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 }
             };
 
-            var networkInterfaceContainer = GetNetworkInterfaceContainer(resourceGroupName);
+            var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
             NetworkInterfacesCreateOrUpdateOperation putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
             var nicResponse = await putNicResponseOperation.WaitForCompletionAsync();;
             // Get Vnet usage again
