@@ -614,8 +614,9 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ProviderData : Azure.ResourceManager.Resources.Models.SubResource
     {
-        internal ProviderData() { }
+        public ProviderData() { }
         public string Namespace { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState? ProviderAuthorizationConsentState { get { throw null; } }
         public string RegistrationPolicy { get { throw null; } }
         public string RegistrationState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ProviderResourceType> ResourceTypes { get { throw null; } }
@@ -880,7 +881,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ErrorResponse
     {
-        internal ErrorResponse() { }
+        public ErrorResponse() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ErrorAdditionalInfo> AdditionalInfo { get { throw null; } }
         public string Code { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ErrorResponse> Details { get { throw null; } }
@@ -1049,6 +1050,26 @@ namespace Azure.ResourceManager.Resources.Models
         public string Id { get { throw null; } }
         public string TagValueValue { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProviderAuthorizationConsentState : System.IEquatable<Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProviderAuthorizationConsentState(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState Consented { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState NotRequired { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState Required { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState left, Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState left, Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ProviderExtendedLocation
     {
         internal ProviderExtendedLocation() { }
@@ -1064,7 +1085,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ProviderResourceType
     {
-        internal ProviderResourceType() { }
+        public ProviderResourceType() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Alias> Aliases { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApiProfile> ApiProfiles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
@@ -1402,7 +1423,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public sealed partial class UserAssignedIdentity : System.IEquatable<Azure.ResourceManager.Resources.Models.UserAssignedIdentity>
     {
-        public UserAssignedIdentity(System.Guid clientId, System.Guid principalId) { }
+        public UserAssignedIdentity() { }
         public System.Guid ClientId { get { throw null; } }
         public System.Guid PrincipalId { get { throw null; } }
         public int CompareTo(Azure.ResourceManager.Resources.Models.UserAssignedIdentity other) { throw null; }
