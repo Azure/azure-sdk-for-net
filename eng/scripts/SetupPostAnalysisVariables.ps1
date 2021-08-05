@@ -7,18 +7,13 @@ param (
     [string] $PoliCheckBaseLineSource
 )
 
-$poliCheckBaselineFile = Join-Path $PipelineWorkSpace "policheck.gdnbaselines"
+$poliCheckBaselineFile = Join-Path $SourceDirectory eng guardian-tools "policheck.gdnbaselines"
 $poliCheckBaselineName = "policheck"
 
 if ($PoliCheckBaseLineSource -ieq "empty")
 {
-    $poliCheckBaselineFile = Join-Path $SourceDirectory eng guardian-tools "empty.gdnbaselines"
-    $poliCheckBaselineName = "empty"
-}
-
-if ($PoliCheckBaseLineSource -ieq "repo")
-{
-    $poliCheckBaselineFile = Join-Path $SourceDirectory eng guardian-tools "policheck.gdnbaselines"
+    $poliCheckBaselineFile = ''
+    $poliCheckBaselineName = ''
 }
 
 echo "##vso[task.setvariable variable=PoliCheckBaselineFile]$poliCheckBaselineFile"

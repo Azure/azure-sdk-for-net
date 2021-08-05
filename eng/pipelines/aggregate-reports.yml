@@ -11,11 +11,11 @@ parameters:
 - name: poliCheckBaselineSource
   displayName: PoliCheck Baseline Source
   type: string
-  default: previousRun
+  default: repo
   values:
-  - previousRun
-  - empty
   - repo
+  - empty
+
 
 trigger: none
 
@@ -166,21 +166,11 @@ stages:
       - job: GuardianTools
         timeoutInMinutes: 120
         steps:
-          - task: DownloadPipelineArtifact@2
-            inputs:
-              source: 'specific'
-              project: 'internal'
-              pipeline: 'net - aggregate-reports'
-              runVersion: 'latestFromBranch'
-              runBranch: 'refs/heads/AddPoliCheck'
-              allowPartiallySucceededBuilds: true
-              artifact: CodeAnalysisLogs
-              path: '$(Pipeline.Workspace)'
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
             displayName: 'Run PoliCheck'
             inputs:
               targetType: F
-              targetArgument: '$(Build.SourcesDirectory)/sdk'
+              targetArgument: '$(Build.SourcesDirectory)/sdk/$(ServiceDirectory)'
               result: PoliCheck.sarif
               optionsFC: 0
               optionsXS: 1
@@ -199,16 +189,27 @@ stages:
               GdnBreakAllTools: false
               GdnBreakGdnToolPoliCheck: true
               GdnBreakGdnToolPoliCheckSeverity: Warning
-              GdnBreakBaselineFiles: ''
-              GdnBreakBaselines: ''
+              GdnBreakBaselineFiles: $(PoliCheckBaselineFile)
+              GdnBreakBaselines: $(PoliCheckBaselineFile)
               GdnBreakSuppressionFiles: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnsuppress'
               GdnBreakSuppressionSets: policheck
               GdnBreakOutputBaselineFile: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnbaselines'
               GdnBreakOutputBaseline: policheck
             continueOnError: true
           - pwsh: |
-              Copy-Item -Path $(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnbaselines -Destination $(Pipeline.Workspace)\.gdn\a\policheck.gdnbaselines
-            displayName: 'Stage baseline output for publishing'
-          - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
-            displayName: 'Publish Security Analysis Logs'
-            condition: succeededOrFailed()
+              Get-ChildItem -Path "$(Pipeline.Workspace)\.gdn\.r"
+              Get-ChildItem -Path "$(Pipeline.Workspace)\.gdn\r"
+              Get-ChildItem -Path "$(Pipeline.Workspace)\.gdn"
+              New-Item -Path "$(Build.ArtifactStagingDirectory)" -Name "CodeAnalysisLogs" -ItemType "directory"
+              Copy-Item -Path "$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnbaselines" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs"
+              Copy-Item -Path "$(Pipeline.Workspace)\.gdn\r\*" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs" -recurse
+              Copy-Item -Path "$(Pipeline.Workspace)\.gdn\.r\*" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs" -recurse
+              Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs" 
+            displayName: 'Stage Guardian Tools Output for publishing'
+            condition: succeeded()
+          - task: PublishPipelineArtifact@1
+            condition: succeeded()
+            displayName: "Publish CodeAnalysis Artifacts"
+            inputs:
+              artifactName: "CodeAnalysisLogs"
+              path: "$(Build.ArtifactStagingDirectory)"
