@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
 
     /// <summary>
-    /// Defines values for RegionCategory.
+    /// Defines values for ResourceNameStatus.
     /// </summary>
-    public static class RegionCategory
+    public static class ResourceNameStatus
     {
-        public const string Recommended = "Recommended";
-        public const string Extended = "Extended";
-        public const string Other = "Other";
+        public const string Allowed = "Allowed";
+        public const string Reserved = "Reserved";
     }
 }
