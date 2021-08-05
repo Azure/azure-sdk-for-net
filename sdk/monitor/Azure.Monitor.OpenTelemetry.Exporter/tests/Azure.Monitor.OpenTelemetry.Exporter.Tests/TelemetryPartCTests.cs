@@ -153,7 +153,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             }
             catch (Exception)
             {
-                Assert.True(1 == 0);
+                Assert.True(false, "_MSlinks should be a JSON formatted string");
             }
             Assert.True(actualMSlinks.Length <= maxLength);
             Assert.Equal(actualMSlinks, expectedMSlinks);
@@ -198,7 +198,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             }
             catch (Exception)
             {
-                Assert.True(1 == 0);
+                Assert.True(false, "_MSlinks should be a JSON formatted string");
             }
             Assert.True(actualMSlinks.Length <= maxLength);
             Assert.Equal(expectedMslinks, actualMSlinks);
