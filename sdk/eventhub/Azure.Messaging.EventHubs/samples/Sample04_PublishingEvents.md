@@ -277,7 +277,6 @@ try
     }
 
     batches = await BuildBatchesAsync(eventsToSend, producer);
-
     foreach (var batch in batches)
     {
         await producer.SendAsync(batch);

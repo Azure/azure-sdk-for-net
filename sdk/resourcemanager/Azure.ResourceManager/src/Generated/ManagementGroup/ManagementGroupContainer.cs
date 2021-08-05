@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupOptions"/> is null. </exception>
-        public virtual ManagementGroupsCreateOrUpdateOperation StartCreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual ManagementGroupCreateOrUpdateOperation StartCreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var originalResponse = _restClient.CreateOrUpdate(groupId, createManagementGroupOptions, cacheControl, cancellationToken);
-                return new ManagementGroupsCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupOptions, cacheControl).Request, originalResponse);
+                return new ManagementGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupOptions, cacheControl).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupOptions"/> is null. </exception>
-        public async virtual Task<ManagementGroupsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagementGroupCreateOrUpdateOperation> StartCreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var originalResponse = await _restClient.CreateOrUpdateAsync(groupId, createManagementGroupOptions, cacheControl, cancellationToken).ConfigureAwait(false);
-                return new ManagementGroupsCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupOptions, cacheControl).Request, originalResponse);
+                return new ManagementGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupOptions, cacheControl).Request, originalResponse);
             }
             catch (Exception e)
             {
