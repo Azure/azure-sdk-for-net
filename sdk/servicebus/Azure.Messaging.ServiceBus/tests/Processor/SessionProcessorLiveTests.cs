@@ -662,14 +662,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        [TestCase(1, 0, 1)]
-        [TestCase(5, 0, 3)]
-        [TestCase(10, 1, 5)]
-        [TestCase(20, 1, 10)]
+        [TestCase(1, 0)]
+        [TestCase(5, 0)]
+        [TestCase(10, 1)]
+        [TestCase(20, 1)]
         public async Task MaxAutoLockRenewalDurationRespected(
             int numThreads,
-            int autoLockRenewalDuration,
-            int maxCallsPerSession)
+            int autoLockRenewalDuration)
         {
             var lockDuration = TimeSpan.FromSeconds(10);
             await using (var scope = await ServiceBusScope.CreateWithQueue(
@@ -692,7 +691,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
-                    MaxConcurrentCallsPerSession = maxCallsPerSession,
                     AutoCompleteMessages = false,
                     MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(autoLockRenewalDuration)
                 };
