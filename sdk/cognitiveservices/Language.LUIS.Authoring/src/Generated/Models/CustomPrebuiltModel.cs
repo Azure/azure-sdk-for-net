@@ -10,12 +10,16 @@
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
 {
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// A Custom Prebuilt model.
     /// </summary>
-    public partial class CustomPrebuiltModel : ModelInfo
+    public partial class CustomPrebuiltModel
     {
         /// <summary>
         /// Initializes a new instance of the CustomPrebuiltModel class.
@@ -39,9 +43,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <param name="typeId">The type ID of the Entity Model.</param>
         /// <param name="fuzzyMatchingEnabled">Enables the fuzzy matching for
         /// the list of entities</param>
-        public CustomPrebuiltModel(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), bool? fuzzyMatchingEnabled = default(bool?))
-            : base(id, readableType, name, typeId, fuzzyMatchingEnabled)
+        /// <param name="customPrebuiltDomainName">The domain name.</param>
+        /// <param name="customPrebuiltModelName">The intent name or entity
+        /// name.</param>
+        public CustomPrebuiltModel(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), bool? fuzzyMatchingEnabled = default(bool?), string customPrebuiltDomainName = default(string), string customPrebuiltModelName = default(string), IList<EntityRole> roles = default(IList<EntityRole>))
         {
+            Id = id;
+            Name = name;
+            TypeId = typeId;
+            ReadableType = readableType;
+            FuzzyMatchingEnabled = fuzzyMatchingEnabled;
+            CustomPrebuiltDomainName = customPrebuiltDomainName;
+            CustomPrebuiltModelName = customPrebuiltModelName;
+            Roles = roles;
             CustomInit();
         }
 
@@ -51,14 +65,69 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the ID of the Entity Model.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public System.Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets name of the Entity Model.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type ID of the Entity Model.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeId")]
+        public int? TypeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Entity Extractor', 'Child
+        /// Entity Extractor', 'Hierarchical Entity Extractor', 'Hierarchical
+        /// Child Entity Extractor', 'Composite Entity Extractor', 'List Entity
+        /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier',
+        /// 'Pattern.Any Entity Extractor', 'Closed List Entity Extractor',
+        /// 'Regex Entity Extractor'
+        /// </summary>
+        [JsonProperty(PropertyName = "readableType")]
+        public string ReadableType { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables the fuzzy matching for the list of entities
+        /// </summary>
+        [JsonProperty(PropertyName = "fuzzyMatchingEnabled")]
+        public bool? FuzzyMatchingEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the domain name.
+        /// </summary>
+        [JsonProperty(PropertyName = "customPrebuiltDomainName")]
+        public string CustomPrebuiltDomainName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the intent name or entity name.
+        /// </summary>
+        [JsonProperty(PropertyName = "customPrebuiltModelName")]
+        public string CustomPrebuiltModelName { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "roles")]
+        public IList<EntityRole> Roles { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (ReadableType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ReadableType");
+            }
         }
     }
 }
