@@ -115,7 +115,8 @@ namespace Azure.Storage.Files.DataLake
                 AccessTier = blobProperties.AccessTier,
                 ArchiveStatus = blobProperties.ArchiveStatus,
                 AccessTierChangedOn = blobProperties.AccessTierChangedOn,
-                ExpiresOn = blobProperties.ExpiresOn
+                ExpiresOn = blobProperties.ExpiresOn,
+                EncryptionScope = blobProperties.EncryptionScope
             };
 
         internal static PathInfo ToPathInfo(this BlobInfo blobInfo) =>
