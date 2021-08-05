@@ -204,7 +204,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Data);
             await createOrUpdateOperation1.WaitForCompletionAsync();
-            ;
 
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Data);
             await createOrUpdateOperation2.WaitForCompletionAsync();
