@@ -302,5 +302,17 @@ namespace Azure.Messaging.ServiceBus
             await CloseAsync().ConfigureAwait(false);
             GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Updates the concurrency for the processor. This method can be used to dynamically change the concurrency of a running processor.
+        /// </summary>
+        /// <param name="maxConcurrentSessions">The new max concurrent sessions value. This will be reflected in the
+        /// <see cref="ServiceBusSessionProcessor.MaxConcurrentSessions"/>property.</param>
+        /// <param name="maxConcurrentCallsPerSession">The new max concurrent calls per session value. This will be reflect in the
+        /// <see cref="ServiceBusSessionProcessor.MaxConcurrentCallsPerSession"/>.</param>
+        public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession)
+        {
+            InnerProcessor.UpdateConcurrency(maxConcurrentSessions, maxConcurrentCallsPerSession);
+        }
     }
 }

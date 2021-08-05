@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Captures the specified resource group as a template. </summary>
         /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ResourceGroupsExportTemplateOperation StartExportTemplate(ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        public virtual ResourceGroupExportTemplateOperation StartExportTemplate(ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var originalResponse = RestClient.ExportTemplate(Id.Name, parameters, cancellationToken);
-                return new ResourceGroupsExportTemplateOperation(Diagnostics, Pipeline, RestClient.CreateExportTemplateRequest(Id.Name, parameters).Request, originalResponse);
+                return new ResourceGroupExportTemplateOperation(Diagnostics, Pipeline, RestClient.CreateExportTemplateRequest(Id.Name, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Captures the specified resource group as a template. </summary>
         /// <param name="parameters"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ResourceGroupsExportTemplateOperation> StartExportTemplateAsync(ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupExportTemplateOperation> StartExportTemplateAsync(ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var originalResponse = await RestClient.ExportTemplateAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new ResourceGroupsExportTemplateOperation(Diagnostics, Pipeline, RestClient.CreateExportTemplateRequest(Id.Name, parameters).Request, originalResponse);
+                return new ResourceGroupExportTemplateOperation(Diagnostics, Pipeline, RestClient.CreateExportTemplateRequest(Id.Name, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ResourcesMoveResourcesOperation StartMoveResources(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual ResourceMoveResourcesOperation StartMoveResources(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var originalResponse = GenericRestClient.MoveResources(Id.Name, parameters, cancellationToken);
-                return new ResourcesMoveResourcesOperation(Diagnostics, Pipeline, GenericRestClient.CreateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
+                return new ResourceMoveResourcesOperation(Diagnostics, Pipeline, GenericRestClient.CreateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ResourcesMoveResourcesOperation> StartMoveResourcesAsync(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceMoveResourcesOperation> StartMoveResourcesAsync(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var originalResponse = await GenericRestClient.MoveResourcesAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new ResourcesMoveResourcesOperation(Diagnostics, Pipeline, GenericRestClient.CreateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
+                return new ResourceMoveResourcesOperation(Diagnostics, Pipeline, GenericRestClient.CreateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ResourcesValidateMoveResourcesOperation StartValidateMoveResources(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual ResourceValidateMoveResourcesOperation StartValidateMoveResources(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var originalResponse = GenericRestClient.ValidateMoveResources(Id.Name, parameters, cancellationToken);
-                return new ResourcesValidateMoveResourcesOperation(Diagnostics, Pipeline, GenericRestClient.CreateValidateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
+                return new ResourceValidateMoveResourcesOperation(Diagnostics, Pipeline, GenericRestClient.CreateValidateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ResourcesValidateMoveResourcesOperation> StartValidateMoveResourcesAsync(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceValidateMoveResourcesOperation> StartValidateMoveResourcesAsync(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var originalResponse = await GenericRestClient.ValidateMoveResourcesAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new ResourcesValidateMoveResourcesOperation(Diagnostics, Pipeline, GenericRestClient.CreateValidateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
+                return new ResourceValidateMoveResourcesOperation(Diagnostics, Pipeline, GenericRestClient.CreateValidateMoveResourcesRequest(Id.Name, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {

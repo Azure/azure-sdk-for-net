@@ -322,6 +322,7 @@ namespace Azure.Core
     {
         PerCall = 0,
         PerRetry = 1,
+        BeforeTransport = 2,
     }
     public abstract partial class Request : System.IDisposable
     {

@@ -10,13 +10,19 @@ using NUnit.Framework;
 namespace Azure.AI.Translation.Document.Samples
 {
     [LiveOnly]
-    public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
+    public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
+        [SyncOnly]
         public void OperationsHistory()
         {
+#if SNIPPET
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+#endif
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 

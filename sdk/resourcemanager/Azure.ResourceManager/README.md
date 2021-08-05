@@ -285,7 +285,7 @@ For more detailed examples, take a look at [samples](https://github.com/Azure/az
 - [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ### Additional Documentation
-If you are migrating from the old SDK to this preview, check out this [Migration guide]<--(To do: Add absolute link)--/>.
+If you are migrating from the old SDK to this preview, check out this [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/MigrationGuide.md).
 
 For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/).
 
