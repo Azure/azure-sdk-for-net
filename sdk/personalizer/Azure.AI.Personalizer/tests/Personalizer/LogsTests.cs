@@ -14,20 +14,25 @@ namespace Azure.AI.Personalizer.Tests
         }
 
         [Test]
-        public async Task GetLogProperties()
+        public async Task LogTest()
         {
             PersonalizerAdministrationClient client = GetAdministrationClient(isSingleSlot: true);
+            await GetLogProperties(client);
+            await DeleteLogs(client);
+        }
+
+        private async Task GetLogProperties(PersonalizerAdministrationClient client)
+        {
             PersonalizerLogProperties properties = await client.GetPersonalizerLogPropertiesAsync();
             DateTime start = new DateTime(properties.StartTime.Value.Year, properties.StartTime.Value.Month, properties.StartTime.Value.Day);
             DateTime end = new DateTime(properties.EndTime.Value.Year, properties.EndTime.Value.Month, properties.EndTime.Value.Day);
-            Assert.IsTrue(DateTime.UtcNow >= start);
-            Assert.IsTrue(end >= start);
+            DateTime expectedDefault = DateTime.MinValue;
+            Assert.AreEqual(expectedDefault, start);
+            Assert.AreEqual(expectedDefault, start);
         }
 
-        [Test]
-        public async Task DeleteLogs()
+        private async Task DeleteLogs(PersonalizerAdministrationClient client)
         {
-            PersonalizerAdministrationClient client = GetAdministrationClient(isSingleSlot: true);
             await client.DeletePersonalizerLogsAsync();
         }
     }

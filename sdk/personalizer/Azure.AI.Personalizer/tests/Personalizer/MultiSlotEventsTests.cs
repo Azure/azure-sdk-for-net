@@ -14,25 +14,28 @@ namespace Azure.AI.Personalizer.Tests
         }
 
         [Test]
-        public async Task Reward()
+        public async Task MultiSlotEventTest()
         {
             PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: false);
+            await Reward(client);
+            await RewardForOneSlot(client);
+            await Activate(client);
+        }
+
+        private async Task Reward(PersonalizerClient client)
+        {
             PersonalizerSlotReward slotReward = new PersonalizerSlotReward("testSlot", 1);
             PersonalizerRewardMultiSlotOptions rewardRequest = new PersonalizerRewardMultiSlotOptions(new List<PersonalizerSlotReward> { slotReward });
             await client.RewardMultiSlotAsync("123456789", rewardRequest);
         }
 
-        [Test]
-        public async Task RewardForOneSlot()
+        private async Task RewardForOneSlot(PersonalizerClient client)
         {
-            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: false);
             await client.RewardMultiSlotAsync("123456789", "testSlot", 1);
         }
 
-        [Test]
-        public async Task Activate()
+        private async Task Activate(PersonalizerClient client)
         {
-            PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: false);
             await client.ActivateMultiSlotAsync("123456789");
         }
     }

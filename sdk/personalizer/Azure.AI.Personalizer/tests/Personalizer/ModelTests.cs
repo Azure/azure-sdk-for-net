@@ -14,23 +14,26 @@ namespace Azure.AI.Personalizer.Tests
         }
 
         [Test]
-        public async Task GetModel()
+        public async Task ModelTest()
         {
             PersonalizerAdministrationClient client = GetAdministrationClient(isSingleSlot: true);
+            await GetModel(client);
+            await GetModelProperties(client);
+            await ResetModel(client);
+        }
+
+        private async Task GetModel(PersonalizerAdministrationClient client)
+        {
             await client.GetPersonalizerModelAsync();
         }
 
-        [Test]
-        public async Task ResetModel()
+        private async Task ResetModel(PersonalizerAdministrationClient client)
         {
-            PersonalizerAdministrationClient client = GetAdministrationClient(isSingleSlot: true);
             await client.ResetPersonalizerModelAsync();
         }
 
-        [Test]
-        public async Task GetModelProperties()
+        private async Task GetModelProperties(PersonalizerAdministrationClient client)
         {
-            PersonalizerAdministrationClient client = GetAdministrationClient(isSingleSlot: true);
             PersonalizerModelProperties modelProperties = await client.GetPersonalizerModelPropertiesAsync();
             Assert.True(modelProperties.CreationTime != null);
             Assert.True(modelProperties.LastModifiedTime != null);
