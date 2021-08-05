@@ -39,12 +39,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// 'Closed List Entity Extractor', 'Regex Entity Extractor'</param>
         /// <param name="name">Name of the Entity Model.</param>
         /// <param name="typeId">The type ID of the Entity Model.</param>
-        public ModelInfo(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?))
+        /// <param name="fuzzyMatchingEnabled">Enables the fuzzy matching for
+        /// the list of entities</param>
+        public ModelInfo(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), bool? fuzzyMatchingEnabled = default(bool?))
         {
             Id = id;
             Name = name;
             TypeId = typeId;
             ReadableType = readableType;
+            FuzzyMatchingEnabled = fuzzyMatchingEnabled;
             CustomInit();
         }
 
@@ -81,6 +84,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         [JsonProperty(PropertyName = "readableType")]
         public string ReadableType { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables the fuzzy matching for the list of entities
+        /// </summary>
+        [JsonProperty(PropertyName = "fuzzyMatchingEnabled")]
+        public bool? FuzzyMatchingEnabled { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,7 +18,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     /// <summary>
     /// List Entity Extractor.
     /// </summary>
-    public partial class ClosedListEntityExtractor
+    public partial class ClosedListEntityExtractor : ModelInfo
     {
         /// <summary>
         /// Initializes a new instance of the ClosedListEntityExtractor class.
@@ -41,14 +40,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// 'Closed List Entity Extractor', 'Regex Entity Extractor'</param>
         /// <param name="name">Name of the Entity Model.</param>
         /// <param name="typeId">The type ID of the Entity Model.</param>
+        /// <param name="fuzzyMatchingEnabled">Enables the fuzzy matching for
+        /// the list of entities</param>
         /// <param name="subLists">List of sublists.</param>
-        public ClosedListEntityExtractor(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), IList<EntityRole> roles = default(IList<EntityRole>), IList<SubClosedListResponse> subLists = default(IList<SubClosedListResponse>))
+        public ClosedListEntityExtractor(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), bool? fuzzyMatchingEnabled = default(bool?), IList<SubClosedListResponse> subLists = default(IList<SubClosedListResponse>))
+            : base(id, readableType, name, typeId, fuzzyMatchingEnabled)
         {
-            Id = id;
-            Name = name;
-            TypeId = typeId;
-            ReadableType = readableType;
-            Roles = roles;
             SubLists = subLists;
             CustomInit();
         }
@@ -59,40 +56,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the Entity Model.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public System.Guid Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets name of the Entity Model.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type ID of the Entity Model.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeId")]
-        public int? TypeId { get; set; }
-
-        /// <summary>
-        /// Gets or sets possible values include: 'Entity Extractor', 'Child
-        /// Entity Extractor', 'Hierarchical Entity Extractor', 'Hierarchical
-        /// Child Entity Extractor', 'Composite Entity Extractor', 'List Entity
-        /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier',
-        /// 'Pattern.Any Entity Extractor', 'Closed List Entity Extractor',
-        /// 'Regex Entity Extractor'
-        /// </summary>
-        [JsonProperty(PropertyName = "readableType")]
-        public string ReadableType { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "roles")]
-        public IList<EntityRole> Roles { get; set; }
-
-        /// <summary>
         /// Gets or sets list of sublists.
         /// </summary>
         [JsonProperty(PropertyName = "subLists")]
@@ -101,15 +64,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
-            if (ReadableType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ReadableType");
-            }
+            base.Validate();
         }
     }
 }

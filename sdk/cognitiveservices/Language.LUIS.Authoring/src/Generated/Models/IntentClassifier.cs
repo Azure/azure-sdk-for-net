@@ -38,11 +38,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// 'Closed List Entity Extractor', 'Regex Entity Extractor'</param>
         /// <param name="name">Name of the Entity Model.</param>
         /// <param name="typeId">The type ID of the Entity Model.</param>
+        /// <param name="fuzzyMatchingEnabled">Enables the fuzzy matching for
+        /// the list of entities</param>
         /// <param name="customPrebuiltDomainName">The domain name.</param>
         /// <param name="customPrebuiltModelName">The intent name or entity
         /// name.</param>
-        public IntentClassifier(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), string customPrebuiltDomainName = default(string), string customPrebuiltModelName = default(string))
-            : base(id, readableType, name, typeId)
+        public IntentClassifier(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), bool? fuzzyMatchingEnabled = default(bool?), string customPrebuiltDomainName = default(string), string customPrebuiltModelName = default(string))
+            : base(id, readableType, name, typeId, fuzzyMatchingEnabled)
         {
             CustomPrebuiltDomainName = customPrebuiltDomainName;
             CustomPrebuiltModelName = customPrebuiltModelName;

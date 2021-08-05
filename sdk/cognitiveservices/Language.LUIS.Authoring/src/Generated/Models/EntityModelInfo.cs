@@ -40,8 +40,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// 'Closed List Entity Extractor', 'Regex Entity Extractor'</param>
         /// <param name="name">Name of the Entity Model.</param>
         /// <param name="typeId">The type ID of the Entity Model.</param>
-        public EntityModelInfo(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), IList<EntityRole> roles = default(IList<EntityRole>))
-            : base(id, readableType, name, typeId)
+        /// <param name="fuzzyMatchingEnabled">Enables the fuzzy matching for
+        /// the list of entities</param>
+        public EntityModelInfo(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), bool? fuzzyMatchingEnabled = default(bool?), IList<EntityRole> roles = default(IList<EntityRole>))
+            : base(id, readableType, name, typeId, fuzzyMatchingEnabled)
         {
             Roles = roles;
             CustomInit();

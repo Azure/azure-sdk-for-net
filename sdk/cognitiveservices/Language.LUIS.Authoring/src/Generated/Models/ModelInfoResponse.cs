@@ -39,8 +39,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// Entity Extractor', 'List Entity Extractor', 'Prebuilt Entity
         /// Extractor', 'Intent Classifier', 'Pattern.Any Entity Extractor',
         /// 'Closed List Entity Extractor', 'Regex Entity Extractor'</param>
-        /// <param name="name">Name of the Entity Model.</param>
-        /// <param name="typeId">The type ID of the Entity Model.</param>
         /// <param name="children">List of child entities.</param>
         /// <param name="subLists">List of sublists.</param>
         /// <param name="customPrebuiltDomainName">The domain name.</param>
@@ -48,19 +46,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// name.</param>
         /// <param name="regexPattern">The Regular Expression entity
         /// pattern.</param>
-        public ModelInfoResponse(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), IList<EntityRole> roles = default(IList<EntityRole>), IList<ChildEntity> children = default(IList<ChildEntity>), IList<SubClosedListResponse> subLists = default(IList<SubClosedListResponse>), string customPrebuiltDomainName = default(string), string customPrebuiltModelName = default(string), string regexPattern = default(string), IList<ExplicitListItem> explicitList = default(IList<ExplicitListItem>))
+        /// <param name="name">Name of the Entity Model.</param>
+        /// <param name="typeId">The type ID of the Entity Model.</param>
+        public ModelInfoResponse(System.Guid id, string readableType, IList<ChildEntity> children = default(IList<ChildEntity>), IList<SubClosedListResponse> subLists = default(IList<SubClosedListResponse>), string customPrebuiltDomainName = default(string), string customPrebuiltModelName = default(string), string regexPattern = default(string), IList<ExplicitListItem> explicitList = default(IList<ExplicitListItem>), string name = default(string), int? typeId = default(int?))
         {
-            Id = id;
-            Name = name;
-            TypeId = typeId;
-            ReadableType = readableType;
-            Roles = roles;
             Children = children;
             SubLists = subLists;
             CustomPrebuiltDomainName = customPrebuiltDomainName;
             CustomPrebuiltModelName = customPrebuiltModelName;
             RegexPattern = regexPattern;
             ExplicitList = explicitList;
+            Id = id;
+            Name = name;
+            TypeId = typeId;
+            ReadableType = readableType;
             CustomInit();
         }
 
@@ -68,40 +67,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the ID of the Entity Model.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public System.Guid Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets name of the Entity Model.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type ID of the Entity Model.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeId")]
-        public int? TypeId { get; set; }
-
-        /// <summary>
-        /// Gets or sets possible values include: 'Entity Extractor', 'Child
-        /// Entity Extractor', 'Hierarchical Entity Extractor', 'Hierarchical
-        /// Child Entity Extractor', 'Composite Entity Extractor', 'List Entity
-        /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier',
-        /// 'Pattern.Any Entity Extractor', 'Closed List Entity Extractor',
-        /// 'Regex Entity Extractor'
-        /// </summary>
-        [JsonProperty(PropertyName = "readableType")]
-        public string ReadableType { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "roles")]
-        public IList<EntityRole> Roles { get; set; }
 
         /// <summary>
         /// Gets or sets list of child entities.
@@ -137,6 +102,35 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         [JsonProperty(PropertyName = "explicitList")]
         public IList<ExplicitListItem> ExplicitList { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the Entity Model.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public System.Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets name of the Entity Model.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type ID of the Entity Model.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeId")]
+        public int? TypeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Entity Extractor', 'Child
+        /// Entity Extractor', 'Hierarchical Entity Extractor', 'Hierarchical
+        /// Child Entity Extractor', 'Composite Entity Extractor', 'List Entity
+        /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier',
+        /// 'Pattern.Any Entity Extractor', 'Closed List Entity Extractor',
+        /// 'Regex Entity Extractor'
+        /// </summary>
+        [JsonProperty(PropertyName = "readableType")]
+        public string ReadableType { get; set; }
 
         /// <summary>
         /// Validate the object.

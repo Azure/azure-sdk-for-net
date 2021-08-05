@@ -35,10 +35,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         /// <param name="subLists">The new sublists for the feature.</param>
         /// <param name="name">The new name of the list entity.</param>
-        public ClosedListModelUpdateObject(IList<WordListObject> subLists = default(IList<WordListObject>), string name = default(string))
+        /// <param name="fuzzyMatchingEnabled">Enables the fuzzy matching for
+        /// the list of entities</param>
+        public ClosedListModelUpdateObject(IList<WordListObject> subLists = default(IList<WordListObject>), string name = default(string), bool? fuzzyMatchingEnabled = default(bool?))
         {
             SubLists = subLists;
             Name = name;
+            FuzzyMatchingEnabled = fuzzyMatchingEnabled;
             CustomInit();
         }
 
@@ -58,6 +61,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables the fuzzy matching for the list of entities
+        /// </summary>
+        [JsonProperty(PropertyName = "fuzzyMatchingEnabled")]
+        public bool? FuzzyMatchingEnabled { get; set; }
 
     }
 }
