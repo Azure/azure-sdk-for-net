@@ -93,7 +93,7 @@ namespace Azure.Core.TestFramework
             RepositoryRoot = directoryInfo?.Parent?.FullName;
         }
 
-        public RecordedTestMode Mode { get; set; } = GlobalTestMode;
+        public RecordedTestMode? Mode { get; set; }
 
         /// <summary>
         ///   The name of the Azure subscription containing the resource group to be used for Live tests. Recorded.
@@ -249,6 +249,11 @@ namespace Azure.Core.TestFramework
 
             string value = GetOptionalVariable(name);
 
+            if (!Mode.HasValue)
+            {
+                return value;
+            }
+
             if (_recording == null)
             {
                 throw new InvalidOperationException("Recorded value should not be set outside the test method invocation");
@@ -381,7 +386,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         /// Determines if the current global test mode.
         /// </summary>
-        internal static RecordedTestMode GlobalTestMode
+        public static RecordedTestMode GlobalTestMode
         {
             get
             {
