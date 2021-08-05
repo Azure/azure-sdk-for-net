@@ -692,6 +692,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
+                    MaxConcurrentCallsPerSession = maxCallsPerSession,
                     AutoCompleteMessages = false,
                     MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(autoLockRenewalDuration)
                 };
@@ -908,6 +909,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
+                    MaxConcurrentCallsPerSession = maxCallsPerSession,
                     AutoCompleteMessages = autoComplete,
                 };
                 for (int i = 0; i < specifiedSessionCount; i++)
