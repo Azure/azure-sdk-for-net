@@ -386,7 +386,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         /// Determines if the current global test mode.
         /// </summary>
-        public static RecordedTestMode GlobalTestMode
+        internal static RecordedTestMode GlobalTestMode
         {
             get
             {

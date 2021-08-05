@@ -9,7 +9,6 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.Storage.Test;
-using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests.ManagedDisk
 {
@@ -19,9 +18,13 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
     /// Deleting snapshots at test class level was not viable as it led to race conditions related to access rights,
     /// i.e. if one of the middle (or first) snapshots is deleted it seems that service revokes read access while it squashes data.
     /// </summary>
-    [SetUpFixture]
-    public class ManagedDiskFixture
+    public class ManagedDiskFixture : SetUpFixtureBase<BlobTestEnvironment>
     {
+        public ManagedDiskFixture()
+            : base(/* RecordedTestMode.Live /* to hardocode the mode */)
+        {
+        }
+
         public static ManagedDiskFixture Instance { get; private set; }
 
         private ManagedDiskConfiguration _config;
@@ -32,10 +35,9 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         public Uri Snapshot1SASUri { get; private set; }
         public Uri Snapshot2SASUri { get; private set; }
 
-        [OneTimeSetUp]
-        public async Task Setup()
+        protected override async Task RunBeforeAnyTests()
         {
-            if (TestEnvironment.GlobalTestMode != RecordedTestMode.Playback)
+            if (Environment.Mode != RecordedTestMode.Playback)
             {
                 _config = TestConfigurations.DefaultTargetManagedDisk;
 
@@ -60,10 +62,9 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             }
         }
 
-        [OneTimeTearDown]
-        public async Task Cleanup()
+        protected override async Task RunAfterAnyTests()
         {
-            if (TestEnvironment.GlobalTestMode != RecordedTestMode.Playback)
+            if (Environment.Mode != RecordedTestMode.Playback)
             {
                 await RevokeAccess(_snapshot1);
                 await RevokeAccess(_snapshot2);
