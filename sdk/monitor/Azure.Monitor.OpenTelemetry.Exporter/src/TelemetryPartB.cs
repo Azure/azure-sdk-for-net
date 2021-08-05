@@ -23,6 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     /// </summary>
     internal class TelemetryPartB
     {
+        private const int MaxlinksAllowed = 100;
         internal static RequestData GetRequestData(Activity activity)
         {
             string url = null;
@@ -129,13 +130,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
+        /// <summary>
+        /// Converts Activity Links to custom property with key as _MS.links.
+        /// Value will be a JSON string formatted as [{"operation_Id":"{TraceId}","id":"{SpanId}"}].
+        /// </summary>
         private static void AddActivityLinksToPartCTags(IEnumerable<ActivityLink> links, ref AzMonList PartCTags)
         {
             string msLinks = "_MS.links";
             // max number of links that can fit in this json formatted string is 107. it is based on assumption that traceid and spanid will be of fixed length.
             // Keeping max at 100 for now.
-            // todo: define this as constant.
-            int maxLinksAllowed =100;
+            int maxLinks = MaxlinksAllowed;
 
             if (links != null && links.Any())
             {
@@ -157,9 +161,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         .Append('\"');
                     linksJson.Append("},");
 
-                    maxLinksAllowed--;
-                    if (maxLinksAllowed == 0)
+                    maxLinks--;
+                    if (maxLinks == 0)
                     {
+                        if (MaxlinksAllowed < links.Count())
+                        {
+                            AzureMonitorExporterEventSource.Log.Write($"ActivityLinksIgnored{EventLevelSuffix.Informational}", $"Max count of {MaxlinksAllowed} has reached.");
+                        }
                         break;
                     }
                 }
