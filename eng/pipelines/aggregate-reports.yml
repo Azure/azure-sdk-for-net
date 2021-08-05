@@ -200,10 +200,15 @@ stages:
               Get-ChildItem -Path "$(Pipeline.Workspace)\.gdn\.r"
               Get-ChildItem -Path "$(Pipeline.Workspace)\.gdn\r"
               Get-ChildItem -Path "$(Pipeline.Workspace)\.gdn"
+
               New-Item -Path "$(Build.ArtifactStagingDirectory)" -Name "CodeAnalysisLogs" -ItemType "directory"
+              New-Item -Path "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs" -Name ".r" -ItemType "directory"
+              New-Item -Path "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs" -Name "r" -ItemType "directory"
+
               Copy-Item -Path "$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnbaselines" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs"
-              Copy-Item -Path "$(Pipeline.Workspace)\.gdn\r\*" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs" -recurse
-              Copy-Item -Path "$(Pipeline.Workspace)\.gdn\.r\*" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs" -recurse
+              Copy-Item -Path "$(Pipeline.Workspace)\.gdn\*.gdn*" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs"
+              Copy-Item -Path "$(Pipeline.Workspace)\.gdn\r\*" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs\r" -recurse
+              Copy-Item -Path "$(Pipeline.Workspace)\.gdn\.r\*" -Destination "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs\.r" -recurse
               Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\CodeAnalysisLogs" 
             displayName: 'Stage Guardian Tools Output for publishing'
             condition: succeeded()
