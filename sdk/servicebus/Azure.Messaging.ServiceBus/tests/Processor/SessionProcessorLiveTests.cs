@@ -1925,7 +1925,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
                 }
-\
+
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += SessionErrorHandler;
 
