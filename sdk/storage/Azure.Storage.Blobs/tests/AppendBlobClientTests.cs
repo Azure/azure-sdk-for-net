@@ -646,7 +646,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         [TestCase(false)]
         [TestCase(true)]
         public async Task AppendBlockAsync_EncryptionScopeSAS(bool azureSasCredential)
