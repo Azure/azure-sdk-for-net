@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/loadBalancers");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create lbPublicIP
             string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
@@ -49,15 +49,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(
                 lbPublicIpName,
-                resourceGroupName,
                 lbDomaingNameLabel,
-                location);
+                location,
+                resourceGroup.Value.GetPublicIPAddresses());
 
             // Create Vnet
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
-
-            VirtualNetwork vnet = await CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location);
+            VirtualNetwork vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.Value.GetVirtualNetworks());
 
             // Create Nics
             string nic1name = Recording.GenerateAssetName("azsmnet");
@@ -66,27 +65,27 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             NetworkInterface nic1 = await CreateNetworkInterface(
                 nic1name,
-                resourceGroupName,
                 null,
                 vnet.Data.Subnets[0].Id,
                 location,
-                "ipconfig");
+                "ipconfig",
+                resourceGroup.Value.GetNetworkInterfaces());
 
             NetworkInterface nic2 = await CreateNetworkInterface(
                 nic2name,
-                resourceGroupName,
                 null,
                 vnet.Data.Subnets[0].Id,
                 location,
-                "ipconfig");
+                "ipconfig",
+                resourceGroup.Value.GetNetworkInterfaces());
 
             NetworkInterface nic3 = await CreateNetworkInterface(
                 nic3name,
-                resourceGroupName,
                 null,
                 vnet.Data.Subnets[0].Id,
                 location,
-                "ipconfig");
+                "ipconfig",
+                resourceGroup.Value.GetNetworkInterfaces());
 
             // Create the LoadBalancer
             var lbName = Recording.GenerateAssetName("azsmnet");
@@ -187,9 +186,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Create the loadBalancer
-            var loadBalancerContainer = GetResourceGroup(resourceGroupName).GetLoadBalancers();
+            var loadBalancerContainer = resourceGroup.Value.GetLoadBalancers();
             Operation<LoadBalancer> putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbName, loadBalancer);
-            await putLoadBalancerOperation.WaitForCompletionAsync();;
+            await putLoadBalancerOperation.WaitForCompletionAsync();
+            ;
             Response<LoadBalancer> getLoadBalancer = await loadBalancerContainer.GetAsync(lbName);
 
             // Associate the nic with LB
@@ -201,15 +201,17 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //nic3.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.InboundNatRules[1]);
 
             // Put Nics
-            var networkInterfaceContainer = GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
+            var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Data);
-            await createOrUpdateOperation1.WaitForCompletionAsync();;
+            await createOrUpdateOperation1.WaitForCompletionAsync();
 
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Data);
-            await createOrUpdateOperation2.WaitForCompletionAsync();;
+            await createOrUpdateOperation2.WaitForCompletionAsync();
+            ;
 
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation3 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic3name, nic3.Data);
-            await createOrUpdateOperation3.WaitForCompletionAsync();;
+            await createOrUpdateOperation3.WaitForCompletionAsync();
+            ;
 
             // Get Nics
             await networkInterfaceContainer.GetAsync(nic1name);
@@ -265,7 +267,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
 
             // Get subnet with expanded ipconfigurations
-            Response<Subnet> subnet = await GetResourceGroup(resourceGroupName).GetVirtualNetworks().Get(vnetName).Value.GetSubnets().GetAsync(
+            Response<Subnet> subnet = await resourceGroup.Value.GetVirtualNetworks().Get(vnetName).Value.GetSubnets().GetAsync(
                 subnetName,
                 "IPConfigurations");
 
@@ -278,7 +280,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
 
             // Get publicIPAddress with expanded ipconfigurations
-            Response<PublicIPAddress> publicip = await GetResourceGroup(resourceGroupName).GetPublicIPAddresses().GetAsync(
+            Response<PublicIPAddress> publicip = await resourceGroup.Value.GetPublicIPAddresses().GetAsync(
                 lbPublicIpName,
                 "IPConfiguration");
 
@@ -289,7 +291,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Delete LoadBalancer
             Operation deleteOperation = await loadBalancerContainer.Get(lbName).Value.StartDeleteAsync();
-            await deleteOperation.WaitForCompletionResponseAsync();;
+            await deleteOperation.WaitForCompletionResponseAsync();
+            ;
 
             // Verify Delete
             AsyncPageable<LoadBalancer> listLoadBalancerAP = loadBalancerContainer.GetAllAsync();
@@ -302,7 +305,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             await networkInterfaceContainer.Get(nic3name).Value.StartDeleteAsync();
 
             // Delete all PublicIPAddresses
-            await GetResourceGroup(resourceGroupName).GetPublicIPAddresses().Get(lbPublicIpName).Value.StartDeleteAsync();
+            await resourceGroup.Value.GetPublicIPAddresses().Get(lbPublicIpName).Value.StartDeleteAsync();
         }
     }
 }

@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             string resourceGroupName = Recording.GenerateAssetName("nw");
             string location = TestEnvironment.Location;
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string networkWatcherName = Recording.GenerateAssetName("azsmnet");
 
             //Create Network Watcher in the resource group
-            var networkWatcherContainer = GetNetworkWatcherContainer(resourceGroupName);
+            var networkWatcherContainer = resourceGroup.Value.GetNetworkWatchers();
             var properties = new NetworkWatcherData { Location = location };
             var createResponse = await networkWatcherContainer.CreateOrUpdateAsync(networkWatcherName, properties);
             Assert.AreEqual(networkWatcherName, createResponse.Value.Data.Name);

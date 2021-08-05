@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/routefilters");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
-            var filterContainer = GetRouteFilterContainer(resourceGroupName);
+            var filterContainer = resourceGroup.Value.GetRouteFilters();
             // Create route filter
             string filterName = "filter";
             string ruleName = "rule";

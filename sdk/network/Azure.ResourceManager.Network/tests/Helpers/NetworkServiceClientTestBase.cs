@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             get
             {
-                return ArmClient.GetSubscriptions().Get(TestEnvironment.SubscriptionId).Value;
+                return ArmClient.DefaultSubscription;
             }
         }
 
@@ -116,9 +116,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
         protected async Task<Response<Resources.ResourceGroup>> CreateResourceGroup(string name)
         {
-            string location = TestEnvironment.Location;
-            await ResourceGroupsOperations.CreateOrUpdateAsync(name, new Resources.Models.ResourceGroup(location));
-            return await ArmClient.DefaultSubscription.GetResourceGroups().GetAsync(name);
+            return await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(TestEnvironment.Location));
         }
 
         public async Task CreateVm(
@@ -304,6 +302,25 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getCircuitResponse;
         }
 
+        public async Task<PublicIPAddress> CreateDefaultPublicIpAddress(string name, string domainNameLabel, string location, PublicIPAddressContainer publicIPAddressContainer)
+        {
+            var publicIp = new PublicIPAddressData()
+            {
+                Location = location,
+                Tags = { { "key", "value" } },
+                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
+            };
+
+            // Put nic1PublicIpAddress
+            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(name, publicIp);
+            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
+            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
+            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(name);
+
+            return getPublicIpAddressResponse;
+        }
+
         public async Task<PublicIPAddress> CreateDefaultPublicIpAddress(string name, string resourceGroupName, string domainNameLabel, string location)
         {
             var publicIp = new PublicIPAddressData()
@@ -359,7 +376,40 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             return getNicResponse;
         }
+        public async Task<NetworkInterface> CreateNetworkInterface(string name,  string publicIpAddressId, string subnetId,
+            string location, string ipConfigName, NetworkInterfaceContainer networkInterfaceContainer)
+        {
+            var nicParameters = new NetworkInterfaceData()
+            {
+                Location = location,
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
+                    new NetworkInterfaceIPConfiguration()
+                    {
+                         Name = ipConfigName,
+                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                         Subnet = new SubnetData() { Id = subnetId }
+                    }
+                }
+            };
 
+            if (!string.IsNullOrEmpty(publicIpAddressId))
+            {
+                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIpAddressId*/ };
+            }
+
+            // Test NIC apis
+            await networkInterfaceContainer.StartCreateOrUpdateAsync(name, nicParameters);
+            Response<NetworkInterface> getNicResponse = await networkInterfaceContainer.GetAsync(name);
+            Assert.AreEqual(getNicResponse.Value.Data.Name, name);
+
+            // because its a single CA nic, primaryOnCA is always true
+            Assert.True(getNicResponse.Value.Data.IpConfigurations[0].Primary);
+
+            Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
+
+            return getNicResponse;
+        }
         public async Task<VirtualNetwork> CreateVirtualNetwork(string vnetName, string subnetName, string resourceGroupName, string location)
         {
             var vnet = new VirtualNetworkData()
@@ -378,6 +428,29 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             var virtualNetworkContainer = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
+            await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
+            Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
+
+            return getVnetResponse;
+        }
+
+        public async Task<VirtualNetwork> CreateVirtualNetwork(string vnetName, string subnetName, string location, VirtualNetworkContainer virtualNetworkContainer)
+        {
+            var vnet = new VirtualNetworkData()
+            {
+                Location = location,
+
+                AddressSpace = new AddressSpace()
+                {
+                    AddressPrefixes = { "10.0.0.0/16", }
+                },
+                DhcpOptions = new DhcpOptions()
+                {
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
+                },
+                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+            };
+
             await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
 
@@ -406,6 +479,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return GetResourceGroup(resourceGroupName).GetLoadBalancers();
         }
 
+        protected LoadBalancerContainer GetLoadBalancerContainer(Resources.ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetLoadBalancers();
+        }
+
         protected PublicIPAddressContainer GetPublicIPAddressContainer(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
@@ -416,6 +494,10 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return GetResourceGroup(resourceGroupName).GetVirtualNetworks();
         }
 
+        protected VirtualNetworkContainer GetVirtualNetworkContainer(Resources.ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetVirtualNetworks();
+        }
         protected NetworkInterfaceContainer GetNetworkInterfaceContainer(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetNetworkInterfaces();

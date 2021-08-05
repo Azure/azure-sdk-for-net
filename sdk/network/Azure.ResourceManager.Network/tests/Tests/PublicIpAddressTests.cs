@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/publicIPAddresses");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create the parameter for PUT PublicIPAddress
             string publicIpName = Recording.GenerateAssetName("ipname");
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressContainer = GetPublicIPAddressContainer(resourceGroupName);
+            var publicIPAddressContainer = resourceGroup.Value.GetPublicIPAddresses();
             PublicIPAddressesCreateOrUpdateOperation putPublicIpAddressResponseOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(publicIpName, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await ResourcesManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/publicIPAddresses");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create the parameter for PUT PublicIPAddress
             string publicIpName = Recording.GenerateAssetName("ipname");
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressContainer = GetPublicIPAddressContainer(resourceGroupName);
+            var publicIPAddressContainer = resourceGroup.Value.GetPublicIPAddresses();
             PublicIPAddressesCreateOrUpdateOperation putPublicIpAddressResponseOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(publicIpName, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await ResourcesManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/publicIPAddresses");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create the parameter for PUT PublicIPAddress
             string ipv6PublicIpName = Recording.GenerateAssetName("csmipv6publicip");
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressContainer = GetPublicIPAddressContainer(resourceGroupName);
+            var publicIPAddressContainer = resourceGroup.Value.GetPublicIPAddresses();
             PublicIPAddressesCreateOrUpdateOperation putPublicIpAddressResponseOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(ipv6PublicIpName, ipv6PublicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
