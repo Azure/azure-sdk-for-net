@@ -1623,61 +1623,6 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [Ignore("Not possible to programmatically create a managed disk storage account")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
-        public async Task GetManagedDiskPageRangesDiffAsync_AccessConditionsFail()
-        {
-            var garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetReduced_AccessConditionsFail_Data(garbageLeaseId))
-            {
-                BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
-                await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
-
-                // Arrange
-                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
-
-                // Upload some Pages
-                var data = GetRandomBuffer(Constants.KB);
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 0);
-                }
-
-                // Create prevSnapshot
-                Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
-                var prevSnapshot = response.Value.Snapshot;
-
-                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
-                {
-                    Snapshot = prevSnapshot
-                };
-
-                // Upload additional Pages
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-                }
-
-                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
-
-                PageBlobRequestConditions accessConditions = BuildAccessConditions(
-                    parameters: parameters,
-                    lease: true);
-
-                // Act
-                await TestHelper.CatchAsync<Exception>(
-                    async () =>
-                    {
-                        var _ = (await blob.GetManagedDiskPageRangesDiffAsync(
-                            range: new HttpRange(0, Constants.KB),
-                            previousSnapshotUri: blobUriBuilder.ToUri(),
-                            conditions: accessConditions)).Value;
-                    });
-            }
-        }
-
-        [RecordedTest]
-        [Ignore("Not possible to programmatically create a managed disk storage account")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync_NonAsciiPrevSnapshotUri()
         {
             BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();

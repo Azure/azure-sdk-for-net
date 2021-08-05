@@ -109,10 +109,30 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             }
         }
 
-        /// <summary>
-        /// Data for CreateAsync, GetPageRangesAsync, GetPageRangesDiffAsync, ResizeAsync, and
-        /// UpdateSequenceNumber AccessConditions tests.
-        /// </summary>
+        [Test]
+        public async Task GetManagedDiskPageRangesDiffAsync_AccessConditionsFail()
+        {
+            var snapshot2Client = InstrumentClient(new PageBlobClient(snapshot2SASUri, GetOptions()));
+            foreach (var parameters in Reduced_AccessConditions_Fail_Data)
+            {
+                parameters.NoneMatch = await SetupBlobMatchCondition(snapshot2Client, parameters.NoneMatch);
+
+                PageBlobRequestConditions accessConditions = PageBlobClientTests.BuildAccessConditions(
+                    parameters: parameters,
+                    lease: false);
+
+                // Act
+                await TestHelper.CatchAsync<Exception>(
+                    async () =>
+                    {
+                        var _ = (await snapshot2Client.GetManagedDiskPageRangesDiffAsync(
+                            range: new HttpRange(0, Constants.KB),
+                            previousSnapshotUri: snapshot1SASUri,
+                            conditions: accessConditions)).Value;
+                    });
+            }
+        }
+
         public IEnumerable<PageBlobClientTests.AccessConditionParameters> Reduced_AccessConditions_Data
             => new[]
             {
@@ -120,8 +140,16 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
                 new PageBlobClientTests.AccessConditionParameters { IfModifiedSince = OldDate },
                 new PageBlobClientTests.AccessConditionParameters { IfUnmodifiedSince = NewDate },
                 new PageBlobClientTests.AccessConditionParameters { Match = ReceivedETag },
-                new PageBlobClientTests.AccessConditionParameters { NoneMatch = GarbageETag },
-                new PageBlobClientTests.AccessConditionParameters { LeaseId = ReceivedLeaseId }
+                new PageBlobClientTests.AccessConditionParameters { NoneMatch = GarbageETag }
+            };
+
+        public IEnumerable<PageBlobClientTests.AccessConditionParameters> Reduced_AccessConditions_Fail_Data
+            => new[]
+            {
+                        new PageBlobClientTests.AccessConditionParameters { IfModifiedSince = NewDate },
+                        new PageBlobClientTests.AccessConditionParameters { IfUnmodifiedSince = OldDate },
+                        new PageBlobClientTests.AccessConditionParameters { Match = GarbageETag },
+                        new PageBlobClientTests.AccessConditionParameters { NoneMatch = ReceivedETag }
             };
 
         private async Task<byte[]> DownloadRange(PageBlobClient client, HttpRange range)
