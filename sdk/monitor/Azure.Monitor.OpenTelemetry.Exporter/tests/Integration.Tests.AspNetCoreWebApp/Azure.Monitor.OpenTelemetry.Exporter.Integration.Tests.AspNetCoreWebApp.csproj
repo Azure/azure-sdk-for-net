@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <!-- https://docs.microsoft.com/aspnet/core/test/integration-tests -->
   
   <PropertyGroup>
@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.5.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <!--We would prefer to use the meta package "Microsoft.AspNetCore.App" here.
     But this package targets NetCoreApp2.1, while all the dependent packages target NetStandard2.0.
     To support net461 so we must reference the dependent packages.-->

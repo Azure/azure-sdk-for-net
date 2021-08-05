@@ -67,12 +67,22 @@
   ],
   "overrides": [
     {
+      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
+      "words": ["warnaserror"]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
     {
-      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
-      "words": ["warnaserror"]
+      "filename": "**/sdk/keyvault/**/*.cs",
+      "words": [
+        "deletesas",
+        "getsas",
+        "listsas",
+        "oaep",
+        "setsas"
+      ]
     },
     {
       "filename": "**/sdk/search/**/*.cs",

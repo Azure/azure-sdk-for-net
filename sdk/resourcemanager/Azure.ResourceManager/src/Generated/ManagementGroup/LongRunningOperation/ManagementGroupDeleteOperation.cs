@@ -11,25 +11,28 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Management.Models
 {
-    /// <summary> The resources to move must be in the same source resource group. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
-    public partial class ResourcesMoveResourcesOperation : Operation
+    /// <summary>
+    /// Delete management group.
+    /// If a management group contains child resources, the request will fail.
+    /// .
+    /// </summary>
+    public partial class ManagementGroupDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ResourcesMoveResourcesOperation for mocking. </summary>
-        protected ResourcesMoveResourcesOperation()
+        /// <summary> Initializes a new instance of ManagementGroupDeleteOperation for mocking. </summary>
+        protected ManagementGroupDeleteOperation()
         {
         }
 
-        internal ResourcesMoveResourcesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagementGroupDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesMoveResourcesOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupDeleteOperation");
         }
-
         /// <inheritdoc />
-        public override string Id => "";
+        public override string Id => _operation.Id;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

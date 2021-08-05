@@ -59,6 +59,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 - [Batch query](#batch-query)
 - [Query dynamic table](#query-dynamic-table)
 - [Increase query timeout](#increase-query-timeout)
+- [Query additional workspaces](#query-additional-workspaces)
 - [Query metrics](#query-metrics)
 
 ### Query logs
@@ -73,7 +74,7 @@ Response<LogsQueryResult> response = await client.QueryAsync(
     "AzureActivity | top 10 by TimeGenerated",
     new DateTimeRange(TimeSpan.FromDays(1)));
 
-LogsQueryResultTable table = response.Value.PrimaryTable;
+LogsQueryResultTable table = response.Value.Table;
 
 foreach (var row in table.Rows)
 {
@@ -177,7 +178,7 @@ Response<LogsQueryResult> response = await client.QueryAsync(
     "AzureActivity | top 10 by TimeGenerated",
     new DateTimeRange(TimeSpan.FromDays(1)));
 
-LogsQueryResultTable table = response.Value.PrimaryTable;
+LogsQueryResultTable table = response.Value.Table;
 
 foreach (var column in table.Columns)
 {
@@ -223,6 +224,32 @@ foreach (var resourceGroup in response.Value)
 }
 ```
 
+### Query additional workspaces
+
+To run the same query against multiple workspaces, use the `LogsQueryOptions.AdditionalWorkspaces` property:
+
+```C# Snippet:QueryLogsWithAdditionalWorkspace
+string workspaceId = "<workspace_id>";
+string additionalWorkspaceId = "<additional_workspace_id>";
+
+var client = new LogsQueryClient(new DefaultAzureCredential());
+
+// Query TOP 10 resource groups by event count
+Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
+    workspaceId,
+    "AzureActivity | summarize count()",
+    new DateTimeRange(TimeSpan.FromDays(1)),
+    options: new LogsQueryOptions
+    {
+        AdditionalWorkspaces = { additionalWorkspaceId }
+    });
+
+foreach (var resourceGroup in response.Value)
+{
+    Console.WriteLine(resourceGroup);
+}
+```
+
 ### Query metrics
 
 You can query metrics using the `MetricsQueryClient.QueryAsync` method. For every requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
@@ -235,11 +262,11 @@ A resource ID is required to query metrics. To find the resource ID:
 
 ```C# Snippet:QueryMetrics
 string resourceId =
-    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.OperationalInsights/workspaces/<workspace_name>";
+    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
 
 var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
 
-Response<MetricQueryResult> results = await metricsClient.QueryAsync(
+Response<MetricsQueryResult> results = await metricsClient.QueryAsync(
     resourceId,
     new[] {"Microsoft.OperationalInsights/workspaces"}
 );

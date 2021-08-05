@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationOrResponseInternals<ResourceGroup> _operation;
 
-        /// <summary> Initializes a new instance of ResourcesCreateOrUpdateByIdOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceGroupCreateOrUpdateOperation for mocking. </summary>
         protected ResourceGroupCreateOrUpdateOperation()
         {
         }

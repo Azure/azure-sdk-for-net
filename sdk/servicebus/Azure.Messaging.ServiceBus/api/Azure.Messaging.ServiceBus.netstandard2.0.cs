@@ -222,6 +222,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual System.Threading.Tasks.Task StopProcessingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public void UpdateConcurrency(int maxConcurrentCalls) { }
     }
     public partial class ServiceBusProcessorOptions
     {
@@ -406,6 +407,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual System.Threading.Tasks.Task StopProcessingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession) { }
     }
     public partial class ServiceBusSessionProcessorOptions
     {
