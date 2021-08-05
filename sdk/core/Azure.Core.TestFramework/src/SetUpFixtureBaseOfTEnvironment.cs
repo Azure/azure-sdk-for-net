@@ -20,23 +20,13 @@ namespace Azure.Core.TestFramework
         public TEnvironment Environment { get; }
 
         [OneTimeSetUp]
-        public Task SetUp()
-        {
-            return RunBeforeAnyTests();
-        }
-
-        [OneTimeTearDown]
-        public Task TearDown()
-        {
-            return RunAfterAnyTests();
-        }
-
-        protected virtual Task RunBeforeAnyTests()
+        public virtual Task SetUp()
         {
             return Task.CompletedTask;
         }
 
-        protected virtual Task RunAfterAnyTests()
+        [OneTimeTearDown]
+        public virtual Task TearDown()
         {
             return Task.CompletedTask;
         }

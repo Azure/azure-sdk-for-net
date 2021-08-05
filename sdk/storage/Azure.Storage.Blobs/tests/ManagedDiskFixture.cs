@@ -35,7 +35,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         public Uri Snapshot1SASUri { get; private set; }
         public Uri Snapshot2SASUri { get; private set; }
 
-        protected override async Task RunBeforeAnyTests()
+        public override async Task SetUp()
         {
             if (Environment.Mode != RecordedTestMode.Playback)
             {
@@ -62,7 +62,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             }
         }
 
-        protected override async Task RunAfterAnyTests()
+        public override async Task TearDown()
         {
             if (Environment.Mode != RecordedTestMode.Playback)
             {
