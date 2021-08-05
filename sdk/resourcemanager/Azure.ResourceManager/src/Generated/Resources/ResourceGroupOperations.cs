@@ -718,5 +718,32 @@ namespace Azure.ResourceManager.Resources
         {
             return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
+
+        #region PolicyAssignment
+        /// <summary> Gets an object representing a PolicyAssignmentContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="PolicyAssignmentContainer" /> object. </returns>
+        public virtual PolicyAssignmentContainer GetPolicyAssignments()
+        {
+            return new PolicyAssignmentContainer(this);
+        }
+        #endregion
+
+        #region PolicyExemption
+        /// <summary> Gets an object representing a PolicyExemptionContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="PolicyExemptionContainer" /> object. </returns>
+        public virtual PolicyExemptionContainer GetPolicyExemptions()
+        {
+            return new PolicyExemptionContainer(this);
+        }
+        #endregion
+
+        #region ManagementLockObject
+        /// <summary> Gets an object representing a ManagementLockObjectContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="ManagementLockObjectContainer" /> object. </returns>
+        public virtual ManagementLockObjectContainer GetManagementLockObjects()
+        {
+            return new ManagementLockObjectContainer(this);
+        }
+        #endregion
     }
 }

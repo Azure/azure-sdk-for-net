@@ -276,5 +276,59 @@ namespace Azure.ResourceManager.Resources
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
+
+        #region PolicyDefinition
+        /// <summary> Gets an object representing a PolicyDefinitionContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="PolicyDefinitionContainer" /> object. </returns>
+        public virtual PolicyDefinitionContainer GetPolicyDefinitions()
+        {
+            return new PolicyDefinitionContainer(this);
+        }
+        #endregion
+
+        #region PolicySetDefinition
+        /// <summary> Gets an object representing a PolicySetDefinitionContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="PolicySetDefinitionContainer" /> object. </returns>
+        public virtual PolicySetDefinitionContainer GetPolicySetDefinitions()
+        {
+            return new PolicySetDefinitionContainer(this);
+        }
+        #endregion
+
+        #region PolicyAssignment
+        /// <summary> Gets an object representing a PolicyAssignmentContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="PolicyAssignmentContainer" /> object. </returns>
+        public virtual PolicyAssignmentContainer GetPolicyAssignments()
+        {
+            return new PolicyAssignmentContainer(this);
+        }
+        #endregion
+
+        #region PolicyExemption
+        /// <summary> Gets an object representing a PolicyExemptionContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="PolicyExemptionContainer" /> object. </returns>
+        public virtual PolicyExemptionContainer GetPolicyExemptions()
+        {
+            return new PolicyExemptionContainer(this);
+        }
+        #endregion
+
+        #region ManagementLockObject
+        /// <summary> Gets an object representing a ManagementLockObjectContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="ManagementLockObjectContainer" /> object. </returns>
+        public virtual ManagementLockObjectContainer GetManagementLocks()
+        {
+            return new ManagementLockObjectContainer(this);
+        }
+        #endregion
+
+        #region ResourceLink
+        /// <summary> Gets an object representing a ResourceLinkContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="ResourceLinkContainer" /> object. </returns>
+        public virtual ResourceLinkContainer GetResourceLinkContainer()
+        {
+            return new ResourceLinkContainer(this);
+        }
+        #endregion
     }
 }

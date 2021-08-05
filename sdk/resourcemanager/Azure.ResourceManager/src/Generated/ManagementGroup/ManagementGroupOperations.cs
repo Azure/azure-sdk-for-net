@@ -332,5 +332,41 @@ namespace Azure.ResourceManager.Management
                 throw;
             }
         }
+
+        #region PolicyDefinition
+        /// <summary> Gets an object representing a PolicyDefinitionContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="PolicyDefinitionContainer" /> object. </returns>
+        public virtual PolicyDefinitionContainer GetPolicyDefinitionContainer()
+        {
+            return new PolicyDefinitionContainer(this);
+        }
+        #endregion
+
+        #region PolicySetDefinition
+        /// <summary> Gets an object representing a PolicySetDefinitionContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="PolicySetDefinitionContainer" /> object. </returns>
+        public virtual PolicySetDefinitionContainer GetPolicySetDefinitionContainer()
+        {
+            return new PolicySetDefinitionContainer(this);
+        }
+        #endregion
+
+        #region PolicyAssignment
+        /// <summary> Gets an object representing a PolicyAssignmentContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="PolicyAssignmentContainer" /> object. </returns>
+        public virtual PolicyAssignmentContainer GetPolicyAssignmentContainer()
+        {
+            return new PolicyAssignmentContainer(this);
+        }
+        #endregion
+
+        #region PolicyExemption
+        /// <summary> Gets an object representing a PolicyExemptionContainer along with the instance operations that can be performed on it. </summary>
+        /// <returns> Returns a <see cref="PolicyExemptionContainer" /> object. </returns>
+        public virtual PolicyExemptionContainer GetPolicyExemptionContainer()
+        {
+            return new PolicyExemptionContainer(this);
+        }
+        #endregion
     }
 }
