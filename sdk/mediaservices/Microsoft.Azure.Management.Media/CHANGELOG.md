@@ -17,7 +17,7 @@
 
 ### Breaking changes
 
-- Media serice constructor has new optional Key delivery parameter after encryption parameter.
+- Media service constructor has new optional Key delivery parameter after encryption parameter.
 - Media service update call is expecting an object of a new class MediaServiceUpdate. The MediaServiceUpdate class is similar to MediaService class, except it doesn't have location property.
 
 ## Changes in 3.0.4
