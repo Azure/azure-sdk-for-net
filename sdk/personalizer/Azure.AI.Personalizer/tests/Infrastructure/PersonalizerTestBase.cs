@@ -23,12 +23,9 @@ namespace Azure.AI.Personalizer.Tests
             string endpoint = isSingleSlot ? TestEnvironment.SingleSlotEndpoint : TestEnvironment.MultiSlotEndpoint;
             string apiKey = isSingleSlot ? TestEnvironment.SingleSlotApiKey : TestEnvironment.MultiSlotApiKey;
             PersonalizerAdministrationClient adminClient = GetAdministrationClient(isSingleSlot);
-            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+            if (!isSingleSlot)
             {
-                if (!isSingleSlot)
-                {
-                    await EnableMultiSlot(adminClient);
-                }
+                await EnableMultiSlot(adminClient);
             }
             var credential = new AzureKeyCredential(apiKey);
             var options = InstrumentClientOptions(new PersonalizerClientOptions());
@@ -57,7 +54,7 @@ namespace Azure.AI.Personalizer.Tests
                 await adminClient.UpdatePersonalizerPropertiesAsync(properties);
                 await adminClient.UpdatePersonalizerPolicyAsync(new PersonalizerPolicy("multiSlot", "--ccb_explore_adf --epsilon 0.2 --power_t 0 -l 0.001 --cb_type mtr -q ::"));
                 //sleep 60 seconds to allow setting to propagte
-                await Task.Delay(30000);
+                await Task.Delay(60000);
             }
         }
     }
