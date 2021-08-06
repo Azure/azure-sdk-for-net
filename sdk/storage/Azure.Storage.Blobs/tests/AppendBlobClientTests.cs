@@ -365,6 +365,111 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
+        public async Task CreateAsync_EncryptionScopeSAS()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = test.Container.Name,
+                BlobName = blobName,
+                EncryptionScope = TestConfigDefault.EncryptionScope,
+                ExpiresOn = Recording.UtcNow.AddDays(1)
+            };
+            blobSasBuilder.SetPermissions(BlobSasPermissions.All);
+
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(
+                new StorageSharedKeyCredential(
+                    TestConfigDefault.AccountName,
+                    TestConfigDefault.AccountKey));
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            {
+                BlobName = blobName,
+                Sas = sasQueryParameters
+            };
+
+            AppendBlobClient sasBlob = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            Response<BlobContentInfo> response = await sasBlob.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
+        public async Task CreateAsync_EncryptionScopeAccountSAS()
+        {
+            // Arrange
+            string containerName = GetNewContainerName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName);
+            BlobServiceClient blobServiceClient = GetServiceClient_SharedKey();
+
+            AccountSasBuilder accountSasBuilder = new AccountSasBuilder(
+                permissions: AccountSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: AccountSasServices.All,
+                resourceTypes: AccountSasResourceTypes.All);
+            accountSasBuilder.EncryptionScope = TestConfigDefault.EncryptionScope;
+
+            Uri accountSasUri = blobServiceClient.GenerateAccountSasUri(accountSasBuilder);
+            blobServiceClient = InstrumentClient(new BlobServiceClient(accountSasUri, GetOptions()));
+            BlobContainerClient containerClient = InstrumentClient(blobServiceClient.GetBlobContainerClient(containerName));
+            AppendBlobClient blob = InstrumentClient(containerClient.GetAppendBlobClient(GetNewBlobName()));
+
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+        }
+
+        [Ignore("TODO, waiting for working test account.")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task CreateAsync_EncryptionScopeIdentitySAS()
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            string blobName = GetNewBlobName();
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = test.Container.Name,
+                BlobName = blobName,
+                EncryptionScope = TestConfigDefault.EncryptionScope,
+                ExpiresOn = Recording.UtcNow.AddDays(1)
+            };
+            blobSasBuilder.SetPermissions(BlobSasPermissions.All);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            {
+                BlobName = blobName,
+                Sas = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, TestConfigOAuth.AccountName)
+            };
+            AppendBlobClient sasBlob = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            // Act
+            Response<BlobContentInfo> response = await sasBlob.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+        }
+
         //TODO
         [Ignore("Not yet implemented")]
         [RecordedTest]
@@ -640,111 +745,6 @@ namespace Azure.Storage.Blobs.Test
             using var stream = new MemoryStream(data);
             Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
                 content: stream);
-
-            // Assert
-            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
-        public async Task AppendBlockAsync_EncryptionScopeSAS()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-            string blobName = GetNewBlobName();
-
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
-            {
-                BlobContainerName = test.Container.Name,
-                BlobName = blobName,
-                EncryptionScope = TestConfigDefault.EncryptionScope,
-                ExpiresOn = Recording.UtcNow.AddDays(1)
-            };
-            blobSasBuilder.SetPermissions(BlobSasPermissions.All);
-
-            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(
-                new StorageSharedKeyCredential(
-                    TestConfigDefault.AccountName,
-                    TestConfigDefault.AccountKey));
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
-            {
-                BlobName = blobName,
-                Sas = sasQueryParameters
-            };
-
-            AppendBlobClient sasBlob = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
-
-            byte[] data = GetRandomBuffer(Constants.KB);
-
-            // Act
-            Response<BlobContentInfo> response = await sasBlob.CreateIfNotExistsAsync();
-
-            // Assert
-            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
-        public async Task AppendBlockAsync_EncryptionScopeAccountSAS()
-        {
-            // Arrange
-            string containerName = GetNewContainerName();
-            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName);
-            BlobServiceClient blobServiceClient = GetServiceClient_SharedKey();
-
-            AccountSasBuilder accountSasBuilder = new AccountSasBuilder(
-                permissions: AccountSasPermissions.All,
-                expiresOn: Recording.UtcNow.AddDays(1),
-                services: AccountSasServices.All,
-                resourceTypes: AccountSasResourceTypes.All);
-            accountSasBuilder.EncryptionScope = TestConfigDefault.EncryptionScope;
-
-            Uri accountSasUri = blobServiceClient.GenerateAccountSasUri(accountSasBuilder);
-            blobServiceClient = InstrumentClient(new BlobServiceClient(accountSasUri, GetOptions()));
-            BlobContainerClient containerClient = InstrumentClient(blobServiceClient.GetBlobContainerClient(containerName));
-            AppendBlobClient blob = InstrumentClient(containerClient.GetAppendBlobClient(GetNewBlobName()));
-
-            // Act
-            Response<BlobContentInfo> response = await blob.CreateIfNotExistsAsync();
-
-            // Assert
-            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
-        }
-
-        [Ignore("TODO, waiting for working test account.")]
-        [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
-        public async Task AppendBlockAsync_EncryptionScopeIdentitySAS()
-        {
-            // Arrange
-            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
-            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
-
-            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
-
-            string blobName = GetNewBlobName();
-
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
-            {
-                BlobContainerName = test.Container.Name,
-                BlobName = blobName,
-                EncryptionScope = TestConfigDefault.EncryptionScope,
-                ExpiresOn = Recording.UtcNow.AddDays(1)
-            };
-            blobSasBuilder.SetPermissions(BlobSasPermissions.All);
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
-            {
-                BlobName = blobName,
-                Sas = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, TestConfigOAuth.AccountName)
-            };
-            AppendBlobClient sasBlob = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
-
-            // Act
-            Response<BlobContentInfo> response =  await sasBlob.CreateIfNotExistsAsync();
 
             // Assert
             Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);

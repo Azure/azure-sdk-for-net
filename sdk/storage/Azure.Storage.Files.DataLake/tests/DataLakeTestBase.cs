@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
-        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion, StorageVersionExtensions.MaxVersion, })]
+        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
     public abstract class DataLakeTestBase : StorageTestBase<DataLakeTestEnvironment>
     {
         protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;
@@ -54,7 +54,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 "user:ec3595d6-2c17-4696-8caa-7e139758d24a,group:ec3595d6-2c17-4696-8caa-7e139758d24a," +
                 "default:user:ec3595d6-2c17-4696-8caa-7e139758d24a,default:group:ec3595d6-2c17-4696-8caa-7e139758d24a");
         public DataLakeTestBase(bool async, DataLakeClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Live)
+            : base(async, mode)
         {
             _serviceVersion = serviceVersion;
         }
