@@ -75,6 +75,29 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        public async Task ExtractSummaryWithDisableServiceLogs()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() { DisableServiceLogs = true } }
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_extractSummaryBatchConvenienceDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionsResults = resultCollection.ExtractSummaryResults;
+
+            Assert.IsNotNull(extractSummaryActionsResults);
+            Assert.AreEqual(2, extractSummaryActionsResults.FirstOrDefault().DocumentsResults.Count);
+        }
+
+        [RecordedTest]
         public async Task ExtractSummaryBatchWithRankOrderTest()
         {
             TextAnalyticsClient client = GetClient();

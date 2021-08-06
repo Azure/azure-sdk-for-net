@@ -81,12 +81,14 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults;
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults;
+            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionsResults = resultCollection.ExtractSummaryResults;
 
             Assert.IsNotNull(keyPhrasesActionsResults);
             Assert.IsNotNull(entitiesActionsResults);
             Assert.IsNotNull(piiActionsResults);
             Assert.IsNotNull(entityLinkingActionsResults);
             Assert.IsNotNull(analyzeSentimentActionsResults);
+            Assert.IsNotNull(extractSummaryActionsResults);
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
