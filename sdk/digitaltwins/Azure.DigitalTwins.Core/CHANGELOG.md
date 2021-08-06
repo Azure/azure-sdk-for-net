@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.0-beta.2 (2021-08-06)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix the bug where boolean expressions did not convert to the correct string representation.
 
 ## 1.3.0-beta.1 (2021-08-04)
 
