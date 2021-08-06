@@ -2,6 +2,12 @@
 
 ## 1.5.0-beta.3 (Unreleased)
 
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
+
+- Tomas Pajurek _([GitHub](https://github.com/tpajurek-dtml))_
+
 ### Features Added
 
 ### Breaking Changes
@@ -9,6 +15,8 @@
 ### Bugs Fixed
 
 - Stopped loading `$PROFILE` and checking for updates when using `AzurePowerShellCredential`.
+- Fixed unrecognized argument issue in `AzureCliCredential` when specifying the `TenantId` option. [#23158](https://github.com/Azure/azure-sdk-for-net/issues/23158) (A community contribution, courtesy of _[tpajurek-dtml](https://github.com/tpajurek-dtml))_.
+
 
 ### Other Changes
 
