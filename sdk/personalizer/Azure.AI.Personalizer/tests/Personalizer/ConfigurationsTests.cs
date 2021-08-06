@@ -69,6 +69,7 @@ namespace Azure.AI.Personalizer.Tests
             PersonalizerPolicy updatedPolicy = await client.UpdatePersonalizerPolicyAsync(newPolicy);
             Assert.NotNull(updatedPolicy);
             Assert.AreEqual(newPolicy.Arguments, updatedPolicy.Arguments);
+            await Task.Delay(30000);
             PersonalizerPolicy policy = await client.GetPersonalizerPolicyAsync();
             Assert.AreEqual(newPolicy.Arguments, policy.Arguments);
         }
