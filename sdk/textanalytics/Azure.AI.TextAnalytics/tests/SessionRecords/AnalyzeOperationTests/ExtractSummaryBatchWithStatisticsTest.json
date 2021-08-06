@@ -1,0 +1,418 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "11355",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-85a9fe6e576c3b4c82b812d39fff6128-626996c5d0bf7d41-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "b5b7af78030e9fd13422000420f3bfb1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "1",
+              "text": "No roads or rails connect the 39,000 people dispersed across Nunavut, a territory in northeastern Canada that spans three time zones and features fjord-cut isles that stretch into the Arctic Circle off the west coast of Greenland. About 80% of the population is of Inuit descent with cultural ties to the land that date back more than 4,000 years.\r\n            Today, low-bandwidth satellite internet service links the people of Nunavut to each other and with the rest of the world.\r\n            The Government of Nunavut relies on this internet link to provide healthcare, education, housing and family, and financial and other services to 25 communities.The smallest, Grise Fiord, has a population of 130; the largest, the capital, Iqaluit, has 8,500 people.About 3,100 people work full-time for the government, which has an office in each community.Another 3,000 people work for the government as relief workers, casual, term or contractors.\r\n            Managing information technology for this dispersed and elastic workforce is a constant challenge for Martin Joy, director of information communication and technology for the Government of Nunavut.\r\n            \u201CTraditionally, in IT, you would have to send a device or mail a device to that end user.In Nunavut, there is no road, there is no logistical framework that allows us to move stuff cost-effectively, so everything has to be flown,\u201D he explained. \u201CBased on weather, based on the types of cargo flows, that could take a considerable amount of time. It could take two to three weeks for us to get a user a device to get them onboarded securely into our environment.\u201D\r\n            \u201CNow, with Windows 365, we can do that within less than an hour of the account being created,\u201D he said.\r\n            Windows 365 puts Microsoft\u2019s flagship operating system in the cloud. Users select Windows 10 or Windows 11, once it is generally available later this calendar year, along with a configuration of processing power, storage and memory that suits their needs.They then access their Cloud PC through a native application or web browser on any device, from anywhere with an internet connection.\r\n            The creation of the Cloud PC follows other products and services to the cloud, from Windows Server on Azure to the suite of Microsoft Office productivity applications in Microsoft 365. Windows is already accessible in the cloud via Azure Virtual Desktop, which offers customers flexibility to create and run their own virtualization service. Windows 365 is a new virtualization technology for Windows that is easy to set up and deploy for today\u2019s login-from-anywhere, mobile and elastic workforces.\r\n            \u201CWindows 365 is really going to make a huge difference for organizations that wanted to try virtualization for various reasons but could not \u2013 maybe it was too costly, too complex or they didn\u2019t have the expertise in house to do it,\u201D said Wangui McKelvey, general manager of Microsoft 365, who works from a home office in Atlanta, Georgia.\r\n            With Windows 365, she added, IT admins can manage and deploy Cloud PCs using the same tools they use today to manage physical PCs.\r\n            The remote and hybrid workforces of today and tomorrow were top of mind for Scott Manchester when he set out to develop Windows 365. The director of program management for Windows 365 in Redmond, Washington, wanted to deliver an experience with the look, feel and security of a traditional Windows PC, only accessed through a native app or web browser on a device of the user\u2019s choosing from anywhere with an internet connection.\r\n            \u201CYou want them to be able to get access to their corporate resources, applications, databases and HR tools, and do all the things they do in a typical workday sitting in the office \u2013 you want them to have that same experience,\u201D he said. \u201CAnd you want them to have that experience in such a way that it feels familiar to them.It\u2019s not this jolting thing that takes away all the things they love about Windows.\u201D\r\n            Virtualization, he noted, can be challenging to set up and maintain, especially for organizations without dedicated IT resources.IT consulting firms do brisk business working with companies to set up virtualization solutions and staffing help desks to field calls from employees when they run into complications. Manchester knows this because he worked on Microsoft\u2019s Windows virtualization technologies for nearly two decades prior to leading the development of Windows 365.\r\n            The inspiration for Windows 365 came earlier, when he was assigned to an internal team at Microsoft working on a project, code named Arcadia, a consumer-facing service that would stream video games from the cloud.The target audience \u2013 gamers \u2013 lacks an IT department to lean on when things glitch. \u201CThat started me thinking, \u2018How do we build something that doesn\u2019t require IT intervention, something that could truly scale to the consumer market?\u2019\u201D Manchester said.\r\n            The consumer experience was Manchester\u2019s benchmark when he started work on virtualization.\r\n            \u201CI took note of every time there was something that didn\u2019t quite deliver on that,\u201D he said. \u201CAnd, as I started meeting with customers and partners and learning about how they fill in these gaps either by setting expectations of their workforce or having an IT department that picks up the phone and deals with those situations, I realized we had some ground to cover.\u201D\r\n            Covering that ground led to improvements in Microsoft\u2019s business offering now known as Azure Virtual Desktop.This offering continues to experience accelerated growth among customers who need full customization and control over their operating environment and have the resources for dedicated IT staff to support the system, Manchester noted. Windows 365 is for the approximate 80% of the marketplace that lacks the need for full customization or the resources for dedicated IT.\r\n            To lead the development of Windows 365, Manchester leaned into his Arcadia mindset.\r\n            \u201CWhen we built this team, we brought in a couple of leaders who had experience with virtualization, but for the most part we brought in people who had experience with Windows and experience with consumer experiences because that was the bar we wanted to set,\u201D he said.\r\n            Soon after this bar was set, and the first batch of hires made \u2013 a handful of experts in virtualization and user experience \u2013 COVID-19 hit and changed the world.\r\n            \u201CWe hired everybody else during the pandemic,\u201D Manchester said. \u201CThey were remote.They were living all over the U.S., Australia, Europe and China.Many of them have never set foot in the office. And as soon as we got far enough along with the development, we moved those people to use the service. People who never used virtualization before, had no expectations \u2013 their bar was the experience they had on their laptop \u2013 and we basically used Windows 365 to build Windows 365.\u201D\r\n            As the team used the service and encountered bugs in the system, they worked through and solved them on their way to creating a unique category of virtualization, the Cloud PC.\r\n            \u201CWe\u2019re giving you Windows from the cloud,\u201D Manchester said.",
+              "language": "en"
+            },
+            {
+              "id": "2",
+              "text": "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure solutions to support employees suddenly forced to work from home, but \u201Cwhat really put the firecracker behind it was the pandemic, it accelerated everything,\u201D McKelvey said. She explained that customers were asking, \u201C\u2019How do we create an experience for people that makes them still feel connected to the company without the physical presence of being there?\u201D\r\n            In this new world of Windows 365, remote workers flip the lid on their laptop, bootup the family workstation or clip a keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365 account.From there, their Cloud PC appears with their background, apps, settings and content just as they left it when they last were last there \u2013 in the office, at home or a coffee shop.\r\n            \u201CAnd then, when you\u2019re done, you\u2019re done.You won\u2019t have any issues around security because you\u2019re not saving anything on your device,\u201D McKelvey said, noting that all the data is stored in the cloud.\r\n            The ability to login to a Cloud PC from anywhere on any device is part of Microsoft\u2019s larger strategy around tailoring products such as Microsoft Teams and Microsoft 365 for the post-pandemic hybrid workforce of the future, she added. It enables employees accustomed to working from home to continue working from home; it enables companies to hire interns from halfway around the world; it allows startups to scale without requiring IT expertise.\r\n            \u201CI think this will be interesting for those organizations who, for whatever reason, have shied away from virtualization.This is giving them an opportunity to try it in a way that their regular, everyday endpoint admin could manage,\u201D McKelvey said.\r\n            The simplicity of Windows 365 won over Dean Wells, the corporate chief information officer for the Government of Nunavut. His team previously attempted to deploy a traditional virtual desktop infrastructure and found it inefficient and unsustainable given the limitations of low-bandwidth satellite internet and the constant need for IT staff to manage the network and infrastructure.\r\n            We didn\u2019t run it for very long,\u201D he said. \u201CIt didn\u2019t turn out the way we had hoped.So, we actually had terminated the project and rolled back out to just regular PCs.\u201D\r\n            He re-evaluated this decision after the Government of Nunavut was hit by a ransomware attack in November 2019 that took down everything from the phone system to the government\u2019s servers. Microsoft helped rebuild the system, moving the government to Teams, SharePoint, OneDrive and Microsoft 365. Manchester\u2019s team recruited the Government of Nunavut to pilot Windows 365. Wells was intrigued, especially by the ability to manage the elastic workforce securely and seamlessly.\r\n            \u201CThe impact that I believe we are finding, and the impact that we\u2019re going to find going forward, is being able to access specialists from outside the territory and organizations outside the territory to come in and help us with our projects, being able to get people on staff with us to help us deliver the day-to-day expertise that we need to run the government,\u201D he said.\r\n            \u201CBeing able to improve healthcare, being able to improve education, economic development is going to improve the quality of life in the communities.\u201D",
+              "language": "en"
+            }
+          ]
+        },
+        "tasks": {
+          "extractiveSummarizationTasks": [
+            {
+              "parameters": {
+                "stringIndexType": "Utf16CodeUnit",
+                "sentenceCount": 5
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "516b148a-3bab-42f9-b34d-fdfb9eb0bddd",
+        "Date": "Fri, 06 Aug 2021 01:59:33 GMT",
+        "operation-location": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/bcca03b3-07b3-49b2-a8f4-034959c2c163",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "209"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/bcca03b3-07b3-49b2-a8f4-034959c2c163?showStats=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "787f8a47014084dcb2054b10ebcfc38a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a957f59c-bbcb-4af4-ab6f-2ba900584120",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:59:33 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "bcca03b3-07b3-49b2-a8f4-034959c2c163",
+        "lastUpdateDateTime": "2021-08-06T01:59:34Z",
+        "createdDateTime": "2021-08-06T01:59:34Z",
+        "expirationDateTime": "2021-08-07T01:59:34Z",
+        "status": "notStarted",
+        "errors": [],
+        "displayName": "NA",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/bcca03b3-07b3-49b2-a8f4-034959c2c163?showStats=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "1ec85caffbf95b7033e56eb80be0b66a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e98eab6f-e496-4ee7-ad58-a23a8d157da9",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:59:34 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "bcca03b3-07b3-49b2-a8f4-034959c2c163",
+        "lastUpdateDateTime": "2021-08-06T01:59:35Z",
+        "createdDateTime": "2021-08-06T01:59:34Z",
+        "expirationDateTime": "2021-08-07T01:59:34Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "NA",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/bcca03b3-07b3-49b2-a8f4-034959c2c163?showStats=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "bdedae3200527712d3330308b7c1b464",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3a842727-165c-4d22-b013-3ecf6d8189af",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:59:35 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "bcca03b3-07b3-49b2-a8f4-034959c2c163",
+        "lastUpdateDateTime": "2021-08-06T01:59:35Z",
+        "createdDateTime": "2021-08-06T01:59:34Z",
+        "expirationDateTime": "2021-08-07T01:59:34Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "NA",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/bcca03b3-07b3-49b2-a8f4-034959c2c163?showStats=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "c355765fa02b4bb81a23445a932478d2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "38e2da1d-5da5-430b-a81f-cad282019319",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:59:36 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
+      },
+      "ResponseBody": {
+        "jobId": "bcca03b3-07b3-49b2-a8f4-034959c2c163",
+        "lastUpdateDateTime": "2021-08-06T01:59:35Z",
+        "createdDateTime": "2021-08-06T01:59:34Z",
+        "expirationDateTime": "2021-08-07T01:59:34Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "NA",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/bcca03b3-07b3-49b2-a8f4-034959c2c163?showStats=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "3cdde14f05e2af374a504bc5f867a371",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "40fa7f25-0c12-4e4b-9fe8-f7482bd81ed1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:59:38 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
+      },
+      "ResponseBody": {
+        "jobId": "bcca03b3-07b3-49b2-a8f4-034959c2c163",
+        "lastUpdateDateTime": "2021-08-06T01:59:35Z",
+        "createdDateTime": "2021-08-06T01:59:34Z",
+        "expirationDateTime": "2021-08-07T01:59:34Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "NA",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/bcca03b3-07b3-49b2-a8f4-034959c2c163?showStats=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "95590931f28a923ff6a1a32fbbb7e4ae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "0e610342-417c-4c50-b31e-62188c288545",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:59:39 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
+      },
+      "ResponseBody": {
+        "jobId": "bcca03b3-07b3-49b2-a8f4-034959c2c163",
+        "lastUpdateDateTime": "2021-08-06T01:59:35Z",
+        "createdDateTime": "2021-08-06T01:59:34Z",
+        "expirationDateTime": "2021-08-07T01:59:34Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "NA",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/bcca03b3-07b3-49b2-a8f4-034959c2c163?showStats=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "d6b930ba77e359823fa579da54f253b3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "355c01c8-b2ca-41b6-b501-110eaad121d8",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:59:40 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "71"
+      },
+      "ResponseBody": {
+        "jobId": "bcca03b3-07b3-49b2-a8f4-034959c2c163",
+        "lastUpdateDateTime": "2021-08-06T01:59:40Z",
+        "createdDateTime": "2021-08-06T01:59:34Z",
+        "expirationDateTime": "2021-08-07T01:59:34Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "NA",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "extractiveSummarizationTasks": [
+            {
+              "lastUpdateDateTime": "2021-08-06T01:59:40.6015552Z",
+              "taskName": "ExtractiveSummarization_latest",
+              "state": "succeeded",
+              "results": {
+                "statistics": {
+                  "documentsCount": 2,
+                  "validDocumentsCount": 2,
+                  "erroneousDocumentsCount": 0,
+                  "transactionsCount": 12
+                },
+                "documents": [
+                  {
+                    "id": "1",
+                    "statistics": {
+                      "charactersCount": 7276,
+                      "transactionsCount": 8
+                    },
+                    "sentences": [
+                      {
+                        "text": "No roads or rails connect the 39,000 people dispersed across Nunavut, a territory in northeastern Canada that spans three time zones and features fjord-cut isles that stretch into the Arctic Circle off the west coast of Greenland.",
+                        "rankScore": 0.8651234540823339,
+                        "offset": 0,
+                        "length": 230
+                      },
+                      {
+                        "text": "About 80% of the population is of Inuit descent with cultural ties to the land that date back more than 4,000 years.",
+                        "rankScore": 0.9408765634641423,
+                        "offset": 231,
+                        "length": 116
+                      },
+                      {
+                        "text": "Today, low-bandwidth satellite internet service links the people of Nunavut to each other and with the rest of the world.",
+                        "rankScore": 0.9746985661604508,
+                        "offset": 361,
+                        "length": 121
+                      },
+                      {
+                        "text": "The Government of Nunavut relies on this internet link to provide healthcare, education, housing and family, and financial and other services to 25 communities.",
+                        "rankScore": 1.0,
+                        "offset": 496,
+                        "length": 160
+                      },
+                      {
+                        "text": "The smallest, Grise Fiord, has a population of 130;",
+                        "rankScore": 0.9327812042146636,
+                        "offset": 656,
+                        "length": 51
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "statistics": {
+                      "charactersCount": 3428,
+                      "transactionsCount": 4
+                    },
+                    "sentences": [
+                      {
+                        "text": "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure solutions to support employees suddenly forced to work from home, but \u201Cwhat really put the firecracker behind it was the pandemic, it accelerated everything,\u201D McKelvey said.",
+                        "rankScore": 1.0,
+                        "offset": 0,
+                        "length": 274
+                      },
+                      {
+                        "text": "She explained that customers were asking, \u201C\u2019How do we create an experience for people that makes them still feel connected to the company without the physical presence of being there?\u201D",
+                        "rankScore": 0.9207522442308361,
+                        "offset": 275,
+                        "length": 184
+                      },
+                      {
+                        "text": "In this new world of Windows 365, remote workers flip the lid on their laptop, bootup the family workstation or clip a keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365 account.",
+                        "rankScore": 0.8643158593781329,
+                        "offset": 473,
+                        "length": 224
+                      },
+                      {
+                        "text": "From there, their Cloud PC appears with their background, apps, settings and content just as they left it when they last were last there \u2013 in the office, at home or a coffee shop.",
+                        "rankScore": 0.6635938628532699,
+                        "offset": 697,
+                        "length": 179
+                      },
+                      {
+                        "text": "\u201CAnd then, when you\u2019re done, you\u2019re done.",
+                        "rankScore": 0.52942298887348,
+                        "offset": 890,
+                        "length": 41
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-08-01"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1123779693",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com"
+  }
+}
