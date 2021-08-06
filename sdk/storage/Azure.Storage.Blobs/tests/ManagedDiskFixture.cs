@@ -29,9 +29,9 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
 
         private ManagedDiskConfiguration _config;
         private ComputeManagementClient _computeClient;
-        private Snapshot _snapshot1;
-        private Snapshot _snapshot2;
 
+        public Snapshot Snapshot1 { get; private set; }
+        public Snapshot Snapshot2 { get; private set; }
         public Uri Snapshot1SASUri { get; private set; }
         public Uri Snapshot2SASUri { get; private set; }
 
@@ -48,15 +48,15 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
                 var disks = await _computeClient.Disks.ListByResourceGroupAsync(_config.ResourceGroupName).ToListAsync();
                 var disk = disks.Where(d => d.Name.Contains(_config.DiskNamePrefix)).First();
 
-                _snapshot1 = await CreateSnapshot(disk, _config.DiskNamePrefix + Guid.NewGuid().ToString().Replace("-", ""));
+                Snapshot1 = await CreateSnapshot(disk, _config.DiskNamePrefix + Guid.NewGuid().ToString().Replace("-", ""));
 
                 // The disk is attached to VM, wait some time to let OS background jobs write something to disk to create delta.
                 await Task.Delay(TimeSpan.FromSeconds(60));
 
-                _snapshot2 = await CreateSnapshot(disk, _config.DiskNamePrefix + Guid.NewGuid().ToString().Replace("-", ""));
+                Snapshot2 = await CreateSnapshot(disk, _config.DiskNamePrefix + Guid.NewGuid().ToString().Replace("-", ""));
 
-                Snapshot1SASUri = await GrantAccess(_snapshot1);
-                Snapshot2SASUri = await GrantAccess(_snapshot2);
+                Snapshot1SASUri = await GrantAccess(Snapshot1);
+                Snapshot2SASUri = await GrantAccess(Snapshot2);
             }
 
             Instance = this;
@@ -66,11 +66,11 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         {
             if (Environment.Mode != RecordedTestMode.Playback)
             {
-                await RevokeAccess(_snapshot1);
-                await RevokeAccess(_snapshot2);
+                await RevokeAccess(Snapshot1);
+                await RevokeAccess(Snapshot2);
 
-                await DeleteSnapshot(_snapshot1);
-                await DeleteSnapshot(_snapshot2);
+                await DeleteSnapshot(Snapshot1);
+                await DeleteSnapshot(Snapshot2);
             }
         }
 
