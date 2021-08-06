@@ -11,7 +11,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 // Create a new ContainerRegistryClient and RegistryArtifact to access image operations
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions() {
-        Audience = ContainerRegistryAudience.ArmPublicCloud
+        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
     });
 RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
 

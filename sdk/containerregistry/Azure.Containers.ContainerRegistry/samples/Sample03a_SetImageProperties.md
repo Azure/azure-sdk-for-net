@@ -12,7 +12,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.ArmPublicCloud
+        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
     });
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 

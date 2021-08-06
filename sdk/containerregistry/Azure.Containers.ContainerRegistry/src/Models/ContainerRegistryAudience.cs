@@ -18,22 +18,22 @@ namespace Azure.Containers.ContainerRegistry
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ArmChinaValue = "https://management.chinacloudapi.cn";
-        private const string ArmGermanyValue = "https://management.microsoftazure.de";
-        private const string ArmGovernmentValue = "https://management.usgovcloudapi.net";
-        private const string ArmPublicCloudValue = "https://management.azure.com";
+        private const string AzureResourceManagerChinaValue = "https://management.chinacloudapi.cn";
+        private const string AzureResourceManagerGermanyValue = "https://management.microsoftazure.de";
+        private const string AzureResourceManagerGovernmentValue = "https://management.usgovcloudapi.net";
+        private const string AzureResourceManagerPublicCloudValue = "https://management.azure.com";
 
         /// <summary> Azure China. </summary>
-        public static ContainerRegistryAudience ArmChina { get; } = new ContainerRegistryAudience(ArmChinaValue);
+        public static ContainerRegistryAudience AzureResourceManagerChina { get; } = new ContainerRegistryAudience(AzureResourceManagerChinaValue);
 
         /// <summary> Azure Germany. </summary>
-        public static ContainerRegistryAudience ArmGermany { get; } = new ContainerRegistryAudience(ArmGermanyValue);
+        public static ContainerRegistryAudience AzureResourceManagerGermany { get; } = new ContainerRegistryAudience(AzureResourceManagerGermanyValue);
 
         /// <summary> Azure Government. </summary>
-        public static ContainerRegistryAudience ArmGovernment { get; } = new ContainerRegistryAudience(ArmGovernmentValue);
+        public static ContainerRegistryAudience AzureResourceManagerGovernment { get; } = new ContainerRegistryAudience(AzureResourceManagerGovernmentValue);
 
         /// <summary> Azure Public Cloud. </summary>
-        public static ContainerRegistryAudience ArmPublicCloud { get; } = new ContainerRegistryAudience(ArmPublicCloudValue);
+        public static ContainerRegistryAudience AzureResourceManagerPublicCloud { get; } = new ContainerRegistryAudience(AzureResourceManagerPublicCloudValue);
 
         /// <summary> Determines if two <see cref="ContainerRegistryAudience"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryAudience left, ContainerRegistryAudience right) => left.Equals(right);

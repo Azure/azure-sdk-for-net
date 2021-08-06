@@ -25,7 +25,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             // Create a new ContainerRegistryClient for anonymous access
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new ContainerRegistryClientOptions()
             {
-                Audience = ContainerRegistryAudience.ArmPublicCloud
+                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
             });
 
             // Obtain a RegistryArtifact object to get access to image operations
@@ -56,7 +56,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             // Create a new ContainerRegistryClient for anonymous access
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new ContainerRegistryClientOptions()
                 {
-                    Audience = ContainerRegistryAudience.ArmPublicCloud
+                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
                 });
 
             // Obtain a RegistryArtifact object to get access to image operations

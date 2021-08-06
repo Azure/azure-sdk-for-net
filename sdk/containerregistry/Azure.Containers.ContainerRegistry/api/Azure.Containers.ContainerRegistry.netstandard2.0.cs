@@ -116,10 +116,10 @@ namespace Azure.Containers.ContainerRegistry
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ContainerRegistryAudience(string value) { throw null; }
-        public static Azure.Containers.ContainerRegistry.ContainerRegistryAudience ArmChina { get { throw null; } }
-        public static Azure.Containers.ContainerRegistry.ContainerRegistryAudience ArmGermany { get { throw null; } }
-        public static Azure.Containers.ContainerRegistry.ContainerRegistryAudience ArmGovernment { get { throw null; } }
-        public static Azure.Containers.ContainerRegistry.ContainerRegistryAudience ArmPublicCloud { get { throw null; } }
+        public static Azure.Containers.ContainerRegistry.ContainerRegistryAudience AzureResourceManagerChina { get { throw null; } }
+        public static Azure.Containers.ContainerRegistry.ContainerRegistryAudience AzureResourceManagerGermany { get { throw null; } }
+        public static Azure.Containers.ContainerRegistry.ContainerRegistryAudience AzureResourceManagerGovernment { get { throw null; } }
+        public static Azure.Containers.ContainerRegistry.ContainerRegistryAudience AzureResourceManagerPublicCloud { get { throw null; } }
         public bool Equals(Azure.Containers.ContainerRegistry.ContainerRegistryAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

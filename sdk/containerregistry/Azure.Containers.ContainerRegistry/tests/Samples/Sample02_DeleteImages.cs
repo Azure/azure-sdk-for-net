@@ -32,7 +32,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
                 new ContainerRegistryClientOptions()
                 {
-                    Audience = ContainerRegistryAudience.ArmPublicCloud
+                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
                 });
 
             // Iterate through repositories
@@ -82,7 +82,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
                 new ContainerRegistryClientOptions()
                 {
-                    Audience = ContainerRegistryAudience.ArmPublicCloud
+                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
                 });
 
             // Iterate through repositories
