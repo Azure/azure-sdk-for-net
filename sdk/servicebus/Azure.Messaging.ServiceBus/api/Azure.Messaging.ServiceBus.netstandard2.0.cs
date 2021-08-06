@@ -197,6 +197,8 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusProcessor : System.IAsyncDisposable
     {
         protected ServiceBusProcessor() { }
+        protected ServiceBusProcessor(Azure.Messaging.ServiceBus.ServiceBusClient client, string queueName, Azure.Messaging.ServiceBus.ServiceBusProcessorOptions options) { }
+        protected ServiceBusProcessor(Azure.Messaging.ServiceBus.ServiceBusClient client, string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusProcessorOptions options) { }
         public virtual bool AutoCompleteMessages { get { throw null; } }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
@@ -220,6 +222,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual System.Threading.Tasks.Task StopProcessingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public void UpdateConcurrency(int maxConcurrentCalls) { }
     }
     public partial class ServiceBusProcessorOptions
     {
@@ -275,6 +278,8 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusReceiver : System.IAsyncDisposable
     {
         protected ServiceBusReceiver() { }
+        protected ServiceBusReceiver(Azure.Messaging.ServiceBus.ServiceBusClient client, string queueName, Azure.Messaging.ServiceBus.ServiceBusReceiverOptions options) { }
+        protected ServiceBusReceiver(Azure.Messaging.ServiceBus.ServiceBusClient client, string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusReceiverOptions options) { }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
@@ -345,6 +350,7 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusSender : System.IAsyncDisposable
     {
         protected ServiceBusSender() { }
+        protected ServiceBusSender(Azure.Messaging.ServiceBus.ServiceBusClient client, string queueOrTopicName) { }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
@@ -369,6 +375,8 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusSessionProcessor : System.IAsyncDisposable
     {
         protected ServiceBusSessionProcessor() { }
+        protected ServiceBusSessionProcessor(Azure.Messaging.ServiceBus.ServiceBusClient client, string queueName, Azure.Messaging.ServiceBus.ServiceBusSessionProcessorOptions options) { }
+        protected ServiceBusSessionProcessor(Azure.Messaging.ServiceBus.ServiceBusClient client, string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusSessionProcessorOptions options) { }
         public virtual bool AutoCompleteMessages { get { throw null; } }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
@@ -399,6 +407,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual System.Threading.Tasks.Task StopProcessingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession) { }
     }
     public partial class ServiceBusSessionProcessorOptions
     {

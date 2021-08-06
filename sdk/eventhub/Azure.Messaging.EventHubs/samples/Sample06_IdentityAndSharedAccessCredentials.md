@@ -45,10 +45,11 @@ For illustration, the `EventHubProducerClient` is demonstrated in these examples
 ## Publishing events with identity-based authorization
 
 ```C# Snippet:EventHubs_Sample06_DefaultAzureCredential
-TokenCredential credential = new DefaultAzureCredential();
+var credential = new DefaultAzureCredential();
 
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
 var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
 try
@@ -81,6 +82,7 @@ var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
 
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
 var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
 try
@@ -113,6 +115,7 @@ var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED
 
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
 var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
 try

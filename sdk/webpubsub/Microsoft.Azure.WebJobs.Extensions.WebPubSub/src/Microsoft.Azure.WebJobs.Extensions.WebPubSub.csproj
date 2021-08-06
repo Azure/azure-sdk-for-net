@@ -4,7 +4,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.WebPubSub</PackageId>
     <Description>Azure Functions extension for the WebPubSub service</Description>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.4</Version>
     <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;CA1056</NoWarn>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
@@ -13,8 +13,6 @@
     <PackageReference Include="Azure.Messaging.WebPubSub" />
     <PackageReference Include="Microsoft.AspNetCore.Http" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
-    <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
   <ItemGroup>

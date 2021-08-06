@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                 switch (cloudEvent.Type)
                 {
                     case "Contoso.Items.ItemReceived":
-                        // By default, GetData uses JsonObjectSerializer to deserialize the payload
+                        // By default, ToObjectFromJson<T> uses System.Text.Json to deserialize the payload
                         ContosoItemReceivedEventData itemReceived = cloudEvent.Data.ToObjectFromJson<ContosoItemReceivedEventData>();
                         Console.WriteLine(itemReceived.ItemSku);
                         break;
@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                         Console.WriteLine(testPayload.Name);
                         break;
                     case SystemEventNames.StorageBlobDeleted:
-                        // Example for deserializing system events using GetData<T>
+                        // Example for deserializing system events using ToObjectFromJson<T>
                         StorageBlobDeletedEventData blobDeleted = cloudEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
                         Console.WriteLine(blobDeleted.BlobType);
                         break;

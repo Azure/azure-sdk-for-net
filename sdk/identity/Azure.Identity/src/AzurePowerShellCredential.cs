@@ -188,16 +188,20 @@ namespace Azure.Identity
                 UseShellExecute = false,
                 ErrorDialog = false,
                 CreateNoWindow = true,
-                WorkingDirectory = DefaultWorkingDir
+                WorkingDirectory = DefaultWorkingDir,
+                Environment =
+                {
+                    ["POWERSHELL_UPDATECHECK"] = "Off",
+                },
             };
 
         private void GetFileNameAndArguments(string resource, string tenantId, out string fileName, out string argument)
         {
-            string powershellExe = "pwsh -NonInteractive -EncodedCommand";
+            string powershellExe = "pwsh -NoProfile -NonInteractive -EncodedCommand";
 
             if (UseLegacyPowerShell)
             {
-                powershellExe = "powershell -NonInteractive -EncodedCommand";
+                powershellExe = "powershell -NoProfile -NonInteractive -EncodedCommand";
             }
 
             var tenantIdArg = tenantId == null ? string.Empty : $" -TenantId {tenantId}";
