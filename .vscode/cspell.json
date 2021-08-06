@@ -64,7 +64,9 @@
     "uninstrumented",
     "westus",
     "xunit",
-    "vnet"
+    "vnet",
+    "unencrypted",
+    "personalizer"
   ],
   "overrides": [
     {
