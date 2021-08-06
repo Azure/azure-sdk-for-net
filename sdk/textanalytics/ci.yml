@@ -24,8 +24,6 @@ pr:
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: textanalytics
-    SpellCheckPublicApiSurface: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.AI.TextAnalytics
