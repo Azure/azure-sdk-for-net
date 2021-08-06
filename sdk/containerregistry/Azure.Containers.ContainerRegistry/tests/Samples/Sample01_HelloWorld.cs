@@ -51,7 +51,11 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             // Create a new ContainerRegistryClient
-            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+                new ContainerRegistryClientOptions()
+                {
+                    Audience = ContainerRegistryAudience.AzurePublicCloud
+                });
 
             // Get the collection of repository names from the registry
             AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
@@ -73,7 +77,11 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Create a ContainerRepository class for an invalid repository
             string fakeRepositoryName = "doesnotexist";
-            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+                new ContainerRegistryClientOptions()
+                {
+                    Audience = ContainerRegistryAudience.AzurePublicCloud
+                });
             ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
             try
@@ -98,7 +106,11 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Create a ContainerRepository class for an invalid repository
             string fakeRepositoryName = "doesnotexist";
-            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+                new ContainerRegistryClientOptions()
+                {
+                    Audience = ContainerRegistryAudience.AzurePublicCloud
+                });
             ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
             try

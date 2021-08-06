@@ -44,7 +44,11 @@ When you're developing and debugging your application locally, you can use your 
 ```C#
 // Create a ContainerRegistryClient that will authenticate to your registry through Azure Active Directory
 Uri endpoint = new Uri("https://myregistry.azurecr.io");
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzurePublicCloud
+    });
 ```
 
 Please see the [Azure Identity README][identity] for more approaches to authenticating with `DefaultAzureCredential`, both locally and in deployment environments.  To connect to registries in non-public Azure Clouds, see the samples below.
@@ -125,7 +129,10 @@ foreach (string repository in repositories)
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient for anonymous access
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new ContainerRegistryClientOptions()
+{
+    Audience = ContainerRegistryAudience.AzurePublicCloud
+});
 
 // Obtain a RegistryArtifact object to get access to image operations
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
@@ -148,7 +155,11 @@ foreach (ArtifactTagProperties tag in tags)
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient and RegistryArtifact to access image operations
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzurePublicCloud
+    });
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
 // Set permissions on the v1 image's "latest" tag
@@ -169,7 +180,11 @@ using Azure.Identity;
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzurePublicCloud
+    });
 
 // Iterate through repositories
 Pageable<string> repositoryNames = client.GetRepositoryNames();
@@ -206,7 +221,11 @@ The asynchronous APIs are identical to their synchronous counterparts, but metho
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzurePublicCloud
+    });
 
 // Get the collection of repository names from the registry
 AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
@@ -223,7 +242,10 @@ await foreach (string repository in repositories)
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient for anonymous access
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzurePublicCloud
+    });
 
 // Obtain a RegistryArtifact object to get access to image operations
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
@@ -246,7 +268,10 @@ await foreach (ArtifactTagProperties tag in tags)
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient and RegistryArtifact to access image operations
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions() {
+        Audience = ContainerRegistryAudience.AzurePublicCloud
+    });
 RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
 
 // Set permissions on the image's "latest" tag
@@ -268,7 +293,11 @@ using Azure.Identity;
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a new ContainerRegistryClient
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzurePublicCloud
+    });
 
 // Iterate through repositories
 AsyncPageable<string> repositoryNames = client.GetRepositoryNamesAsync();
@@ -314,7 +343,7 @@ ContainerRegistryClient client = new ContainerRegistryClient(endpoint,
         }),
     new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.AzureChina
     });
 ```
 
@@ -328,7 +357,11 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a ContainerRepository class for an invalid repository
 string fakeRepositoryName = "doesnotexist";
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
+    new ContainerRegistryClientOptions()
+    {
+        Audience = ContainerRegistryAudience.AzurePublicCloud
+    });
 ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
 try
