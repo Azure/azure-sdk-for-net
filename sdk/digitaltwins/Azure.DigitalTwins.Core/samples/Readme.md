@@ -282,12 +282,12 @@ await foreach (Page<BasicDigitalTwin> page in asyncPageableResponseWithCharge.As
 }
 ```
 
-In addition to passing strings as a query parameter, it is possible to pass in an `AdtQueryBuilder` ([see following section](#build-adt-queries)) object instead of a query in string format.
+In addition to passing strings as a query parameter, it is possible to pass in a `DigitalTwinsQueryBuilder` ([see following section](#build-adt-queries)) object instead of a query in string format.
 
 ```C# Snippet:DigitalTwinsSampleQueryTwinsAdtQueryBuilder
-// This code snippet demonstrates querying digital twin results using an AdtQueryBuilder, an object that allows for 
+// This code snippet demonstrates querying digital twin results using an DigitalTwinsQueryBuilder, an object that allows for 
 // fluent-style query construction that makes it easier to write queries.
-AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilder = client.QueryAsync<BasicDigitalTwin>(
+AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilderFluent = client.QueryAsync<BasicDigitalTwin>(
     new DigitalTwinsQueryBuilder()
         .SelectAll()
         .From(DigitalTwinsCollection.DigitalTwins)

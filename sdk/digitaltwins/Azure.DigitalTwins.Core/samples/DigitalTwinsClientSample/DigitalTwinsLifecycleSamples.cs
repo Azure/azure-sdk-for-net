@@ -291,9 +291,9 @@ namespace Azure.DigitalTwins.Core.Samples
                 #endregion Snippet:DigitalTwinsSampleQueryTwins
 
                 #region Snippet:DigitalTwinsSampleQueryTwinsAdtQueryBuilder
-                // This code snippet demonstrates querying digital twin results using an AdtQueryBuilder, an object that allows for 
+                // This code snippet demonstrates querying digital twin results using an DigitalTwinsQueryBuilder, an object that allows for 
                 // fluent-style query construction that makes it easier to write queries.
-                AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilder = client.QueryAsync<BasicDigitalTwin>(
+                AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilderFluent = client.QueryAsync<BasicDigitalTwin>(
                     new DigitalTwinsQueryBuilder()
                         .SelectAll()
                         .From(DigitalTwinsCollection.DigitalTwins)

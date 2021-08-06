@@ -51,6 +51,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                 // if int, long, float, our double, insert raw value into query string (nothing needs to be done)
                 conditionString.Append(Value);
             }
+            else if (typeof(T) == typeof(bool))
+            {
+                conditionString.Append(Value);
+            }
             else
             {
                 throw new InvalidOperationException("Invalid condition: use a string, integer, long, float, or double.");
