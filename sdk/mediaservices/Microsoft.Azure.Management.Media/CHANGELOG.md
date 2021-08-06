@@ -2,11 +2,14 @@
 
 ## Changes in 5.0.0
 
--
+- The Media Services account now supports system and user assigned managed identities.
+- Added PublicNetworkAccess option to Media Services accounts. This option can be used with the Private Link feature to restrict network access private networks.
+- Basic passthrough - A new live event type is added. "Basic Pass-through" live events have similar capabilities as standard pass-through live events with some input and output restrictions, and are offered at a reduced price.
+- PresetConfigurations - allow you to customize the output settings, and min and max bitrates used for the Content Aware Encoding Preset. This helps you to better estimate and plan for more accurate billing when using Content Aware Encoding through constrained output track numbers and resolutions.
 
 ### Breaking changes
 
-- ApiErrorException has been replaced with ErrorResponseException to be consistant with all other Azure SDKs. Exception body has not changed.
+- ApiErrorException has been replaced with ErrorResponseException to be consistent with all other Azure SDKs. Exception body has not changed.
 
 ## Changes in 4.0.0
 
@@ -52,7 +55,7 @@ This SDK is using 2020-05-01 version of the API
 - Added UtcClipTime class, which specifies the clip time as a Utc time position in the media file during a job creation.
 - Added the “Mode” property to Audio/VideoAnalyzerPresets, exposing a new Basic Mode that only performs transcription and caption generation.
 
-### Breaking changes:
+### Breaking changes
 
 - VanityUrl property on LiveEvent is now called UseStaticHostName to better reflect the intent of the property.
 - SubscriptionMediaService class has been removed in favor of MediaService class. SubscriptionMediaService is a duplicate of MediaService class.
