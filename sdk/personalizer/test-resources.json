@@ -13,7 +13,7 @@
             "type": "string",
             "defaultValue": "eastus2",
             "metadata": {
-                "description": "The location of the resource. By default, this is the same as the resource group."
+                "description": "The location of the resource."
             }
 		}
     },
