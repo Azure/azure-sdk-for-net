@@ -23,6 +23,7 @@ namespace DataFactory.Tests.ScenarioTests
             var integrationRuntimeName = "siwftssisazureintegrationruntime";
             var description = "Azure-SSIS integration runtime.";
             var nodeSize = "Standard_D2_v3";
+            var subnetId = "/subscriptions/cb715d05-3337-4640-8c43-4f943c50d06e/resourceGroups/Wamao/providers/Microsoft.Network/virtualNetworks/TestIntWestUsADMSWanli/subnets/TestDelegation";
             var resource = new IntegrationRuntimeResource()
             {
                 Properties = new ManagedIntegrationRuntime
@@ -60,7 +61,7 @@ namespace DataFactory.Tests.ScenarioTests
                     },
                     CustomerVirtualNetwork = new IntegrationRuntimeCustomerVirtualNetwork
                     {
-                        SubnetId = "/subscriptions/cb715d05-3337-4640-8c43-4f943c50d06e/resourceGroups/Wamao/providers/Microsoft.Network/virtualNetworks/TestIntWestUsADMSWanli/subnets/TestDelegation"
+                        SubnetId = subnetId
                     }
                 }
             };
@@ -78,6 +79,8 @@ namespace DataFactory.Tests.ScenarioTests
                 Assert.Equal(integrationRuntimeName, createResponse.Name);
                 Assert.Equal(description, createResponse.Properties.Description);
                 Assert.True(createResponse.Properties is ManagedIntegrationRuntime);
+                var responseProperties = createResponse.Properties as ManagedIntegrationRuntime;
+                Assert.Equal(subnetId, responseProperties.CustomerVirtualNetwork.SubnetId);
 
                 var startResponse = await client.IntegrationRuntimes.StartAsync(
                     this.ResourceGroupName,
