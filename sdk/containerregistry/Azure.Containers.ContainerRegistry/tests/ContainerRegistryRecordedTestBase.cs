@@ -143,6 +143,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         public async Task ImportImageAsync(string registry, string repository, List<string> tags)
         {
+            AzureEnvironment environment = GetManagementCloudEnvironment();
+
             var credential = new AzureCredentials(
                 new ServicePrincipalLoginInformation
                 {
@@ -150,9 +152,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     ClientSecret = TestEnvironment.ClientSecret,
                 },
                 TestEnvironment.TenantId,
-                GetManagementCloudEnvironment());
+                environment);
 
-            var managementClient = new ContainerRegistryManagementClient(credential.WithDefaultSubscription(TestEnvironment.SubscriptionId));
+            var managementClient = new ContainerRegistryManagementClient(
+                new Uri (environment.ResourceManagerEndpoint),
+                credential.WithDefaultSubscription(TestEnvironment.SubscriptionId));
             managementClient.SubscriptionId = TestEnvironment.SubscriptionId;
 
             var importSource = new ImportSource
