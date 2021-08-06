@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1)]
     public class AnalyzeOperationTests : TextAnalyticsClientLiveTestBase
     {
         public AnalyzeOperationTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -670,7 +670,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_1)]
-        [Ignore("Wrong rank order")]
         public async Task ExtractSummaryBatchWithRankOrderTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -874,11 +873,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
                     if (expectedOrder == SummarySentencesOrder.Offset)
                     {
-                        Assert.Greater(sentence.Offset, previousSentence.Offset);
+                        Assert.LessOrEqual(sentence.Offset, previousSentence.Offset);
                     }
                     else if (expectedOrder == SummarySentencesOrder.Rank)
                     {
-                        Assert.Greater(sentence.RankScore, previousSentence.RankScore);
+                        Assert.LessOrEqual(sentence.RankScore, previousSentence.RankScore);
                     }
                 }
             }
