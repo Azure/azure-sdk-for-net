@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -102,17 +101,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                  TestEnvironment.Credential,
                  InstrumentClientOptions(new ComputeManagementClientOptions())));
         }
-
-        //private ArmClient GetArmClient()
-        //{
-            //if (string.IsNullOrEmpty(TestEnvironment.SubscriptionId))
-            //{
-            //    return new ArmClient(TestEnvironment.Credential);
-            //} else
-            //{
-            //    return new ArmClient(TestEnvironment.SubscriptionId, TestEnvironment.Credential);
-            //}
-        //}
 
         protected async Task<Response<Resources.ResourceGroup>> CreateResourceGroup(string name)
         {
