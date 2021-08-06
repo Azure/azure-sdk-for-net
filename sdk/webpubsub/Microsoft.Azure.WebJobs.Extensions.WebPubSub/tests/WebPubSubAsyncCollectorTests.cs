@@ -28,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 DataType = MessageDataType.Text
             });
 
-            mockClient.Verify(c => c.SendToAllAsync(It.IsAny<RequestContent>(), It.IsAny<string>(), null, It.IsAny<CancellationToken>()), Times.Once);
+            mockClient.Verify(c => c.SendToAllAsync(It.IsAny<RequestContent>(), It.IsAny<ContentType>(), It.IsAny<string[]>(), It.IsAny<RequestOptions>()), Times.Once);
             mockClient.VerifyNoOtherCalls();
 
             mockClient.VerifyAll();

@@ -18,9 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// condition operator
         /// 
-        /// 
-        /// 
-        /// should be specified when combining multiple detection conditions.
+        /// should be specified when combining multiple detection conditions
         /// </summary>
         public DetectionConditionOperator? ConditionOperator { get; set; }
         public SmartDetectionConditionPatch SmartDetectionCondition { get; set; }

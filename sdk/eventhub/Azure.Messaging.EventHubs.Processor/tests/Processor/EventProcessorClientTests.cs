@@ -1172,6 +1172,45 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventProcessingRespectsCancellation()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var eventBatch = new[]
+            {
+                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123),
+                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456),
+                new MockEventData(new byte[] { 0x33 }, offset: 789, sequenceNumber: 789),
+                new MockEventData(new byte[] { 0x44 }, offset: 000, sequenceNumber: 000)
+            };
+
+            var processedEventsCount = 0;
+            var partitionId = "0";
+            var mockStorageManager = new Mock<StorageManager>();
+            var processorClient = new TestEventProcessorClient(mockStorageManager.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.ProcessEventAsync += eventArgs =>
+            {
+                ++processedEventsCount;
+                cancellationSource.Cancel();
+
+                return Task.CompletedTask;
+            };
+
+            await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition(partitionId), cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.True, "The cancellation token should have been signaled.");
+            Assert.That(processedEventsCount, Is.EqualTo(1), "The event handler should not have been triggered after cancellation.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorClient.GetCheckpointAsync" />
         ///   method.
         /// </summary>

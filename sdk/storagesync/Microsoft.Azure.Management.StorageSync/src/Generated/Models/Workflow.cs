@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <summary>
         /// Initializes a new instance of the Workflow class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="lastStepName">last step name</param>
         /// <param name="status">workflow status. Possible values include:
         /// 'active', 'expired', 'succeeded', 'aborted', 'failed'</param>
@@ -46,7 +46,11 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="steps">workflow steps</param>
         /// <param name="lastOperationId">workflow last operation
         /// identifier.</param>
-        public Workflow(string id = default(string), string name = default(string), string type = default(string), string lastStepName = default(string), string status = default(string), string operation = default(string), string steps = default(string), string lastOperationId = default(string))
+        /// <param name="commandName">workflow command name.</param>
+        /// <param name="createdTimestamp">workflow created timestamp.</param>
+        /// <param name="lastStatusTimestamp">workflow last status
+        /// timestamp.</param>
+        public Workflow(string id = default(string), string name = default(string), string type = default(string), string lastStepName = default(string), string status = default(string), string operation = default(string), string steps = default(string), string lastOperationId = default(string), string commandName = default(string), System.DateTime? createdTimestamp = default(System.DateTime?), System.DateTime? lastStatusTimestamp = default(System.DateTime?))
             : base(id, name, type)
         {
             LastStepName = lastStepName;
@@ -54,6 +58,9 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             Operation = operation;
             Steps = steps;
             LastOperationId = lastOperationId;
+            CommandName = commandName;
+            CreatedTimestamp = createdTimestamp;
+            LastStatusTimestamp = lastStatusTimestamp;
             CustomInit();
         }
 
@@ -93,6 +100,24 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastOperationId")]
         public string LastOperationId { get; set; }
+
+        /// <summary>
+        /// Gets workflow command name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.commandName")]
+        public string CommandName { get; private set; }
+
+        /// <summary>
+        /// Gets workflow created timestamp.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdTimestamp")]
+        public System.DateTime? CreatedTimestamp { get; private set; }
+
+        /// <summary>
+        /// Gets workflow last status timestamp.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastStatusTimestamp")]
+        public System.DateTime? LastStatusTimestamp { get; private set; }
 
     }
 }

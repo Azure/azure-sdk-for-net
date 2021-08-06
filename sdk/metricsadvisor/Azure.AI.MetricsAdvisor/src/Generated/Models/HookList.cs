@@ -21,8 +21,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of HookList. </summary>
-        /// <param name="nextLink"> . </param>
-        /// <param name="value"> . </param>
+        /// <param name="nextLink"></param>
+        /// <param name="value"></param>
         internal HookList(string nextLink, IReadOnlyList<NotificationHook> value)
         {
             NextLink = nextLink;

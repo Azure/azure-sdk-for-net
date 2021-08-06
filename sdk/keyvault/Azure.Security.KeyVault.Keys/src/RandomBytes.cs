@@ -6,11 +6,23 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys
 {
-    internal class RandomBytes : IJsonDeserializable
+    /// <summary>
+    /// Contains random bytes returned from <see cref="KeyClient.GetRandomBytes(int, System.Threading.CancellationToken)"/>
+    /// or <see cref="KeyClient.GetRandomBytesAsync(int, System.Threading.CancellationToken)"/>.
+    /// </summary>
+    public class RandomBytes : IJsonDeserializable
     {
-        private const string s_valuePropertyName = "value";
+        private const string ValuePropertyName = "value";
 
-        public byte[] Value { get; private set; }
+        internal RandomBytes()
+        {
+        }
+
+        /// <summary>
+        /// Gets random bytes returned from <see cref="KeyClient.GetRandomBytes(int, System.Threading.CancellationToken)"/>
+        /// or <see cref="KeyClient.GetRandomBytesAsync(int, System.Threading.CancellationToken)"/>.
+        /// </summary>
+        public byte[] Value { get; internal set; }
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
@@ -18,7 +30,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 switch (prop.Name)
                 {
-                    case s_valuePropertyName:
+                    case ValuePropertyName:
                         string value = prop.Value.GetString();
                         Value = Base64Url.Decode(value);
                         break;

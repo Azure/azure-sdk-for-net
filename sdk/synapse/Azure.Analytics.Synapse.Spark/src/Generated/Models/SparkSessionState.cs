@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Spark.Models
         }
 
         /// <summary> Initializes a new instance of SparkSessionState. </summary>
-        /// <param name="notStartedAt"> . </param>
-        /// <param name="startingAt"> . </param>
-        /// <param name="idleAt"> . </param>
-        /// <param name="deadAt"> . </param>
-        /// <param name="shuttingDownAt"> . </param>
-        /// <param name="terminatedAt"> . </param>
-        /// <param name="recoveringAt"> . </param>
-        /// <param name="busyAt"> . </param>
-        /// <param name="errorAt"> . </param>
-        /// <param name="currentState"> . </param>
-        /// <param name="jobCreationRequest"> . </param>
+        /// <param name="notStartedAt"></param>
+        /// <param name="startingAt"></param>
+        /// <param name="idleAt"></param>
+        /// <param name="deadAt"></param>
+        /// <param name="shuttingDownAt"></param>
+        /// <param name="terminatedAt"></param>
+        /// <param name="recoveringAt"></param>
+        /// <param name="busyAt"></param>
+        /// <param name="errorAt"></param>
+        /// <param name="currentState"></param>
+        /// <param name="jobCreationRequest"></param>
         internal SparkSessionState(DateTimeOffset? notStartedAt, DateTimeOffset? startingAt, DateTimeOffset? idleAt, DateTimeOffset? deadAt, DateTimeOffset? shuttingDownAt, DateTimeOffset? terminatedAt, DateTimeOffset? recoveringAt, DateTimeOffset? busyAt, DateTimeOffset? errorAt, string currentState, SparkRequest jobCreationRequest)
         {
             NotStartedAt = notStartedAt;

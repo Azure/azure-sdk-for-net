@@ -93,7 +93,7 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new DocumentStatus(path.Value, sourcePath, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error.Value, progress, id, characterCharged);
+            return new DocumentStatus(path.Value, sourcePath, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error, progress, id, characterCharged);
         }
     }
 }
