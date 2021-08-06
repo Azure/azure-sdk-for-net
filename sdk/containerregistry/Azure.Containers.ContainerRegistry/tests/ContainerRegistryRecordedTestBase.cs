@@ -63,7 +63,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 ));
         }
 
-        private Uri GetAuthorityHost(string endpoint)
+        internal static Uri GetAuthorityHost(string endpoint)
         {
             if (endpoint.Contains(".azurecr.io"))
             {
