@@ -30,7 +30,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             client = InstrumentClient(new ContainerRegistryClient(_url, GetCredential(), new ContainerRegistryClientOptions()
             {
-                Audience = ContainerRegistryAudience.AzurePublicCloud
+                Audience = ContainerRegistryAudience.ArmPublicCloud
             }));
             repository = client.GetRepository(_repositoryName);
         }

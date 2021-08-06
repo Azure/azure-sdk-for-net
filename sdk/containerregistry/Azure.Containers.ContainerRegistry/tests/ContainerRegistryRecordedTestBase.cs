@@ -92,22 +92,22 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
             {
-                return ContainerRegistryAudience.AzurePublicCloud;
+                return ContainerRegistryAudience.ArmPublicCloud;
             }
 
             if (authorityHost == AzureAuthorityHosts.AzureChina)
             {
-                return ContainerRegistryAudience.AzureChina;
+                return ContainerRegistryAudience.ArmChina;
             }
 
             if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
-                return ContainerRegistryAudience.AzureGovernment;
+                return ContainerRegistryAudience.ArmGovernment;
             }
 
             if (authorityHost == AzureAuthorityHosts.AzureGermany)
             {
-                return ContainerRegistryAudience.AzureGermany;
+                return ContainerRegistryAudience.ArmGermany;
             }
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");

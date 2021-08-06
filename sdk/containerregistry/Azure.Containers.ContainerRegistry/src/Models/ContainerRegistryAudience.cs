@@ -18,22 +18,22 @@ namespace Azure.Containers.ContainerRegistry
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AzureChinaValue = "https://management.chinacloudapi.cn";
-        private const string AzureGermanyValue = "https://management.microsoftazure.de";
-        private const string AzureGovernmentValue = "https://management.usgovcloudapi.net";
-        private const string AzurePublicCloudValue = "https://management.azure.com";
+        private const string ArmChinaValue = "https://management.chinacloudapi.cn";
+        private const string ArmGermanyValue = "https://management.microsoftazure.de";
+        private const string ArmGovernmentValue = "https://management.usgovcloudapi.net";
+        private const string ArmPublicCloudValue = "https://management.azure.com";
 
         /// <summary> Azure China. </summary>
-        public static ContainerRegistryAudience AzureChina { get; } = new ContainerRegistryAudience(AzureChinaValue);
+        public static ContainerRegistryAudience ArmChina { get; } = new ContainerRegistryAudience(ArmChinaValue);
 
         /// <summary> Azure Germany. </summary>
-        public static ContainerRegistryAudience AzureGermany { get; } = new ContainerRegistryAudience(AzureGermanyValue);
+        public static ContainerRegistryAudience ArmGermany { get; } = new ContainerRegistryAudience(ArmGermanyValue);
 
         /// <summary> Azure Government. </summary>
-        public static ContainerRegistryAudience AzureGovernment { get; } = new ContainerRegistryAudience(AzureGovernmentValue);
+        public static ContainerRegistryAudience ArmGovernment { get; } = new ContainerRegistryAudience(ArmGovernmentValue);
 
         /// <summary> Azure Public Cloud. </summary>
-        public static ContainerRegistryAudience AzurePublicCloud { get; } = new ContainerRegistryAudience(AzurePublicCloudValue);
+        public static ContainerRegistryAudience ArmPublicCloud { get; } = new ContainerRegistryAudience(ArmPublicCloudValue);
 
         /// <summary> Determines if two <see cref="ContainerRegistryAudience"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryAudience left, ContainerRegistryAudience right) => left.Equals(right);

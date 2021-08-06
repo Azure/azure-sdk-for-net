@@ -20,7 +20,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 
 // Iterate through repositories

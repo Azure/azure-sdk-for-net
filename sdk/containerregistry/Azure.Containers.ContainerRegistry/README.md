@@ -47,7 +47,7 @@ Uri endpoint = new Uri("https://myregistry.azurecr.io");
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 ```
 
@@ -111,7 +111,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 
 // Get the collection of repository names from the registry
@@ -131,7 +131,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 // Create a new ContainerRegistryClient for anonymous access
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new ContainerRegistryClientOptions()
 {
-    Audience = ContainerRegistryAudience.AzurePublicCloud
+    Audience = ContainerRegistryAudience.ArmPublicCloud
 });
 
 // Obtain a RegistryArtifact object to get access to image operations
@@ -158,7 +158,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
@@ -183,7 +183,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 
 // Iterate through repositories
@@ -224,7 +224,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 
 // Get the collection of repository names from the registry
@@ -244,7 +244,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 // Create a new ContainerRegistryClient for anonymous access
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 
 // Obtain a RegistryArtifact object to get access to image operations
@@ -270,7 +270,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 // Create a new ContainerRegistryClient and RegistryArtifact to access image operations
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions() {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
 
@@ -296,7 +296,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 
 // Iterate through repositories
@@ -360,7 +360,7 @@ string fakeRepositoryName = "doesnotexist";
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 

@@ -28,7 +28,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
                 new ContainerRegistryClientOptions()
                 {
-                    Audience = ContainerRegistryAudience.AzurePublicCloud
+                    Audience = ContainerRegistryAudience.ArmPublicCloud
                 });
 
             // Get the collection of repository names from the registry
@@ -54,7 +54,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
                 new ContainerRegistryClientOptions()
                 {
-                    Audience = ContainerRegistryAudience.AzurePublicCloud
+                    Audience = ContainerRegistryAudience.ArmPublicCloud
                 });
 
             // Get the collection of repository names from the registry
@@ -80,7 +80,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
                 new ContainerRegistryClientOptions()
                 {
-                    Audience = ContainerRegistryAudience.AzurePublicCloud
+                    Audience = ContainerRegistryAudience.ArmPublicCloud
                 });
             ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
@@ -109,7 +109,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
                 new ContainerRegistryClientOptions()
                 {
-                    Audience = ContainerRegistryAudience.AzurePublicCloud
+                    Audience = ContainerRegistryAudience.ArmPublicCloud
                 });
             ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 

@@ -20,7 +20,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 
 // Get the collection of repository names from the registry
@@ -43,7 +43,7 @@ string fakeRepositoryName = "doesnotexist";
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
     new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 

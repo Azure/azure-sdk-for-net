@@ -18,7 +18,7 @@ namespace Azure.Containers.ContainerRegistry.Perf
             _client = new ContainerRegistryClient(new Uri(PerfTestEnvironment.Instance.Endpoint), PerfTestEnvironment.Instance.Credential,
                 new ContainerRegistryClientOptions()
                 {
-                    Audience = ContainerRegistryAudience.AzurePublicCloud
+                    Audience = ContainerRegistryAudience.ArmPublicCloud
                 });
         }
 

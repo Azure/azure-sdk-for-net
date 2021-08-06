@@ -11,7 +11,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 // Create a new ContainerRegistryClient for anonymous access
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new ContainerRegistryClientOptions()
     {
-        Audience = ContainerRegistryAudience.AzurePublicCloud
+        Audience = ContainerRegistryAudience.ArmPublicCloud
     });
 
 // Obtain a RegistryArtifact object to get access to image operations
