@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
@@ -23,7 +25,7 @@ namespace Azure.Communication.CallingServer.Tests
         protected const string RESOURCE_IDENTIFIER = "016a7064-0581-40b9-be73-6dde64d69d72";
 
         // Random Gen Guid
-        protected const string GROUP_IDENTIFIER = "3500789f-e11b-4ceb-85cb-bc8df2a01768";
+        protected const string GROUP_IDENTIFIER = "e9e70082-43b4-4aab-a53f-dff66658c28e";
 
         protected string GetResourceId()
         {
@@ -113,6 +115,28 @@ namespace Azure.Communication.CallingServer.Tests
             #endregion Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
 
             return InstrumentClient(callingServerClient);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="CallingServerClient" />.
+        /// </summary>
+        /// <returns>The instrumented <see cref="CallingServerClient"/>.</returns>
+        protected CallingServerClient CreateInstrumentedCallingServerClientWithToken()
+        {
+            Uri endpoint = TestEnvironment.LiveTestStaticEndpoint;
+            TokenCredential tokenCredential;
+
+            if (Mode == RecordedTestMode.Playback)
+            {
+                tokenCredential = new MockCredential();
+            }
+            else
+            {
+                tokenCredential = new DefaultAzureCredential();
+            }
+
+            CallingServerClient client = new CallingServerClient(endpoint.ToString(), tokenCredential, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+            return InstrumentClient(client);
         }
 
         #region Api operation functions
