@@ -387,7 +387,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // TODO
         }
 
-        [Ignore("TODO need to figure this one out")]
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
         public async Task CreateAsync_EncryptionScopeAccountSas()
@@ -398,7 +397,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient serviceClient = GetServiceClient_SharedKey();
 
             AccountSasBuilder accountSasBuilder = new AccountSasBuilder(
-                permissions: AccountSasPermissions.All,
+                permissions: AccountSasPermissions.Write,
                 expiresOn: Recording.UtcNow.AddDays(1),
                 services: AccountSasServices.All,
                 resourceTypes: AccountSasResourceTypes.All);
