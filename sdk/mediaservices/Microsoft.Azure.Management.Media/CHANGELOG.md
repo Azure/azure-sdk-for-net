@@ -3,13 +3,15 @@
 ## Changes in 5.0.0
 
 - The Media Services account now supports system and user assigned managed identities.
-- Added PublicNetworkAccess option to Media Services accounts. This option can be used with the Private Link feature to restrict network access private networks.
+- Added PublicNetworkAccess option to Media Services accounts. This option can be used with the Private Link feature to only allow access from private networks, blocking all public network access.
 - Basic passthrough - A new live event type is added. "Basic Pass-through" live events have similar capabilities as standard pass-through live events with some input and output restrictions, and are offered at a reduced price.
 - PresetConfigurations - allow you to customize the output settings, and min and max bitrates used for the Content Aware Encoding Preset. This helps you to better estimate and plan for more accurate billing when using Content Aware Encoding through constrained output track numbers and resolutions.
 
 ### Breaking changes
 
 - ApiErrorException has been replaced with ErrorResponseException to be consistent with all other Azure SDKs. Exception body has not changed.
+- Media service constructor has new optional PublicNetworkAccess parameter after KeyDelivery parameter.
+- Type property in MediaServiceIdentity has been changed from ManagedIdentityType enum to string, to accommodate comma separated multiple types. Valid strings for type are SystemAssigned or SystemAssigned,UserAssigned or UserAssigned.
 
 ## Changes in 4.0.0
 
