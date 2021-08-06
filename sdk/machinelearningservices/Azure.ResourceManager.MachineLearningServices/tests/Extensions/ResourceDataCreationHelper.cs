@@ -93,7 +93,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
 
         public DatastoreProperties GenerateDatastorePropertiesResourceData()
         {
-            throw new NotImplementedException();
+            return new DatastoreProperties(
+                new AzureBlobContents(
+                    "track2mlstorage",
+                    "datastore-container",
+                    new AccountKeyDatastoreCredentials() { Secrets = new AccountKeyDatastoreSecrets() { Key = "L0SLnz1YS4yOAvQ4I66ay3n/1GL3HKcoWrUVpRjmUD875WiH3zzB8S+pKDp0U4wILRFg2YeHvdgoNR97WZSb3A==" } },
+                    "core.windows.net",
+                    "https")
+                ) {
+                Description = "Description",
+                IsDefault = true,
+                LinkedInfo = new LinkedInfo() { LinkedId = "string", LinkedResourceName = "string", Origin = OriginType.Synapse },
+                //Properties = { { "additionalProp1", "vaule1" } },
+                Tags = { { "key1", "value1" }, { "key2", "value2" } }
+            };
         }
 
         public DataVersion GenerateDataVersionResourceData()
@@ -130,12 +143,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
 
         public ModelContainer GenerateModelContainerResourceData()
         {
-            throw new NotImplementedException();
+            return new ModelContainer() { Properties = { { "key1", "value1" } }, Description = "Description", Tags = { { "key1", "value1" } } };
         }
 
-        public ModelVersion GenerateModelVersionResourceData()
+        public ModelVersion GenerateModelVersionResourceData(DatastorePropertiesResource datastore)
         {
-            throw new NotImplementedException();
+            return new ModelVersion("Test.txt")
+            {
+                DatastoreId = datastore.Data.Id,
+                Description = "Model version description",
+                Flavors = { { "python_function", new FlavorData() { Data = { { "loader_module", "myLoaderModule" } } } } },
+                Tags = { { "key1", "value1" },{ "key2", "value2" } },
+                Properties = { { "key1", "value1" }, { "key2", "value2" } }
+            };
         }
 
         public OnlineDeploymentTrackedResourceData GenerateOnlineDeploymentTrackedResourceData()

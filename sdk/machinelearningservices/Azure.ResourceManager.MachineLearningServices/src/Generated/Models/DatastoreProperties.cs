@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Information about the datastore origin, if linked. </summary>
         public LinkedInfo LinkedInfo { get; set; }
         /// <summary> The asset property dictionary. </summary>
-        public IDictionary<string, string> Properties { get; }
+        public IDictionary<string, string> Properties { get; set; }
         /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
         public IDictionary<string, string> Tags { get; }
     }

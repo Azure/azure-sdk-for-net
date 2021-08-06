@@ -17,11 +17,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         private const string WorkspacePrefix = "test-workspace";
         private const string ParentPrefix = "test-parent";
         private const string ResourceNamePrefix = "test-resource";
+        private const string DataStoreNamePrefix = "test_dataStore";
         private readonly Location _defaultLocation = Location.WestUS2;
         private string _resourceName = ResourceNamePrefix;
         private string _workspaceName = WorkspacePrefix;
         private string _resourceGroupName = ResourceGroupNamePrefix;
         private string _parentPrefix = ParentPrefix;
+        private string _dataStoreName = DataStoreNamePrefix;
 
         public ModelVersionResourceOperationsTests(bool isAsync)
             : base(isAsync)
@@ -34,6 +36,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             _parentPrefix = SessionRecording.GenerateAssetName(ParentPrefix);
             _resourceName = SessionRecording.GenerateAssetName(ResourceNamePrefix);
             _resourceGroupName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
+            _dataStoreName = SessionRecording.GenerateAssetName(DataStoreNamePrefix);
 
             // Create RG and Res with GlobalClient
             ResourceGroup rg = await GlobalClient.DefaultSubscription.GetResourceGroups()
@@ -47,9 +50,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 _parentPrefix,
                 DataHelper.GenerateModelContainerResourceData());
 
+            DatastorePropertiesResource dateStore = await ws.GetDatastorePropertiesResources().CreateOrUpdateAsync(
+                _dataStoreName,
+                DataHelper.GenerateDatastorePropertiesResourceData());
+
             _ = await parent.GetModelVersionResources().CreateOrUpdateAsync(
-                _resourceName,
-                DataHelper.GenerateModelVersionResourceData());
+                "1",
+                DataHelper.GenerateModelVersionResourceData(dateStore));
             StopSessionRecording();
         }
 
@@ -60,12 +67,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
             ModelContainerResource parent = await ws.GetModelContainerResources().GetAsync(_parentPrefix);
+            DatastorePropertiesResource dateStore = await ws.GetDatastorePropertiesResources().GetAsync(_dataStoreName);
 
             var deleteResourceName = Recording.GenerateAssetName(ResourceNamePrefix) + "_delete";
             ModelVersionResource res = null;
             Assert.DoesNotThrowAsync(async () => res = await parent.GetModelVersionResources().CreateOrUpdateAsync(
                 deleteResourceName,
-                DataHelper.GenerateModelVersionResourceData()));
+                DataHelper.GenerateModelVersionResourceData(dateStore)));
             Assert.DoesNotThrowAsync(async () => _ = await res.DeleteAsync());
         }
 

@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             ModelContainerResourceData resourceData = default)
         {
             resourceData ??= new ModelContainerResourceData(
-                Parent.Id + $"/codes/{name}",
+                Parent.Id + $"/models/{name}",
                 name,
                 ModelContainerResourceOperations.ResourceType,
                 new ModelContainer(string.Empty, new Dictionary<string, string>(), new Dictionary<string, string>()),

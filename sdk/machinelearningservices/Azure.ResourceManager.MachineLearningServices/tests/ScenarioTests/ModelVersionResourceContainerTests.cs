@@ -15,11 +15,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         private const string WorkspacePrefix = "test-workspace";
         private const string ParentPrefix = "test-parent";
         private const string ResourceNamePrefix = "test-resource";
+        private const string DataStoreNamePrefix = "test_dataStore";
         private readonly Location _defaultLocation = Location.WestUS2;
         private string _resourceGroupName = ResourceGroupNamePrefix;
         private string _workspaceName = WorkspacePrefix;
         private string _resourceName = ResourceNamePrefix;
         private string _parentPrefix = ParentPrefix;
+        private string _dataStoreName = DataStoreNamePrefix;
 
         public ModelVersionResourceContainerTests(bool isAsync)
          : base(isAsync)
@@ -33,6 +35,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             _resourceName = SessionRecording.GenerateAssetName(ResourceNamePrefix);
             _workspaceName = SessionRecording.GenerateAssetName(WorkspacePrefix);
             _resourceGroupName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
+            _dataStoreName = SessionRecording.GenerateAssetName(DataStoreNamePrefix);
 
             ResourceGroup rg = await GlobalClient.DefaultSubscription.GetResourceGroups()
                 .CreateOrUpdateAsync(_resourceGroupName, new ResourceGroupData(_defaultLocation));
@@ -54,10 +57,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
             ModelContainerResource parent = await ws.GetModelContainerResources().GetAsync(_parentPrefix);
+            DatastorePropertiesResource dateStore = await ws.GetDatastorePropertiesResources().CreateOrUpdateAsync(
+                _dataStoreName,
+                DataHelper.GenerateDatastorePropertiesResourceData());
 
             Assert.DoesNotThrowAsync(async () => _ = await parent.GetModelVersionResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateModelVersionResourceData()));
+                DataHelper.GenerateModelVersionResourceData(dateStore)));
 
             var count = (await parent.GetModelVersionResources().GetAllAsync().ToEnumerableAsync()).Count;
             Assert.AreEqual(count, 1);
@@ -70,10 +76,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
             ModelContainerResource parent = await ws.GetModelContainerResources().GetAsync(_parentPrefix);
+            DatastorePropertiesResource dateStore = await ws.GetDatastorePropertiesResources().CreateOrUpdateAsync(
+                _dataStoreName,
+                DataHelper.GenerateDatastorePropertiesResourceData());
 
             Assert.DoesNotThrowAsync(async () => _ = await parent.GetModelVersionResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateModelVersionResourceData()));
+                DataHelper.GenerateModelVersionResourceData(dateStore)));
 
             Assert.DoesNotThrowAsync(async () => await parent.GetModelVersionResources().GetAsync(_resourceName));
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await parent.GetModelVersionResources().GetAsync("NonExistant"));
@@ -86,11 +95,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
             ModelContainerResource parent = await ws.GetModelContainerResources().GetAsync(_parentPrefix);
+            DatastorePropertiesResource dateStore = await ws.GetDatastorePropertiesResources().CreateOrUpdateAsync(
+                _dataStoreName,
+                DataHelper.GenerateDatastorePropertiesResourceData());
 
             ModelVersionResource resource = null;
             Assert.DoesNotThrowAsync(async () => resource = await parent.GetModelVersionResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateModelVersionResourceData()));
+                DataHelper.GenerateModelVersionResourceData(dateStore)));
 
             resource.Data.Properties.Description = "Updated";
             Assert.DoesNotThrowAsync(async () => resource = await parent.GetModelVersionResources().CreateOrUpdateAsync(
@@ -106,11 +118,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
             ModelContainerResource parent = await ws.GetModelContainerResources().GetAsync(_parentPrefix);
+            DatastorePropertiesResource dateStore = await ws.GetDatastorePropertiesResources().CreateOrUpdateAsync(
+                _dataStoreName,
+                DataHelper.GenerateDatastorePropertiesResourceData());
 
             ModelVersionResource resource = null;
             Assert.DoesNotThrowAsync(async () => resource = await (await parent.GetModelVersionResources().StartCreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateModelVersionResourceData())).WaitForCompletionAsync());
+                DataHelper.GenerateModelVersionResourceData(dateStore))).WaitForCompletionAsync());
 
             resource.Data.Properties.Description = "Updated";
             Assert.DoesNotThrowAsync(async () => resource = await (await parent.GetModelVersionResources().StartCreateOrUpdateAsync(
@@ -126,10 +141,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
             ModelContainerResource parent = await ws.GetModelContainerResources().GetAsync(_parentPrefix);
+            DatastorePropertiesResource dateStore = await ws.GetDatastorePropertiesResources().CreateOrUpdateAsync(
+                _dataStoreName,
+                DataHelper.GenerateDatastorePropertiesResourceData());
 
             Assert.DoesNotThrowAsync(async () => _ = await (await parent.GetModelVersionResources().StartCreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateModelVersionResourceData())).WaitForCompletionAsync());
+                DataHelper.GenerateModelVersionResourceData(dateStore))).WaitForCompletionAsync());
 
             Assert.IsTrue(await parent.GetModelVersionResources().CheckIfExistsAsync(_resourceName));
             Assert.IsFalse(await parent.GetModelVersionResources().CheckIfExistsAsync(_resourceName + "xyz"));

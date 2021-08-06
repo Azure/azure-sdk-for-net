@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             Assert.AreEqual("Updated", updatedResource.Data.Description);
         }
 
+        [Ignore("will be removed")]
         [TestCase]
         [RecordedTest]
         public async Task GetWorkspaceFeatures()
