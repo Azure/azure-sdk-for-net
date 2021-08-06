@@ -179,7 +179,7 @@ namespace Azure.Identity
             string command = tenantId switch
             {
                 null => $"az account get-access-token --output json --resource {resource}",
-                _ => $"az account get-access-token --output json --resource {resource} -tenant {tenantId}"
+                _ => $"az account get-access-token --output json --resource {resource} --tenant {tenantId}"
             };
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
