@@ -235,6 +235,7 @@ namespace Microsoft.Azure.Batch
             string containerUrl,
             DateTime startTime,
             DateTime? endTime,
+            ComputeNodeIdentityReference identityReference,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken);
 

@@ -1162,10 +1162,13 @@
             string containerUrl,
             DateTime startTime,
             DateTime? endTime,
+            ComputeNodeIdentityReference identityReference,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.UploadBatchServiceLogsConfiguration(containerUrl, startTime, endTime);
+            var identityRefModel = identityReference != null ? new Models.ComputeNodeIdentityReference(identityReference.ResourceId) : null;
+
+            var parameters = new Models.UploadBatchServiceLogsConfiguration(containerUrl, startTime, endTime, identityRefModel);
             var request = new ComputeNodeUploadBatchServiceLogsBatchRequest(this._client, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNode.UploadBatchServiceLogsWithHttpMessagesAsync(
