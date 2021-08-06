@@ -873,7 +873,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
                     if (expectedOrder == SummarySentencesOrder.Offset)
                     {
-                        Assert.LessOrEqual(sentence.Offset, previousSentence.Offset);
+                        Assert.Greater(sentence.Offset, previousSentence.Offset);
                     }
                     else if (expectedOrder == SummarySentencesOrder.Rank)
                     {
