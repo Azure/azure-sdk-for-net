@@ -1,6 +1,17 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0-beta.1 (2021-08-04)
+
 ### New Features
 
 - Added `DigitalTwinsQueryBuilder` under the  `Azure.DigitalTwins.Core.QueryBuilder.Fluent` and the `Azure.DigitalTwins.Core.QueryBuilder.Linq` namespaces to allow for the creation of ADT queries using fluent-style syntax to abstract the ADT query language from users. As of August 2021, these two query builders are trial features that will be shipped in preview before being potentially released in the future pending user feedback.
@@ -79,11 +90,10 @@ Note that these breaking changes are only breaking changes from the **preview** 
 - Type definitions in Azure.DigitalTwins.Core.Models namespace moved to Azure.DigitalTwins.Core.
 - `CreateModelsAsync` and `CreateModels` APIs now return `Response<ModelData[]>` instead of `Response<IReadOnlyList<ModelData>>`.
 
-## 1.0.0-preview.2 
+## 1.0.0-preview.2
 
 ### New features
 
 - Official public preview of [Azure.DigitalTwins.Core SDK](https://www.nuget.org/packages/Azure.DigitalTwins.Core)
 - [Azure Digital Twins Public Repo](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core)
 - [Azure Digital Twins Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples)
-
