@@ -29,7 +29,7 @@ namespace Azure.DigitalTwins.Core
         /// // the query API. It iterates over the response pages first to access to the query-charge header,
         /// // and then the digital twin results within each page.
         ///
-        /// AsyncPageable&lt;BasicDigitalTwin&gt; asyncPageableResponseWithCharge = client.QueryAsync&lt;BasicDigitalTwin&gt;(&quot;SELECT * FROM digitaltwins&quot;);
+        /// AsyncPageable&lt;BasicDigitalTwin&gt; asyncPageableResponseWithCharge = client.QueryAsync&lt;BasicDigitalTwin&gt;(basicQuery);
         /// int pageNum = 0;
         ///
         /// // The &quot;await&quot; keyword here is required as a call is made when fetching a new page.

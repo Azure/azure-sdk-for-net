@@ -48,10 +48,17 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // Construct a query string to find the twins with the EXACT model id and provided version. If EXACT is not specified, the query
                 // call will get all twins with the same model id but that implement any version higher than the provided version
-                string queryString = $"SELECT * FROM digitaltwins WHERE IS_OF_MODEL('{roomModelId}', EXACT) AND IsOccupied = true";
+                DigitalTwinsQueryBuilder testQuery = new DigitalTwinsQueryBuilder()
+                    .SelectAll()
+                    .From(DigitalTwinsCollection.DigitalTwins)
+                    .Where(q => q
+                        .IsOfModel(roomModelId, true)
+                        .And()
+                        .Compare("IsOccupied", QueryComparisonOperator.Equal, true))
+                    .Build();
 
                 // act
-                AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(queryString);
+                AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(testQuery);
 
                 // assert
 
@@ -195,7 +202,10 @@ namespace Azure.DigitalTwins.Core.Tests
                     await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
                 }
 
-                string queryString = "SELECT * FROM digitaltwins";
+                DigitalTwinsQueryBuilder testQuery = new DigitalTwinsQueryBuilder()
+                    .SelectAll()
+                    .From(DigitalTwinsCollection.DigitalTwins)
+                    .Build();
 
                 // act
                 CancellationTokenSource queryTimeoutCancellationToken = new CancellationTokenSource(QueryWaitTimeout);
@@ -207,7 +217,7 @@ namespace Azure.DigitalTwins.Core.Tests
                         throw new AssertionException($"Timed out waiting for at least {pageSize + 1} twins to be queryable");
                     }
 
-                    AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(queryString, queryTimeoutCancellationToken.Token);
+                    AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(testQuery, queryTimeoutCancellationToken.Token);
                     int count = 0;
                     await foreach (Page<BasicDigitalTwin> queriedTwinPage in asyncPageableResponse.AsPages(pageSizeHint: pageSize))
                     {
@@ -222,7 +232,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // Test that page size hint works, and that all returned pages either have the page size hint amount of
                 // elements, or have no continuation token (signaling that it is the last page)
                 int pageCount = 0;
-                await foreach (Page<BasicDigitalTwin> page in client.QueryAsync<BasicDigitalTwin>(queryString).AsPages(pageSizeHint: pageSize))
+                await foreach (Page<BasicDigitalTwin> page in client.QueryAsync<BasicDigitalTwin>(testQuery).AsPages(pageSizeHint: pageSize))
                 {
                     pageCount++;
                     if (page.ContinuationToken != null)
@@ -277,7 +287,16 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // Construct a query string to find the twins with the EXACT model id and provided version. If EXACT is not specified, the query
                 // call will get all twins with the same model id but that implement any version higher than the provided version
-                string queryString = $"SELECT COUNT() FROM digitaltwins WHERE IS_OF_MODEL('{roomModelId}', EXACT) AND IsOccupied = true";
+
+                string queryString = new DigitalTwinsQueryBuilder()
+                    .SelectCount()
+                    .From(DigitalTwinsCollection.DigitalTwins)
+                    .Where(q => q
+                        .IsOfModel(roomModelId, true)
+                        .And()
+                        .Compare("IsOccupied", QueryComparisonOperator.Equal, true))
+                    .Build()
+                    .GetQueryText();
 
                 // act
                 AsyncPageable<JsonElement> asyncPageableResponse = client.QueryAsync<JsonElement>(queryString);
