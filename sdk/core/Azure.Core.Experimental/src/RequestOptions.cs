@@ -143,6 +143,7 @@ namespace Azure
             public override bool IsRetriableResponse(HttpMessage message)
             {
                 if (Applies(message, ResponseClassification.DontRetry)) return false;
+                if (Applies(message, ResponseClassification.Retry)) return true;
 
                 return _inner.IsRetriableResponse(message);
             }
