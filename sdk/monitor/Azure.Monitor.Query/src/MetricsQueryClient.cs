@@ -207,21 +207,24 @@ namespace Azure.Monitor.Query
         /// For example: <c>Microsoft.OperationalInsights/workspaces</c>.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A list of metric definitions.</returns>
-        public virtual Response<IReadOnlyList<MetricDefinition>> GetMetricDefinitions(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
+        public virtual Pageable<MetricDefinition> GetMetricDefinitions(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricDefinitions)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateEnumerable(_ =>
             {
-                var response = _metricDefinitionsClient.List(resourceId, metricsNamespace, cancellationToken);
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricDefinitions)}");
+                scope.Start();
+                try
+                {
+                    var response = _metricDefinitionsClient.List(resourceId, metricsNamespace, cancellationToken);
 
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                    return Page<MetricDefinition>.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -238,21 +241,24 @@ namespace Azure.Monitor.Query
         /// For example: <c>Microsoft.OperationalInsights/workspaces</c>.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A list of metric definitions.</returns>
-        public virtual async Task<Response<IReadOnlyList<MetricDefinition>>> GetMetricDefinitionsAsync(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricDefinitions)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(async _ =>
             {
-                var response = await _metricDefinitionsClient.ListAsync(resourceId, metricsNamespace, cancellationToken).ConfigureAwait(false);
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricDefinitions)}");
+                scope.Start();
+                try
+                {
+                    var response = await _metricDefinitionsClient.ListAsync(resourceId, metricsNamespace, cancellationToken).ConfigureAwait(false);
 
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                    return Page<MetricDefinition>.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -266,21 +272,24 @@ namespace Azure.Monitor.Query
         /// </param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A list of metric namespaces.</returns>
-        public virtual Response<IReadOnlyList<MetricNamespace>> GetMetricNamespaces(string resourceId, CancellationToken cancellationToken = default)
+        public virtual Pageable<MetricNamespace> GetMetricNamespaces(string resourceId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricNamespaces)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateEnumerable(_ =>
             {
-                var response = _namespacesRestClient.List(resourceId, cancellationToken: cancellationToken);
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricNamespaces)}");
+                scope.Start();
+                try
+                {
+                    var response = _namespacesRestClient.List(resourceId, cancellationToken: cancellationToken);
 
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                    return Page<MetricNamespace>.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -289,21 +298,24 @@ namespace Azure.Monitor.Query
         /// <param name="resourceId">The resource name.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A list of metric namespaces.</returns>
-        public virtual async Task<Response<IReadOnlyList<MetricNamespace>>> GetMetricNamespacesAsync(string resourceId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MetricNamespace> GetMetricNamespacesAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricNamespaces)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(async _ =>
             {
-                var response = await _namespacesRestClient.ListAsync(resourceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetricNamespaces)}");
+                scope.Start();
+                try
+                {
+                    var response = await _namespacesRestClient.ListAsync(resourceId, cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                    return Page<MetricNamespace>.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            });
         }
 
         private static string GetAggregation(MetricsQueryOptions options)
