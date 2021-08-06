@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Renamed `AZURE_POD_IDENTITY_TOKEN_URL` to `AZURE_POD_IDENTITY_AUTHORITY_HOST`. The value should now be a host, for example "http://169.254.169.254" (the default).
+
 ### Bugs Fixed
 
 - Stopped loading `$PROFILE` and checking for updates when using `AzurePowerShellCredential`.
