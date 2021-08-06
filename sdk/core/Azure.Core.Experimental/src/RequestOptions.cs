@@ -36,29 +36,30 @@ namespace Azure
         public RequestOptions(Action<HttpMessage> perCall) => PerCallPolicy = new ActionPolicy(perCall);
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="RequestOptions"/> class.
         /// </summary>
-        /// <param name="treatAsSuccess"></param>
+        /// <param name="treatAsSuccess">The status codes to treat as successful.</param>
         public RequestOptions(params int[] treatAsSuccess) : this(treatAsSuccess, ResponseClassification.Success)
         {
         }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="RequestOptions"/> class.
+        /// Applying provided classification to a set of status codes.
         /// </summary>
-        /// <param name="statusCodes"></param>
-        /// <param name="classification"></param>
+        /// <param name="statusCodes">The status codes to classify.</param>
+        /// <param name="classification">The classification.</param>
         public RequestOptions(int[] statusCodes, ResponseClassification classification)
         {
-            AddStatusClassifier(statusCodes, classification);
+            AddClassifier(statusCodes, classification);
         }
 
         /// <summary>
-        ///
+        /// Adds the classification for provided status codes.
         /// </summary>
-        /// <param name="statusCodes"></param>
-        /// <param name="classification"></param>
-        public void AddStatusClassifier(int[] statusCodes, ResponseClassification classification = ResponseClassification.Success)
+        /// <param name="statusCodes">The status codes to classify.</param>
+        /// <param name="classification">The classification.</param>
+        public void AddClassifier(int[] statusCodes, ResponseClassification classification)
         {
             foreach (var statusCode in statusCodes)
             {
@@ -67,7 +68,7 @@ namespace Azure
         }
 
         /// <summary>
-        ///
+        /// Adds a function that allows to specify how response would be processed by the pipeline.
         /// </summary>
         /// <param name="classifier"></param>
         public void AddClassifier(Func<HttpMessage, ResponseClassification?> classifier)
@@ -128,7 +129,7 @@ namespace Azure
             public override void OnSendingRequest(HttpMessage message) => Action.Invoke(message);
         }
 
-        internal class PerCallResponseClassifier : ResponseClassifier
+        private class PerCallResponseClassifier : ResponseClassifier
         {
             private readonly ResponseClassifier _inner;
             private readonly List<HttpMessageClassifier> _classifiers;
@@ -181,12 +182,12 @@ namespace Azure
             }
         }
 
-        internal abstract class HttpMessageClassifier
+        private abstract class HttpMessageClassifier
         {
             public abstract bool TryClassify(HttpMessage message, Exception? exception, out ResponseClassification classification);
         }
 
-        internal class FuncHttpMessageClassifier : HttpMessageClassifier
+        private class FuncHttpMessageClassifier : HttpMessageClassifier
         {
             private readonly Func<HttpMessage, ResponseClassification?> _func;
 
@@ -210,27 +211,27 @@ namespace Azure
     }
 
     /// <summary>
-    ///
+    /// Specifies how response would be processed by the pipeline and the client.
     /// </summary>
     public enum ResponseClassification
     {
         /// <summary>
-        ///
+        /// The response would be retried.
         /// </summary>
         Retry,
 
         /// <summary>
-        ///
+        /// The response would be retried.
         /// </summary>
         DontRetry,
 
         /// <summary>
-        ///
+        /// The client would throw an exception for the response.
         /// </summary>
         Throw,
 
         /// <summary>
-        ///
+        /// The client would tread the response a successful.
         /// </summary>
         Success,
     }
