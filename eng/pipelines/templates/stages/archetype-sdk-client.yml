@@ -55,7 +55,7 @@ parameters:
   default: []
 - name: SpellCheckPublicApiSurface
   type: boolean
-  default: false
+  default: true
 
 variables:
   - template: ../variables/globals.yml

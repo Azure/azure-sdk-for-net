@@ -26,6 +26,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: monitor
+    SpellCheckPublicApiSurface: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Monitor.OpenTelemetry.Exporter

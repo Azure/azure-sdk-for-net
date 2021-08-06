@@ -63,7 +63,8 @@
     "unhold",
     "uninstrumented",
     "westus",
-    "xunit"
+    "xunit",
+    "vnet"
   ],
   "overrides": [
     {

@@ -27,6 +27,7 @@ extends:
   parameters:
     ServiceDirectory: compute
     ArtifactName: packages
+    SpellCheckPublicApiSurface: false
     Artifacts:
     - name: Azure.ResourceManager.Compute
       safeName: AzureResourceManagerCompute

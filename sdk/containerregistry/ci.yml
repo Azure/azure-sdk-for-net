@@ -31,6 +31,7 @@ extends:
     SDKType: client
     ServiceDirectory: containerregistry
     ArtifactName: packages
+    SpellCheckPublicApiSurface: false
     Artifacts:
     - name: Azure.Containers.ContainerRegistry
       safeName: AzureContainersContainerRegistry

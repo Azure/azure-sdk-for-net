@@ -24,6 +24,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: purview
+    SpellCheckPublicApiSurface: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Analytics.Purview.Catalog

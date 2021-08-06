@@ -26,6 +26,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: sqlmanagement
+    SpellCheckPublicApiSurface: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.ResourceManager.Sql

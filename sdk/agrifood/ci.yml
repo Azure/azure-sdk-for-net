@@ -24,6 +24,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: agrifood
+    SpellCheckPublicApiSurface: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Verticals.AgriFood.Farming
