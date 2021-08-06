@@ -44,3 +44,44 @@ jobs:
           TargetRepoOwner: $(DocRepoOwner)
           WorkingDirectory: $(DocRepoLocation)
 
+      # Prepare daily docs CI
+      # - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
+      #   parameters:
+      #     DailyBranchVariableName: DailyDocsBranchName
+      # - pwsh: |
+      #     $ErrorActionPreference = "Continue"
+      #     git checkout "origin/$(DailyDocsBranchName)" 2>&1 | Out-Null
+      #     $LASTEXITCODE = 0 # This ignores any error from git checkout
+      #     git status
+      #   displayName: Checkout daily branch if it exists
+      #   workingDirectory: $(DocRepoLocation)
+      # - task: Powershell@2
+      #   inputs:
+      #     pwsh: true
+      #     filePath: eng/common/scripts/Update-DocsMsPackages.ps1
+      #     arguments: -DocRepoLocation $(DocRepoLocation)
+      #   displayName: Update Docs Onboarding for Daily branch
+      # - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+      #   parameters:
+      #     BaseRepoBranch: $(DailyDocsBranchName)
+      #     BaseRepoOwner: $(DocRepoOwner)
+      #     CommitMsg: "Update targeting packages based on release metadata. (Daily docs)"
+      #     TargetRepoName: $(DocRepoName)
+      #     TargetRepoOwner: $(DocRepoOwner)
+      #     WorkingDirectory: $(DocRepoLocation)
+      #     ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
+
+      # - task: PowerShell@2
+      #   displayName: Queue Docs CI build
+      #   inputs:
+      #     pwsh: true
+      #     filePath: eng/common/scripts/Queue-Pipeline.ps1
+      #     # SourceBranch must be "master" as this repo is managed by the docs 
+      #     # team and will be updated according to their timeline.
+      #     arguments: >
+      #       -Organization "apidrop"
+      #       -Project "Content%20CI"
+      #       -SourceBranch "master"
+      #       -DefinitionId 3452
+      #       -Base64EncodedAuthToken "$(azuresdk-apidrop-devops-queue-build-pat)"
+      #       -BuildParametersJson '{"params":"{ \"target_repo\": { \"url\": \"https://github.com/MicrosoftDocs/azure-docs-sdk-node\", \"branch\": \"$(DailyDocsBranchName)\", \"folder\": \"./\" }, \"source_repos\": [] }"}'
