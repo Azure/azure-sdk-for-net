@@ -13,8 +13,8 @@ copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 title: SearchServiceClient
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/7601061bfbb72b2f19cb29c46cbf9a397c2d8893/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/7601061bfbb72b2f19cb29c46cbf9a397c2d8893/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d2183715d380084ff04313a73c8803d042fe91b9/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d2183715d380084ff04313a73c8803d042fe91b9/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
 ```
 
 ## Release hacks
@@ -51,7 +51,7 @@ directive:
     }
 ```
 
-### Make Loookup Document behave a little friendlier
+### Make Lookup Document behave a little friendlier
 It's currently an empty object and adding Additional Properties will generate
 a more useful model.
 ``` yaml

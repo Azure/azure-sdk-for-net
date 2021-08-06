@@ -136,5 +136,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.IsTrue(body.TryGetValue(out val));
             Assert.AreEqual("value", ((Dictionary<string, object>)val)["key"]);
         }
+
+        [Test]
+        public void CanParseMaxAbsoluteExpiryTime()
+        {
+            var data = new Data();
+            var amqpMessage = AmqpMessage.Create(data);
+            amqpMessage.Properties.AbsoluteExpiryTime = DateTime.MaxValue;
+
+            var convertedSbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+
+            Assert.AreEqual(DateTimeOffset.MaxValue, convertedSbMessage.ExpiresAt);
+        }
     }
 }

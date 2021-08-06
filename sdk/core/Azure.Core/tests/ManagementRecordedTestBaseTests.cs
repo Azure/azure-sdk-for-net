@@ -90,11 +90,11 @@ namespace Azure.Core.Tests.Management
         }
 
         [Test]
-        public async Task ValidateInstrumentPhPageable()
+        public async Task ValidateInstrumentPageable()
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             var testResources = client.GetTestResourceContainer();
-            await foreach (var item in testResources.ListAsync())
+            await foreach (var item in testResources.GetAllAsync())
             {
                 Assert.AreEqual("TestResourceProxy", item.GetType().Name);
                 Assert.AreEqual("success", item.Method());

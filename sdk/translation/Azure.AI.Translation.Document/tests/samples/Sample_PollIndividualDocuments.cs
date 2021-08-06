@@ -21,7 +21,6 @@ namespace Azure.AI.Translation.Document.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:PollIndividualDocuments
             Uri sourceUri = new Uri("<source SAS URI>");
             Uri targetUri = new Uri("<target SAS URI>");
 
@@ -61,8 +60,6 @@ namespace Azure.AI.Translation.Document.Samples
                     Console.WriteLine($"  Message: {document.Error.Message}");
                 }
             }
-
-            #endregion
         }
     }
 }

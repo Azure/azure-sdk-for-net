@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
+    [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
     public class TenantDiscoveryBlobBaseClientTests : BlobTestBase
     {
         public TenantDiscoveryBlobBaseClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)

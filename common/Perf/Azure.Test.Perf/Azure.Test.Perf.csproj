@@ -10,6 +10,7 @@
     <PackageReference Include="System.Reflection.Emit" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Channels" />
+    <PackageReference Include="BenchmarkDotNet" />
     <Reference Include="System.Net.Http" Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'" />
   </ItemGroup>
 

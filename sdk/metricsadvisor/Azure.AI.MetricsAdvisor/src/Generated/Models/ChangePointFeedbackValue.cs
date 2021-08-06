@@ -11,7 +11,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class ChangePointFeedbackValue
     {
         /// <summary> Initializes a new instance of ChangePointFeedbackValue. </summary>
-        /// <param name="changePointValue"> . </param>
+        /// <param name="changePointValue"></param>
         public ChangePointFeedbackValue(ChangePointValue changePointValue)
         {
             ChangePointValue = changePointValue;
