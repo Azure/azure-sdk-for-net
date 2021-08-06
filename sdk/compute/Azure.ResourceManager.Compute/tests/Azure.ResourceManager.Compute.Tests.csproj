@@ -6,10 +6,4 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Compute.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager" />
-  </ItemGroup>
 </Project>
