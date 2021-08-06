@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement
         /// Create next TransferItem/Task to be processed.
         /// </summary>
         /// <returns>The Task to perform the Upload operation.</returns>
-        public override Task StartTransferTaskAsync()
+        protected override Task StartTransferTaskAsync()
         {
             // TODO: implement download the blob and store it and upload to the destination.
             return Task.CompletedTask;

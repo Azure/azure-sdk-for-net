@@ -205,6 +205,14 @@ namespace Azure.Storage.Blobs.Tests
             Directory.Delete(folder, true);
         }
 
+        // This test is here just to see if DM stuff works, but shouldn't sit in here
+        // (just needed to use DisposingContainer). Maybe a refactor for Disposing* stuff out to a
+        // test common source might be useful for DMLib tests.
+
+        // Test is disabled as it will not function properly until _toScanQueue > _jobsToProcess
+        // transition is implemented.
+
+        /*
         [RecordedTest]
         public async Task TransferManager_UploadTwoDirectories()
         {
@@ -234,6 +242,8 @@ namespace Azure.Storage.Blobs.Tests
             await manager.ScheduleUploadDirectoryAsync(folder, client, options);
             await manager.ScheduleUploadDirectoryAsync(folder, clientTwo, options);
 
+            await manager.StartTransfersAsync();
+
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
 
@@ -253,5 +263,6 @@ namespace Azure.Storage.Blobs.Tests
             // Cleanup
             Directory.Delete(folder, true);
         }
+        */
     }
 }

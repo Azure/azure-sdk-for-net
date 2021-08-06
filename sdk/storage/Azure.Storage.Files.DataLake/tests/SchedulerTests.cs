@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.DataLake.Tests
     {
         public SchedulerTests
             (bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -70,57 +70,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        public async Task UploadDirectoryAsync_RemoteUnspecifiedWithSubfolder()
-        {
-            // Arrange
-            await using DisposingFileSystem test = await GetNewFileSystem();
-
-            string dirName = GetNewFileName();
-            DataLakeDirectoryClient client = test.FileSystem.GetDirectoryClient(dirName);
-
-            string folder = CreateRandomDirectory(System.IO.Path.GetTempPath());
-            string openChild = CreateRandomFile(folder);
-            string lockedChild = CreateRandomFile(folder);
-
-            string openSubfolder = CreateRandomDirectory(folder);
-            string openSubchild = CreateRandomFile(openSubfolder);
-
-            string lockedSubfolder = CreateRandomDirectory(folder);
-            string lockedSubchild = CreateRandomFile(lockedSubfolder);
-
-            string localDirName = folder.Split('\\').Last();
-
-            Func<byte[]> data = () => GetRandomBuffer(Constants.KB);
-
-            File.WriteAllBytes(openChild, data());
-            File.WriteAllBytes(lockedChild, data());
-
-            File.WriteAllBytes(openSubchild, data());
-            File.WriteAllBytes(lockedSubchild, data());
-
-            DataLakeDirectoryUploadOptions options = new DataLakeDirectoryUploadOptions();
-            options.UploadToSubdirectory = true;
-
-            // Act
-            await client.UploadAsync(folder, default, options);
-
-            List<string> paths = ((List<PathItem>)await test.FileSystem.GetPathsAsync(recursive: true).ToListAsync())
-                .Select((PathItem path) => path.Name).ToList();
-
-            // Assert
-            Assert.Multiple(() =>
-            {
-                CollectionAssert.Contains(paths, dirName + "/" + localDirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(paths, dirName + "/" + localDirName + "/" + lockedChild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(paths, dirName + "/" + localDirName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(paths, dirName + "/" + localDirName + "/" + lockedSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
-            });
-
-            // Cleanup
-            Directory.Delete(folder, true);
-        }
-
-        [RecordedTest]
         public async Task UploadDirectoryAsync_RemoteGivenNoSubfolder()
         {
             // Arrange
@@ -163,58 +112,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 CollectionAssert.Contains(paths, dirName + "/" + remoteTargetDir + "/" + lockedChild.Substring(folder.Length + 1).Replace('\\', '/'));
                 CollectionAssert.Contains(paths, dirName + "/" + remoteTargetDir + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
                 CollectionAssert.Contains(paths, dirName + "/" + remoteTargetDir + "/" + lockedSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
-            });
-
-            // Cleanup
-            Directory.Delete(folder, true);
-        }
-
-        [RecordedTest]
-        public async Task UploadDirectoryAsync_RemoteGivenWithSubfolder()
-        {
-            // Arrange
-            await using DisposingFileSystem test = await GetNewFileSystem();
-
-            string dirName = GetNewFileName();
-            string remoteTargetDir = GetNewFileName();
-            DataLakeDirectoryClient client = test.FileSystem.GetDirectoryClient(dirName);
-
-            string folder = CreateRandomDirectory(System.IO.Path.GetTempPath());
-            string openChild = CreateRandomFile(folder);
-            string lockedChild = CreateRandomFile(folder);
-
-            string openSubfolder = CreateRandomDirectory(folder);
-            string openSubchild = CreateRandomFile(openSubfolder);
-
-            string lockedSubfolder = CreateRandomDirectory(folder);
-            string lockedSubchild = CreateRandomFile(lockedSubfolder);
-
-            string localDirName = folder.Split('\\').Last();
-
-            Func<byte[]> data = () => GetRandomBuffer(Constants.KB);
-
-            File.WriteAllBytes(openChild, data());
-            File.WriteAllBytes(lockedChild, data());
-
-            File.WriteAllBytes(openSubchild, data());
-            File.WriteAllBytes(lockedSubchild, data());
-
-            DataLakeDirectoryUploadOptions options = new DataLakeDirectoryUploadOptions();
-            options.UploadToSubdirectory = true;
-
-            // Act
-            await client.UploadAsync(folder, remoteTargetDir, default, options);
-
-            List<string> paths = ((List<PathItem>)await test.FileSystem.GetPathsAsync(recursive: true).ToListAsync())
-                .Select((PathItem path) => path.Name).ToList();
-
-            // Assert
-            Assert.Multiple(() =>
-            {
-                CollectionAssert.Contains(paths, dirName + "/" + remoteTargetDir + "/" + localDirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(paths, dirName + "/" + remoteTargetDir + "/" + localDirName + "/" + lockedChild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(paths, dirName + "/" + remoteTargetDir + "/" + localDirName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(paths, dirName + "/" + remoteTargetDir + "/" + localDirName + "/" + lockedSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
             });
 
             // Cleanup

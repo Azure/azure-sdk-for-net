@@ -60,7 +60,7 @@ namespace Azure.Storage.DataMovement
         /// Create next TransferItem/Task to be processed.
         /// </summary>
         /// <returns>The Task to perform the Upload operation.</returns>
-        public override Task StartTransferTaskAsync()
+        protected override Task StartTransferTaskAsync()
         {
             // TODO: add other Copymethod Options
             // for now only do CopyMethod.ServiceSideAsyncCopy as a stub

@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement
         /// Creates Download TransferItem/Task to be processed.
         /// </summary>
         /// <returns>The Task to perform the Download operation</returns>
-        public override Task StartTransferTaskAsync()
+        protected override Task StartTransferTaskAsync()
         {
             // Do only blockblob upload for now for now
             return _sourceBlobClient.DownloadToAsync(_destinationLocalPath, transferOptions: _transferOptions, cancellationToken: CancellationToken);

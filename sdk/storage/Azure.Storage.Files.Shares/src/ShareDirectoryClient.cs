@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -2867,10 +2868,10 @@ namespace Azure.Storage.Files.Shares
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(string, StorageTransferOptions, ShareDirectoryUploadOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob directory, creating a new blob
-        /// if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="Upload(string, StorageTransferOptions, ShareDirectoryUploadOptions, CancellationToken)"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="localPath">
         /// A string pointing to the directory containing the content to upload.
@@ -2912,10 +2913,9 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, StorageTransferOptions, ShareDirectoryUploadOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="UploadAsync(string, StorageTransferOptions, ShareDirectoryUploadOptions, CancellationToken)"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
         ///
         /// </summary>
         /// <param name="localPath">
@@ -2960,16 +2960,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="Upload(string, StorageTransferOptions, ShareDirectoryUploadOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob directory, creating a new blob
-        /// if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="Upload(string, StorageTransferOptions, ShareDirectoryUploadOptions, CancellationToken)"/> ...
         ///
-        /// TODO: implement overloads for overwrite parameter
+        /// TODO: Replace placeholder summary + param docs
         ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
-        /// Put Blob</see>.
         /// </summary>
         /// <param name="localPath">
         /// A string of the path to the local directory containing the local files to upload.
@@ -3015,10 +3009,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, StorageTransferOptions, ShareDirectoryUploadOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="UploadAsync(string, StorageTransferOptions, ShareDirectoryUploadOptions, CancellationToken)"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="localPath">
         /// A string of the path to the local directory containing the local files to upload.
@@ -3065,10 +3059,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="UploadInternal"/>
-        /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="UploadInternal"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="localPath">
         /// The path of the local directory to upload.
@@ -3120,42 +3114,326 @@ namespace Azure.Storage.Files.Shares
                 {
                     scope.Start();
 
-                    Uri targetUri = Uri;
+                    ShareDirectoryClient directoryClient = this;
 
                     if (remotePath != null)
                     {
-                        targetUri = targetUri.AppendToPath(remotePath);
+                        directoryClient = GetSubdirectoryClient(remotePath);
 
                         if (async)
-                            await GetSubdirectoryClient(remotePath)
-                                .CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        {
+                            await directoryClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        }
                         else
-                            GetSubdirectoryClient(remotePath)
-                                .CreateIfNotExists(cancellationToken: cancellationToken);
+                        {
+                            directoryClient.CreateIfNotExists(cancellationToken: cancellationToken);
+                        }
                     }
 
-                    if (options.UploadToSubdirectory.HasValue && (bool)options.UploadToSubdirectory)
+                    string fullPath = System.IO.Path.GetFullPath(localPath);
+
+                    PathScannerFactory scannerFactory = new PathScannerFactory(localPath);
+                    PathScanner scanner = scannerFactory.BuildPathScanner();
+                    IEnumerable<FileSystemInfo> fileList = scanner.Scan();
+
+                    int concurrency = (int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1);
+                    TaskThrottler throttler = new TaskThrottler(concurrency);
+
+                    List<Response<ShareFileUploadInfo>> responses = new List<Response<ShareFileUploadInfo>>();
+
+                    Queue<FileSystemInfo> files = new();
+
+                    foreach (FileSystemInfo file in fileList)
                     {
-                        string localDirName = localPath.Split('\\').Last();
-                        targetUri = targetUri.AppendToPath(localDirName);
+                        if (file.FullName == fullPath)
+                            continue;
 
-                        if (async)
-                            await GetSubdirectoryClient($"{(remotePath != null ? $"{remotePath}/" : "")}{localDirName}")
-                                .CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        if (file.GetType() == typeof(System.IO.DirectoryInfo))
+                        {
+                            throttler.AddTask(async () =>
+                            {
+                                await directoryClient.GetSubdirectoryClient(file.FullName.Substring(fullPath.Length + 1))
+                                    .CreateIfNotExistsAsync(cancellationToken: cancellationToken)
+                                    .ConfigureAwait(false);
+                            });
+                        }
                         else
-                            GetSubdirectoryClient($"{(remotePath != null ? $"{remotePath}/" : "")}{localDirName}")
-                                .CreateIfNotExists(cancellationToken: cancellationToken);
+                        {
+                            files.Enqueue(file);
+                        }
                     }
 
-                    ShareUploadScheduler scheduler = new ShareUploadScheduler(targetUri, ClientConfiguration);
+                    if (async)
+                    {
+                        await throttler.WaitAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        throttler.Wait();
+                    }
 
-                    return await scheduler.StartTransfer(
-                        localPath,
-                        transferOptions,
-                        options,
-                        async,
-                        cancellationToken)
-                        .ConfigureAwait(false);
+                    while (files.Count > 0)
+                    {
+                        FileSystemInfo file = files.Dequeue();
+
+                        throttler.AddTask(async () =>
+                        {
+                            using (FileStream stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read))
+                            {
+                                ShareFileClient fileClient = directoryClient.GetFileClient(file.FullName.Substring(fullPath.Length + 1));
+                                await fileClient.CreateAsync(stream.Length).ConfigureAwait(false);
+                                responses.Add(await fileClient.UploadAsync(stream).ConfigureAwait(false));
+                            }
+                        });
+                    }
+
+                    if (async)
+                    {
+                        await throttler.WaitAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        throttler.Wait();
+                    }
+
+                    return responses;
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
+        #region Download
+        /// <summary>
+        /// The <see cref="Download(string, ShareFileRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob directory, creating a new blob
+        /// if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="targetPath">
+        /// A string pointing to the local directory whose contents should be uploaded.
+        /// </param>
+        /// <param name="conditions">
+        /// A <see cref="ShareFileRequestConditions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual IEnumerable<Response> Download(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            string targetPath,
+            ShareFileRequestConditions conditions = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            return DownloadInternal(
+                targetPath,
+                conditions,
+                transferOptions,
+                async: false,
+                cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadAsync(string, ShareFileRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        /// </summary>
+        /// <param name="targetPath">
+        /// The path of the local directory to upload.
+        /// </param>
+        /// <param name="conditions">
+        /// A <see cref="ShareFileRequestConditions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<IEnumerable<Response>> DownloadAsync(
+#pragma warning disable AZC0015 // Unexpected client method return type.
+            string targetPath,
+            ShareFileRequestConditions conditions = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await DownloadInternal(
+                targetPath,
+                conditions,
+                transferOptions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadInternal"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        /// </summary>
+        /// <param name="targetPath">
+        /// The path of the local directory to upload.
+        /// </param>
+        /// <param name="conditions">
+        /// A <see cref="ShareFileRequestConditions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// TODO: remove pragma warning after adding await operators
+        internal virtual async Task<IEnumerable<Response>> DownloadInternal(
+            string targetPath,
+            ShareFileRequestConditions conditions,
+            StorageTransferOptions transferOptions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareDirectoryClient),
+                    message:
+                    $"{nameof(targetPath)}: {targetPath}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareDirectoryClient)}.{nameof(Download)}");
+
+                try
+                {
+                    scope.Start();
+
+                    string fullPath = System.IO.Path.GetFullPath(targetPath);
+
+                    List<string> paths = new();
+
+                    if (async)
+                    {
+                        await RecurseShareDirectory(paths, this, "").ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        Task recurse = Task.Run(async () =>
+                        {
+                            await RecurseShareDirectory(paths, this, "").ConfigureAwait(false);
+                        }, cancellationToken);
+                        recurse.Wait(cancellationToken);
+                    }
+
+                    int concurrency = (int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1);
+                    TaskThrottler throttler = new TaskThrottler(concurrency);
+
+                    List<Response> responses = new List<Response>();
+
+                    foreach (string path in paths)
+                    {
+                        ShareFileClient client = GetFileClient(path);
+
+                        string downloadPath = System.IO.Path.Combine(fullPath, path);
+
+                        throttler.AddTask(async () =>
+                        {
+                            Directory.CreateDirectory(System.IO.Path.GetDirectoryName(downloadPath));
+                            using (Stream destination = File.Create(downloadPath))
+                            {
+                                // TODO: Re-enable DownloadTo-based snippet once PartitionedDownloader
+                                // implementation for Files is complete (just uncomment)
+                                //
+                                // responses.Add(await client.DownloadToAsync(
+                                //    destination,
+                                //    conditions,
+                                //    transferOptions,
+                                //    cancellationToken)
+                                //    .ConfigureAwait(false));
+
+                                Response<ShareFileDownloadInfo> downloadResponse = await client.DownloadAsync(
+                                    conditions: conditions,
+                                    cancellationToken: cancellationToken)
+                                    .ConfigureAwait(false);
+                                await downloadResponse.Value.Content.CopyToAsync(destination).ConfigureAwait(false);
+
+                                responses.Add(downloadResponse.GetRawResponse());
+                            }
+                        });
+                    }
+
+                    if (async)
+                    {
+                        await throttler.WaitAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        throttler.Wait();
+                    }
+
+                    return responses;
+
+                    async Task RecurseShareDirectory(List<string> output, ShareDirectoryClient parent, string currentTree)
+                    {
+                        await foreach (ShareFileItem shareItem in parent.GetFilesAndDirectoriesAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                        {
+                            if (shareItem.IsDirectory)
+                                await RecurseShareDirectory(output, parent.GetSubdirectoryClient(shareItem.Name), currentTree + shareItem.Name + "/")
+                                    .ConfigureAwait(false);
+                            else
+                                output.Add(currentTree + shareItem.Name);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

@@ -512,20 +512,10 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(string, BlobDirectoryUploadOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob directory, creating a new blob
-        /// if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="Upload(string, BlobDirectoryUploadOptions, CancellationToken)"/> ...
         ///
-        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
-        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
-        /// to avoid overwriting existing data.
+        /// TODO: Replace placeholder summary + param docs
         ///
-        /// For now this will only do block blobs. For the future, we can have in BlobUploadDirectoryOptions
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
-        /// Put Blob</see>.
         /// </summary>
         /// <param name="localPath">
         /// A <see cref="Directory"/> containing the content to upload.
@@ -562,18 +552,10 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, BlobDirectoryUploadOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="UploadAsync(string, BlobDirectoryUploadOptions, CancellationToken)"/> ...
         ///
-        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
-        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
-        /// to avoid overwriting existing data.
+        /// TODO: Replace placeholder summary + param docs
         ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
-        /// Put Blob</see>.
         /// </summary>
         /// <param name="localPath">
         /// The path of the local directory to upload.
@@ -612,23 +594,10 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="Upload(string, BlobDirectoryUploadOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob directory, creating a new blob
-        /// if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="Upload(string, BlobDirectoryUploadOptions, CancellationToken)"/> ...
         ///
-        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
-        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
-        /// to avoid overwriting existing data.
+        /// TODO: Replace placeholder summary + param docs
         ///
-        /// For now this will only do block blobs. For the future, we can have in BlobUploadDirectoryOptions
-        /// the option to set the blob type of page blobs and append blobs.
-        ///
-        /// TODO: implement overloads for overwrite parameter
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
-        /// Put Blob</see>.
         /// </summary>
         /// <param name="localPath">
         /// A string of the path to the local directory containing the local files to upload.
@@ -669,18 +638,10 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, BlobDirectoryUploadOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="UploadAsync(string, BlobDirectoryUploadOptions, CancellationToken)"/> ...
         ///
-        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
-        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
-        /// to avoid overwriting existing data.
+        /// TODO: Replace placeholder summary + param docs
         ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
-        /// Put Blob</see>.
         /// </summary>
         /// <param name="localPath">
         /// A string of the path to the local directory containing the local files to upload.
@@ -722,18 +683,10 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="UploadInternal"/>
-        /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="UploadInternal"/> ...
         ///
-        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
-        /// access conditions</see> through <see cref="BlobRequestConditions"/>
-        /// to avoid overwriting existing data.
+        /// TODO: Replace placeholder summary + param docs
         ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
-        /// Put Blob</see>.
         /// </summary>
         /// <param name="localPath">
         /// The path of the local directory to upload.
@@ -800,12 +753,12 @@ namespace Azure.Storage.Blobs.Specialized
                             continue;
                         }
 
+                        string blobName = remotePath != null ?
+                            $"{remotePath}/{file.FullName.Substring(fullPath.Length + 1)}" :
+                            file.FullName.Substring(fullPath.Length + 1);
+
                         throttler.AddTask(async () =>
                         {
-                            string blobName = remotePath != null ?
-                                $"{remotePath}/{file.FullName.Substring(fullPath.Length + 1)}" :
-                                file.FullName.Substring(fullPath.Length + 1);
-
                             responses.Add(await GetBlobClient(blobName)
                                .UploadAsync(
                                    file.FullName,
@@ -842,8 +795,10 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Download
         /// <summary>
-        /// The <see cref="Download(string)"/> operation downloads a blob using parallel requests,
-        /// and writes the content to <paramref name="targetPath"/>.
+        /// The <see cref="Download(string)"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="targetPath">
         /// A file path to write the downloaded content to.
@@ -860,9 +815,10 @@ namespace Azure.Storage.Blobs.Specialized
             Download(targetPath, CancellationToken.None);
 
         /// <summary>
-        /// The <see cref="DownloadAsync(string)"/> downloads all the blobs
-        /// within a blob directory using parallel requests,
-        /// and writes the content to the local <paramref name="targetPath"/>.
+        /// The <see cref="DownloadAsync(string)"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="targetPath">
         /// A file path to write the downloaded content to.
@@ -879,9 +835,10 @@ namespace Azure.Storage.Blobs.Specialized
             await DownloadAsync(targetPath, CancellationToken.None).ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="Download(string, CancellationToken)"/> downloads all the blobs
-        /// within a blob directory using parallel requests,
-        /// and writes the content to the local <paramref name="targetPath"/>.
+        /// The <see cref="Download(string, CancellationToken)"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="targetPath">
         /// A file path to write the downloaded content to.
@@ -907,9 +864,10 @@ namespace Azure.Storage.Blobs.Specialized
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="DownloadAsync(string, CancellationToken)"/> downloads all the blobs
-        /// within a blob directory using parallel requests,
-        /// and writes the content to the local <paramref name="targetPath"/>.
+        /// The <see cref="DownloadAsync(string, CancellationToken)"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="targetPath">
         /// A file path to write the downloaded content to.
@@ -936,9 +894,10 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="Download(string, BlobDirectoryDownloadOptions, CancellationToken)"/>
-        /// downloads all the blobs within a blob directory using parallel requests,
-        /// and writes the content to the local <paramref name="targetPath"/>.
+        /// The <see cref="Download(string, BlobDirectoryDownloadOptions, CancellationToken)"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="targetPath">
         /// A file path to write the downloaded content to.
@@ -963,7 +922,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobDirectoryDownloadOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            return StagedDownloadAsync(
+            return DownloadInternal(
                 targetPath,
                 options: options,
                 async: false,
@@ -972,9 +931,10 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="DownloadAsync(string, BlobDirectoryDownloadOptions, CancellationToken)"/>
-        /// downloads all the blobs within a blob directory using parallel requests,
-        /// and writes the content to the local <paramref name="targetPath"/>.
+        /// The <see cref="DownloadAsync(string, BlobDirectoryDownloadOptions, CancellationToken)"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="targetPath">
         /// A file path to write the downloaded content to.
@@ -999,7 +959,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobDirectoryDownloadOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            return await StagedDownloadAsync(
+            return await DownloadInternal(
                 targetPath,
                 options: options,
                 async: true,
@@ -1008,9 +968,9 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// This operation will download a blob of arbitrary size by downloading it as individually staged
-        /// partitions if it's larger than the
-        /// <paramref name="options"/> MaximumTransferLength.
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="targetPath">
         /// A file path to write the downloaded content to.
@@ -1033,7 +993,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         /// TODO: remove static
-        internal async Task<IEnumerable<Response>> StagedDownloadAsync(
+        internal async Task<IEnumerable<Response>> DownloadInternal(
             string targetPath,
             BlobDirectoryDownloadOptions options,
             bool async = true,
@@ -1076,7 +1036,7 @@ namespace Azure.Storage.Blobs.Specialized
                         BlobBaseClient client = containerClient.GetBlobBaseClient(blob.Name);
                         string downloadPath = Path.Combine(fullPath, blob.Name.Substring(Name.Length + 1));
 
-                        throttler.AddTask(async () =>
+                        throttler.AddTask(async() =>
                         {
                             Directory.CreateDirectory(Path.GetDirectoryName(downloadPath));
                             using (Stream destination = File.Create(downloadPath))
@@ -1291,16 +1251,9 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region CopyFromUri
         /// <summary>
-        /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
-        /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
-        /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// TODO: Replace placeholder summary + param docs
         ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
-        /// Copy Blob From URL</see>.
         /// </summary>
         /// <param name="source">
         /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
@@ -1337,16 +1290,9 @@ namespace Azure.Storage.Blobs.Specialized
             .EnsureCompleted();
 
         /// <summary>
-        /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
-        /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
-        /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// TODO: Replace placeholder summary + param docs
         ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
-        /// Copy Blob From URL</see>.
         /// </summary>
         /// <param name="source">
         /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
@@ -1383,16 +1329,9 @@ namespace Azure.Storage.Blobs.Specialized
             .ConfigureAwait(false);
 
         /// <summary>
-        /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
-        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
-        /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
-        /// which is either public or authorized with a shared access signature.
         ///
-        /// The size of the source blob can be a maximum length of up to 256 MB.
+        /// TODO: Replace placeholder summary + param docs
         ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
-        /// Copy Blob From URL</see>.
         /// </summary>
         /// <param name="source">
         /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length

@@ -17,7 +17,6 @@
     <RootNamespace>Azure.Storage</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Threading" VersionOverride="16.10.56" />
     <PackageReference Include="System.Threading.Tasks.Dataflow" VersionOverride="5.0.0" />
   </ItemGroup>
   <ItemGroup>

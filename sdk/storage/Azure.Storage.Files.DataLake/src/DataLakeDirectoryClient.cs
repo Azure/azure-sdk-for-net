@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -2284,20 +2285,13 @@ namespace Azure.Storage.Files.DataLake
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(string, StorageTransferOptions, DataLakeDirectoryUploadOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob directory, creating a new blob
-        /// if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="Upload(string, DataLakeDirectoryUploadOptions, CancellationToken)"/> ...
         ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
-        /// Put Blob</see>.
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="localPath">
         /// A string pointing to the local directory whose contents should be uploaded.
-        /// </param>
-        /// <param name="transferOptions">
-        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -2319,30 +2313,25 @@ namespace Azure.Storage.Files.DataLake
         public virtual IEnumerable<Response<PathInfo>> Upload(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             string localPath,
-            StorageTransferOptions transferOptions,
             DataLakeDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             return UploadInternal(
                 localPath,
                 null,
-                transferOptions,
                 options,
                 async: false,
                 cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, StorageTransferOptions, DataLakeDirectoryUploadOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="UploadAsync(string, DataLakeDirectoryUploadOptions, CancellationToken)"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="localPath">
         /// The path of the local directory to upload.
-        /// </param>
-        /// <param name="transferOptions">
-        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -2364,14 +2353,12 @@ namespace Azure.Storage.Files.DataLake
         public virtual async Task<IEnumerable<Response<PathInfo>>> UploadAsync(
 #pragma warning disable AZC0015 // Unexpected client method return type.
             string localPath,
-            StorageTransferOptions transferOptions,
             DataLakeDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             return await UploadInternal(
                 localPath,
                 null,
-                transferOptions,
                 options,
                 async: true,
                 cancellationToken)
@@ -2379,12 +2366,9 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="Upload(string, StorageTransferOptions, DataLakeDirectoryUploadOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob directory, creating a new blob
-        /// if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="Upload(string, string, DataLakeDirectoryUploadOptions, CancellationToken)"/> ...
         ///
-        /// TODO: implement overloads for overwrite parameter
+        /// TODO: Replace placeholder summary + param docs
         ///
         /// </summary>
         /// <param name="localPath">
@@ -2393,9 +2377,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="remotePath">
         /// A string specifying the remote directory to which target data will be uploaded.
         /// </param>
-        /// <param name="transferOptions">
-        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
-        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -2417,33 +2398,28 @@ namespace Azure.Storage.Files.DataLake
 #pragma warning restore AZC0015 // Unexpected client method return type.
             string localPath,
             string remotePath,
-            StorageTransferOptions transferOptions,
             DataLakeDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             return UploadInternal(
                 localPath,
                 remotePath,
-                transferOptions,
                 options,
                 async: false,
                 cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, StorageTransferOptions, DataLakeDirectoryUploadOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="UploadAsync(string, DataLakeDirectoryUploadOptions, CancellationToken)"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="localPath">
         /// The path of the local directory to upload.
         /// </param>
         /// <param name="remotePath">
         /// A string specifying the remote directory to which target data will be uploaded.
-        /// </param>
-        /// <param name="transferOptions">
-        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -2466,14 +2442,12 @@ namespace Azure.Storage.Files.DataLake
 #pragma warning disable AZC0015 // Unexpected client method return type.
             string localPath,
             string remotePath,
-            StorageTransferOptions transferOptions,
             DataLakeDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             return await UploadInternal(
                 localPath,
                 remotePath,
-                transferOptions,
                 options,
                 async: true,
                 cancellationToken)
@@ -2481,19 +2455,16 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="UploadInternal"/>
-        /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="UploadInternal"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="localPath">
         /// The path of the local directory to upload.
         /// </param>
         /// <param name="remotePath">
         /// The remote path of the directory to which to upload.
-        /// </param>
-        /// <param name="transferOptions">
-        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -2517,7 +2488,6 @@ namespace Azure.Storage.Files.DataLake
         internal virtual async Task<IEnumerable<Response<PathInfo>>> UploadInternal(
             string localPath,
             string remotePath,
-            StorageTransferOptions transferOptions,
             DataLakeDirectoryUploadOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -2536,24 +2506,47 @@ namespace Azure.Storage.Files.DataLake
                 {
                     scope.Start();
 
-                    Uri targetUri = Uri;
+                    string fullPath = System.IO.Path.GetFullPath(localPath);
 
-                    if (remotePath != null)
-                        targetUri = targetUri.AppendToPath(remotePath);
+                    PathScannerFactory scannerFactory = new PathScannerFactory(fullPath);
+                    PathScanner scanner = scannerFactory.BuildPathScanner();
+                    IEnumerable<System.IO.FileSystemInfo> fileList = scanner.Scan();
 
-                    targetUri = options.UploadToSubdirectory.HasValue && (bool)options.UploadToSubdirectory
-                        ? targetUri.AppendToPath(localPath.Split('\\').Last())
-                        : targetUri;
+                    int concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
+                        options.TransferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
+                    TaskThrottler throttler = new TaskThrottler(concurrency);
 
-                    DataLakeUploadScheduler scheduler = new DataLakeUploadScheduler(targetUri, ClientConfiguration);
+                    List<Response<PathInfo>> responses = new List<Response<PathInfo>>();
 
-                    return await scheduler.StartTransfer(
-                        localPath,
-                        transferOptions,
-                        options,
-                        async,
-                        cancellationToken)
-                        .ConfigureAwait(false);
+                    foreach (System.IO.FileSystemInfo file in fileList)
+                    {
+                        if (file.GetType() == typeof(DirectoryInfo))
+                        {
+                            continue;
+                        }
+
+                        string fileName = remotePath != null ?
+                            $"{remotePath}/{file.FullName.Substring(fullPath.Length + 1)}" :
+                            file.FullName.Substring(fullPath.Length + 1);
+
+                        throttler.AddTask(async () =>
+                        {
+                            responses.Add(await GetFileClient(fileName)
+                                .UploadAsync(file.FullName)
+                                .ConfigureAwait(false));
+                        });
+                    }
+
+                    if (async)
+                    {
+                        await throttler.WaitAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        throttler.Wait();
+                    }
+
+                    return responses;
                 }
                 catch (Exception ex)
                 {
@@ -2572,14 +2565,10 @@ namespace Azure.Storage.Files.DataLake
 
         #region Download
         /// <summary>
-        /// The <see cref="Download(string, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob directory, creating a new blob
-        /// if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="Download(string, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/> ...
         ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
-        /// Put Blob</see>.
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="targetPath">
         /// A string pointing to the local directory whose contents should be uploaded.
@@ -2620,10 +2609,10 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="DownloadAsync(string, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="DownloadAsync(string, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="targetPath">
         /// The path of the local directory to upload.
@@ -2665,10 +2654,10 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="DownloadInternal"/>
-        /// operation overwrites the contents of the blob, creating a new block
-        /// blob if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
+        /// The <see cref="DownloadInternal"/> ...
+        ///
+        /// TODO: Replace placeholder summary + param docs
+        ///
         /// </summary>
         /// <param name="targetPath">
         /// The path of the local directory to upload.
@@ -2715,8 +2704,51 @@ namespace Azure.Storage.Files.DataLake
                 {
                     scope.Start();
 
-                    DataLakeDownloadScheduler scheduler = new DataLakeDownloadScheduler(Uri, ClientConfiguration);
-                    return await scheduler.StartTransfer(targetPath, conditions, transferOptions, async, cancellationToken).ConfigureAwait(false);
+                    string fullPath = System.IO.Path.GetFullPath(targetPath);
+
+                    Pageable<PathItem> paths = GetPaths(recursive: true, cancellationToken: cancellationToken);
+
+                    int concurrency = transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ?
+                        transferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
+                    TaskThrottler throttler = new TaskThrottler(concurrency);
+
+                    List<Response> responses = new List<Response>();
+
+                    foreach (PathItem path in paths)
+                    {
+                        if (!(bool)path.IsDirectory)
+                        {
+                            string resolvedName = path.Name.Substring(Name != null ? Name.Length + 1 : 0);
+
+                            DataLakeFileClient client = GetFileClient(resolvedName);
+                            string downloadPath = System.IO.Path.Combine(fullPath, resolvedName);
+
+                            throttler.AddTask(async () =>
+                            {
+                                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(downloadPath));
+                                using (Stream destination = File.Create(downloadPath))
+                                {
+                                    responses.Add(await client.ReadToAsync(
+                                        destination,
+                                        conditions,
+                                        transferOptions,
+                                        cancellationToken)
+                                        .ConfigureAwait(false));
+                                }
+                            });
+                        }
+                    }
+
+                    if (async)
+                    {
+                        await throttler.WaitAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        throttler.Wait();
+                    }
+
+                    return responses;
                 }
                 catch (Exception ex)
                 {
