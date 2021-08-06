@@ -195,6 +195,19 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
+        public void DigitalTwinsQueryBuilder_Where_Compare_Bool()
+        {
+            new DigitalTwinsQueryBuilder()
+                .SelectAll()
+                .From(DigitalTwinsCollection.DigitalTwins)
+                .Where(q => q.Compare("IsOccupied", QueryComparisonOperator.Equal, true))
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE IsOccupied = True");
+        }
+
+        [Test]
         public void DigitalTwinsQueryBuilder_Where_Contains()
         {
             new DigitalTwinsQueryBuilder()

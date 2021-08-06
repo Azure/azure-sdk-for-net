@@ -278,7 +278,8 @@ namespace Azure.DigitalTwins.Core.Samples
 
                 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
                 // happens under the covers.
-                AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
+                DigitalTwinsQueryBuilder basicQuery = new DigitalTwinsQueryBuilder().SelectAll().From(DigitalTwinsCollection.DigitalTwins).Build();
+                AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(basicQuery);
 
                 // Iterate over the twin instances in the pageable response.
                 // The "await" keyword here is required because new pages will be fetched when necessary,
@@ -291,9 +292,9 @@ namespace Azure.DigitalTwins.Core.Samples
                 #endregion Snippet:DigitalTwinsSampleQueryTwins
 
                 #region Snippet:DigitalTwinsSampleQueryTwinsAdtQueryBuilder
-                // This code snippet demonstrates querying digital twin results using an AdtQueryBuilder, an object that allows for 
+                // This code snippet demonstrates querying digital twin results using an DigitalTwinsQueryBuilder, an object that allows for 
                 // fluent-style query construction that makes it easier to write queries.
-                AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilder = client.QueryAsync<BasicDigitalTwin>(
+                AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilderFluent = client.QueryAsync<BasicDigitalTwin>(
                     new DigitalTwinsQueryBuilder()
                         .SelectAll()
                         .From(DigitalTwinsCollection.DigitalTwins)
@@ -308,7 +309,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 // the query API. It iterates over the response pages first to access to the query-charge header,
                 // and then the digital twin results within each page.
 
-                AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
+                AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAsync<BasicDigitalTwin>(basicQuery);
                 int pageNum = 0;
 
                 // The "await" keyword here is required as a call is made when fetching a new page.
