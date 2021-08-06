@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &quot;namespace eq &apos;{value}&apos;&quot;. If $filter is not provided, no filtering is performed. If $filter=namespace eq &apos;{value}&apos; is provided, the returned list only includes all data policy manifests that have a namespace matching the provided value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataPolicyManifest" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<DataPolicyManifest> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataPolicyManifest> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DataPolicyManifest>> FirstPageFunc(int? pageSizeHint)
             {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestContainer.GetAsGenericResources");
             scope.Start();

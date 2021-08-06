@@ -214,5 +214,13 @@ namespace Azure.ResourceManager.Resources
         {
             return new SubscriptionContainer(this);
         }
+        /// <summary>
+        /// Gets the data policy manifest container for this tenant.
+        /// </summary>
+        /// <returns> A container of the data policy manifest. </returns>
+        public virtual DataPolicyManifestContainer GetDataPolicyManifests()
+        {
+            return new DataPolicyManifestContainer(this);
+        }
     }
 }

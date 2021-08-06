@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Get a management lock by scope. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public async virtual Task<Response<ManagementLockObject>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementLockObjectOperations.GetByScope");
