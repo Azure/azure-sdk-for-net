@@ -27,7 +27,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             IReadOnlyList<TimeSeriesIdProperty> timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
             foreach (TimeSeriesIdProperty property in timeSeriesIdProperties)
             {
-                Console.WriteLine($"Time Series Id property name : '{property.Name}', type : '{property.Type}'.");
+                Console.WriteLine($"Time Series Id property name : '{property.Name}', type : '{property.PropertyType}'.");
             }
             #endregion Snippet:TimeSeriesInsightsSampleGetModelSettings
 

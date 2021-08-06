@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -152,5 +153,46 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "subscriptionRequired")]
         public bool? SubscriptionRequired { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ApiRevision != null)
+            {
+                if (ApiRevision.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ApiRevision", 100);
+                }
+                if (ApiRevision.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ApiRevision", 1);
+                }
+            }
+            if (ApiVersion != null)
+            {
+                if (ApiVersion.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ApiVersion", 100);
+                }
+            }
+            if (ApiRevisionDescription != null)
+            {
+                if (ApiRevisionDescription.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ApiRevisionDescription", 256);
+                }
+            }
+            if (ApiVersionDescription != null)
+            {
+                if (ApiVersionDescription.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ApiVersionDescription", 256);
+                }
+            }
+        }
     }
 }

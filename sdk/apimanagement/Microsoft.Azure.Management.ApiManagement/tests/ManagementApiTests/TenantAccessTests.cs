@@ -15,7 +15,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class TenantAccessTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "sasolank")]
         public async Task EnableGetAndUpdateKeys()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -24,17 +24,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
 
-                // get settings
-                var getResponse = testBase.client.TenantAccess.Get(
+                // list tenant access
+                var getResponse = testBase.client.TenantAccess.ListByService(
                     testBase.rgName,
                     testBase.serviceName);
 
                 Assert.NotNull(getResponse);
-                Assert.False(getResponse.Enabled);
-                Assert.Null(getResponse.PrimaryKey);
-                Assert.Null(getResponse.SecondaryKey);
 
-                var getSecrets = testBase.client.TenantAccess.ListSecrets(testBase.rgName, testBase.serviceName);
+                var getSecrets = testBase.client.TenantAccess.ListSecrets(testBase.rgName, testBase.serviceName, "access");
                 Assert.NotNull(getSecrets.PrimaryKey);
                 Assert.NotNull(getSecrets.SecondaryKey);
 
@@ -45,34 +42,47 @@ namespace ApiManagement.Tests.ManagementApiTests
                     {
                         Enabled = true
                     };
-                    testBase.client.TenantAccess.Update(
+                    var getUpdateResponse = testBase.client.TenantAccess.Update(
                         testBase.rgName,
                         testBase.serviceName,
                         parameters,
+                        "access",
                         "*");
+
+                    Assert.NotNull(getUpdateResponse);
+                    Assert.True(getUpdateResponse.Enabled);
 
                     var getHttpResponse = await testBase.client.TenantAccess.GetWithHttpMessagesAsync(
                         testBase.rgName,
-                        testBase.serviceName);
+                        testBase.serviceName,
+                        "access");
 
                     Assert.NotNull(getHttpResponse);
                     Assert.True(getHttpResponse.Body.Enabled);
                     Assert.NotNull(getHttpResponse.Headers.ETag);
 
-                    testBase.client.TenantAccess.RegeneratePrimaryKey(testBase.rgName, testBase.serviceName);
+                    var getEtag = testBase.client.TenantAccess.GetEntityTag(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        "access");
 
-                    var getSecrets2 = testBase.client.TenantAccess.ListSecrets(testBase.rgName, testBase.serviceName);
+                    Assert.NotNull(getEtag);
+                    Assert.NotNull(getEtag.ETag);
+
+                    testBase.client.TenantAccess.RegeneratePrimaryKey(testBase.rgName, testBase.serviceName, "access");
+
+                    var getSecrets2 = testBase.client.TenantAccess.ListSecrets(testBase.rgName, testBase.serviceName, "access");
 
                     Assert.NotNull(getSecrets2);
                     Assert.Equal(getSecrets.SecondaryKey, getSecrets2.SecondaryKey);
                     Assert.NotEqual(getSecrets.PrimaryKey, getSecrets2.PrimaryKey);
 
-                    testBase.client.TenantAccess.RegenerateSecondaryKey(testBase.rgName, testBase.serviceName);
+                    testBase.client.TenantAccess.RegenerateSecondaryKey(testBase.rgName, testBase.serviceName, "access");
 
-                    getSecrets2 = testBase.client.TenantAccess.Get(testBase.rgName, testBase.serviceName);
+                    var getSecrets3 = testBase.client.TenantAccess.ListSecrets(testBase.rgName, testBase.serviceName, "access");
 
-                    Assert.NotNull(getSecrets2);
-                    Assert.NotEqual(getSecrets.SecondaryKey, getSecrets2.SecondaryKey);
+                    Assert.NotNull(getSecrets3);
+                    Assert.NotEqual(getSecrets.SecondaryKey, getSecrets3.SecondaryKey);
                 }
                 finally
                 {
@@ -80,6 +90,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         new AccessInformationUpdateParameters(enabled: false),
+                        "access",
                         "*");
                 }
             }

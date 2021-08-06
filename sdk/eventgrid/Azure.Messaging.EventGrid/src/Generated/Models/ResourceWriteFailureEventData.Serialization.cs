@@ -24,10 +24,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> resourceUri = default;
             Optional<string> operationName = default;
             Optional<string> status = default;
-            Optional<string> authorization = default;
-            Optional<string> claims = default;
+            Optional<JsonElement> authorization = default;
+            Optional<JsonElement> claims = default;
             Optional<string> correlationId = default;
-            Optional<string> httpRequest = default;
+            Optional<JsonElement> httpRequest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"))
@@ -67,12 +67,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("authorization"))
                 {
-                    authorization = property.Value.GetString();
+                    authorization = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("claims"))
                 {
-                    claims = property.Value.GetString();
+                    claims = property.Value.Clone();
                     continue;
                 }
                 if (property.NameEquals("correlationId"))
@@ -82,11 +82,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("httpRequest"))
                 {
-                    httpRequest = property.Value.GetString();
+                    httpRequest = property.Value.Clone();
                     continue;
                 }
             }
-            return new ResourceWriteFailureEventData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization.Value, claims.Value, correlationId.Value, httpRequest.Value);
+            return new ResourceWriteFailureEventData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization, claims, correlationId.Value, httpRequest);
         }
 
         internal partial class ResourceWriteFailureEventDataConverter : JsonConverter<ResourceWriteFailureEventData>

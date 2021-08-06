@@ -20,6 +20,7 @@ Global
 		{49A0F579-8121-472C-A2A7-B812FEC8CA18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{49A0F579-8121-472C-A2A7-B812FEC8CA18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49A0F579-8121-472C-A2A7-B812FEC8CA18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49A0F579-8121-472C-A2A7-B812FEC8CA18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

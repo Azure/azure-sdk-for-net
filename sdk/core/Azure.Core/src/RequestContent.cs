@@ -142,10 +142,10 @@ namespace Azure.Core
                 {
                     while (true)
                     {
-                        cancellationToken.ThrowIfCancellationRequested();
+                        CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         var read = _stream.Read(buffer, 0, buffer.Length);
                         if (read == 0) { break; }
-                        cancellationToken.ThrowIfCancellationRequested();
+                        CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         stream.Write(buffer, 0, read);
                     }
                 }

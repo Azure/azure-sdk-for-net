@@ -30,7 +30,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the Rendering class.
         /// </summary>
         /// <param name="type">Rendering Type. Possible values include:
-        /// 'NoGraph', 'Table', 'TimeSeries', 'TimeSeriesPerInstance'</param>
+        /// 'NoGraph', 'Table', 'TimeSeries', 'TimeSeriesPerInstance',
+        /// 'PieChart', 'DataSummary', 'Email', 'Insights', 'DynamicInsight',
+        /// 'Markdown', 'Detector', 'DropDown', 'Card', 'Solution', 'Guage',
+        /// 'Form', 'ChangeSets', 'ChangeAnalysisOnboarding', 'ChangesView',
+        /// 'AppInsight', 'DependencyGraph', 'DownTime', 'SummaryCard',
+        /// 'SearchComponent', 'AppInsightEnablement'</param>
         /// <param name="title">Title of data</param>
         /// <param name="description">Description of the data that will help it
         /// be interpreted</param>
@@ -49,7 +54,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Gets or sets rendering Type. Possible values include: 'NoGraph',
-        /// 'Table', 'TimeSeries', 'TimeSeriesPerInstance'
+        /// 'Table', 'TimeSeries', 'TimeSeriesPerInstance', 'PieChart',
+        /// 'DataSummary', 'Email', 'Insights', 'DynamicInsight', 'Markdown',
+        /// 'Detector', 'DropDown', 'Card', 'Solution', 'Guage', 'Form',
+        /// 'ChangeSets', 'ChangeAnalysisOnboarding', 'ChangesView',
+        /// 'AppInsight', 'DependencyGraph', 'DownTime', 'SummaryCard',
+        /// 'SearchComponent', 'AppInsightEnablement'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public RenderingType? Type { get; set; }

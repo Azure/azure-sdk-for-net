@@ -11,8 +11,8 @@ require:
     - https://github.com/Azure/azure-rest-api-specs/blob/fc5e2fbcfc3f585d38bdb1c513ce1ad2c570cf3d/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.ManagedPrivateEndpoints
 public-clients: true
-credential-types: TokenCredential
-credential-scopes: https://dev.azuresynapse.net/.default
+security: AADToken
+security-scopes: https://dev.azuresynapse.net/.default
 ```
 
 ### Make Endpoint type as Uri

@@ -1,34 +1,36 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/bb1b4371-062d-414d-bef3-b0d124ff721c/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/ba97a8e8-b16d-418c-b1ad-1fdfe06d2d89/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "167",
+        "Content-Length": "180",
         "Content-Type": "application/json",
-        "traceparent": "00-c5656762c78efc4d842e4c17d89d298c-f935700052a5de48-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-3e4ecf8e8b39614abfceef4b53eaac82-33083a55148b2d42-00",
+        "User-Agent": [
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210720.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+        ],
         "x-ms-client-request-id": "b0ad0544223e642737428909269feb69",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA1_116_CL |project-rename Name = StringColumn_s, Age = IntColumn_d |project Name, Age |order by Name asc",
-        "timespan": "2021-04-26T00:00:00.0000000Z/P7D"
+        "query": "TableA1_193_CL | distinct * |project-rename Name = StringColumn_s, Age = IntColumn_d |project Name, Age |order by Name asc",
+        "timespan": "2021-07-12T00:00:00.0000000Z/P7D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "79",
         "Connection": "keep-alive",
         "Content-Length": "143",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 May 2021 18:37:07 GMT",
+        "Date": "Tue, 20 Jul 2021 18:30:20 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6c84644dc4-fn7sf",
+        "Via": "1.1 draft-oms-fdbf6c888-4rw7h",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -65,8 +67,9 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-05-04T11:37:07.3648895-07:00",
+    "DateTimeOffsetNow": "2021-07-20T11:30:20.1460123-07:00",
+    "LOGS_ENDPOINT": "https://api.loganalytics.io",
     "RandomSeed": "472670342",
-    "WORKSPACE_ID": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+    "WORKSPACE_ID": "ba97a8e8-b16d-418c-b1ad-1fdfe06d2d89"
   }
 }

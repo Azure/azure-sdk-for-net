@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 new TextDocumentInput("4", string.Empty)
             };
 
-            var options = new RecognizeEntitiesOptions { IncludeStatistics = true };
+            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(documents, options);
             RecognizeEntitiesResultCollection entitiesInDocuments = response.Value;
 

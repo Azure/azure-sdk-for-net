@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
-using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
@@ -20,11 +19,54 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
     {
         // multiple events are processed concurrently
         private static ConcurrentDictionary<string, string> _log = new ConcurrentDictionary<string, string>();
+        private const string CloudEventSubscription =
+                "{'source': '/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Eventhub/Namespaces/namespace'," +
+                "'type': 'Microsoft.EventGrid.SubscriptionValidationEvent'," +
+                "'id': 'testid'," +
+                "'type': 'Microsoft.EventGrid.SubscriptionValidationEvent'," +
+                "'time': '2021-06-04T23:02:03.3136561Z'," +
+                "'specversion': '1.0'," +
+                // intentionally include quotes and line breaks into JSON to match service behavior for CloudEvents
+                "'data': " + @"""{
+                                'validationCode': 'validation-code',
+                                'validationUrl': 'validation-url'}""}";
+        // event grid subscription request is delivered as an array of 1 event
+        private const string EventGridEventSubscription =
+            "[{" +
+            "'id': 'testid'," +
+            "'topic': '/subscriptions/subscription/resourceGroups/jolov/providers/Microsoft.Storage/StorageAccounts/jolovstorage'," +
+            "'subject': ''," +
+            "'data': {" +
+            "'validationCode': 'validation-code'," +
+            "'validationUrl': 'validation-url'" +
+            "}," +
+            "'eventType': 'Microsoft.EventGrid.SubscriptionValidationEvent'," +
+            "'eventTime': '2021-06-04T23:02:03.3136561Z'," +
+            "'metadataVersion': '1'," +
+            "'dataVersion': '2'" +
+            "}]";
 
         [SetUp]
         public void SetupTestListener()
         {
             _log.Clear();
+        }
+
+        [Test]
+        [TestCase(CloudEventSubscription)]
+        [TestCase(EventGridEventSubscription)]
+        public async Task TestSubscribe(string evt)
+        {
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
+            var host = TestHelpers.NewHost<MyProg1>(ext);
+            await host.StartAsync(); // add listener
+
+            var request = CreateEventSubscribeRequest("TestEventGrid", evt);
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            var content = await response.Content.ReadAsStringAsync();
+            Assert.AreEqual("validation-code", JObject.Parse(content)["validationResponse"].ToString());
         }
 
         // Unsubscribe gives a 202.
@@ -117,6 +159,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
         }
 
+        [Test]
+        public async Task ExecutionFailureMultipleEventsTest()
+        {
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
+            var host = TestHelpers.NewHost<MyProg3>(ext);
+            await host.StartAsync(); // add listener
+
+            JObject dummyPayload = JObject.Parse("{}");
+            var request = CreateDispatchRequest("EventGridThrowsExceptionMultiple", dummyPayload);
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+
+            string responseContent = await response.Content.ReadAsStringAsync();
+            Assert.AreEqual("Exception while executing function: EventGridThrowsExceptionMultiple", responseContent);
+            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+        }
+
+        private static HttpRequestMessage CreateEventSubscribeRequest(string funcName, string evt)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/?functionName=" + funcName);
+            request.Headers.Add("aeg-event-type", "SubscriptionValidation");
+            request.Content = new StringContent(evt);
+            return request;
+        }
+
         private static HttpRequestMessage CreateUnsubscribeRequest(string funcName)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/?functionName=" + funcName);
@@ -169,6 +235,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             [FunctionName("EventGridThrowsException")]
             public void Run([EventGridTrigger] JObject value)
+            {
+                throw new InvalidOperationException($"failed with {value.ToString()}");
+            }
+        }
+
+        public class MyProg3
+        {
+            [FunctionName("EventGridThrowsExceptionMultiple")]
+            public void Run([EventGridTrigger] JObject[] value)
             {
                 throw new InvalidOperationException($"failed with {value.ToString()}");
             }

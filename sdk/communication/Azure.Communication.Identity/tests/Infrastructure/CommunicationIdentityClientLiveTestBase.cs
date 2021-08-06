@@ -4,6 +4,10 @@
 using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using System.Threading.Tasks;
+using Microsoft.Identity.Client;
+using System.Security;
+using System.Threading;
 
 namespace Azure.Communication.Identity.Tests
 {
@@ -42,6 +46,34 @@ namespace Azure.Communication.Identity.Tests
             CommunicationIdentityClientOptions communicationIdentityClientOptions = new CommunicationIdentityClientOptions();
             communicationIdentityClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(communicationIdentityClientOptions);
+        }
+
+        protected async Task<string> generateTeamsToken()
+        {
+            string token;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                token = "Sanitized";
+            }
+            else
+            {
+                IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
+                                                    .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
+                                                    .WithRedirectUri(TestEnvironment.CommunicationM365RedirectUri)
+                                                    .Build();
+                string[] scopes = { TestEnvironment.CommunicationM365Scope };
+                SecureString communicationMsalPassword = new SecureString();
+                foreach (char c in TestEnvironment.CommunicationMsalPassword)
+                {
+                    communicationMsalPassword.AppendChar(c);
+                }
+                AuthenticationResult result = await publicClientApplication.AcquireTokenByUsernamePassword(
+                    scopes,
+                    TestEnvironment.CommunicationMsalUsername,
+                    communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
+                token = result.AccessToken;
+            }
+            return token;
         }
     }
 }

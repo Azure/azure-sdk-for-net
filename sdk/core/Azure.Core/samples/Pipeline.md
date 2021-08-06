@@ -9,7 +9,7 @@ Before request is sent to the service it travels through the pipeline which cons
 Azure SDKs provides a way to add policies to the pipeline at two positions:
 
  - per-call policies get executed once per request
- - per-retry policies get executed every time request is retried, see [Retries samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md#configuring-retry-options) for how to configure retries.
+ - per-retry policies get executed every time request is retried, see [Retries samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md#configuring-retry-options) for how to configure retries.
 
 ```C# Snippet:AddingPerCallPolicy
 SecretClientOptions options = new SecretClientOptions();

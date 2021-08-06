@@ -33,10 +33,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         /// <param name="headers">Array of HTTP Headers to log.</param>
         /// <param name="body">Body logging settings.</param>
-        public HttpMessageDiagnostic(IList<string> headers = default(IList<string>), BodyDiagnosticSettings body = default(BodyDiagnosticSettings))
+        /// <param name="dataMasking">Data masking settings.</param>
+        public HttpMessageDiagnostic(IList<string> headers = default(IList<string>), BodyDiagnosticSettings body = default(BodyDiagnosticSettings), DataMasking dataMasking = default(DataMasking))
         {
             Headers = headers;
             Body = body;
+            DataMasking = dataMasking;
             CustomInit();
         }
 
@@ -56,6 +58,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "body")]
         public BodyDiagnosticSettings Body { get; set; }
+
+        /// <summary>
+        /// Gets or sets data masking settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "dataMasking")]
+        public DataMasking DataMasking { get; set; }
 
         /// <summary>
         /// Validate the object.

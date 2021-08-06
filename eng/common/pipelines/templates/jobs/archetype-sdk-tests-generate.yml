@@ -27,15 +27,15 @@ parameters:
   default: []
 - name: Pool
   type: string
-  default: azsdk-pool-mms-ubuntu-1804-general
+  default: azsdk-pool-mms-ubuntu-2004-general
 - name: OsVmImage
   type: string
-  default: MMSUbuntu18.04
+  default: MMSUbuntu20.04
 # This parameter is only necessary if there are multiple invocations of this template within the SAME STAGE.
 # When that occurs, provide a name other than the default value.
 - name: GenerateJobName
   type: string
-  default: 'generate_matrix'
+  default: 'generate_job_matrix'
 
 jobs:
 - job: ${{ parameters.GenerateJobName }}
@@ -44,7 +44,6 @@ jobs:
   pool:
     name: ${{ parameters.Pool }}
     vmImage: ${{ parameters.OsVmImage }}
-  displayName: Generate Job Matrix
   ${{ if parameters.DependsOn }}:
     dependsOn: ${{ parameters.DependsOn }}
   steps:

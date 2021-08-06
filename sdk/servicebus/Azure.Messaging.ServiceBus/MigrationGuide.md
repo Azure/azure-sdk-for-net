@@ -2,21 +2,30 @@
 
 This guide is intended to assist in the migration to version 7 of the Service Bus client library [`Azure.Messaging.ServiceBus`](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) from [`Microsoft.Azure.ServiceBus`](https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/). It will focus on side-by-side comparisons for similar operations between the two packages.
 
-We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. If not, please refer to the [README for Azure.Messaging.ServiceBus](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/README.md) and [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples) rather than this guide.
+We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. If not, please refer to the [README for Azure.Messaging.ServiceBus](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/README.md) and [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples) rather than this guide.
 
 ## Table of contents
 
--   [Migration benefits](#migration-benefits)
--   [General changes](#general-changes)
-    -   [Package and namespaces](#package-and-namespaces)
-    -   [Client hierarchy](#client-hierarchy)
-    -   [Client constructors](#client-constructors)
-    -   [Sending messages](#sending-messages)
-    -   [Receiving messages](#receiving-messages)
-    -   [Working with sessions](#working-with-sessions)
-    -   [Cross-entity transactions](#cross-entity-transactions)
--   [Known gaps](#known-gaps-from-previous-library)
--   [Additional samples](#additional-samples)
+- [Guide for migrating to Azure.Messaging.ServiceBus from Microsoft.Azure.ServiceBus](#guide-for-migrating-to-azuremessagingservicebus-from-microsoftazureservicebus)
+  - [Table of contents](#table-of-contents)
+  - [Migration benefits](#migration-benefits)
+    - [Cross Service SDK improvements](#cross-service-sdk-improvements)
+    - [New features](#new-features)
+  - [General changes](#general-changes)
+    - [Package and namespaces](#package-and-namespaces)
+    - [Client hierarchy](#client-hierarchy)
+      - [Approachability](#approachability)
+      - [Consistency](#consistency)
+      - [Connection Pooling](#connection-pooling)
+    - [Client constructors](#client-constructors)
+      - [Service Bus client](#service-bus-client)
+      - [Administration client](#administration-client)
+    - [Sending messages](#sending-messages)
+    - [Receiving messages](#receiving-messages)
+    - [Working with sessions](#working-with-sessions)
+    - [Cross-Entity transactions](#cross-entity-transactions)
+  - [Known Gaps from Previous Library](#known-gaps-from-previous-library)
+  - [Additional samples](#additional-samples)
 
 ## Migration benefits
 
@@ -72,6 +81,8 @@ By making this connection sharing be implicit to a `ServiceBusClient` instance, 
 
 ### Client constructors
 
+#### Service Bus client
+
 While we continue to support connection strings when constructing a client, the main difference is when using Azure Active Directory. We now use the new [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) library to share a single authentication solution between clients of different Azure services.
 
 Authenticate with Active Directory:
@@ -88,6 +99,27 @@ Authenticate with connection string:
 // Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
 ServiceBusClient client = new ServiceBusClient(connectionString);
+```
+
+#### Administration client
+
+The `ServiceBusAdministrationClient` replaces the `ManagementClient` from `Microsoft.Azure.ServiceBus`. For example usage please see the sample for [CRUD operations using the `ServiceBusAdministrationClient`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample07_CrudOperations.md).
+
+
+Authenticate with Active Directory:
+
+```C# Snippet:ServiceBusAdministrationClientAAD
+// Create a ServiceBusAdministrationClient that will authenticate using default credentials
+string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
+ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+```
+
+Authenticate with connection string:
+
+```C# Snippet:ServiceBusAdministrationClientConnectionString
+// Create a ServiceBusAdministrationClient that will authenticate using a connection string
+string connectionString = "<connection_string>";
+ServiceBusAdministrationClient client = new ServiceBusAdministrationClient(connectionString);
 ```
 
 ### Sending messages
@@ -264,7 +296,7 @@ Task ErrorHandler(ProcessErrorEventArgs args)
 // start processing
 await processor.StartProcessingAsync();
 
-// since the processing happens in the background, we add a Conole.ReadKey to allow the processing to continue until a key is pressed.
+// since the processing happens in the background, we add a Console.ReadKey to allow the processing to continue until a key is pressed.
 Console.ReadKey();
 ```
 
@@ -408,10 +440,9 @@ using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 
 There are a few features that are yet to be implemented in `Azure.Messaging.ServiceBus`, but were present in the previous library `Microsoft.Azure.ServiceBus`. The plan is to add these features in upcoming releases (unless otherwise noted), but they will not be available in the version 7.0.0:
 
--   **Plugins** - In the previous library, Microsoft.Azure.ServiceBus, users could [register plugins](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/QueueClient.cs#L527) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. This feature is not yet supported in the new library but will be added in an upcoming release. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/12943.
-
+-   **Plugins** - In the previous library, Microsoft.Azure.ServiceBus, users could [register plugins](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Microsoft.Azure.ServiceBus/src/QueueClient.cs#L527) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. To achieve similar functionality with `Azure.Messaging.ServiceBus`, you can extend the various types as demonstrated in the [extensibility sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample09_Extensibility.md).
 ## Additional samples
 
 More examples can be found at:
 
--   [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples)
+-   [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples)

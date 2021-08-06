@@ -56,8 +56,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
 
             var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
-
             CollectionAssert.Contains(logs, $"PocoValues(foo,data)");
+
+            var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.EventProcessor");
         }
 
         [Test]
@@ -72,8 +74,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(result);
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
-
                 CollectionAssert.Contains(logs, $"Input(data)");
+
+                var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
+                CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.EventProcessor");
             }
         }
 
@@ -232,15 +236,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         {"AzureWebJobsStorage:clientSecret", EventHubsTestEnvironment.Instance.ClientSecret},
                         {"AzureWebJobsStorage:tenantId", EventHubsTestEnvironment.Instance.TenantId},
                     })));
-        }
-
-        [Test]
-        public void ThrowsIfBindingToASingleEvent()
-        {
-            Assert.Throws<NotSupportedException>(() =>
-                BuildHost<EventHubTestSingleDispatchJobWithConnection>(builder =>
-                    builder.ConfigureServices(services =>
-                        services.Configure<EventHubOptions>(options => options.IsSingleDispatchEnabled = false))));
         }
 
         private static string GetServiceUri()

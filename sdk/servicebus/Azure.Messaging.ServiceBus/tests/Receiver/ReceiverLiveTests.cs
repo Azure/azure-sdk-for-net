@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -43,6 +44,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     }
                 }
                 Assert.AreEqual(messageCt, ct);
+            }
+        }
+
+        [Test]
+        public async Task PeekWithZeroTimeout()
+        {
+            await using (var scope =
+                await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var receiverWithPrefetch = client.CreateReceiver(scope.QueueName,
+                    options: new ServiceBusReceiverOptions() {PrefetchCount = 10});
+
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+                await receiverWithPrefetch.ReceiveMessagesAsync(10, TimeSpan.Zero).ConfigureAwait(false);
+                stopwatch.Stop();
+                var durationWithPrefetchModeInSecs = stopwatch.Elapsed.TotalSeconds;
+
+                // If prefetch is enabled, timeout 0 secs will not be replaced with default timeout.
+                // In such case, only prefetched messages will be returned and no call to server will be made and call will be very fast.
+                Assert.IsTrue(durationWithPrefetchModeInSecs < 1);
             }
         }
 
@@ -100,6 +123,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        [Ignore("reverted cancellation support outside of processor")]
         public async Task ReceiveMessagesWhenQueueEmpty()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))

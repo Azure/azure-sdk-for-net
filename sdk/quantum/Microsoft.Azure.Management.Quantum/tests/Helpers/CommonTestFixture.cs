@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Quantum.Tests
         /// </summary>
         public string SubscriptionId { get; set; }
 
-        public const string WorkspaceType = "Microsoft.Quantum/workspaces";
+        public const string WorkspaceType = "microsoft.quantum/workspaces";
 
         /// <summary>
         /// Ctor

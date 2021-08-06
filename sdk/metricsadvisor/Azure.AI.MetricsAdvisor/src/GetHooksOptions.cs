@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.MetricsAdvisor.Administration;
-
-namespace Azure.AI.MetricsAdvisor
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// The set of options that can be specified when calling <see cref="MetricsAdvisorAdministrationClient.GetHooks"/> or
@@ -12,7 +10,8 @@ namespace Azure.AI.MetricsAdvisor
     public class GetHooksOptions
     {
         /// <summary>
-        /// The name of the hook to filter on.
+        /// Filters the result by <see cref="NotificationHook.Name"/>. Only hooks containing the filter as a
+        /// substring of their names will be returned. Case insensitive.
         /// </summary>
         public string HookNameFilter { get; set; }
 

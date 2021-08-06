@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-preview.11 (Unreleased)
+
+
 ## 1.0.0-preview.10 (2021-05-13)
 ### Key Bug Fixes
 - LibraryRestClient.Append method nows includes comp parameter (https://github.com/Azure/azure-rest-api-specs/pull/13841)

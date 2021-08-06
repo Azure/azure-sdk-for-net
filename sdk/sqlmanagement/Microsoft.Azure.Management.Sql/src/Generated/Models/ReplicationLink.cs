@@ -38,18 +38,24 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="partnerServer">Resource partner server.</param>
         /// <param name="partnerDatabase">Resource partner database.</param>
         /// <param name="partnerLocation">Resource partner location.</param>
-        /// <param name="role">Local replication role.</param>
-        /// <param name="partnerRole">Partner replication role.</param>
+        /// <param name="role">Local replication role. Possible values include:
+        /// 'Primary', 'Secondary', 'NonReadableSecondary', 'Source',
+        /// 'Copy'</param>
+        /// <param name="partnerRole">Partner replication role. Possible values
+        /// include: 'Primary', 'Secondary', 'NonReadableSecondary', 'Source',
+        /// 'Copy'</param>
         /// <param name="replicationMode">Replication mode.</param>
         /// <param name="startTime">Time at which the link was created.</param>
         /// <param name="percentComplete">Seeding completion percentage for the
         /// link.</param>
         /// <param name="replicationState">Replication state (PENDING, SEEDING,
-        /// CATCHUP, SUSPENDED).</param>
+        /// CATCHUP, SUSPENDED). Possible values include: 'PENDING', 'SEEDING',
+        /// 'CATCH_UP', 'SUSPENDED'</param>
         /// <param name="isTerminationAllowed">Whether the user is currently
         /// allowed to terminate the link.</param>
-        /// <param name="linkType">Link type (GEO, NAMED).</param>
-        public ReplicationLink(string id = default(string), string name = default(string), string type = default(string), string partnerServer = default(string), string partnerDatabase = default(string), string partnerLocation = default(string), string role = default(string), string partnerRole = default(string), string replicationMode = default(string), System.DateTime? startTime = default(System.DateTime?), int? percentComplete = default(int?), string replicationState = default(string), bool? isTerminationAllowed = default(bool?), string linkType = default(string))
+        /// <param name="linkType">Link type (GEO, NAMED). Possible values
+        /// include: 'GEO', 'NAMED'</param>
+        public ReplicationLink(string id = default(string), string name = default(string), string type = default(string), string partnerServer = default(string), string partnerDatabase = default(string), string partnerLocation = default(string), ReplicationRole? role = default(ReplicationRole?), ReplicationRole? partnerRole = default(ReplicationRole?), string replicationMode = default(string), System.DateTime? startTime = default(System.DateTime?), int? percentComplete = default(int?), string replicationState = default(string), bool? isTerminationAllowed = default(bool?), string linkType = default(string))
             : base(id, name, type)
         {
             PartnerServer = partnerServer;
@@ -90,16 +96,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string PartnerLocation { get; private set; }
 
         /// <summary>
-        /// Gets local replication role.
+        /// Gets local replication role. Possible values include: 'Primary',
+        /// 'Secondary', 'NonReadableSecondary', 'Source', 'Copy'
         /// </summary>
         [JsonProperty(PropertyName = "properties.role")]
-        public string Role { get; private set; }
+        public ReplicationRole? Role { get; private set; }
 
         /// <summary>
-        /// Gets partner replication role.
+        /// Gets partner replication role. Possible values include: 'Primary',
+        /// 'Secondary', 'NonReadableSecondary', 'Source', 'Copy'
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerRole")]
-        public string PartnerRole { get; private set; }
+        public ReplicationRole? PartnerRole { get; private set; }
 
         /// <summary>
         /// Gets replication mode.
@@ -121,6 +129,8 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets replication state (PENDING, SEEDING, CATCHUP, SUSPENDED).
+        /// Possible values include: 'PENDING', 'SEEDING', 'CATCH_UP',
+        /// 'SUSPENDED'
         /// </summary>
         [JsonProperty(PropertyName = "properties.replicationState")]
         public string ReplicationState { get; private set; }
@@ -132,7 +142,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public bool? IsTerminationAllowed { get; private set; }
 
         /// <summary>
-        /// Gets link type (GEO, NAMED).
+        /// Gets link type (GEO, NAMED). Possible values include: 'GEO',
+        /// 'NAMED'
         /// </summary>
         [JsonProperty(PropertyName = "properties.linkType")]
         public string LinkType { get; private set; }

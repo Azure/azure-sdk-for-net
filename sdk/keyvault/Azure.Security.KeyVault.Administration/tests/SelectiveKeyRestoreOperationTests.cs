@@ -3,7 +3,10 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Administration.Models;
+using Azure.Security.KeyVault.Tests;
 using Moq;
 using NUnit.Framework;
 
@@ -120,6 +123,106 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.Throws<InvalidOperationException>(() => { KeyVaultSelectiveKeyRestoreResult x = operation.Value; });
             Assert.That(operation.StartTime, Is.EqualTo(incompleteRestore.StartTime));
             Assert.That(operation.EndTime, Is.EqualTo(incompleteRestore.EndTime));
+        }
+
+        [Test]
+        public async Task ValueDoesNotThrowOnNullError()
+        {
+            DateTimeOffset endTime = DateTimeOffset.FromUnixTimeSeconds(1622154174);
+
+            var transport = new MockTransport(
+                new MockResponse(200)
+                    .WithContent($@"{{
+    ""jobId"": ""{JobId}"",
+    ""status"": ""Succeeded"",
+    ""startTime"": 1622154134,
+    ""endTime"": {endTime.ToUnixTimeSeconds()},
+    ""error"": null
+}}"));
+
+            var client = new KeyVaultBackupClient(
+                new Uri("https://localhost"),
+                new MockCredential(),
+                new KeyVaultAdministrationClientOptions
+                {
+                    Transport = transport,
+                });
+
+            var operation = new KeyVaultSelectiveKeyRestoreOperation(client, JobId);
+
+            Response response = await operation.UpdateStatusAsync();
+            Assert.AreEqual(200, response.Status);
+
+            KeyVaultSelectiveKeyRestoreResult result = operation.Value;
+            Assert.AreEqual(endTime, result.EndTime);
+        }
+
+        [Test]
+        public async Task ValueDoesNotThrowOnEmptyError()
+        {
+            DateTimeOffset endTime = DateTimeOffset.FromUnixTimeSeconds(1622154174);
+
+            var transport = new MockTransport(
+                new MockResponse(200)
+                    .WithContent($@"{{
+    ""jobId"": ""{JobId}"",
+    ""status"": ""Succeeded"",
+    ""startTime"": 1622154134,
+    ""endTime"": {endTime.ToUnixTimeSeconds()},
+    ""error"": {{}}
+}}"));
+
+            var client = new KeyVaultBackupClient(
+                new Uri("https://localhost"),
+                new MockCredential(),
+                new KeyVaultAdministrationClientOptions
+                {
+                    Transport = transport,
+                });
+
+            var operation = new KeyVaultSelectiveKeyRestoreOperation(client, JobId);
+
+            Response response = await operation.UpdateStatusAsync();
+            Assert.AreEqual(200, response.Status);
+
+            KeyVaultSelectiveKeyRestoreResult result = operation.Value;
+            Assert.AreEqual(endTime, result.EndTime);
+        }
+
+        [Test]
+        public async Task ValueDoesNotThrowOnErrorNullProperties()
+        {
+            DateTimeOffset endTime = DateTimeOffset.FromUnixTimeSeconds(1622154174);
+
+            var transport = new MockTransport(
+                new MockResponse(200)
+                    .WithContent($@"{{
+    ""jobId"": ""{JobId}"",
+    ""status"": ""Succeeded"",
+    ""startTime"": 1622154134,
+    ""endTime"": {endTime.ToUnixTimeSeconds()},
+    ""error"": {{
+        ""code"": null,
+        ""innererror"": null,
+        ""message"": null
+    }}
+}}"));
+
+            var client = new KeyVaultBackupClient(
+                new Uri("https://localhost"),
+                new MockCredential(),
+                new KeyVaultAdministrationClientOptions
+                {
+                    Transport = transport,
+                });
+
+            var operation = new KeyVaultSelectiveKeyRestoreOperation(client, JobId);
+
+            Response response = await operation.UpdateStatusAsync();
+            Assert.AreEqual(200, response.Status);
+
+            KeyVaultSelectiveKeyRestoreResult result = operation.Value;
+            Assert.AreEqual(endTime, result.EndTime);
         }
     }
 }

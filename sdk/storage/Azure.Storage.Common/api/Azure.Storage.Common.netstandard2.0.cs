@@ -1,3 +1,13 @@
+namespace Azure
+{
+    public partial class HttpAuthorization
+    {
+        public HttpAuthorization(string scheme, string parameter) { }
+        public string Parameter { get { throw null; } }
+        public string Scheme { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
+}
 namespace Azure.Storage
 {
     public partial class ClientSideEncryptionOptions
@@ -86,6 +96,7 @@ namespace Azure.Storage.Sas
         Tag = 256,
         Filter = 512,
         DeleteVersion = 1024,
+        SetImmutabilityPolicy = 2048,
     }
     [System.FlagsAttribute]
     public enum AccountSasResourceTypes

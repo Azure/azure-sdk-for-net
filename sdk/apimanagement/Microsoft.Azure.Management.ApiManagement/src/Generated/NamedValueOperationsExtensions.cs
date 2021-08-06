@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class NamedValueOperationsExtensions
     {
             /// <summary>
-            /// Lists a collection of NamedValues defined within a service instance.
+            /// Lists a collection of named values defined within a service instance.
             /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
             /// </summary>
             /// <param name='operations'>
@@ -38,13 +38,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<NamedValueContract> ListByService(this INamedValueOperations operations, string resourceGroupName, string serviceName, ODataQuery<NamedValueContract> odataQuery = default(ODataQuery<NamedValueContract>))
+            /// <param name='isKeyVaultRefreshFailed'>
+            /// When set to true, the response contains only named value entities which
+            /// failed refresh.
+            /// </param>
+            public static IPage<NamedValueContract> ListByService(this INamedValueOperations operations, string resourceGroupName, string serviceName, ODataQuery<NamedValueContract> odataQuery = default(ODataQuery<NamedValueContract>), bool? isKeyVaultRefreshFailed = default(bool?))
             {
-                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery, isKeyVaultRefreshFailed).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists a collection of NamedValues defined within a service instance.
+            /// Lists a collection of named values defined within a service instance.
             /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
             /// </summary>
             /// <param name='operations'>
@@ -58,20 +62,24 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='isKeyVaultRefreshFailed'>
+            /// When set to true, the response contains only named value entities which
+            /// failed refresh.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NamedValueContract>> ListByServiceAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, ODataQuery<NamedValueContract> odataQuery = default(ODataQuery<NamedValueContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NamedValueContract>> ListByServiceAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, ODataQuery<NamedValueContract> odataQuery = default(ODataQuery<NamedValueContract>), bool? isKeyVaultRefreshFailed = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, isKeyVaultRefreshFailed, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets the entity state (Etag) version of the NamedValue specified by its
+            /// Gets the entity state (Etag) version of the named value specified by its
             /// identifier.
             /// </summary>
             /// <param name='operations'>
@@ -92,7 +100,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the entity state (Etag) version of the NamedValue specified by its
+            /// Gets the entity state (Etag) version of the named value specified by its
             /// identifier.
             /// </summary>
             /// <param name='operations'>
@@ -119,7 +127,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the details of the NamedValue specified by its identifier.
+            /// Gets the details of the named value specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -139,7 +147,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the details of the NamedValue specified by its identifier.
+            /// Gets the details of the named value specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -165,7 +173,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates or updates a NamedValue.
+            /// Creates or updates named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -192,7 +200,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates or updates a NamedValue.
+            /// Creates or updates named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -225,7 +233,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Updates the specific NamedValue.
+            /// Updates the specific named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -253,7 +261,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Updates the specific NamedValue.
+            /// Updates the specific named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -287,7 +295,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Deletes specific NamedValue from the API Management service instance.
+            /// Deletes specific named value from the API Management service instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -312,7 +320,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Deletes specific NamedValue from the API Management service instance.
+            /// Deletes specific named value from the API Management service instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -340,7 +348,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the secret value of the NamedValue.
+            /// Gets the secret of the named value specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -354,13 +362,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='namedValueId'>
             /// Identifier of the NamedValue.
             /// </param>
-            public static PropertyValueContract ListValue(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId)
+            public static NamedValueSecretContract ListValue(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId)
             {
                 return operations.ListValueAsync(resourceGroupName, serviceName, namedValueId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the secret value of the NamedValue.
+            /// Gets the secret of the named value specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -377,7 +385,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PropertyValueContract> ListValueAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamedValueSecretContract> ListValueAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListValueWithHttpMessagesAsync(resourceGroupName, serviceName, namedValueId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -386,7 +394,53 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates or updates a NamedValue.
+            /// Refresh the secret of the named value specified by its identifier.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
+            /// </param>
+            public static NamedValueContract RefreshSecret(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId)
+            {
+                return operations.RefreshSecretAsync(resourceGroupName, serviceName, namedValueId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Refresh the secret of the named value specified by its identifier.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NamedValueContract> RefreshSecretAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RefreshSecretWithHttpMessagesAsync(resourceGroupName, serviceName, namedValueId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -413,7 +467,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Creates or updates a NamedValue.
+            /// Creates or updates named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -446,7 +500,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Updates the specific NamedValue.
+            /// Updates the specific named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -474,7 +528,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Updates the specific NamedValue.
+            /// Updates the specific named value.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -508,7 +562,53 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of NamedValues defined within a service instance.
+            /// Refresh the secret of the named value specified by its identifier.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
+            /// </param>
+            public static NamedValueContract BeginRefreshSecret(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId)
+            {
+                return operations.BeginRefreshSecretAsync(resourceGroupName, serviceName, namedValueId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Refresh the secret of the named value specified by its identifier.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NamedValueContract> BeginRefreshSecretAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRefreshSecretWithHttpMessagesAsync(resourceGroupName, serviceName, namedValueId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists a collection of named values defined within a service instance.
             /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
             /// </summary>
             /// <param name='operations'>
@@ -523,7 +623,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of NamedValues defined within a service instance.
+            /// Lists a collection of named values defined within a service instance.
             /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
             /// </summary>
             /// <param name='operations'>

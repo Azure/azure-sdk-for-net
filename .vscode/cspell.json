@@ -35,8 +35,10 @@
     "azsdk",
     "blazor",
     "contoso",
+    "deserializable",
     "deserializes",
     "diagnoser",
+    "dtmf",
     "epsg",
     "expando",
     "finalizer",
@@ -50,6 +52,7 @@
     "overridden",
     "parallelization",
     "pkcs",
+    "pstn",
     "pwsh",
     "referer",
     "renormalize",
@@ -57,18 +60,78 @@
     "structs",
     "uints",
     "unformattable",
+    "unhold",
     "uninstrumented",
     "westus",
     "xunit"
   ],
   "overrides": [
     {
+      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
+      "words": ["warnaserror"]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
     {
-      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
-      "words": ["warnaserror"]
+      "filename": "**/sdk/keyvault/**/*.cs",
+      "words": [
+        "deletesas",
+        "getsas",
+        "listsas",
+        "oaep",
+        "setsas"
+      ]
+    },
+    {
+      "filename": "**/sdk/search/**/*.cs",
+      "words": [
+        "Adls",
+        "Bangla",
+        "Bokmaal",
+        "Cyrl",
+        "Decompounder",
+        "Haase",
+        "Hant",
+        "Koelner",
+        "Latn",
+        "Lovins",
+        "Nysiis",
+        "Phonetik",
+        "Piqd",
+        "Reranker",
+        "Rslp",
+        "Soundex",
+        "Sorani",
+        "Unprocessable"
+      ]
+    },
+    {
+      "filename": "**/sdk/storage/**/*.cs",
+      "words": [
+        "Aadds",
+        "Deprovisioning",
+        "Gzrs",
+        "Ntfs",
+        "Posix",
+        "Ragrs",
+        "Ragzrs",
+        "Rehydrated",
+        "Skus",
+        "Undelete"
+      ]
+    },
+    {
+      "filename": "**/sdk/textanalytics/**/*.cs",
+      "words": [
+        "Brcpf",
+        "Idrg",
+        "Esdni",
+        "Eugps",
+        "Plregon",
+        "Usuk"
+      ]
     }
   ],
   "allowCompoundWords": true

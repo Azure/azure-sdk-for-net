@@ -19,7 +19,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class BackendTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "jikang")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -143,6 +143,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "jikang")]
         public async Task ServiceFabricCreateUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -181,7 +182,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     backendCreateParameters.Description = TestUtilities.GenerateName("description");
                     backendCreateParameters.Properties = new BackendProperties();
                     backendCreateParameters.Properties.ServiceFabricCluster = new BackendServiceFabricClusterProperties();
-                    backendCreateParameters.Properties.ServiceFabricCluster.ClientCertificatethumbprint = cert.Thumbprint;
+                    backendCreateParameters.Properties.ServiceFabricCluster.ClientCertificateId = $"/subscriptions/{testBase.subscriptionId}/resourceGroups/{testBase.rgName}/providers/Microsoft.ApiManagement/service/{testBase.serviceName}/certificates/{certificateId}";
                     backendCreateParameters.Properties.ServiceFabricCluster.ManagementEndpoints = new List<string>();
                     backendCreateParameters.Properties.ServiceFabricCluster.ManagementEndpoints.Add(urlParameter);
                     backendCreateParameters.Properties.ServiceFabricCluster.MaxPartitionResolutionRetries = 5;

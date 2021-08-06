@@ -22,10 +22,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             await TestUtility.CompleteMessagesAsync(messageReceiver, receivedMessages);
         }
 
-        internal async Task ReceiveDeleteTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount)
+        internal async Task ReceiveDeleteTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount, TimeSpan timeout)
         {
             await TestUtility.SendMessagesAsync(messageSender, messageCount);
-            var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount, TimeSpan.FromSeconds(10));
+            var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount, timeout);
             Assert.Equal(messageCount, receivedMessages.Count);
         }
 

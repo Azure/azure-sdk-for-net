@@ -11,6 +11,8 @@ namespace Azure.Core.Amqp.Tests
 {
     public class AmqpAnnotatedMessageTests
     {
+        private static readonly AmqpMessageBody EmptyDataBody = AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { Array.Empty<byte>() });
+
         [Test]
         public void CanCreateAnnotatedMessage()
         {
@@ -64,6 +66,93 @@ namespace Azure.Core.Amqp.Tests
             Assert.AreEqual("subject", message.Properties.Subject);
             Assert.AreEqual("to", message.Properties.To.ToString());
             Assert.AreEqual("userId", Encoding.UTF8.GetString(message.Properties.UserId.Value.ToArray()));
+        }
+
+        [Test]
+        public void HeaderIsCreatedOnDemand()
+        {
+            var message = new AmqpAnnotatedMessage(EmptyDataBody);
+            Assert.False(message.HasSection(AmqpMessageSection.Header));
+
+            message.Header.DeliveryCount = 99;
+            Assert.True(message.HasSection(AmqpMessageSection.Header));
+            Assert.NotNull(message.Header);
+        }
+
+        [Test]
+        public void DeliveryAnnotationsAreCreatedOnDemand()
+        {
+            var message = new AmqpAnnotatedMessage(EmptyDataBody);
+            Assert.False(message.HasSection(AmqpMessageSection.DeliveryAnnotations));
+
+            message.DeliveryAnnotations.Add("test", new object());
+            Assert.True(message.HasSection(AmqpMessageSection.DeliveryAnnotations));
+            Assert.NotNull(message.DeliveryAnnotations);
+        }
+
+        [Test]
+        public void MessageAnnotationsAreCreatedOnDemand()
+        {
+            var message = new AmqpAnnotatedMessage(EmptyDataBody);
+            Assert.False(message.HasSection(AmqpMessageSection.MessageAnnotations));
+
+            message.MessageAnnotations.Add("test", new object());
+            Assert.True(message.HasSection(AmqpMessageSection.MessageAnnotations));
+            Assert.NotNull(message.MessageAnnotations);
+        }
+
+        [Test]
+        public void PropertiesAreCreatedOnDemand()
+        {
+            var message = new AmqpAnnotatedMessage(EmptyDataBody);
+            Assert.False(message.HasSection(AmqpMessageSection.Properties));
+
+            message.Properties.ContentType = "test/unit";
+            Assert.True(message.HasSection(AmqpMessageSection.Properties));
+            Assert.NotNull(message.Properties);
+        }
+
+        [Test]
+        public void ApplicationPropertiesAreCreatedOnDemand()
+        {
+            var message = new AmqpAnnotatedMessage(EmptyDataBody);
+            Assert.False(message.HasSection(AmqpMessageSection.ApplicationProperties));
+
+            message.ApplicationProperties.Add("test", new object());
+            Assert.True(message.HasSection(AmqpMessageSection.ApplicationProperties));
+            Assert.NotNull(message.ApplicationProperties);
+        }
+
+        [Test]
+        public void FooterIsCreatedOnDemand()
+        {
+            var message = new AmqpAnnotatedMessage(EmptyDataBody);
+            Assert.False(message.HasSection(AmqpMessageSection.Footer));
+
+            message.Footer.Add("test", new object());
+            Assert.True(message.HasSection(AmqpMessageSection.Footer));
+            Assert.NotNull(message.Footer);
+        }
+
+        [Test]
+        public void BodyIsDetectedByHasSection()
+        {
+            var message = new AmqpAnnotatedMessage(EmptyDataBody);
+
+            message.Body = null;
+            Assert.False(message.HasSection(AmqpMessageSection.Body));
+
+            message.Body = AmqpMessageBody.FromValue("this is a string value");
+            Assert.True(message.HasSection(AmqpMessageSection.Body));
+        }
+
+        [Test]
+        public void HasSectionValidatesTheSection()
+        {
+            var invalidSection = (AmqpMessageSection)int.MinValue;
+            var message = new AmqpAnnotatedMessage(EmptyDataBody);
+
+            Assert.Throws<ArgumentException>(() => message.HasSection(invalidSection));
         }
     }
 }

@@ -37,7 +37,7 @@ param(
     [boolean] $AmendCommit = $false
 )
 
-# This is necessay because of the janky git command output writing to stderr.
+# This is necessary because of the git command output writing to stderr.
 # Without explicitly setting the ErrorActionPreference to continue the script
 # would fail the first time git wrote command output.
 $ErrorActionPreference = "Continue"
@@ -116,8 +116,9 @@ do
         $needsRetry = $true
         Write-Host "Git push failed with LASTEXITCODE=$($LASTEXITCODE) Need to fetch and rebase: attempt number=$($tryNumber)"
  
-        Write-Host "git fetch $RemoteName"
-        git fetch $RemoteName
+        Write-Host "git fetch $RemoteName $PRBranchName"
+        # Full fetch will fail when the repo is in a sparse-checkout state, and single branch fetch is faster anyway.
+        git fetch $RemoteName $PRBranchName
         if ($LASTEXITCODE -ne 0)
         {
             Write-Error "Unable to fetch remote LASTEXITCODE=$($LASTEXITCODE), see command output above."

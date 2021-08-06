@@ -24,7 +24,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary>
         /// Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property.
         /// </summary>
-        public TimeSeriesValue[] Values => _values ??= CreateValues();
+        public IReadOnlyList<TimeSeriesValue> Values => _values ??= CreateValues();
 
         private TimeSeriesValue[] CreateValues()
         {

@@ -5,23 +5,32 @@ using System;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    /// <summary> The GetEnrichmentStatusesOptions. </summary>
+    /// <summary>
+    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetMetricEnrichmentStatuses"/> or
+    /// <see cref="MetricsAdvisorClient.GetMetricEnrichmentStatusesAsync"/> to configure the behavior of the request.
+    /// </summary>
     public class GetMetricEnrichmentStatusesOptions
     {
-        /// <summary> Initializes a new instance of <see cref="GetMetricEnrichmentStatusesOptions"/>. </summary>
-        /// <param name="startTime"> the start point of time range to query anomaly detection status. </param>
-        /// <param name="endTime"> the end point of time range to query anomaly detection status. </param>
-        public GetMetricEnrichmentStatusesOptions(DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <summary>
+        /// Initializes a new instance of <see cref="GetMetricEnrichmentStatusesOptions"/>.
+        /// </summary>
+        /// <param name="startsOn">The start point of time range to query enrichment status.</param>
+        /// <param name="endsOn">The end point of time range to query enrichment status.</param>
+        public GetMetricEnrichmentStatusesOptions(DateTimeOffset startsOn, DateTimeOffset endsOn)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
         }
 
-        /// <summary> the start point of time range to query anomaly detection status. </summary>
-        public DateTimeOffset StartTime { get; }
+        /// <summary>
+        /// The start point of time range to query enrichment status.
+        /// </summary>
+        public DateTimeOffset StartsOn { get; }
 
-        /// <summary> the end point of time range to query anomaly detection status. </summary>
-        public DateTimeOffset EndTime { get; }
+        /// <summary>
+        /// The end point of time range to query enrichment status.
+        /// </summary>
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to

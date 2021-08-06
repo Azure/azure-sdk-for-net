@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.StoragePool.Models
         /// "lun0"</param>
         /// <param name="managedDiskAzureResourceId">Azure Resource ID of the
         /// Managed Disk.</param>
-        public IscsiLun(string name, string managedDiskAzureResourceId)
+        /// <param name="lun">Specifies the Logical Unit Number of the iSCSI
+        /// LUN.</param>
+        public IscsiLun(string name, string managedDiskAzureResourceId, int? lun = default(int?))
         {
             Name = name;
             ManagedDiskAzureResourceId = managedDiskAzureResourceId;
+            Lun = lun;
             CustomInit();
         }
 
@@ -56,6 +59,12 @@ namespace Microsoft.Azure.Management.StoragePool.Models
         /// </summary>
         [JsonProperty(PropertyName = "managedDiskAzureResourceId")]
         public string ManagedDiskAzureResourceId { get; set; }
+
+        /// <summary>
+        /// Gets specifies the Logical Unit Number of the iSCSI LUN.
+        /// </summary>
+        [JsonProperty(PropertyName = "lun")]
+        public int? Lun { get; private set; }
 
     }
 }

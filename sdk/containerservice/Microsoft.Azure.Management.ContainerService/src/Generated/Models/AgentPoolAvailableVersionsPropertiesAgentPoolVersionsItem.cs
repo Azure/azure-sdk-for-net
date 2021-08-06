@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         /// <param name="defaultProperty">Whether this version is the default
         /// agent pool version.</param>
-        /// <param name="kubernetesVersion">Kubernetes version (major, minor,
-        /// patch).</param>
+        /// <param name="kubernetesVersion">The Kubernetes version
+        /// (major.minor.patch).</param>
         /// <param name="isPreview">Whether Kubernetes version is currently in
         /// preview.</param>
         public AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem(bool? defaultProperty = default(bool?), string kubernetesVersion = default(string), bool? isPreview = default(bool?))
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public bool? DefaultProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets kubernetes version (major, minor, patch).
+        /// Gets or sets the Kubernetes version (major.minor.patch).
         /// </summary>
         [JsonProperty(PropertyName = "kubernetesVersion")]
         public string KubernetesVersion { get; set; }

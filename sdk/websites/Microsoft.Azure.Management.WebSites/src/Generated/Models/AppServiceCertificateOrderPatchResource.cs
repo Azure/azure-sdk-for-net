@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// name.</param>
         /// <param name="domainVerificationToken">Domain verification
         /// token.</param>
-        /// <param name="validityInYears">Duration in years (must be between 1
-        /// and 3).</param>
+        /// <param name="validityInYears">Duration in years (must be
+        /// 1).</param>
         /// <param name="keySize">Certificate key size.</param>
         /// <param name="autoRenew">&lt;code&gt;true&lt;/code&gt; if the
         /// certificate should be automatically renewed when it expires;
@@ -78,7 +78,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// moment.</param>
         /// <param name="nextAutoRenewalTimeStamp">Time stamp when the
         /// certificate would be auto renewed next</param>
-        public AppServiceCertificateOrderPatchResource(CertificateProductType productType, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, AppServiceCertificate> certificates = default(IDictionary<string, AppServiceCertificate>), string distinguishedName = default(string), string domainVerificationToken = default(string), int? validityInYears = default(int?), int? keySize = default(int?), bool? autoRenew = default(bool?), ProvisioningState? provisioningState = default(ProvisioningState?), CertificateOrderStatus? status = default(CertificateOrderStatus?), CertificateDetails signedCertificate = default(CertificateDetails), string csr = default(string), CertificateDetails intermediate = default(CertificateDetails), CertificateDetails root = default(CertificateDetails), string serialNumber = default(string), System.DateTime? lastCertificateIssuanceTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), bool? isPrivateKeyExternal = default(bool?), IList<string> appServiceCertificateNotRenewableReasons = default(IList<string>), System.DateTime? nextAutoRenewalTimeStamp = default(System.DateTime?))
+        /// <param name="contact">Contact info</param>
+        public AppServiceCertificateOrderPatchResource(CertificateProductType productType, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, AppServiceCertificate> certificates = default(IDictionary<string, AppServiceCertificate>), string distinguishedName = default(string), string domainVerificationToken = default(string), int? validityInYears = default(int?), int? keySize = default(int?), bool? autoRenew = default(bool?), ProvisioningState? provisioningState = default(ProvisioningState?), CertificateOrderStatus? status = default(CertificateOrderStatus?), CertificateDetails signedCertificate = default(CertificateDetails), string csr = default(string), CertificateDetails intermediate = default(CertificateDetails), CertificateDetails root = default(CertificateDetails), string serialNumber = default(string), System.DateTime? lastCertificateIssuanceTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), bool? isPrivateKeyExternal = default(bool?), IList<string> appServiceCertificateNotRenewableReasons = default(IList<string>), System.DateTime? nextAutoRenewalTimeStamp = default(System.DateTime?), CertificateOrderContact contact = default(CertificateOrderContact))
             : base(id, name, kind, type)
         {
             Certificates = certificates;
@@ -100,6 +101,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             IsPrivateKeyExternal = isPrivateKeyExternal;
             AppServiceCertificateNotRenewableReasons = appServiceCertificateNotRenewableReasons;
             NextAutoRenewalTimeStamp = nextAutoRenewalTimeStamp;
+            Contact = contact;
             CustomInit();
         }
 
@@ -127,7 +129,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string DomainVerificationToken { get; private set; }
 
         /// <summary>
-        /// Gets or sets duration in years (must be between 1 and 3).
+        /// Gets or sets duration in years (must be 1).
         /// </summary>
         [JsonProperty(PropertyName = "properties.validityInYears")]
         public int? ValidityInYears { get; set; }
@@ -233,6 +235,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public System.DateTime? NextAutoRenewalTimeStamp { get; private set; }
 
         /// <summary>
+        /// Gets contact info
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.contact")]
+        public CertificateOrderContact Contact { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -240,14 +248,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ValidityInYears > 3)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "ValidityInYears", 3);
-            }
-            if (ValidityInYears < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "ValidityInYears", 1);
-            }
         }
     }
 }

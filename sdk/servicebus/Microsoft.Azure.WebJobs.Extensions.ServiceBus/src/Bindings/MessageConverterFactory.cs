@@ -5,12 +5,13 @@ using System;
 using System.Collections;
 using Microsoft.Azure.WebJobs.Host.Converters;
 using Azure.Messaging.ServiceBus;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
     internal static class MessageConverterFactory
     {
-        internal static IConverter<TInput, ServiceBusMessage> Create<TInput>()
+        internal static IConverter<TInput, ServiceBusMessage> Create<TInput>(JsonSerializerSettings jsonSerializerSettings)
         {
             if (typeof(TInput) == typeof(ServiceBusMessage))
             {
@@ -18,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             }
             else if (typeof(TInput) == typeof(string))
             {
-                return (IConverter<TInput, ServiceBusMessage>)new StringToBrokeredMessageConverter();
+                return (IConverter<TInput, ServiceBusMessage>)new StringToMessageConverter();
             }
             else if (typeof(TInput) == typeof(byte[]))
             {
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
                     throw new InvalidOperationException("Nested collections are not supported.");
                 }
 
-                return new UserTypeToBrokeredMessageConverter<TInput>();
+                return new UserTypeToMessageConverter<TInput>(jsonSerializerSettings);
             }
         }
     }

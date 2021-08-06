@@ -18,6 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     /// </summary>
     internal class TelemetryPartA
     {
+        private const string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
         private static readonly IReadOnlyDictionary<TelemetryType, string> PartA_Name_Mapping = new Dictionary<TelemetryType, string>
         {
             [TelemetryType.Request] = "Request",
@@ -32,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static TelemetryItem GetTelemetryItem(Activity activity, Resource resource, string instrumentationKey)
         {
-            TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture))
+            TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], FormatUtcTimestamp(activity.StartTimeUtc))
             {
                 InstrumentationKey = instrumentationKey
             };
@@ -42,9 +43,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
             telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
-            if (activity.Parent != null)
+            if (activity.ParentSpanId != default)
             {
-                telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.Parent.SpanId.ToHexString();
+                telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.ParentSpanId.ToHexString();
             }
 
             telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
@@ -55,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal static TelemetryItem GetTelemetryItem(LogRecord logRecord, string instrumentationKey)
         {
             var name = PartA_Name_Mapping[TelemetryType.Message];
-            var time = logRecord.Timestamp.ToString(CultureInfo.InvariantCulture);
+            var time = FormatUtcTimestamp(logRecord.Timestamp);
 
             TelemetryItem telemetryItem = new TelemetryItem(name, time)
             {
@@ -121,6 +122,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 RoleName = serviceName;
             }
+        }
+
+        internal static string FormatUtcTimestamp(System.DateTime utcTimestamp)
+        {
+            return utcTimestamp.ToString(DateTimeFormat, CultureInfo.InvariantCulture);
         }
     }
 }

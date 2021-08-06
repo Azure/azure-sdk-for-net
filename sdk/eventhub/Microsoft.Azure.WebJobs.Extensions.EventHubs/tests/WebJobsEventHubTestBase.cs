@@ -76,7 +76,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     b.AddEventHubs(options =>
                     {
-                        options.IsSingleDispatchEnabled = true;
                         options.EventProcessorOptions.TrackLastEnqueuedEventProperties = true;
                         options.EventProcessorOptions.MaximumWaitTime = TimeSpan.FromSeconds(5);
                         options.CheckpointContainer = Guid.NewGuid().ToString("D").Substring(0, 13);

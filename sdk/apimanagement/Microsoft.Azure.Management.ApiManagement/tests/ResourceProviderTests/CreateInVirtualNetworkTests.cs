@@ -113,6 +113,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 Assert.NotNull(serviceNetworkStatus.First().NetworkStatus.DnsServers);
                 Assert.Equal("success", serviceNetworkStatus.First().NetworkStatus.ConnectivityStatus.First().Status, true);
                 Assert.NotNull(serviceNetworkStatus.First().NetworkStatus.ConnectivityStatus.First().Name);
+                Assert.NotNull(serviceNetworkStatus.First().NetworkStatus.ConnectivityStatus.First().ResourceType);
 
                 // get the network status by location
                 var serviceNetworkStatusByLocation = await testBase.client.NetworkStatus.ListByLocationAsync(

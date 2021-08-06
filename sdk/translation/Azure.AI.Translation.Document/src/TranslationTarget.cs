@@ -14,7 +14,8 @@ namespace Azure.AI.Translation.Document
 
         /// <summary>
         /// Location of the container with your documents.
-        /// This should be a SAS Uri.
+        /// See the service documentation for the supported SAS permissions for accessing
+        /// target storage containers/blobs: <a href="https://aka.ms/azsdk/documenttranslation/sas-permissions"/>.
         /// </summary>
         [CodeGenMember("TargetUrl")]
         public Uri TargetUri { get; }

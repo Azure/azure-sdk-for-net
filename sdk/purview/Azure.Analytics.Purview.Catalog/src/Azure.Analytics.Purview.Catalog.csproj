@@ -5,6 +5,7 @@
     <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure Purview</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);CS0169</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

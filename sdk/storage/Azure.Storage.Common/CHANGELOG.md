@@ -1,7 +1,28 @@
 # Release History
 
-## 12.8.0-beta.5 (Unreleased)
+## 12.9.0-beta.3 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.9.0-beta.2 (2021-07-23)
+- This release changes the dependency on Azure.Core to v1.16.0
+
+## 12.9.0-beta.1 (2021-07-22)
+- TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
+    - A new property is now available on the ClientOptions called `EnableTenantDiscovery`. If set to true, the client will attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.
+
+## 12.8.0 (2021-06-08)
+- Includes all features from 12.8.0-beta.4.
+- This release contains bug fixes to improve quality.
+
+## 12.7.3 (2021-05-20)
+- This release contains bug fixes to improve quality.
 
 ## 12.8.0-beta.4 (2021-05-12)
 - Added ability to specify server timeout.

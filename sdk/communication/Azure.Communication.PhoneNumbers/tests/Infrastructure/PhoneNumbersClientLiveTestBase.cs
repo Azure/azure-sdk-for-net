@@ -12,6 +12,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 {
     public class PhoneNumbersClientLiveTestBase : RecordedTestBase<PhoneNumbersClientTestEnvironment>
     {
+        protected const string UnauthorizedNumber = "+14255550123";
         public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new PhoneNumbersClientRecordedTestSanitizer();
 

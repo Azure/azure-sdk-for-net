@@ -8,8 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "352",
         "Content-Type": "application/json",
-        "traceparent": "00-5a2f80baad13384f885c1e009c8059bb-5f6ba5e47984bc45-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-d44b1072892bc543ba15023c3ec69b93-24ea94168931884d-00",
+        "User-Agent": [
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "71385b2e9566961d382ec20e0e1368c5",
         "x-ms-return-client-request-id": "true"
       },
@@ -19,21 +22,21 @@
             "id": "0",
             "body": {
               "query": "Heartbeat",
-              "timespan": "2021-04-26T00:00:00.0000000Z/P7D"
+              "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
             },
             "path": "/query",
             "method": "POST",
-            "workspace": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+            "workspace": "50e32c19-2b4b-4152-b97e-0e02441cae60"
           },
           {
             "id": "1",
             "body": {
               "query": "Heartbeat",
-              "timespan": "2021-04-26T00:00:00.0000000Z/P7D"
+              "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
             },
             "path": "/query",
             "method": "POST",
-            "workspace": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+            "workspace": "50e32c19-2b4b-4152-b97e-0e02441cae60"
           }
         ]
       },
@@ -43,25 +46,21 @@
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 May 2021 18:37:06 GMT",
+        "Date": "Thu, 13 May 2021 21:57:52 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "Vary": [
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-6c84644dc4-gmfnb",
+        "Via": "1.1 draft-oms-6b5d48d5bb-8kmrn",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
         "responses": [
           {
-            "id": "0",
+            "id": "1",
             "status": 200,
-            "headers": {
-              "Age": "80",
-              "request-context": "appId=cid-v1:70941e4f-7e8f-40b7-b730-183893db0297"
-            },
             "body": {
               "tables": [
                 {
@@ -194,12 +193,8 @@
             }
           },
           {
-            "id": "1",
+            "id": "0",
             "status": 200,
-            "headers": {
-              "Age": "80",
-              "request-context": "appId=cid-v1:70941e4f-7e8f-40b7-b730-183893db0297"
-            },
             "body": {
               "tables": [
                 {
@@ -336,8 +331,9 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-05-04T11:37:06.0768964-07:00",
+    "DateTimeOffsetNow": "2021-05-13T14:57:48.8372535-07:00",
+    "LOGS_ENDPOINT": "https://api.loganalytics.io",
     "RandomSeed": "1735529811",
-    "WORKSPACE_ID": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+    "WORKSPACE_ID": "50e32c19-2b4b-4152-b97e-0e02441cae60"
   }
 }

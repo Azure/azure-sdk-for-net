@@ -630,7 +630,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var name = "Curie";
             var pageCount = 211;
-            var errors = new List<FormRecognizerError>() { formRecognizerError };
+            IEnumerable<FormRecognizerError> errors = new List<FormRecognizerError>() { formRecognizerError };
             var status = TrainingStatus.PartiallySucceeded;
 
             var trainingDocumentInfo = FormRecognizerModelFactory.TrainingDocumentInfo(name, pageCount, errors, status);

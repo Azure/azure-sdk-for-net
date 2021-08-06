@@ -67,7 +67,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Series Insights client library.
         /// </summary>
         /// <returns>An array representing a single Time Series Id.</returns>
-        public string[] ToArray() => _keys;
+        public string[] ToStringArray() => _keys;
 
         /// <summary>
         /// Represent the Time Series Id as a JSON string.
@@ -81,8 +81,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <inheritdoc/>
         public bool Equals(TimeSeriesId other)
         {
-            return _keys.Length == other.ToArray().Length
-                && _keys.SequenceEqual(other.ToArray());
+            return _keys.Length == other.ToStringArray().Length
+                && _keys.SequenceEqual(other.ToStringArray());
         }
 
         /// <inheritdoc/>

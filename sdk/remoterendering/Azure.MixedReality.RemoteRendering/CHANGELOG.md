@@ -3,6 +3,9 @@
 ## 1.1.0-beta.1 (Unreleased)
 - Ensure the MS-CV header is not redacted in logs. If you are logging an issue, it can be useful to quote this value.
 
+## 1.0.1 (2021-05-25)
+- Update dependency versions
+
 ## 1.0.0 (2021-03-02)
 - Release client.
 

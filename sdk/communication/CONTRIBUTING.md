@@ -1,6 +1,6 @@
 # Contributing Guide
 
-This a contributing guide made specifically for the Azure Communication Services SDK. The Azure SDK repo also has a contributing guide that might help you in some other general processes this guide assumes you have done. If you haven't checked that one out yet, you can find it [here](https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md)
+This a contributing guide made specifically for the Azure Communication Services SDK. The Azure SDK repo also has a contributing guide that might help you in some other general processes this guide assumes you have done. If you haven't checked that one out yet, you can find it [here](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md)
 
 The Azure Communication Services SDK for .Net currently consists of six different packages. While each package has its own set of environment variables to make their tests run successfully, all of them follow a similar structure that allows a smooth onboarding process.
 
@@ -14,7 +14,7 @@ Once the package has been built, let's jump on how to run the tests to see that 
 
 ## Testing
 
-Make sure to check out the general contributing guide the Azure SDK repo has for a more in-depth look at testing and setting up your dev environment. You can check out the contributing file [here](https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md)
+Make sure to check out the general contributing guide the Azure SDK repo has for a more in-depth look at testing and setting up your dev environment. You can check out the contributing file [here](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md)
 
 When you go inside the tests folder of the package you are working with, you will see a folder called `SessionRecords\<TestFileName>`. This folder contains, as its name suggests, recordings of successful calls to the API that allow us to run the tests in PLAYBACK mode and remove the necessity of hitting the actual resources every time we may want to test.
 

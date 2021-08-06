@@ -9,7 +9,6 @@ using Azure.Core;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
 
@@ -26,9 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var sender = new ServiceBusSender(
                 "queueName",
-                new ServiceBusSenderOptions(),
-                mockConnection.Object,
-                new ServiceBusPlugin[] { })
+                mockConnection.Object)
             {
                 Logger = mockLogger.Object
             };
@@ -56,9 +53,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var sender = new ServiceBusSender(
                 "queueName",
-                new ServiceBusSenderOptions(),
-                mockConnection.Object,
-                new ServiceBusPlugin[] { })
+                mockConnection.Object)
             {
                 Logger = mockLogger.Object
             };
@@ -86,9 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var sender = new ServiceBusSender(
                 "queueName",
-                new ServiceBusSenderOptions(),
-                mockConnection.Object,
-                new ServiceBusPlugin[] { })
+                mockConnection.Object)
             {
                 Logger = mockLogger.Object
             };
@@ -126,9 +119,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var sender = new ServiceBusSender(
                 "queueName",
-                new ServiceBusSenderOptions(),
-                mockConnection.Object,
-                new ServiceBusPlugin[] { })
+                mockConnection.Object)
             {
                 Logger = mockLogger.Object
             };
@@ -176,9 +167,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockConnection = GetMockConnection(mockTransportSender);
             var sender = new ServiceBusSender(
                 "queueName",
-                new ServiceBusSenderOptions(),
-                mockConnection.Object,
-                new ServiceBusPlugin[] { })
+                mockConnection.Object)
             {
                 Logger = mockLogger.Object
             };
@@ -214,9 +203,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var sender = new ServiceBusSender(
                 "queueName",
-                new ServiceBusSenderOptions(),
-                mockConnection.Object,
-                new ServiceBusPlugin[] { })
+                mockConnection.Object)
             {
                 Logger = mockLogger.Object
             };
@@ -255,9 +242,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockConnection = GetMockConnection(mockTransportSender);
             var sender = new ServiceBusSender(
                 "queueName",
-                new ServiceBusSenderOptions(),
-                mockConnection.Object,
-                new ServiceBusPlugin[] { })
+                mockConnection.Object)
             {
                 Logger = mockLogger.Object
             };
@@ -286,9 +271,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             var sender = new ServiceBusSender(
                 "queueName",
-                new ServiceBusSenderOptions(),
-                mockConnection.Object,
-                new ServiceBusPlugin[] { })
+                mockConnection.Object)
             {
                 Logger = mockLogger.Object
             };
@@ -324,21 +307,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockLogger = new Mock<ServiceBusEventSource>();
             var mockTransportReceiver = new Mock<TransportReceiver>();
             var mockConnection = GetMockConnection(mockTransportReceiver);
-
+            var received = (IReadOnlyList<ServiceBusReceivedMessage>)
+                new List<ServiceBusReceivedMessage> { new() };
             mockTransportReceiver.Setup(
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
                     It.IsAny<TimeSpan?>(),
-                    false,
                     It.IsAny<CancellationToken>()))
-                .Returns(
-                Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>)
-                    new List<ServiceBusReceivedMessage> { new ServiceBusReceivedMessage() }));
+                .Returns(Task.FromResult(received));
             var receiver = new ServiceBusReceiver(
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -356,7 +336,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.ReceiveMessageComplete(
                         receiver.Identifier,
-                        1),
+                        received),
                 Times.Once);
             mockLogger
             .Verify(
@@ -374,22 +354,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var maxMessages = 4;
             var mockTransportReceiver = new Mock<TransportReceiver>();
             var mockConnection = GetMockConnection(mockTransportReceiver);
+            var received = (IReadOnlyList<ServiceBusReceivedMessage>)
+                new List<ServiceBusReceivedMessage> { new() };
 
             mockTransportReceiver.Setup(
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     maxMessages,
                     It.IsAny<TimeSpan?>(),
-                    false,
                     It.IsAny<CancellationToken>()))
                 .Returns(
-                Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>)
-                    new List<ServiceBusReceivedMessage> { new ServiceBusReceivedMessage(),
-                    new ServiceBusReceivedMessage()}));
+                Task.FromResult(received));
             var receiver = new ServiceBusReceiver(
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions()
                 {
                     PrefetchCount = maxMessages - 1
@@ -420,7 +398,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     log => log.ReceiveMessageComplete(
                         receiver.Identifier,
                         // the amount we actually received
-                        msgs.Count),
+                        msgs),
                 Times.Once);
         }
 
@@ -435,14 +413,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
                     It.IsAny<TimeSpan?>(),
-                    false,
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
             var receiver = new ServiceBusReceiver(
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -487,7 +463,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -535,7 +510,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -579,7 +553,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -614,7 +587,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -653,7 +625,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -689,7 +660,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -728,7 +698,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -764,7 +733,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -805,7 +773,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -841,7 +808,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -880,7 +846,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -916,7 +881,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -954,7 +918,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusPlugin[] { },
                 new ServiceBusReceiverOptions())
             {
                 Logger = mockLogger.Object
@@ -986,7 +949,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockLogger = new Mock<ServiceBusEventSource>();
             var mockTransportReceiver = new Mock<TransportReceiver>();
             var mockConnection = GetMockConnection(mockTransportReceiver);
-            var receiver = new ServiceBusSessionReceiver(mockConnection.Object, "queueName", new ServiceBusPlugin[] { }, new ServiceBusSessionReceiverOptions(), cancellationToken: CancellationToken.None)
+            var receiver = new ServiceBusSessionReceiver(mockConnection.Object, "queueName",  new ServiceBusSessionReceiverOptions(), cancellationToken: CancellationToken.None)
             {
                 Logger = mockLogger.Object
             };
@@ -1019,7 +982,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var receiver = new ServiceBusSessionReceiver(
                 mockConnection.Object,
                 "queueName",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionReceiverOptions(),
                 cancellationToken: CancellationToken.None)
             {
@@ -1053,7 +1015,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var receiver = new ServiceBusSessionReceiver(
                 mockConnection.Object,
                 "queueName",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionReceiverOptions(),
                 cancellationToken: CancellationToken.None)
             {
@@ -1088,7 +1049,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var receiver = new ServiceBusSessionReceiver(
                 mockConnection.Object,
                 "queueName",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionReceiverOptions(),
                 cancellationToken: CancellationToken.None)
             {
@@ -1122,7 +1082,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var receiver = new ServiceBusSessionReceiver(
                 mockConnection.Object,
                 "queueName",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionReceiverOptions(),
                 cancellationToken: CancellationToken.None)
             {
@@ -1158,7 +1117,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var receiver = new ServiceBusSessionReceiver(
                 mockConnection.Object,
                 "queueName",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionReceiverOptions(),
                 cancellationToken: CancellationToken.None)
             {
@@ -1193,10 +1151,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
                     It.IsAny<TimeSpan?>(),
-                    true,
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>) new List<ServiceBusReceivedMessage>() { new ServiceBusReceivedMessage() }));
-            var processor = new ServiceBusProcessor(mockConnection.Object, "queueName", false, new ServiceBusPlugin[] { }, new ServiceBusProcessorOptions
+            var processor = new ServiceBusProcessor(mockConnection.Object, "queueName", false, new ServiceBusProcessorOptions
             {
                 MaxAutoLockRenewalDuration = TimeSpan.Zero,
                 AutoCompleteMessages = false
@@ -1245,7 +1202,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             var mockLogger = new Mock<ServiceBusEventSource>();
             var mockConnection = CreateMockConnection();
-            var processor = new ServiceBusProcessor(mockConnection.Object, "queueName", false, new ServiceBusPlugin[] { }, new ServiceBusProcessorOptions
+            var processor = new ServiceBusProcessor(mockConnection.Object, "queueName", false, new ServiceBusProcessorOptions
             {
                 AutoCompleteMessages = false,
                 MaxAutoLockRenewalDuration = TimeSpan.Zero

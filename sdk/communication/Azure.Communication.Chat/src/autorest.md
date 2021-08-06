@@ -10,13 +10,9 @@ If any of the new objects needs to be overwritten, add the required changes to t
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-chat-2021-03-07
-require: 
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/bf081421869ccd31d9fd87084b07a1e246aee310/specification/communication/data-plane/Microsoft.CommunicationServicesChat/readme.md
+title: Chat
+tag: package-chat-2021-04-05-preview6
+model-namespace: false
+require:
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/29e0c9624a8e60138127457f2e863bb4a9ba1419/specification/communication/data-plane/Chat/readme.md
 payload-flattening-threshold: 10
-directive:
-  from: swagger-document
-  where: $.definitions.*
-  transform: >
-    $["x-namespace"] = "Azure.Communication.Chat"
-```

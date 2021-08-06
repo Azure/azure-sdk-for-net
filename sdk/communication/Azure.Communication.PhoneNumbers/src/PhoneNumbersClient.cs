@@ -26,7 +26,7 @@ namespace Azure.Communication.PhoneNumbers
         /// </summary>
         public PhoneNumbersClient(string connectionString)
             : this(
-                ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 new PhoneNumbersClientOptions())
         { }
 
@@ -35,7 +35,7 @@ namespace Azure.Communication.PhoneNumbers
         /// </summary>
         public PhoneNumbersClient(string connectionString, PhoneNumbersClientOptions options)
             : this(
-                ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 options ?? new PhoneNumbersClientOptions())
         { }
 
@@ -45,8 +45,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public PhoneNumbersClient(Uri endpoint, AzureKeyCredential keyCredential, PhoneNumbersClientOptions options = default)
             : this(
-                AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                AssertNotNull(keyCredential, nameof(keyCredential)),
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
                 options ?? new PhoneNumbersClientOptions())
         { }
 
@@ -58,8 +58,8 @@ namespace Azure.Communication.PhoneNumbers
         /// </summary>
         public PhoneNumbersClient(Uri endpoint, TokenCredential tokenCredential, PhoneNumbersClientOptions options = default)
             : this(
-                AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                AssertNotNull(tokenCredential, nameof(tokenCredential)),
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
                 options ?? new PhoneNumbersClientOptions())
         { }
 
@@ -404,19 +404,6 @@ namespace Azure.Communication.PhoneNumbers
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        private static T AssertNotNull<T>(T argument, string argumentName)
-            where T : class
-        {
-            Argument.AssertNotNull(argument, argumentName);
-            return argument;
-        }
-
-        private static string AssertNotNullOrEmpty(string argument, string argumentName)
-        {
-            Argument.AssertNotNullOrEmpty(argument, argumentName);
-            return argument;
         }
     }
 }

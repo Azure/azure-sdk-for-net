@@ -178,8 +178,12 @@ namespace DataFactory.Tests.ScenarioTests
                                 ReferenceName = "stagingLinkedService"
                             },
                             Path = "fakedPath"
+                        },
+                        Credential = new CredentialReference
+                        {
+                            ReferenceName=  "credentialReference"
                         }
-        }
+                    }
                 }
             };
 

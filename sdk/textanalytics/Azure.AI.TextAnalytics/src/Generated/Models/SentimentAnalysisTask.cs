@@ -16,5 +16,6 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         public SentimentAnalysisTaskParameters Parameters { get; set; }
+        public string TaskName { get; set; }
     }
 }

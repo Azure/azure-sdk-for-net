@@ -10,7 +10,7 @@ using Azure.Security.KeyVault.Administration.Models;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary>
-    /// A long-running operation for <see cref="KeyVaultBackupClient.StartSelectiveRestore"/> or <see cref="KeyVaultBackupClient.StartSelectiveRestoreAsync"/>.
+    /// A long-running operation for <see cref="KeyVaultBackupClient.StartSelectiveKeyRestore"/> or <see cref="KeyVaultBackupClient.StartSelectiveKeyRestoreAsync"/>.
     /// </summary>
     public class KeyVaultSelectiveKeyRestoreOperation : Operation<KeyVaultSelectiveKeyRestoreResult>
     {

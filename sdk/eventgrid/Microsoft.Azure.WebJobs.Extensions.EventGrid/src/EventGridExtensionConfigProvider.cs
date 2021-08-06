@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 throw new ArgumentNullException(nameof(context));
             }
 
-            _logger = _loggerFactory.CreateLogger(LogCategories.CreateTriggerCategory("EventGrid"));
+            _logger = _loggerFactory.CreateLogger<EventGridExtensionConfigProvider>();
 
 #pragma warning disable 618
             Uri url = context.GetWebhookHandler();
@@ -173,7 +173,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     };
                     executions.Add(_listeners[functionName].Executor.TryExecuteAsync(triggerData, CancellationToken.None));
                 }
-                await Task.WhenAll(executions).ConfigureAwait(false);
             }
             // Batch Dispatch
             else
@@ -184,6 +183,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 };
                 executions.Add(_listeners[functionName].Executor.TryExecuteAsync(triggerData, CancellationToken.None));
             }
+            await Task.WhenAll(executions).ConfigureAwait(false);
 
             // FIXME without internal queuing, we are going to process all events in parallel
             // and return 500 if there's at least one failure...which will cause EventGrid to resend the entire payload

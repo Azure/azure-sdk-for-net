@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// Initializes a new instance of the PartnerTopicUpdateParameters
         /// class.
         /// </summary>
-        /// <param name="tags">Tags of the partner topic.</param>
-        public PartnerTopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="tags">Tags of the Partner Topic resource.</param>
+        /// <param name="identity">Identity information for the Partner Topic
+        /// resource.</param>
+        public PartnerTopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityInfo identity = default(IdentityInfo))
         {
             Tags = tags;
+            Identity = identity;
             CustomInit();
         }
 
@@ -46,10 +49,16 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets tags of the partner topic.
+        /// Gets or sets tags of the Partner Topic resource.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets identity information for the Partner Topic resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityInfo Identity { get; set; }
 
     }
 }

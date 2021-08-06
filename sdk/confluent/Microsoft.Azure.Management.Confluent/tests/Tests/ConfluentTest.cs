@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Confluent.Tests
                 OrganizationResource rp = CreateResource(context, rgName, resourceName);
                 Assert.NotNull(rp);
 
-                // DeleteResource(context, rgName, resourceName);
+                DeleteResource(context, rgName, resourceName);
                 DeleteResourceGroup(context, rgName);
             }
         }
@@ -54,8 +54,8 @@ namespace Microsoft.Azure.Management.Confluent.Tests
                 new OrganizationResource(
                     name: resourceName,
                     type: "Microsoft.Confluent/organizations",
-                    offerDetail: new OrganizationResourcePropertiesOfferDetail(publisherId: "isvtestuklegacy", id: "liftr_cf_dev", planId: "payg", planName: "Pay as you go", termUnit: "P1M"),
-                    userDetail: new OrganizationResourcePropertiesUserDetail(firstName: "Srinivas", lastName: "Alluri", emailAddress: "sralluri@microsoft.com"),
+                    offerDetail: new OfferDetail(publisherId: "isvtestuklegacy", id: "liftr_cf_dev", planId: "payg", planName: "Pay as you go", termUnit: "P1M"),
+                    userDetail: new UserDetail(firstName: "Srinivas", lastName: "Alluri", emailAddress: "sralluri@microsoft.com"),
                     location: "westus2"
                     )
             );

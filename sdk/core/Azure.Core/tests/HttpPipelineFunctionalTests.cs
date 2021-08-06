@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -415,7 +416,8 @@ namespace Azure.Core.Tests
 
             cts.Cancel();
 
-            Assert.ThrowsAsync(Is.InstanceOf<TaskCanceledException>(), async () => await task);
+            var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await task);
+            Assert.AreEqual("The operation was canceled.", exception.Message);
             Assert.AreEqual(1, i);
 
             testDoneTcs.Cancel();
@@ -468,6 +470,71 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void TimeoutsResponseBuffering()
+        {
+            var testDoneTcs = new CancellationTokenSource();
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions
+            {
+                Retry =
+                {
+                    NetworkTimeout = TimeSpan.FromMilliseconds(500),
+                    MaxRetries = 0
+                }
+            });
+
+            using TestServer testServer = new TestServer(
+                async _ =>
+                {
+                    await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+                });
+
+            using HttpMessage message = httpPipeline.CreateMessage();
+            message.Request.Uri.Reset(testServer.Address);
+            message.BufferResponse = true;
+
+            var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await ExecuteRequest(message, httpPipeline));
+            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
+                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
+
+            testDoneTcs.Cancel();
+        }
+
+        [Test]
+        public void TimeoutsBodyBuffering()
+        {
+            var testDoneTcs = new CancellationTokenSource();
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(new TestOptions
+            {
+                Retry =
+                {
+                    NetworkTimeout = TimeSpan.FromMilliseconds(500),
+                    MaxRetries = 0
+                }
+            });
+
+            using TestServer testServer = new TestServer(
+                async context =>
+                {
+                    context.Response.StatusCode = 200;
+                    context.Response.Headers.ContentLength = 10;
+                    await context.Response.WriteAsync("1");
+                    await context.Response.Body.FlushAsync();
+
+                    await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+                });
+
+            using HttpMessage message = httpPipeline.CreateMessage();
+            message.Request.Uri.Reset(testServer.Address);
+            message.BufferResponse = true;
+
+            var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await ExecuteRequest(message, httpPipeline));
+            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
+                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
+
+            testDoneTcs.Cancel();
+        }
+
+        [Test]
         public async Task TimeoutsUnbufferedBodyReads()
         {
             var testDoneTcs = new CancellationTokenSource();
@@ -480,7 +547,6 @@ namespace Azure.Core.Tests
                 }
             });
 
-            Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] Starting");
             using TestServer testServer = new TestServer(
                 async context =>
                 {
@@ -503,7 +569,9 @@ namespace Azure.Core.Tests
             Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
             var buffer = new byte[10];
             Assert.AreEqual(1, await responseContentStream.ReadAsync(buffer, 0, 1));
-            Assert.That(async () => await responseContentStream.ReadAsync(buffer, 0, 10), Throws.InstanceOf<OperationCanceledException>());
+            var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await responseContentStream.ReadAsync(buffer, 0, 10));
+            Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
+                            "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
 
             testDoneTcs.Cancel();
         }
@@ -557,6 +625,112 @@ namespace Azure.Core.Tests
             Assert.AreEqual(formData.Current.ContentDisposition, "form-data; name=LastName; filename=file_name.txt");
         }
 
+        [Test]
+        public async Task HandlesRedirects()
+        {
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            Uri testServerAddress = null;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    if (context.Request.Path.ToString().Contains("/redirected"))
+                    {
+                        context.Response.StatusCode = 200;
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 300;
+                        context.Response.Headers.Add("Location", testServerAddress + "/redirected");
+                    }
+                    return Task.CompletedTask;
+                });
+
+            testServerAddress = testServer.Address;
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            using Response response = await ExecuteRequest(request, httpPipeline);
+            Assert.AreEqual(response.Status, 200);
+        }
+
+        [Test]
+        public async Task PerRetryPolicyObservesRedirect()
+        {
+            List<string> uris = new List<string>();
+            var options = GetOptions();
+            var perRetryPolicy = new CallbackPolicy(message => uris.Add(message.Request.Uri.ToString()));
+            options.AddPolicy(perRetryPolicy, HttpPipelinePosition.PerRetry);
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options);
+            Uri testServerAddress = null;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    if (context.Request.Path.ToString().Contains("/redirected"))
+                    {
+                        context.Response.StatusCode = 200;
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 300;
+                        context.Response.Headers.Add("Location", testServerAddress + "/redirected");
+                    }
+                    return Task.CompletedTask;
+                });
+
+            testServerAddress = testServer.Address;
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            using Response response = await ExecuteRequest(request, httpPipeline);
+            Assert.AreEqual(response.Status, 200);
+            Assert.AreEqual(2, uris.Count);
+            Assert.AreEqual(1, uris.Count(u => u.Contains("/redirected")));
+        }
+
+        [Test]
+        public async Task StopsOnMaxRedirects()
+        {
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            Uri testServerAddress = null;
+            int count = 0;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    Interlocked.Increment(ref count);
+                    context.Response.StatusCode = 300;
+                    context.Response.Headers.Add("Location", testServerAddress + "/redirected");
+                });
+
+            testServerAddress = testServer.Address;
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            using Response response = await ExecuteRequest(request, httpPipeline);
+            Assert.AreEqual(300, response.Status);
+            Assert.AreEqual(51, count);
+        }
+
+        private class CallbackPolicy : HttpPipelineSynchronousPolicy
+        {
+            private readonly Action<HttpMessage> _callback;
+
+            public CallbackPolicy(Action<HttpMessage> callback)
+            {
+                _callback = callback;
+            }
+
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                base.OnSendingRequest(message);
+                _callback(message);
+            }
+        }
         private class TestOptions : ClientOptions
         {
         }

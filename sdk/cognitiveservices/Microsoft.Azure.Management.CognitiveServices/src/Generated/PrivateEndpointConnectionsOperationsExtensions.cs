@@ -216,5 +216,108 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
+            /// <summary>
+            /// Update the state of specified private endpoint connection associated with
+            /// the Cognitive Services account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection associated with the Cognitive
+            /// Services Account
+            /// </param>
+            /// <param name='properties'>
+            /// The private endpoint connection properties.
+            /// </param>
+            public static PrivateEndpointConnection BeginCreateOrUpdate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection properties)
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, accountName, privateEndpointConnectionName, properties).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update the state of specified private endpoint connection associated with
+            /// the Cognitive Services account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection associated with the Cognitive
+            /// Services Account
+            /// </param>
+            /// <param name='properties'>
+            /// The private endpoint connection properties.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateEndpointConnection> BeginCreateOrUpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection properties, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, privateEndpointConnectionName, properties, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes the specified private endpoint connection associated with the
+            /// Cognitive Services account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection associated with the Cognitive
+            /// Services Account
+            /// </param>
+            public static void BeginDelete(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string accountName, string privateEndpointConnectionName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, accountName, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the specified private endpoint connection associated with the
+            /// Cognitive Services account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection associated with the Cognitive
+            /// Services Account
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string accountName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
     }
 }

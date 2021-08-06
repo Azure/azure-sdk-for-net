@@ -45,17 +45,17 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// Initializes a new instance of <see cref="TableAccountSasBuilder"/> based on an existing Uri containing a shared acccess signature.
         /// </summary>
-        /// <param name="uri">The Uri to parse.</param>
+        /// <param name="sasUri">The Uri containing a SAS token to parse.</param>
         /// <returns></returns>
-        public TableAccountSasBuilder(Uri uri)
+        public TableAccountSasBuilder(Uri sasUri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(sasUri, nameof(sasUri));
 
-            var uriBuilder = new TableUriBuilder(uri);
+            var uriBuilder = new TableUriBuilder(sasUri);
 
             if (!uriBuilder.Sas.ResourceTypes.HasValue)
             {
-                throw new ArgumentException("Uri must contain a ResourceType value", nameof(uri));
+                throw new ArgumentException("Uri must contain a ResourceType value", nameof(sasUri));
             }
 
             ExpiresOn = uriBuilder.Sas.ExpiresOn;

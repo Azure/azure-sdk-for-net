@@ -5,9 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,23 +16,29 @@ namespace Azure.Monitor.Query.Models
     public partial class LogsQueryResult
     {
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
-        internal LogsQueryResult()
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
+        internal LogsQueryResult(IEnumerable<LogsQueryResultTable> allTables)
         {
-            Tables = new ChangeTrackingList<LogsQueryResultTable>();
+            if (allTables == null)
+            {
+                throw new ArgumentNullException(nameof(allTables));
+            }
+
+            AllTables = allTables.ToList();
         }
 
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
-        /// <param name="tables"> The list of tables, columns and rows. </param>
-        /// <param name="statistics"> Any object. </param>
-        /// <param name="error"> . </param>
-        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables, JsonElement statistics, ErrorDetails error)
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <param name="Statistics"> Any object. </param>
+        /// <param name="Visualization"> Any object. </param>
+        /// <param name="Error"> Any object. </param>
+        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> allTables, JsonElement Statistics, JsonElement Visualization, JsonElement Error)
         {
-            Tables = tables;
-            Statistics = statistics;
-            Error = error;
+            AllTables = allTables;
+            _statistics = Statistics;
+            _visualization = Visualization;
+            _error = Error;
         }
-
-        /// <summary> The list of tables, columns and rows. </summary>
-        public IReadOnlyList<LogsQueryResultTable> Tables { get; }
     }
 }

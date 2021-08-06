@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='account'>
             /// The parameters to provide for the created account.
             /// </param>
-            public static CognitiveServicesAccount Create(this IAccountsOperations operations, string resourceGroupName, string accountName, CognitiveServicesAccount account)
+            public static Account Create(this IAccountsOperations operations, string resourceGroupName, string accountName, Account account)
             {
                 return operations.CreateAsync(resourceGroupName, accountName, account).GetAwaiter().GetResult();
             }
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CognitiveServicesAccount> CreateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CognitiveServicesAccount account, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Account> CreateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, Account account, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, account, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='account'>
             /// The parameters to provide for the created account.
             /// </param>
-            public static CognitiveServicesAccount Update(this IAccountsOperations operations, string resourceGroupName, string accountName, CognitiveServicesAccount account)
+            public static Account Update(this IAccountsOperations operations, string resourceGroupName, string accountName, Account account)
             {
                 return operations.UpdateAsync(resourceGroupName, accountName, account).GetAwaiter().GetResult();
             }
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CognitiveServicesAccount> UpdateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CognitiveServicesAccount account, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Account> UpdateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, Account account, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, account, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -166,9 +166,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
             /// </param>
-            public static CognitiveServicesAccount GetProperties(this IAccountsOperations operations, string resourceGroupName, string accountName)
+            public static Account Get(this IAccountsOperations operations, string resourceGroupName, string accountName)
             {
-                return operations.GetPropertiesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -186,9 +186,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CognitiveServicesAccount> GetPropertiesAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Account> GetAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPropertiesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            public static IPage<CognitiveServicesAccount> ListByResourceGroup(this IAccountsOperations operations, string resourceGroupName)
+            public static IPage<Account> ListByResourceGroup(this IAccountsOperations operations, string resourceGroupName)
             {
                 return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CognitiveServicesAccount>> ListByResourceGroupAsync(this IAccountsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Account>> ListByResourceGroupAsync(this IAccountsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<CognitiveServicesAccount> List(this IAccountsOperations operations)
+            public static IPage<Account> List(this IAccountsOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CognitiveServicesAccount>> ListAsync(this IAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Account>> ListAsync(this IAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
             /// </param>
-            public static CognitiveServicesAccountKeys ListKeys(this IAccountsOperations operations, string resourceGroupName, string accountName)
+            public static ApiKeys ListKeys(this IAccountsOperations operations, string resourceGroupName, string accountName)
             {
                 return operations.ListKeysAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CognitiveServicesAccountKeys> ListKeysAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApiKeys> ListKeysAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='keyName'>
             /// key name to generate (Key1|Key2). Possible values include: 'Key1', 'Key2'
             /// </param>
-            public static CognitiveServicesAccountKeys RegenerateKey(this IAccountsOperations operations, string resourceGroupName, string accountName, KeyName keyName)
+            public static ApiKeys RegenerateKey(this IAccountsOperations operations, string resourceGroupName, string accountName, KeyName keyName)
             {
                 return operations.RegenerateKeyAsync(resourceGroupName, accountName, keyName).GetAwaiter().GetResult();
             }
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CognitiveServicesAccountKeys> RegenerateKeyAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, KeyName keyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApiKeys> RegenerateKeyAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, KeyName keyName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, keyName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='accountName'>
             /// The name of Cognitive Services account.
             /// </param>
-            public static CognitiveServicesAccountEnumerateSkusResult ListSkus(this IAccountsOperations operations, string resourceGroupName, string accountName)
+            public static AccountSkuListResult ListSkus(this IAccountsOperations operations, string resourceGroupName, string accountName)
             {
                 return operations.ListSkusAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
@@ -378,7 +378,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CognitiveServicesAccountEnumerateSkusResult> ListSkusAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccountSkuListResult> ListSkusAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSkusWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -403,9 +403,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// supported parameter is name.value (name of the metric, can have an or of
             /// multiple names).
             /// </param>
-            public static UsagesResult GetUsages(this IAccountsOperations operations, string resourceGroupName, string accountName, string filter = default(string))
+            public static UsageListResult ListUsages(this IAccountsOperations operations, string resourceGroupName, string accountName, string filter = default(string))
             {
-                return operations.GetUsagesAsync(resourceGroupName, accountName, filter).GetAwaiter().GetResult();
+                return operations.ListUsagesAsync(resourceGroupName, accountName, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -428,12 +428,145 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UsagesResult> GetUsagesAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UsageListResult> ListUsagesAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetUsagesWithHttpMessagesAsync(resourceGroupName, accountName, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListUsagesWithHttpMessagesAsync(resourceGroupName, accountName, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Create Cognitive Services Account. Accounts is a resource group wide
+            /// resource type. It holds the keys for developer to access intelligent APIs.
+            /// It's also the resource type for billing.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            /// <param name='account'>
+            /// The parameters to provide for the created account.
+            /// </param>
+            public static Account BeginCreate(this IAccountsOperations operations, string resourceGroupName, string accountName, Account account)
+            {
+                return operations.BeginCreateAsync(resourceGroupName, accountName, account).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create Cognitive Services Account. Accounts is a resource group wide
+            /// resource type. It holds the keys for developer to access intelligent APIs.
+            /// It's also the resource type for billing.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            /// <param name='account'>
+            /// The parameters to provide for the created account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Account> BeginCreateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, Account account, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, accountName, account, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates a Cognitive Services account
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            /// <param name='account'>
+            /// The parameters to provide for the created account.
+            /// </param>
+            public static Account BeginUpdate(this IAccountsOperations operations, string resourceGroupName, string accountName, Account account)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, accountName, account).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a Cognitive Services account
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            /// <param name='account'>
+            /// The parameters to provide for the created account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Account> BeginUpdateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, Account account, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, accountName, account, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a Cognitive Services account from the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            public static void BeginDelete(this IAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a Cognitive Services account from the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -446,7 +579,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<CognitiveServicesAccount> ListByResourceGroupNext(this IAccountsOperations operations, string nextPageLink)
+            public static IPage<Account> ListByResourceGroupNext(this IAccountsOperations operations, string nextPageLink)
             {
                 return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -464,7 +597,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CognitiveServicesAccount>> ListByResourceGroupNextAsync(this IAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Account>> ListByResourceGroupNextAsync(this IAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -481,7 +614,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<CognitiveServicesAccount> ListNext(this IAccountsOperations operations, string nextPageLink)
+            public static IPage<Account> ListNext(this IAccountsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -498,7 +631,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CognitiveServicesAccount>> ListNextAsync(this IAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Account>> ListNextAsync(this IAccountsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

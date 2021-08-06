@@ -282,6 +282,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public virtual IRecoveryPointsRecommendedForMoveOperations RecoveryPointsRecommendedForMove { get; private set; }
 
         /// <summary>
+        /// Gets the IBackupUsageSummariesCRROperations.
+        /// </summary>
+        public virtual IBackupUsageSummariesCRROperations BackupUsageSummariesCRR { get; private set; }
+
+        /// <summary>
         /// Gets the IAadPropertiesOperations.
         /// </summary>
         public virtual IAadPropertiesOperations AadProperties { get; private set; }
@@ -609,6 +614,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             BackupProtectionContainers = new BackupProtectionContainersOperations(this);
             SecurityPINs = new SecurityPINsOperations(this);
             RecoveryPointsRecommendedForMove = new RecoveryPointsRecommendedForMoveOperations(this);
+            BackupUsageSummariesCRR = new BackupUsageSummariesCRROperations(this);
             AadProperties = new AadPropertiesOperations(this);
             CrossRegionRestore = new CrossRegionRestoreOperations(this);
             BackupCrrJobDetails = new BackupCrrJobDetailsOperations(this);
@@ -743,7 +749,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1029,7 +1035,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 parameters.Validate();
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1216,7 +1222,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 parameters.Validate();
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1423,7 +1429,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

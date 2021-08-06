@@ -26,7 +26,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20997")]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsCanAuthenticateWithTokenCredential(bool useTrainingLabels)
@@ -351,7 +350,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and perform analysis based on a custom labeled model.
         /// </summary>
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20960")]
         [TestCase(true, true)]
         [TestCase(true, false)]
         [TestCase(false, true)]
@@ -414,7 +412,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20960")]
         [TestCase(true)]
         [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
@@ -505,7 +502,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20960")]
         [TestCase(true)]
         [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage(bool useStream)
@@ -593,7 +589,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/20961")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
         {
@@ -602,13 +598,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels);
 
-            var operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, invalidUri);
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, invalidUri));
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
-
-            Assert.AreEqual("2003", ex.ErrorCode);
-            Assert.True(operation.HasCompleted);
-            Assert.False(operation.HasValue);
+            Assert.AreEqual("2001", ex.ErrorCode);
         }
 
         [RecordedTest]

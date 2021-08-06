@@ -189,11 +189,6 @@ namespace Microsoft.Azure.Management.Quantum.Tests
                 },
                 Providers = new List<Provider>()
                 {
-                    new Provider()
-                    {
-                        ProviderId = "Microsoft",
-                        ProviderSku = "Basic"
-                    }
                 },
                 StorageAccount = commonData.StorageAccountId,
             };

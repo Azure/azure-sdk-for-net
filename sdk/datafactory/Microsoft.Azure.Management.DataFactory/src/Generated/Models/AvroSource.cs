@@ -41,12 +41,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="storeSettings">Avro store settings.</param>
         /// <param name="additionalColumns">Specifies the additional columns to
         /// be added to source data. Type: array of objects (or Expression with
         /// resultType array of objects).</param>
-        public AvroSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), StoreReadSettings storeSettings = default(StoreReadSettings), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        public AvroSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), StoreReadSettings storeSettings = default(StoreReadSettings), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             StoreSettings = storeSettings;
             AdditionalColumns = additionalColumns;

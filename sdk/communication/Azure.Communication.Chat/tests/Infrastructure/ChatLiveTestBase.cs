@@ -20,7 +20,7 @@ namespace Azure.Communication.Chat.Tests
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         /// <summary>
         /// Creates a <see cref="ChatClient" /> with a static token and instruments it to make use of

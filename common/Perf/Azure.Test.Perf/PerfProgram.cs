@@ -13,6 +13,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using BenchmarkDotNet.Running;
 
 namespace Azure.Test.Perf
 {
@@ -31,6 +32,13 @@ namespace Azure.Test.Perf
 
         public static async Task Main(Assembly assembly, string[] args)
         {
+            // See if we want to run a BenchmarkDotNet microbenchmark
+            if (args.Length > 0 && args[0].Equals("micro", StringComparison.OrdinalIgnoreCase))
+            {
+                BenchmarkSwitcher.FromAssembly(assembly).Run(args.Skip(1).ToArray());
+                return;
+            }
+
             var testTypes = assembly.ExportedTypes
                 .Where(t => typeof(IPerfTest).IsAssignableFrom(t) && !t.IsAbstract);
 
@@ -97,11 +105,25 @@ namespace Azure.Test.Perf
                 {
                     await tests[0].GlobalSetupAsync();
 
+                    var startedPlayback = false;
+
                     try
                     {
                         await Task.WhenAll(tests.Select(t => t.SetupAsync()));
                         setupStatusCts.Cancel();
                         setupStatusThread.Join();
+
+                        if (options.TestProxy != null)
+                        {
+                            using var recordStatusCts = new CancellationTokenSource();
+                            var recordStatusThread = PerfStressUtilities.PrintStatus("=== Record and Start Playback ===", () => ".", newLine: false, recordStatusCts.Token);
+
+                            await Task.WhenAll(tests.Select(t => t.RecordAndStartPlayback()));
+                            startedPlayback = true;
+
+                            recordStatusCts.Cancel();
+                            recordStatusThread.Join();
+                        }
 
                         if (options.Warmup > 0)
                         {
@@ -133,14 +155,28 @@ namespace Azure.Test.Perf
                     }
                     finally
                     {
-                        if (!options.NoCleanup)
+                        try
                         {
-                            if (cleanupStatusThread == null)
+                            if (startedPlayback)
                             {
-                                cleanupStatusThread = PerfStressUtilities.PrintStatus("=== Cleanup ===", () => ".", newLine: false, cleanupStatusCts.Token);
+                                using var playbackStatusCts = new CancellationTokenSource();
+                                var playbackStatusThread = PerfStressUtilities.PrintStatus("=== Stop Playback ===", () => ".", newLine: false, playbackStatusCts.Token);
+                                await Task.WhenAll(tests.Select(t => t.StopPlayback()));
+                                playbackStatusCts.Cancel();
+                                playbackStatusThread.Join();
                             }
+                        }
+                        finally
+                        {
+                            if (!options.NoCleanup)
+                            {
+                                if (cleanupStatusThread == null)
+                                {
+                                    cleanupStatusThread = PerfStressUtilities.PrintStatus("=== Cleanup ===", () => ".", newLine: false, cleanupStatusCts.Token);
+                                }
 
-                            await Task.WhenAll(tests.Select(t => t.CleanupAsync()));
+                                await Task.WhenAll(tests.Select(t => t.CleanupAsync()));
+                            }
                         }
                     }
                 }
@@ -441,8 +477,16 @@ namespace Azure.Test.Perf
                     _lastCompletionTimes[index] = sw.Elapsed;
                 }
             }
-            catch (OperationCanceledException)
+            catch (Exception e)
             {
+                if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                {
+                    // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 
@@ -484,8 +528,11 @@ namespace Azure.Test.Perf
             }
             catch (Exception e)
             {
-                // Ignore if any part of the exception chain is type OperationCanceledException
-                if (!PerfStressUtilities.ContainsOperationCanceledException(e))
+                if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                {
+                    // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+                }
+                else
                 {
                     throw;
                 }

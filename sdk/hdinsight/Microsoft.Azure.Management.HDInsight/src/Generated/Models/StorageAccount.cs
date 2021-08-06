@@ -42,7 +42,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="msiResourceId">The managed identity (MSI) that is
         /// allowed to access the storage account, only to be specified for
         /// Azure Data Lake Storage Gen 2.</param>
-        public StorageAccount(string name = default(string), bool? isDefault = default(bool?), string container = default(string), string fileSystem = default(string), string key = default(string), string resourceId = default(string), string msiResourceId = default(string))
+        /// <param name="saskey">The shared access signature key.</param>
+        /// <param name="fileshare">The file share name.</param>
+        public StorageAccount(string name = default(string), bool? isDefault = default(bool?), string container = default(string), string fileSystem = default(string), string key = default(string), string resourceId = default(string), string msiResourceId = default(string), string saskey = default(string), string fileshare = default(string))
         {
             Name = name;
             IsDefault = isDefault;
@@ -51,6 +53,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             Key = key;
             ResourceId = resourceId;
             MsiResourceId = msiResourceId;
+            Saskey = saskey;
+            Fileshare = fileshare;
             CustomInit();
         }
 
@@ -106,6 +110,18 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "msiResourceId")]
         public string MsiResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the shared access signature key.
+        /// </summary>
+        [JsonProperty(PropertyName = "saskey")]
+        public string Saskey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the file share name.
+        /// </summary>
+        [JsonProperty(PropertyName = "fileshare")]
+        public string Fileshare { get; set; }
 
     }
 }

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
     public class VMInstanceViewPatchStatusTests : VMTestBase
     {
         private const string RgName = "RGforSDKtestResources";
-        private const string VmName = "VMforTest";
+        private const string VmName = "imageVM";
 
         //How to re-record this test:
         // 1. Manually create Resource group and VM

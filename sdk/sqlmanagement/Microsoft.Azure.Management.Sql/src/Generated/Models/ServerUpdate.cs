@@ -56,12 +56,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'Connected', 'Disconnected'</param>
         /// <param name="primaryUserAssignedIdentityId">The resource id of a
         /// user assigned identity to be used by default.</param>
+        /// <param name="federatedClientId">The Client id used for cross tenant
+        /// CMK scenario</param>
         /// <param name="keyId">A CMK URI of the key to use for
         /// encryption.</param>
         /// <param name="administrators">The Azure Active Directory identity of
         /// the server.</param>
+        /// <param name="restrictOutboundNetworkAccess">Whether or not to
+        /// restrict outbound network access for this server.  Value is
+        /// optional but if passed in, must be 'Enabled' or 'Disabled'.
+        /// Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="tags">Resource tags.</param>
-        public ServerUpdate(ResourceIdentityWithUserAssignedIdentities identity = default(ResourceIdentityWithUserAssignedIdentities), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string), string workspaceFeature = default(string), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ServerExternalAdministrator administrators = default(ServerExternalAdministrator), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ServerUpdate(ResourceIdentity identity = default(ResourceIdentity), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string), string workspaceFeature = default(string), string primaryUserAssignedIdentityId = default(string), System.Guid? federatedClientId = default(System.Guid?), string keyId = default(string), ServerExternalAdministrator administrators = default(ServerExternalAdministrator), string restrictOutboundNetworkAccess = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Identity = identity;
             AdministratorLogin = administratorLogin;
@@ -74,8 +80,10 @@ namespace Microsoft.Azure.Management.Sql.Models
             PublicNetworkAccess = publicNetworkAccess;
             WorkspaceFeature = workspaceFeature;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
+            FederatedClientId = federatedClientId;
             KeyId = keyId;
             Administrators = administrators;
+            RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
             Tags = tags;
             CustomInit();
         }
@@ -89,7 +97,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets or sets server identity
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
-        public ResourceIdentityWithUserAssignedIdentities Identity { get; set; }
+        public ResourceIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets administrator username for the server. Once created it
@@ -160,6 +168,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string PrimaryUserAssignedIdentityId { get; set; }
 
         /// <summary>
+        /// Gets or sets the Client id used for cross tenant CMK scenario
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.federatedClientId")]
+        public System.Guid? FederatedClientId { get; set; }
+
+        /// <summary>
         /// Gets or sets a CMK URI of the key to use for encryption.
         /// </summary>
         [JsonProperty(PropertyName = "properties.keyId")]
@@ -170,6 +184,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.administrators")]
         public ServerExternalAdministrator Administrators { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not to restrict outbound network access for
+        /// this server.  Value is optional but if passed in, must be 'Enabled'
+        /// or 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.restrictOutboundNetworkAccess")]
+        public string RestrictOutboundNetworkAccess { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

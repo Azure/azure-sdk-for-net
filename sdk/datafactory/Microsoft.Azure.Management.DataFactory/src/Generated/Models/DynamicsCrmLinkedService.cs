@@ -38,14 +38,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="deploymentType">The deployment type of the Dynamics
         /// CRM instance. 'Online' for Dynamics CRM Online and
         /// 'OnPremisesWithIfd' for Dynamics CRM on-premises with Ifd. Type:
-        /// string (or Expression with resultType string). Possible values
-        /// include: 'Online', 'OnPremisesWithIfd'</param>
+        /// string (or Expression with resultType string).</param>
         /// <param name="authenticationType">The authentication type to connect
         /// to Dynamics CRM server. 'Office365' for online scenario, 'Ifd' for
         /// on-premises with Ifd scenario, 'AADServicePrincipal' for
         /// Server-To-Server authentication in online scenario. Type: string
-        /// (or Expression with resultType string). Possible values include:
-        /// 'Office365', 'Ifd', 'AADServicePrincipal'</param>
+        /// (or Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -94,7 +92,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public DynamicsCrmLinkedService(string deploymentType, string authenticationType, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object hostName = default(object), object port = default(object), object serviceUri = default(object), object organizationName = default(object), object username = default(object), SecretBase password = default(SecretBase), object servicePrincipalId = default(object), object servicePrincipalCredentialType = default(object), SecretBase servicePrincipalCredential = default(SecretBase), object encryptedCredential = default(object))
+        public DynamicsCrmLinkedService(object deploymentType, object authenticationType, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object hostName = default(object), object port = default(object), object serviceUri = default(object), object organizationName = default(object), object username = default(object), SecretBase password = default(SecretBase), object servicePrincipalId = default(object), object servicePrincipalCredentialType = default(object), SecretBase servicePrincipalCredential = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             DeploymentType = deploymentType;
@@ -121,11 +119,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the deployment type of the Dynamics CRM instance.
         /// 'Online' for Dynamics CRM Online and 'OnPremisesWithIfd' for
         /// Dynamics CRM on-premises with Ifd. Type: string (or Expression with
-        /// resultType string). Possible values include: 'Online',
-        /// 'OnPremisesWithIfd'
+        /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.deploymentType")]
-        public string DeploymentType { get; set; }
+        public object DeploymentType { get; set; }
 
         /// <summary>
         /// Gets or sets the host name of the on-premises Dynamics CRM server.
@@ -166,11 +163,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// server. 'Office365' for online scenario, 'Ifd' for on-premises with
         /// Ifd scenario, 'AADServicePrincipal' for Server-To-Server
         /// authentication in online scenario. Type: string (or Expression with
-        /// resultType string). Possible values include: 'Office365', 'Ifd',
-        /// 'AADServicePrincipal'
+        /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.authenticationType")]
-        public string AuthenticationType { get; set; }
+        public object AuthenticationType { get; set; }
 
         /// <summary>
         /// Gets or sets user name to access the Dynamics CRM instance. Type:

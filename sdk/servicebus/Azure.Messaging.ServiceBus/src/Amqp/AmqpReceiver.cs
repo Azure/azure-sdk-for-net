@@ -96,6 +96,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly ConcurrentExpiringSet<Guid> _requestResponseLockedMessages;
 
         private static IReadOnlyList<ServiceBusReceivedMessage> s_backingEmptyList;
+        private readonly bool _isProcessor;
 
         private static IReadOnlyList<ServiceBusReceivedMessage> EmptyList
         {
@@ -149,6 +150,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
             _isSessionReceiver = isSessionReceiver;
+            _isProcessor = isProcessor;
             _receiveMode = receiveMode;
             _identifier = identifier;
             _requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
@@ -160,8 +162,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout: timeout,
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
-                        isSessionReceiver: isSessionReceiver,
-                        isProcessor: isProcessor,
                         identifier: identifier,
                         // The cancellationToken will always be CancellationToken.None for non-session receivers
                         // it is okay to register the user provided cancellationToken from the AcceptNextSessionAsync call in
@@ -190,8 +190,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             uint prefetchCount,
             ServiceBusReceiveMode receiveMode,
-            bool isSessionReceiver,
-            bool isProcessor,
             string identifier,
             CancellationToken cancellationToken)
         {
@@ -206,9 +204,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     prefetchCount: prefetchCount,
                     receiveMode: receiveMode,
                     sessionId: SessionId,
-                    isSessionReceiver: isSessionReceiver,
+                    isSessionReceiver: _isSessionReceiver,
+                    isProcessor: _isProcessor,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (isSessionReceiver)
+                if (_isSessionReceiver)
                 {
                     SessionLockedUntil = link.Settings.Properties.TryGetValue<long>(
                         AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks)
@@ -236,7 +235,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 return link;
             }
             catch (TimeoutException)
-                when (isSessionReceiver)
+                when (_isSessionReceiver)
             {
                 // When this occurs during accepting a session, it will be logged from
                 // ServiceBusSessionReceiver.CreateSessionReceiverAsync so it would be redundant
@@ -244,7 +243,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw;
             }
             catch (TaskCanceledException)
-                when (isProcessor)
+                when (_isProcessor)
             {
                 // do not log this as the processor is shutting down
                 throw;
@@ -273,13 +272,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         /// <param name="maxMessages">The maximum number of messages that will be received.</param>
         /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.</param>
-        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public override async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
             int maxMessages,
             TimeSpan? maxWaitTime,
-            bool isProcessor,
             CancellationToken cancellationToken)
         {
             return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
@@ -297,7 +294,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Receives a list of <see cref="ServiceBusMessage" /> from the Service Bus entity.
+        /// Receives a list of <see cref="ServiceBusReceivedMessage" /> from the Service Bus entity.
         /// </summary>
         ///
         /// <param name="maxMessages">The maximum number of messages to receive.</param>
@@ -313,6 +310,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             var link = default(ReceivingAmqpLink);
+            CancellationTokenRegistration registration;
 
             ThrowIfSessionLockLost();
 
@@ -330,11 +328,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     new TaskCompletionSource<IEnumerable<AmqpMessage>>(TaskCreationOptions
                         .RunContinuationsAsynchronously);
 
-                using var registration = cancellationToken.Register(static state =>
+                // Only allow cancelling in-flight receives when it is from a processor.
+                // This would occur when the processor is stopped or closed by the user.
+                if (_isProcessor)
                 {
-                    var tcs = (TaskCompletionSource<IEnumerable<AmqpMessage>>)state;
-                    tcs.TrySetCanceled();
-                }, receiveMessagesCompletionSource, useSynchronizationContext: false);
+                    registration = cancellationToken.Register(static state =>
+                    {
+                        var tcs = (TaskCompletionSource<IEnumerable<AmqpMessage>>)state;
+                        tcs.TrySetCanceled();
+                    }, receiveMessagesCompletionSource, useSynchronizationContext: false);
+                }
 
                 // in case BeginReceiveRemoteMessages throws exception will be materialized on the synchronous path
                 _ = Task.Factory
@@ -411,6 +414,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     .Throw();
 
                 throw; // will never be reached
+            }
+            finally
+            {
+                if (_isProcessor)
+                {
+                    registration.Dispose();
+                }
             }
         }
 
@@ -1406,10 +1416,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         /// Opens an AMQP link for use with receiver operations.
         /// </summary>
-        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public override async Task OpenLinkAsync(bool isProcessor, CancellationToken cancellationToken)
+        public override async Task OpenLinkAsync(CancellationToken cancellationToken)
         {
             _ = await _retryPolicy.RunOperation(
                 static async (receiveLink, timeout, _) =>

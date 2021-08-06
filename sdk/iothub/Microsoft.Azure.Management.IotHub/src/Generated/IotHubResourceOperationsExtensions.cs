@@ -544,9 +544,11 @@ namespace Microsoft.Azure.Management.IotHub
             /// <param name='name'>
             /// The name of the consumer group to add.
             /// </param>
-            public static EventHubConsumerGroupInfo CreateEventHubConsumerGroup(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, string eventHubEndpointName, string name)
+            /// <param name='properties'>
+            /// </param>
+            public static EventHubConsumerGroupInfo CreateEventHubConsumerGroup(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, string eventHubEndpointName, string name, EventHubConsumerGroupName properties)
             {
-                return operations.CreateEventHubConsumerGroupAsync(resourceGroupName, resourceName, eventHubEndpointName, name).GetAwaiter().GetResult();
+                return operations.CreateEventHubConsumerGroupAsync(resourceGroupName, resourceName, eventHubEndpointName, name, properties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -570,12 +572,14 @@ namespace Microsoft.Azure.Management.IotHub
             /// <param name='name'>
             /// The name of the consumer group to add.
             /// </param>
+            /// <param name='properties'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EventHubConsumerGroupInfo> CreateEventHubConsumerGroupAsync(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, string eventHubEndpointName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EventHubConsumerGroupInfo> CreateEventHubConsumerGroupAsync(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, string eventHubEndpointName, string name, EventHubConsumerGroupName properties, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateEventHubConsumerGroupWithHttpMessagesAsync(resourceGroupName, resourceName, eventHubEndpointName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateEventHubConsumerGroupWithHttpMessagesAsync(resourceGroupName, resourceName, eventHubEndpointName, name, properties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

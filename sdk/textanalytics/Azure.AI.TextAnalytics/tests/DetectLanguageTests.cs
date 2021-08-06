@@ -11,7 +11,17 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class DetectLanguageTests : TextAnalyticsClientLiveTestBase
     {
-        public DetectLanguageTests(bool isAsync) : base(isAsync) { }
+        /// <summary>
+        /// The version of the REST API to test against.  This will be passed
+        /// to the .ctor via ClientTestFixture's values.
+        /// </summary>
+        private readonly TextAnalyticsClientOptions.ServiceVersion _serviceVersion;
+
+        public DetectLanguageTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
+        {
+            _serviceVersion = serviceVersion;
+        }
 
         private const string SingleEnglish = "This is written in English.";
         private const string SingleSpanish = "Este documento está en español";
@@ -100,7 +110,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task DetectLanguageWithNoneDefaultCountryHintTest()
         {
-            var options = new TextAnalyticsClientOptions()
+            var options = new TextAnalyticsClientOptions(_serviceVersion)
             {
                 DefaultCountryHint = DetectLanguageInput.None
             };

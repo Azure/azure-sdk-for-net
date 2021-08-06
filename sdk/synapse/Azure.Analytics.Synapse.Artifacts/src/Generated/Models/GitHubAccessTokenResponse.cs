@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of GitHubAccessTokenResponse. </summary>
-        /// <param name="gitHubAccessToken"> . </param>
+        /// <param name="gitHubAccessToken"></param>
         internal GitHubAccessTokenResponse(string gitHubAccessToken)
         {
             GitHubAccessToken = gitHubAccessToken;

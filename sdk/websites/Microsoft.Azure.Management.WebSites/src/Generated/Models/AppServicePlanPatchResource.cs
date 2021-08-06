@@ -66,11 +66,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// free offer expires.</param>
         /// <param name="resourceGroup">Resource group of the App Service
         /// plan.</param>
-        /// <param name="reserved">This needs to set to
-        /// &lt;code&gt;true&lt;/code&gt; when creating a Linux App Service
-        /// Plan, along with &lt;code&gt;kind&lt;/code&gt; set to
-        /// &lt;code&gt;Linux&lt;/code&gt;. It should be
-        /// &lt;code&gt;false&lt;/code&gt; otherwise.</param>
+        /// <param name="reserved">If Linux app service plan
+        /// &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;
+        /// otherwise.</param>
         /// <param name="isXenon">Obsolete: If Hyper-V container app service
         /// plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;
         /// otherwise.</param>
@@ -80,9 +78,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="targetWorkerCount">Scaling worker count.</param>
         /// <param name="targetWorkerSizeId">Scaling worker size ID.</param>
         /// <param name="provisioningState">Provisioning state of the App
-        /// Service Environment. Possible values include: 'Succeeded',
-        /// 'Failed', 'Canceled', 'InProgress', 'Deleting'</param>
-        public AppServicePlanPatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), System.DateTime? freeOfferExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), bool? hyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?))
+        /// Service Plan. Possible values include: 'Succeeded', 'Failed',
+        /// 'Canceled', 'InProgress', 'Deleting'</param>
+        /// <param name="kubeEnvironmentProfile">Specification for the
+        /// Kubernetes Environment to use for the App Service plan.</param>
+        public AppServicePlanPatchResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), System.DateTime? freeOfferExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), bool? hyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), KubeEnvironmentProfile kubeEnvironmentProfile = default(KubeEnvironmentProfile))
             : base(id, name, kind, type)
         {
             WorkerTierName = workerTierName;
@@ -104,6 +104,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             TargetWorkerCount = targetWorkerCount;
             TargetWorkerSizeId = targetWorkerSizeId;
             ProvisioningState = provisioningState;
+            KubeEnvironmentProfile = kubeEnvironmentProfile;
             CustomInit();
         }
 
@@ -200,11 +201,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string ResourceGroup { get; private set; }
 
         /// <summary>
-        /// Gets or sets this needs to set to
-        /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; when creating a Linux
-        /// App Service Plan, along with
-        /// &amp;lt;code&amp;gt;kind&amp;lt;/code&amp;gt; set to
-        /// &amp;lt;code&amp;gt;Linux&amp;lt;/code&amp;gt;. It should be
+        /// Gets or sets if Linux app service plan
+        /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;,
         /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; otherwise.
         /// </summary>
         [JsonProperty(PropertyName = "properties.reserved")]
@@ -239,12 +237,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public int? TargetWorkerSizeId { get; set; }
 
         /// <summary>
-        /// Gets provisioning state of the App Service Environment. Possible
-        /// values include: 'Succeeded', 'Failed', 'Canceled', 'InProgress',
+        /// Gets provisioning state of the App Service Plan. Possible values
+        /// include: 'Succeeded', 'Failed', 'Canceled', 'InProgress',
         /// 'Deleting'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets specification for the Kubernetes Environment to use
+        /// for the App Service plan.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.kubeEnvironmentProfile")]
+        public KubeEnvironmentProfile KubeEnvironmentProfile { get; set; }
 
     }
 }

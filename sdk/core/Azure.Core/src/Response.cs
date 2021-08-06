@@ -72,7 +72,7 @@ namespace Azure
                 }
                 else
                 {
-                    throw new InvalidOperationException($"The {nameof(ContentStream)}'s internal buffer cannot be accessed.");
+                    return new BinaryData(memoryContent.ToArray());
                 }
             }
         }

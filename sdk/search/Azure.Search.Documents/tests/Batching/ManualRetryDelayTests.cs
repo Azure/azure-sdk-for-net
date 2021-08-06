@@ -55,6 +55,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/19002")]
         public async Task ClampDelay()
         {
             Stopwatch watch = new Stopwatch();

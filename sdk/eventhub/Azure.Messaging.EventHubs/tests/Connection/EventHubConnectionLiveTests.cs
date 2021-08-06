@@ -5,7 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
 using System.Net.WebSockets;
+using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -360,6 +363,68 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(async () => await invalidProxyConnection.GetPartitionIdsAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                     Assert.That(async () => await invalidProxyConnection.GetPropertiesAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                     Assert.That(async () => await invalidProxyConnection.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Event Hubs service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConnectionTransportCannotRetrieveMetadataWhenCustomValidationRejectsTheCertificate()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+                var retryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(2) };
+
+                var clientOptions = new EventHubConnectionOptions
+                {
+                    CertificateValidationCallback = (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) => false
+                };
+
+                await using (var connection = new TestConnectionWithRetryPolicy(connectionString))
+                await using (var certificateRejectingConnection = new TestConnectionWithRetryPolicy(connectionString, clientOptions))
+                {
+                    connection.RetryPolicy = new BasicRetryPolicy(retryOptions);
+                    certificateRejectingConnection.RetryPolicy = new BasicRetryPolicy(retryOptions);
+
+                    var partition = (await connection.GetPartitionIdsAsync()).First();
+
+                    Assert.That(async () => await certificateRejectingConnection.GetPartitionIdsAsync(), Throws.InstanceOf<AuthenticationException>());
+                    Assert.That(async () => await certificateRejectingConnection.GetPropertiesAsync(), Throws.InstanceOf<AuthenticationException>());
+                    Assert.That(async () => await certificateRejectingConnection.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<AuthenticationException>());
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Event Hubs service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConnectionTransportCanRetrieveMetadataWhenCustomValidationAcceptsTheCertificate()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+                var retryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(2) };
+
+                var clientOptions = new EventHubConnectionOptions
+                {
+                    CertificateValidationCallback = (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) => true
+                };
+
+                await using (var connection = new TestConnectionWithRetryPolicy(connectionString, clientOptions))
+                {
+                    connection.RetryPolicy = new BasicRetryPolicy(retryOptions);
+
+                    var partition = (await connection.GetPartitionIdsAsync()).First();
+                    Assert.That(async () => await connection.GetPropertiesAsync(), Throws.Nothing);
+                    Assert.That(async () => await connection.GetPartitionPropertiesAsync(partition), Throws.Nothing);
                 }
             }
         }

@@ -19,35 +19,35 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private string FakeGuid => "00000000-0000-0000-0000-000000000000";
 
         [Test]
-        public void GetDimensionValuesValidatesArguments()
+        public void GetMetricDimensionValuesValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            Assert.That(() => client.GetDimensionValuesAsync(null, "dimensionName"), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetDimensionValuesAsync("", "dimensionName"), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetDimensionValuesAsync("metricId", "dimensionName"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => client.GetDimensionValuesAsync(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetDimensionValuesAsync(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetMetricDimensionValuesAsync(null, "dimensionName"), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetMetricDimensionValuesAsync("", "dimensionName"), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetMetricDimensionValuesAsync("metricId", "dimensionName"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetMetricDimensionValuesAsync(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetMetricDimensionValuesAsync(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
 
-            Assert.That(() => client.GetDimensionValues(null, "dimensionName"), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetDimensionValues("", "dimensionName"), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.GetDimensionValues("metricId", "dimensionName"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => client.GetDimensionValues(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => client.GetDimensionValues(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetMetricDimensionValues(null, "dimensionName"), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetMetricDimensionValues("", "dimensionName"), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.GetMetricDimensionValues("metricId", "dimensionName"), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
+            Assert.That(() => client.GetMetricDimensionValues(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => client.GetMetricDimensionValues(FakeGuid, ""), Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]
-        public void GetDimensionValuesRespectsTheCancellationToken()
+        public void GetMetricDimensionValuesRespectsTheCancellationToken()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            IAsyncEnumerator<string> asyncEnumerator = client.GetDimensionValuesAsync(FakeGuid, "dimensionName", cancellationToken: cancellationSource.Token).GetAsyncEnumerator();
+            IAsyncEnumerator<string> asyncEnumerator = client.GetMetricDimensionValuesAsync(FakeGuid, "dimensionName", cancellationToken: cancellationSource.Token).GetAsyncEnumerator();
             Assert.That(async () => await asyncEnumerator.MoveNextAsync(), Throws.InstanceOf<OperationCanceledException>());
 
-            IEnumerator<string> enumerator = client.GetDimensionValues(FakeGuid, "dimensionName", cancellationToken: cancellationSource.Token).GetEnumerator();
+            IEnumerator<string> enumerator = client.GetMetricDimensionValues(FakeGuid, "dimensionName", cancellationToken: cancellationSource.Token).GetEnumerator();
             Assert.That(() => enumerator.MoveNext(), Throws.InstanceOf<OperationCanceledException>());
         }
 

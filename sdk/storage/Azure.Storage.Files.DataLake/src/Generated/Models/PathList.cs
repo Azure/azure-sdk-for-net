@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of PathList. </summary>
-        /// <param name="paths"> . </param>
+        /// <param name="paths"></param>
         internal PathList(IReadOnlyList<Path> paths)
         {
             Paths = paths;

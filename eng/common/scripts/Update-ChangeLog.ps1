@@ -15,6 +15,7 @@ param (
   [String]$ChangelogPath,
   [String]$ReleaseDate
 )
+Set-StrictMode -Version 3
 
 . (Join-Path $PSScriptRoot common.ps1)
 
@@ -39,11 +40,11 @@ if ($ReleaseDate)
         exit 1
     }
 }
-elseif ($Unreleased) 
+elseif ($Unreleased)
 {
     $ReleaseStatus = $CHANGELOG_UNRELEASED_STATUS
 }
-else 
+else
 {
     $ReleaseStatus = "$(Get-Date -Format $CHANGELOG_DATE_FORMAT)"
     $ReleaseStatus = "($ReleaseStatus)"
@@ -61,7 +62,7 @@ if ([string]::IsNullOrEmpty($ChangelogPath))
     $ChangelogPath = $pkgProperties.ChangeLogPath
 }
 
-if (!(Test-Path $ChangelogPath)) 
+if (!(Test-Path $ChangelogPath))
 {
     LogError "Changelog path [$ChangelogPath] is invalid."
     exit 1
@@ -103,7 +104,7 @@ if ($LatestsSorted[0] -ne $Version) {
     LogWarning "Version [$Version] is older than the latestversion [$LatestVersion] in the changelog. Consider using a more recent version."
 }
 
-if ($ReplaceLatestEntryTitle) 
+if ($ReplaceLatestEntryTitle)
 {
     $newChangeLogEntry = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus -Content $ChangeLogEntries[$LatestVersion].ReleaseContent
     LogDebug "Resetting latest entry title to [$($newChangeLogEntry.ReleaseTitle)]"

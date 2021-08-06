@@ -113,6 +113,22 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        private static readonly Regex s_credentialIdRegex = new Regex(@"/credentials/(?<credentialId>[\d\w-]*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+
+        public static string GetCredentialId(string locationHeader)
+        {
+            Match match = s_credentialIdRegex.Match(locationHeader);
+
+            if (match.Success)
+            {
+                return match.Groups["credentialId"].Value;
+            }
+            else
+            {
+                throw new ArgumentException(UnexpectedHeaderFormat);
+            }
+        }
+
         private static readonly Regex s_feedbackIdRegex = new Regex(@"/feedback/metric/(?<feedbackId>[\d\w-]*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
         public static string GetFeedbackId(string locationHeader)

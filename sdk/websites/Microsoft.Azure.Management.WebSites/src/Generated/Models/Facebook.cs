@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the Facebook provider.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Facebook : ProxyOnlyResource
     {
@@ -33,6 +36,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="enabled">&lt;code&gt;false&lt;/code&gt; if the
+        /// Facebook provider should not be enabled despite the set
+        /// registration; otherwise, &lt;code&gt;true&lt;/code&gt;.</param>
+        /// <param name="registration">The configuration settings of the app
+        /// registration for the Facebook provider.</param>
+        /// <param name="graphApiVersion">The version of the Facebook api to be
+        /// used while logging in.</param>
+        /// <param name="login">The configuration settings of the login
+        /// flow.</param>
         public Facebook(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), AppRegistration registration = default(AppRegistration), string graphApiVersion = default(string), LoginScopes login = default(LoginScopes))
             : base(id, name, kind, type)
         {
@@ -49,21 +61,30 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; if the
+        /// Facebook provider should not be enabled despite the set
+        /// registration; otherwise,
+        /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the app registration for
+        /// the Facebook provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties.registration")]
         public AppRegistration Registration { get; set; }
 
         /// <summary>
+        /// Gets or sets the version of the Facebook api to be used while
+        /// logging in.
         /// </summary>
         [JsonProperty(PropertyName = "properties.graphApiVersion")]
         public string GraphApiVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the login flow.
         /// </summary>
         [JsonProperty(PropertyName = "properties.login")]
         public LoginScopes Login { get; set; }

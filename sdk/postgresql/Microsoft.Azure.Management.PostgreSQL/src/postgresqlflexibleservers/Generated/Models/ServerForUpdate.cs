@@ -39,21 +39,26 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// <param name="sku">The SKU (pricing tier) of the server.</param>
         /// <param name="administratorLoginPassword">The password of the
         /// administrator login.</param>
-        /// <param name="storageProfile">Storage profile of a server.</param>
-        /// <param name="haEnabled">stand by count value can be either enabled
-        /// or disabled. Possible values include: 'Enabled', 'Disabled'</param>
-        /// <param name="maintenanceWindow">Maintenance window of a
+        /// <param name="storage">Storage properties of a server.</param>
+        /// <param name="backup">Backup properties of a server.</param>
+        /// <param name="highAvailability">High availability properties of a
         /// server.</param>
+        /// <param name="maintenanceWindow">Maintenance window properties of a
+        /// server.</param>
+        /// <param name="createMode">The mode to update a new PostgreSQL
+        /// server. Possible values include: 'Default', 'Update'</param>
         /// <param name="tags">Application-specific metadata in the form of
         /// key-value pairs.</param>
-        public ServerForUpdate(string location = default(string), Sku sku = default(Sku), string administratorLoginPassword = default(string), StorageProfile storageProfile = default(StorageProfile), HAEnabledEnum? haEnabled = default(HAEnabledEnum?), MaintenanceWindow maintenanceWindow = default(MaintenanceWindow), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ServerForUpdate(string location = default(string), Sku sku = default(Sku), string administratorLoginPassword = default(string), Storage storage = default(Storage), Backup backup = default(Backup), HighAvailability highAvailability = default(HighAvailability), MaintenanceWindow maintenanceWindow = default(MaintenanceWindow), string createMode = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Location = location;
             Sku = sku;
             AdministratorLoginPassword = administratorLoginPassword;
-            StorageProfile = storageProfile;
-            HaEnabled = haEnabled;
+            Storage = storage;
+            Backup = backup;
+            HighAvailability = highAvailability;
             MaintenanceWindow = maintenanceWindow;
+            CreateMode = createMode;
             Tags = tags;
             CustomInit();
         }
@@ -82,23 +87,35 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         public string AdministratorLoginPassword { get; set; }
 
         /// <summary>
-        /// Gets or sets storage profile of a server.
+        /// Gets or sets storage properties of a server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.storageProfile")]
-        public StorageProfile StorageProfile { get; set; }
+        [JsonProperty(PropertyName = "properties.storage")]
+        public Storage Storage { get; set; }
 
         /// <summary>
-        /// Gets or sets stand by count value can be either enabled or
-        /// disabled. Possible values include: 'Enabled', 'Disabled'
+        /// Gets or sets backup properties of a server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.haEnabled")]
-        public HAEnabledEnum? HaEnabled { get; set; }
+        [JsonProperty(PropertyName = "properties.backup")]
+        public Backup Backup { get; set; }
 
         /// <summary>
-        /// Gets or sets maintenance window of a server.
+        /// Gets or sets high availability properties of a server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.highAvailability")]
+        public HighAvailability HighAvailability { get; set; }
+
+        /// <summary>
+        /// Gets or sets maintenance window properties of a server.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maintenanceWindow")]
         public MaintenanceWindow MaintenanceWindow { get; set; }
+
+        /// <summary>
+        /// Gets or sets the mode to update a new PostgreSQL server. Possible
+        /// values include: 'Default', 'Update'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createMode")]
+        public string CreateMode { get; set; }
 
         /// <summary>
         /// Gets or sets application-specific metadata in the form of key-value

@@ -150,6 +150,25 @@ namespace Azure.Communication.Identity.Samples
         }
 
         [Test]
+        public async Task ExchangeTeamsToken()
+        {
+            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
+                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+            }
+
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            var teamsToken = await generateTeamsToken();
+            client = CreateClientWithConnectionString();
+
+            #region  Snippet:ExchangeTeamsToken
+            Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(teamsToken);
+            string token = tokenResponse.Value.Token;
+            Console.WriteLine($"Token: {token}");
+            #endregion Snippet:ExchangeTeamsToken
+        }
+
+        [Test]
         public async Task Troubleshooting()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;

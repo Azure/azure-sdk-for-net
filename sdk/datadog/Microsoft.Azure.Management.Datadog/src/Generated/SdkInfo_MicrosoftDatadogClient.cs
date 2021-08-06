@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Datadog
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datadog/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\work\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "83a54687d2b523b537ad86b0c78b56c84687eee8";
+      public static readonly String GithubCommidId = "b554b6d3497ef8a9eff147f94a5d47ba4eeb7a34";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

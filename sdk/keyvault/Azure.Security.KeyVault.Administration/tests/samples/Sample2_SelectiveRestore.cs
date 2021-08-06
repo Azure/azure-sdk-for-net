@@ -11,8 +11,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class Sample2_SelectiveRestore : BackupRestoreTestBase
     {
-        public Sample2_SelectiveRestore(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public Sample2_SelectiveRestore(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [RecordedTest]
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 #endif
 
             // Start the restore for a specific key that was previously backed up using the backupBlobUri returned from a previous BackupOperation.
-            KeyVaultSelectiveKeyRestoreOperation restoreOperation = await Client.StartSelectiveRestoreAsync(keyName, folderUri, sasToken);
+            KeyVaultSelectiveKeyRestoreOperation restoreOperation = await Client.StartSelectiveKeyRestoreAsync(keyName, folderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
             KeyVaultSelectiveKeyRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();

@@ -20,7 +20,6 @@ namespace Azure.Storage.Files.DataLake
     internal partial class FileSystemRestClient
     {
         private string url;
-        private string fileSystem;
         private string resource;
         private string version;
         private ClientDiagnostics _clientDiagnostics;
@@ -29,34 +28,15 @@ namespace Azure.Storage.Files.DataLake
         /// <summary> Initializes a new instance of FileSystemRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
-        /// <param name="fileSystem"> The filesystem identifier. </param>
+        /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="resource"> The value must be &quot;filesystem&quot; for all filesystem operations. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="fileSystem"/>, <paramref name="resource"/>, or <paramref name="version"/> is null. </exception>
-        public FileSystemRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string fileSystem, string resource = "filesystem", string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="resource"/>, or <paramref name="version"/> is null. </exception>
+        public FileSystemRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string resource = "filesystem", string version = "2020-06-12")
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (fileSystem == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystem));
-            }
-            if (resource == null)
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-
-            this.url = url;
-            this.fileSystem = fileSystem;
-            this.resource = resource;
-            this.version = version;
+            this.url = url ?? throw new ArgumentNullException(nameof(url));
+            this.resource = resource ?? throw new ArgumentNullException(nameof(resource));
+            this.version = version ?? throw new ArgumentNullException(nameof(version));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -68,8 +48,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
             uri.AppendQuery("resource", resource, true);
             if (timeout != null)
             {
@@ -128,8 +106,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
             uri.AppendQuery("resource", resource, true);
             if (timeout != null)
             {
@@ -200,8 +176,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
             uri.AppendQuery("resource", resource, true);
             if (timeout != null)
             {
@@ -254,8 +228,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
             uri.AppendQuery("resource", resource, true);
             if (timeout != null)
             {
@@ -320,8 +292,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
             uri.AppendQuery("resource", resource, true);
             if (timeout != null)
             {
@@ -411,8 +381,6 @@ namespace Azure.Storage.Files.DataLake
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(fileSystem, true);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "list", true);
             if (prefix != null)

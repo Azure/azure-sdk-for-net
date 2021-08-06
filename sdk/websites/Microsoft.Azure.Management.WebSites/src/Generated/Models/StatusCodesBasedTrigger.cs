@@ -34,13 +34,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="win32Status">Win32 error code.</param>
         /// <param name="count">Request Count.</param>
         /// <param name="timeInterval">Time interval.</param>
-        public StatusCodesBasedTrigger(int? status = default(int?), int? subStatus = default(int?), int? win32Status = default(int?), int? count = default(int?), string timeInterval = default(string))
+        /// <param name="path">Request Path</param>
+        public StatusCodesBasedTrigger(int? status = default(int?), int? subStatus = default(int?), int? win32Status = default(int?), int? count = default(int?), string timeInterval = default(string), string path = default(string))
         {
             Status = status;
             SubStatus = subStatus;
             Win32Status = win32Status;
             Count = count;
             TimeInterval = timeInterval;
+            Path = path;
             CustomInit();
         }
 
@@ -78,6 +80,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "timeInterval")]
         public string TimeInterval { get; set; }
+
+        /// <summary>
+        /// Gets or sets request Path
+        /// </summary>
+        [JsonProperty(PropertyName = "path")]
+        public string Path { get; set; }
 
     }
 }

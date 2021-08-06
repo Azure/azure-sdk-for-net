@@ -45,11 +45,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="ciphertext">The ciphertext to decrypt.</param>
         /// <param name="iv">The initialization vector (or nonce) generated during encryption.</param>
         /// <param name="authenticationTag">The authentication tag generated during encryption.</param>
-        /// <param name="additionalAuthenticationData">Optional data that is authenticated but not encrypted.</param>
+        /// <param name="additionalAuthenticatedData">Optional data that is authenticated but not encrypted.</param>
         /// <returns>An instance of the <see cref="DecryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128Gcm"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="ciphertext"/>, <paramref name="iv"/>, or <paramref name="authenticationTag"/> is null.</exception>
-        public static DecryptParameters A128GcmParameters(byte[] ciphertext, byte[] iv, byte[] authenticationTag, byte[] additionalAuthenticationData = null) =>
-            new DecryptParameters(EncryptionAlgorithm.A128Gcm, ciphertext, iv, authenticationTag, additionalAuthenticationData);
+        public static DecryptParameters A128GcmParameters(byte[] ciphertext, byte[] iv, byte[] authenticationTag, byte[] additionalAuthenticatedData = null) =>
+            new DecryptParameters(EncryptionAlgorithm.A128Gcm, ciphertext, iv, authenticationTag, additionalAuthenticatedData);
 
         /// <summary>
         /// Creates an instance of the <see cref="DecryptParameters"/> class for the <see cref="EncryptionAlgorithm.A192Gcm"/> encryption algorithm.
@@ -57,11 +57,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="ciphertext">The ciphertext to decrypt.</param>
         /// <param name="iv">The initialization vector (or nonce) generated during encryption.</param>
         /// <param name="authenticationTag">The authentication tag generated during encryption.</param>
-        /// <param name="additionalAuthenticationData">Optional data that is authenticated but not encrypted.</param>
+        /// <param name="additionalAuthenticatedData">Optional data that is authenticated but not encrypted.</param>
         /// <returns>An instance of the <see cref="DecryptParameters"/> class for the <see cref="EncryptionAlgorithm.A192Gcm"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="ciphertext"/>, <paramref name="iv"/>, or <paramref name="authenticationTag"/> is null.</exception>
-        public static DecryptParameters A192GcmParameters(byte[] ciphertext, byte[] iv, byte[] authenticationTag, byte[] additionalAuthenticationData = null) =>
-            new DecryptParameters(EncryptionAlgorithm.A192Gcm, ciphertext, iv, authenticationTag, additionalAuthenticationData);
+        public static DecryptParameters A192GcmParameters(byte[] ciphertext, byte[] iv, byte[] authenticationTag, byte[] additionalAuthenticatedData = null) =>
+            new DecryptParameters(EncryptionAlgorithm.A192Gcm, ciphertext, iv, authenticationTag, additionalAuthenticatedData);
 
         /// <summary>
         /// Creates an instance of the <see cref="DecryptParameters"/> class for the <see cref="EncryptionAlgorithm.A256Gcm"/> encryption algorithm.
@@ -69,11 +69,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="ciphertext">The ciphertext to decrypt.</param>
         /// <param name="iv">The initialization vector (or nonce) generated during encryption.</param>
         /// <param name="authenticationTag">The authentication tag generated during encryption.</param>
-        /// <param name="additionalAuthenticationData">Optional data that is authenticated but not encrypted.</param>
+        /// <param name="additionalAuthenticatedData">Optional data that is authenticated but not encrypted.</param>
         /// <returns>An instance of the <see cref="DecryptParameters"/> class for the <see cref="EncryptionAlgorithm.A256Gcm"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="ciphertext"/>, <paramref name="iv"/>, or <paramref name="authenticationTag"/> is null.</exception>
-        public static DecryptParameters A256GcmParameters(byte[] ciphertext, byte[] iv, byte[] authenticationTag, byte[] additionalAuthenticationData = null) =>
-            new DecryptParameters(EncryptionAlgorithm.A256Gcm, ciphertext, iv, authenticationTag, additionalAuthenticationData);
+        public static DecryptParameters A256GcmParameters(byte[] ciphertext, byte[] iv, byte[] authenticationTag, byte[] additionalAuthenticatedData = null) =>
+            new DecryptParameters(EncryptionAlgorithm.A256Gcm, ciphertext, iv, authenticationTag, additionalAuthenticatedData);
 
         /// <summary>
         /// Creates an instance of the <see cref="DecryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128Cbc"/> encryption algorithm.

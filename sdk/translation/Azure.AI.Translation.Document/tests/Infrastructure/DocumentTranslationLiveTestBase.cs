@@ -36,7 +36,8 @@ namespace Azure.AI.Translation.Document.Tests
 
         public DocumentTranslationClient GetClient(
             AzureKeyCredential credential = default,
-            DocumentTranslationClientOptions options = default)
+            DocumentTranslationClientOptions options = default,
+            bool useTokenCredential = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             options ??= new DocumentTranslationClientOptions()
@@ -48,8 +49,15 @@ namespace Azure.AI.Translation.Document.Tests
                 }
             };
 
-            credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
-            return InstrumentClient(new DocumentTranslationClient(endpoint, credential, InstrumentClientOptions(options)));
+            if (useTokenCredential)
+            {
+                return InstrumentClient(new DocumentTranslationClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
+            }
+            else
+            {
+                credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
+                return InstrumentClient(new DocumentTranslationClient(endpoint, credential, InstrumentClientOptions(options)));
+            }
         }
 
         public BlobContainerClient GetBlobContainerClient(string containerName)
@@ -60,7 +68,7 @@ namespace Azure.AI.Translation.Document.Tests
         public async Task<Uri> CreateSourceContainerAsync(List<TestDocument> documents)
         {
             Recording.DisableIdReuse();
-            string containerName = "source" + Recording.GenerateId();
+            var containerName = "source" + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(containerName);
             await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
@@ -73,7 +81,7 @@ namespace Azure.AI.Translation.Document.Tests
         public async Task<Uri> CreateTargetContainerAsync(List<TestDocument> documents = default)
         {
             Recording.DisableIdReuse();
-            string containerName = "target" + Recording.GenerateId();
+            var containerName = "target" + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(containerName);
             await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
@@ -83,9 +91,40 @@ namespace Azure.AI.Translation.Document.Tests
             }
 
             var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
-            return containerClient.GenerateSasUri(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write, expiresOn);
+            return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write, expiresOn);
+        }
+        public async Task<Tuple<Uri, BlobContainerClient>> CreateTargetContainerWithClientAsync(List<TestDocument> documents = default)
+        {
+            Recording.DisableIdReuse();
+            var containerName = "target" + Recording.GenerateId();
+            var containerClient = GetBlobContainerClient(containerName);
+            await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
+
+            if (documents != default)
+            {
+                await UploadDocumentsAsync(containerClient, documents);
+            }
+
+            var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
+            return Tuple.Create(containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write, expiresOn),containerClient);
         }
 
+        public async Task<Uri> CreateGlossaryAsync(TestDocument document = default)
+        {
+            Recording.DisableIdReuse();
+            var glossaryContainerName = "glossary" + Recording.GenerateId();
+            var containerClient = GetBlobContainerClient(glossaryContainerName);
+            await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
+
+            if (document != default)
+            {
+                await UploadDocumentsAsync(containerClient, new List<TestDocument> { document });
+            }
+
+            var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
+            var glossaryContainerSasUri = containerClient.GenerateSasUri(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write, expiresOn);
+            return new Uri(String.Format("{0}{1}{2}{3}/{4}{5}", glossaryContainerSasUri.Scheme, Uri.SchemeDelimiter, glossaryContainerSasUri.Authority, glossaryContainerSasUri.AbsolutePath, document.Name, glossaryContainerSasUri.Query));
+        }
         private async Task UploadDocumentsAsync(BlobContainerClient containerClient, List<TestDocument> documents)
         {
             for (int i = 0; i < documents.Count; i++)

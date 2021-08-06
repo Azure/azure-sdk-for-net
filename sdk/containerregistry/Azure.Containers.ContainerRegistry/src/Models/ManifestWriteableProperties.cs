@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class ManifestWriteableProperties
+    internal partial class ManifestWriteableProperties
     {
         /// <summary> Quarantine state. </summary>
         internal string QuarantineState { get; set; }

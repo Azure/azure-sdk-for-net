@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private const string DeadLetterQueuePath = @"/$DeadLetterQueue";
 
         private readonly string _functionId;
-        private readonly EntityType _entityType;
+        private readonly ServiceBusEntityType _serviceBusEntityType;
         private readonly string _entityPath;
         private readonly ScaleMonitorDescriptor _scaleMonitorDescriptor;
         private readonly bool _isListeningOnDeadLetterQueue;
@@ -29,10 +29,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         private DateTime _nextWarningTime;
 
-        public ServiceBusScaleMonitor(string functionId, EntityType entityType, string entityPath, string connection, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory, ServiceBusClientFactory clientFactory)
+        public ServiceBusScaleMonitor(string functionId, ServiceBusEntityType serviceBusEntityType, string entityPath, string connection, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory, ServiceBusClientFactory clientFactory)
         {
             _functionId = functionId;
-            _entityType = entityType;
+            _serviceBusEntityType = serviceBusEntityType;
             _entityPath = entityPath;
             _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-ServiceBusTrigger-{_entityPath}".ToLower(CultureInfo.InvariantCulture));
             _isListeningOnDeadLetterQueue = entityPath.EndsWith(DeadLetterQueuePath, StringComparison.OrdinalIgnoreCase);
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         public async Task<ServiceBusTriggerMetrics> GetMetricsAsync()
         {
             ServiceBusReceivedMessage message = null;
-            string entityName = _entityType == EntityType.Queue ? "queue" : "topic";
+            string entityName = _serviceBusEntityType == ServiceBusEntityType.Queue ? "queue" : "topic";
 
             try
             {
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 // Use PeekBySequenceNumberAsync with fromSequenceNumber = 0 to always get the first available message
                 message = await _receiver.Value.PeekMessageAsync(fromSequenceNumber: 0).ConfigureAwait(false);
 
-                if (_entityType == EntityType.Queue)
+                if (_serviceBusEntityType == ServiceBusEntityType.Queue)
                 {
                     return await GetQueueMetricsAsync(message).ConfigureAwait(false);
                 }
