@@ -35,6 +35,11 @@ extends:
   parameters:
     ServiceDirectory: core
     ServiceToTest: '*'
+    # Opt out of spell checking the public API surface because `ServiceToTest`
+    # forces the `CodeChecks.ps1` to check ALL public API surfaces (including
+    # those which have known spelling errors) by specifying `*` to the
+    # -ServiceDirectory parameter.
+    SpellCheckPublicApiSurface: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Core
