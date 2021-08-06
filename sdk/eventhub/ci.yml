@@ -36,7 +36,6 @@ extends:
   parameters:
     SDKType: client
     ServiceDirectory: eventhub
-    SpellCheckPublicApiSurface: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Messaging.EventHubs
