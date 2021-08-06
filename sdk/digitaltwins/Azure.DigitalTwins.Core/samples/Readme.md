@@ -241,7 +241,8 @@ Query the Azure Digital Twins instance for digital twins using the [Azure Digita
 ```C# Snippet:DigitalTwinsSampleQueryTwins
 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
 // happens under the covers.
-AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
+DigitalTwinsQueryBuilder basicQuery = new DigitalTwinsQueryBuilder().SelectAll().From(DigitalTwinsCollection.DigitalTwins).Build();
+AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(basicQuery);
 
 // Iterate over the twin instances in the pageable response.
 // The "await" keyword here is required because new pages will be fetched when necessary,
@@ -259,7 +260,7 @@ The SDK also allows you to extract the `query-charge` header from the pageable r
 // the query API. It iterates over the response pages first to access to the query-charge header,
 // and then the digital twin results within each page.
 
-AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
+AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAsync<BasicDigitalTwin>(basicQuery);
 int pageNum = 0;
 
 // The "await" keyword here is required as a call is made when fetching a new page.
