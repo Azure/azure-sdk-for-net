@@ -48,13 +48,14 @@ namespace Azure.AI.Personalizer.Tests
         private async Task EnableMultiSlot(PersonalizerAdministrationClient adminClient)
         {
             PersonalizerServiceProperties properties = await adminClient.GetPersonalizerPropertiesAsync();
-            if (properties.IsAutoOptimizationEnabled == true)
+            if (properties.IsAutoOptimizationEnabled != false)
             {
                 properties.IsAutoOptimizationEnabled = false;
                 await adminClient.UpdatePersonalizerPropertiesAsync(properties);
+                await Task.Delay(30000);
                 await adminClient.UpdatePersonalizerPolicyAsync(new PersonalizerPolicy("multiSlot", "--ccb_explore_adf --epsilon 0.2 --power_t 0 -l 0.001 --cb_type mtr -q ::"));
-                //sleep 60 seconds to allow setting to propagte
-                await Task.Delay(60000);
+                //sleep 30 seconds to allow settings to propagate
+                await Task.Delay(30000);
             }
         }
     }

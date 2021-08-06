@@ -7,9 +7,9 @@ using NUnit.Framework;
 
 namespace Azure.AI.Personalizer.Tests
 {
-    public class RankMultiSlotTests : PersonalizerTestBase
+    public class MultiSlotTests : PersonalizerTestBase
     {
-        public RankMultiSlotTests(bool isAsync) : base(isAsync)
+        public MultiSlotTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -72,12 +72,15 @@ namespace Azure.AI.Personalizer.Tests
         };
 
         [Test]
-        public async Task MultiSlotRankTests()
+        public async Task MultiSlotTest()
         {
             PersonalizerClient client = await GetPersonalizerClientAsync(isSingleSlot: false);
             await RankMultiSlotNullParameters(client);
             await RankMultiSlotNoOptions(client);
             await RankMultiSlot(client);
+            await Reward(client);
+            await RewardForOneSlot(client);
+            await Activate(client);
         }
 
         private async Task RankMultiSlotNullParameters(PersonalizerClient client)
@@ -129,6 +132,23 @@ namespace Azure.AI.Personalizer.Tests
             PersonalizerSlotResult responseSlot2 = response.Slots[1];
             Assert.AreEqual(slot2.Id, responseSlot2.SlotId);
             Assert.AreEqual("SportsArticle", responseSlot2.RewardActionId);
+        }
+
+        private async Task Reward(PersonalizerClient client)
+        {
+            PersonalizerSlotReward slotReward = new PersonalizerSlotReward("testSlot", 1);
+            PersonalizerRewardMultiSlotOptions rewardRequest = new PersonalizerRewardMultiSlotOptions(new List<PersonalizerSlotReward> { slotReward });
+            await client.RewardMultiSlotAsync("123456789", rewardRequest);
+        }
+
+        private async Task RewardForOneSlot(PersonalizerClient client)
+        {
+            await client.RewardMultiSlotAsync("123456789", "testSlot", 1);
+        }
+
+        private async Task Activate(PersonalizerClient client)
+        {
+            await client.ActivateMultiSlotAsync("123456789");
         }
     }
 }
