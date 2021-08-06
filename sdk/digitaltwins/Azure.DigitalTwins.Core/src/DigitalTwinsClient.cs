@@ -2043,7 +2043,11 @@ namespace Azure.DigitalTwins.Core
         /// <code snippet="Snippet:DigitalTwinsSampleQueryTwins" language="csharp">
         /// // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
         /// // happens under the covers.
-        /// DigitalTwinsQueryBuilder basicQuery = new DigitalTwinsQueryBuilder().SelectAll().From(DigitalTwinsCollection.DigitalTwins).Build();
+        /// DigitalTwinsQueryBuilder basicQuery = new DigitalTwinsQueryBuilder()
+        ///     .SelectAll()
+        ///     .From(DigitalTwinsCollection.DigitalTwins)
+        ///     .Build();
+        ///
         /// AsyncPageable&lt;BasicDigitalTwin&gt; asyncPageableResponse = client.QueryAsync&lt;BasicDigitalTwin&gt;(basicQuery);
         ///
         /// // Iterate over the twin instances in the pageable response.
