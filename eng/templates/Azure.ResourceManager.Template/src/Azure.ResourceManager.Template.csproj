@@ -4,8 +4,6 @@
     <PackageId>Azure.ResourceManager.Template</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider ProviderFullName</Description>
     <PackageTags>azure;management;arm;resource manager;ProviderNameLowercase</PackageTags>
+    <NoWarn>$(NoWarn);CS1591;</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Core"/>
-  </ItemGroup>
 </Project>

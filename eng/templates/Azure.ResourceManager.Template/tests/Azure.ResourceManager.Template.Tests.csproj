@@ -1,6 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TestHelperProjects>;</TestHelperProjects>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Core"/>
     <ProjectReference Include="..\src\Azure.ResourceManager.Template.csproj" />
   </ItemGroup>
 </Project>
