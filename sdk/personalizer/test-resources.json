@@ -11,7 +11,7 @@
 		},
 		"location": {
             "type": "string",
-            "defaultValue": "eastus2",
+            "defaultValue": "eastus",
             "metadata": {
                 "description": "The location of the resource."
             }
