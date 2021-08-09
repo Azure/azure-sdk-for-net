@@ -8,18 +8,18 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Core.Tests
 {
-    public class ArmOperationTest : Operation<TestResource>, IOperationSource<TestResource>
+    public class TestLroOperation : Operation<TestResource>, IOperationSource<TestResource>
     {
         private TestResource _value;
         private bool _exceptionOnWait;
         private OperationOrResponseInternals<TestResource> _operationHelper;
         private int _delaySteps = 0;
 
-        protected ArmOperationTest()
+        protected TestLroOperation()
         {
         }
 
-        public ArmOperationTest(TestResource value, bool exceptionOnWait = false, int delaySteps = 0)
+        public TestLroOperation(TestResource value, bool exceptionOnWait = false, int delaySteps = 0)
         {
             _value = value;
             _exceptionOnWait = exceptionOnWait;
