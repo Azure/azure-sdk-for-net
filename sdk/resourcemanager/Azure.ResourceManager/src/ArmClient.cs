@@ -158,7 +158,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the resourcegroup. </param>
         /// <returns> Resource operations of the resourcegroup. </returns>
-        public virtual ResourceGroup GetResourceGroup(string id)
+        public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
         {
             return new ResourceGroup(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the subscription. </param>
         /// <returns> Resource operations of the subscription. </returns>
-        public virtual Subscription GetSubscription(string id)
+        public virtual Subscription GetSubscription(ResourceIdentifier id)
         {
             return new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the feature. </param>
         /// <returns> Resource operations of the feature. </returns>
-        public virtual Feature GetFeature(string id)
+        public virtual Feature GetFeature(ResourceIdentifier id)
         {
             return new Feature(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the Provider. </param>
         /// <returns> Resource operations of the Provider. </returns>
-        public virtual Provider GetProvider(string id)
+        public virtual Provider GetProvider(ResourceIdentifier id)
         {
             return new Provider(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the PredefinedTag. </param>
         /// <returns> Resource operations of the PredefinedTag. </returns>
-        public virtual PredefinedTag GetPreDefinedTag(string id)
+        public virtual PredefinedTag GetPreDefinedTag(ResourceIdentifier id)
         {
             return new PredefinedTag(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
         /// <returns> The list of operations that can be performed over the GenericResources. </returns>
-        public virtual IReadOnlyList<GenericResource> GetGenericResource(params string[] ids)
+        public virtual IReadOnlyList<GenericResource> GetGenericResources(params ResourceIdentifier[] ids)
         {
             return GetGenericResourceOperationsInternal(ids);
         }
@@ -239,12 +239,32 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
         /// <returns> The list of operations that can be performed over the GenericResources. </returns>
-        public virtual IReadOnlyList<GenericResource> GetGenericResource(IEnumerable<string> ids)
+        public virtual IReadOnlyList<GenericResource> GetGenericResources(IEnumerable<ResourceIdentifier> ids)
         {
             return GetGenericResourceOperationsInternal(ids);
         }
 
-        private IReadOnlyList<GenericResource> GetGenericResourceOperationsInternal(IEnumerable<string> ids)
+        /// <summary>
+        /// Get the operations for a list of specific resources.
+        /// </summary>
+        /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
+        /// <returns> The list of operations that can be performed over the GenericResources. </returns>
+        public virtual IReadOnlyList<GenericResource> GetGenericResources(params string[] ids)
+        {
+            return GetGenericResourceOperationsInternal(ids.Select(id => new ResourceIdentifier(id)));
+        }
+
+        /// <summary>
+        /// Get the operations for a list of specific resources.
+        /// </summary>
+        /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
+        /// <returns> The list of operations that can be performed over the GenericResources. </returns>
+        public virtual IReadOnlyList<GenericResource> GetGenericResources(IEnumerable<string> ids)
+        {
+            return GetGenericResourceOperationsInternal(ids.Select(id => new ResourceIdentifier(id)));
+        }
+
+        private IReadOnlyList<GenericResource> GetGenericResourceOperationsInternal(IEnumerable<ResourceIdentifier> ids)
         {
             if (ids == null)
             {
@@ -264,7 +284,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the resource to retrieve. </param>
         /// <returns> The operations that can be performed over a specific GenericResource. </returns>
-        public virtual GenericResource GetGenericResource(string id)
+        public virtual GenericResource GetGenericResource(ResourceIdentifier id)
         {
             if (id == null)
             {
@@ -289,14 +309,14 @@ namespace Azure.ResourceManager
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Pageable<ProviderInfo> GetProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetProviders(top, expand, cancellationToken);
+        public virtual Pageable<ProviderInfo> GetTenantProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantProviders(top, expand, cancellationToken);
 
         /// <summary> Gets all resource providers for a subscription. </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<ProviderInfo> GetProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetProvidersAsync(top, expand, cancellationToken);
+        public virtual AsyncPageable<ProviderInfo> GetTenantProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantProvidersAsync(top, expand, cancellationToken);
 
         /// <summary> Gets the specified resource provider at the tenant level. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -304,7 +324,7 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProviderInfo> GetProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetProvider(resourceProviderNamespace, expand, cancellationToken);
+        public virtual Response<ProviderInfo> GetTenantProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantProvider(resourceProviderNamespace, expand, cancellationToken);
 
         /// <summary> Gets the specified resource provider at the tenant level. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -312,7 +332,7 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProviderInfo>> GetProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => await _tenant.GetProviderAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<ProviderInfo>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => await _tenant.GetTenantProviderAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Gets the management group container for this tenant.
@@ -325,6 +345,6 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the management group operations. </param>
         /// <returns> A client to perform operations on the management group. </returns>
-        public virtual ManagementGroup GetManagementGroup(string id) => _tenant.GetManagementGroup(id);
+        public virtual ManagementGroup GetManagementGroup(ResourceIdentifier id) => _tenant.GetManagementGroup(id);
     }
 }

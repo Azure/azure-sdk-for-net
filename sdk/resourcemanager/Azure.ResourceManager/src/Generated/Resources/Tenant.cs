@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ProviderInfo> GetProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProviderInfo> GetTenantProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Page<ProviderInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Tenant.GetProviders");
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProviders");
                 scope.Start();
 
                 try
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<ProviderInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Tenant.GetProviders");
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProviders");
                 scope.Start();
 
                 try
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ProviderInfo> GetProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProviderInfo> GetTenantProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ProviderInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Tenant.GetProviders");
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProviders");
                 scope.Start();
 
                 try
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ProviderInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("Tenant.GetProviders");
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProviders");
                 scope.Start();
 
                 try
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<ProviderInfo> GetProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ProviderInfo> GetTenantProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Tenant.GetProvider");
+            using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProvider");
             scope.Start();
 
             try
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual async Task<Response<ProviderInfo>> GetProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProviderInfo>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Tenant.GetProvider");
+            using var scope = _clientDiagnostics.CreateScope("Tenant.GetTenantProvider");
             scope.Start();
 
             try
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="id"> The id of the management group operations. </param>
         /// <returns> A client to perform operations on the management group. </returns>
-        internal ManagementGroup GetManagementGroup(string id)
+        internal ManagementGroup GetManagementGroup(ResourceIdentifier id)
         {
             return new ManagementGroup(this, id);
         }
