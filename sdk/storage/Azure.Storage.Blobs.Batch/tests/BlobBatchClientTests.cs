@@ -223,8 +223,8 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = default;
             var serviceClient = InstrumentClient(
                 new BlobServiceClient(
-                    new Uri(TestConfigDefault.BlobServiceEndpoint),
-                    new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
+                    new Uri("https://zedystorage0809.blob.core.usgovcloudapi.net/"),
+                    new StorageSharedKeyCredential("zedystorage0809", "IExJx/WZjeO5QBQ1oDn99xbhc9SDYl2HmEP4Y9e2pPgmf0Nx319xzaW4M0BipvLNGlfeVqxml42VxfRYoCE9Jw=="),
                     options ?? GetOptions()));
             var sas = GetAccountSasCredentials().SasToken;
             var sasServiceClient = InstrumentClient(new BlobServiceClient(serviceClient.Uri, new AzureSasCredential(sas), GetOptions()));
