@@ -11,10 +11,10 @@ namespace Azure.Analytics.Synapse.Monitoring
     }
     public partial class MonitoringClientOptions : Azure.Core.ClientOptions
     {
-        public MonitoringClientOptions(Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions.ServiceVersion.V2019_11_01_preview) { }
+        public MonitoringClientOptions(Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions.ServiceVersion.V2020_12_01) { }
         public enum ServiceVersion
         {
-            V2019_11_01_preview = 1,
+            V2020_12_01 = 1,
         }
     }
 }
