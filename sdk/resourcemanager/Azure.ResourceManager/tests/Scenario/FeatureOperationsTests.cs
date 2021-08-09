@@ -3,7 +3,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class FeatureOperationsTests : ResourceManagerTestBase
     {
@@ -16,12 +16,15 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task Get()
         {
             Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
-            Feature featureFromContainer = await GetFirst(provider.GetFeatures().ListAsync());
+            Feature featureFromContainer = await GetFirst(provider.GetFeatures().GetAllAsync());
             Feature feature = await featureFromContainer.GetAsync();
             Assert.AreEqual(featureFromContainer.Data.Id, feature.Data.Id);
             Assert.AreEqual(featureFromContainer.Data.Name, feature.Data.Name);
             Assert.AreEqual(featureFromContainer.Data.Properties.State, feature.Data.Properties.State);
             Assert.AreEqual(featureFromContainer.Data.Type, feature.Data.Type);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetFeatureOperations(feature.Data.Id + "x").GetAsync());
+            Assert.AreEqual(404, ex.Status);
         }
 
         private async Task<Feature> GetFirst(AsyncPageable<Feature> asyncPageable, bool? isRegistered = null)

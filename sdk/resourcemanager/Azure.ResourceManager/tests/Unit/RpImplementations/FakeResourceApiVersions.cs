@@ -1,6 +1,8 @@
-﻿namespace Azure.ResourceManager.Core.Tests
+﻿using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Tests
 {
-    public class FakeResourceApiVersions : ApiVersionsBase
+    internal class FakeResourceApiVersions : ApiVersionsBase
     {
         public static readonly FakeResourceApiVersions V2020_06_01 = new FakeResourceApiVersions("2020-06-01");
         public static readonly FakeResourceApiVersions V2019_12_01 = new FakeResourceApiVersions("2019-12-01");

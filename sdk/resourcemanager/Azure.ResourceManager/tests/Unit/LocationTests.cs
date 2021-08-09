@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
     public class LocationTests
@@ -233,14 +233,6 @@ namespace Azure.ResourceManager.Core.Tests
                 Assert.Throws<System.NullReferenceException>(()=> { string x = location1.DisplayName; });
             else
                 Assert.AreEqual(expected, location1.DisplayName);  
-        }
-
-        [Test]
-        public void CanAccessDefaultLocation()
-        {
-            Assert.IsNotNull(Location.Default);
-            Location location = Location.Default;
-            Assert.IsTrue(location.Equals(Location.Default));
         }
 
         [Test]

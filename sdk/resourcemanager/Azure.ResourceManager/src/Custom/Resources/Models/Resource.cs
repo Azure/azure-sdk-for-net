@@ -8,24 +8,23 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary>
     /// A class representing the base resource used by all azure resources.
     /// </summary>
-    [ReferenceType(typeof(TenantResourceIdentifier))]
-    public abstract class Resource<TIdentifier>
-        where TIdentifier : TenantResourceIdentifier
+    [ReferenceType]
+    public abstract class Resource
     {
         /// <summary>
-        /// Initializes an empty instance of <see cref="Resource{TIdentifier}"/>.
+        /// Initializes an empty instance of <see cref="Resource"/>.
         /// </summary>
         [InitializationConstructor]
         protected Resource() { }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Resource{TIdentifier}"/> for deserialization.
+        /// Initializes a new instance of <see cref="Resource"/> for deserialization.
         /// </summary>
         /// <param name="id"> The id of the resource. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The <see cref="ResourceType"/> of the resource. </param>
         [SerializationConstructor]
-        protected internal Resource(TIdentifier id, string name, ResourceType type)
+        protected internal Resource(ResourceIdentifier id, string name, ResourceType type)
         {
             Id = id;
             Name = name;
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary>
         /// Gets or sets the resource identifier.
         /// </summary>
-        public virtual TIdentifier Id { get; }
+        public virtual ResourceIdentifier Id { get; }
 
         /// <summary>
         /// Gets the name.

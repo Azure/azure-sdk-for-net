@@ -307,15 +307,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockLogger = new Mock<ServiceBusEventSource>();
             var mockTransportReceiver = new Mock<TransportReceiver>();
             var mockConnection = GetMockConnection(mockTransportReceiver);
-
+            var received = (IReadOnlyList<ServiceBusReceivedMessage>)
+                new List<ServiceBusReceivedMessage> { new() };
             mockTransportReceiver.Setup(
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
                     It.IsAny<TimeSpan?>(),
                     It.IsAny<CancellationToken>()))
-                .Returns(
-                Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>)
-                    new List<ServiceBusReceivedMessage> { new ServiceBusReceivedMessage() }));
+                .Returns(Task.FromResult(received));
             var receiver = new ServiceBusReceiver(
                 mockConnection.Object,
                 "queueName",
@@ -337,7 +336,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Verify(
                     log => log.ReceiveMessageComplete(
                         receiver.Identifier,
-                        1),
+                        received),
                 Times.Once);
             mockLogger
             .Verify(
@@ -355,6 +354,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var maxMessages = 4;
             var mockTransportReceiver = new Mock<TransportReceiver>();
             var mockConnection = GetMockConnection(mockTransportReceiver);
+            var received = (IReadOnlyList<ServiceBusReceivedMessage>)
+                new List<ServiceBusReceivedMessage> { new() };
 
             mockTransportReceiver.Setup(
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
@@ -362,9 +363,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     It.IsAny<TimeSpan?>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(
-                Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>)
-                    new List<ServiceBusReceivedMessage> { new ServiceBusReceivedMessage(),
-                    new ServiceBusReceivedMessage()}));
+                Task.FromResult(received));
             var receiver = new ServiceBusReceiver(
                 mockConnection.Object,
                 "queueName",
@@ -399,7 +398,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     log => log.ReceiveMessageComplete(
                         receiver.Identifier,
                         // the amount we actually received
-                        msgs.Count),
+                        msgs),
                 Times.Once);
         }
 

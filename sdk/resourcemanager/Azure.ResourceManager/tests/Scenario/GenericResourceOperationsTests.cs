@@ -6,7 +6,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
     public class GenericResourceOperationsTests : ResourceManagerTestBase
@@ -128,6 +128,9 @@ namespace Azure.ResourceManager.Core.Tests
             GenericResource aset2 = await aset.GetAsync();
 
             AssertAreEqual(aset, aset2);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetGenericResourceOperations(aset2.Id + "x").GetAsync());
+            Assert.AreEqual(404, ex.Status);
         }
 
         [TestCase]
