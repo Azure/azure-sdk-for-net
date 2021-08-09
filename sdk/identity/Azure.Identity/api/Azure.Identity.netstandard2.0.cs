@@ -330,6 +330,7 @@ namespace Azure.Identity
         public TokenCredentialOptions() { }
         public bool AllowMultiTenantAuthentication { get { throw null; } set { } }
         public System.Uri AuthorityHost { get { throw null; } set { } }
+        public bool IsLoggingPIIEnabled { get { throw null; } set { } }
     }
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {

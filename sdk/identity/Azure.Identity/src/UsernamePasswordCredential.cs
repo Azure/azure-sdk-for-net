@@ -21,13 +21,13 @@ namespace Azure.Identity
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
 
         private readonly string _clientId;
-        private readonly MsalPublicClient _client;
         private readonly CredentialPipeline _pipeline;
         private readonly string _username;
         private readonly SecureString _password;
         private AuthenticationRecord _record;
         private readonly string _tenantId;
         private readonly bool _allowMultiTenantAuthentication;
+        internal MsalPublicClient Client { get; }
 
         /// <summary>
         /// Protected constructor for mocking
@@ -89,7 +89,7 @@ namespace Azure.Identity
             _password = password.ToSecureString();
             _clientId = clientId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            _client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options as ITokenCacheOptions);
+            Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options as ITokenCacheOptions, options?.IsLoggingPIIEnabled ?? false);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Azure.Identity
             {
                 var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
 
-                AuthenticationResult result = await _client
+                AuthenticationResult result = await Client
                     .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, requestContext.Claims, _username, _password, tenantId, async, cancellationToken)
                     .ConfigureAwait(false);
 

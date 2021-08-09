@@ -255,7 +255,6 @@ namespace Azure.Core
         public bool IsDistributedTracingEnabled { get { throw null; } set { } }
         public bool IsLoggingContentEnabled { get { throw null; } set { } }
         public bool IsLoggingEnabled { get { throw null; } set { } }
-        public bool IsLoggingPIIEnabled { get { throw null; } set { } }
         public bool IsTelemetryEnabled { get { throw null; } set { } }
         public int LoggedContentSizeLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } }
