@@ -19,8 +19,8 @@ namespace Azure.Analytics.Synapse.Spark
     internal partial class SparkBatchRestClient
     {
         private Uri endpoint;
-        private string livyApiVersion;
         private string sparkPoolName;
+        private string livyApiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -28,14 +28,14 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <param name="livyApiVersion"> Valid api-version for the request. </param>
         /// <param name="sparkPoolName"> Name of the spark pool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="livyApiVersion"/>, or <paramref name="sparkPoolName"/> is null. </exception>
-        public SparkBatchRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string livyApiVersion, string sparkPoolName)
+        /// <param name="livyApiVersion"> Valid api-version for the request. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="sparkPoolName"/>, or <paramref name="livyApiVersion"/> is null. </exception>
+        public SparkBatchRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
         {
             this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            this.livyApiVersion = livyApiVersion ?? throw new ArgumentNullException(nameof(livyApiVersion));
             this.sparkPoolName = sparkPoolName ?? throw new ArgumentNullException(nameof(sparkPoolName));
+            this.livyApiVersion = livyApiVersion ?? throw new ArgumentNullException(nameof(livyApiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

@@ -23,3 +23,11 @@ directive:
   where: $.parameters.Endpoint
   transform: $.format = "url"
 ```
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.LivyApiVersion
+  transform: >
+    $["x-ms-client-default"] = $.default;
+```
