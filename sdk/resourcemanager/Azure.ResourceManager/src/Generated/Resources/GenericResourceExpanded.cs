@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
         /// <param name="resource"> The data model representing the generic azure resource. </param>
-        internal GenericResourceExpanded(ResourceOperations operations, GenericResourceExpandedData resource)
+        internal GenericResourceExpanded(ArmResource operations, GenericResourceExpandedData resource)
             : base(operations, resource.Id)
         {
             Data = resource;

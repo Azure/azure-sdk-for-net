@@ -15,8 +15,10 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of Subscription and their operations
     /// </summary>
-    public class SubscriptionContainer : ResourceContainer
+    public class SubscriptionContainer : ArmContainer
     {
+        private ClientDiagnostics _clientDiagnostics;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class for mocking.
         /// </summary>
@@ -28,26 +30,28 @@ namespace Azure.ResourceManager.Resources
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SubscriptionContainer(TenantOperations parent)
+        internal SubscriptionContainer(Tenant parent)
             : base(parent)
         {
-            RestClient = new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline, this.BaseUri);
+            RestClient = new SubscriptionsRestOperations(Diagnostics, Pipeline, BaseUri);
         }
 
         /// <summary>
         /// Gets the parent resource of this resource.
         /// </summary>
-        protected new TenantOperations Parent { get { return base.Parent as TenantOperations; } }
+        protected new Tenant Parent { get { return base.Parent as Tenant; } }
 
         /// <summary>
         /// Gets the valid resource type associated with the container.
         /// </summary>
-        protected override ResourceType ValidResourceType => TenantOperations.ResourceType;
+        protected override ResourceType ValidResourceType => Tenant.ResourceType;
 
         /// <summary>
         /// Gets the operations that can be performed on the container.
         /// </summary>
         private SubscriptionsRestOperations RestClient;
+
+        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary>
         /// Lists all subscriptions in the current container.

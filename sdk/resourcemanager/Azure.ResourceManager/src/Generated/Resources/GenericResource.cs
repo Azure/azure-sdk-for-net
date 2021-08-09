@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
         /// <param name="resource"> The data model representing the generic azure resource. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="ArmClientOptions"/> or <see cref="TokenCredential"/> is null. </exception>
-        internal GenericResource(ResourceOperations operations, GenericResourceData resource)
+        internal GenericResource(ArmResource operations, GenericResourceData resource)
             : base(operations, resource.Id)
         {
             Data = resource;

@@ -16,48 +16,45 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the operations that can be performed over a specific resource.
     /// </summary>
-    public abstract class ResourceOperations
+    public abstract class ArmResource
     {
         private TagResourceContainer _tagContainer;
-        private TagResourceOperations _tagResourceOperations;
-        private TenantOperations _tenant;
+        private TagResource _tagResourceOperations;
+        private Tenant _tenant;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperations"/> class for mocking.
+        /// Initializes a new instance of the <see cref="ArmResource"/> class for mocking.
         /// </summary>
-        protected ResourceOperations()
+        protected ArmResource()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperations"/> class.
+        /// Initializes a new instance of the <see cref="ArmResource"/> class.
         /// </summary>
         /// <param name="parentOperations"> The resource representing the parent resource. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected ResourceOperations(ResourceOperations parentOperations, ResourceIdentifier id)
+        protected ArmResource(ArmResource parentOperations, ResourceIdentifier id)
             : this(new ClientContext(parentOperations.ClientOptions, parentOperations.Credential, parentOperations.BaseUri, parentOperations.Pipeline), id)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperations"/> class.
+        /// Initializes a new instance of the <see cref="ArmResource"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceOperations(ClientContext clientContext, ResourceIdentifier id)
+        internal ArmResource(ClientContext clientContext, ResourceIdentifier id)
         {
             ClientOptions = clientContext.ClientOptions;
             Id = id;
             Credential = clientContext.Credential;
             BaseUri = clientContext.BaseUri;
             Pipeline = clientContext.Pipeline;
-            Diagnostics = new ClientDiagnostics(ClientOptions);
             ValidateResourceType(id);
         }
 
-        internal ClientDiagnostics Diagnostics { get; }
-
-        private TenantOperations Tenant => _tenant ??= new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
+        private Tenant Tenant => _tenant ??= new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
 
         /// <summary>
         /// Gets the resource identifier.
@@ -94,7 +91,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
-        protected internal TagResourceOperations TagResourceOperations => _tagResourceOperations ??= new TagResourceOperations(this, Id);
+        protected internal TagResource TagResourceOperations => _tagResourceOperations ??= new TagResource(this, Id);
 
         /// <summary>
         /// Gets the TagsOperations.

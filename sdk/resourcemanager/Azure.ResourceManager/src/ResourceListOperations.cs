@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// List resources under the a resource context
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations"/> instance to use for the list. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup"/> instance to use for the list. </param>
         /// <param name="resourceFilters"> Optional filters for results. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<GenericResourceExpanded> GetAtContext(
-            ResourceGroupOperations resourceGroup,
+            ResourceGroup resourceGroup,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
             int? top = null,
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// List resources under the a resource context
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations"/> instance to use for the list. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup"/> instance to use for the list. </param>
         /// <param name="resourceFilters"> Optional filters for results. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Core
         /// <returns>An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<GenericResourceExpanded> GetAtContextAsync(
-            ResourceGroupOperations resourceGroup,
+            ResourceGroup resourceGroup,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
             int? top = null,
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// List resources under a subscription
         /// </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations"/> instance to use for the list. </param>
+        /// <param name="subscription"> The <see cref="Subscription"/> instance to use for the list. </param>
         /// <param name="resourceFilters"> Optional filters for results. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<GenericResourceExpanded> GetAtContext(
-            SubscriptionOperations subscription,
+            Subscription subscription,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
             int? top = null,
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// List resources under the a resource context
         /// </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations"/> instance to use for the list. </param>
+        /// <param name="subscription"> The <see cref="Subscription"/> instance to use for the list. </param>
         /// <param name="resourceFilters"> Optional filters for results. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<GenericResourceExpanded> GetAtContextAsync(
-            SubscriptionOperations subscription,
+            Subscription subscription,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
             int? top = null,
@@ -116,13 +116,13 @@ namespace Azure.ResourceManager.Core
                 cancellationToken);
         }
 
-        private static GenericResourceContainer GetGenericResourceContainer(ResourceOperations resourceOperations)
+        private static GenericResourceContainer GetGenericResourceContainer(ArmResource resourceOperations)
         {
             return new GenericResourceContainer(new ClientContext(resourceOperations.ClientOptions, resourceOperations.Credential, resourceOperations.BaseUri, resourceOperations.Pipeline), resourceOperations.Id);
         }
 
         private static AsyncPageable<GenericResourceExpanded> ListAtContextInternalAsync(
-            ResourceOperations resourceOperations,
+            ArmResource resourceOperations,
             string scopeFilter,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Core
         }
 
         private static Pageable<GenericResourceExpanded> ListAtContextInternal(
-            ResourceOperations resourceOperations,
+            ArmResource resourceOperations,
             string scopeFilter = null,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,

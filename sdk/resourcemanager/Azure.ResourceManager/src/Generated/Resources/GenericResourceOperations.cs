@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,8 +15,10 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific ArmResource.
     /// </summary>
-    public class GenericResourceOperations : ResourceOperations
+    public class GenericResourceOperations : ArmResource
     {
+        private ClientDiagnostics _clientDiagnostics;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceOperations"/> class for mocking.
         /// </summary>
@@ -28,13 +31,13 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="operations"> The operation to get the client properties from. </param>
         /// <param name="id"> The id of the resource. </param>
-        internal GenericResourceOperations(ResourceOperations operations, ResourceIdentifier id)
+        internal GenericResourceOperations(ArmResource operations, ResourceIdentifier id)
             : base(operations, id)
         {
         }
 
         /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
+        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
 
         private ResourcesRestOperations RestClient
         {
@@ -53,6 +56,8 @@ namespace Azure.ResourceManager.Resources
                     BaseUri);
             }
         }
+
+        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary>
         /// Delete the resource.

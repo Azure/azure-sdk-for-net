@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,8 +15,10 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    public class GenericResourceContainer : ResourceContainer
+    public class GenericResourceContainer : ArmContainer
     {
+        private ClientDiagnostics _clientDiagnostics;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceContainer"/> class for mocking.
         /// </summary>
@@ -58,6 +61,8 @@ namespace Azure.ResourceManager.Resources
                     BaseUri);
             }
         }
+
+        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary>
         /// Gets details for this resource from the service.

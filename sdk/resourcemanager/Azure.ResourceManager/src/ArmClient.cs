@@ -25,7 +25,7 @@ namespace Azure.ResourceManager
         /// The base URI of the service.
         /// </summary>
         internal const string DefaultUri = "https://management.azure.com";
-        private TenantOperations _tenant;
+        private Tenant _tenant;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmClient"/> class for mocking.
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
             Pipeline = ManagementPipelineBuilder.Build(Credential, options.Scope, options ?? ClientOptions);
 
-            _tenant = new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
+            _tenant = new Tenant(ClientOptions, Credential, BaseUri, Pipeline);
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptions().GetIfExists(defaultSubscriptionId);
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager
         /// Gets a resource group operations object.
         /// </summary>
         /// <param name="id"> The id of the resourcegroup. </param>
-        /// <returns> Resource operations of the resource. </returns>
-        public virtual ResourceGroupOperations GetResourceGroupOperations(string id)
+        /// <returns> Resource operations of the resourcegroup. </returns>
+        public virtual ResourceGroup GetResourceGroup(string id)
         {
-            return new ResourceGroupOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+            return new ResourceGroup(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
         /// <summary>
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the subscription. </param>
         /// <returns> Resource operations of the subscription. </returns>
-        public virtual SubscriptionOperations GetSubscriptionOperations(string id)
+        public virtual Subscription GetSubscription(string id)
         {
-            return new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+            return new Subscription(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
         /// <summary>
@@ -178,19 +178,29 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the feature. </param>
         /// <returns> Resource operations of the feature. </returns>
-        public virtual FeatureOperations GetFeatureOperations(string id)
+        public virtual Feature GetFeature(string id)
         {
-            return new FeatureOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+            return new Feature(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
         /// <summary>
-        /// Gets a feature operations object.
+        /// Gets a Provider operations object.
         /// </summary>
-        /// <param name="id"> The id of the feature. </param>
-        /// <returns> Resource operations of the feature. </returns>
-        public virtual ProviderOperations GetProviderOperations(string id)
+        /// <param name="id"> The id of the Provider. </param>
+        /// <returns> Resource operations of the Provider. </returns>
+        public virtual Provider GetProvider(string id)
         {
-            return new ProviderOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+            return new Provider(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+        }
+
+        /// <summary>
+        /// Gets a PredefinedTag operations object.
+        /// </summary>
+        /// <param name="id"> The id of the PredefinedTag. </param>
+        /// <returns> Resource operations of the PredefinedTag. </returns>
+        public virtual PredefinedTag GetPreDefinedTag(string id)
+        {
+            return new PredefinedTag(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
         private Subscription GetDefaultSubscription()
@@ -219,7 +229,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
         /// <returns> The list of operations that can be performed over the GenericResources. </returns>
-        public virtual IReadOnlyList<GenericResourceOperations> GetGenericResourceOperations(params string[] ids)
+        public virtual IReadOnlyList<GenericResourceOperations> GetGenericResource(params string[] ids)
         {
             return GetGenericResourceOperationsInternal(ids);
         }
@@ -229,7 +239,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
         /// <returns> The list of operations that can be performed over the GenericResources. </returns>
-        public virtual IReadOnlyList<GenericResourceOperations> GetGenericResourceOperations(IEnumerable<string> ids)
+        public virtual IReadOnlyList<GenericResourceOperations> GetGenericResource(IEnumerable<string> ids)
         {
             return GetGenericResourceOperationsInternal(ids);
         }
@@ -254,7 +264,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the resource to retrieve. </param>
         /// <returns> The operations that can be performed over a specific GenericResource. </returns>
-        public virtual GenericResourceOperations GetGenericResourceOperations(string id)
+        public virtual GenericResourceOperations GetGenericResource(string id)
         {
             if (id == null)
             {
@@ -315,6 +325,6 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the management group operations. </param>
         /// <returns> A client to perform operations on the management group. </returns>
-        public virtual ManagementGroupOperations GetManagementGroupOperations(string id) => _tenant.GetManagementGroupOperations(id);
+        public virtual ManagementGroupOperations GetManagementGroup(string id) => _tenant.GetManagementGroup(id);
     }
 }
