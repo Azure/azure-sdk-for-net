@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The status of the delete operation. </returns>
         public virtual Response Delete(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.Delete");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.Delete");
             scope.Start();
             try
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A <see cref="Task"/> that on completion returns the status of the delete operation. </returns>
         public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.Delete");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.Delete");
             scope.Start();
             try
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Resources
         /// </remarks>
         public virtual ResourceDeleteByIdOperation StartDelete(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.StartDelete");
             scope.Start();
             try
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Resources
         /// </remarks>
         public virtual async Task<ResourceDeleteByIdOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.StartDelete");
             scope.Start();
             try
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<GenericResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.AddTag");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.AddTag");
             scope.Start();
             try
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual async Task<Response<GenericResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.AddTag");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.AddTag");
             scope.Start();
             try
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GenericResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.Get");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.Get");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GenericResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.Get");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.Get");
             scope.Start();
             try
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<GenericResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.SetTags");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.SetTags");
             scope.Start();
             try
             {
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual async Task<Response<GenericResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.SetTags");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.SetTags");
             scope.Start();
             try
             {
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<GenericResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.RemoveTag");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.RemoveTag");
             scope.Start();
             try
             {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual async Task<Response<GenericResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.RemoveTag");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.RemoveTag");
             scope.Start();
             try
             {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.Update");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.Update");
             scope.Start();
             try
             {
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.Update");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.Update");
             scope.Start();
             try
             {
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.StartUpdate");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.StartUpdate");
             scope.Start();
             try
             {
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.StartUpdate");
+            using var scope = _clientDiagnostics.CreateScope("GenericResource.StartUpdate");
             scope.Start();
             try
             {

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Tests
         [TestCase]
         public void GetGenericResourcesOperationsTests()
         {
-            string id = $"/providers/Microsoft.Compute/virtualMachines/myVm";
+            string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/providers/Microsoft.Compute/virtualMachines/myVm";
             Assert.AreEqual(id, Client.GetGenericResource(new ResourceIdentifier(id)).Id.StringValue);
         }
 
