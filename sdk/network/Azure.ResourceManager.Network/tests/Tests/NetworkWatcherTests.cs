@@ -43,19 +43,24 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         //    await CleanupResourceGroupsAsync();
         //}
 
+        private async Task<NetworkWatcherContainer> GetContainer()
+        {
+            var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("nw"));
+            return resourceGroup.Value.GetNetworkWatchers();
+        }
+
         [Test]
+        [RecordedTest]
         public async Task NetworkWatcherApiTest()
         {
             List<NetworkWatcher> allWatchers = await ArmClient.DefaultSubscription.GetNetworkWatchersAsync().ToEnumerableAsync();
             int countBeforeTest = allWatchers.Count;
 
-            string resourceGroupName = Recording.GenerateAssetName("nw");
-            string location = TestEnvironment.Location;
-            var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string networkWatcherName = Recording.GenerateAssetName("azsmnet");
 
             //Create Network Watcher in the resource group
-            var networkWatcherContainer = resourceGroup.Value.GetNetworkWatchers();
+            var networkWatcherContainer = await GetContainer();
+            var location = TestEnvironment.Location;
             var properties = new NetworkWatcherData { Location = location };
             var createResponse = await networkWatcherContainer.CreateOrUpdateAsync(networkWatcherName, properties);
             Assert.AreEqual(networkWatcherName, createResponse.Value.Data.Name);
