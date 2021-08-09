@@ -11,7 +11,7 @@
 		},
 		"location": {
             "type": "string",
-            "defaultValue": "eastus2euap",
+            "defaultValue": "centraluseuap",
             "metadata": {
                 "description": "The location of the resource."
             }
