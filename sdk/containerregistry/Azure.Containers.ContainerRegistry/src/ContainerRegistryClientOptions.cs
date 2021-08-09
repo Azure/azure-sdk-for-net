@@ -14,6 +14,8 @@ namespace Azure.Containers.ContainerRegistry
         internal string Version { get; }
 
         /// <summary>
+        /// Gets or sets the Audience to use for authentication with AAD.
+        /// The authentication scope will be set from this audience.
         /// </summary>
         public ContainerRegistryAudience? Audience { get; set; }
 
