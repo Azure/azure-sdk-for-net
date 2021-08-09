@@ -80,7 +80,6 @@ namespace Azure.Core.TestFramework
         protected string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
-
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
             string additionalParameterName = testAdapter.Properties.ContainsKey(ClientTestFixtureAttribute.RecordingDirectorySuffixKey) ?
                 testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
@@ -156,7 +155,7 @@ namespace Azure.Core.TestFramework
         {
             if (TestEnvironment.GlobalIsRunningInCI)
             {
-                var tempFileName = Path.GetTempFileName();
+                var tempFileName = Path.GetTempFileName() + ".txt";
                 File.WriteAllText(tempFileName, TestExecutionContext.CurrentContext.CurrentResult.Output);
                 TestContext.AddTestAttachment(tempFileName, "Test Output");
             }

@@ -68,6 +68,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var result = RestClient.Get(resourceProviderNamespace, expand, cancellationToken);
+                if (result.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+
                 return Response.FromValue(new Provider(this, result), result.GetRawResponse());
             }
             catch (Exception e)
@@ -91,8 +94,11 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                Response<ProviderData> result = await RestClient.GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Provider(this, result), result.GetRawResponse());
+                Response<ProviderData> response = await RestClient.GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+
+                return Response.FromValue(new Provider(this, response), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,6 +187,108 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Returns the resource from Azure if it exists.
+        /// </summary>
+        /// <param name="resourceProviderNamespace"> The name of the resource you want to get. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual Response<Provider> GetIfExists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ProviderContainer.GetIfExists");
+            scope.Start();
+
+            try
+            {
+                var response = RestClient.Get(resourceProviderNamespace, expand, cancellationToken);
+                return response.Value == null
+                   ? Response.FromValue<Provider>(null, response.GetRawResponse())
+                   : Response.FromValue(new Provider(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the resource from Azure if it exists.
+        /// </summary>
+        /// <param name="resourceProviderNamespace"> The name of the resource you want to get. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual async Task<Response<Provider>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ProviderContainer.GetIfExists");
+            scope.Start();
+
+            try
+            {
+                var response = await RestClient.GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                   ? Response.FromValue<Provider>(null, response.GetRawResponse())
+                   : Response.FromValue(new Provider(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether or not the azure resource exists in this container.
+        /// </summary>
+        /// <param name="resourceProviderNamespace"> The name of the resource you want to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual Response<bool> CheckIfExists(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ProviderContainer.CheckIfExists");
+            scope.Start();
+
+            try
+            {
+                var response = GetIfExists(resourceProviderNamespace, null, cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether or not the azure resource exists in this container.
+        /// </summary>
+        /// <param name="resourceProviderNamespace"> The name of the resource you want to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual async Task<Response<bool>> CheckIfExistsAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ProviderContainer.CheckIfExists");
+            scope.Start();
+
+            try
+            {
+                var response = await GetIfExistsAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

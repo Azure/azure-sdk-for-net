@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task GetSubscriptionOperation()
         {
-            var sub = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
+            Subscription sub = await Client.GetSubscriptions().GetIfExistsAsync(TestEnvironment.SubscriptionId);
             Assert.AreEqual(sub.Id.SubscriptionId, TestEnvironment.SubscriptionId);
         }
 
@@ -142,13 +141,9 @@ namespace Azure.ResourceManager.Tests
         {
             var subscription = await Client.DefaultSubscription.GetAsync();
             Assert.NotNull(subscription.Value.Data.Id);
-        }
 
-        [RecordedTest]
-        public async Task TestTryGet()
-        {
-            var sub = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
-            Assert.AreEqual($"/subscriptions/{TestEnvironment.SubscriptionId}", sub.Data.Id.ToString());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscriptionOperations($"/subscriptions/{new Guid()}").GetAsync());
+            Assert.AreEqual(404, ex.Status);
         }
 
         private string GetLongString(int length)

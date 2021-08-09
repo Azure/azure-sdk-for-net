@@ -1,4 +1,5 @@
 ﻿using System;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 

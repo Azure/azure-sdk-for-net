@@ -22,7 +22,40 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class OutputFileBlobContainerDestination : ITransportObjectProvider<Models.OutputFileBlobContainerDestination>, IPropertyMetadata
     {
+        private class PropertyContainer : PropertyCollection
+        {
+            public readonly PropertyAccessor<string> ContainerUrlProperty;
+            public readonly PropertyAccessor<ComputeNodeIdentityReference> IdentityReferenceProperty;
+            public readonly PropertyAccessor<string> PathProperty;
+
+            public PropertyContainer() : base(BindingState.Unbound)
+            {
+                this.ContainerUrlProperty = this.CreatePropertyAccessor<string>(nameof(ContainerUrl), BindingAccess.Read | BindingAccess.Write);
+                this.IdentityReferenceProperty = this.CreatePropertyAccessor<ComputeNodeIdentityReference>(nameof(IdentityReference), BindingAccess.Read | BindingAccess.Write);
+                this.PathProperty = this.CreatePropertyAccessor<string>(nameof(Path), BindingAccess.Read | BindingAccess.Write);
+            }
+
+            public PropertyContainer(Models.OutputFileBlobContainerDestination protocolObject) : base(BindingState.Bound)
+            {
+                this.ContainerUrlProperty = this.CreatePropertyAccessor(
+                    protocolObject.ContainerUrl,
+                    nameof(ContainerUrl),
+                    BindingAccess.Read);
+                this.IdentityReferenceProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.IdentityReference, o => new ComputeNodeIdentityReference(o).Freeze()),
+                    nameof(IdentityReference),
+                    BindingAccess.Read);
+                this.PathProperty = this.CreatePropertyAccessor(
+                    protocolObject.Path,
+                    nameof(Path),
+                    BindingAccess.Read);
+            }
+        }
+
+        private readonly PropertyContainer propertyContainer;
+
         #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="OutputFileBlobContainerDestination"/> class.
         /// </summary>
@@ -32,14 +65,14 @@ namespace Microsoft.Azure.Batch
             string containerUrl,
             string path = default(string))
         {
+            this.propertyContainer = new PropertyContainer();
             this.ContainerUrl = containerUrl;
             this.Path = path;
         }
 
         internal OutputFileBlobContainerDestination(Models.OutputFileBlobContainerDestination protocolObject)
         {
-            this.ContainerUrl = protocolObject.ContainerUrl;
-            this.Path = protocolObject.Path;
+            this.propertyContainer = new PropertyContainer(protocolObject);
         }
 
         #endregion Constructors
@@ -52,7 +85,23 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// The URL must include a Shared Access Signature (SAS) granting write permissions to the container.
         /// </remarks>
-        public string ContainerUrl { get; }
+        public string ContainerUrl
+        {
+            get { return this.propertyContainer.ContainerUrlProperty.Value; }
+            private set { this.propertyContainer.ContainerUrlProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the reference to the user assigned identity to use to access Azure Blob Storage specified by containerUrl
+        /// </summary>
+        /// <remarks>
+        /// The identity must have write access to the Azure Blob Storage container
+        /// </remarks>
+        public ComputeNodeIdentityReference IdentityReference
+        {
+            get { return this.propertyContainer.IdentityReferenceProperty.Value; }
+            set { this.propertyContainer.IdentityReferenceProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets the destination blob or virtual directory within the Azure Storage container to which to upload the file(s).
@@ -64,7 +113,11 @@ namespace Microsoft.Azure.Batch
         /// directory (which is prepended to each blob name) to which to upload the file(s).</para><para>If omitted, file(s) 
         /// are uploaded to the root of the container with a blob name matching their file name.</para>
         /// </remarks>
-        public string Path { get; }
+        public string Path
+        {
+            get { return this.propertyContainer.PathProperty.Value; }
+            private set { this.propertyContainer.PathProperty.Value = value; }
+        }
 
         #endregion // OutputFileBlobContainerDestination
 
@@ -72,23 +125,18 @@ namespace Microsoft.Azure.Batch
 
         bool IModifiable.HasBeenModified
         {
-            //This class is compile time readonly so it cannot have been modified
-            get { return false; }
+            get { return this.propertyContainer.HasBeenModified; }
         }
 
         bool IReadOnly.IsReadOnly
         {
-            get { return true; }
-            set
-            {
-                // This class is compile time readonly already
-            }
+            get { return this.propertyContainer.IsReadOnly; }
+            set { this.propertyContainer.IsReadOnly = value; }
         }
 
-        #endregion // IPropertyMetadata
+        #endregion //IPropertyMetadata
 
         #region Internal/private methods
-
         /// <summary>
         /// Return a protocol object of the requested type.
         /// </summary>
@@ -98,6 +146,7 @@ namespace Microsoft.Azure.Batch
             Models.OutputFileBlobContainerDestination result = new Models.OutputFileBlobContainerDestination()
             {
                 ContainerUrl = this.ContainerUrl,
+                IdentityReference = UtilitiesInternal.CreateObjectWithNullCheck(this.IdentityReference, (o) => o.GetTransportObject()),
                 Path = this.Path,
             };
 

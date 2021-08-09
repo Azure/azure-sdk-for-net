@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TryGetTest()
         {
-            ResourceGroup result = await _container.TryGetAsync(_rgName);
+            ResourceGroup result = await _container.GetIfExistsAsync(_rgName);
             Assert.NotNull(result);
             Assert.IsTrue(result.Data.Name == _rgName);
-            result = await _container.TryGetAsync("FakeName");
+            result = await _container.GetIfExistsAsync("FakeName");
             Assert.IsNull(result);
         }
     }

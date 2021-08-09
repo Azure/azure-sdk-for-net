@@ -306,11 +306,6 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary>
-        /// Gets default Location object: West US.
-        /// </summary>
-        public static ref readonly Location Default => ref WestUS;
-
-        /// <summary>
         /// Gets the name of a location object.
         /// </summary>
         /// <returns> The name. </returns>

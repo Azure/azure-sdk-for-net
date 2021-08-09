@@ -146,8 +146,11 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var originalResponse = RestClient.Get(Id.Name, null, cancellationToken);
-                return Response.FromValue(new Provider(this, originalResponse), originalResponse.GetRawResponse());
+                var result = RestClient.Get(Id.Name, null, cancellationToken);
+                if (result.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+
+                return Response.FromValue(new Provider(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,13 +163,16 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Provider>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProvidersOperations.Get");
+            using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
             scope.Start();
 
             try
             {
-                var result = await RestClient.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Provider(this, result), result.GetRawResponse());
+                var response = await RestClient.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+
+                return Response.FromValue(new Provider(this, response), response.GetRawResponse());
             }
             catch (Exception e)
             {

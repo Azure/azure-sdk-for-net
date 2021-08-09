@@ -22,6 +22,9 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(featureFromContainer.Data.Name, feature.Data.Name);
             Assert.AreEqual(featureFromContainer.Data.Properties.State, feature.Data.Properties.State);
             Assert.AreEqual(featureFromContainer.Data.Type, feature.Data.Type);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetFeatureOperations(feature.Data.Id + "x").GetAsync());
+            Assert.AreEqual(404, ex.Status);
         }
 
         private async Task<Feature> GetFirst(AsyncPageable<Feature> asyncPageable, bool? isRegistered = null)

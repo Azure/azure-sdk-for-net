@@ -162,7 +162,7 @@ function Get-dotnet-GithubIoDocIndex()
   # Build up the artifact to service name mapping for GithubIo toc.
   $tocContent = Get-TocMapping -metadata $metadata -artifacts $artifacts
   # Generate yml/md toc files and build site.
-  GenerateDocfxTocContent -tocContent $tocContent -lang $LanguageDisplayName
+  GenerateDocfxTocContent -tocContent $tocContent -lang $LanguageDisplayName -campaignId "UA-62780441-41"
 }
 
 # details on CSV schema can be found here
