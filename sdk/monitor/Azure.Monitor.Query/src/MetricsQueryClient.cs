@@ -206,7 +206,7 @@ namespace Azure.Monitor.Query
         /// <param name="metricsNamespace">The metric namespace.
         /// For example: <c>Microsoft.OperationalInsights/workspaces</c>.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>A list of metric definitions.</returns>
+        /// <returns>A pageable collection of metric definitions.</returns>
         public virtual Pageable<MetricDefinition> GetMetricDefinitions(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
         {
             return PageResponseEnumerator.CreateEnumerable(_ =>
@@ -240,7 +240,7 @@ namespace Azure.Monitor.Query
         /// <param name="metricsNamespace">The metric namespace.
         /// For example: <c>Microsoft.OperationalInsights/workspaces</c>.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>A list of metric definitions.</returns>
+        /// <returns>A pageable collection of metric definitions.</returns>
         public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(string resourceId, string metricsNamespace, CancellationToken cancellationToken = default)
         {
             return PageResponseEnumerator.CreateAsyncEnumerable(async _ =>
@@ -271,7 +271,7 @@ namespace Azure.Monitor.Query
         /// <c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Compute/virtualMachines/myvm</c><br/>
         /// </param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>A list of metric namespaces.</returns>
+        /// <returns>A pageable collection of metric namespaces.</returns>
         public virtual Pageable<MetricNamespace> GetMetricNamespaces(string resourceId, CancellationToken cancellationToken = default)
         {
             return PageResponseEnumerator.CreateEnumerable(_ =>
@@ -297,7 +297,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="resourceId">The resource name.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>A list of metric namespaces.</returns>
+        /// <returns>A pageable collection of metric namespaces.</returns>
         public virtual AsyncPageable<MetricNamespace> GetMetricNamespacesAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             return PageResponseEnumerator.CreateAsyncEnumerable(async _ =>
