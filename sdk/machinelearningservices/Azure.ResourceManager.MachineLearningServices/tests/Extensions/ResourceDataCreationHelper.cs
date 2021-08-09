@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
                 new AzureBlobContents(
                     "track2mlstorage",
                     "datastore-container",
-                    new AccountKeyDatastoreCredentials() { Secrets = new AccountKeyDatastoreSecrets() { Key = "L0SLnz1YS4yOAvQ4I66ay3n/1GL3HKcoWrUVpRjmUD875WiH3zzB8S+pKDp0U4wILRFg2YeHvdgoNR97WZSb3A==" } },
+                    new AccountKeyDatastoreCredentials() { Secrets = new AccountKeyDatastoreSecrets() { Key = "key" } },
                     "core.windows.net",
                     "https")
                 ) {
