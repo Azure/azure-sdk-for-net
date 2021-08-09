@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Delete a gallery Application. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<GalleryApplicationsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryApplicationDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new GalleryApplicationsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new GalleryApplicationDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Delete a gallery Application. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual GalleryApplicationsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual GalleryApplicationDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new GalleryApplicationsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new GalleryApplicationDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplication"> Parameters supplied to the update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplication"/> is null. </exception>
-        public async virtual Task<GalleryApplicationsUpdateOperation> StartUpdateAsync(GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryApplicationUpdateOperation> StartUpdateAsync(GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
         {
             if (galleryApplication == null)
             {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication, cancellationToken).ConfigureAwait(false);
-                return new GalleryApplicationsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response);
+                return new GalleryApplicationUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response);
             }
             catch (Exception e)
             {
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplication"> Parameters supplied to the update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplication"/> is null. </exception>
-        public virtual GalleryApplicationsUpdateOperation StartUpdate(GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
+        public virtual GalleryApplicationUpdateOperation StartUpdate(GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
         {
             if (galleryApplication == null)
             {
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication, cancellationToken);
-                return new GalleryApplicationsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response);
+                return new GalleryApplicationUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response);
             }
             catch (Exception e)
             {

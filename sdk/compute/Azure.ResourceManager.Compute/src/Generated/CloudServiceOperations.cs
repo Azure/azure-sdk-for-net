@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Deletes a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServicesDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServiceDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new CloudServicesDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new CloudServiceDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Deletes a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServicesDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual CloudServiceDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new CloudServicesDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new CloudServiceDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -724,14 +724,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Update a cloud service. </summary>
         /// <param name="parameters"> The cloud service object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServicesUpdateOperation> StartUpdateAsync(CloudServiceUpdate parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServiceUpdateOperation> StartUpdateAsync(CloudServiceUpdate parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new CloudServicesUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new CloudServiceUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -743,14 +743,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Update a cloud service. </summary>
         /// <param name="parameters"> The cloud service object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServicesUpdateOperation StartUpdate(CloudServiceUpdate parameters = null, CancellationToken cancellationToken = default)
+        public virtual CloudServiceUpdateOperation StartUpdate(CloudServiceUpdate parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return new CloudServicesUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new CloudServiceUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -797,14 +797,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Starts the cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServicesPowerOnOperation> StartPowerOnAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServicePowerOnOperation> StartPowerOnAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartPowerOn");
             scope.Start();
             try
             {
                 var response = await _restClient.PowerOnAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new CloudServicesPowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new CloudServicePowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -815,14 +815,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Starts the cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServicesPowerOnOperation StartPowerOn(CancellationToken cancellationToken = default)
+        public virtual CloudServicePowerOnOperation StartPowerOn(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartPowerOn");
             scope.Start();
             try
             {
                 var response = _restClient.PowerOn(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new CloudServicesPowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new CloudServicePowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -869,14 +869,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Power off the cloud service. Note that resources are still attached and you are getting charged for the resources. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServicesPowerOffOperation> StartPowerOffAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServicePowerOffOperation> StartPowerOffAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartPowerOff");
             scope.Start();
             try
             {
                 var response = await _restClient.PowerOffAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new CloudServicesPowerOffOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new CloudServicePowerOffOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -887,14 +887,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Power off the cloud service. Note that resources are still attached and you are getting charged for the resources. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServicesPowerOffOperation StartPowerOff(CancellationToken cancellationToken = default)
+        public virtual CloudServicePowerOffOperation StartPowerOff(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartPowerOff");
             scope.Start();
             try
             {
                 var response = _restClient.PowerOff(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new CloudServicesPowerOffOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new CloudServicePowerOffOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -944,14 +944,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Restarts one or more role instances in a cloud service. </summary>
         /// <param name="parameters"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServicesRestartOperation> StartRestartAsync(RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServiceRestartOperation> StartRestartAsync(RoleInstances parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartRestart");
             scope.Start();
             try
             {
                 var response = await _restClient.RestartAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new CloudServicesRestartOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new CloudServiceRestartOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -963,14 +963,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Restarts one or more role instances in a cloud service. </summary>
         /// <param name="parameters"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServicesRestartOperation StartRestart(RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual CloudServiceRestartOperation StartRestart(RoleInstances parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartRestart");
             scope.Start();
             try
             {
                 var response = _restClient.Restart(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return new CloudServicesRestartOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new CloudServiceRestartOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1020,14 +1020,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Reimage asynchronous operation reinstalls the operating system on instances of web roles or worker roles. </summary>
         /// <param name="parameters"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServicesReimageOperation> StartReimageAsync(RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServiceReimageOperation> StartReimageAsync(RoleInstances parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartReimage");
             scope.Start();
             try
             {
                 var response = await _restClient.ReimageAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new CloudServicesReimageOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new CloudServiceReimageOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1039,14 +1039,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Reimage asynchronous operation reinstalls the operating system on instances of web roles or worker roles. </summary>
         /// <param name="parameters"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServicesReimageOperation StartReimage(RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual CloudServiceReimageOperation StartReimage(RoleInstances parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartReimage");
             scope.Start();
             try
             {
                 var response = _restClient.Reimage(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return new CloudServicesReimageOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new CloudServiceReimageOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1096,14 +1096,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Rebuild Role Instances reinstalls the operating system on instances of web roles or worker roles and initializes the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instances. </summary>
         /// <param name="parameters"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServicesRebuildOperation> StartRebuildAsync(RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServiceRebuildOperation> StartRebuildAsync(RoleInstances parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartRebuild");
             scope.Start();
             try
             {
                 var response = await _restClient.RebuildAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new CloudServicesRebuildOperation(_clientDiagnostics, Pipeline, _restClient.CreateRebuildRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new CloudServiceRebuildOperation(_clientDiagnostics, Pipeline, _restClient.CreateRebuildRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1115,14 +1115,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Rebuild Role Instances reinstalls the operating system on instances of web roles or worker roles and initializes the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instances. </summary>
         /// <param name="parameters"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServicesRebuildOperation StartRebuild(RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual CloudServiceRebuildOperation StartRebuild(RoleInstances parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartRebuild");
             scope.Start();
             try
             {
                 var response = _restClient.Rebuild(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return new CloudServicesRebuildOperation(_clientDiagnostics, Pipeline, _restClient.CreateRebuildRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new CloudServiceRebuildOperation(_clientDiagnostics, Pipeline, _restClient.CreateRebuildRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1172,14 +1172,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deletes role instances in a cloud service. </summary>
         /// <param name="parameters"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServicesDeleteInstancesOperation> StartDeleteInstancesAsync(RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServiceDeleteInstancesOperation> StartDeleteInstancesAsync(RoleInstances parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartDeleteInstances");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteInstancesAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new CloudServicesDeleteInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new CloudServiceDeleteInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1191,14 +1191,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deletes role instances in a cloud service. </summary>
         /// <param name="parameters"> List of cloud service role instance names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServicesDeleteInstancesOperation StartDeleteInstances(RoleInstances parameters = null, CancellationToken cancellationToken = default)
+        public virtual CloudServiceDeleteInstancesOperation StartDeleteInstances(RoleInstances parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartDeleteInstances");
             scope.Start();
             try
             {
                 var response = _restClient.DeleteInstances(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return new CloudServicesDeleteInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new CloudServiceDeleteInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {

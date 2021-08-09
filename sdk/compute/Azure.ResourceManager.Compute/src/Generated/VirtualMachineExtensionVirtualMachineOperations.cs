@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The operation to delete the extension. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineExtensionsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineExtensionDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineExtensionsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new VirtualMachineExtensionDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The operation to delete the extension. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineExtensionsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual VirtualMachineExtensionDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new VirtualMachineExtensionsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new VirtualMachineExtensionDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionParameters"/> is null. </exception>
-        public async virtual Task<VirtualMachineExtensionsUpdateOperation> StartUpdateAsync(VirtualMachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineExtensionUpdateOperation> StartUpdateAsync(VirtualMachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (extensionParameters == null)
             {
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineExtensionsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters).Request, response);
+                return new VirtualMachineExtensionUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionParameters"/> is null. </exception>
-        public virtual VirtualMachineExtensionsUpdateOperation StartUpdate(VirtualMachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineExtensionUpdateOperation StartUpdate(VirtualMachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (extensionParameters == null)
             {
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters, cancellationToken);
-                return new VirtualMachineExtensionsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters).Request, response);
+                return new VirtualMachineExtensionUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionParameters).Request, response);
             }
             catch (Exception e)
             {

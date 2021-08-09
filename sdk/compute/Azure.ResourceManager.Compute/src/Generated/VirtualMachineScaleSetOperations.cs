@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deletes a VM scale set. </summary>
         /// <param name="forceDeletion"> Optional parameter to force delete a VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetsDeleteOperation> StartDeleteAsync(bool? forceDeletion = null, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetDeleteOperation> StartDeleteAsync(bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, forceDeletion, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, forceDeletion).Request, response);
+                return new VirtualMachineScaleSetDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, forceDeletion).Request, response);
             }
             catch (Exception e)
             {
@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deletes a VM scale set. </summary>
         /// <param name="forceDeletion"> Optional parameter to force delete a VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetsDeleteOperation StartDelete(bool? forceDeletion = null, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetDeleteOperation StartDelete(bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, forceDeletion, cancellationToken);
-                return new VirtualMachineScaleSetsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, forceDeletion).Request, response);
+                return new VirtualMachineScaleSetDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name, forceDeletion).Request, response);
             }
             catch (Exception e)
             {
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The scale set object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualMachineScaleSetsUpdateOperation> StartUpdateAsync(VirtualMachineScaleSetUpdate parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetUpdateOperation> StartUpdateAsync(VirtualMachineScaleSetUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new VirtualMachineScaleSetUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The scale set object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualMachineScaleSetsUpdateOperation StartUpdate(VirtualMachineScaleSetUpdate parameters, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetUpdateOperation StartUpdate(VirtualMachineScaleSetUpdate parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return new VirtualMachineScaleSetsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new VirtualMachineScaleSetUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -766,14 +766,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases the compute resources. You are not billed for the compute resources that this virtual machine scale set deallocates. </summary>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetsDeallocateOperation> StartDeallocateAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetDeallocateOperation> StartDeallocateAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartDeallocate");
             scope.Start();
             try
             {
                 var response = await _restClient.DeallocateAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsDeallocateOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeallocateRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetDeallocateOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeallocateRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -785,14 +785,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases the compute resources. You are not billed for the compute resources that this virtual machine scale set deallocates. </summary>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetsDeallocateOperation StartDeallocate(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetDeallocateOperation StartDeallocate(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartDeallocate");
             scope.Start();
             try
             {
                 var response = _restClient.Deallocate(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                return new VirtualMachineScaleSetsDeallocateOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeallocateRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetDeallocateOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeallocateRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="forceDeletion"> Optional parameter to force delete virtual machines from the VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInstanceIDs"/> is null. </exception>
-        public async virtual Task<VirtualMachineScaleSetsDeleteInstancesOperation> StartDeleteInstancesAsync(VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, bool? forceDeletion = null, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetDeleteInstancesOperation> StartDeleteInstancesAsync(VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
             if (vmInstanceIDs == null)
             {
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restClient.DeleteInstancesAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsDeleteInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion).Request, response);
+                return new VirtualMachineScaleSetDeleteInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion).Request, response);
             }
             catch (Exception e)
             {
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="forceDeletion"> Optional parameter to force delete virtual machines from the VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInstanceIDs"/> is null. </exception>
-        public virtual VirtualMachineScaleSetsDeleteInstancesOperation StartDeleteInstances(VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, bool? forceDeletion = null, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetDeleteInstancesOperation StartDeleteInstances(VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
             if (vmInstanceIDs == null)
             {
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restClient.DeleteInstances(Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion, cancellationToken);
-                return new VirtualMachineScaleSetsDeleteInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion).Request, response);
+                return new VirtualMachineScaleSetDeleteInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteInstancesRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs, forceDeletion).Request, response);
             }
             catch (Exception e)
             {
@@ -949,14 +949,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetsPowerOffOperation> StartPowerOffAsync(bool? skipShutdown = null, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetPowerOffOperation> StartPowerOffAsync(bool? skipShutdown = null, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartPowerOff");
             scope.Start();
             try
             {
                 var response = await _restClient.PowerOffAsync(Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsPowerOffOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetPowerOffOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -969,14 +969,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetsPowerOffOperation StartPowerOff(bool? skipShutdown = null, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetPowerOffOperation StartPowerOff(bool? skipShutdown = null, VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartPowerOff");
             scope.Start();
             try
             {
                 var response = _restClient.PowerOff(Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs, cancellationToken);
-                return new VirtualMachineScaleSetsPowerOffOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetPowerOffOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOffRequest(Id.ResourceGroupName, Id.Name, skipShutdown, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1026,14 +1026,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Restarts one or more virtual machines in a VM scale set. </summary>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetsRestartOperation> StartRestartAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetRestartOperation> StartRestartAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartRestart");
             scope.Start();
             try
             {
                 var response = await _restClient.RestartAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsRestartOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetRestartOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1045,14 +1045,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Restarts one or more virtual machines in a VM scale set. </summary>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetsRestartOperation StartRestart(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetRestartOperation StartRestart(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartRestart");
             scope.Start();
             try
             {
                 var response = _restClient.Restart(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                return new VirtualMachineScaleSetsRestartOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetRestartOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestartRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1102,14 +1102,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Starts one or more virtual machines in a VM scale set. </summary>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetsPowerOnOperation> StartPowerOnAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetPowerOnOperation> StartPowerOnAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartPowerOn");
             scope.Start();
             try
             {
                 var response = await _restClient.PowerOnAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsPowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetPowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1121,14 +1121,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Starts one or more virtual machines in a VM scale set. </summary>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetsPowerOnOperation StartPowerOn(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetPowerOnOperation StartPowerOn(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartPowerOn");
             scope.Start();
             try
             {
                 var response = _restClient.PowerOn(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                return new VirtualMachineScaleSetsPowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetPowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1178,14 +1178,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Shuts down all the virtual machines in the virtual machine scale set, moves them to a new node, and powers them back on. </summary>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetsRedeployOperation> StartRedeployAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetRedeployOperation> StartRedeployAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartRedeploy");
             scope.Start();
             try
             {
                 var response = await _restClient.RedeployAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsRedeployOperation(_clientDiagnostics, Pipeline, _restClient.CreateRedeployRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetRedeployOperation(_clientDiagnostics, Pipeline, _restClient.CreateRedeployRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1197,14 +1197,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Shuts down all the virtual machines in the virtual machine scale set, moves them to a new node, and powers them back on. </summary>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetsRedeployOperation StartRedeploy(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetRedeployOperation StartRedeploy(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartRedeploy");
             scope.Start();
             try
             {
                 var response = _restClient.Redeploy(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                return new VirtualMachineScaleSetsRedeployOperation(_clientDiagnostics, Pipeline, _restClient.CreateRedeployRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetRedeployOperation(_clientDiagnostics, Pipeline, _restClient.CreateRedeployRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1254,14 +1254,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform maintenance will be failed. Please refer to best practices for more details: https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications. </summary>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetsPerformMaintenanceOperation> StartPerformMaintenanceAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetPerformMaintenanceOperation> StartPerformMaintenanceAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartPerformMaintenance");
             scope.Start();
             try
             {
                 var response = await _restClient.PerformMaintenanceAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsPerformMaintenanceOperation(_clientDiagnostics, Pipeline, _restClient.CreatePerformMaintenanceRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetPerformMaintenanceOperation(_clientDiagnostics, Pipeline, _restClient.CreatePerformMaintenanceRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1273,14 +1273,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform maintenance will be failed. Please refer to best practices for more details: https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications. </summary>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetsPerformMaintenanceOperation StartPerformMaintenance(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetPerformMaintenanceOperation StartPerformMaintenance(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartPerformMaintenance");
             scope.Start();
             try
             {
                 var response = _restClient.PerformMaintenance(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                return new VirtualMachineScaleSetsPerformMaintenanceOperation(_clientDiagnostics, Pipeline, _restClient.CreatePerformMaintenanceRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetPerformMaintenanceOperation(_clientDiagnostics, Pipeline, _restClient.CreatePerformMaintenanceRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1343,7 +1343,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInstanceIDs"/> is null. </exception>
-        public async virtual Task<VirtualMachineScaleSetsUpdateInstancesOperation> StartUpdateInstancesAsync(VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetUpdateInstancesOperation> StartUpdateInstancesAsync(VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, CancellationToken cancellationToken = default)
         {
             if (vmInstanceIDs == null)
             {
@@ -1355,7 +1355,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restClient.UpdateInstancesAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsUpdateInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateUpdateInstancesRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetUpdateInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateUpdateInstancesRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInstanceIDs"/> is null. </exception>
-        public virtual VirtualMachineScaleSetsUpdateInstancesOperation StartUpdateInstances(VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetUpdateInstancesOperation StartUpdateInstances(VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, CancellationToken cancellationToken = default)
         {
             if (vmInstanceIDs == null)
             {
@@ -1380,7 +1380,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restClient.UpdateInstances(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                return new VirtualMachineScaleSetsUpdateInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateUpdateInstancesRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetUpdateInstancesOperation(_clientDiagnostics, Pipeline, _restClient.CreateUpdateInstancesRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1430,14 +1430,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don&apos;t have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state. </summary>
         /// <param name="vmScaleSetReimageInput"> Parameters for Reimaging VM ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetsReimageOperation> StartReimageAsync(VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetReimageOperation> StartReimageAsync(VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartReimage");
             scope.Start();
             try
             {
                 var response = await _restClient.ReimageAsync(Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsReimageOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput).Request, response);
+                return new VirtualMachineScaleSetReimageOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput).Request, response);
             }
             catch (Exception e)
             {
@@ -1449,14 +1449,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don&apos;t have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state. </summary>
         /// <param name="vmScaleSetReimageInput"> Parameters for Reimaging VM ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetsReimageOperation StartReimage(VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetReimageOperation StartReimage(VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartReimage");
             scope.Start();
             try
             {
                 var response = _restClient.Reimage(Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput, cancellationToken);
-                return new VirtualMachineScaleSetsReimageOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput).Request, response);
+                return new VirtualMachineScaleSetReimageOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageRequest(Id.ResourceGroupName, Id.Name, vmScaleSetReimageInput).Request, response);
             }
             catch (Exception e)
             {
@@ -1506,14 +1506,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed disks. </summary>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetsReimageAllOperation> StartReimageAllAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetReimageAllOperation> StartReimageAllAsync(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartReimageAll");
             scope.Start();
             try
             {
                 var response = await _restClient.ReimageAllAsync(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsReimageAllOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageAllRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetReimageAllOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageAllRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1525,14 +1525,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed disks. </summary>
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetsReimageAllOperation StartReimageAll(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetReimageAllOperation StartReimageAll(VirtualMachineScaleSetVMInstanceIDs vmInstanceIDs = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.StartReimageAll");
             scope.Start();
             try
             {
                 var response = _restClient.ReimageAll(Id.ResourceGroupName, Id.Name, vmInstanceIDs, cancellationToken);
-                return new VirtualMachineScaleSetsReimageAllOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageAllRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
+                return new VirtualMachineScaleSetReimageAllOperation(_clientDiagnostics, Pipeline, _restClient.CreateReimageAllRequest(Id.ResourceGroupName, Id.Name, vmInstanceIDs).Request, response);
             }
             catch (Exception e)
             {
@@ -1595,7 +1595,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The input object for SetOrchestrationServiceState API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualMachineScaleSetsSetOrchestrationServiceStateOperation> StartSetOrchestrationServiceStateAsync(OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetSetOrchestrationServiceStateOperation> StartSetOrchestrationServiceStateAsync(OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1607,7 +1607,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restClient.SetOrchestrationServiceStateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetsSetOrchestrationServiceStateOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetOrchestrationServiceStateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new VirtualMachineScaleSetSetOrchestrationServiceStateOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetOrchestrationServiceStateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1620,7 +1620,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The input object for SetOrchestrationServiceState API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualMachineScaleSetsSetOrchestrationServiceStateOperation StartSetOrchestrationServiceState(OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetSetOrchestrationServiceStateOperation StartSetOrchestrationServiceState(OrchestrationServiceStateInput parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -1632,7 +1632,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restClient.SetOrchestrationServiceState(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return new VirtualMachineScaleSetsSetOrchestrationServiceStateOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetOrchestrationServiceStateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                return new VirtualMachineScaleSetSetOrchestrationServiceStateOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetOrchestrationServiceStateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {

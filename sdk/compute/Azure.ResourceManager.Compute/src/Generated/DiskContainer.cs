@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
-        public virtual DisksCreateOrUpdateOperation StartCreateOrUpdate(string diskName, DiskData disk, CancellationToken cancellationToken = default)
+        public virtual DiskCreateOrUpdateOperation StartCreateOrUpdate(string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
             if (diskName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, diskName, disk, cancellationToken);
-                return new DisksCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskName, disk).Request, response);
+                return new DiskCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskName, disk).Request, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
-        public async virtual Task<DisksCreateOrUpdateOperation> StartCreateOrUpdateAsync(string diskName, DiskData disk, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskCreateOrUpdateOperation> StartCreateOrUpdateAsync(string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
             if (diskName == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, diskName, disk, cancellationToken).ConfigureAwait(false);
-                return new DisksCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskName, disk).Request, response);
+                return new DiskCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskName, disk).Request, response);
             }
             catch (Exception e)
             {
@@ -398,9 +398,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("DiskContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -421,9 +421,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("DiskContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

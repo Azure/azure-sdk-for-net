@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Deletes a disk encryption set. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DiskEncryptionSetsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<DiskEncryptionSetDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new DiskEncryptionSetsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new DiskEncryptionSetDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Deletes a disk encryption set. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DiskEncryptionSetsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual DiskEncryptionSetDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new DiskEncryptionSetsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new DiskEncryptionSetDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Patch disk encryption set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSet"/> is null. </exception>
-        public async virtual Task<DiskEncryptionSetsUpdateOperation> StartUpdateAsync(DiskEncryptionSetUpdate diskEncryptionSet, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskEncryptionSetUpdateOperation> StartUpdateAsync(DiskEncryptionSetUpdate diskEncryptionSet, CancellationToken cancellationToken = default)
         {
             if (diskEncryptionSet == null)
             {
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, diskEncryptionSet, cancellationToken).ConfigureAwait(false);
-                return new DiskEncryptionSetsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, diskEncryptionSet).Request, response);
+                return new DiskEncryptionSetUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, diskEncryptionSet).Request, response);
             }
             catch (Exception e)
             {
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Patch disk encryption set operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSet"/> is null. </exception>
-        public virtual DiskEncryptionSetsUpdateOperation StartUpdate(DiskEncryptionSetUpdate diskEncryptionSet, CancellationToken cancellationToken = default)
+        public virtual DiskEncryptionSetUpdateOperation StartUpdate(DiskEncryptionSetUpdate diskEncryptionSet, CancellationToken cancellationToken = default)
         {
             if (diskEncryptionSet == null)
             {
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Name, diskEncryptionSet, cancellationToken);
-                return new DiskEncryptionSetsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, diskEncryptionSet).Request, response);
+                return new DiskEncryptionSetUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, diskEncryptionSet).Request, response);
             }
             catch (Exception e)
             {

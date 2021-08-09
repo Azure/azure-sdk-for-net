@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The operation to delete the restore point collection. This operation will also delete all the contained restore points. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<RestorePointCollectionsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<RestorePointCollectionDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RestorePointCollectionOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new RestorePointCollectionsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new RestorePointCollectionDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The operation to delete the restore point collection. This operation will also delete all the contained restore points. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual RestorePointCollectionsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual RestorePointCollectionDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RestorePointCollectionOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new RestorePointCollectionsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new RestorePointCollectionDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {

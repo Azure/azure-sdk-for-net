@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Delete a dedicated host group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DedicatedHostGroupsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<DedicatedHostGroupDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DedicatedHostGroupOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new DedicatedHostGroupsDeleteOperation(response);
+                return new DedicatedHostGroupDeleteOperation(response);
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Delete a dedicated host group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DedicatedHostGroupsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual DedicatedHostGroupDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DedicatedHostGroupOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new DedicatedHostGroupsDeleteOperation(response);
+                return new DedicatedHostGroupDeleteOperation(response);
             }
             catch (Exception e)
             {

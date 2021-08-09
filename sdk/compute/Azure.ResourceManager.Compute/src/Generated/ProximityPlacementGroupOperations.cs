@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Delete a proximity placement group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ProximityPlacementGroupsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ProximityPlacementGroupDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroupOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ProximityPlacementGroupsDeleteOperation(response);
+                return new ProximityPlacementGroupDeleteOperation(response);
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Delete a proximity placement group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ProximityPlacementGroupsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual ProximityPlacementGroupDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ProximityPlacementGroupOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new ProximityPlacementGroupsDeleteOperation(response);
+                return new ProximityPlacementGroupDeleteOperation(response);
             }
             catch (Exception e)
             {

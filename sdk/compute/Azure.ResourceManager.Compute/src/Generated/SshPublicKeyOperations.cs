@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Delete an SSH public key. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SshPublicKeysDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<SshPublicKeyDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SshPublicKeyOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new SshPublicKeysDeleteOperation(response);
+                return new SshPublicKeyDeleteOperation(response);
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Delete an SSH public key. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SshPublicKeysDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual SshPublicKeyDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SshPublicKeyOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new SshPublicKeysDeleteOperation(response);
+                return new SshPublicKeyDeleteOperation(response);
             }
             catch (Exception e)
             {
