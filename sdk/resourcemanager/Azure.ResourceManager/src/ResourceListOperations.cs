@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<GenericResourceExpanded> GetAtContext(
+        public static Pageable<GenericResource> GetAtContext(
             ResourceGroup resourceGroup,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns>An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<GenericResourceExpanded> GetAtContextAsync(
+        public static AsyncPageable<GenericResource> GetAtContextAsync(
             ResourceGroup resourceGroup,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<GenericResourceExpanded> GetAtContext(
+        public static Pageable<GenericResource> GetAtContext(
             Subscription subscription,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<GenericResourceExpanded> GetAtContextAsync(
+        public static AsyncPageable<GenericResource> GetAtContextAsync(
             Subscription subscription,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Core
             return new GenericResourceContainer(new ClientContext(resourceOperations.ClientOptions, resourceOperations.Credential, resourceOperations.BaseUri, resourceOperations.Pipeline), resourceOperations.Id);
         }
 
-        private static AsyncPageable<GenericResourceExpanded> ListAtContextInternalAsync(
+        private static AsyncPageable<GenericResource> ListAtContextInternalAsync(
             ArmResource resourceOperations,
             string scopeFilter,
             ResourceFilterCollection resourceFilters = null,
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Core
             CancellationToken cancellationToken = default)
         {
             var restClient = GetGenericResourceContainer(resourceOperations);
-            AsyncPageable<GenericResourceExpanded> result;
+            AsyncPageable<GenericResource> result;
             if (scopeFilter == null)
             {
                 result = restClient.GetAllAsync(resourceFilters?.ToString(), expand, top, cancellationToken);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Core
             return result;
         }
 
-        private static Pageable<GenericResourceExpanded> ListAtContextInternal(
+        private static Pageable<GenericResource> ListAtContextInternal(
             ArmResource resourceOperations,
             string scopeFilter = null,
             ResourceFilterCollection resourceFilters = null,
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Core
             CancellationToken cancellationToken = default)
         {
             var restClient = GetGenericResourceContainer(resourceOperations);
-            Pageable<GenericResourceExpanded> result;
+            Pageable<GenericResource> result;
             if (scopeFilter == null)
             {
                 result = restClient.GetAll(resourceFilters?.ToString(), expand, top, cancellationToken);

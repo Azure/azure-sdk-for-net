@@ -229,7 +229,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
         /// <returns> The list of operations that can be performed over the GenericResources. </returns>
-        public virtual IReadOnlyList<GenericResourceOperations> GetGenericResource(params string[] ids)
+        public virtual IReadOnlyList<GenericResource> GetGenericResource(params string[] ids)
         {
             return GetGenericResourceOperationsInternal(ids);
         }
@@ -239,22 +239,22 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
         /// <returns> The list of operations that can be performed over the GenericResources. </returns>
-        public virtual IReadOnlyList<GenericResourceOperations> GetGenericResource(IEnumerable<string> ids)
+        public virtual IReadOnlyList<GenericResource> GetGenericResource(IEnumerable<string> ids)
         {
             return GetGenericResourceOperationsInternal(ids);
         }
 
-        private IReadOnlyList<GenericResourceOperations> GetGenericResourceOperationsInternal(IEnumerable<string> ids)
+        private IReadOnlyList<GenericResource> GetGenericResourceOperationsInternal(IEnumerable<string> ids)
         {
             if (ids == null)
             {
                 throw new ArgumentNullException(nameof(ids));
             }
 
-            var genericRespirceOperations = new ChangeTrackingList<GenericResourceOperations>();
+            var genericRespirceOperations = new ChangeTrackingList<GenericResource>();
             foreach (string id in ids)
             {
-                genericRespirceOperations.Add(new GenericResourceOperations(DefaultSubscription, id));
+                genericRespirceOperations.Add(new GenericResource(DefaultSubscription, id));
             }
             return genericRespirceOperations;
         }
@@ -264,14 +264,14 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the resource to retrieve. </param>
         /// <returns> The operations that can be performed over a specific GenericResource. </returns>
-        public virtual GenericResourceOperations GetGenericResource(string id)
+        public virtual GenericResource GetGenericResource(string id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            return new GenericResourceOperations(DefaultSubscription, id);
+            return new GenericResource(DefaultSubscription, id);
         }
 
         /// <summary>

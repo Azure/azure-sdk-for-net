@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Tests
             var genericResourceOperationsList = Client.GetGenericResource(ids);
 
             int index = 0;
-            foreach (GenericResourceOperations operations in genericResourceOperationsList)
+            foreach (GenericResource operations in genericResourceOperationsList)
             {
                 Assert.AreEqual(ids[index], operations.Id.StringValue);
                 index++;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Tests
             genericResourceOperationsList = Client.GetGenericResource(ids[0], ids[1], ids[2], ids[3]);
 
             index = 0;
-            foreach (GenericResourceOperations operations in genericResourceOperationsList)
+            foreach (GenericResource operations in genericResourceOperationsList)
             {
                 Assert.AreEqual(ids[index], operations.Id.StringValue);
                 index++;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Tests
 
             var genericResourceOperationsList = Client.GetGenericResource(ids);
 
-            foreach (GenericResourceOperations operations in genericResourceOperationsList)
+            foreach (GenericResource operations in genericResourceOperationsList)
             {
                 var genericResource = await operations.GetAsync();
                 Assert.AreEqual(200, genericResource.GetRawResponse().Status);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Tests
 
             var genericResourceOperationsList = Client.GetGenericResource(ids);
 
-            foreach (GenericResourceOperations operations in genericResourceOperationsList)
+            foreach (GenericResource operations in genericResourceOperationsList)
             {
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await operations.GetAsync());
                 Assert.AreEqual(404, exception.Status);
