@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             string location = "eastus2euap";
             //string workspaceLocation = "East US";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName,location);
 
             //Create network security group
             string networkSecurityGroupName = Recording.GenerateAssetName("azsmnet");
             var networkSecurityGroup = new NetworkSecurityGroupData() { Location = location, };
 
             // Put Nsg
-            var securityGroupContainer = GetResourceGroup(resourceGroupName).GetNetworkSecurityGroups();
+            var securityGroupContainer = resourceGroup.Value.GetNetworkSecurityGroups();
             NetworkSecurityGroupsCreateOrUpdateOperation putNsgResponseOperation = await securityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
             await putNsgResponseOperation.WaitForCompletionAsync();;
             // Get NSG
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var properties = new NetworkWatcherData { Location = location };
 
             //Create network Watcher
-            var networkWatcherContainer = GetResourceGroup(resourceGroupName).GetNetworkWatchers();
+            var networkWatcherContainer = resourceGroup.Value.GetNetworkWatchers();
             await networkWatcherContainer.CreateOrUpdateAsync(networkWatcherName, properties);
 
             //Create storage

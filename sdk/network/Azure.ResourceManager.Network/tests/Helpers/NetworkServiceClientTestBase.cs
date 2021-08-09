@@ -106,6 +106,10 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             return await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(TestEnvironment.Location));
         }
+        protected async Task<Response<Resources.ResourceGroup>> CreateResourceGroup(string name,string location)
+        {
+            return await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location));
+        }
 
         public async Task CreateVm(
             ResourcesManagementClient resourcesClient,
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             await deploymentWait.WaitForCompletionAsync();
         }
 
-        public async Task<ExpressRouteCircuit> CreateDefaultExpressRouteCircuit(string resourceGroupName, string circuitName, string location)
+        public async Task<ExpressRouteCircuit> CreateDefaultExpressRouteCircuit(Resources.ResourceGroup resourceGroup, string circuitName, string location)
         {
             var sku = new ExpressRouteCircuitSku
             {
@@ -191,7 +195,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             // Put circuit
-            var circuitContainer = GetResourceGroup(resourceGroupName).GetExpressRouteCircuits();
+            var circuitContainer = resourceGroup.GetExpressRouteCircuits();
             Operation<ExpressRouteCircuit> circuitOperation = await circuitContainer.StartCreateOrUpdateAsync(circuitName, circuit);
             Response<ExpressRouteCircuit> circuitResponse = await circuitOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", circuitResponse.Value.Data.ProvisioningState.ToString());
@@ -200,7 +204,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getCircuitResponse;
         }
 
-        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(string resourceGroupName, string circuitName)
+        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(Resources.ResourceGroup resourceGroup, string circuitName)
         {
             var peering = new ExpressRouteCircuitPeeringData()
             {
@@ -219,7 +223,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 },
             };
 
-            var circuitContainer = GetResourceGroup(resourceGroupName).GetExpressRouteCircuits();
+            var circuitContainer = resourceGroup.GetExpressRouteCircuits();
             Operation<ExpressRouteCircuitPeering> peerOperation = await circuitContainer.Get(circuitName).Value.GetExpressRouteCircuitPeerings().StartCreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeering> peerResponse = await peerOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
@@ -228,7 +232,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getCircuitResponse;
         }
 
-        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(string resourceGroupName, string circuitName)
+        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(Resources.ResourceGroup resourceGroup, string circuitName)
         {
             var ipv6Peering = new Ipv6ExpressRouteCircuitPeeringConfig()
             {
@@ -252,7 +256,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Ipv6PeeringConfig = ipv6Peering
             };
 
-            var circuitContainer = GetResourceGroup(resourceGroupName).GetExpressRouteCircuits();
+            var circuitContainer = resourceGroup.GetExpressRouteCircuits();
             Operation<ExpressRouteCircuitPeering> peerOperation = await circuitContainer.Get(circuitName).Value.GetExpressRouteCircuitPeerings().StartCreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeering> peerResponse = await peerOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());

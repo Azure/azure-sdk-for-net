@@ -155,7 +155,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Create the loadBalancer
             LoadBalancersCreateOrUpdateOperation putLoadBalancerOperation = await resourceGroup.Value.GetLoadBalancers().StartCreateOrUpdateAsync(lbName, loadBalancer);
             await putLoadBalancerOperation.WaitForCompletionAsync();
-            ;
             Response<LoadBalancer> getLoadBalancer = await resourceGroup.Value.GetLoadBalancers().GetAsync(lbName);
 
             // Verify the GET LoadBalancer
@@ -1129,26 +1128,21 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Response<LoadBalancer> getLoadBalancer = await loadBalancerContainer.GetAsync(lbName);
 
             // Associate the nic with LB
-            var ipConfigurationsResponse = nic1.GetNetworkInterfaceIPConfigurationsAsync();
-            var ipConfigurationsList = await ipConfigurationsResponse.ToEnumerableAsync();
-            ipConfigurationsList.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
-            ipConfigurationsList.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules.First());
-            ipConfigurationsList.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
-            ipConfigurationsList.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules[1]);
+            nic1.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
+            nic1.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules.First());
+            nic2.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
+            nic2.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules[1]);
 
             // Put Nics
             var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
             NetworkInterfacesCreateOrUpdateOperation nic1Operation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Data);
             await nic1Operation.WaitForCompletionAsync();
-            ;
 
             NetworkInterfacesCreateOrUpdateOperation nic2Operation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Data);
             await nic2Operation.WaitForCompletionAsync();
-            ;
 
             NetworkInterfacesCreateOrUpdateOperation nic3Operation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic3name, nic3.Data);
             await nic3Operation.WaitForCompletionAsync();
-            ;
 
             // Get Nics
             nic1 = await networkInterfaceContainer.GetAsync(nic1name);
@@ -1161,17 +1155,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[0].Id, nic1.Data.IpConfigurations[0].Id);
             Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[1].Id, nic2.Data.IpConfigurations[0].Id);
             Assert.AreEqual(nic1.Data.IpConfigurations[0].Id, getLoadBalancer.Value.Data.InboundNatRules.First().BackendIPConfiguration.Id);
-            Assert.AreEqual(nic3.Data.IpConfigurations[0].Id, getLoadBalancer.Value.Data.InboundNatRules[1].BackendIPConfiguration.Id);
 
             // Verify List NetworkInterfaces in LoadBalancer// Verify List NetworkInterfaces in LoadBalancer
             AsyncPageable<NetworkInterfaceData> listLoadBalancerNetworkInterfacesAP = getLoadBalancer.Value.GetLoadBalancerNetworkInterfacesAsync();
             List<NetworkInterfaceData> listLoadBalancerNetworkInterfaces = await listLoadBalancerNetworkInterfacesAP.ToEnumerableAsync();
-            Assert.AreEqual(3, listLoadBalancerNetworkInterfaces.Count());
+            Assert.AreEqual(2, listLoadBalancerNetworkInterfaces.Count());
 
             // Delete LoadBalancer
             LoadBalancersDeleteOperation deleteOperation = await getLoadBalancer.Value.StartDeleteAsync();
             await deleteOperation.WaitForCompletionResponseAsync();
-            ;
 
             // Verify Delete
             AsyncPageable<LoadBalancer> listLoadBalancerAP = loadBalancerContainer.GetAllAsync();

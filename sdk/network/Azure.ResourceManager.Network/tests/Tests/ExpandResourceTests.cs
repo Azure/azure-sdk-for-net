@@ -189,7 +189,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var loadBalancerContainer = resourceGroup.Value.GetLoadBalancers();
             Operation<LoadBalancer> putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbName, loadBalancer);
             await putLoadBalancerOperation.WaitForCompletionAsync();
-            ;
             Response<LoadBalancer> getLoadBalancer = await loadBalancerContainer.GetAsync(lbName);
 
             // Associate the nic with LB
@@ -199,6 +198,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //nic1.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.InboundNatRules.First());
             //nic2.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.BackendAddressPools.First());
             //nic3.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.InboundNatRules[1]);
+            nic1.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
+            nic1.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules[0]);
+            nic2.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
+            nic2.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules[1]);
+            nic3.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
 
             // Put Nics
             var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
@@ -207,11 +211,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Data);
             await createOrUpdateOperation2.WaitForCompletionAsync();
-            ;
 
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation3 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic3name, nic3.Data);
             await createOrUpdateOperation3.WaitForCompletionAsync();
-            ;
 
             // Get Nics
             await networkInterfaceContainer.GetAsync(nic1name);
