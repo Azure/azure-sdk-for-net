@@ -1163,6 +1163,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<BlobDownloadStreamingResult> DownloadStreaming(
             BlobBaseDownloadOptions options,
             CancellationToken cancellationToken = default) =>
@@ -1204,6 +1205,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingAsync(
             BlobBaseDownloadOptions options,
             CancellationToken cancellationToken = default) =>
@@ -1291,6 +1293,7 @@ namespace Azure.Storage.Blobs.Specialized
                         {
                             stream.CopyTo(readDestStream);
                         }
+                        readDestStream.Position = 0;
 
                         ContentHasher.GetHashResult computedHash = ContentHasher.GetHash(readDestStream, options.TransactionalHashingOptions.Algorithm);
                         switch (options.TransactionalHashingOptions.Algorithm)
@@ -1298,20 +1301,20 @@ namespace Azure.Storage.Blobs.Specialized
                             case TransactionalHashAlgorithm.MD5:
                                 if (!Enumerable.SequenceEqual(computedHash.MD5, response.Value.Details.ContentHash))
                                 {
-                                    throw new Exception();
+                                    throw new Exception(); // TODO better exception
                                 }
                                 break;
                             case TransactionalHashAlgorithm.StorageCrc64:
                                 if (!Enumerable.SequenceEqual(computedHash.StorageCrc64, response.GetRawResponse().Headers.TryGetValue("x-ms-content-crc64", out byte[] crc) ? crc : default))
                                 {
-                                    throw new Exception();
+                                    throw new Exception(); // TODO better exception
                                 }
                                 break;
                             default:
                                 throw new ArgumentException($"Could not verify payload with the specified transactional hash algorithm {options.TransactionalHashingOptions.Algorithm}.");
                         }
 
-                        // we've consumed the network stream to hash it; the return stream is now the buffered stream
+                        // we've consumed the network stream to hash it; return buffered stream to the user
                         stream = readDestStream;
                     }
 
@@ -1390,6 +1393,12 @@ namespace Azure.Storage.Blobs.Specialized
                         (long?)null);
             }
 
+            // if requesting hash, range is necessary on request
+            if (pageRange == default && options.TransactionalHashingOptions?.Algorithm != TransactionalHashAlgorithm.None)
+            {
+                pageRange = new HttpRange(0, Constants.MB);
+            }
+
             ClientConfiguration.Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
 
             ResponseWithHeaders<Stream, BlobDownloadHeaders> response;
@@ -1405,8 +1414,8 @@ namespace Azure.Storage.Blobs.Specialized
                 response = await BlobRestClient.DownloadAsync(
                     range: pageRange?.ToString(),
                     leaseId: options.Conditions?.LeaseId,
-                    rangeGetContentMD5: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5,
-                    rangeGetContentCRC64: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64,
+                    rangeGetContentMD5: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    rangeGetContentCRC64: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1423,8 +1432,8 @@ namespace Azure.Storage.Blobs.Specialized
                 response = BlobRestClient.Download(
                     range: pageRange?.ToString(),
                     leaseId: options.Conditions?.LeaseId,
-                    rangeGetContentMD5: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5,
-                    rangeGetContentCRC64: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64,
+                    rangeGetContentMD5: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
+                    rangeGetContentCRC64: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64 ? true : null,
                     encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                     encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
@@ -1745,6 +1754,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<BlobDownloadResult> DownloadContent(
             BlobBaseDownloadOptions options,
             CancellationToken cancellationToken = default) =>
@@ -1794,6 +1804,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobDownloadResult>> DownloadContentAsync(
             BlobBaseDownloadOptions options,
             CancellationToken cancellationToken = default) =>
