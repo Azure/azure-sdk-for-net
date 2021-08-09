@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public class Subscription : ArmResource
     {
-        private ClientDiagnostics _clientDiagnostics;
-        private SubscriptionsRestOperations _restClient;
-        private FeaturesRestOperations _featuresRestOperations;
-        private SubscriptionData _data;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly SubscriptionsRestOperations _restClient;
+        private readonly FeaturesRestOperations _featuresRestOperations;
+        private readonly SubscriptionData _data;
 
         /// <summary>
         /// The resource type for subscription
@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Resources
         internal Subscription(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext,  id)
         {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary>
@@ -56,16 +59,9 @@ namespace Azure.ResourceManager.Resources
         {
             _data = subscriptionData;
             HasData = true;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Subscription"/> class.
-        /// </summary>
-        /// <param name="operations"> The resource operations to copy the options from. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected Subscription(ArmResource operations, ResourceIdentifier id)
-            : base(operations, id)
-        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary>
@@ -85,12 +81,6 @@ namespace Azure.ResourceManager.Resources
         /// Gets the valid resource type for this operation class
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
-
-        private SubscriptionsRestOperations RestClient => _restClient ??= new SubscriptionsRestOperations(Diagnostics, Pipeline, BaseUri);
-
-        private FeaturesRestOperations FeaturesRestOperations => _featuresRestOperations ??= new FeaturesRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary>
         /// Gets whether or not the current instance has data.
@@ -142,13 +132,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Subscription> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("Subscription.Get");
+            using var scope = _clientDiagnostics.CreateScope("Subscription.Get");
             scope.Start();
             try
             {
-                var response = RestClient.Get(Id.Name, cancellationToken);
+                var response = _restClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
 
                 return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
@@ -163,13 +153,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("Subscription.Get");
+            using var scope = _clientDiagnostics.CreateScope("Subscription.Get");
             scope.Start();
             try
             {
-                var response = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
                 return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
@@ -186,11 +176,11 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<LocationExpanded>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("Subscription.GetLocations");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetLocations");
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListLocationsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListLocationsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -208,11 +198,11 @@ namespace Azure.ResourceManager.Resources
         {
             Page<LocationExpanded> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("Subscription.GetLocations");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetLocations");
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListLocations(Id.Name, cancellationToken);
+                    var response = _restClient.ListLocations(Id.Name, cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -239,11 +229,11 @@ namespace Azure.ResourceManager.Resources
         {
             Page<Feature> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("Subscription.GetFeatures");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
-                    var response = FeaturesRestOperations.ListAll(cancellationToken);
+                    var response = _featuresRestOperations.ListAll(cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -254,11 +244,11 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("Subscription.GetFeatures");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
-                    var response = FeaturesRestOperations.ListAllNextPage(nextLink, cancellationToken);
+                    var response = _featuresRestOperations.ListAllNextPage(nextLink, cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -276,11 +266,11 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("Subscription.GetFeatures");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
-                    var response = await FeaturesRestOperations.ListAllAsync(cancellationToken).ConfigureAwait(false);
+                    var response = await _featuresRestOperations.ListAllAsync(cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -291,11 +281,11 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("Subscription.GetFeatures");
+                using var scope = _clientDiagnostics.CreateScope("Subscription.GetFeatures");
                 scope.Start();
                 try
                 {
-                    var response = await FeaturesRestOperations.ListAllNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    var response = await _featuresRestOperations.ListAllNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Resources
     /// <summary> The Providers service client. </summary>
     public partial class Provider : ArmResource
     {
-        private ClientDiagnostics _clientDiagnostics;
-        private ProviderRestOperations _restClient;
-        private ProviderData _data;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ProviderRestOperations _restClient;
+        private readonly ProviderData _data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Provider"/> class for mocking.
@@ -36,6 +36,8 @@ namespace Azure.ResourceManager.Resources
         internal Provider(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary>
@@ -48,16 +50,8 @@ namespace Azure.ResourceManager.Resources
         {
             _data = providerData;
             HasData = true;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Provider"/> class.
-        /// </summary>
-        /// <param name="operations"> The resource operations to copy the options from. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected Provider(ArmResource operations, ResourceIdentifier id)
-            : base(operations, id)
-        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new ProviderRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         /// <inheritdoc/>
@@ -67,10 +61,6 @@ namespace Azure.ResourceManager.Resources
         /// Gets the resource type definition for a ResourceType.
         /// </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/providers";
-
-        private ProviderRestOperations RestClient => _restClient ??= new ProviderRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary>
         /// Gets whether or not the current instance has data.
@@ -96,11 +86,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Provider>> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("Provider.Unregister");
+            using var scope = _clientDiagnostics.CreateScope("Provider.Unregister");
             scope.Start();
             try
             {
-                var result = await RestClient.UnregisterAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
+                var result = await _restClient.UnregisterAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Provider(this, result), result.GetRawResponse());
             }
             catch (Exception e)
@@ -115,11 +105,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Provider> Unregister(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("Provider.Unregister");
+            using var scope = _clientDiagnostics.CreateScope("Provider.Unregister");
             scope.Start();
             try
             {
-                var result = RestClient.Unregister(resourceProviderNamespace, cancellationToken);
+                var result = _restClient.Unregister(resourceProviderNamespace, cancellationToken);
                 return Response.FromValue(new Provider(this, result), result.GetRawResponse());
             }
             catch (Exception e)
@@ -134,11 +124,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Provider>> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("Provider.Register");
+            using var scope = _clientDiagnostics.CreateScope("Provider.Register");
             scope.Start();
             try
             {
-                var result = await RestClient.RegisterAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
+                var result = await _restClient.RegisterAsync(resourceProviderNamespace, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Provider(this, result), result.GetRawResponse());
             }
             catch (Exception e)
@@ -153,11 +143,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Provider> Register(string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("Provider.Register");
+            using var scope = _clientDiagnostics.CreateScope("Provider.Register");
             scope.Start();
             try
             {
-                var result = RestClient.Register(resourceProviderNamespace, cancellationToken);
+                var result = _restClient.Register(resourceProviderNamespace, cancellationToken);
                 return Response.FromValue(new Provider(this, result), result.GetRawResponse());
             }
             catch (Exception e)
@@ -171,14 +161,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Provider> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("Provider.Get");
+            using var scope = _clientDiagnostics.CreateScope("Provider.Get");
             scope.Start();
 
             try
             {
-                var result = RestClient.Get(Id.Name, null, cancellationToken);
+                var result = _restClient.Get(Id.Name, null, cancellationToken);
                 if (result.Value == null)
-                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+                    throw _clientDiagnostics.CreateRequestFailedException(result.GetRawResponse());
 
                 return Response.FromValue(new Provider(this, result), result.GetRawResponse());
             }
@@ -193,14 +183,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Provider>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("Provider.Get");
+            using var scope = _clientDiagnostics.CreateScope("Provider.Get");
             scope.Start();
 
             try
             {
-                var response = await RestClient.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
                 return Response.FromValue(new Provider(this, response), response.GetRawResponse());
             }

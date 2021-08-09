@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Management
     /// </summary>
     public class ManagementGroup : ArmResource
     {
-        private ClientDiagnostics _clientDiagnostics;
-        private ManagementGroupsRestOperations _restClient;
-        private ManagementGroupData _data;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ManagementGroupsRestOperations _restClient;
+        private readonly ManagementGroupData _data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroup"/> class for mocking.
@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Management
         protected internal ManagementGroup(ArmResource options, ResourceIdentifier id)
             : base(options, id)
         {
-            _restClient = new ManagementGroupsRestOperations(Diagnostics, Pipeline, BaseUri);
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
         }
 
         /// <summary>
@@ -49,9 +50,9 @@ namespace Azure.ResourceManager.Management
         {
             _data = resource;
             HasData = true;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
         }
-
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary>
         /// Gets the resource type definition for a ResourceType.
@@ -91,13 +92,13 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementGroup> Get(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupOperations.Get");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.Get");
             scope.Start();
             try
             {
                 var response = _restClient.Get(Id.Name, expand, recurse, filter, cacheControl, cancellationToken);
                 if (response.Value == null)
-                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
 
                 return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
@@ -119,13 +120,13 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagementGroup>> GetAsync(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupOperations.Get");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.Get");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAsync(Id.Name, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
                 return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupOperations.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.Delete");
             scope.Start();
             try
             {
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response> DeleteAsync(string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupOperations.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.Delete");
             scope.Start();
             try
             {
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ManagementGroupDeleteOperation StartDelete(string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupOperations.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.StartDelete");
             scope.Start();
             try
             {
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<ManagementGroupDeleteOperation> StartDeleteAsync(string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupOperations.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.StartDelete");
             scope.Start();
             try
             {
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.Management
         {
             Page<DescendantInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.Management
             }
             Page<DescendantInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -289,7 +290,7 @@ namespace Azure.ResourceManager.Management
         {
             async Task<Page<DescendantInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -304,7 +305,7 @@ namespace Azure.ResourceManager.Management
             }
             async Task<Page<DescendantInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -329,7 +330,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementGroup> Update(PatchManagementGroupOptions patchGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupOperations.Update");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.Update");
             scope.Start();
             try
             {
@@ -352,7 +353,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagementGroup>> UpdateAsync(PatchManagementGroupOptions patchGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ManagementGroupOperations.Update");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.Update");
             scope.Start();
             try
             {

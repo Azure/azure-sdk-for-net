@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public class GenericResource : ArmResource
     {
-        private ClientDiagnostics _clientDiagnostics;
-        private ResourcesRestOperations _restClient;
-        private GenericResourceData _data;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ResourcesRestOperations _restClient;
+        private readonly GenericResourceData _data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResource"/> class for mocking.
@@ -37,6 +37,8 @@ namespace Azure.ResourceManager.Resources
         internal GenericResource(ArmResource operations, ResourceIdentifier id)
             : base(operations, id)
         {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary>
@@ -50,14 +52,12 @@ namespace Azure.ResourceManager.Resources
         {
             _data = resource;
             HasData = true;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
-
-        private ResourcesRestOperations RestClient => _restClient ??= new ResourcesRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary>
         /// Gets whether or not the current instance has data.
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The status of the delete operation. </returns>
         public virtual Response Delete(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.Delete");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.Delete");
             scope.Start();
             try
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A <see cref="Task"/> that on completion returns the status of the delete operation. </returns>
         public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.Delete");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.Delete");
             scope.Start();
             try
             {
@@ -131,13 +131,13 @@ namespace Azure.ResourceManager.Resources
         /// </remarks>
         public virtual ResourceDeleteByIdOperation StartDelete(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.StartDelete");
             scope.Start();
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                var originalResponse = RestClient.DeleteById(Id, apiVersion, cancellationToken);
-                return new ResourceDeleteByIdOperation(Diagnostics, Pipeline, RestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
+                var originalResponse = _restClient.DeleteById(Id, apiVersion, cancellationToken);
+                return new ResourceDeleteByIdOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.Resources
         /// </remarks>
         public virtual async Task<ResourceDeleteByIdOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.StartDelete");
             scope.Start();
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var originalResponse = await RestClient.DeleteByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                return new ResourceDeleteByIdOperation(Diagnostics, Pipeline, RestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
+                var originalResponse = await _restClient.DeleteByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
+                return new ResourceDeleteByIdOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<GenericResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.AddTag");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.AddTag");
             scope.Start();
             try
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = TagResourceOperations.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue[key] = value;
                 TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
-                var originalResponse = RestClient.GetById(Id, apiVersion, cancellationToken);
+                var originalResponse = _restClient.GetById(Id, apiVersion, cancellationToken);
                 return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual async Task<Response<GenericResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.AddTag");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.AddTag");
             scope.Start();
             try
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = (await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
                 originalTags.Data.Properties.TagsValue[key] = value;
                 await TagContainer.CreateOrUpdateAsync(originalTags.Data, cancellationToken).ConfigureAwait(false);
-                var originalResponse = await RestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _restClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GenericResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.Get");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.Get");
             scope.Start();
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                var result = RestClient.GetById(Id, apiVersion, cancellationToken);
+                var result = _restClient.GetById(Id, apiVersion, cancellationToken);
                 if (result.Value == null)
-                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+                    throw _clientDiagnostics.CreateRequestFailedException(result.GetRawResponse());
 
                 return Response.FromValue(new GenericResource(this, result), result.GetRawResponse());
             }
@@ -254,14 +254,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GenericResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.Get");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.Get");
             scope.Start();
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var response = await RestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
                 return Response.FromValue(new GenericResource(this, response), response.GetRawResponse());
             }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<GenericResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.SetTags");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.SetTags");
             scope.Start();
             try
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Resources
                 var newTags = TagResourceOperations.Get(cancellationToken);
                 newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagContainer.CreateOrUpdate(new TagResourceData(newTags.Value.Data.Properties), cancellationToken);
-                var originalResponse = RestClient.GetById(Id, apiVersion, cancellationToken);
+                var originalResponse = _restClient.GetById(Id, apiVersion, cancellationToken);
                 return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual async Task<Response<GenericResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.SetTags");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.SetTags");
             scope.Start();
             try
             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Resources
                 var newTags = await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false);
                 newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagContainer.CreateOrUpdateAsync(new TagResourceData(newTags.Value.Data.Properties), cancellationToken).ConfigureAwait(false);
-                var originalResponse = await RestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _restClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual Response<GenericResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.RemoveTag");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.RemoveTag");
             scope.Start();
             try
             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = TagResourceOperations.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue.Remove(key);
                 TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
-                var originalResponse = RestClient.GetById(Id, apiVersion, cancellationToken);
+                var originalResponse = _restClient.GetById(Id, apiVersion, cancellationToken);
                 return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The updated resource with the tag added. </returns>
         public virtual async Task<Response<GenericResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.RemoveTag");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.RemoveTag");
             scope.Start();
             try
             {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = (await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
                 originalTags.Data.Properties.TagsValue.Remove(key);
                 await TagContainer.CreateOrUpdateAsync(originalTags.Data, cancellationToken).ConfigureAwait(false);
-                var originalResponse = await RestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _restClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GenericResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.Update");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.Update");
             scope.Start();
             try
             {
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.Update");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.Update");
             scope.Start();
             try
             {
@@ -446,13 +446,13 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartUpdate");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.StartUpdate");
             scope.Start();
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                var originalResponse = RestClient.UpdateById(Id, apiVersion, parameters, cancellationToken);
-                return new ResourceUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, originalResponse);
+                var originalResponse = _restClient.UpdateById(Id, apiVersion, parameters, cancellationToken);
+                return new ResourceUpdateByIdOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -472,13 +472,13 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartUpdate");
+            using var scope = _clientDiagnostics.CreateScope("GenericResourceOperations.StartUpdate");
             scope.Start();
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var originalResponse = await RestClient.UpdateByIdAsync(Id, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                return new ResourceUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, originalResponse);
+                var originalResponse = await _restClient.UpdateByIdAsync(Id, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
+                return new ResourceUpdateByIdOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {

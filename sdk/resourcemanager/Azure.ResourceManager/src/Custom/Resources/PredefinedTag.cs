@@ -4,7 +4,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,9 +13,9 @@ namespace Azure.ResourceManager.Resources
     /// <summary> The predefined tag client. </summary>
     public class PredefinedTag : ArmResource
     {
-        private ClientDiagnostics _clientDiagnostics;
-        private TagRestOperations _restClient;
-        private PredefinedTagData _data;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly TagRestOperations _restClient;
+        private readonly PredefinedTagData _data;
 
         /// <summary>
         /// The resource type for predefined tag.
@@ -38,6 +37,8 @@ namespace Azure.ResourceManager.Resources
         internal PredefinedTag(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary>
@@ -50,16 +51,14 @@ namespace Azure.ResourceManager.Resources
         {
             _data = data;
             HasData = true;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary>
         /// Gets the valid resource type for this operation class.
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
-
-        private TagRestOperations RestClient => _restClient ??= new TagRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary>
         /// Gets whether or not the current instance has data.
@@ -86,11 +85,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PredefinedTag.DeleteValue");
+            using var scope = _clientDiagnostics.CreateScope("PredefinedTag.DeleteValue");
             scope.Start();
             try
             {
-                return await RestClient.DeleteValueAsync(tagName, tagValue, cancellationToken).ConfigureAwait(false);
+                return await _restClient.DeleteValueAsync(tagName, tagValue, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -105,11 +104,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeleteValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PredefinedTag.DeleteValue");
+            using var scope = _clientDiagnostics.CreateScope("PredefinedTag.DeleteValue");
             scope.Start();
             try
             {
-                return RestClient.DeleteValue(tagName, tagValue, cancellationToken);
+                return _restClient.DeleteValue(tagName, tagValue, cancellationToken);
             }
             catch (Exception e)
             {
@@ -124,11 +123,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PredefinedTagValue>> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PredefinedTag.CreateOrUpdateValue");
+            using var scope = _clientDiagnostics.CreateScope("PredefinedTag.CreateOrUpdateValue");
             scope.Start();
             try
             {
-                return await RestClient.CreateOrUpdateValueAsync(tagName, tagValue, cancellationToken).ConfigureAwait(false);
+                return await _restClient.CreateOrUpdateValueAsync(tagName, tagValue, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -143,11 +142,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PredefinedTagValue> CreateOrUpdateValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PredefinedTag.CreateOrUpdateValue");
+            using var scope = _clientDiagnostics.CreateScope("PredefinedTag.CreateOrUpdateValue");
             scope.Start();
             try
             {
-                return RestClient.CreateOrUpdateValue(tagName, tagValue, cancellationToken);
+                return _restClient.CreateOrUpdateValue(tagName, tagValue, cancellationToken);
             }
             catch (Exception e)
             {
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(string tagName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PredefinedTag.Delete");
+            using var scope = _clientDiagnostics.CreateScope("PredefinedTag.Delete");
             scope.Start();
             try
             {
@@ -180,7 +179,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string tagName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PredefinedTag.Delete");
+            using var scope = _clientDiagnostics.CreateScope("PredefinedTag.Delete");
             scope.Start();
             try
             {
@@ -199,12 +198,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<PredefinedTagDeleteOperation> StartDeleteAsync(string tagName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PredefinedTag.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("PredefinedTag.StartDelete");
             scope.Start();
             try
             {
-                var response = await RestClient.DeleteAsync(tagName, cancellationToken).ConfigureAwait(false);
-                return new PredefinedTagDeleteOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, response);
+                var response = await _restClient.DeleteAsync(tagName, cancellationToken).ConfigureAwait(false);
+                return new PredefinedTagDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -218,12 +217,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual PredefinedTagDeleteOperation StartDelete(string tagName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("PredefinedTag.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("PredefinedTag.StartDelete");
             scope.Start();
             try
             {
-                var response = RestClient.Delete(tagName, cancellationToken);
-                return new PredefinedTagDeleteOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, response);
+                var response = _restClient.Delete(tagName, cancellationToken);
+                return new PredefinedTagDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name).Request, response);
             }
             catch (Exception e)
             {

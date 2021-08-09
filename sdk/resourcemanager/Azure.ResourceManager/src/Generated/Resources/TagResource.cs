@@ -16,16 +16,20 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public class TagResource : ArmResource
     {
-        private ClientDiagnostics _clientDiagnostics;
-        private TagResourceData _data;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly TagRestOperations _restClient;
+        private readonly TagResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="TagResource"/> class for mocking. </summary>
         protected TagResource()
         {
         }
 
-        internal TagResource(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal TagResource(ArmResource options, ResourceIdentifier id)
+            : base(options, id)
         {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref = "TagResource"/> class. </summary>
@@ -36,24 +40,9 @@ namespace Azure.ResourceManager.Resources
         {
             _data = resource;
             HasData = true;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new TagRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
-
-        private string _subscriptionId
-        {
-            get {
-                string subscriptionId;
-                Id.TryGetSubscriptionId(out subscriptionId);
-                return subscriptionId;
-            }
-        }
-
-        /// <summary> Represents the REST operations. </summary>
-        private TagRestOperations RestClient => new TagRestOperations(_clientDiagnostics, Pipeline, _subscriptionId, BaseUri);
-
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceIdentifier Id => base.Id as ResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => Id.ResourceType;
@@ -86,7 +75,7 @@ namespace Azure.ResourceManager.Resources
             if (parameters is null)
                 throw new ArgumentNullException(nameof(parameters));
 
-            using var scope = Diagnostics.CreateScope("TagResource.UpdateAtScope");
+            using var scope = _clientDiagnostics.CreateScope("TagResource.UpdateAtScope");
             scope.Start();
 
             try
@@ -112,7 +101,7 @@ namespace Azure.ResourceManager.Resources
             if (parameters is null)
                 throw new ArgumentNullException(nameof(parameters));
 
-            using var scope = Diagnostics.CreateScope("TagResource.UpdateAtScope");
+            using var scope = _clientDiagnostics.CreateScope("TagResource.UpdateAtScope");
             scope.Start();
 
             try
@@ -134,14 +123,14 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The tags associate with resource. </returns>
         public virtual Response<TagResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagResource.GetAtScope");
+            using var scope = _clientDiagnostics.CreateScope("TagResource.GetAtScope");
             scope.Start();
 
             try
             {
-                var response = RestClient.GetAtScope(Id, cancellationToken);
+                var response = _restClient.GetAtScope(Id, cancellationToken);
                 if (response.Value == null)
-                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
 
                 return Response.FromValue(new TagResource(this, response.Value), response.GetRawResponse());
             }
@@ -159,14 +148,14 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The tags associate with resource. </returns>
         public virtual async Task<Response<TagResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagResource.GetAtScope");
+            using var scope = _clientDiagnostics.CreateScope("TagResource.GetAtScope");
             scope.Start();
 
             try
             {
-                var response = await RestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
                 return Response.FromValue(new TagResource(this, response.Value), response.GetRawResponse());
             }
@@ -184,7 +173,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The delete response. </returns>
         public virtual Response Delete(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagResource.DeleteAtScope");
+            using var scope = _clientDiagnostics.CreateScope("TagResource.DeleteAtScope");
             scope.Start();
 
             try
@@ -205,7 +194,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> The delete response. </returns>
         public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagResource.DeleteAtScope");
+            using var scope = _clientDiagnostics.CreateScope("TagResource.DeleteAtScope");
             scope.Start();
 
             try
@@ -230,11 +219,11 @@ namespace Azure.ResourceManager.Resources
         /// </remarks>
         public virtual TagCreateOrUpdateOperation StartUpdate(TagPatchResource parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagResource.StartUpdateAtScope");
+            using var scope = _clientDiagnostics.CreateScope("TagResource.StartUpdateAtScope");
             scope.Start();
             try
             {
-                var response = RestClient.UpdateAtScope(Id, parameters, cancellationToken);
+                var response = _restClient.UpdateAtScope(Id, parameters, cancellationToken);
                 return new TagCreateOrUpdateOperation(this, response);
             }
             catch (Exception e)
@@ -255,11 +244,11 @@ namespace Azure.ResourceManager.Resources
         /// </remarks>
         public virtual async Task<TagCreateOrUpdateOperation> StartUpdateAsync(TagPatchResource parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagResource.StartUpdateAtScope");
+            using var scope = _clientDiagnostics.CreateScope("TagResource.StartUpdateAtScope");
             scope.Start();
             try
             {
-                var response = await RestClient.UpdateAtScopeAsync(Id, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateAtScopeAsync(Id, parameters, cancellationToken).ConfigureAwait(false);
                 return new TagCreateOrUpdateOperation(this, response);
             }
             catch (Exception e)
@@ -279,11 +268,11 @@ namespace Azure.ResourceManager.Resources
         /// </remarks>
         public virtual Response StartDelete(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagResource.StartDeleteAtScope");
+            using var scope = _clientDiagnostics.CreateScope("TagResource.StartDeleteAtScope");
             scope.Start();
             try
             {
-                return RestClient.DeleteAtScope(Id, cancellationToken);
+                return _restClient.DeleteAtScope(Id, cancellationToken);
             }
             catch (Exception e)
             {
@@ -302,11 +291,11 @@ namespace Azure.ResourceManager.Resources
         /// </remarks>
         public virtual async Task<Response> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("TagResource.StartDeleteAtScope");
+            using var scope = _clientDiagnostics.CreateScope("TagResource.StartDeleteAtScope");
             scope.Start();
             try
             {
-                return await RestClient.DeleteAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
+                return await _restClient.DeleteAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {

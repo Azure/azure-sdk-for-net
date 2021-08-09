@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public class Tenant : ArmResource
     {
-        private ProviderRestOperations _providerRestOperations;
-        private ClientDiagnostics _clientDiagnostics;
-        private TenantData _data;
+        private readonly ProviderRestOperations _providerRestOperations;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly TenantData _data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Tenant"/> class for mocking.
@@ -40,6 +40,8 @@ namespace Azure.ResourceManager.Resources
         {
             _data = tenantData;
             HasData = true;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, Guid.Empty.ToString(), BaseUri);
         }
 
         /// <summary>
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.Resources
         internal Tenant(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline)
             : base(new ClientContext(options, credential, baseUri, pipeline), ResourceIdentifier.RootResourceIdentifier)
         {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, Guid.Empty.ToString(), BaseUri);
         }
 
         /// <summary>
@@ -83,10 +87,6 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
-
-        private ProviderRestOperations ProviderRestClient => _providerRestOperations ??= new ProviderRestOperations(Diagnostics, Pipeline, Guid.Empty.ToString(), BaseUri);
-
         /// <summary>
         /// Provides a way to reuse the protected client context.
         /// </summary>
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.Resources
         {
             Page<ProviderInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("Tenant.GetProviders");
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetProviders");
                 scope.Start();
 
                 try
                 {
-                    Response<ProviderInfoListResult> response = ProviderRestClient.ListAtTenantScope(top, expand, cancellationToken);
+                    Response<ProviderInfoListResult> response = _providerRestOperations.ListAtTenantScope(top, expand, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.Resources
             }
             Page<ProviderInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("Tenant.GetProviders");
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetProviders");
                 scope.Start();
 
                 try
                 {
-                    Response<ProviderInfoListResult> response = ProviderRestClient.ListAtTenantScopeNextPage(nextLink, cancellationToken);
+                    Response<ProviderInfoListResult> response = _providerRestOperations.ListAtTenantScopeNextPage(nextLink, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<ProviderInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("Tenant.GetProviders");
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetProviders");
                 scope.Start();
 
                 try
                 {
-                    Response<ProviderInfoListResult> response = await ProviderRestClient.ListAtTenantScopeAsync(top, expand, cancellationToken).ConfigureAwait(false);
+                    Response<ProviderInfoListResult> response = await _providerRestOperations.ListAtTenantScopeAsync(top, expand, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ProviderInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("Tenant.GetProviders");
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetProviders");
                 scope.Start();
 
                 try
                 {
-                    Response<ProviderInfoListResult> response = await ProviderRestClient.ListAtTenantScopeNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    Response<ProviderInfoListResult> response = await _providerRestOperations.ListAtTenantScopeNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual Response<ProviderInfo> GetProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("Tenant.GetProvider");
+            using var scope = _clientDiagnostics.CreateScope("Tenant.GetProvider");
             scope.Start();
 
             try
             {
-                return ProviderRestClient.GetAtTenantScope(resourceProviderNamespace, expand, cancellationToken);
+                return _providerRestOperations.GetAtTenantScope(resourceProviderNamespace, expand, cancellationToken);
             }
             catch (Exception e)
             {
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual async Task<Response<ProviderInfo>> GetProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("Tenant.GetProvider");
+            using var scope = _clientDiagnostics.CreateScope("Tenant.GetProvider");
             scope.Start();
 
             try
             {
-                return await ProviderRestClient.GetAtTenantScopeAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+                return await _providerRestOperations.GetAtTenantScopeAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
