@@ -109,16 +109,11 @@ namespace Azure.Storage.Test.Shared
         }
 
         private BlobServiceClient GetServiceClientFromSharedKeyConfig(TenantConfiguration config, BlobClientOptions options = default)
-        {
-            Console.WriteLine("11111111111111111111111");
-            Console.WriteLine($"{config.AccountName},{config.AccountKey}");
-            Console.WriteLine("11111111111111111111111");
-            return InstrumentClient(
+            =>  InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
                     options ?? GetOptions()));
-        }
 
         private BlobServiceClient GetSecondaryReadServiceClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
         {
@@ -291,8 +286,13 @@ namespace Azure.Storage.Test.Shared
             PublicAccessType? publicAccessType = default,
             bool premium = default)
         {
+            BlobClientOptions options = default;
             containerName ??= GetNewContainerName();
-            service ??= GetServiceClient_SharedKey();
+            service ??= InstrumentClient(
+                new BlobServiceClient(
+                    new Uri(TestConfigDefault.BlobServiceEndpoint),
+                    new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
+                    options ?? GetOptions()));
 
             if (publicAccessType == default)
             {

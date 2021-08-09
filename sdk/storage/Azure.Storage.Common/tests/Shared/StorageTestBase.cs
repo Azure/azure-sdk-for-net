@@ -245,9 +245,6 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.Https,
             };
             sasBuilder.SetPermissions(permissions);
-            Console.WriteLine("11111111111111111111111");
-            Console.WriteLine($"{TestConfigDefault.AccountName},{TestConfigDefault.AccountKey}");
-            Console.WriteLine("11111111111111111111111");
             var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
             return new SharedAccessSignatureCredentials(sasBuilder.ToSasQueryParameters(cred).ToString());
         }

@@ -220,7 +220,12 @@ namespace Azure.Storage.Blobs.Test
             // Create a container using SAS for Auth
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            var serviceClient = GetServiceClient_SharedKey();
+            BlobClientOptions options = default;
+            var serviceClient = InstrumentClient(
+                new BlobServiceClient(
+                    new Uri(TestConfigDefault.BlobServiceEndpoint),
+                    new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
+                    options ?? GetOptions()));
             var sas = GetAccountSasCredentials().SasToken;
             var sasServiceClient = InstrumentClient(new BlobServiceClient(serviceClient.Uri, new AzureSasCredential(sas), GetOptions()));
             await using TestScenario scenario = Scenario(sasServiceClient);
