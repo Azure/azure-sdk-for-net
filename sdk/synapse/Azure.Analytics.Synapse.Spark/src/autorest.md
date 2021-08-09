@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-spark-2020-12-01
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/3d6211cf28f83236cdf78e7cfc50efd3fb7cba72/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/37c4ff1612668f5acec62dea729ca3a66b591d7f/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Spark
 public-clients: true
 security: AADToken
@@ -22,12 +22,4 @@ directive:
   from: swagger-document
   where: $.parameters.Endpoint
   transform: $.format = "url"
-```
-
-``` yaml
-directive:
-- from: swagger-document
-  where: $.parameters.LivyApiVersion
-  transform: >
-    $["x-ms-client-default"] = $.default;
 ```
