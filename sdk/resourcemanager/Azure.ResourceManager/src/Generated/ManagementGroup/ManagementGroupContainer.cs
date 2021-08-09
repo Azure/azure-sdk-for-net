@@ -60,16 +60,16 @@ namespace Azure.ResourceManager.Management
         /// .
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ManagementGroupInfo> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagementGroup> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagementGroupInfo> FirstPageFunc(int? pageSizeHint)
+            Page<ManagementGroup> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
                     var response = RestClient.List(cacheControl, skiptoken, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroupInfo(this, d)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroup(this, d)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.Management
                     throw;
                 }
             }
-            Page<ManagementGroupInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagementGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
                     var response = RestClient.ListNextPage(nextLink, cacheControl, skiptoken, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroupInfo(this, d)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroup(this, d)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.Management
         /// .
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ManagementGroupInfo> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagementGroup> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagementGroupInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagementGroup>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListAsync(cacheControl, skiptoken, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroupInfo(this, d)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroup(this, d)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Management
                     throw;
                 }
             }
-            async Task<Page<ManagementGroupInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagementGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListNextPageAsync(nextLink, cacheControl, skiptoken, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroupInfo(this, d)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroup(this, d)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         public bool HasData { get; }
 
-        /// <summary> Gets or sets the TagsResourceData. </summary>
+        /// <summary> Gets the TagsResourceData. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual TagResourceData Data
         {

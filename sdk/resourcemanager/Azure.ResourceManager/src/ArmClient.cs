@@ -325,6 +325,6 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="id"> The id of the management group operations. </param>
         /// <returns> A client to perform operations on the management group. </returns>
-        public virtual ManagementGroupOperations GetManagementGroup(string id) => _tenant.GetManagementGroup(id);
+        public virtual ManagementGroup GetManagementGroup(string id) => _tenant.GetManagementGroup(id);
     }
 }

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources
         public bool HasData { get; }
 
         /// <summary>
-        /// Gets the subscription data model.
+        /// Gets the tenant data model.
         /// </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual TenantData Data
@@ -238,9 +238,9 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="id"> The id of the management group operations. </param>
         /// <returns> A client to perform operations on the management group. </returns>
-        internal ManagementGroupOperations GetManagementGroup(string id)
+        internal ManagementGroup GetManagementGroup(string id)
         {
-            return new ManagementGroupOperations(this, id);
+            return new ManagementGroup(this, id);
         }
 
         /// <summary>

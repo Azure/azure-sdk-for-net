@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources
         public bool HasData { get; }
 
         /// <summary>
-        /// Gets the data representing this generic azure resource.
+        /// Gets the data representing this provider.
         /// </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ProviderData Data
