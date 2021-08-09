@@ -82,11 +82,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 _resourceName,
                 DataHelper.GenerateWorkspaceConnectionData()));
 
-            resource.Data.Value = "Updated";
+            resource.Data.Target = "www.google.com";
+            resource.Data.ValueFormat = null;
             Assert.DoesNotThrowAsync(async () => resource = await ws.GetWorkspaceConnections().CreateOrUpdateAsync(
                 _resourceName,
                 resource.Data));
-            Assert.AreEqual("Updated", resource.Data.Value);
+            Assert.AreEqual("www.google.com", resource.Data.Target);
         }
 
         [TestCase]
@@ -101,11 +102,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 _resourceName,
                 DataHelper.GenerateWorkspaceConnectionData())).WaitForCompletionAsync());
 
-            resource.Data.Value = "Updated";
+            resource.Data.Target = "www.google.com";
+            resource.Data.ValueFormat = null;
             Assert.DoesNotThrowAsync(async () => resource = await (await ws.GetWorkspaceConnections().StartCreateOrUpdateAsync(
                 _resourceName,
                 resource.Data)).WaitForCompletionAsync());
-            Assert.AreEqual("Updated", resource.Data.Value);
+            Assert.AreEqual("www.google.com", resource.Data.Target);
         }
 
         [TestCase]

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 
             OnlineEndpointTrackedResource parent = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _parentPrefix,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData());
+                DataHelper.GenerateOnlineEndpointTrackedResourceData(ws));
 
             _ = await parent.GetOnlineDeploymentTrackedResources().CreateOrUpdateAsync(
                 _resourceName,

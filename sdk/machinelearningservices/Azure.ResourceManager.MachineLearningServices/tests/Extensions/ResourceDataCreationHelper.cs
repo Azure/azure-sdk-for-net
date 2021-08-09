@@ -163,9 +163,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
             throw new NotImplementedException();
         }
 
-        public OnlineEndpointTrackedResourceData GenerateOnlineEndpointTrackedResourceData()
+        public OnlineEndpointTrackedResourceData GenerateOnlineEndpointTrackedResourceData(Workspace workspace)
         {
-            throw new NotImplementedException();
+            OnlineEndpoint properties = new OnlineEndpoint(EndpointAuthMode.AMLToken)
+            {
+                Keys = new EndpointAuthKeys() { PrimaryKey = "string", SecondaryKey = "string" },
+                Target = workspace.GetComputeResources().GetAsync("").Result.Value.Id.ToString(),
+                Traffic = { { "myDeployment1", 0 }, { "myDeployment2", 1 } },
+                Description = "Description"
+            };
+            return new OnlineEndpointTrackedResourceData(Location.WestUS2, properties) { Kind = "string"};
         }
 
         public PrivateEndpointConnectionData GeneratePrivateEndpointConnectionData()
@@ -175,7 +182,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
 
         public WorkspaceConnectionData GenerateWorkspaceConnectionData()
         {
-            throw new NotImplementedException();
+            return new WorkspaceConnectionData()
+            {
+                Category = "ACR",
+                Target = "www.facebook.com",
+                AuthType = "PAT",
+                Value = "secrets"
+            };
         }
     }
 }

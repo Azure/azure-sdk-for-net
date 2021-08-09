@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 
             _ = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData());
+                DataHelper.GenerateOnlineEndpointTrackedResourceData(ws));
             StopSessionRecording();
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             OnlineEndpointTrackedResource res = null;
             Assert.DoesNotThrowAsync(async () => res = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 deleteResourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData()));
+                DataHelper.GenerateOnlineEndpointTrackedResourceData(ws)));
             Assert.DoesNotThrowAsync(async () => _ = await res.DeleteAsync());
         }
 
