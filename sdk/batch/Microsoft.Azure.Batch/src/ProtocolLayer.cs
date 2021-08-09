@@ -1859,7 +1859,7 @@
                         // enforce that the returned object is the required type
                         ValidateReturnObject(request, typeof(IBatchRequest<TResponse>));
 
-                        // any changes must be communcated back to the caller
+                        // any changes must be communicated back to the caller
                         request = (Protocol.IBatchRequest<TResponse>)proxyObj;
                     }
                 }
@@ -1904,7 +1904,7 @@
                     // enforce that the returned object is the required type
                     ValidateReturnObject(responseFromIntercept, typeof(TResponse));
 
-                    // promote the intercetor response to official response
+                    // promote the interceptor response to official response
                     response = (TResponse)responseFromIntercept;
                 }
             }

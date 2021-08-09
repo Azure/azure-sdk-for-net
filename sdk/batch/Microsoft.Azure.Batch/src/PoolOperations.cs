@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Batch
         /// </remarks>
         public IList<BatchClientBehavior> CustomBehaviors { get; set; }
 
-#endregion  IInheeritedBehaviors
+#endregion  IInheritedBehaviors
 
 #region // PoolOperations
 

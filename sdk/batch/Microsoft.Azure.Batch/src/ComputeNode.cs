@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            // create the behavior managaer
+            // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             Task asyncTask = this.parentBatchClient.ProtocolLayer.DeleteComputeNodeUser(this.parentPoolId, this.Id, userName, bhMgr, cancellationToken);
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> object that represents the asynchronous operation.</returns>
         public Task GetRDPFileAsync(Stream rdpStream, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            // create the behavior managaer
+            // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             Task asyncTask = this.parentBatchClient.ProtocolLayer.GetComputeNodeRDPFile(this.parentPoolId, this.Id, rdpStream, bhMgr, cancellationToken);
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            // create the behavior managaer
+            // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             Task asyncTask = this.parentBatchClient.PoolOperations.GetRDPFileViaFileNameAsyncImpl(this.parentPoolId, this.Id, rdpFileNameToCreate, bhMgr, cancellationToken);
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Batch
             IEnumerable<BatchClientBehavior> additionalBehaviors = null, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            // create the behavior managaer
+            // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
             List<string> computeNodeIds = new List<string> {this.Id};
@@ -641,7 +641,7 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="Task"/> representing the asynchronous refresh operation.</returns>
         public async Task RefreshAsync(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            // create the behavior managaer
+            // create the behavior manager
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors, detailLevel);
 
             System.Threading.Tasks.Task<AzureOperationResponse<Models.ComputeNode, Models.ComputeNodeGetHeaders>> asyncTask = 
