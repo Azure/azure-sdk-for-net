@@ -3,7 +3,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
     public class HttpPipelineTests : ResourceManagerTestBase
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Core.Tests
             await _client.DefaultSubscription
                 .GetResourceGroups().Construct(Location.WestUS)
                 .CreateOrUpdateAsync(_rgName);
-            await foreach (var rg in _client.DefaultSubscription.GetResourceGroups().ListAsync())
+            await foreach (var rg in _client.DefaultSubscription.GetResourceGroups().GetAllAsync())
             {
                 Assert.AreEqual(rg.Pipeline.GetHashCode(), _client.DefaultSubscription.Pipeline.GetHashCode());
             }

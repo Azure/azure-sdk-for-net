@@ -78,12 +78,12 @@ The following examples show common scenarios using the `client` [created above](
 
 The only input required to a ask a question using an existing knowledge base is just the question itself:
 
-```C# Snippet:QuestionAnsweringClient_QueryKnowledgebase
-KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should my Surface battery last?");
+```C# Snippet:QuestionAnsweringClient_QueryKnowledgeBase
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should my Surface battery last?");
 
-Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("FAQ", options);
+Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
 
-foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
     Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");
@@ -99,15 +99,15 @@ If your knowledge base is configured for [chit-chat][questionanswering_docs_chat
 
 ```C# Snippet:QuestionAnsweringClient_Chat
 // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
-KnowledgebaseAnswer previousAnswer = answers.Answers.First();
-KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should charging take?")
+KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should charging take?")
 {
-    Context = new KnowledgebaseAnswerRequestContext(previousAnswer.Id.Value)
+    Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
 };
 
-Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("FAQ", options);
+Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
 
-foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
     Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");
@@ -126,7 +126,7 @@ For example, if you submit a question to a non-existant knowledge base, a `400` 
 ```C# Snippet:QuestionAnsweringClient_BadRequest
 try
 {
-    Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("invalid-knowledgebase", options);
+    Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("invalid-knowledgebase", options);
 }
 catch (RequestFailedException ex)
 {
@@ -204,8 +204,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [questionanswering_docs_chat]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base
 [questionanswering_docs_demos]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#demo
 [questionanswering_docs_features]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#features
-[questionanswering_nuget_package]: https://nuget.org/
-[questionanswering_refdocs]: https://docs.microsoft.com/dotnet/api/
+[questionanswering_nuget_package]: https://nuget.org/packages/Azure.AI.Language.QuestionAnswering/
+[questionanswering_refdocs]: https://docs.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
 [questionanswering_rest_docs]: https://docs.microsoft.com/rest/api/cognitiveservices-qnamaker/
 [questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
         /// <param name="data"> The data model representing the generic azure resource. </param>
-        internal PredefinedTag(OperationsBase operations, PredefinedTagData data)
+        internal PredefinedTag(ResourceOperations operations, PredefinedTagData data)
             : base(new ClientContext(operations.ClientOptions,operations.Credential, operations.BaseUri, operations.Pipeline), operations.Id)
         {
             Data = data;

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Azure.ResourceManager.Core;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class ReferenceTypeTests
     {

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -305,11 +306,6 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary>
-        /// Gets default Location object: West US.
-        /// </summary>
-        public static ref readonly Location Default => ref WestUS;
-
-        /// <summary>
         /// Gets the name of a location object.
         /// </summary>
         /// <returns> The name. </returns>
@@ -448,6 +444,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(this, obj))
@@ -467,6 +464,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return Name.GetHashCode();

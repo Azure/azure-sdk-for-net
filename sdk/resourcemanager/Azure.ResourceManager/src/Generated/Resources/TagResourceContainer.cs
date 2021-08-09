@@ -11,14 +11,14 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of tag and their operations over a scope. </summary>
-    public class TagResourceContainer : ContainerBase
+    public class TagResourceContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="TagResourceContainer"/> class for mocking. </summary>
         protected TagResourceContainer()
         {
         }
 
-        internal TagResourceContainer(OperationsBase operationsBase) : base(operationsBase)
+        internal TagResourceContainer(ResourceOperations operationsBase) : base(operationsBase)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -85,6 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(this, obj))
@@ -94,6 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return HashCodeBuilder.Combine(TenantId, PrincipalId);

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> The Providers service client. </summary>
-    public partial class ProviderOperations : ResourceOperationsBase<SubscriptionProviderIdentifier, Provider>
+    public partial class ProviderOperations : ResourceOperations
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderOperations"/> class for mocking.
@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Resources
         { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
+        /// Initializes a new instance of the <see cref="ProviderOperations"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"></param>
-        internal ProviderOperations(ClientContext clientContext, SubscriptionProviderIdentifier id)
+        internal ProviderOperations(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericResourceOperations"/> class.
+        /// Initializes a new instance of the <see cref="ProviderOperations"/> class.
         /// </summary>
         /// <param name="operations"> The resource operations to copy the options from. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProviderOperations(OperationsBase operations, SubscriptionProviderIdentifier id)
+        protected ProviderOperations(ResourceOperations operations, ResourceIdentifier id)
             : base(operations, id)
         {
         }
@@ -137,16 +137,20 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        public override Response<Provider> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets the current Provider from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Provider> Get(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
             scope.Start();
 
             try
             {
-                var originalResponse = RestClient.Get(Id.Name, null, cancellationToken);
-                return Response.FromValue(new Provider(this, originalResponse), originalResponse.GetRawResponse());
+                var result = RestClient.Get(Id.Name, null, cancellationToken);
+                if (result.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+
+                return Response.FromValue(new Provider(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,16 +159,20 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        public override async Task<Response<Provider>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets the current Provider from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<Provider>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ProvidersOperations.Get");
+            using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
             scope.Start();
 
             try
             {
-                var result = await RestClient.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Provider(this, result), result.GetRawResponse());
+                var response = await RestClient.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+
+                return Response.FromValue(new Provider(this, response), response.GetRawResponse());
             }
             catch (Exception e)
             {

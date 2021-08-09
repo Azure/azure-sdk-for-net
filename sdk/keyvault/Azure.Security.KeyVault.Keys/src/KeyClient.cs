@@ -1220,5 +1220,119 @@ namespace Azure.Security.KeyVault.Keys
                 throw;
             }
         }
+
+        /// <summary>
+        /// Releases a key.
+        /// </summary>
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// The key must be exportable.
+        /// This operation requires the keys/release permission.
+        /// </remarks>
+        /// <returns>The key release result containing the released key.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default) =>
+            ReleaseKey(name, null, target, options, cancellationToken);
+
+        /// <summary>
+        /// Releases a key.
+        /// </summary>
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="version">Optional version of the key to release.</param>
+        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// The key must be exportable.
+        /// This operation requires the keys/release permission.
+        /// </remarks>
+        /// <returns>The key release result containing the released key.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string version, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(target, nameof(target));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
+            scope.AddAttribute("key", name);
+            scope.Start();
+
+            options ??= new();
+            options.Target = target;
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, options, () => new ReleaseKeyResult(), cancellationToken, KeysPath, name, "/", version, "/release");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Releases a key.
+        /// </summary>
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// The key must be exportable.
+        /// This operation requires the keys/release permission.
+        /// </remarks>
+        /// <returns>The key release result containing the released key.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default) =>
+            ReleaseKeyAsync(name, null, target, options, cancellationToken);
+
+        /// <summary>
+        /// Releases a key.
+        /// </summary>
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="version">Optional version of the key to release.</param>
+        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// The key must be exportable.
+        /// This operation requires the keys/release permission.
+        /// </remarks>
+        /// <returns>The key release result containing the released key.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string version, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(target, nameof(target));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
+            scope.AddAttribute("key", name);
+            scope.Start();
+
+            options ??= new();
+            options.Target = target;
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, options, () => new ReleaseKeyResult(), cancellationToken, KeysPath, name, "/", version, "/release").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

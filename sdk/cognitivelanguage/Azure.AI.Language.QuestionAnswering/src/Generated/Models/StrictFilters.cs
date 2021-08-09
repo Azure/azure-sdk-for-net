@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
-    /// <summary> filters over knowledgebase. </summary>
+    /// <summary> filters over knowledge base. </summary>
     public partial class StrictFilters
     {
         /// <summary> Initializes a new instance of StrictFilters. </summary>
@@ -21,9 +21,9 @@ namespace Azure.AI.Language.QuestionAnswering.Models
 
         /// <summary> Find QnAs that are associated with the given list of metadata. </summary>
         public MetadataFilter MetadataFilter { get; set; }
-        /// <summary> Find QnAs that are associated with the given list of sources in knowledgebase. </summary>
+        /// <summary> Find QnAs that are associated with the given list of sources in knowledge base. </summary>
         public IList<string> SourceFilter { get; }
         /// <summary> (Optional) Set to &apos;OR&apos; for joining metadata using &apos;OR&apos; operation. </summary>
-        public CompoundOperationType? CompoundOperation { get; set; }
+        public CompoundOperationKind? CompoundOperation { get; set; }
     }
 }

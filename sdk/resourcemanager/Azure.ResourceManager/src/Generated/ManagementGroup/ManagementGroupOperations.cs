@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Management
     /// <summary>
     /// A class representing the operations that can be performed over a specific ManagementGroup.
     /// </summary>
-    public class ManagementGroupOperations : ResourceOperationsBase<TenantResourceIdentifier, ManagementGroup>
+    public class ManagementGroupOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ManagementGroupsRestOperations _restClient;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Management
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ManagementGroupOperations(OperationsBase options, TenantResourceIdentifier id)
+        protected internal ManagementGroupOperations(ResourceOperations options, ResourceIdentifier id)
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -46,18 +46,6 @@ namespace Azure.ResourceManager.Management
 
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceType;
-
-        /// <inheritdoc/>
-        public override Response<ManagementGroup> Get(CancellationToken cancellationToken = default)
-        {
-            return Get(null, null, null, null, cancellationToken);
-        }
-
-        /// <inheritdoc/>
-        public async override Task<Response<ManagementGroup>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            return await GetAsync(null, null, null, null, cancellationToken).ConfigureAwait(false);
-        }
 
         /// <summary>
         /// Get the details of the management group.
@@ -75,6 +63,9 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = _restClient.Get(Id.Name, expand, recurse, filter, cacheControl, cancellationToken);
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
                 return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,6 +91,9 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = await _restClient.GetAsync(Id.Name, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+
                 return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -162,14 +156,14 @@ namespace Azure.ResourceManager.Management
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagementGroupsDeleteOperation StartDelete(string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual ManagementGroupDeleteOperation StartDelete(string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.StartDelete");
             scope.Start();
             try
             {
                 var originalResponse = _restClient.Delete(Id.Name, cacheControl, cancellationToken);
-                return new ManagementGroupsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name, cacheControl).Request, originalResponse);
+                return new ManagementGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name, cacheControl).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -185,14 +179,14 @@ namespace Azure.ResourceManager.Management
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagementGroupsDeleteOperation> StartDeleteAsync(string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagementGroupDeleteOperation> StartDeleteAsync(string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.StartDelete");
             scope.Start();
             try
             {
                 var originalResponse = await _restClient.DeleteAsync(Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
-                return new ManagementGroupsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name, cacheControl).Request, originalResponse);
+                return new ManagementGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Name, cacheControl).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -212,11 +206,11 @@ namespace Azure.ResourceManager.Management
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<DescendantInfo> ListDescendants(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DescendantInfo> GetDescendants(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<DescendantInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.ListDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -231,7 +225,7 @@ namespace Azure.ResourceManager.Management
             }
             Page<DescendantInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.ListDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -258,11 +252,11 @@ namespace Azure.ResourceManager.Management
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<DescendantInfo> ListDescendantsAsync(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DescendantInfo> GetDescendantsAsync(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DescendantInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.ListDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -277,7 +271,7 @@ namespace Azure.ResourceManager.Management
             }
             async Task<Page<DescendantInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.ListDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -297,16 +291,16 @@ namespace Azure.ResourceManager.Management
         /// Update a management group.
         /// .
         /// </summary>
-        /// <param name="patchGroupRequest"> Management group patch parameters. </param>
+        /// <param name="patchGroupOptions"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagementGroup> Update(PatchManagementGroupRequest patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroup> Update(PatchManagementGroupOptions patchGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.Update");
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.Name, patchGroupRequest, cacheControl, cancellationToken);
+                var response = _restClient.Update(Id.Name, patchGroupOptions, cacheControl, cancellationToken);
                 return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -320,16 +314,16 @@ namespace Azure.ResourceManager.Management
         /// Update a management group.
         /// .
         /// </summary>
-        /// <param name="patchGroupRequest"> Management group patch parameters. </param>
+        /// <param name="patchGroupOptions"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagementGroup>> UpdateAsync(PatchManagementGroupRequest patchGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ManagementGroup>> UpdateAsync(PatchManagementGroupOptions patchGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.Name, patchGroupRequest, cacheControl, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateAsync(Id.Name, patchGroupOptions, cacheControl, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

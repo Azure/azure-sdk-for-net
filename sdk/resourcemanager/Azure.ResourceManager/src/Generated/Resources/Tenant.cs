@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
         /// <param name="tenantData"> The data model representing the generic azure resource. </param>
-        internal Tenant(OperationsBase operations, TenantData tenantData)
+        internal Tenant(ResourceOperations operations, TenantData tenantData)
             : base(operations.ClientOptions, operations.Credential, operations.BaseUri, operations.Pipeline)
         {
             Data = tenantData;

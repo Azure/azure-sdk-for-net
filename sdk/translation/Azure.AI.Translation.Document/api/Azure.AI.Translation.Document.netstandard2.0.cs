@@ -1,5 +1,23 @@
 namespace Azure.AI.Translation.Document
 {
+    public partial class DocumentFilter
+    {
+        public DocumentFilter() { }
+        public System.DateTimeOffset CreatedAfter { get { throw null; } set { } }
+        public System.DateTimeOffset CreatedBefore { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Ids { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentFilterOrder> OrderBy { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentTranslationStatus> Statuses { get { throw null; } }
+    }
+    public partial class DocumentFilterOrder
+    {
+        public DocumentFilterOrder(Azure.AI.Translation.Document.DocumentFilterProperty property, bool asc = true) { }
+        public Azure.AI.Translation.Document.DocumentFilterProperty Property { get { throw null; } set { } }
+    }
+    public enum DocumentFilterProperty
+    {
+        CreatedOn = 0,
+    }
     public partial class DocumentStatus
     {
         internal DocumentStatus() { }
@@ -23,8 +41,8 @@ namespace Azure.AI.Translation.Document
         public DocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.Translation.Document.TranslationStatus> GetAllTranslationStatuses(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.Translation.Document.TranslationStatus> GetAllTranslationStatusesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.Translation.Document.TranslationStatus> GetAllTranslationStatuses(Azure.AI.Translation.Document.TranslationFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.Translation.Document.TranslationStatus> GetAllTranslationStatusesAsync(Azure.AI.Translation.Document.TranslationFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Document.FileFormat>> GetSupportedDocumentFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -87,6 +105,14 @@ namespace Azure.AI.Translation.Document
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationTarget> Targets { get { throw null; } }
         public void AddTarget(System.Uri targetUri, string languageCode, Azure.AI.Translation.Document.TranslationGlossary glossary = null) { }
     }
+    public static partial class DocumentTranslationModelFactory
+    {
+        public static Azure.AI.Translation.Document.DocumentStatus DocumentStatus(string id, System.Uri sourceDocumentUri, Azure.AI.Translation.Document.DocumentTranslationError error, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, string translatedTo, float progress, long charactersCharged) { throw null; }
+        public static Azure.AI.Translation.Document.DocumentStatus DocumentStatus(string id, System.Uri sourceDocumentUri, System.Uri translatedDocumentUri, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, string translatedTo, float progress, long charactersCharged) { throw null; }
+        public static Azure.AI.Translation.Document.DocumentTranslationError DocumentTranslationError(Azure.AI.Translation.Document.DocumentTranslationErrorCode errorCode, string message, string target) { throw null; }
+        public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IEnumerable<string> fileExtensions = null, System.Collections.Generic.IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IEnumerable<string> formatVersions = null) { throw null; }
+        public static Azure.AI.Translation.Document.TranslationStatus TranslationStatus(string id, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, Azure.AI.Translation.Document.DocumentTranslationError error, int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, long totalCharacterCharged) { throw null; }
+    }
     public partial class DocumentTranslationOperation : Azure.PageableOperation<Azure.AI.Translation.Document.DocumentStatus>
     {
         protected DocumentTranslationOperation() { }
@@ -107,8 +133,8 @@ namespace Azure.AI.Translation.Document
         public override Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatus> Value { get { throw null; } }
         public virtual void Cancel(System.Threading.CancellationToken cancellationToken) { }
         public virtual System.Threading.Tasks.Task CancelAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.Translation.Document.DocumentStatus> GetAllDocumentStatuses(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatus> GetAllDocumentStatusesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.Translation.Document.DocumentStatus> GetAllDocumentStatuses(Azure.AI.Translation.Document.DocumentFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatus> GetAllDocumentStatusesAsync(Azure.AI.Translation.Document.DocumentFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Translation.Document.DocumentStatus> GetDocumentStatus(string documentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Document.DocumentStatus>> GetDocumentStatusAsync(string documentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response GetRawResponse() { throw null; }
@@ -156,6 +182,24 @@ namespace Azure.AI.Translation.Document
         File = 0,
         Folder = 1,
     }
+    public partial class TranslationFilter
+    {
+        public TranslationFilter() { }
+        public System.DateTimeOffset? CreatedAfter { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedBefore { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Ids { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationFilterOrder> OrderBy { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentTranslationStatus> Statuses { get { throw null; } }
+    }
+    public partial class TranslationFilterOrder
+    {
+        public TranslationFilterOrder(Azure.AI.Translation.Document.TranslationFilterProperty property, bool asc = true) { }
+        public Azure.AI.Translation.Document.TranslationFilterProperty Property { get { throw null; } set { } }
+    }
+    public enum TranslationFilterProperty
+    {
+        CreatedOn = 0,
+    }
     public partial class TranslationGlossary
     {
         public TranslationGlossary(System.Uri glossaryUri, string format) { }
@@ -194,12 +238,5 @@ namespace Azure.AI.Translation.Document
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationGlossary> Glossaries { get { throw null; } }
         public string LanguageCode { get { throw null; } }
         public System.Uri TargetUri { get { throw null; } }
-    }
-}
-namespace Azure.AI.Translation.Document.Models
-{
-    public static partial class BatchDocumentTranslationModelFactory
-    {
-        public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IEnumerable<string> fileExtensions = null, System.Collections.Generic.IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IEnumerable<string> formatVersions = null) { throw null; }
     }
 }

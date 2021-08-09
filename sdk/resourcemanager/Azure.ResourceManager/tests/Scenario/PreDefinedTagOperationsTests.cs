@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class PredefinedTagOperationsTests : ResourceManagerTestBase
     {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var container = Client.DefaultSubscription.GetPredefinedTags();
             var operation = Client.DefaultSubscription.GetPreDefinedTagOperations();
-            var listResult = (await container.ListAsync().ToEnumerableAsync()).Where(x => x.Data.TagName.StartsWith("tagName"));
+            var listResult = (await container.GetAllAsync().ToEnumerableAsync()).Where(x => x.Data.TagName.StartsWith("tagName"));
             foreach (var item in listResult)
             {
                 await item.DeleteAsync(item.Data.TagName).ConfigureAwait(false);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.IsTrue(createValue.Value.TagValueValue.Equals("testValue"));
             // Assert delete tag value
             await operation.DeleteValueAsync(tagName, "testValue").ConfigureAwait(false);
-            var listResult = await container.ListAsync().ToEnumerableAsync();
+            var listResult = await container.GetAllAsync().ToEnumerableAsync();
             var expectTag = listResult.Where(x => x.Data.TagName == tagName).FirstOrDefault();
             var expectValue = expectTag.Data.Values.Where(x => x.TagValueValue == "testValue").FirstOrDefault();
             Assert.IsNull(expectValue);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Core.Tests
             var container = Client.DefaultSubscription.GetPredefinedTags();
             await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             await operation.DeleteAsync(tagName).ConfigureAwait(false);
-            var listResult = await container.ListAsync().ToEnumerableAsync();
+            var listResult = await container.GetAllAsync().ToEnumerableAsync();
             var expectTag = listResult.Where(x => x.Data.TagName.Equals(tagName)).FirstOrDefault();
             Assert.IsNull(expectTag);
         }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Core.Tests
             var container = Client.DefaultSubscription.GetPredefinedTags();
             await container.CreateOrUpdateAsync(tagName).ConfigureAwait(false);
             await operation.StartDeleteAsync(tagName).ConfigureAwait(false);
-            var listResult = await container.ListAsync().ToEnumerableAsync();
+            var listResult = await container.GetAllAsync().ToEnumerableAsync();
             var expectTag = listResult.Where(x => x.Data.TagName.Equals(tagName)).FirstOrDefault();
             Assert.IsNull(expectTag);
         }

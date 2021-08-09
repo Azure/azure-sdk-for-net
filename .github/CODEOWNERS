@@ -127,7 +127,7 @@
 /sdk/cognitiveservices/Vision.ComputerVision/            @ryogok @TFR258 @tburns10 @areddish @toothache
 
 # ServiceLabel: %Cognitive - Face %Service Attention
-/sdk/cognitiveservices/Vision.Face/            @JinyuID @dipidoo @SteveMSFT @TFR258
+/sdk/cognitiveservices/Vision.Face/            @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @ShaoAnLin @lulululululu
 
 # PRLabel: %Cognitive - Form Recognizer
 /sdk/formrecognizer/                            @annelo-msft @kinelski @maririos
@@ -638,6 +638,10 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # ServiceLabel: %WebPubSub %Service Attention
 /sdk/webpubsub/  @vicancy @JialinXin
+
+# ServiceLabel: %Personalizer %Service Attention
+# PRLabel: %Personalizer
+/sdk/personalizer/ @orenmichaely @tyclintw @Mohit-Chakraborty
 
 # ######## Management Plane ########
 

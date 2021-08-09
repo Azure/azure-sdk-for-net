@@ -67,12 +67,45 @@
   ],
   "overrides": [
     {
+      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
+      "words": ["warnaserror"]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
     {
-      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
-      "words": ["warnaserror"]
+      "filename": "**/sdk/keyvault/**/*.cs",
+      "words": [
+        "deletesas",
+        "getsas",
+        "listsas",
+        "oaep",
+        "setsas"
+      ]
+    },
+    {
+      "filename": "**/sdk/search/**/*.cs",
+      "words": [
+        "Adls",
+        "Bangla",
+        "Bokmaal",
+        "Cyrl",
+        "Decompounder",
+        "Haase",
+        "Hant",
+        "Koelner",
+        "Latn",
+        "Lovins",
+        "Nysiis",
+        "Phonetik",
+        "Piqd",
+        "Reranker",
+        "Rslp",
+        "Soundex",
+        "Sorani",
+        "Unprocessable"
+      ]
     },
     {
       "filename": "**/sdk/storage/**/*.cs",
@@ -87,6 +120,17 @@
         "Rehydrated",
         "Skus",
         "Undelete"
+      ]
+    },
+    {
+      "filename": "**/sdk/textanalytics/**/*.cs",
+      "words": [
+        "Brcpf",
+        "Idrg",
+        "Esdni",
+        "Eugps",
+        "Plregon",
+        "Usuk"
       ]
     }
   ],

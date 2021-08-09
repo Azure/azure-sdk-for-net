@@ -6,8 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-94d096a87a235f49b1187e30e1707f3d-8b49ecd31799104a-00",
-        "User-Agent": "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210616.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210728.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "c635f4320c100a08da26d3eebabdea35",
         "x-ms-return-client-request-id": "true"
       },
@@ -15,17 +14,17 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "450",
+        "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 17 Jun 2021 00:46:39 GMT",
+        "Date": "Thu, 29 Jul 2021 00:25:16 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fda654d8-70e7-43e5-bdd0-999354d457ce",
-        "x-ms-ratelimit-remaining-subscription-reads": "11933",
-        "x-ms-request-id": "fda654d8-70e7-43e5-bdd0-999354d457ce",
-        "x-ms-routing-request-id": "WESTUS:20210617T004639Z:fda654d8-70e7-43e5-bdd0-999354d457ce"
+        "x-ms-correlation-request-id": "1bd83bec-6bc5-45da-ad20-67bfe5ec9c47",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "1bd83bec-6bc5-45da-ad20-67bfe5ec9c47",
+        "x-ms-routing-request-id": "WESTUS2:20210729T002516Z:1bd83bec-6bc5-45da-ad20-67bfe5ec9c47"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -37,7 +36,7 @@
         },
         "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": "Azure SDK sandbox",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Internal_2014-09-01",
@@ -52,7 +51,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210616.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-73ae8fb7e232824d88b9d71963703af8-b2e9d2794ea95f48-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210728.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "f82becc2534c0e0f8bc3107b43dc017c",
         "x-ms-return-client-request-id": "true"
       },
@@ -60,17 +60,17 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "23922",
+        "Content-Length": "25825",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 17 Jun 2021 00:46:39 GMT",
+        "Date": "Thu, 29 Jul 2021 00:25:16 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0edd4036-9651-42d1-8d0d-9023ee8e1204",
-        "x-ms-ratelimit-remaining-subscription-reads": "11911",
-        "x-ms-request-id": "0edd4036-9651-42d1-8d0d-9023ee8e1204",
-        "x-ms-routing-request-id": "WESTUS:20210617T004639Z:0edd4036-9651-42d1-8d0d-9023ee8e1204"
+        "x-ms-correlation-request-id": "281ac6a9-ac61-46b5-9907-508361b8d1a3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "281ac6a9-ac61-46b5-9907-508361b8d1a3",
+        "x-ms-routing-request-id": "WESTUS2:20210729T002516Z:281ac6a9-ac61-46b5-9907-508361b8d1a3"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.insights",
@@ -131,6 +131,10 @@
           {
             "applicationId": "12743ff8-d3de-49d0-a4ce-6c91a4245ea0",
             "roleDefinitionId": "207b20a7-6802-4ae4-aaa2-1a36dd45bba0"
+          },
+          {
+            "applicationId": "58ef1dbd-684c-47d6-8ffc-61ea7a197b95",
+            "roleDefinitionId": "dd9d4347-f397-45f2-b538-85f21c90037b"
           }
         ],
         "resourceTypes": [
@@ -1452,7 +1456,8 @@
               "UAE North",
               "Japan West",
               "Norway East",
-              "Switzerland West"
+              "Switzerland West",
+              "Brazil South"
             ],
             "apiVersions": [
               "2021-04-01",
@@ -1509,13 +1514,107 @@
             "capabilities": "SupportsExtension"
           },
           {
+            "resourceType": "dataCollectionEndpoints",
+            "locations": [
+              "Australia Southeast",
+              "Canada Central",
+              "Japan East",
+              "Australia East",
+              "Central India",
+              "Germany West Central",
+              "North Central US",
+              "South Central US",
+              "East US",
+              "Central US",
+              "West Europe",
+              "West US 2",
+              "Southeast Asia",
+              "East US 2",
+              "UK South",
+              "North Europe",
+              "West US",
+              "Australia Central",
+              "West Central US",
+              "East Asia",
+              "UK West",
+              "Korea Central",
+              "France Central",
+              "South Africa North",
+              "Switzerland North",
+              "Brazil South",
+              "Australia Central 2",
+              "Brazil Southeast",
+              "Canada East",
+              "France South",
+              "Korea South",
+              "Norway West",
+              "UAE North",
+              "Japan West",
+              "Norway East",
+              "Switzerland West"
+            ],
+            "apiVersions": [
+              "2021-04-01"
+            ],
+            "defaultApiVersion": "2021-04-01",
+            "capabilities": "SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "dataCollectionEndpoints/scopedPrivateLinkProxies",
+            "locations": [
+              "Australia Southeast",
+              "Canada Central",
+              "Japan East",
+              "Australia East",
+              "Central India",
+              "Germany West Central",
+              "North Central US",
+              "South Central US",
+              "East US",
+              "Central US",
+              "West Europe",
+              "West US 2",
+              "Southeast Asia",
+              "East US 2",
+              "UK South",
+              "North Europe",
+              "West US",
+              "Australia Central",
+              "West Central US",
+              "East Asia",
+              "UK West",
+              "Korea Central",
+              "France Central",
+              "South Africa North",
+              "Switzerland North",
+              "Brazil South",
+              "Australia Central 2",
+              "Brazil Southeast",
+              "Canada East",
+              "France South",
+              "Korea South",
+              "Norway West",
+              "UAE North",
+              "Japan West",
+              "Norway East",
+              "Switzerland West"
+            ],
+            "apiVersions": [
+              "2021-04-01"
+            ],
+            "defaultApiVersion": "2021-04-01",
+            "capabilities": "None"
+          },
+          {
             "resourceType": "privateLinkScopes",
             "locations": [
               "Global"
             ],
             "apiVersions": [
+              "2021-07-01-preview",
               "2019-10-17-preview"
             ],
+            "defaultApiVersion": "2019-10-17-preview",
             "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
           },
           {
@@ -1524,8 +1623,10 @@
               "Global"
             ],
             "apiVersions": [
+              "2021-07-01-preview",
               "2019-10-17-preview"
             ],
+            "defaultApiVersion": "2019-10-17-preview",
             "capabilities": "None"
           },
           {
@@ -1534,8 +1635,10 @@
               "Global"
             ],
             "apiVersions": [
+              "2021-07-01-preview",
               "2019-10-17-preview"
             ],
+            "defaultApiVersion": "2019-10-17-preview",
             "capabilities": "None"
           },
           {
@@ -1544,8 +1647,10 @@
               "Global"
             ],
             "apiVersions": [
+              "2021-07-01-preview",
               "2019-10-17-preview"
             ],
+            "defaultApiVersion": "2019-10-17-preview",
             "capabilities": "None"
           },
           {
@@ -1588,18 +1693,56 @@
               "Global"
             ],
             "apiVersions": [
+              "2021-07-01-preview",
               "2019-10-17-preview"
             ],
+            "defaultApiVersion": "2019-10-17-preview",
             "capabilities": "None"
           }
         ],
         "registrationState": "Registered",
         "registrationPolicy": "RegistrationRequired"
       }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/DoesNotExist?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9368a073da21264aab5ba62422ffab4b-c3221765e3fbf34e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210728.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "ea9dbaf88c87728290ae32c659cd053a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "107",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 29 Jul 2021 00:25:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "050c00e2-21c4-47cf-9eda-542f6b110943",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "050c00e2-21c4-47cf-9eda-542f6b110943",
+        "x-ms-routing-request-id": "WESTUS2:20210729T002516Z:050c00e2-21c4-47cf-9eda-542f6b110943"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidResourceNamespace",
+          "message": "The resource namespace \u0027DoesNotExist\u0027 is invalid."
+        }
+      }
     }
   ],
   "Variables": {
     "RandomSeed": "1814902176",
+    "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

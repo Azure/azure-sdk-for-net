@@ -1,15 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1/sentiment?showStats=false\u0026opinionMining=true\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://tacanaryjava.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/sentiment?showStats=false\u0026opinionMining=true\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "127",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-528fb41df9d2544c91b7655a8253b556-bb12173851df7f4c-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210629.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-d452cdec9634574fbea5ea6a06dd81b1-c5756f756f9a9d4b-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210803.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "1e33ed24967d42087f8188a6111ef9b0",
         "x-ms-return-client-request-id": "true"
       },
@@ -24,14 +30,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f3d334df-4c0d-48c0-bbab-eb78317a0e62",
+        "apim-request-id": "c29a7bbd-23d1-4b00-bef4-b00c2e3b604f",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Tue, 29 Jun 2021 19:09:47 GMT",
+        "Date": "Tue, 03 Aug 2021 18:39:32 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "83"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "114"
       },
       "ResponseBody": {
         "documents": [
@@ -171,6 +177,6 @@
   "Variables": {
     "RandomSeed": "4400155",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://tacanaryjava.cognitiveservices.azure.com/"
   }
 }

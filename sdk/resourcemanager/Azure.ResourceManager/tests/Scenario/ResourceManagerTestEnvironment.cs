@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class ResourceManagerTestEnvironment : TestEnvironment
     {

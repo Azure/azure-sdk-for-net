@@ -5,6 +5,8 @@
 ### Features Added
 
 - Added `GetRandomBytes` and `GetRandomBytesAsync` to `KeyClient` to get random bytes from a managed HSM.
+- Added `Exportable` and `ReleasePolicy` to `CreateKeyOptions`, `ImportKeyOptions`, and `KeyProperties` to support Secure Key Release for Key Vault and Managed HSM.
+- Added `ReleaseKey` and `ReleaseKeyAsync` to `KeyClient` to release a key for Key Vault and Managed HSM.
 
 ### Breaking Changes
 
