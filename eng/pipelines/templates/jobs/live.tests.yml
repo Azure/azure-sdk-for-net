@@ -110,7 +110,7 @@ jobs:
       - pwsh: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
-          --filter "TestCategory!=Manually"
+          --filter "(TestCategory!=Manually)&(FullyQualifiedName~Azure.Identity.Tests.VisualStudioCodeCredentialLiveTests)"
           --logger "trx"
           --logger:"console;verbosity=normal"
           /p:SDKType=${{ parameters.SDKType }}
