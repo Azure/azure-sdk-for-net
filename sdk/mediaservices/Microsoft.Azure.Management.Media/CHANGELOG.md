@@ -10,6 +10,7 @@
 ### Breaking changes
 
 - ApiErrorException has been replaced with ErrorResponseException to be consistent with all other Azure SDKs. Exception body has not changed.
+- All calls returning 404 Not found raises an ErrorResponseException instead of returning null. This change was make to be consistent with other Azure SDKs.
 - Media service constructor has new optional PublicNetworkAccess parameter after KeyDelivery parameter.
 - Type property in MediaServiceIdentity has been changed from ManagedIdentityType enum to string, to accommodate comma separated multiple types. Valid strings for type are SystemAssigned or SystemAssigned,UserAssigned or UserAssigned.
 
