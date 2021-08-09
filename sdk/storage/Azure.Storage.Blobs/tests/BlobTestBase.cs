@@ -109,11 +109,16 @@ namespace Azure.Storage.Test.Shared
         }
 
         private BlobServiceClient GetServiceClientFromSharedKeyConfig(TenantConfiguration config, BlobClientOptions options = default)
-            => InstrumentClient(
+        {
+            Console.WriteLine("11111111111111111111111");
+            Console.WriteLine($"{config.AccountName},{config.AccountKey}");
+            Console.WriteLine("11111111111111111111111");
+            return InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
                     options ?? GetOptions()));
+        }
 
         private BlobServiceClient GetSecondaryReadServiceClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
         {
