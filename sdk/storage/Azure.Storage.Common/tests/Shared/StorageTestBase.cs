@@ -245,7 +245,7 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.Https,
             };
             sasBuilder.SetPermissions(permissions);
-            var cred = new StorageSharedKeyCredential("zedystorage0809", "IExJx/WZjeO5QBQ1oDn99xbhc9SDYl2HmEP4Y9e2pPgmf0Nx319xzaW4M0BipvLNGlfeVqxml42VxfRYoCE9Jw==");
+            var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
             return new SharedAccessSignatureCredentials(sasBuilder.ToSasQueryParameters(cred).ToString());
         }
 
