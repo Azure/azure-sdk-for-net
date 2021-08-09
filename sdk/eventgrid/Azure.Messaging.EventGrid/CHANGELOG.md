@@ -1,14 +1,10 @@
 # Release History
 
-## 4.6.0-beta.1 (Unreleased)
+## 4.6.0 (2021-08-10)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `ContainerServiceNewKubernetesVersionAvailableEventData` system event.
 
 ## 4.5.0 (2021-07-19)
 
