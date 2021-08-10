@@ -4,8 +4,8 @@
 
 Thank you to our developer community members who helped to make Azure Tables better with their contributions to this release:
 
-- Yifan Bian _([yifanbian-msft](https://github.com/yifanbian-msft))
-- David Gardiner _([flcdrg](https://github.com/flcdrg))
+- Yifan Bian _([yifanbian-msft](https://github.com/yifanbian-msft))_
+- David Gardiner _([flcdrg](https://github.com/flcdrg))_
 
 ### Features Added
 
