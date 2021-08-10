@@ -3,5 +3,6 @@ trigger: none
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
-    SDKType: client
     ServiceDirectory: containerregistry
+    SDKType: client
+    SupportedClouds: 'Public,UsGov,China'
