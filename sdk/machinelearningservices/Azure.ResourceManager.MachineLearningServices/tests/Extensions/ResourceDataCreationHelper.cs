@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
 
         public ComputeResourceData GenerateComputeResourceData()
         {
-            // TODO: Take input to create different compute resource
             return new ComputeResourceData
             {
                 Location = Location.WestUS2,
@@ -163,13 +162,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
             throw new NotImplementedException();
         }
 
-        public OnlineEndpointTrackedResourceData GenerateOnlineEndpointTrackedResourceData(Workspace workspace)
+        public OnlineEndpointTrackedResourceData GenerateOnlineEndpointTrackedResourceData(ComputeResource compute)
         {
-            OnlineEndpoint properties = new OnlineEndpoint(EndpointAuthMode.AMLToken)
+            OnlineEndpoint properties = new OnlineEndpoint(EndpointAuthMode.Key)
             {
-                Keys = new EndpointAuthKeys() { PrimaryKey = "string", SecondaryKey = "string" },
-                Target = workspace.GetComputeResources().GetAsync("").Result.Value.Id.ToString(),
-                Traffic = { { "myDeployment1", 0 }, { "myDeployment2", 1 } },
+                Keys = new EndpointAuthKeys() { PrimaryKey = "SimpleTestKeys1", SecondaryKey = "SimpleTestKeys2" },
+                Target = compute.Data.Id.ToString(),
+                Traffic = { { "myDeployment1", 0 }, { "myDeployment2", 100 } },
                 Description = "Description"
             };
             return new OnlineEndpointTrackedResourceData(Location.WestUS2, properties) { Kind = "string"};
@@ -187,7 +186,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
                 Category = "ACR",
                 Target = "www.facebook.com",
                 AuthType = "PAT",
-                Value = "secrets"
+                Value = "secrets",
+                //ValueFormat = ValueFormat.Json
             };
         }
     }

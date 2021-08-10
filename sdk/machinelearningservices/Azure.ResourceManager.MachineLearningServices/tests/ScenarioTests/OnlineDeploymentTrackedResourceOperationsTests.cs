@@ -17,11 +17,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         private const string WorkspacePrefix = "test-workspace";
         private const string ParentPrefix = "test-parent";
         private const string ResourceNamePrefix = "test-resource";
+        private const string ComputeNamePrefix = "test-compute";
         private readonly Location _defaultLocation = Location.WestUS2;
         private string _resourceName = ResourceNamePrefix;
         private string _workspaceName = WorkspacePrefix;
         private string _resourceGroupName = ResourceGroupNamePrefix;
         private string _parentPrefix = ParentPrefix;
+        private string _computeName = ComputeNamePrefix;
 
         public OnlineDeploymentTrackedResourceOperationsTests(bool isAsync)
             : base(isAsync)
@@ -34,6 +36,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             _parentPrefix = SessionRecording.GenerateAssetName(ParentPrefix);
             _resourceName = SessionRecording.GenerateAssetName(ResourceNamePrefix);
             _resourceGroupName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
+            _computeName = SessionRecording.GenerateAssetName(ComputeNamePrefix);
 
             // Create RG and Res with GlobalClient
             ResourceGroup rg = await GlobalClient.DefaultSubscription.GetResourceGroups()
@@ -43,9 +46,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 _workspaceName,
                 DataHelper.GenerateWorkspaceData());
 
+            ComputeResource compute = await ws.GetComputeResources().CreateOrUpdateAsync(
+                _computeName,
+                DataHelper.GenerateComputeResourceData());
+
             OnlineEndpointTrackedResource parent = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _parentPrefix,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData(ws));
+                DataHelper.GenerateOnlineEndpointTrackedResourceData(compute));
 
             _ = await parent.GetOnlineDeploymentTrackedResources().CreateOrUpdateAsync(
                 _resourceName,

@@ -15,11 +15,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         private const string WorkspacePrefix = "test-workspace";
         private const string ParentPrefix = "test-parent";
         private const string ResourceNamePrefix = "test-resource";
+        private const string ComputeNamePrefix = "test-compute";
         private readonly Location _defaultLocation = Location.WestUS2;
         private string _resourceGroupName = ResourceGroupNamePrefix;
         private string _workspaceName = WorkspacePrefix;
         private string _resourceName = ResourceNamePrefix;
         private string _parentPrefix = ParentPrefix;
+        private string _computeName = ComputeNamePrefix;
 
         public OnlineDeploymentTrackedResourceContainerTests(bool isAsync)
          : base(isAsync)
@@ -33,6 +35,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             _resourceName = SessionRecording.GenerateAssetName(ResourceNamePrefix);
             _workspaceName = SessionRecording.GenerateAssetName(WorkspacePrefix);
             _resourceGroupName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
+            _computeName = SessionRecording.GenerateAssetName(ComputeNamePrefix);
 
             ResourceGroup rg = await GlobalClient.DefaultSubscription.GetResourceGroups()
                 .CreateOrUpdateAsync(_resourceGroupName, new ResourceGroupData(_defaultLocation));
@@ -41,9 +44,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 _workspaceName,
                 DataHelper.GenerateWorkspaceData());
 
+            ComputeResource compute = await ws.GetComputeResources().CreateOrUpdateAsync(
+                _computeName,
+                DataHelper.GenerateComputeResourceData());
+
             _ = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _parentPrefix,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData(ws));
+                DataHelper.GenerateOnlineEndpointTrackedResourceData(compute));
             StopSessionRecording();
         }
 
