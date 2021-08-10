@@ -537,7 +537,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Create
         /// <summary>
-        /// The <see cref="Create(Models.PublicAccessType, Metadata, DataLakeFileSystemEncryptionScopeOptions, CancellationToken)"/>
+        /// The <see cref="Create(DataLakeFileSystemCreateOptions, CancellationToken)"/>
         /// operation creates a new file system under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
@@ -545,24 +545,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
         /// Create Container</see>.
         /// </summary>
-        /// <param name="publicAccessType">
-        /// Optionally specifies whether data in the file system may be accessed
-        /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and path data.
-        /// Clients can enumerate paths within the file system via anonymous
-        /// request, but cannot enumerate file systems within the storage
-        /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
-        /// read access for paths.  Path data within this file system can be
-        /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate paths within the file system via anonymous
-        /// request.  <see cref="Models.PublicAccessType.None"/> specifies that the
-        /// file system data is private to the account owner.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file system.
-        /// </param>
-        /// <param name="encryptionScopeOptions">
-        /// Optional encryption scope options to set for this file system.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -577,9 +561,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual Response<FileSystemInfo> Create(
-            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
-            Metadata metadata = default,
-            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = default,
+            DataLakeFileSystemCreateOptions options,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Create)}");
@@ -589,9 +571,9 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<BlobContainerInfo> containerResponse = _containerClient.Create(
-                    publicAccessType: (Blobs.Models.PublicAccessType)publicAccessType,
-                    metadata: metadata,
-                    encryptionScopeOptions: encryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    publicAccessType: (Blobs.Models.PublicAccessType)options?.PublicAccessType,
+                    metadata: options?.Metadata,
+                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(
@@ -614,7 +596,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="CreateAsync(Models.PublicAccessType, Metadata, DataLakeFileSystemEncryptionScopeOptions, CancellationToken)"/>
+        /// The <see cref="CreateAsync(DataLakeFileSystemCreateOptions, CancellationToken)"/>
         /// operation creates a new file system
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
@@ -623,24 +605,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
         /// Create Container</see>.
         /// </summary>
-        /// <param name="publicAccessType">
-        /// Optionally specifies whether data in the file system may be accessed
-        /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and path data.
-        /// Clients can enumerate paths within the file system via anonymous
-        /// request, but cannot enumerate file system within the storage
-        /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
-        /// read access for pathss.  Path data within this file system can be
-        /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate pathss within the file system via anonymous
-        /// request.  <see cref="Models.PublicAccessType.None"/> specifies that the
-        /// file system data is private to the account owner.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file system.
-        /// </param>
-        /// <param name="encryptionScopeOptions">
-        /// Optional encryption scope options to set for this file system.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -655,9 +621,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<FileSystemInfo>> CreateAsync(
-            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
-            Metadata metadata = default,
-            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = default,
+            DataLakeFileSystemCreateOptions options,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Create)}");
@@ -667,9 +631,9 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<BlobContainerInfo> containerResponse = await _containerClient.CreateAsync(
-                    publicAccessType: (Blobs.Models.PublicAccessType)publicAccessType,
-                    metadata: metadata,
-                    encryptionScopeOptions: encryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    publicAccessType: (Blobs.Models.PublicAccessType)options?.PublicAccessType,
+                    metadata: options?.Metadata,
+                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -731,12 +695,10 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<FileSystemInfo> Create(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            Models.PublicAccessType publicAccessType,
-            Metadata metadata,
-            CancellationToken cancellationToken)
+            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Create)}");
 
@@ -807,12 +769,10 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<FileSystemInfo>> CreateAsync(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            Models.PublicAccessType publicAccessType,
-            Metadata metadata,
-            CancellationToken cancellationToken)
+            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Create)}");
 
@@ -848,7 +808,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Create If Not Exists
         /// <summary>
-        /// The <see cref="CreateIfNotExists(Models.PublicAccessType, Metadata, DataLakeFileSystemEncryptionScopeOptions, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsAsync(DataLakeFileSystemCreateOptions, CancellationToken)"/>
         /// operation creates a new file system
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
@@ -857,24 +817,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
         /// Create Container</see>.
         /// </summary>
-        /// <param name="publicAccessType">
-        /// Optionally specifies whether data in the file system may be accessed
-        /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and path data.
-        /// Clients can enumerate paths within the file system via anonymous
-        /// request, but cannot enumerate file system within the storage
-        /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
-        /// read access for pathss.  Path data within this file system can be
-        /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate pathss within the file system via anonymous
-        /// request.  <see cref="Models.PublicAccessType.None"/> specifies that the
-        /// file system data is private to the account owner.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file system.
-        /// </param>
-        /// <param name="encryptionScopeOptions">
-        /// Optional encryption scope options to set for this file system.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -889,9 +833,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual Response<FileSystemInfo> CreateIfNotExists(
-            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
-            Metadata metadata = default,
-            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = default,
+            DataLakeFileSystemCreateOptions options,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateIfNotExists)}");
@@ -899,9 +841,9 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
                 Response<BlobContainerInfo> containerResponse = _containerClient.CreateIfNotExists(
-                    publicAccessType: (Blobs.Models.PublicAccessType)publicAccessType,
-                    metadata: metadata,
-                    encryptionScopeOptions: encryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    publicAccessType: (Blobs.Models.PublicAccessType)options?.PublicAccessType,
+                    metadata: options?.Metadata,
+                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
                     cancellationToken: cancellationToken);
 
                 if (containerResponse == default)
@@ -929,7 +871,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsAsync(Models.PublicAccessType, Metadata, DataLakeFileSystemEncryptionScopeOptions, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsAsync(DataLakeFileSystemCreateOptions, CancellationToken)"/>
         /// operation creates a new file system
         /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
@@ -938,24 +880,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
         /// Create Container</see>.
         /// </summary>
-        /// <param name="publicAccessType">
-        /// Optionally specifies whether data in the file system may be accessed
-        /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and path data.
-        /// Clients can enumerate paths within the file system via anonymous
-        /// request, but cannot enumerate file system within the storage
-        /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
-        /// read access for pathss.  Path data within this file system can be
-        /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate pathss within the file system via anonymous
-        /// request.  <see cref="Models.PublicAccessType.None"/> specifies that the
-        /// file system data is private to the account owner.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this file system.
-        /// </param>
-        /// <param name="encryptionScopeOptions">
-        /// Optional encryption scope options to set for this file system.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -970,9 +896,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<FileSystemInfo>> CreateIfNotExistsAsync(
-            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
-            Metadata metadata = default,
-            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = default,
+            DataLakeFileSystemCreateOptions options,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateIfNotExists)}");
@@ -980,9 +904,9 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
                 Response<BlobContainerInfo> containerResponse = await _containerClient.CreateIfNotExistsAsync(
-                    publicAccessType: (Blobs.Models.PublicAccessType)publicAccessType,
-                    metadata: metadata,
-                    encryptionScopeOptions: encryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    publicAccessType: (Blobs.Models.PublicAccessType)options?.PublicAccessType,
+                    metadata: options?.Metadata,
+                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 if (containerResponse == default)
@@ -1048,12 +972,10 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<FileSystemInfo> CreateIfNotExists(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            Models.PublicAccessType publicAccessType,
-            Metadata metadata,
-            CancellationToken cancellationToken)
+            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateIfNotExists)}");
             try
@@ -1127,12 +1049,10 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<FileSystemInfo>> CreateIfNotExistsAsync(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            Models.PublicAccessType publicAccessType,
-            Metadata metadata,
-            CancellationToken cancellationToken)
+            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateIfNotExists)}");
             try
@@ -1411,7 +1331,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs. If you want to create the file system if
         /// it doesn't exist, use
-        /// <see cref="CreateIfNotExists(Models.PublicAccessType, Metadata, DataLakeFileSystemEncryptionScopeOptions, CancellationToken)"/>
+        /// <see cref="CreateIfNotExists(DataLakeFileSystemCreateOptions, CancellationToken)"/>
         /// instead.
         /// </remarks>
         public virtual Response<bool> Exists(
@@ -1453,7 +1373,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs. If you want to create the file system if
         /// it doesn't exist, use
-        /// <see cref="CreateIfNotExistsAsync(Models.PublicAccessType, Metadata, DataLakeFileSystemEncryptionScopeOptions, CancellationToken)"/>
+        /// <see cref="CreateIfNotExistsAsync(DataLakeFileSystemCreateOptions, CancellationToken)"/>
         /// instead.
         /// </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(

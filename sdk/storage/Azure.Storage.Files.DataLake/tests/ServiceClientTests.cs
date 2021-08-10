@@ -225,8 +225,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
             };
+            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
+            {
+                EncryptionScopeOptions = encryptionScopeOptions
+            };
 
-            await fileSystemClient.CreateAsync(encryptionScopeOptions: encryptionScopeOptions);
+            await fileSystemClient.CreateAsync(options: options);
 
             // Act
             IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
@@ -380,10 +384,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
             };
+            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
+            {
+                EncryptionScopeOptions = encryptionScopeOptions
+            };
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             try
             {
-                DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name, encryptionScopeOptions: encryptionScopeOptions)).Value);
+                DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name, options: options)).Value);
                 Response<FileSystemProperties> properties = await fileSystem.GetPropertiesAsync();
                 Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, properties.Value.DefaultEncryptionScope);
             }

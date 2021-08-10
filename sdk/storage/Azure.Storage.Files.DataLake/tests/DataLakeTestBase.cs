@@ -151,11 +151,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             // TODO Remove this handling after the service bug is fixed https://github.com/Azure/azure-sdk-for-net/issues/9399
             try
             {
+                DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
+                {
+                    PublicAccessType = publicAccessType.GetValueOrDefault(),
+                    Metadata = metadata,
+                    EncryptionScopeOptions = encryptionScopeOptions
+                };
+
                 await RetryAsync(
                     async () => await fileSystem.CreateAsync(
-                        metadata: metadata,
-                        publicAccessType: publicAccessType.Value,
-                        encryptionScopeOptions: encryptionScopeOptions),
+                        options: options),
                     ex => ex.ErrorCode == Blobs.Models.BlobErrorCode.ContainerAlreadyExists,
                     retryDelay: TestConstants.DataLakeRetryDelay,
                     retryAttempts: 1);

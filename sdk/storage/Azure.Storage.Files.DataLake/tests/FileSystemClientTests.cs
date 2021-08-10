@@ -369,9 +369,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
             IDictionary<string, string> metadata = BuildMetadata();
+            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
+            {
+                Metadata = metadata
+            };
 
             // Act
-            await fileSystem.CreateAsync(metadata: metadata);
+            await fileSystem.CreateAsync(options: options);
 
             // Assert
             Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
@@ -387,9 +391,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
+            {
+                PublicAccessType = PublicAccessType.Path
+            };
 
             // Act
-            await fileSystem.CreateAsync(publicAccessType: Models.PublicAccessType.Path);
+            await fileSystem.CreateAsync(options: options);
 
             // Assert
             Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
@@ -471,13 +479,17 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
             };
+            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
+            {
+                EncryptionScopeOptions = encryptionScopeOptions
+            };
 
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
             try
             {
                 // Act
-                await fileSystemClient.CreateIfNotExistsAsync(encryptionScopeOptions: encryptionScopeOptions);
+                await fileSystemClient.CreateIfNotExistsAsync(options: options);
 
                 // Assert - We are also testing GetPropertiesAsync() in this test.
                 Response<FileSystemProperties> response = await fileSystemClient.GetPropertiesAsync();
