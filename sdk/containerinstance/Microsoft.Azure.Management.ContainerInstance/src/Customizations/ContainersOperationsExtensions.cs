@@ -37,7 +37,7 @@
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<Logs> ListLogsAsync(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<Logs> ListLogsAsync(this IContainersOperations operations, string resourceGroupName, string containerGroupName, string containerName, int? tail, CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.ListLogsWithHttpMessagesAsync(resourceGroupName, containerGroupName, containerName, tail, null, cancellationToken).ConfigureAwait(false))
             {
