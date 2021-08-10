@@ -273,7 +273,8 @@ namespace Azure.Core.Pipeline
 
             public override void Dispose()
             {
-                _originalContentStream?.Dispose();
+                if (_originalContentStream is not MemoryStream)
+                    _originalContentStream?.Dispose();
                 DisposeContentStreamIfNotBuffered();
             }
 
