@@ -2,13 +2,13 @@
 
 ## 1.0.0-beta.4 (2021-08-10)
 
-### Features Added
-
 ### Breaking Changes
 
-### Bugs Fixed
+- Replaced `AuthenticationScope` property on `ContainerRegistryClientOptions` with `Audience`.  `Audience` is of type `ContainerRegistryAudience`, a statically typed string, which allows customers to select from available audiences or provide their own audience string.  All calls to client constructors now require passing `ContainerRegistryClientOptions` with the `Audience` property set.
 
 ### Other Changes
+
+- Updated documentation comments.
 
 ## 1.0.0-beta.3 (2021-06-08)
 
