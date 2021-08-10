@@ -183,6 +183,73 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Assert.Equal("www.wiki.com", urlAuthority);
         }
 
-        // TODO: Order of precedence.
+        [Fact]
+        public void RequestUrlIsSetUsingHttpUrl()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpUrl, "https://www.wiki.com"));
+
+            string url = PartBTags.GetRequestUrl();
+            Assert.Equal("https://www.wiki.com", url);
+        }
+
+        [Fact]
+        public void RequestUrlIsSetUsing_Scheme_HttpHost_Target()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "www.example.org"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+
+            string expectedUrl = "http://www.example.org/path";
+            string url = PartBTags.GetRequestUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Theory]
+        [InlineData("80")]
+        [InlineData("443")]
+        [InlineData("8888")]
+
+        public void RequestUrlIsSetUsing_Scheme_ServerName_Port_Target(string port)
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpServerName, "example.com"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostPort, port));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string colon = ":";
+            if (port == "80" || port == "443")
+            {
+                port = "";
+                colon = "";
+            }
+            string expectedUrl = $"http://example.com{colon}{port}/path";
+            string url = PartBTags.GetRequestUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Theory]
+        [InlineData("80")]
+        [InlineData("443")]
+        [InlineData("8888")]
+
+        public void RequestUrlIsSetUsing_Scheme_NetHostName_Port_Target(string port)
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostName, "localhost"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostPort, port));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string colon = ":";
+            if (port == "80" || port == "443")
+            {
+                port = "";
+                colon = "";
+            }
+            string expectedUrl = $"http://localhost{colon}{port}/path";
+            string url = PartBTags.GetRequestUrl();
+            Assert.Equal(expectedUrl, url);
+        }
     }
 }

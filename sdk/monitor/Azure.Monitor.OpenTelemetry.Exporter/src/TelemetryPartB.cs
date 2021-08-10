@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             switch (monitorTags.activityType)
             {
                 case PartBType.Http:
-                    url = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpUrl)?.ToString();
+                    url = monitorTags.PartBTags.GetRequestUrl();
                     break;
                 case PartBType.Messaging:
                     url = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeMessagingUrl)?.ToString();
