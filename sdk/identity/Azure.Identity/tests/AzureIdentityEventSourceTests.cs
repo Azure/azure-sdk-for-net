@@ -35,6 +35,12 @@ namespace Azure.Identity.Tests
             _listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Verbose);
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            _listener.Dispose();
+        }
+
         [Test]
         public void MatchesNameAndGuid()
         {

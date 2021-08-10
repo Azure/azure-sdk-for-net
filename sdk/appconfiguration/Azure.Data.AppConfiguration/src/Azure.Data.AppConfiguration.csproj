@@ -3,8 +3,9 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Application Configuration Service client library</Description>
     <AssemblyTitle>Microsoft Azure.Data.AppConfiguration client library</AssemblyTitle>
-    <Version>1.1.0-beta.4</Version>
-    <ApiCompatVersion>1.0.3</ApiCompatVersion>
+    <Version>1.2.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Application Configuration;Data;AppConfig;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>

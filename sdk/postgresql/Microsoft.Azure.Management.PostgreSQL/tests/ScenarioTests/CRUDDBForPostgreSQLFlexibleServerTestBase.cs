@@ -33,7 +33,9 @@ namespace PostgreSQL.Tests.ScenarioTests
                             administratorLogin: "testUser",
                             administratorLoginPassword: "testPassword1!",
                             version: "12",
-                            storageProfile: new FlexibleServersModels.StorageProfile(storageMB: 524288)));
+                            storage: new FlexibleServersModels.Storage(storageSizeGB: 128),
+                            network: new FlexibleServersModels.Network(publicNetworkAccess: "Disabled")));
+
         }
 
         protected ResourceGroup CreateResourceGroup(MockContext context,

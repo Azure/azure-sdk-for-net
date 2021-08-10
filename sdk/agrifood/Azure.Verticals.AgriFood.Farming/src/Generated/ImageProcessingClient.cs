@@ -67,97 +67,89 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Farmer ID. </term>
+        ///     <term>Farmer ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>shapefileAttachmentId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Shapefile attachment ID. </term>
+        ///     <term>Shapefile attachment ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>shapefileColumnNames</term>
         ///     <term>string[]</term>
         ///     <term>Yes</term>
-        ///     <term> List of shapefile column names to create raster attachments. </term>
+        ///     <term>List of shapefile column names to create raster attachments.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -165,7 +157,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateRasterizeJobAsync(string jobId, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Operation<BinaryData>> CreateRasterizeJobAsync(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -184,14 +176,14 @@ namespace Azure.Verticals.AgriFood.Farming
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "ImageProcessingClient.CreateRasterizeJob");
                         default:
                             throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "ImageProcessingClient.CreateRasterizeJob");
                 }
             }
             catch (Exception e)
@@ -215,97 +207,89 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Farmer ID. </term>
+        ///     <term>Farmer ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>shapefileAttachmentId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Shapefile attachment ID. </term>
+        ///     <term>Shapefile attachment ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>shapefileColumnNames</term>
         ///     <term>string[]</term>
         ///     <term>Yes</term>
-        ///     <term> List of shapefile column names to create raster attachments. </term>
+        ///     <term>List of shapefile column names to create raster attachments.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -313,7 +297,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateRasterizeJob(string jobId, RequestContent content, RequestOptions options = null)
+        public virtual Operation<BinaryData> CreateRasterizeJob(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -332,14 +316,14 @@ namespace Azure.Verticals.AgriFood.Farming
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "ImageProcessingClient.CreateRasterizeJob");
                         default:
                             throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "ImageProcessingClient.CreateRasterizeJob");
                 }
             }
             catch (Exception e)

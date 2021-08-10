@@ -155,6 +155,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             Assert.Throws<KeyNotFoundException>(() => telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
         }
 
+        [Fact]
+        public void GeneratePartAEnvelope_Activity_WithParentSpanId()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
+
+            Assert.Equal("RemoteDependency", telemetryItem.Name);
+            Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
+            Assert.StartsWith("unknown_service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Null(telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
+            Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
+            Assert.Equal(activity.ParentSpanId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
+        }
+
         // TODO: GeneratePartAEnvelope_WithActivityParent
 
         /// <summary>

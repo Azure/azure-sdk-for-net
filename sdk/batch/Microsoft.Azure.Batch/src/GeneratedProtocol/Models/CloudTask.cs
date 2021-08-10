@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="constraints">The execution constraints that apply to
         /// this Task.</param>
         /// <param name="requiredSlots">The number of scheduling slots that the
-        /// Task required to run.</param>
+        /// Task requires to run.</param>
         /// <param name="userIdentity">The user identity under which the Task
         /// runs.</param>
         /// <param name="executionInfo">Information about the execution of the
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of scheduling slots that the Task required
+        /// Gets or sets the number of scheduling slots that the Task requires
         /// to run.
         /// </summary>
         /// <remarks>

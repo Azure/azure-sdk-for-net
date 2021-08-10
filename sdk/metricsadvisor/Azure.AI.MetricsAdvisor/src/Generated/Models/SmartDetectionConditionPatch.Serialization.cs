@@ -12,25 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class SmartDetectionConditionPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Sensitivity))
-            {
-                writer.WritePropertyName("sensitivity");
-                writer.WriteNumberValue(Sensitivity.Value);
-            }
-            if (Optional.IsDefined(AnomalyDetectorDirection))
-            {
-                writer.WritePropertyName("anomalyDetectorDirection");
-                writer.WriteStringValue(AnomalyDetectorDirection.Value.ToString());
-            }
-            if (Optional.IsDefined(SuppressCondition))
-            {
-                writer.WritePropertyName("suppressCondition");
-                writer.WriteObjectValue(SuppressCondition);
-            }
-            writer.WriteEndObject();
-        }
     }
 }

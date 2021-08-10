@@ -464,19 +464,19 @@ namespace Azure.Security.ConfidentialLedger
         ///     <term>contents</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Contents of the ledger entry. </term>
+        ///     <term>Contents of the ledger entry.</term>
         ///   </item>
         ///   <item>
         ///     <term>subLedgerId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Identifier for sub-ledgers. </term>
+        ///     <term>Identifier for sub-ledgers.</term>
         ///   </item>
         ///   <item>
         ///     <term>transactionId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read. </term>
+        ///     <term>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -534,19 +534,19 @@ namespace Azure.Security.ConfidentialLedger
         ///     <term>contents</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Contents of the ledger entry. </term>
+        ///     <term>Contents of the ledger entry.</term>
         ///   </item>
         ///   <item>
         ///     <term>subLedgerId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Identifier for sub-ledgers. </term>
+        ///     <term>Identifier for sub-ledgers.</term>
         ///   </item>
         ///   <item>
         ///     <term>transactionId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read. </term>
+        ///     <term>A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -1228,13 +1228,13 @@ namespace Azure.Security.ConfidentialLedger
         ///     <term>assignedRole</term>
         ///     <term>&quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;</term>
         ///     <term>Yes</term>
-        ///     <term> Represents an assignable role. </term>
+        ///     <term>Represents an assignable role.</term>
         ///   </item>
         ///   <item>
         ///     <term>userId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Identifier for the user. This must either be an AAD object id or a certificate fingerprint. </term>
+        ///     <term>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -1292,13 +1292,13 @@ namespace Azure.Security.ConfidentialLedger
         ///     <term>assignedRole</term>
         ///     <term>&quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;</term>
         ///     <term>Yes</term>
-        ///     <term> Represents an assignable role. </term>
+        ///     <term>Represents an assignable role.</term>
         ///   </item>
         ///   <item>
         ///     <term>userId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Identifier for the user. This must either be an AAD object id or a certificate fingerprint. </term>
+        ///     <term>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</term>
         ///   </item>
         /// </list>
         /// </remarks>

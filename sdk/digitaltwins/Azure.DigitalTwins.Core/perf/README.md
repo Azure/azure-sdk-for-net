@@ -31,7 +31,7 @@ Run the executable output of a project
 dotnet run -c Release -f <supported-framework> --no-build -p <path/to/project/file> -- [parameters needed for the test]
 ```
 
-\<supported-framework\> can be one of netcoreapp2.1, netcoreapp3.1, net461 or net5.0. Note the -- before any custom parameters to pass. This prevents dotnet from trying to handle any ambiguous command line switches.
+\<supported-framework\> can be one of netcoreapp3.1, netcoreapp3.1, net461 or net5.0. Note the -- before any custom parameters to pass. This prevents dotnet from trying to handle any ambiguous command line switches.
 
 You should use the scenario test class names as the first parameter that is needed for running the test.
 

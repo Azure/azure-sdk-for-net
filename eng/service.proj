@@ -63,4 +63,12 @@
     <Message Text="Final Build References:" Importance="high"/>
     <Message Text="  %(ProjectReference.Identity)" Importance="high"/>
   </Target>
+
+  <Target Name="GetPackageInfo">
+    <MSBuild Projects="@(ProjectReference)"
+            Targets="GetPackageInfo"
+            BuildInParallel="$(BuildInParallel)"
+            SkipNonexistentProjects="false"
+            SkipNonexistentTargets="true" />
+  </Target>
 </Project>

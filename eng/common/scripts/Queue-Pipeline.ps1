@@ -1,3 +1,45 @@
+<#
+.SYNOPSIS
+Queues an Azure DevOps Pipeline run optionally canceling similar runs
+
+.PARAMETER Organization
+Azure DevOps organization name
+
+.PARAMETER Project
+Azure DevOps project name
+
+.PARAMETER SourceBranch
+Source branch use when executing the DevOps pipeline. Specifying an empty string
+will result in queuing of the run with the default branch configured for the
+pipeline.
+
+.PARAMETER DefinitionId
+Pipline definition ID
+
+.PARAMETER CancelPreviousBuilds
+Requires a value for SourceBranch. Cancel previous builds before queuing the new 
+build.
+
+.PARAMETER VsoQueuedPipelines
+Variable name to set in DevOps for the queued pipeline links
+
+.PARAMETER Base64EncodedAuthToken
+Auth token for Azure DevOps API
+
+.PARAMETER BuildParametersJson
+Additional build parameters to provide to the pipeline execution.
+
+Of the format:
+
+```json
+{
+  "variable1": "value1",
+  "variable2": "value2"
+}
+```
+
+#>
+
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
   [Parameter(Mandatory = $true)]
@@ -6,7 +48,6 @@ param(
   [Parameter(Mandatory = $true)]
   [string]$Project,
 
-  [Parameter(Mandatory = $true)]
   [string]$SourceBranch,
 
   [Parameter(Mandatory = $true)]
@@ -18,12 +59,17 @@ param(
   [string]$VsoQueuedPipelines,
 
   [Parameter(Mandatory = $true)]
-  [string]$Base64EncodedAuthToken
+  [string]$Base64EncodedAuthToken,
+
+  [Parameter(Mandatory = $false)]
+  [string]$BuildParametersJson
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-if ($CancelPreviousBuilds)
+# Skip if SourceBranch is empty because it we cannot generate a target branch
+# name from an empty string.
+if ($CancelPreviousBuilds -and $SourceBranch)
 {
   try {
     $queuedBuilds = Get-DevOpsBuilds -BranchName "refs/heads/$SourceBranch" -Definitions $DefinitionId `
@@ -46,7 +92,13 @@ if ($CancelPreviousBuilds)
 }
 
 try {
-  $resp = Start-DevOpsBuild -SourceBranch $SourceBranch -DefinitionId $DefinitionId -Base64EncodedAuthToken $Base64EncodedAuthToken
+  $resp = Start-DevOpsBuild `
+    -Organization $Organization `
+    -Project $Project `
+    -SourceBranch $SourceBranch `
+    -DefinitionId $DefinitionId `
+    -Base64EncodedAuthToken $Base64EncodedAuthToken `
+    -BuildParametersJson $BuildParametersJson
 }
 catch {
   LogError "Start-DevOpsBuild failed with exception:`n$_"

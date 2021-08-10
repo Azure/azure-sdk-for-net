@@ -870,6 +870,7 @@ namespace Azure.Storage.Blobs
                     CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
                     CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
                     LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
+                    LeaseStatus = response.Headers.LeaseStatus ?? LeaseStatus.Unlocked,
                     LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
                     AcceptRanges = response.Headers.AcceptRanges,
                     BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),

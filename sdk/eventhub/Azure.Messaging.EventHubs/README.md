@@ -18,7 +18,7 @@ The Azure Event Hubs client library allows for publishing and consuming of Azure
 
 ### Prerequisites
 
-- **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 
 - **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
 
@@ -139,7 +139,7 @@ await using (var consumer = new EventHubConsumerClient(consumerGroup, connection
 
 In order to read events for an Event Hub partition, you'll need to create an `EventHubConsumerClient` for a given consumer group.  When an Event Hub is created, it provides a default consumer group that can be used to get started with exploring Event Hubs.  To read from a specific partition, the consumer will also need to specify where in the event stream to begin receiving events; in our example, we will focus on reading all published events for the first partition of the Event Hub.
 
-```C# Snippet:EventHubs_ReadMe_Read
+```C# Snippet:EventHubs_ReadMe_ReadPartition
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
@@ -147,12 +147,15 @@ string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
 await using (var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName))
 {
+    EventPosition startingPosition = EventPosition.Earliest;
+    string partitionId = (await consumer.GetPartitionIdsAsync()).First();
+
     using var cancellationSource = new CancellationTokenSource();
     cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
 
-    await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync(cancellationSource.Token))
+    await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, cancellationSource.Token))
     {
-        // At this point, the loop will wait for events to be available in the Event Hub.  When an event
+        // At this point, the loop will wait for events to be available in the partition.  When an event
         // is available, the loop will iterate with the event that was received.  Because we did not
         // specify a maximum wait time, the loop will wait forever unless cancellation is requested using
         // the cancellation token.
@@ -192,6 +195,7 @@ try
 {
     // The processor performs its work in the background; block until cancellation
     // to allow processing to take place.
+
     await Task.Delay(Timeout.Infinite, cancellationSource.Token);
 }
 catch (TaskCanceledException)
@@ -206,6 +210,7 @@ try
 finally
 {
     // To prevent leaks, the handlers should be removed when processing is complete.
+
     processor.ProcessEventAsync -= processEventHandler;
     processor.ProcessErrorAsync -= processErrorHandler;
 }
@@ -220,10 +225,9 @@ The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/blob/mai
 To make use of an Active Directory principal, one of the available credentials from the `Azure.Identity` library is specified when creating the Event Hubs client.  In addition, the fully qualified Event Hubs namespace and the name of desired Event Hub are supplied in lieu of the Event Hubs connection string.  For illustration, the `EventHubProducerClient` is demonstrated in these examples, but the concept and form are common across clients.
 
 ```C# Snippet:EventHubs_ReadMe_PublishIdentity
-TokenCredential credential = new DefaultAzureCredential();
-
 var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
 
 await using (var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential))
 {

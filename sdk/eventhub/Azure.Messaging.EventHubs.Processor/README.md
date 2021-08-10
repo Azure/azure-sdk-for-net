@@ -16,7 +16,7 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
 ### Prerequisites
 
-- **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 
 - **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
 
@@ -95,9 +95,9 @@ var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPA
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
-BlobContainerClient storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
+var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
 
-EventProcessorClient processor = new EventProcessorClient
+var processor = new EventProcessorClient
 (
     storageClient,
     consumerGroup,
@@ -124,6 +124,7 @@ async Task processEventHandler(ProcessEventArgs eventArgs)
     {
         // Perform the application-specific processing for an event.  This method
         // is intended for illustration and is not defined in this snippet.
+
         await DoSomethingWithTheEvent(eventArgs.Partition, eventArgs.Data);
     }
     catch
@@ -138,6 +139,7 @@ async Task processErrorHandler(ProcessErrorEventArgs eventArgs)
     {
         // Perform the application-specific processing for an error.  This method
         // is intended for illustration and is not defined in this snippet.
+
         await DoSomethingWithTheError(eventArgs.Exception);
     }
     catch
@@ -183,6 +185,7 @@ try
 {
     // The processor performs its work in the background; block until cancellation
     // to allow processing to take place.
+
     await Task.Delay(Timeout.Infinite, cancellationSource.Token);
 }
 catch (TaskCanceledException)
@@ -197,6 +200,7 @@ try
 finally
 {
     // To prevent leaks, the handlers should be removed when processing is complete.
+
     processor.ProcessEventAsync -= processEventHandler;
     processor.ProcessErrorAsync -= processErrorHandler;
 }
@@ -211,16 +215,16 @@ To make use of an Active Directory principal, one of the available credentials f
 To make use of an Active Directory principal with Azure Storage blob containers, the fully qualified URL to the container must be provided when creating the storage client.  Details about the valid URI formats for accessing Blob storage may be found in [Naming and Referencing Containers, Blobs, and Metadata](https://docs.microsoft.com/rest/api/storageservices/Naming-and-Referencing-Containers--Blobs--and-Metadata#resource-uri-syntax).  
 
 ```C# Snippet:EventHubs_Processor_ReadMe_CreateWithIdentity
-TokenCredential credential = new DefaultAzureCredential();
-
-string blobStorageUrl ="<< FULLY-QUALIFIED CONTAINER URL (like https://myaccount.blob.core.windows.net/mycontainer) >>";
-BlobContainerClient storageClient = new BlobContainerClient(new Uri(blobStorageUrl), credential);
+var credential = new DefaultAzureCredential();
+var blobStorageUrl ="<< FULLY-QUALIFIED CONTAINER URL (like https://myaccount.blob.core.windows.net/mycontainer) >>";
 
 var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
-EventProcessorClient processor = new EventProcessorClient
+var storageClient = new BlobContainerClient(new Uri(blobStorageUrl), credential);
+
+var processor = new EventProcessorClient
 (
     storageClient,
     consumerGroup,

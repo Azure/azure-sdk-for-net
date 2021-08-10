@@ -14,8 +14,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkSessionCollection
     {
         /// <summary> Initializes a new instance of SparkSessionCollection. </summary>
-        /// <param name="from"> . </param>
-        /// <param name="total"> . </param>
+        /// <param name="from"></param>
+        /// <param name="total"></param>
         internal SparkSessionCollection(int @from, int total)
         {
             From = @from;
@@ -24,9 +24,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
         }
 
         /// <summary> Initializes a new instance of SparkSessionCollection. </summary>
-        /// <param name="from"> . </param>
-        /// <param name="total"> . </param>
-        /// <param name="sessions"> . </param>
+        /// <param name="from"></param>
+        /// <param name="total"></param>
+        /// <param name="sessions"></param>
         internal SparkSessionCollection(int @from, int total, IReadOnlyList<SparkSession> sessions)
         {
             From = @from;

@@ -88,7 +88,7 @@ namespace Azure.Identity
             Record = (options as DeviceCodeCredentialOptions)?.AuthenticationRecord;
             _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            Client = client ?? new MsalPublicClient(Pipeline, tenantId, ClientId, AzureAuthorityHosts.GetDeviceCodeRedirectUri(Pipeline.AuthorityHost).ToString(), options as ITokenCacheOptions);
+            Client = client ?? new MsalPublicClient(Pipeline, tenantId, ClientId, AzureAuthorityHosts.GetDeviceCodeRedirectUri(Pipeline.AuthorityHost).AbsoluteUri, options as ITokenCacheOptions);
         }
 
         /// <summary>

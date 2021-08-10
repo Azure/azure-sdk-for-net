@@ -16,4 +16,3 @@ extends:
           - $(sub-config-communication-int-test-resources-common)
           - $(sub-config-communication-int-test-resources-net)
     Clouds: Public,Int
-    EnvVars:

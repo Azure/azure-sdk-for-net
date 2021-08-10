@@ -4,9 +4,13 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using Azure.AI.MetricsAdvisor.Administration;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Newtonsoft.Json;
+using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
@@ -75,5 +79,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             return new MemoryStream(Encoding.UTF8.GetBytes(jsonStr));
         }
+
+        public string ReadContent(Request request)
+        {
+            using MemoryStream stream = new MemoryStream();
+            request.Content.WriteTo(stream, CancellationToken.None);
+
+            return Encoding.UTF8.GetString(stream.ToArray());
+        }
+
+        public SubstringConstraint ContainsJsonString(string propertyName, string propertyValue) =>
+            Contains.Substring($"\"{propertyName}\":\"{propertyValue}\"");
+
+        // Currently only supports a single-element array.
+        public SubstringConstraint ContainsJsonStringArray(string propertyName, string elementValue) =>
+            Contains.Substring($"\"{propertyName}\":[\"{elementValue}\"]");
     }
 }

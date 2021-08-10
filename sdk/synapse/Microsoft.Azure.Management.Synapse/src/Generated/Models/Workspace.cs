@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// settings</param>
         /// <param name="purviewConfiguration">Purview Configuration</param>
         /// <param name="adlaResourceId">The ADLA resource ID.</param>
-        /// <param name="publicNetworkAccess">Enable or Disable pubic network
+        /// <param name="publicNetworkAccess">Enable or Disable public network
         /// access to workspace. Possible values include: 'Enabled',
         /// 'Disabled'</param>
         /// <param name="identity">Identity of the workspace</param>
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public string AdlaResourceId { get; private set; }
 
         /// <summary>
-        /// Gets or sets enable or Disable pubic network access to workspace.
+        /// Gets or sets enable or Disable public network access to workspace.
         /// Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]

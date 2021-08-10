@@ -48,5 +48,11 @@ namespace Azure.Monitor.Query.Models
         {
             return RowBinder.Shared.BindResults<T>(new[] { this });
         }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return $"{Name}: {Rows.Count} rows, {Columns.Count} columns";
+        }
     }
 }

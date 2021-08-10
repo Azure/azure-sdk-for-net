@@ -54,13 +54,13 @@ namespace Azure.Template.Tests.Samples
             #region Snippet:WebPubSubSendJson
             var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
-            serviceClient.SendToAll("application/json",
-                RequestContent.Create(
+            serviceClient.SendToAll(RequestContent.Create(
                     new
                     {
                         Foo = "Hello World!",
                         Bar = 42
-                    }));
+                    }),
+                    ContentType.ApplicationJson);
             #endregion
         }
 
@@ -73,7 +73,7 @@ namespace Azure.Template.Tests.Samples
             var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
             Stream stream = BinaryData.FromString("Hello World!").ToStream();
-            serviceClient.SendToAll("application/octet-stream", RequestContent.Create(stream));
+            serviceClient.SendToAll(RequestContent.Create(stream), ContentType.ApplicationOctetStream);
             #endregion
         }
 

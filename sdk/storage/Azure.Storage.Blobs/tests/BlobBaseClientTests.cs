@@ -304,6 +304,10 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+
+            Assert.AreEqual(LeaseStatus.Unlocked, response.Value.Details.LeaseStatus);
+            Assert.AreEqual(LeaseState.Available, response.Value.Details.LeaseState);
+            Assert.AreEqual(LeaseDurationType.Infinite, response.Value.Details.LeaseDuration);
         }
 
         [RecordedTest]
@@ -1520,6 +1524,72 @@ namespace Azure.Storage.Blobs.Test
                     IfModifiedSince = Recording.UtcNow
                 });
             Assert.AreEqual(304, result.Status);
+        }
+
+        [RecordedTest]
+        public async Task DownloadContent_Initial304()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload a blob
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Add conditions to cause a failure and ensure we don't explode
+            Response<BlobDownloadResult> result = await blob.DownloadContentAsync(
+                new BlobRequestConditions
+                {
+                    IfModifiedSince = Recording.UtcNow
+                });
+            Assert.AreEqual(304, result.GetRawResponse().Status);
+        }
+
+        [RecordedTest]
+        public async Task DownloadStreaming_Initial304()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload a blob
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Add conditions to cause a failure and ensure we don't explode
+            Response<BlobDownloadStreamingResult> result = await blob.DownloadStreamingAsync(
+                conditions: new BlobRequestConditions
+                {
+                    IfModifiedSince = Recording.UtcNow
+                });
+            Assert.AreEqual(304, result.GetRawResponse().Status);
+        }
+
+        [RecordedTest]
+        public async Task Download_Initial304()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload a blob
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Add conditions to cause a failure and ensure we don't explode
+            Response<BlobDownloadInfo> result = await blob.DownloadAsync(
+                conditions: new BlobRequestConditions
+                {
+                    IfModifiedSince = Recording.UtcNow
+                });
+            Assert.AreEqual(304, result.GetRawResponse().Status);
         }
 
         [RecordedTest]

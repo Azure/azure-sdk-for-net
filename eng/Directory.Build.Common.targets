@@ -49,7 +49,7 @@
   <PropertyGroup>
     <OriginalReadmeMdPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))README.md</OriginalReadmeMdPath>
     <ProcessedReadmeMdPath>$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
-    <EnableNuGetReadmeMd Condition="'$(HasReleaseVersion)' == 'false' and Exists('$(OriginalReadmeMdPath)')">true</EnableNuGetReadmeMd>
+    <EnableNuGetReadmeMd Condition="'$(DesignTimeBuild)' != 'true' and Exists('$(OriginalReadmeMdPath)')">true</EnableNuGetReadmeMd>
     <PackageReadmeFile Condition="'$(EnableNuGetReadmeMd)' == 'true'">README.md</PackageReadmeFile>
   </PropertyGroup>
 
@@ -87,10 +87,10 @@
 
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
 
-    <PackageReference Condition="'$(EnableFxCopAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    <PackageReference Condition="'$(EnableFxCopAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.FxCopAnalyzers" PrivateAssets="All" />
+
+    <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
+
   </ItemGroup>
 
   <!-- Add Package Icon to DataPlane Packages -->
@@ -105,12 +105,18 @@
   </ItemGroup>
 
   <!-- Add StyleCop Analyzers -->
-  <ItemGroup Condition="'$(EnableStyleCopAnalyzers)' == 'true'"  >
+  <ItemGroup Condition="'$(EnableStyleCopAnalyzers)' == 'true'" >
     <PackageReference Include="StyleCop.Analyzers">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <AdditionalFiles Include="$(RepoEngPath)\stylecop.json">
+      <Visible>false</Visible>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
+    <AdditionalFiles Include="$(RepoEngPath)\BannedSymbols.txt">
       <Visible>false</Visible>
     </AdditionalFiles>
   </ItemGroup>
@@ -162,11 +168,23 @@
     <!-- Add ProjectReferences -->
     <ProjectReference Include="@(ProjectsToConvert -> '%(ProjectPath)')" />
   </ItemGroup>
+  
+  <!--TODO: update build targets - ADO 5668-->
+  <PropertyGroup>
+    <MgmtCoreShared>$(MSBuildThisFileDirectory)/../common/ManagementCoreShared</MgmtCoreShared>
+    <ExcludeMgmtCoreShared Condition="'$(ExcludeMgmtCoreShared)' == ''">false</ExcludeMgmtCoreShared>
+  </PropertyGroup>
 
+  <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(ExcludeMgmtCoreShared)' == 'false'">
+    <Compile Include="$(MgmtCoreShared)/**/*.cs"
+                 Link="Shared/Management/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  
+  <!--TODO: end-->
   <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
     <PackageReference Include="System.Text.Json" />
-
+    
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
@@ -262,6 +280,24 @@
   </Target>
 
   <Target Name="RunApiCompat" DependsOnTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
+  </Target>
+
+  <Target Name="GetPackageInfo">
+    <PropertyGroup>
+      <PackageIsNewSdk>false</PackageIsNewSdk>
+      <PackageIsNewSdk Condition="'$(IsClientLibrary)' == 'true'">true</PackageIsNewSdk>
+
+      <PackageSdkType>data</PackageSdkType>
+      <PackageSdkType Condition="'$(IsClientLibrary)' == 'true'">client</PackageSdkType>
+      <PackageSdkType Condition="'$(IsMgmtLibrary)' == 'true'">mgmt</PackageSdkType>
+
+      <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).Trim("/").Trim("\\"))</PackageRootDirectory>
+
+      <!-- Parse out the service directory based on the relative path to the sdk folder -->
+      <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
+    </PropertyGroup>
+
+    <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(_VersionInProject)' '$(PackageSdkType)' '$(PackageIsNewSdk)'" Importance="High" />
   </Target>
 
   <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />

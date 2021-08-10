@@ -30,16 +30,16 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
-        /// <param name="contentType"> Upload file type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToAllAsync(string contentType, RequestContent content, IEnumerable<string> excluded = null, RequestOptions options = null)
+        public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToAllRequest(contentType, content, excluded, options);
+            HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -72,16 +72,16 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
-        /// <param name="contentType"> Upload file type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response SendToAll(string contentType, RequestContent content, IEnumerable<string> excluded = null, RequestOptions options = null)
+        public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToAllRequest(contentType, content, excluded, options);
+            HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -114,11 +114,11 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Create Request for <see cref="SendToAll"/> and <see cref="SendToAllAsync"/> operations. </summary>
-        /// <param name="contentType"> Upload file type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSendToAllRequest(string contentType, RequestContent content, IEnumerable<string> excluded = null, RequestOptions options = null)
+        private HttpMessage CreateSendToAllRequest(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -137,7 +137,7 @@ namespace Azure.Messaging.WebPubSub
                 uri.AppendQuery("api-version", apiVersion, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType);
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
         }
@@ -251,16 +251,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CloseClientConnectionAsync(string connectionId, string reason = null, RequestOptions options = null)
+        public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCloseClientConnectionRequest(connectionId, reason, options);
+            HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseClientConnection");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
             try
             {
@@ -292,16 +292,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CloseClientConnection(string connectionId, string reason = null, RequestOptions options = null)
+        public virtual Response CloseConnection(string connectionId, string reason = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCloseClientConnectionRequest(connectionId, reason, options);
+            HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseClientConnection");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
             try
             {
@@ -328,11 +328,11 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        /// <summary> Create Request for <see cref="CloseClientConnection"/> and <see cref="CloseClientConnectionAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="CloseConnection"/> and <see cref="CloseConnectionAsync"/> operations. </summary>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCloseClientConnectionRequest(string connectionId, string reason = null, RequestOptions options = null)
+        private HttpMessage CreateCloseConnectionRequest(string connectionId, string reason = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -357,15 +357,15 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Send content inside request body to the specific connection. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="contentType"> Upload file type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToConnectionAsync(string connectionId, string contentType, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToConnectionRequest(connectionId, contentType, content, options);
+            HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -399,15 +399,15 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Send content inside request body to the specific connection. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="contentType"> Upload file type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response SendToConnection(string connectionId, string contentType, RequestContent content, RequestOptions options = null)
+        public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToConnectionRequest(connectionId, contentType, content, options);
+            HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -441,10 +441,10 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Create Request for <see cref="SendToConnection"/> and <see cref="SendToConnectionAsync"/> operations. </summary>
         /// <param name="connectionId"> The connection Id. </param>
-        /// <param name="contentType"> Upload file type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSendToConnectionRequest(string connectionId, string contentType, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateSendToConnectionRequest(string connectionId, RequestContent content, ContentType contentType, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -461,7 +461,7 @@ namespace Azure.Messaging.WebPubSub
                 uri.AppendQuery("api-version", apiVersion, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType);
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
         }
@@ -572,16 +572,16 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Send content inside request body to a group of connections. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="contentType"> Upload file type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToGroupAsync(string group, string contentType, RequestContent content, IEnumerable<string> excluded = null, RequestOptions options = null)
+        public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToGroupRequest(group, contentType, content, excluded, options);
+            HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -615,16 +615,16 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Send content inside request body to a group of connections. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="contentType"> Upload file type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response SendToGroup(string group, string contentType, RequestContent content, IEnumerable<string> excluded = null, RequestOptions options = null)
+        public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToGroupRequest(group, contentType, content, excluded, options);
+            HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -658,11 +658,11 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Create Request for <see cref="SendToGroup"/> and <see cref="SendToGroupAsync"/> operations. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="contentType"> Upload file type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSendToGroupRequest(string group, string contentType, RequestContent content, IEnumerable<string> excluded = null, RequestOptions options = null)
+        private HttpMessage CreateSendToGroupRequest(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -683,7 +683,7 @@ namespace Azure.Messaging.WebPubSub
                 uri.AppendQuery("api-version", apiVersion, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType);
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
         }
@@ -1010,15 +1010,15 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Send content inside request body to the specific user. </summary>
         /// <param name="userId"> The user Id. </param>
-        /// <param name="contentType"> Upload file type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SendToUserAsync(string userId, string contentType, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToUserRequest(userId, contentType, content, options);
+            HttpMessage message = CreateSendToUserRequest(userId, content, contentType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1052,15 +1052,15 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Send content inside request body to the specific user. </summary>
         /// <param name="userId"> The user Id. </param>
-        /// <param name="contentType"> Upload file type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response SendToUser(string userId, string contentType, RequestContent content, RequestOptions options = null)
+        public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateSendToUserRequest(userId, contentType, content, options);
+            HttpMessage message = CreateSendToUserRequest(userId, content, contentType, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -1094,10 +1094,10 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Create Request for <see cref="SendToUser"/> and <see cref="SendToUserAsync"/> operations. </summary>
         /// <param name="userId"> The user Id. </param>
-        /// <param name="contentType"> Upload file type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateSendToUserRequest(string userId, string contentType, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateSendToUserRequest(string userId, RequestContent content, ContentType contentType, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1114,7 +1114,7 @@ namespace Azure.Messaging.WebPubSub
                 uri.AppendQuery("api-version", apiVersion, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType);
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
         }

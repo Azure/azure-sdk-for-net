@@ -53,7 +53,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// separated string with IPv4 CIDRs, IPv4 host addresses and host
         /// names</param>
         /// <param name="hasRootAccess">Has root access to volume</param>
-        public ExportPolicyRule(int? ruleIndex = default(int?), bool? unixReadOnly = default(bool?), bool? unixReadWrite = default(bool?), bool? kerberos5ReadOnly = default(bool?), bool? kerberos5ReadWrite = default(bool?), bool? kerberos5iReadOnly = default(bool?), bool? kerberos5iReadWrite = default(bool?), bool? kerberos5pReadOnly = default(bool?), bool? kerberos5pReadWrite = default(bool?), bool? cifs = default(bool?), bool? nfsv3 = default(bool?), bool? nfsv41 = default(bool?), string allowedClients = default(string), bool? hasRootAccess = default(bool?))
+        /// <param name="chownMode">This parameter specifies who is authorized
+        /// to change the ownership of a file. restricted - Only root user can
+        /// change the ownership of the file. unrestricted - Non-root users can
+        /// change ownership of files that they own. Possible values include:
+        /// 'Restricted', 'Unrestricted'</param>
+        public ExportPolicyRule(int? ruleIndex = default(int?), bool? unixReadOnly = default(bool?), bool? unixReadWrite = default(bool?), bool? kerberos5ReadOnly = default(bool?), bool? kerberos5ReadWrite = default(bool?), bool? kerberos5iReadOnly = default(bool?), bool? kerberos5iReadWrite = default(bool?), bool? kerberos5pReadOnly = default(bool?), bool? kerberos5pReadWrite = default(bool?), bool? cifs = default(bool?), bool? nfsv3 = default(bool?), bool? nfsv41 = default(bool?), string allowedClients = default(string), bool? hasRootAccess = default(bool?), string chownMode = default(string))
         {
             RuleIndex = ruleIndex;
             UnixReadOnly = unixReadOnly;
@@ -69,6 +74,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             Nfsv41 = nfsv41;
             AllowedClients = allowedClients;
             HasRootAccess = hasRootAccess;
+            ChownMode = chownMode;
             CustomInit();
         }
 
@@ -169,6 +175,16 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "hasRootAccess")]
         public bool? HasRootAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets this parameter specifies who is authorized to change
+        /// the ownership of a file. restricted - Only root user can change the
+        /// ownership of the file. unrestricted - Non-root users can change
+        /// ownership of files that they own. Possible values include:
+        /// 'Restricted', 'Unrestricted'
+        /// </summary>
+        [JsonProperty(PropertyName = "chownMode")]
+        public string ChownMode { get; set; }
 
     }
 }

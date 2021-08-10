@@ -13,9 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary>
     /// anomaly status
     /// 
-    /// 
-    /// 
-    /// only return for alerting anomaly result.
+    /// only return for alerting anomaly result
     /// </summary>
     public readonly partial struct AnomalyStatus : IEquatable<AnomalyStatus>
     {

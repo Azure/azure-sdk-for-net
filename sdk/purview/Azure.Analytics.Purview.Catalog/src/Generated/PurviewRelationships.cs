@@ -43,91 +43,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>end1</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>end2</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the relationship. </term>
+        ///     <term>The home ID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>label</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of relationship status. </term>
+        ///     <term>The enum of relationship status.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the relationship. </term>
+        ///     <term>The version of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasObjectId</c>:
@@ -142,19 +142,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the object. </term>
+        ///     <term>The GUID of the object.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>uniqueAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The unique attributes of the object. </term>
+        ///     <term>The unique attributes of the object.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -211,91 +211,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>end1</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>end2</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the relationship. </term>
+        ///     <term>The home ID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>label</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of relationship status. </term>
+        ///     <term>The enum of relationship status.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the relationship. </term>
+        ///     <term>The version of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasObjectId</c>:
@@ -310,19 +310,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the object. </term>
+        ///     <term>The GUID of the object.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>uniqueAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The unique attributes of the object. </term>
+        ///     <term>The unique attributes of the object.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -398,91 +398,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>end1</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>end2</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the relationship. </term>
+        ///     <term>The home ID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>label</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of relationship status. </term>
+        ///     <term>The enum of relationship status.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the relationship. </term>
+        ///     <term>The version of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasObjectId</c>:
@@ -497,19 +497,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the object. </term>
+        ///     <term>The GUID of the object.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>uniqueAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The unique attributes of the object. </term>
+        ///     <term>The unique attributes of the object.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -566,91 +566,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>end1</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>end2</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the relationship. </term>
+        ///     <term>The home ID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>label</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of relationship status. </term>
+        ///     <term>The enum of relationship status.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the relationship. </term>
+        ///     <term>The version of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasObjectId</c>:
@@ -665,19 +665,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the object. </term>
+        ///     <term>The GUID of the object.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>uniqueAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The unique attributes of the object. </term>
+        ///     <term>The unique attributes of the object.</term>
         ///   </item>
         /// </list>
         /// </remarks>

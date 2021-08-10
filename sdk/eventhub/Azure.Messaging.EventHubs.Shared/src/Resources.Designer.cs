@@ -780,5 +780,27 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("DictionaryKeyNotFoundMask", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not a supported value body type..
+        /// </summary>
+        internal static string InvalidAmqpMessageValueBodyMask
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidAmqpMessageValueBodyMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} key `{1}` has a value of type `{2}` which is not supported for AMQP transport..
+        /// </summary>
+        internal static string InvalidAmqpMessageDictionaryTypeMask
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidAmqpMessageDictionaryTypeMask", resourceCulture);
+            }
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var eventData = new EventData(new BinaryData(Array.Empty<byte>()));
 
-            Assert.That(eventData.HasProperties, Is.False, "The user properties should be created lazily.");
+            Assert.That(eventData.GetRawAmqpMessage().HasSection(AmqpMessageSection.ApplicationProperties), Is.False, "The user properties should be created lazily.");
             Assert.That(GetSystemPropertiesBackingStore(eventData), Is.Null, "The system properties should be the static empty set.");
         }
 

@@ -141,7 +141,7 @@ namespace Azure.Core.Pipeline
             return new HttpClient(httpMessageHandler)
             {
                 // Timeouts are handled by the pipeline
-                Timeout = Timeout.InfiniteTimeSpan
+                Timeout = Timeout.InfiniteTimeSpan,
             };
         }
 
@@ -153,9 +153,15 @@ namespace Azure.Core.Pipeline
             }
 
 #if NETCOREAPP
-            return new SocketsHttpHandler();
+            return new SocketsHttpHandler()
+            {
+                AllowAutoRedirect = false
+            };
 #else
-            return new HttpClientHandler();
+            return new HttpClientHandler()
+            {
+                AllowAutoRedirect = false
+            };
 #endif
         }
 

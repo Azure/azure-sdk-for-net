@@ -21,8 +21,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Threading.Tasks.Task<Azure.Response> AddUserToGroupAsync(string group, string userId, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response<bool> CheckPermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckPermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response CloseClientConnection(string connectionId, string reason = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CloseClientConnectionAsync(string connectionId, string reason = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response CloseConnection(string connectionId, string reason = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CloseConnectionAsync(string connectionId, string reason = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response<bool> ConnectionExists(string connectionId, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ConnectionExistsAsync(string connectionId, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Uri GenerateClientAccessUri(System.DateTimeOffset expiresAt, string userId = null, params string[] roles) { throw null; }
@@ -39,28 +39,29 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveUserFromGroupAsync(string group, string userId, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response RevokePermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RevokePermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response SendToAll(Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response SendToAll(string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
-        public virtual Azure.Response SendToAll(string contentType, Azure.Core.RequestContent content, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToAllAsync(Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToAllAsync(string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendToAllAsync(string contentType, Azure.Core.RequestContent content, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response SendToConnection(string connectionId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response SendToConnection(string connectionId, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
-        public virtual Azure.Response SendToConnection(string connectionId, string contentType, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToConnectionAsync(string connectionId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToConnectionAsync(string connectionId, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendToConnectionAsync(string connectionId, string contentType, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response SendToGroup(string group, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response SendToGroup(string group, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
-        public virtual Azure.Response SendToGroup(string group, string contentType, Azure.Core.RequestContent content, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToGroupAsync(string group, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToGroupAsync(string group, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendToGroupAsync(string group, string contentType, Azure.Core.RequestContent content, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response SendToUser(string userId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response SendToUser(string userId, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
-        public virtual Azure.Response SendToUser(string userId, string contentType, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToUserAsync(string userId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToUserAsync(string userId, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendToUserAsync(string userId, string contentType, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response<bool> UserExists(string userId, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> UserExistsAsync(string userId, Azure.RequestOptions options = null) { throw null; }
     }
     public partial class WebPubSubServiceClientOptions : Azure.Core.ClientOptions
     {
         public WebPubSubServiceClientOptions(Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.V2021_05_01_preview) { }
+        public System.Uri ReverseProxyEndpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2021_05_01_preview = 1,

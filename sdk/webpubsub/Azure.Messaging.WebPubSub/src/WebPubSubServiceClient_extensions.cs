@@ -57,9 +57,19 @@ namespace Azure.Messaging.WebPubSub
             _clientDiagnostics = new ClientDiagnostics(options);
             apiVersion = options.Version;
 
+            HttpPipelinePolicy[] perCallPolicies;
+            if (options.ReverseProxyEndpoint != null)
+            {
+                perCallPolicies = new HttpPipelinePolicy[] { new ApimPolicy(options.ReverseProxyEndpoint), new LowLevelCallbackPolicy() };
+            }
+            else
+            {
+                perCallPolicies = new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() };
+            }
+
             Pipeline = HttpPipelineBuilder.Build(
                 options,
-                perCallPolicies: new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
+                perCallPolicies: perCallPolicies,
                 perRetryPolicies: new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(credential) },
                 new ResponseClassifier()
             );
@@ -105,7 +115,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToAllAsync(contentType.ToString(), RequestContent.Create(content), default, options: default).ConfigureAwait(false);
+            return await SendToAllAsync(RequestContent.Create(content), contentType.ToString(), default, options: default).ConfigureAwait(false);
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>
@@ -118,7 +128,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToAll(contentType.ToString(), RequestContent.Create(content), excluded: default, options: default);
+            return SendToAll(RequestContent.Create(content), contentType, excluded: default, options: default);
         }
 
         /// <summary>
@@ -135,7 +145,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToUserAsync(userId, contentType.ToString(), RequestContent.Create(content), options: default).ConfigureAwait(false);
+            return await SendToUserAsync(userId, RequestContent.Create(content), contentType, options: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -152,7 +162,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToUser(userId, contentType.ToString(), RequestContent.Create(content), options: default);
+            return SendToUser(userId, RequestContent.Create(content), contentType, options: default);
         }
 
         /// <summary>
@@ -169,7 +179,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToConnectionAsync(connectionId, contentType.ToString(), RequestContent.Create(content), options: default).ConfigureAwait(false);
+            return await SendToConnectionAsync(connectionId, RequestContent.Create(content), contentType, options: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,7 +196,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToConnection(connectionId, contentType.ToString(), RequestContent.Create(content), options: default);
+            return SendToConnection(connectionId, RequestContent.Create(content), contentType, options: default);
         }
 
         /// <summary>
@@ -203,7 +213,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return await SendToGroupAsync(group, contentType.ToString(), RequestContent.Create(content), excluded : default, options: default).ConfigureAwait(false);
+            return await SendToGroupAsync(group, RequestContent.Create(content), contentType, excluded : default, options: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -220,7 +230,7 @@ namespace Azure.Messaging.WebPubSub
 
             if (contentType == default) contentType = ContentType.TextPlain;
 
-            return SendToGroup(group, contentType.ToString(), RequestContent.Create(content), excluded : default, options: default);
+            return SendToGroup(group, RequestContent.Create(content), contentType, excluded: default, options: default);
         }
 
         /// <summary> Check if there are any client connections inside the given group. </summary>
