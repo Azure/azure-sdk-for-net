@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Sample.Perf
@@ -51,16 +52,15 @@ namespace Azure.Sample.Perf
 
             for (var i=0; i < Partitions; i++)
             {
-                _ = Process(i);
+                var j = i;
+                Task.Run(() => Process(j));
             }
 
             return Task.CompletedTask;
         }
 
-        private async Task Process(int partition)
+        private void Process(int partition)
         {
-            await Task.Yield();
-
             var eventArgs = _eventArgs[partition];
 
             if (MaxEventsPerSecond > 0)
@@ -72,12 +72,12 @@ namespace Azure.Sample.Perf
 
                     if (eventsRaised < targetEventsRaised)
                     {
-                        await _processEventAsync(eventArgs).ConfigureAwait(false);
+                        _processEventAsync(eventArgs).Wait();
                         _eventsRaised[partition]++;
                     }
                     else
                     {
-                        await Task.Delay(TimeSpan.FromSeconds(1 / MaxEventsPerSecondPerPartition));
+                        Thread.Sleep(TimeSpan.FromSeconds(1 / MaxEventsPerSecondPerPartition));
                     }
                 }
             }
@@ -85,7 +85,7 @@ namespace Azure.Sample.Perf
             {
                 while (true)
                 {
-                    await _processEventAsync(eventArgs).ConfigureAwait(false);
+                    _processEventAsync(eventArgs).Wait();
                     _eventsRaised[partition]++;
                 }
             }
