@@ -151,7 +151,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         }
 
                         url = $"{httpScheme}://{host}{colon}{netHostPort}{httpTarget}";
-
                         return url;
                     }
                 }
