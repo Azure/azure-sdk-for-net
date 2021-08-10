@@ -3274,6 +3274,7 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             copySourceAuthorization: sourceAuthentication?.ToString(),
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3298,6 +3299,7 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             copySourceAuthorization: sourceAuthentication?.ToString(),
+                            encryptionScope: ClientConfiguration.EncryptionScope,
                             cancellationToken: cancellationToken);
                     }
 
