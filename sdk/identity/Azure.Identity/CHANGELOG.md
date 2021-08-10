@@ -27,8 +27,6 @@ Thank you to our developer community members who helped to make Azure Identity b
 - Fixed DateTime parsing to use the current culture in AzurePowerShellCredential. [#22638](https://github.com/Azure/azure-sdk-for-net/issues/22638)
 
 
-### Other Changes
-
 ## 1.5.0-beta.2 (2021-07-12)
 
 ### New Features
