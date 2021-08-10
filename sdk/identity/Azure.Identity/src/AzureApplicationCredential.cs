@@ -32,14 +32,11 @@ namespace Azure.Identity
         /// Initializes an instance of the <see cref="AzureApplicationCredential"/>.
         /// </summary>
         /// <param name="options">The <see cref="TokenCredentialOptions"/> to configure this credential.</param>
-        public AzureApplicationCredential(AzureApplicationCredentialOptions options) : this(options, null, null)
+        public AzureApplicationCredential(AzureApplicationCredentialOptions options = null) : this(options ?? new AzureApplicationCredentialOptions(), null, null)
         { }
 
         internal AzureApplicationCredential(AzureApplicationCredentialOptions options, EnvironmentCredential environmentCredential = null, ManagedIdentityCredential managedIdentityCredential = null)
         {
-            Argument.AssertNotNull(options, nameof(options));
-            Argument.AssertNotNull(options.ManagedIdentityClientId, $"{nameof(AzureApplicationCredentialOptions)}.{nameof(options.ManagedIdentityClientId)}");
-
             _credential = new ChainedTokenCredential(
                 environmentCredential ?? new EnvironmentCredential(options),
                 managedIdentityCredential ?? new ManagedIdentityCredential(options.ManagedIdentityClientId)
