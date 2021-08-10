@@ -42,18 +42,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
             activity.Stop();
+
             var httpUrl = "https://www.foo.bar/search";
-            var httpResponsCode = "0";
             activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in HttpHelperTests.
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, null);
             var requestData = TelemetryPartB.GetRequestData(activity);
-            Assert.Equal(requestData.Name, activity.DisplayName);
-            Assert.Equal(requestData.Id, activity.Context.SpanId.ToHexString());
-            Assert.Equal(requestData.Url, httpUrl);
-            Assert.Equal(requestData.ResponseCode, httpResponsCode);
-            Assert.Equal(requestData.Duration, activity.Duration.ToString("c", CultureInfo.InvariantCulture));
-            Assert.Equal(requestData.Success, activity.GetStatus() != Status.Error);
+
+            Assert.Equal(activity.DisplayName, requestData.Name);
+            Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
+            Assert.Equal(httpUrl, requestData.Url);
+            Assert.Equal("0", requestData.ResponseCode);
+            Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), requestData.Duration);
+            Assert.Equal(activity.GetStatus() != Status.Error, requestData.Success);
             Assert.Null(requestData.Source);
             Assert.True(requestData.Properties.Count == 1); //Because of otel_statuscode attribute for activity status. todo: do not add all tags to PartC
             Assert.True(requestData.Measurements.Count == 0);
@@ -70,13 +71,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 ActivityKind.Server,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
-            activity.Stop();
-            var httpUrl = "https://www.foo.bar/search";
+
             var httpResponsCode = httpStatusCode ?? "0";
-            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl);
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
             var requestData = TelemetryPartB.GetRequestData(activity);
-            Assert.Equal(requestData.ResponseCode, httpResponsCode);
+
+            Assert.Equal(httpResponsCode, requestData.ResponseCode);
         }
 
         [Theory]
@@ -104,10 +105,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             {
                 activity.SetStatus(Status.Unset);
             }
-            var httpUrl = "https://www.foo.bar/search";
-            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl);
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             var requestData = TelemetryPartB.GetRequestData(activity);
-            Assert.Equal(requestData.Success, activity.GetStatus() != Status.Error);
+
+            Assert.Equal(activity.GetStatus() != Status.Error, requestData.Success);
         }
     }
 }
