@@ -168,6 +168,8 @@ namespace Azure.ResourceManager.Network
                         value = PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((PrivateLinkServiceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -201,6 +203,8 @@ namespace Azure.ResourceManager.Network
                         value = PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((PrivateLinkServiceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -806,7 +810,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateCheckPrivateLinkServiceVisibilityRequest(string location, string privateLinkServiceAlias)
+        internal HttpMessage CreateCheckPrivateLinkServiceVisibilityRequest(string location, CheckPrivateLinkServiceVisibilityRequest parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -822,29 +826,29 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new CheckPrivateLinkServiceVisibilityRequest()
-            {
-                PrivateLinkServiceAlias = privateLinkServiceAlias
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
 
         /// <summary> Checks whether the subscription is visible to private link service. </summary>
         /// <param name="location"> The location of the domain name. </param>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response> CheckPrivateLinkServiceVisibilityAsync(string location, string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> CheckPrivateLinkServiceVisibilityAsync(string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateCheckPrivateLinkServiceVisibilityRequest(location, privateLinkServiceAlias);
+            using var message = CreateCheckPrivateLinkServiceVisibilityRequest(location, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -858,17 +862,21 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Checks whether the subscription is visible to private link service. </summary>
         /// <param name="location"> The location of the domain name. </param>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response CheckPrivateLinkServiceVisibility(string location, string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
+        public Response CheckPrivateLinkServiceVisibility(string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateCheckPrivateLinkServiceVisibilityRequest(location, privateLinkServiceAlias);
+            using var message = CreateCheckPrivateLinkServiceVisibilityRequest(location, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -880,7 +888,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(string resourceGroupName, string location, string privateLinkServiceAlias)
+        internal HttpMessage CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(string resourceGroupName, string location, CheckPrivateLinkServiceVisibilityRequest parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -898,12 +906,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new CheckPrivateLinkServiceVisibilityRequest()
-            {
-                PrivateLinkServiceAlias = privateLinkServiceAlias
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -911,10 +915,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="location"> The location of the domain name. </param>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(string resourceGroupName, string location, string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="location"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(string resourceGroupName, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -924,8 +928,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(location));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroupName, location, privateLinkServiceAlias);
+            using var message = CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroupName, location, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -940,10 +948,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="location"> The location of the domain name. </param>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
-        public Response CheckPrivateLinkServiceVisibilityByResourceGroup(string resourceGroupName, string location, string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="location"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response CheckPrivateLinkServiceVisibilityByResourceGroup(string resourceGroupName, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -953,8 +961,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(location));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroupName, location, privateLinkServiceAlias);
+            using var message = CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroupName, location, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

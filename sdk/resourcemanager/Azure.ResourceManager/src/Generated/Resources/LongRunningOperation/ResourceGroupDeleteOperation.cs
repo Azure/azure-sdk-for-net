@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ResourceGroupsDeleteOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceGroupDeleteOperation for mocking. </summary>
         protected ResourceGroupDeleteOperation()
         {
         }
 
         internal ResourceGroupDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupsDeleteOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupDeleteOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

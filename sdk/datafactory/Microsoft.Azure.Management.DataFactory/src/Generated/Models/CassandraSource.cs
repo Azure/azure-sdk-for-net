@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="additionalColumns">Specifies the additional columns to
-        /// be added to source data. Type: array of objects (or Expression with
-        /// resultType array of objects).</param>
+        /// be added to source data. Type: array of objects(AdditionalColumns)
+        /// (or Expression with resultType array of objects).</param>
         /// <param name="query">Database query. Should be a SQL-92 query
         /// expression or Cassandra Query Language (CQL) command. Type: string
         /// (or Expression with resultType string).</param>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// default value is 'ONE'. It is case-insensitive. Possible values
         /// include: 'ALL', 'EACH_QUORUM', 'QUORUM', 'LOCAL_QUORUM', 'ONE',
         /// 'TWO', 'THREE', 'LOCAL_ONE', 'SERIAL', 'LOCAL_SERIAL'</param>
-        public CassandraSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object query = default(object), string consistencyLevel = default(string))
+        public CassandraSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object queryTimeout = default(object), object additionalColumns = default(object), object query = default(object), string consistencyLevel = default(string))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, queryTimeout, additionalColumns)
         {
             Query = query;

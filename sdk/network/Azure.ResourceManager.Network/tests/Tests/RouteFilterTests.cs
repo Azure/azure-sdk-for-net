@@ -36,23 +36,26 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         //    await CleanupResourceGroupsAsync();
         //}
 
-        private const string Filter_Commmunity = "12076:51004";
+        private const string Filter_Commmunity = "12076:51006";
+
+        private async Task<RouteFilterContainer> GetContainer()
+        {
+            var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("route_filter_test_"));
+            return resourceGroup.Value.GetRouteFilters();
+        }
 
         [Test]
+        [RecordedTest]
         public async Task RouteFilterApiTest()
         {
-            string resourceGroupName = Recording.GenerateAssetName("csmrg");
+            var filterContainer = await GetContainer();
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/routefilters");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
-
-            var filterContainer = GetRouteFilterContainer(resourceGroupName);
             // Create route filter
-            string filterName = "filter";
-            string ruleName = "rule";
+            string filterName = Recording.GenerateAssetName("filter");
+            string ruleName = Recording.GenerateAssetName("rule");
 
             RouteFilter filter = await CreateDefaultRouteFilter(filterContainer,
-                filterName, location);
+                filterName);
             Assert.AreEqual("Succeeded", filter.Data.ProvisioningState.ToString());
             Assert.AreEqual(filterName, filter.Data.Name);
             Assert.IsEmpty(filter.Data.Rules);
@@ -89,7 +92,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(Access.Deny, filterRule.Data.Access);
 
             // Add filter rule, this will fail due to the limitation of maximum 1 rule per filter
-            Assert.ThrowsAsync<RequestFailedException>(async () => await CreateDefaultRouteFilterRule(filter, "rule2"));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await CreateDefaultRouteFilterRule(filter, Recording.GenerateAssetName("rule2")));
 
             filter = await filterContainer.GetAsync(filterName);
             Has.One.Equals(filter.Data.Rules);
@@ -107,12 +110,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.False(allFilters.Any(f => filter.Id == f.Id));
         }
 
-        private async Task<RouteFilter> CreateDefaultRouteFilter(RouteFilterContainer filterContainer, string filterName, string location,
+        private async Task<RouteFilter> CreateDefaultRouteFilter(RouteFilterContainer filterContainer, string filterName,
             bool containsRule = false)
         {
             var filter = new RouteFilterData()
             {
-                Location = location,
+                Location = TestEnvironment.Location,
                 Tags = { { "key", "value" } }
             };
 
@@ -120,10 +123,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 var rule = new RouteFilterRuleData()
                 {
-                    Name = "test",
+                    Name = Recording.GenerateAssetName("test"),
                     Access = Access.Allow,
                     Communities = { Filter_Commmunity },
-                    Location = location
+                    Location = TestEnvironment.Location
                 };
 
                 filter.Rules.Add(rule);

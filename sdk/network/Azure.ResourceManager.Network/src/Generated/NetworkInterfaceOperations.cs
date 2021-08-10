@@ -58,6 +58,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -77,6 +79,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -140,14 +144,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkInterfacesDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkInterfaceDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new NetworkInterfacesDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new NetworkInterfaceDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -158,14 +162,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkInterfacesDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual NetworkInterfaceDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new NetworkInterfacesDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new NetworkInterfaceDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -174,15 +178,21 @@ namespace Azure.ResourceManager.Network
             }
         }
         /// <summary> Updates a network interface tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update network interface tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetworkInterface>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<NetworkInterface>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -193,15 +203,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates a network interface tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update network interface tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkInterface> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<NetworkInterface> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -437,14 +453,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all route tables applied to a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkInterfacesGetEffectiveRouteTableOperation> StartGetEffectiveRouteTableAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkInterfaceGetEffectiveRouteTableOperation> StartGetEffectiveRouteTableAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.StartGetEffectiveRouteTable");
             scope.Start();
             try
             {
                 var response = await _restClient.GetEffectiveRouteTableAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new NetworkInterfacesGetEffectiveRouteTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveRouteTableRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new NetworkInterfaceGetEffectiveRouteTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveRouteTableRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -455,14 +471,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all route tables applied to a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkInterfacesGetEffectiveRouteTableOperation StartGetEffectiveRouteTable(CancellationToken cancellationToken = default)
+        public virtual NetworkInterfaceGetEffectiveRouteTableOperation StartGetEffectiveRouteTable(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.StartGetEffectiveRouteTable");
             scope.Start();
             try
             {
                 var response = _restClient.GetEffectiveRouteTable(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new NetworkInterfacesGetEffectiveRouteTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveRouteTableRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new NetworkInterfaceGetEffectiveRouteTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveRouteTableRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -509,14 +525,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all network security groups applied to a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation> StartGetEffectiveNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkInterfaceGetEffectiveNetworkSecurityGroupsOperation> StartGetEffectiveNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.StartGetEffectiveNetworkSecurityGroups");
             scope.Start();
             try
             {
                 var response = await _restClient.GetEffectiveNetworkSecurityGroupsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveNetworkSecurityGroupsRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new NetworkInterfaceGetEffectiveNetworkSecurityGroupsOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveNetworkSecurityGroupsRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -527,14 +543,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all network security groups applied to a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation StartGetEffectiveNetworkSecurityGroups(CancellationToken cancellationToken = default)
+        public virtual NetworkInterfaceGetEffectiveNetworkSecurityGroupsOperation StartGetEffectiveNetworkSecurityGroups(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.StartGetEffectiveNetworkSecurityGroups");
             scope.Start();
             try
             {
                 var response = _restClient.GetEffectiveNetworkSecurityGroups(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveNetworkSecurityGroupsRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new NetworkInterfaceGetEffectiveNetworkSecurityGroupsOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveNetworkSecurityGroupsRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {

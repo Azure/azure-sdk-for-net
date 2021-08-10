@@ -22,7 +22,64 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class AzureBlobFileSystemConfiguration : ITransportObjectProvider<Models.AzureBlobFileSystemConfiguration>, IPropertyMetadata
     {
+        private class PropertyContainer : PropertyCollection
+        {
+            public readonly PropertyAccessor<string> AccountKeyProperty;
+            public readonly PropertyAccessor<string> AccountNameProperty;
+            public readonly PropertyAccessor<string> BlobfuseOptionsProperty;
+            public readonly PropertyAccessor<string> ContainerNameProperty;
+            public readonly PropertyAccessor<ComputeNodeIdentityReference> IdentityReferenceProperty;
+            public readonly PropertyAccessor<string> RelativeMountPathProperty;
+            public readonly PropertyAccessor<string> SasKeyProperty;
+
+            public PropertyContainer() : base(BindingState.Unbound)
+            {
+                this.AccountKeyProperty = this.CreatePropertyAccessor<string>(nameof(AccountKey), BindingAccess.Read | BindingAccess.Write);
+                this.AccountNameProperty = this.CreatePropertyAccessor<string>(nameof(AccountName), BindingAccess.Read | BindingAccess.Write);
+                this.BlobfuseOptionsProperty = this.CreatePropertyAccessor<string>(nameof(BlobfuseOptions), BindingAccess.Read | BindingAccess.Write);
+                this.ContainerNameProperty = this.CreatePropertyAccessor<string>(nameof(ContainerName), BindingAccess.Read | BindingAccess.Write);
+                this.IdentityReferenceProperty = this.CreatePropertyAccessor<ComputeNodeIdentityReference>(nameof(IdentityReference), BindingAccess.Read | BindingAccess.Write);
+                this.RelativeMountPathProperty = this.CreatePropertyAccessor<string>(nameof(RelativeMountPath), BindingAccess.Read | BindingAccess.Write);
+                this.SasKeyProperty = this.CreatePropertyAccessor<string>(nameof(SasKey), BindingAccess.Read | BindingAccess.Write);
+            }
+
+            public PropertyContainer(Models.AzureBlobFileSystemConfiguration protocolObject) : base(BindingState.Bound)
+            {
+                this.AccountKeyProperty = this.CreatePropertyAccessor(
+                    protocolObject.AccountKey,
+                    nameof(AccountKey),
+                    BindingAccess.Read);
+                this.AccountNameProperty = this.CreatePropertyAccessor(
+                    protocolObject.AccountName,
+                    nameof(AccountName),
+                    BindingAccess.Read);
+                this.BlobfuseOptionsProperty = this.CreatePropertyAccessor(
+                    protocolObject.BlobfuseOptions,
+                    nameof(BlobfuseOptions),
+                    BindingAccess.Read);
+                this.ContainerNameProperty = this.CreatePropertyAccessor(
+                    protocolObject.ContainerName,
+                    nameof(ContainerName),
+                    BindingAccess.Read);
+                this.IdentityReferenceProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.IdentityReference, o => new ComputeNodeIdentityReference(o).Freeze()),
+                    nameof(IdentityReference),
+                    BindingAccess.Read);
+                this.RelativeMountPathProperty = this.CreatePropertyAccessor(
+                    protocolObject.RelativeMountPath,
+                    nameof(RelativeMountPath),
+                    BindingAccess.Read);
+                this.SasKeyProperty = this.CreatePropertyAccessor(
+                    protocolObject.SasKey,
+                    nameof(SasKey),
+                    BindingAccess.Read);
+            }
+        }
+
+        private readonly PropertyContainer propertyContainer;
+
         #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureBlobFileSystemConfiguration"/> class.
         /// </summary>
@@ -40,6 +97,7 @@ namespace Microsoft.Azure.Batch
             string sasKey = default(string),
             string blobfuseOptions = default(string))
         {
+            this.propertyContainer = new PropertyContainer();
             this.AccountName = accountName;
             this.ContainerName = containerName;
             this.RelativeMountPath = relativeMountPath;
@@ -50,12 +108,7 @@ namespace Microsoft.Azure.Batch
 
         internal AzureBlobFileSystemConfiguration(Models.AzureBlobFileSystemConfiguration protocolObject)
         {
-            this.AccountKey = protocolObject.AccountKey;
-            this.AccountName = protocolObject.AccountName;
-            this.BlobfuseOptions = protocolObject.BlobfuseOptions;
-            this.ContainerName = protocolObject.ContainerName;
-            this.RelativeMountPath = protocolObject.RelativeMountPath;
-            this.SasKey = protocolObject.SasKey;
+            this.propertyContainer = new PropertyContainer(protocolObject);
         }
 
         #endregion Constructors
@@ -65,12 +118,20 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the Azure Storage Account key. This property is mutually exclusive with <see cref="SasKey"/>.
         /// </summary>
-        public string AccountKey { get; }
+        public string AccountKey
+        {
+            get { return this.propertyContainer.AccountKeyProperty.Value; }
+            private set { this.propertyContainer.AccountKeyProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets the Azure Storage account name.
         /// </summary>
-        public string AccountName { get; }
+        public string AccountName
+        {
+            get { return this.propertyContainer.AccountNameProperty.Value; }
+            private set { this.propertyContainer.AccountNameProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets additional command line options to pass to the mount command.
@@ -78,12 +139,32 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// These are 'net use' options in Windows and 'mount' options in Linux.
         /// </remarks>
-        public string BlobfuseOptions { get; }
+        public string BlobfuseOptions
+        {
+            get { return this.propertyContainer.BlobfuseOptionsProperty.Value; }
+            private set { this.propertyContainer.BlobfuseOptionsProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets the Azure Blob Storage Container name.
         /// </summary>
-        public string ContainerName { get; }
+        public string ContainerName
+        {
+            get { return this.propertyContainer.ContainerNameProperty.Value; }
+            private set { this.propertyContainer.ContainerNameProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the reference to the user assigned identity to use to access containerName
+        /// </summary>
+        /// <remarks>
+        /// This property is mutually exclusive with both accountKey and sasKey; exactly one must be specified.
+        /// </remarks>
+        public ComputeNodeIdentityReference IdentityReference
+        {
+            get { return this.propertyContainer.IdentityReferenceProperty.Value; }
+            set { this.propertyContainer.IdentityReferenceProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets the relative path on the compute node where the file system will be mounted.
@@ -92,12 +173,20 @@ namespace Microsoft.Azure.Batch
         /// All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR 
         /// environment variable.
         /// </remarks>
-        public string RelativeMountPath { get; }
+        public string RelativeMountPath
+        {
+            get { return this.propertyContainer.RelativeMountPathProperty.Value; }
+            private set { this.propertyContainer.RelativeMountPathProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets the Azure Storage SAS token. This property is mutually exclusive with <see cref="AccountKey"/>.
         /// </summary>
-        public string SasKey { get; }
+        public string SasKey
+        {
+            get { return this.propertyContainer.SasKeyProperty.Value; }
+            private set { this.propertyContainer.SasKeyProperty.Value = value; }
+        }
 
         #endregion // AzureBlobFileSystemConfiguration
 
@@ -105,23 +194,18 @@ namespace Microsoft.Azure.Batch
 
         bool IModifiable.HasBeenModified
         {
-            //This class is compile time readonly so it cannot have been modified
-            get { return false; }
+            get { return this.propertyContainer.HasBeenModified; }
         }
 
         bool IReadOnly.IsReadOnly
         {
-            get { return true; }
-            set
-            {
-                // This class is compile time readonly already
-            }
+            get { return this.propertyContainer.IsReadOnly; }
+            set { this.propertyContainer.IsReadOnly = value; }
         }
 
-        #endregion // IPropertyMetadata
+        #endregion //IPropertyMetadata
 
         #region Internal/private methods
-
         /// <summary>
         /// Return a protocol object of the requested type.
         /// </summary>
@@ -134,6 +218,7 @@ namespace Microsoft.Azure.Batch
                 AccountName = this.AccountName,
                 BlobfuseOptions = this.BlobfuseOptions,
                 ContainerName = this.ContainerName,
+                IdentityReference = UtilitiesInternal.CreateObjectWithNullCheck(this.IdentityReference, (o) => o.GetTransportObject()),
                 RelativeMountPath = this.RelativeMountPath,
                 SasKey = this.SasKey,
             };

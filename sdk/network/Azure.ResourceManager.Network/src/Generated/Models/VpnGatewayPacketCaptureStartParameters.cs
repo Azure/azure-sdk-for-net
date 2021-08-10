@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Start packet capture parameters. </summary>
-    internal partial class VpnGatewayPacketCaptureStartParameters
+    public partial class VpnGatewayPacketCaptureStartParameters
     {
         /// <summary> Initializes a new instance of VpnGatewayPacketCaptureStartParameters. </summary>
         public VpnGatewayPacketCaptureStartParameters()

@@ -15,31 +15,25 @@ namespace Azure.ResourceManager.Network.Tests.Tests
     {
         private VirtualNetwork virtualNetwork;
         private GenericResource privateDnsZone;
+        private Resources.ResourceGroup resourceGroup;
+        private GenericResource storageAccount;
 
         public PrivateEndpointTests(bool isAsync) : base(isAsync)
         {
         }
 
         [SetUp]
-        public void ClearChallengeCacheforRecord()
+        public async Task ClearChallengeCacheforRecord()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 Initialize();
             }
-        }
-
-        private async Task<Response<ResourceGroup>> createResourceGroup()
-        {
-            var name = Recording.GenerateAssetName("pe_rg");
-            // TODO: create it through resource management, or we can instrutment ArmClient?
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/privateEndpoints");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(name, new Resources.Models.ResourceGroup(location));
-            return await ArmClient.DefaultSubscription.GetResourceGroups().GetAsync(name);
+            resourceGroup = (await CreateResourceGroup(Recording.GenerateAssetName("pe_rg"))).Value;
         }
 
         // TODO: create it through resource management, or we can instrutment ArmClient?
-        private async Task<Response<VirtualNetwork>> createVirtualNetwork(ResourceGroup resourceGroup)
+        private async Task<Response<VirtualNetwork>> createVirtualNetwork()
         {
             var name = Recording.GenerateAssetName("pe_vnet");
             var vnet = new VirtualNetworkData()
@@ -62,6 +56,24 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             return await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(name, vnet);
         }
 
+        private async Task<GenericResource> createStorageAccount()
+        {
+            var name = Recording.GenerateAssetName("testsa");
+            var storageAccountId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{name}";
+
+        //var storageParameters = new Storage.Models.StorageAccountCreateParameters(new Storage.Models.Sku(Storage.Models.SkuName.StandardLRS), Storage.Models.Kind.Storage, TestEnvironment.Location);
+        //var accountOperation = await StorageManagementClient.StorageAccounts.StartCreateAsync(resourceGroup.Data.Name, name, storageParameters);
+        //Response<Storage.Models.StorageAccount> account = await accountOperation.WaitForCompletionAsync();
+        //return account.Value;
+
+            return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(storageAccountId, new GenericResourceData
+            {
+                //Sku = new Resources.Models.Sku(),
+                Kind = "storage",
+                Location = TestEnvironment.Location
+            })).Value;
+        }
+
         [TearDown]
         public async Task CleanupResourceGroup()
         {
@@ -79,13 +91,20 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 await privateDnsZone.DeleteAsync();
             }
+            if (storageAccount != null)
+            {
+                //await StorageManagementClient.StorageAccounts.DeleteAsync(resourceGroup.Data.Name, storageAccount.Name);
+                await storageAccount.DeleteAsync();
+            }
         }
 
         [Test]
+        [RecordedTest]
+        [Ignore("We need to replace storage management with either generic resource or template")]
         public async Task PrivateEndpointTest()
         {
-            var resourceGroup = (await createResourceGroup()).Value;
-            virtualNetwork = (await createVirtualNetwork(resourceGroup)).Value;
+            virtualNetwork = (await createVirtualNetwork()).Value;
+            storageAccount = await createStorageAccount();
 
             // create
             var privateEndpointContainer = resourceGroup.GetPrivateEndpoints();
@@ -100,9 +119,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                     {
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network
-                        PrivateLinkServiceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktest7669/providers/Microsoft.KeyVault/vaults/TierRuanKeyVaultJustTest",
+                        //PrivateLinkServiceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{storageAccount.Name}",
+                        PrivateLinkServiceId = storageAccount.Id,
                         RequestMessage = "SDK test",
-                        GroupIds = { "vault" }
+                        GroupIds = { "storage" }
                     }
                 },
             };
@@ -140,10 +160,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
+        [Ignore("We need to replace storage management with either generic resource or template")]
         public async Task PrivateDnsZoneGroupTest()
         {
-            var resourceGroup = (await createResourceGroup()).Value;
-            virtualNetwork = (await createVirtualNetwork(resourceGroup)).Value;
+            virtualNetwork = (await createVirtualNetwork()).Value;
+            storageAccount = await createStorageAccount();
 
             // create
             var privateEndpointContainer = resourceGroup.GetPrivateEndpoints();
@@ -158,9 +180,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                     {
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network
-                        PrivateLinkServiceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktest7669/providers/Microsoft.KeyVault/vaults/TierRuanKeyVaultJustTest",
+                        //PrivateLinkServiceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktest7669/providers/Microsoft.KeyVault/vaults/TierRuanKeyVaultJustTest",
+                        PrivateLinkServiceId = storageAccount.Id,
                         RequestMessage = "SDK test",
-                        GroupIds = { "vault" }
+                        GroupIds = { "storage" }
                     }
                 },
             };
@@ -218,6 +241,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task AvailablePrivateEndpointTypeTest()
         {
             var types = await ArmClient.DefaultSubscription.GetAvailablePrivateEndpointTypesAsync(TestEnvironment.Location).ToEnumerableAsync();
@@ -225,10 +249,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task AvailablePrivateEndpointInResourceGroupTypeTest()
         {
-            var resourceGroup = (await createResourceGroup()).Value;
-            var types = await ArmClient.DefaultSubscription.GetAvailablePrivateEndpointTypesByResourceGroupAsync(TestEnvironment.Location, resourceGroup.Data.Name).ToEnumerableAsync();
+            var types = await ArmClient.DefaultSubscription.GetAvailablePrivateEndpointTypesByResourceGroupAsync( resourceGroup.Data.Name, TestEnvironment.Location).ToEnumerableAsync();
             Assert.IsNotEmpty(types);
         }
     }

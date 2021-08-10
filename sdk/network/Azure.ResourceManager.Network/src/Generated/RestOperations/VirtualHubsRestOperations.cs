@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -87,6 +86,8 @@ namespace Azure.ResourceManager.Network
                         value = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((VirtualHubData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -119,6 +120,8 @@ namespace Azure.ResourceManager.Network
                         value = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((VirtualHubData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -213,7 +216,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string virtualHubName, IDictionary<string, string> tags)
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string virtualHubName, TagsObject virtualHubParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -230,17 +233,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            TagsObject tagsObject = new TagsObject();
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    tagsObject.Tags.Add(value);
-                }
-            }
-            var model = tagsObject;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(virtualHubParameters);
             request.Content = content;
             return message;
         }
@@ -248,10 +242,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates VirtualHub tags. </summary>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
-        public async Task<Response<VirtualHubData>> UpdateTagsAsync(string resourceGroupName, string virtualHubName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="virtualHubParameters"/> is null. </exception>
+        public async Task<Response<VirtualHubData>> UpdateTagsAsync(string resourceGroupName, string virtualHubName, TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -261,8 +255,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
+            if (virtualHubParameters == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubParameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualHubName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualHubName, virtualHubParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -281,10 +279,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates VirtualHub tags. </summary>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
-        public Response<VirtualHubData> UpdateTags(string resourceGroupName, string virtualHubName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="virtualHubParameters"/> is null. </exception>
+        public Response<VirtualHubData> UpdateTags(string resourceGroupName, string virtualHubName, TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -294,8 +292,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
+            if (virtualHubParameters == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubParameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualHubName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualHubName, virtualHubParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -516,7 +518,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetEffectiveVirtualHubRoutesRequest(string resourceGroupName, string virtualHubName, string resourceId, string virtualWanResourceType)
+        internal HttpMessage CreateGetEffectiveVirtualHubRoutesRequest(string resourceGroupName, string virtualHubName, EffectiveRoutesParameters effectiveRoutesParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -533,26 +535,23 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new EffectiveRoutesParameters()
+            if (effectiveRoutesParameters != null)
             {
-                ResourceId = resourceId,
-                VirtualWanResourceType = virtualWanResourceType
-            };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(effectiveRoutesParameters);
+                request.Content = content;
+            }
             return message;
         }
 
         /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
-        /// <param name="resourceId"> The resource whose effective routes are being requested. </param>
-        /// <param name="virtualWanResourceType"> The type of the specified resource like RouteTable, ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </param>
+        /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
-        public async Task<Response> GetEffectiveVirtualHubRoutesAsync(string resourceGroupName, string virtualHubName, string resourceId = null, string virtualWanResourceType = null, CancellationToken cancellationToken = default)
+        public async Task<Response> GetEffectiveVirtualHubRoutesAsync(string resourceGroupName, string virtualHubName, EffectiveRoutesParameters effectiveRoutesParameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -563,7 +562,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var message = CreateGetEffectiveVirtualHubRoutesRequest(resourceGroupName, virtualHubName, resourceId, virtualWanResourceType);
+            using var message = CreateGetEffectiveVirtualHubRoutesRequest(resourceGroupName, virtualHubName, effectiveRoutesParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -578,11 +577,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
-        /// <param name="resourceId"> The resource whose effective routes are being requested. </param>
-        /// <param name="virtualWanResourceType"> The type of the specified resource like RouteTable, ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </param>
+        /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
-        public Response GetEffectiveVirtualHubRoutes(string resourceGroupName, string virtualHubName, string resourceId = null, string virtualWanResourceType = null, CancellationToken cancellationToken = default)
+        public Response GetEffectiveVirtualHubRoutes(string resourceGroupName, string virtualHubName, EffectiveRoutesParameters effectiveRoutesParameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -593,7 +591,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
 
-            using var message = CreateGetEffectiveVirtualHubRoutesRequest(resourceGroupName, virtualHubName, resourceId, virtualWanResourceType);
+            using var message = CreateGetEffectiveVirtualHubRoutesRequest(resourceGroupName, virtualHubName, effectiveRoutesParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

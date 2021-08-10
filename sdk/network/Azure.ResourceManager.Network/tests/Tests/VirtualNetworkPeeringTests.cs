@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             var location = "westus";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string remoteVirtualNetworkName = Recording.GenerateAssetName("azsmnet");
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put Vnet
-            var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroupName);
-            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
+            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             vnet.AddressSpace.AddressPrefixes[0] = "10.1.0.0/16";
             vnet.Subnets[0].AddressPrefix = "10.1.1.0/24";
             vnet.Subnets[1].AddressPrefix = "10.1.2.0/24";
-            VirtualNetworksCreateOrUpdateOperation remoteVirtualNetworkOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(remoteVirtualNetworkName, vnet);
+            var remoteVirtualNetworkOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(remoteVirtualNetworkName, vnet);
             Response<VirtualNetwork> remoteVirtualNetwork = await remoteVirtualNetworkOperation.WaitForCompletionAsync();;
 
             // Get Peerings in the vnet
-            var virtualNetworkPeeringContainer = GetVirtualNetworkContainer(resourceGroupName).Get(vnetName).Value.GetVirtualNetworkPeerings();
+            var virtualNetworkPeeringContainer =resourceGroup.Value.GetVirtualNetworks().Get(vnetName).Value.GetVirtualNetworkPeerings();
             AsyncPageable<VirtualNetworkPeering> listPeeringAP = virtualNetworkPeeringContainer.GetAllAsync();
             List<VirtualNetworkPeering> listPeering = await listPeeringAP.ToEnumerableAsync();
             Assert.IsEmpty(listPeering);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put peering in the vnet
-            VirtualNetworkPeeringsCreateOrUpdateOperation putPeeringOperation = await virtualNetworkPeeringContainer.StartCreateOrUpdateAsync(vnetPeeringName, peering);
+            var putPeeringOperation = await virtualNetworkPeeringContainer.StartCreateOrUpdateAsync(vnetPeeringName, peering);
             Response<VirtualNetworkPeering> putPeering = await putPeeringOperation.WaitForCompletionAsync();;
             Assert.NotNull(putPeering.Value.Data.Etag);
             Assert.AreEqual(vnetPeeringName, putPeering.Value.Data.Name);

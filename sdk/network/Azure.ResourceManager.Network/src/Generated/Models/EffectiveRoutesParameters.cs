@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The parameters specifying the resource whose effective routes are being requested. </summary>
-    internal partial class EffectiveRoutesParameters
+    public partial class EffectiveRoutesParameters
     {
         /// <summary> Initializes a new instance of EffectiveRoutesParameters. </summary>
         public EffectiveRoutesParameters()

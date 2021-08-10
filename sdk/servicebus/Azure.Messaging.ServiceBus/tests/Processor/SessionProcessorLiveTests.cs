@@ -635,9 +635,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // complete it, we will get a session lock
                     // lost exception. We are still able to verify
                     // that the message will be completed eventually.
-                    var exception = (ServiceBusException)args.Exception;
                     if (!(args.Exception is ServiceBusException sbEx) ||
-                    sbEx.Reason != ServiceBusFailureReason.SessionLockLost)
+                        sbEx.Reason != ServiceBusFailureReason.SessionLockLost)
                     {
                         Assert.Fail(args.Exception.ToString());
                     }
@@ -662,14 +661,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        [TestCase(1, 0, 1)]
-        [TestCase(5, 0, 3)]
-        [TestCase(10, 1, 5)]
-        [TestCase(20, 1, 10)]
+        [TestCase(1, 0)]
+        [TestCase(5, 0)]
+        [TestCase(10, 1)]
+        [TestCase(20, 1)]
         public async Task MaxAutoLockRenewalDurationRespected(
             int numThreads,
-            int autoLockRenewalDuration,
-            int maxCallsPerSession)
+            int autoLockRenewalDuration)
         {
             var lockDuration = TimeSpan.FromSeconds(10);
             await using (var scope = await ServiceBusScope.CreateWithQueue(
@@ -908,6 +906,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
+                    MaxConcurrentCallsPerSession = maxCallsPerSession,
                     AutoCompleteMessages = autoComplete,
                 };
                 for (int i = 0; i < specifiedSessionCount; i++)
@@ -1518,21 +1517,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ConcurrentDictionary<string, int> sessionDict = new ConcurrentDictionary<string, int>();
 
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += args =>
-                {
-                    // If the connection drops due to network flakiness
-                    // after the message is received but before we
-                    // complete it, we will get a session lock
-                    // lost exception. We are still able to verify
-                    // that the message will be completed eventually.
-                    var exception = (ServiceBusException)args.Exception;
-                    if (!(args.Exception is ServiceBusException sbEx) ||
-                    sbEx.Reason != ServiceBusFailureReason.SessionLockLost)
-                    {
-                        Assert.Fail(args.Exception.ToString());
-                    }
-                    return Task.CompletedTask;
-                };
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
                 await processor.StartProcessingAsync();
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -1816,6 +1802,151 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 // verify all messages were autocompleted
                 await AsyncAssert.ThrowsAsync<ServiceBusException>(async () => await client.AcceptNextSessionAsync(scope.QueueName));
             }
+        }
+
+        [Test]
+        public async Task CanUpdateSessionConcurrency()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 100;
+
+                for (int i = 0; i < messageCount / 2; i++)
+                {
+                    await sender.SendMessagesAsync(GetMessages(2, $"session{i}"));
+                }
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = 1,
+                    MaxConcurrentCallsPerSession = 1,
+                    SessionIdleTimeout = TimeSpan.FromSeconds(5)
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        return Task.CompletedTask;
+                    }
+
+                    var ct = Interlocked.Increment(ref receivedCount);
+                    if (ct == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    if (ct == 5)
+                    {
+                        processor.UpdateConcurrency(20, 2);
+                        Assert.AreEqual(20, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(2, processor.MaxConcurrentCallsPerSession);
+                    }
+
+                    if (ct == 50)
+                    {
+                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 20);
+                    }
+                    if (ct == 90)
+                    {
+                        processor.UpdateConcurrency(1, 1);
+                        Assert.AreEqual(1, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
+                    }
+                    if (ct == 95)
+                    {
+                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
+                    }
+                    return Task.CompletedTask;
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
+        public async Task CanUpdateMaxCallsPerSessionConcurrency()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 100;
+                await sender.SendMessagesAsync(GetMessages(messageCount, "sessionId"));
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = 1,
+                    MaxConcurrentCallsPerSession = 1
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        await args.AbandonMessageAsync(args.Message);
+                    }
+
+                    var ct = Interlocked.Increment(ref receivedCount);
+                    if (ct == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    if (ct == 5)
+                    {
+                        processor.UpdateConcurrency(5, 20);
+                        Assert.AreEqual(5, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
+                    }
+                    if (ct == 50)
+                    {
+                        // tasks will generally be 100 here, but allow some forgiveness as this is not deterministic
+                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 50);
+                        processor.UpdateConcurrency(1, 1);
+                        Assert.AreEqual(1, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
+                    }
+                    if (ct == 95)
+                    {
+                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
+                    }
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        private Task SessionErrorHandler(ProcessErrorEventArgs args)
+        {
+            // If the connection drops due to network flakiness
+            // after the message is received but before we
+            // complete it, we will get a session lock
+            // lost exception. We are still able to verify
+            // that the message will be completed eventually.
+            if (args.Exception is not ServiceBusException { Reason: ServiceBusFailureReason.SessionLockLost })
+            {
+                Assert.Fail(args.Exception.ToString());
+            }
+            return Task.CompletedTask;
         }
     }
 }

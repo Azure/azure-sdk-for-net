@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             var networkWatcherContainer = GetNetworkWatcherContainer(resourceGroupName);
             var networkWatcherResponse = await networkWatcherContainer.GetAsync("NetworkWatcher_westus2");
-            NetworkWatchersGetNextHopOperation getNextHop1Operation = await networkWatcherResponse.Value.StartGetNextHopAsync(nhProperties1);
+            var getNextHop1Operation = await networkWatcherResponse.Value.StartGetNextHopAsync(nhProperties1);
             Response<NextHopResult> getNextHop1 = await getNextHop1Operation.WaitForCompletionAsync();;
 
-            NetworkWatchersGetNextHopOperation getNextHop2Operation = await networkWatcherResponse.Value.StartGetNextHopAsync(nhProperties2);
+            var getNextHop2Operation = await networkWatcherResponse.Value.StartGetNextHopAsync(nhProperties2);
             Response<NextHopResult> getNextHop2 = await getNextHop2Operation.WaitForCompletionAsync();;
 
             Response<RouteTable> routeTable = await GetRouteTableContainer(resourceGroupName).GetAsync(resourceGroupName + "RT");

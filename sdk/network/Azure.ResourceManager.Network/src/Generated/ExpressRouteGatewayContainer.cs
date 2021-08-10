@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="putExpressRouteGatewayParameters"> Parameters required in an ExpressRoute gateway PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> or <paramref name="putExpressRouteGatewayParameters"/> is null. </exception>
-        public virtual ExpressRouteGatewaysCreateOrUpdateOperation StartCreateOrUpdate(string expressRouteGatewayName, ExpressRouteGatewayData putExpressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteGatewayCreateOrUpdateOperation StartCreateOrUpdate(string expressRouteGatewayName, ExpressRouteGatewayData putExpressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (expressRouteGatewayName == null)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, cancellationToken);
-                return new ExpressRouteGatewaysCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response);
+                return new ExpressRouteGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="putExpressRouteGatewayParameters"> Parameters required in an ExpressRoute gateway PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> or <paramref name="putExpressRouteGatewayParameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string expressRouteGatewayName, ExpressRouteGatewayData putExpressRouteGatewayParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteGatewayCreateOrUpdateOperation> StartCreateOrUpdateAsync(string expressRouteGatewayName, ExpressRouteGatewayData putExpressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (expressRouteGatewayName == null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteGatewaysCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response);
+                return new ExpressRouteGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -177,6 +177,8 @@ namespace Azure.ResourceManager.Network
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteGateway(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,6 +203,8 @@ namespace Azure.ResourceManager.Network
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ExpressRouteGateway(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -213,9 +217,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual ExpressRouteGateway TryGet(string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteGateway> GetIfExists(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -224,11 +228,10 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(expressRouteGatewayName));
                 }
 
-                return Get(expressRouteGatewayName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<ExpressRouteGateway>(null, response.GetRawResponse())
+                    : Response.FromValue(new ExpressRouteGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,9 +243,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<ExpressRouteGateway> TryGetAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ExpressRouteGateway>> GetIfExistsAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -251,11 +254,10 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(expressRouteGatewayName));
                 }
 
-                return await GetAsync(expressRouteGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, expressRouteGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<ExpressRouteGateway>(null, response.GetRawResponse())
+                    : Response.FromValue(new ExpressRouteGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -267,7 +269,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.CheckIfExists");
             scope.Start();
@@ -278,7 +280,8 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(expressRouteGatewayName));
                 }
 
-                return TryGet(expressRouteGatewayName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(expressRouteGatewayName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -290,7 +293,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.CheckIfExists");
             scope.Start();
@@ -301,7 +304,8 @@ namespace Azure.ResourceManager.Network
                     throw new ArgumentNullException(nameof(expressRouteGatewayName));
                 }
 
-                return await TryGetAsync(expressRouteGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(expressRouteGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -316,9 +320,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -339,9 +343,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

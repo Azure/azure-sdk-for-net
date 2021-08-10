@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -70,6 +72,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PacketCapture(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,14 +137,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified packet capture session. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PacketCapturesDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<PacketCaptureDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PacketCaptureOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new PacketCapturesDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new PacketCaptureDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -151,14 +155,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified packet capture session. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PacketCapturesDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual PacketCaptureDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PacketCaptureOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new PacketCapturesDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new PacketCaptureDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -205,14 +209,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Stops a specified packet capture session. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PacketCapturesStopOperation> StartStopAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<PacketCaptureStopOperation> StartStopAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PacketCaptureOperations.StartStop");
             scope.Start();
             try
             {
                 var response = await _restClient.StopAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new PacketCapturesStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new PacketCaptureStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -223,14 +227,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Stops a specified packet capture session. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PacketCapturesStopOperation StartStop(CancellationToken cancellationToken = default)
+        public virtual PacketCaptureStopOperation StartStop(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PacketCaptureOperations.StartStop");
             scope.Start();
             try
             {
                 var response = _restClient.Stop(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new PacketCapturesStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new PacketCaptureStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -277,14 +281,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Query the status of a running packet capture session. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PacketCapturesGetStatusOperation> StartGetStatusAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<PacketCaptureGetStatusOperation> StartGetStatusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PacketCaptureOperations.StartGetStatus");
             scope.Start();
             try
             {
                 var response = await _restClient.GetStatusAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new PacketCapturesGetStatusOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetStatusRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new PacketCaptureGetStatusOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetStatusRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -295,14 +299,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Query the status of a running packet capture session. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PacketCapturesGetStatusOperation StartGetStatus(CancellationToken cancellationToken = default)
+        public virtual PacketCaptureGetStatusOperation StartGetStatus(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PacketCaptureOperations.StartGetStatus");
             scope.Start();
             try
             {
                 var response = _restClient.GetStatus(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new PacketCapturesGetStatusOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetStatusRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new PacketCaptureGetStatusOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetStatusRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {

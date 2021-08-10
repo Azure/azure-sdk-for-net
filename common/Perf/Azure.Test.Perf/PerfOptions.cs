@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using CommandLine;
+using System;
 
 namespace Azure.Test.Perf
 {
@@ -54,6 +55,9 @@ namespace Azure.Test.Perf
 
         [Option("sync", HelpText = "Runs sync version of test")]
         public bool Sync { get; set; }
+
+        [Option('x', "test-proxy", HelpText = "URI of TestProxy Server")]
+        public Uri TestProxy { get; set; }
 
         [Option('w', "warmup", Default = 5, HelpText = "Duration of warmup in seconds")]
         public int Warmup { get; set; }

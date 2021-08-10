@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Details of PrepareNetworkPolicies for Subnet. </summary>
-    internal partial class PrepareNetworkPoliciesRequest
+    public partial class PrepareNetworkPoliciesRequest
     {
         /// <summary> Initializes a new instance of PrepareNetworkPoliciesRequest. </summary>
         public PrepareNetworkPoliciesRequest()

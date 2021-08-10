@@ -55,6 +55,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VpnSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -73,6 +75,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VpnSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -136,14 +140,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes a VpnSite. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VpnSitesDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<VpnSiteDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VpnSiteOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new VpnSitesDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new VpnSiteDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -154,14 +158,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes a VpnSite. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VpnSitesDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual VpnSiteDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VpnSiteOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new VpnSitesDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new VpnSiteDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -170,15 +174,21 @@ namespace Azure.ResourceManager.Network
             }
         }
         /// <summary> Updates VpnSite tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="vpnSiteParameters"> Parameters supplied to update VpnSite tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VpnSite>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteParameters"/> is null. </exception>
+        public virtual async Task<Response<VpnSite>> UpdateTagsAsync(TagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
         {
+            if (vpnSiteParameters == null)
+            {
+                throw new ArgumentNullException(nameof(vpnSiteParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VpnSiteOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, vpnSiteParameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VpnSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -189,15 +199,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates VpnSite tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="vpnSiteParameters"> Parameters supplied to update VpnSite tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VpnSite> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteParameters"/> is null. </exception>
+        public virtual Response<VpnSite> UpdateTags(TagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
         {
+            if (vpnSiteParameters == null)
+            {
+                throw new ArgumentNullException(nameof(vpnSiteParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VpnSiteOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, vpnSiteParameters, cancellationToken);
                 return Response.FromValue(new VpnSite(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

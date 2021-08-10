@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Tags object for patch operations. </summary>
-    internal partial class TagsObject
+    public partial class TagsObject
     {
         /// <summary> Initializes a new instance of TagsObject. </summary>
         public TagsObject()

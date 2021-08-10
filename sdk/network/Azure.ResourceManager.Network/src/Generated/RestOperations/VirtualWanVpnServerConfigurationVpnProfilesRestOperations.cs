@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGenerateRequest(string resourceGroupName, string virtualWANName, string vpnServerConfigurationResourceId, AuthenticationMethod? authenticationMethod)
+        internal HttpMessage CreateGenerateRequest(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,13 +57,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new VirtualWanVpnProfileParameters()
-            {
-                VpnServerConfigurationResourceId = vpnServerConfigurationResourceId,
-                AuthenticationMethod = authenticationMethod
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(vpnClientParams);
             request.Content = content;
             return message;
         }
@@ -71,11 +66,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="virtualWANName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
-        /// <param name="vpnServerConfigurationResourceId"> VpnServerConfiguration partial resource uri with which VirtualWan is associated to. </param>
-        /// <param name="authenticationMethod"> VPN client authentication method. </param>
+        /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualWANName"/> is null. </exception>
-        public async Task<Response> GenerateAsync(string resourceGroupName, string virtualWANName, string vpnServerConfigurationResourceId = null, AuthenticationMethod? authenticationMethod = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="vpnClientParams"/> is null. </exception>
+        public async Task<Response> GenerateAsync(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -85,8 +79,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualWANName));
             }
+            if (vpnClientParams == null)
+            {
+                throw new ArgumentNullException(nameof(vpnClientParams));
+            }
 
-            using var message = CreateGenerateRequest(resourceGroupName, virtualWANName, vpnServerConfigurationResourceId, authenticationMethod);
+            using var message = CreateGenerateRequest(resourceGroupName, virtualWANName, vpnClientParams);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -101,11 +99,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="virtualWANName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
-        /// <param name="vpnServerConfigurationResourceId"> VpnServerConfiguration partial resource uri with which VirtualWan is associated to. </param>
-        /// <param name="authenticationMethod"> VPN client authentication method. </param>
+        /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualWANName"/> is null. </exception>
-        public Response Generate(string resourceGroupName, string virtualWANName, string vpnServerConfigurationResourceId = null, AuthenticationMethod? authenticationMethod = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="vpnClientParams"/> is null. </exception>
+        public Response Generate(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -115,8 +112,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualWANName));
             }
+            if (vpnClientParams == null)
+            {
+                throw new ArgumentNullException(nameof(vpnClientParams));
+            }
 
-            using var message = CreateGenerateRequest(resourceGroupName, virtualWANName, vpnServerConfigurationResourceId, authenticationMethod);
+            using var message = CreateGenerateRequest(resourceGroupName, virtualWANName, vpnClientParams);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

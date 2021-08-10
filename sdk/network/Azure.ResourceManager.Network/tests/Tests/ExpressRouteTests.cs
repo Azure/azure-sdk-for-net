@@ -69,18 +69,16 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = "westus";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
 
             string circuitName = "circuit";
 
-            ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroupName,
-                circuitName, location);
+            ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
 
             Assert.AreEqual(circuit.Data.Name, circuitName);
             Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
 
-            circuit = await UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(resourceGroupName,
-                circuitName);
+            circuit = await UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(resourceGroup,circuitName);
 
             Assert.AreEqual(circuit.Data.Name, circuitName);
             Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
@@ -94,17 +92,16 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = "westus";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
 
             string circuitName = "circuit";
 
-            ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroupName,
-                circuitName, location);
+            ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
 
             Assert.AreEqual(circuit.Data.Name, circuitName);
             Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
 
-            circuit = await UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(resourceGroupName,
+            circuit = await UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(resourceGroup,
                 circuitName);
 
             Assert.AreEqual(circuit.Data.Name, circuitName);

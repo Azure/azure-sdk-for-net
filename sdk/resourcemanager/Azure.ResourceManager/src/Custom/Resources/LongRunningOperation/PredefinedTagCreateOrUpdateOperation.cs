@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationOrResponseInternals<PredefinedTag> _operation;
 
-        /// <summary> Initializes a new instance of PreDefinedTagCreateOrUpdateOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of PredefinedTagCreateOrUpdateOperation for mocking. </summary>
         protected PredefinedTagCreateOrUpdateOperation()
         {
         }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,11 +39,11 @@ namespace Azure.ResourceManager.Network
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateDownloadRequest(string resourceGroupName, string virtualWANName, string outputBlobSasUrl, IEnumerable<string> vpnSites)
+        internal HttpMessage CreateDownloadRequest(string resourceGroupName, string virtualWANName, GetVpnSitesConfigurationRequest request)
         {
             var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
+            var request0 = message.Request;
+            request0.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -55,32 +54,22 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(virtualWANName, true);
             uri.AppendPath("/vpnConfiguration", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            GetVpnSitesConfigurationRequest getVpnSitesConfigurationRequest = new GetVpnSitesConfigurationRequest(outputBlobSasUrl);
-            if (vpnSites != null)
-            {
-                foreach (var value in vpnSites)
-                {
-                    getVpnSitesConfigurationRequest.VpnSites.Add(value);
-                }
-            }
-            var model = getVpnSitesConfigurationRequest;
+            request0.Uri = uri;
+            request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            content.JsonWriter.WriteObjectValue(request);
+            request0.Content = content;
             return message;
         }
 
         /// <summary> Gives the sas-url to download the configurations for vpn-sites in a resource group. </summary>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="virtualWANName"> The name of the VirtualWAN for which configuration of all vpn-sites is needed. </param>
-        /// <param name="outputBlobSasUrl"> The sas-url to download the configurations for vpn-sites. </param>
-        /// <param name="vpnSites"> List of resource-ids of the vpn-sites for which config is to be downloaded. </param>
+        /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="outputBlobSasUrl"/> is null. </exception>
-        public async Task<Response> DownloadAsync(string resourceGroupName, string virtualWANName, string outputBlobSasUrl, IEnumerable<string> vpnSites = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="request"/> is null. </exception>
+        public async Task<Response> DownloadAsync(string resourceGroupName, string virtualWANName, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -90,12 +79,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualWANName));
             }
-            if (outputBlobSasUrl == null)
+            if (request == null)
             {
-                throw new ArgumentNullException(nameof(outputBlobSasUrl));
+                throw new ArgumentNullException(nameof(request));
             }
 
-            using var message = CreateDownloadRequest(resourceGroupName, virtualWANName, outputBlobSasUrl, vpnSites);
+            using var message = CreateDownloadRequest(resourceGroupName, virtualWANName, request);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -110,11 +99,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gives the sas-url to download the configurations for vpn-sites in a resource group. </summary>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="virtualWANName"> The name of the VirtualWAN for which configuration of all vpn-sites is needed. </param>
-        /// <param name="outputBlobSasUrl"> The sas-url to download the configurations for vpn-sites. </param>
-        /// <param name="vpnSites"> List of resource-ids of the vpn-sites for which config is to be downloaded. </param>
+        /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="outputBlobSasUrl"/> is null. </exception>
-        public Response Download(string resourceGroupName, string virtualWANName, string outputBlobSasUrl, IEnumerable<string> vpnSites = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualWANName"/>, or <paramref name="request"/> is null. </exception>
+        public Response Download(string resourceGroupName, string virtualWANName, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -124,12 +112,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualWANName));
             }
-            if (outputBlobSasUrl == null)
+            if (request == null)
             {
-                throw new ArgumentNullException(nameof(outputBlobSasUrl));
+                throw new ArgumentNullException(nameof(request));
             }
 
-            using var message = CreateDownloadRequest(resourceGroupName, virtualWANName, outputBlobSasUrl, vpnSites);
+            using var message = CreateDownloadRequest(resourceGroupName, virtualWANName, request);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

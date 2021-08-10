@@ -1,10 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Nullable>annotations</Nullable>
-    <IsMgmtLibrary>true</IsMgmtLibrary>
     <Version>1.0.0-preview.3</Version>
   </PropertyGroup>
 
@@ -18,16 +16,6 @@
       This is a beta preview vesion.  This version uses a next-generation code generator that introduces important breaking changes, but also new features (such as intuitive authentication, custom HTTP pipeline, distributed tracing and much more).
     </Description>
     <PackageTags>azure;management;network</PackageTags>
-    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- TODO: Temp workaround. Should be fixed prio release  -->
-    <NoWarn>$(NoWarn);AZC0008</NoWarn>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager" VersionOverride="1.0.0-alpha.20210728.2" />
-  </ItemGroup>
 
 </Project>

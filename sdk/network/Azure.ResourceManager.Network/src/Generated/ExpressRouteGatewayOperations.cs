@@ -53,6 +53,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new ExpressRouteGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -71,6 +73,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,14 +138,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection subresources. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteGatewaysDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteGatewayDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteGatewaysDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new ExpressRouteGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -152,14 +156,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection subresources. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteGatewaysDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual ExpressRouteGatewayDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new ExpressRouteGatewaysDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new ExpressRouteGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -240,15 +244,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates express route gateway tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExpressRouteGateway>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
+        public async virtual Task<Response<ExpressRouteGateway>> UpdateTagsAsync(TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
+            if (expressRouteGatewayParameters == null)
+            {
+                throw new ArgumentNullException(nameof(expressRouteGatewayParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayOperations.UpdateTags");
             scope.Start();
             try
             {
-                var operation = await StartUpdateTagsAsync(tags, cancellationToken).ConfigureAwait(false);
+                var operation = await StartUpdateTagsAsync(expressRouteGatewayParameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -259,15 +269,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates express route gateway tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteGateway> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
+        public virtual Response<ExpressRouteGateway> UpdateTags(TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
+            if (expressRouteGatewayParameters == null)
+            {
+                throw new ArgumentNullException(nameof(expressRouteGatewayParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayOperations.UpdateTags");
             scope.Start();
             try
             {
-                var operation = StartUpdateTags(tags, cancellationToken);
+                var operation = StartUpdateTags(expressRouteGatewayParameters, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -278,16 +294,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates express route gateway tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteGatewaysUpdateTagsOperation> StartUpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
+        public async virtual Task<ExpressRouteGatewayUpdateTagsOperation> StartUpdateTagsAsync(TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
+            if (expressRouteGatewayParameters == null)
+            {
+                throw new ArgumentNullException(nameof(expressRouteGatewayParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayOperations.StartUpdateTags");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteGatewaysUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, tags).Request, response);
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters, cancellationToken).ConfigureAwait(false);
+                return new ExpressRouteGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -297,16 +319,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates express route gateway tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteGatewaysUpdateTagsOperation StartUpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
+        public virtual ExpressRouteGatewayUpdateTagsOperation StartUpdateTags(TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
+            if (expressRouteGatewayParameters == null)
+            {
+                throw new ArgumentNullException(nameof(expressRouteGatewayParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayOperations.StartUpdateTags");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return new ExpressRouteGatewaysUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, tags).Request, response);
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters, cancellationToken);
+                return new ExpressRouteGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, expressRouteGatewayParameters).Request, response);
             }
             catch (Exception e)
             {

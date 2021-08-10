@@ -91,12 +91,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var networkSecurityGroupContainer = GetNetworkSecurityGroupContainer(resourceGroupName);
             Response<NetworkSecurityGroup> nsg = await networkSecurityGroupContainer.GetAsync(resourceGroupName, networkSecurityGroupName);
             nsg.Value.Data.SecurityRules.Add(SecurityRule);
-            NetworkSecurityGroupsCreateOrUpdateOperation createOrUpdateOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, nsg.Value.Data);
+            var createOrUpdateOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, nsg.Value.Data);
             Response<NetworkSecurityGroup> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //Get view security group rules
-            //SecurityGroupViewParameters sgvProperties = new SecurityGroupViewParameters(getVm.Value.Id);
-            NetworkWatchersGetVMSecurityRulesOperation viewNSGRulesOperation = await GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.StartGetVMSecurityRulesAsync();
+            var viewNSGRulesOperation = await GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.StartGetVMSecurityRulesAsync(new SecurityGroupViewParameters(getVm.Value.Id));
             Response<SecurityGroupViewResult> viewNSGRules = await viewNSGRulesOperation.WaitForCompletionAsync();;
 
             //Verify effective security rule defined earlier

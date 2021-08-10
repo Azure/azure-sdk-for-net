@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             get
             {
-                return ArmClient.GetSubscriptions().Get(TestEnvironment.SubscriptionId).Value;
+                return ArmClient.DefaultSubscription;
             }
         }
 
@@ -103,22 +102,13 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                  InstrumentClientOptions(new ComputeManagementClientOptions())));
         }
 
-        //private ArmClient GetArmClient()
-        //{
-            //if (string.IsNullOrEmpty(TestEnvironment.SubscriptionId))
-            //{
-            //    return new ArmClient(TestEnvironment.Credential);
-            //} else
-            //{
-            //    return new ArmClient(TestEnvironment.SubscriptionId, TestEnvironment.Credential);
-            //}
-        //}
-
         protected async Task<Response<Resources.ResourceGroup>> CreateResourceGroup(string name)
         {
-            string location = TestEnvironment.Location;
-            await ResourceGroupsOperations.CreateOrUpdateAsync(name, new Resources.Models.ResourceGroup(location));
-            return await ArmClient.DefaultSubscription.GetResourceGroups().GetAsync(name);
+            return await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(TestEnvironment.Location));
+        }
+        protected async Task<Response<Resources.ResourceGroup>> CreateResourceGroup(string name,string location)
+        {
+            return await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location));
         }
 
         public async Task CreateVm(
@@ -180,7 +170,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             await deploymentWait.WaitForCompletionAsync();
         }
 
-        public async Task<ExpressRouteCircuit> CreateDefaultExpressRouteCircuit(string resourceGroupName, string circuitName, string location)
+        public async Task<ExpressRouteCircuit> CreateDefaultExpressRouteCircuit(Resources.ResourceGroup resourceGroup, string circuitName, string location)
         {
             var sku = new ExpressRouteCircuitSku
             {
@@ -205,7 +195,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             // Put circuit
-            var circuitContainer = GetResourceGroup(resourceGroupName).GetExpressRouteCircuits();
+            var circuitContainer = resourceGroup.GetExpressRouteCircuits();
             Operation<ExpressRouteCircuit> circuitOperation = await circuitContainer.StartCreateOrUpdateAsync(circuitName, circuit);
             Response<ExpressRouteCircuit> circuitResponse = await circuitOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", circuitResponse.Value.Data.ProvisioningState.ToString());
@@ -214,7 +204,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getCircuitResponse;
         }
 
-        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(string resourceGroupName, string circuitName)
+        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(Resources.ResourceGroup resourceGroup, string circuitName)
         {
             var peering = new ExpressRouteCircuitPeeringData()
             {
@@ -233,7 +223,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 },
             };
 
-            var circuitContainer = GetResourceGroup(resourceGroupName).GetExpressRouteCircuits();
+            var circuitContainer = resourceGroup.GetExpressRouteCircuits();
             Operation<ExpressRouteCircuitPeering> peerOperation = await circuitContainer.Get(circuitName).Value.GetExpressRouteCircuitPeerings().StartCreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeering> peerResponse = await peerOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
@@ -242,7 +232,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getCircuitResponse;
         }
 
-        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(string resourceGroupName, string circuitName)
+        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(Resources.ResourceGroup resourceGroup, string circuitName)
         {
             var ipv6Peering = new Ipv6ExpressRouteCircuitPeeringConfig()
             {
@@ -266,7 +256,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Ipv6PeeringConfig = ipv6Peering
             };
 
-            var circuitContainer = GetResourceGroup(resourceGroupName).GetExpressRouteCircuits();
+            var circuitContainer = resourceGroup.GetExpressRouteCircuits();
             Operation<ExpressRouteCircuitPeering> peerOperation = await circuitContainer.Get(circuitName).Value.GetExpressRouteCircuitPeerings().StartCreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeering> peerResponse = await peerOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
@@ -304,6 +294,25 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getCircuitResponse;
         }
 
+        public async Task<PublicIPAddress> CreateDefaultPublicIpAddress(string name, string domainNameLabel, string location, PublicIPAddressContainer publicIPAddressContainer)
+        {
+            var publicIp = new PublicIPAddressData()
+            {
+                Location = location,
+                Tags = { { "key", "value" } },
+                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
+            };
+
+            // Put nic1PublicIpAddress
+            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(name, publicIp);
+            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
+            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
+            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(name);
+
+            return getPublicIpAddressResponse;
+        }
+
         public async Task<PublicIPAddress> CreateDefaultPublicIpAddress(string name, string resourceGroupName, string domainNameLabel, string location)
         {
             var publicIp = new PublicIPAddressData()
@@ -319,7 +328,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(name, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(resourceGroupName, name);
+            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(name);
 
             return getPublicIpAddressResponse;
         }
@@ -336,7 +345,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                         //Subnet = new SubnetData() { Id = subnetId }
+                         Subnet = new SubnetData() { Id = subnetId }
                     }
                 }
             };
@@ -349,7 +358,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             // Test NIC apis
             var networkInterfaceContainer = GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
             await networkInterfaceContainer.StartCreateOrUpdateAsync(name, nicParameters);
-            Response<NetworkInterface> getNicResponse = await networkInterfaceContainer.GetAsync(resourceGroupName, name);
+            Response<NetworkInterface> getNicResponse = await networkInterfaceContainer.GetAsync(name);
             Assert.AreEqual(getNicResponse.Value.Data.Name, name);
 
             // because its a single CA nic, primaryOnCA is always true
@@ -359,7 +368,40 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             return getNicResponse;
         }
+        public async Task<NetworkInterface> CreateNetworkInterface(string name,  string publicIpAddressId, string subnetId,
+            string location, string ipConfigName, NetworkInterfaceContainer networkInterfaceContainer)
+        {
+            var nicParameters = new NetworkInterfaceData()
+            {
+                Location = location,
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
+                    new NetworkInterfaceIPConfiguration()
+                    {
+                         Name = ipConfigName,
+                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                         Subnet = new SubnetData() { Id = subnetId }
+                    }
+                }
+            };
 
+            if (!string.IsNullOrEmpty(publicIpAddressId))
+            {
+                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIpAddressId*/ };
+            }
+
+            // Test NIC apis
+            await networkInterfaceContainer.StartCreateOrUpdateAsync(name, nicParameters);
+            Response<NetworkInterface> getNicResponse = await networkInterfaceContainer.GetAsync(name);
+            Assert.AreEqual(getNicResponse.Value.Data.Name, name);
+
+            // because its a single CA nic, primaryOnCA is always true
+            Assert.True(getNicResponse.Value.Data.IpConfigurations[0].Primary);
+
+            Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
+
+            return getNicResponse;
+        }
         public async Task<VirtualNetwork> CreateVirtualNetwork(string vnetName, string subnetName, string resourceGroupName, string location)
         {
             var vnet = new VirtualNetworkData()
@@ -378,6 +420,29 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             var virtualNetworkContainer = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
+            await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
+            Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
+
+            return getVnetResponse;
+        }
+
+        public async Task<VirtualNetwork> CreateVirtualNetwork(string vnetName, string subnetName, string location, VirtualNetworkContainer virtualNetworkContainer)
+        {
+            var vnet = new VirtualNetworkData()
+            {
+                Location = location,
+
+                AddressSpace = new AddressSpace()
+                {
+                    AddressPrefixes = { "10.0.0.0/16", }
+                },
+                DhcpOptions = new DhcpOptions()
+                {
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
+                },
+                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+            };
+
             await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
 
@@ -406,6 +471,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return GetResourceGroup(resourceGroupName).GetLoadBalancers();
         }
 
+        protected LoadBalancerContainer GetLoadBalancerContainer(Resources.ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetLoadBalancers();
+        }
+
         protected PublicIPAddressContainer GetPublicIPAddressContainer(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
@@ -416,6 +486,10 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return GetResourceGroup(resourceGroupName).GetVirtualNetworks();
         }
 
+        protected VirtualNetworkContainer GetVirtualNetworkContainer(Resources.ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetVirtualNetworks();
+        }
         protected NetworkInterfaceContainer GetNetworkInterfaceContainer(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetNetworkInterfaces();

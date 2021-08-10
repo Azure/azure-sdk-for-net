@@ -39,7 +39,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkSecurityGroups");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
+
             string networkSecurityGroupName = Recording.GenerateAssetName("azsmnet");
             string securityRule1 = Recording.GenerateAssetName("azsmnet");
             string securityRule2 = Recording.GenerateAssetName("azsmnet");
@@ -66,8 +67,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put Nsg
-            var networkSecurityGroupContainer = GetNetworkSecurityGroupContainer(resourceGroupName);
-            NetworkSecurityGroupsCreateOrUpdateOperation putNsgResponseOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
+            var networkSecurityGroupContainer = resourceGroup.Value.GetNetworkSecurityGroups();
+            var putNsgResponseOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
             Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
 
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 SourcePortRange = "656",
             };
 
-            SecurityRulesCreateOrUpdateOperation putSecurityRuleResponseOperation = await getNsgResponse.Value.GetSecurityRules().StartCreateOrUpdateAsync(securityRule2, securityRule);
+            var putSecurityRuleResponseOperation = await getNsgResponse.Value.GetSecurityRules().StartCreateOrUpdateAsync(securityRule2, securityRule);
             Response<SecurityRule> putSecurityRuleResponse = await putSecurityRuleResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putSecurityRuleResponse.Value.Data.ProvisioningState.ToString());
 
