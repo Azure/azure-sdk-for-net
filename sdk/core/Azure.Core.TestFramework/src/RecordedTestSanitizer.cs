@@ -25,6 +25,18 @@ namespace Azure.Core.TestFramework
 
         private static readonly string[] s_sanitizeValueArray = { SanitizeValue };
 
+        public RecordedTestSanitizer()
+        {
+            // Lazy sanitize fields in the request and response bodies
+            AddJsonPathSanitizer("$..token");
+            AddJsonPathSanitizer("$..identity");
+            AddJsonPathSanitizer("$..primaryKey");
+            AddJsonPathSanitizer("$..secondaryKey");
+            AddJsonPathSanitizer("$..primaryConnectionString");
+            AddJsonPathSanitizer("$..secondaryConnectionString");
+            AddJsonPathSanitizer("$..connectionString");
+        }
+
         private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
         {
             DateParseHandling = DateParseHandling.None
@@ -55,6 +67,9 @@ namespace Azure.Core.TestFramework
 
         public virtual string SanitizeTextBody(string contentType, string body)
         {
+            if (String.IsNullOrWhiteSpace(body))
+                return body;
+
             if (JsonPathSanitizers.Count == 0)
                 return body;
             try
