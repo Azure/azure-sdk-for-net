@@ -11,7 +11,7 @@ namespace Azure.Sample.Perf
         [Option("partitions", Default = 8)]
         public int Partitions { get; set; }
 
-        [Option("maxEventsPerSecond", Default = 100, HelpText = "Maximum events per second across all partitions. -1 means unlimited.")]
+        [Option("maxEventsPerSecond", Default = -1, HelpText = "Maximum events per second across all partitions. -1 means unlimited.")]
         public int MaxEventsPerSecond { get; set; }
     }
 }
