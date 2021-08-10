@@ -87,7 +87,7 @@ namespace Azure.Core.Pipeline
             else
             {
                 // Set the status to UNSET so the AppInsights doesn't try to infer it from the status code
-                activity.AddTag("otel.status_code", "UNSET");
+                scope.AddAttribute("otel.status_code", "UNSET");
             }
         }
 

@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
     internal readonly struct DiagnosticScope : IDisposable
 #pragma warning restore CA1001 // Implement IDisposable
     {
-        private static readonly ConcurrentDictionary<string, object?> ActivitySources = new ();
+        private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
         private readonly ActivityAdapter? _activitySourceAdapter;
 
@@ -217,7 +217,7 @@ namespace Azure.Core.Pipeline
                 }
                 else
                 {
-                    _currentActivity?.AddObjectTag(name, value!);
+                    _currentActivity?.AddTag(name, value!);
                 }
             }
 
