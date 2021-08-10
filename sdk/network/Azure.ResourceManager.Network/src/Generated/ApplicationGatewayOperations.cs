@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified application gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ApplicationGatewaysDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ApplicationGatewayDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ApplicationGatewaysDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new ApplicationGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified application gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ApplicationGatewaysDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual ApplicationGatewayDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new ApplicationGatewaysDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new ApplicationGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -174,15 +174,21 @@ namespace Azure.ResourceManager.Network
             }
         }
         /// <summary> Updates the specified application gateway tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update application gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicationGateway>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<ApplicationGateway>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ApplicationGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -193,15 +199,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates the specified application gateway tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update application gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicationGateway> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<ApplicationGateway> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new ApplicationGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -325,14 +337,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Starts the specified application gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ApplicationGatewaysStartOperation> StartStartAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ApplicationGatewayStartOperation> StartStartAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.StartStart");
             scope.Start();
             try
             {
                 var response = await _restClient.StartAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ApplicationGatewaysStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new ApplicationGatewayStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -343,14 +355,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Starts the specified application gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ApplicationGatewaysStartOperation StartStart(CancellationToken cancellationToken = default)
+        public virtual ApplicationGatewayStartOperation StartStart(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.StartStart");
             scope.Start();
             try
             {
                 var response = _restClient.Start(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new ApplicationGatewaysStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new ApplicationGatewayStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -397,14 +409,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Stops the specified application gateway in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ApplicationGatewaysStopOperation> StartStopAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ApplicationGatewayStopOperation> StartStopAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.StartStop");
             scope.Start();
             try
             {
                 var response = await _restClient.StopAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ApplicationGatewaysStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new ApplicationGatewayStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -415,14 +427,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Stops the specified application gateway in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ApplicationGatewaysStopOperation StartStop(CancellationToken cancellationToken = default)
+        public virtual ApplicationGatewayStopOperation StartStop(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.StartStop");
             scope.Start();
             try
             {
                 var response = _restClient.Stop(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new ApplicationGatewaysStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new ApplicationGatewayStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -472,14 +484,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the backend health of the specified application gateway in a resource group. </summary>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ApplicationGatewaysBackendHealthOperation> StartBackendHealthAsync(string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ApplicationGatewayBackendHealthOperation> StartBackendHealthAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.StartBackendHealth");
             scope.Start();
             try
             {
                 var response = await _restClient.BackendHealthAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
-                return new ApplicationGatewaysBackendHealthOperation(_clientDiagnostics, Pipeline, _restClient.CreateBackendHealthRequest(Id.ResourceGroupName, Id.Name, expand).Request, response);
+                return new ApplicationGatewayBackendHealthOperation(_clientDiagnostics, Pipeline, _restClient.CreateBackendHealthRequest(Id.ResourceGroupName, Id.Name, expand).Request, response);
             }
             catch (Exception e)
             {
@@ -491,14 +503,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the backend health of the specified application gateway in a resource group. </summary>
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ApplicationGatewaysBackendHealthOperation StartBackendHealth(string expand = null, CancellationToken cancellationToken = default)
+        public virtual ApplicationGatewayBackendHealthOperation StartBackendHealth(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.StartBackendHealth");
             scope.Start();
             try
             {
                 var response = _restClient.BackendHealth(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
-                return new ApplicationGatewaysBackendHealthOperation(_clientDiagnostics, Pipeline, _restClient.CreateBackendHealthRequest(Id.ResourceGroupName, Id.Name, expand).Request, response);
+                return new ApplicationGatewayBackendHealthOperation(_clientDiagnostics, Pipeline, _restClient.CreateBackendHealthRequest(Id.ResourceGroupName, Id.Name, expand).Request, response);
             }
             catch (Exception e)
             {
@@ -564,7 +576,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeRequest"/> is null. </exception>
-        public async virtual Task<ApplicationGatewaysBackendHealthOnDemandOperation> StartBackendHealthOnDemandAsync(ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ApplicationGatewayBackendHealthOnDemandOperation> StartBackendHealthOnDemandAsync(ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
         {
             if (probeRequest == null)
             {
@@ -576,7 +588,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.BackendHealthOnDemandAsync(Id.ResourceGroupName, Id.Name, probeRequest, expand, cancellationToken).ConfigureAwait(false);
-                return new ApplicationGatewaysBackendHealthOnDemandOperation(_clientDiagnostics, Pipeline, _restClient.CreateBackendHealthOnDemandRequest(Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response);
+                return new ApplicationGatewayBackendHealthOnDemandOperation(_clientDiagnostics, Pipeline, _restClient.CreateBackendHealthOnDemandRequest(Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response);
             }
             catch (Exception e)
             {
@@ -590,7 +602,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands BackendAddressPool and BackendHttpSettings referenced in backend health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeRequest"/> is null. </exception>
-        public virtual ApplicationGatewaysBackendHealthOnDemandOperation StartBackendHealthOnDemand(ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
+        public virtual ApplicationGatewayBackendHealthOnDemandOperation StartBackendHealthOnDemand(ApplicationGatewayOnDemandProbe probeRequest, string expand = null, CancellationToken cancellationToken = default)
         {
             if (probeRequest == null)
             {
@@ -602,7 +614,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.BackendHealthOnDemand(Id.ResourceGroupName, Id.Name, probeRequest, expand, cancellationToken);
-                return new ApplicationGatewaysBackendHealthOnDemandOperation(_clientDiagnostics, Pipeline, _restClient.CreateBackendHealthOnDemandRequest(Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response);
+                return new ApplicationGatewayBackendHealthOnDemandOperation(_clientDiagnostics, Pipeline, _restClient.CreateBackendHealthOnDemandRequest(Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response);
             }
             catch (Exception e)
             {

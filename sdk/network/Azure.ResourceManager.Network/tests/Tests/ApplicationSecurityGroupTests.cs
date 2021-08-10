@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.That(applicationSecurityGroupData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // patch
-            applicationSecurityGroupData = (await applicationSecurityGroupResponse.Value.UpdateTagsAsync(new Dictionary<string, string>{
-                { "tag2", "value2"} }
-            )).Value.Data;
+            var tags = new TagsObject();
+            tags.Tags.Add("tag2", "value2");
+            applicationSecurityGroupData = (await applicationSecurityGroupResponse.Value.UpdateTagsAsync(tags)).Value.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);
             Assert.That(applicationSecurityGroupData.Tags, Has.Count.EqualTo(1));

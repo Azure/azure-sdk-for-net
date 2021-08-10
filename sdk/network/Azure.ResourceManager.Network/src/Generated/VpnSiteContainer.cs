@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteParameters"> Parameters supplied to create or update VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> or <paramref name="vpnSiteParameters"/> is null. </exception>
-        public virtual VpnSitesCreateOrUpdateOperation StartCreateOrUpdate(string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
+        public virtual VpnSiteCreateOrUpdateOperation StartCreateOrUpdate(string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             if (vpnSiteName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters, cancellationToken);
-                return new VpnSitesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters).Request, response);
+                return new VpnSiteCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteParameters"> Parameters supplied to create or update VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> or <paramref name="vpnSiteParameters"/> is null. </exception>
-        public async virtual Task<VpnSitesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VpnSiteCreateOrUpdateOperation> StartCreateOrUpdateAsync(string vpnSiteName, VpnSiteData vpnSiteParameters, CancellationToken cancellationToken = default)
         {
             if (vpnSiteName == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters, cancellationToken).ConfigureAwait(false);
-                return new VpnSitesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters).Request, response);
+                return new VpnSiteCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vpnSiteName, vpnSiteParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -398,9 +398,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -421,9 +421,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnSiteContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("VpnSiteContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

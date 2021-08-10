@@ -1,14 +1,11 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.3 (2021-08-10)
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- `LogsQueryResult.PrimaryTable` renamed to `Table`, and `LogsQueryResult.Tables` to `AllTables`.
+- `MetricQueryResult` renamed to `MetricsQueryResult`
+- `GetMetricNamespaces` and `GetMetricDefinitions` return `Pageable` types.
 
 ## 1.0.0-beta.2 (2021-07-06)
 

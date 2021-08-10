@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string tapName, IDictionary<string, string> tags)
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string tapName, TagsObject tapParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -311,17 +310,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            TagsObject tagsObject = new TagsObject();
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    tagsObject.Tags.Add(value);
-                }
-            }
-            var model = tagsObject;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(tapParameters);
             request.Content = content;
             return message;
         }
@@ -329,10 +319,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates an VirtualNetworkTap tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="tapName"> The name of the tap. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="tapParameters"> Parameters supplied to update VirtualNetworkTap tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="tapName"/> is null. </exception>
-        public async Task<Response<VirtualNetworkTapData>> UpdateTagsAsync(string resourceGroupName, string tapName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="tapName"/>, or <paramref name="tapParameters"/> is null. </exception>
+        public async Task<Response<VirtualNetworkTapData>> UpdateTagsAsync(string resourceGroupName, string tapName, TagsObject tapParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -342,8 +332,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(tapName));
             }
+            if (tapParameters == null)
+            {
+                throw new ArgumentNullException(nameof(tapParameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, tapName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, tapName, tapParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -362,10 +356,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates an VirtualNetworkTap tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="tapName"> The name of the tap. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="tapParameters"> Parameters supplied to update VirtualNetworkTap tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="tapName"/> is null. </exception>
-        public Response<VirtualNetworkTapData> UpdateTags(string resourceGroupName, string tapName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="tapName"/>, or <paramref name="tapParameters"/> is null. </exception>
+        public Response<VirtualNetworkTapData> UpdateTags(string resourceGroupName, string tapName, TagsObject tapParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -375,8 +369,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(tapName));
             }
+            if (tapParameters == null)
+            {
+                throw new ArgumentNullException(nameof(tapParameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, tapName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, tapName, tapParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

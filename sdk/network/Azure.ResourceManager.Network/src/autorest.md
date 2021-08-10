@@ -9,7 +9,6 @@ library-name: Network
 namespace: Azure.ResourceManager.Network
 require: https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/readme.md
 tag: package-track2-preview
-use: https://github.com/Azure/autorest.csharp/releases/download/v3.0.0-beta.20210730.4/autorest-csharp-3.0.0-beta.20210730.4.tgz
 
 output-folder: Generated/
 clear-output-folder: true
@@ -19,7 +18,7 @@ modelerfour:
 model-namespace: true
 public-clients: false
 head-as-boolean: false
-payload-flattening-threshold: 2
+flatten-payloads: false
 operation-group-to-resource-type:
     # applicationgateway.json
     ApplicationGatewayPrivateLinkResources: Microsoft.Network/applicationGateways/privateLinkResources
@@ -250,30 +249,6 @@ directive:
     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability"].get.operationId
     transform: return "DnsNameAvailabilities_Check"
     reason: Original 'operationId' doesn't follow pattern
-# ddosProtectionPlan.json: ADO 6068
-  - where-model: DdosProtectionPlan
-    transform: >
-      return {
-        "description": "A DDoS protection plan in a resource group.",
-        "x-ms-azure-resource": true,
-        "properties": {
-          "properties": {
-            "x-ms-client-flatten": true,
-            "$ref": "#/definitions/DdosProtectionPlanPropertiesFormat",
-            "description": "Properties of the DDoS protection plan."
-          },
-          "etag": {
-            "readOnly": true,
-            "type": "string",
-            "description": "A unique read-only string that changes whenever the resource is updated."
-          }
-        },
-        "allOf": [
-            {
-              "$ref": "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/network.json#/definitions/Resource"
-            }
-        ]
-      }
 # virtualWan.json
   - from: swagger-document
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders"].get.operationId

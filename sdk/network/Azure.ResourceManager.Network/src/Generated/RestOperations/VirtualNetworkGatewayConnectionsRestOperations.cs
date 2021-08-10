@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string virtualNetworkGatewayConnectionName, IDictionary<string, string> tags)
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string virtualNetworkGatewayConnectionName, TagsObject parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -311,17 +310,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            TagsObject tagsObject = new TagsObject();
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    tagsObject.Tags.Add(value);
-                }
-            }
-            var model = tagsObject;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -329,10 +319,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a virtual network gateway connection tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update virtual network gateway connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
-        public async Task<Response> UpdateTagsAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> UpdateTagsAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -342,8 +332,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualNetworkGatewayConnectionName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualNetworkGatewayConnectionName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -358,10 +352,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a virtual network gateway connection tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update virtual network gateway connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
-        public Response UpdateTags(string resourceGroupName, string virtualNetworkGatewayConnectionName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response UpdateTags(string resourceGroupName, string virtualNetworkGatewayConnectionName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -371,8 +365,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualNetworkGatewayConnectionName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualNetworkGatewayConnectionName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -384,7 +382,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateSetSharedKeyRequest(string resourceGroupName, string virtualNetworkGatewayConnectionName, string value, string id)
+        internal HttpMessage CreateSetSharedKeyRequest(string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -402,12 +400,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new ConnectionSharedKey(value)
-            {
-                Id = id
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -415,11 +409,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The virtual network gateway connection name. </param>
-        /// <param name="value"> The virtual network connection shared key value. </param>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="parameters"> Parameters supplied to the Begin Set Virtual Network Gateway connection Shared key operation throughNetwork resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="value"/> is null. </exception>
-        public async Task<Response> SetSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, string value, string id = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> SetSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -429,12 +422,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
-            if (value == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(value));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateSetSharedKeyRequest(resourceGroupName, virtualNetworkGatewayConnectionName, value, id);
+            using var message = CreateSetSharedKeyRequest(resourceGroupName, virtualNetworkGatewayConnectionName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -449,11 +442,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The virtual network gateway connection name. </param>
-        /// <param name="value"> The virtual network connection shared key value. </param>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="parameters"> Parameters supplied to the Begin Set Virtual Network Gateway connection Shared key operation throughNetwork resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="value"/> is null. </exception>
-        public Response SetSharedKey(string resourceGroupName, string virtualNetworkGatewayConnectionName, string value, string id = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response SetSharedKey(string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionSharedKey parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -463,12 +455,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
-            if (value == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(value));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateSetSharedKeyRequest(resourceGroupName, virtualNetworkGatewayConnectionName, value, id);
+            using var message = CreateSetSharedKeyRequest(resourceGroupName, virtualNetworkGatewayConnectionName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -636,7 +628,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateResetSharedKeyRequest(string resourceGroupName, string virtualNetworkGatewayConnectionName, int keyLength)
+        internal HttpMessage CreateResetSharedKeyRequest(string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -654,9 +646,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new ConnectionResetSharedKey(keyLength);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -664,10 +655,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The virtual network gateway connection reset shared key Name. </param>
-        /// <param name="keyLength"> The virtual network connection reset shared key length, should between 1 and 128. </param>
+        /// <param name="parameters"> Parameters supplied to the begin reset virtual network gateway connection shared key operation through network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
-        public async Task<Response> ResetSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, int keyLength, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> ResetSharedKeyAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -677,8 +668,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateResetSharedKeyRequest(resourceGroupName, virtualNetworkGatewayConnectionName, keyLength);
+            using var message = CreateResetSharedKeyRequest(resourceGroupName, virtualNetworkGatewayConnectionName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -693,10 +688,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The virtual network gateway connection reset shared key Name. </param>
-        /// <param name="keyLength"> The virtual network connection reset shared key length, should between 1 and 128. </param>
+        /// <param name="parameters"> Parameters supplied to the begin reset virtual network gateway connection shared key operation through network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
-        public Response ResetSharedKey(string resourceGroupName, string virtualNetworkGatewayConnectionName, int keyLength, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response ResetSharedKey(string resourceGroupName, string virtualNetworkGatewayConnectionName, ConnectionResetSharedKey parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -706,8 +701,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateResetSharedKeyRequest(resourceGroupName, virtualNetworkGatewayConnectionName, keyLength);
+            using var message = CreateResetSharedKeyRequest(resourceGroupName, virtualNetworkGatewayConnectionName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -719,7 +718,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateStartPacketCaptureRequest(string resourceGroupName, string virtualNetworkGatewayConnectionName, string filterData)
+        internal HttpMessage CreateStartPacketCaptureRequest(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStartParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -736,24 +735,23 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new VpnPacketCaptureStartParameters()
+            if (parameters != null)
             {
-                FilterData = filterData
-            };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(parameters);
+                request.Content = content;
+            }
             return message;
         }
 
         /// <summary> Starts packet capture on virtual network gateway connection in the specified resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
-        /// <param name="filterData"> Start Packet capture parameters. </param>
+        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
-        public async Task<Response> StartPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, string filterData = null, CancellationToken cancellationToken = default)
+        public async Task<Response> StartPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -764,7 +762,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
 
-            using var message = CreateStartPacketCaptureRequest(resourceGroupName, virtualNetworkGatewayConnectionName, filterData);
+            using var message = CreateStartPacketCaptureRequest(resourceGroupName, virtualNetworkGatewayConnectionName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -779,10 +777,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Starts packet capture on virtual network gateway connection in the specified resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
-        /// <param name="filterData"> Start Packet capture parameters. </param>
+        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
-        public Response StartPacketCapture(string resourceGroupName, string virtualNetworkGatewayConnectionName, string filterData = null, CancellationToken cancellationToken = default)
+        public Response StartPacketCapture(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -793,7 +791,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
 
-            using var message = CreateStartPacketCaptureRequest(resourceGroupName, virtualNetworkGatewayConnectionName, filterData);
+            using var message = CreateStartPacketCaptureRequest(resourceGroupName, virtualNetworkGatewayConnectionName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -805,7 +803,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateStopPacketCaptureRequest(string resourceGroupName, string virtualNetworkGatewayConnectionName, string sasUrl)
+        internal HttpMessage CreateStopPacketCaptureRequest(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStopParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -823,12 +821,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new VpnPacketCaptureStopParameters()
-            {
-                SasUrl = sasUrl
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -836,10 +830,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Stops packet capture on virtual network gateway connection in the specified resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway Connection. </param>
-        /// <param name="sasUrl"> SAS url for packet capture on virtual network gateway. </param>
+        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
-        public async Task<Response> StopPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, string sasUrl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> StopPacketCaptureAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -849,8 +843,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateStopPacketCaptureRequest(resourceGroupName, virtualNetworkGatewayConnectionName, sasUrl);
+            using var message = CreateStopPacketCaptureRequest(resourceGroupName, virtualNetworkGatewayConnectionName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -865,10 +863,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Stops packet capture on virtual network gateway connection in the specified resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway Connection. </param>
-        /// <param name="sasUrl"> SAS url for packet capture on virtual network gateway. </param>
+        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
-        public Response StopPacketCapture(string resourceGroupName, string virtualNetworkGatewayConnectionName, string sasUrl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkGatewayConnectionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response StopPacketCapture(string resourceGroupName, string virtualNetworkGatewayConnectionName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -878,8 +876,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayConnectionName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateStopPacketCaptureRequest(resourceGroupName, virtualNetworkGatewayConnectionName, sasUrl);
+            using var message = CreateStopPacketCaptureRequest(resourceGroupName, virtualNetworkGatewayConnectionName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -15,6 +15,7 @@ namespace Azure.Identity
     {
         // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
+        internal const string imddsTokenPath = "/metadata/identity/oauth2/token";
         private static readonly IPAddress s_imdsHostIp = IPAddress.Parse("169.254.169.254");
         private const int s_imdsPort = 80;
         private const int ImdsAvailableTimeoutMs = 1000;
@@ -32,7 +33,9 @@ namespace Azure.Identity
             // if the PodIdenityEndpoint environment variable was set no need to probe the endpoint, it can be assumed to exist
             if (!string.IsNullOrEmpty(EnvironmentVariables.PodIdentityEndpoint))
             {
-                return new ImdsManagedIdentitySource(options.Pipeline, options.ClientId, new Uri(EnvironmentVariables.PodIdentityEndpoint));
+                var builder = new UriBuilder(EnvironmentVariables.PodIdentityEndpoint);
+                builder.Path = imddsTokenPath;
+                return new ImdsManagedIdentitySource(options.Pipeline, options.ClientId, builder.Uri);
             }
 
             AzureIdentityEventSource.Singleton.ProbeImdsEndpoint(s_imdsEndpoint);

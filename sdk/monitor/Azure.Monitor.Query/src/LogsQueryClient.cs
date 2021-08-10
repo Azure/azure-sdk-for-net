@@ -110,7 +110,7 @@ namespace Azure.Monitor.Query
         {
             Response<LogsQueryResult> response = Query(workspaceId, query, timeRange, options, cancellationToken);
 
-            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.Tables), response.GetRawResponse());
+            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.Monitor.Query
         {
             Response<LogsQueryResult> response = await QueryAsync(workspaceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
 
-            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.Tables), response.GetRawResponse());
+            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
         }
 
         /// <summary>

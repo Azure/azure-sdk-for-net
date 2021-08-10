@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<LoadBalancersDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<LoadBalancerDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new LoadBalancersDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new LoadBalancerDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -168,14 +168,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual LoadBalancersDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual LoadBalancerDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new LoadBalancersDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new LoadBalancerDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -184,15 +184,21 @@ namespace Azure.ResourceManager.Network
             }
         }
         /// <summary> Updates a load balancer tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update load balancer tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LoadBalancer>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<LoadBalancer>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,15 +209,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates a load balancer tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update load balancer tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LoadBalancer> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<LoadBalancer> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -743,15 +755,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Swaps VIPs between two load balancers. </summary>
-        /// <param name="frontendIPConfigurations"> A list of frontend IP configuration resources that should swap VIPs. </param>
+        /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> SwapPublicIpAddressesAsync(IEnumerable<LoadBalancerVipSwapRequestFrontendIPConfiguration> frontendIPConfigurations = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response> SwapPublicIpAddressesAsync(LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.SwapPublicIpAddresses");
             scope.Start();
             try
             {
-                var operation = await StartSwapPublicIpAddressesAsync(frontendIPConfigurations, cancellationToken).ConfigureAwait(false);
+                var operation = await StartSwapPublicIpAddressesAsync(parameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -762,15 +780,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Swaps VIPs between two load balancers. </summary>
-        /// <param name="frontendIPConfigurations"> A list of frontend IP configuration resources that should swap VIPs. </param>
+        /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SwapPublicIpAddresses(IEnumerable<LoadBalancerVipSwapRequestFrontendIPConfiguration> frontendIPConfigurations = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response SwapPublicIpAddresses(LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.SwapPublicIpAddresses");
             scope.Start();
             try
             {
-                var operation = StartSwapPublicIpAddresses(frontendIPConfigurations, cancellationToken);
+                var operation = StartSwapPublicIpAddresses(parameters, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -781,16 +805,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Swaps VIPs between two load balancers. </summary>
-        /// <param name="frontendIPConfigurations"> A list of frontend IP configuration resources that should swap VIPs. </param>
+        /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<LoadBalancersSwapPublicIpAddressesOperation> StartSwapPublicIpAddressesAsync(IEnumerable<LoadBalancerVipSwapRequestFrontendIPConfiguration> frontendIPConfigurations = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<LoadBalancerSwapPublicIpAddressesOperation> StartSwapPublicIpAddressesAsync(LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.StartSwapPublicIpAddresses");
             scope.Start();
             try
             {
-                var response = await _restClient.SwapPublicIpAddressesAsync(Id.Name, frontendIPConfigurations, cancellationToken).ConfigureAwait(false);
-                return new LoadBalancersSwapPublicIpAddressesOperation(_clientDiagnostics, Pipeline, _restClient.CreateSwapPublicIpAddressesRequest(Id.Name, frontendIPConfigurations).Request, response);
+                var response = await _restClient.SwapPublicIpAddressesAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new LoadBalancerSwapPublicIpAddressesOperation(_clientDiagnostics, Pipeline, _restClient.CreateSwapPublicIpAddressesRequest(Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -800,16 +830,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Swaps VIPs between two load balancers. </summary>
-        /// <param name="frontendIPConfigurations"> A list of frontend IP configuration resources that should swap VIPs. </param>
+        /// <param name="parameters"> Parameters that define which VIPs should be swapped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual LoadBalancersSwapPublicIpAddressesOperation StartSwapPublicIpAddresses(IEnumerable<LoadBalancerVipSwapRequestFrontendIPConfiguration> frontendIPConfigurations = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual LoadBalancerSwapPublicIpAddressesOperation StartSwapPublicIpAddresses(LoadBalancerVipSwapRequest parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.StartSwapPublicIpAddresses");
             scope.Start();
             try
             {
-                var response = _restClient.SwapPublicIpAddresses(Id.Name, frontendIPConfigurations, cancellationToken);
-                return new LoadBalancersSwapPublicIpAddressesOperation(_clientDiagnostics, Pipeline, _restClient.CreateSwapPublicIpAddressesRequest(Id.Name, frontendIPConfigurations).Request, response);
+                var response = _restClient.SwapPublicIpAddresses(Id.Name, parameters, cancellationToken);
+                return new LoadBalancerSwapPublicIpAddressesOperation(_clientDiagnostics, Pipeline, _restClient.CreateSwapPublicIpAddressesRequest(Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {

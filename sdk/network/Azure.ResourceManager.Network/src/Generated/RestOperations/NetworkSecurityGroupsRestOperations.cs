@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -300,7 +299,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string networkSecurityGroupName, IDictionary<string, string> tags)
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string networkSecurityGroupName, TagsObject parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -317,17 +316,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            TagsObject tagsObject = new TagsObject();
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    tagsObject.Tags.Add(value);
-                }
-            }
-            var model = tagsObject;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -335,10 +325,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a network security group tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update network security group tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkSecurityGroupName"/> is null. </exception>
-        public async Task<Response<NetworkSecurityGroupData>> UpdateTagsAsync(string resourceGroupName, string networkSecurityGroupName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkSecurityGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<NetworkSecurityGroupData>> UpdateTagsAsync(string resourceGroupName, string networkSecurityGroupName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -348,8 +338,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(networkSecurityGroupName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, networkSecurityGroupName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, networkSecurityGroupName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -368,10 +362,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a network security group tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update network security group tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkSecurityGroupName"/> is null. </exception>
-        public Response<NetworkSecurityGroupData> UpdateTags(string resourceGroupName, string networkSecurityGroupName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkSecurityGroupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<NetworkSecurityGroupData> UpdateTags(string resourceGroupName, string networkSecurityGroupName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -381,8 +375,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(networkSecurityGroupName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, networkSecurityGroupName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, networkSecurityGroupName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

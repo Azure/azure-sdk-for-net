@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put Nsg
             var networkSecurityGroupContainer = resourceGroup.Value.GetNetworkSecurityGroups();
-            NetworkSecurityGroupsCreateOrUpdateOperation putNsgResponseOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
+            var putNsgResponseOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
             Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 SourcePortRange = "656",
             };
 
-            SecurityRulesCreateOrUpdateOperation putSecurityRuleResponseOperation = await getNsgResponse.Value.GetSecurityRules().StartCreateOrUpdateAsync(securityRule2, securityRule);
+            var putSecurityRuleResponseOperation = await getNsgResponse.Value.GetSecurityRules().StartCreateOrUpdateAsync(securityRule2, securityRule);
             Response<SecurityRule> putSecurityRuleResponse = await putSecurityRuleResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putSecurityRuleResponse.Value.Data.ProvisioningState.ToString());
 

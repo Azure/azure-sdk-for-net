@@ -1,8 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
-  <PropertyGroup>
-    <UseNewMgmtFramework>true</UseNewMgmtFramework>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
-  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Network.csproj" />
   </ItemGroup>

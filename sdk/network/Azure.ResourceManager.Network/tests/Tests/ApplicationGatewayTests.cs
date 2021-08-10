@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroup);
-            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             await putVnetResponseOperation.WaitForCompletionAsync();;
             Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
             Response<Subnet> getSubnetResponse = await getVnetResponse.Value.GetSubnets().GetAsync(gwSubnetName);
@@ -608,10 +608,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             nic2.Result.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
             // Put Nics
             var networkInterfaceContainer = GetNetworkInterfaceContainer(resourceGroupName);
-            NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Result.Data);
+            var createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Result.Data);
             await createOrUpdateOperation1.WaitForCompletionAsync();;
 
-            NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Result.Data);
+            var createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Result.Data);
             await createOrUpdateOperation2.WaitForCompletionAsync();;
 
             // Get AppGw backend health

@@ -206,13 +206,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put Nics
             var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
-            NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Data);
+            var createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Data);
             await createOrUpdateOperation1.WaitForCompletionAsync();
 
-            NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Data);
+            var createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Data);
             await createOrUpdateOperation2.WaitForCompletionAsync();
 
-            NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation3 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic3name, nic3.Data);
+            var createOrUpdateOperation3 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic3name, nic3.Data);
             await createOrUpdateOperation3.WaitForCompletionAsync();
 
             // Get Nics

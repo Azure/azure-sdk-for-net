@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class PrepareNetworkPoliciesRequest : IUtf8JsonSerializable
+    public partial class PrepareNetworkPoliciesRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

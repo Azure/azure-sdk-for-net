@@ -5658,7 +5658,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="domainNameLabel"/> is null. </exception>
-        public static async Task<Response<DnsNameAvailabilityResult>> GetDnsNameAvailabilityckAsync(this SubscriptionOperations subscription, string location, string domainNameLabel, CancellationToken cancellationToken = default)
+        public static async Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(this SubscriptionOperations subscription, string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -5673,7 +5673,7 @@ namespace Azure.ResourceManager.Network
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDnsNameAvailabilitiesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDnsNameAvailabilityck");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckDnsNameAvailability");
                 scope.Start();
                 try
                 {
@@ -5695,7 +5695,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="domainNameLabel"/> is null. </exception>
-        public static Response<DnsNameAvailabilityResult> GetDnsNameAvailabilityck(this SubscriptionOperations subscription, string location, string domainNameLabel, CancellationToken cancellationToken = default)
+        public static Response<DnsNameAvailabilityResult> CheckDnsNameAvailability(this SubscriptionOperations subscription, string location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -5710,7 +5710,7 @@ namespace Azure.ResourceManager.Network
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetDnsNameAvailabilitiesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetDnsNameAvailabilityck");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.CheckDnsNameAvailability");
                 scope.Start();
                 try
                 {

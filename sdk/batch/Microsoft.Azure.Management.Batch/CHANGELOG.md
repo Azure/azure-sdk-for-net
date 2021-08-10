@@ -1,10 +1,10 @@
 # Release History
 
-## 14.0.0 (2021-06-01)
+## 14.0.0 (2021-08-01)
 
 ### REST API version
 
-- This version targets REST API version 2021-01-01.
+- This version targets REST API version 2021-06-01.
 
 ### Features
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -258,7 +257,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string expressRouteGatewayName, IDictionary<string, string> tags)
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string expressRouteGatewayName, TagsObject expressRouteGatewayParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -275,17 +274,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            TagsObject tagsObject = new TagsObject();
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    tagsObject.Tags.Add(value);
-                }
-            }
-            var model = tagsObject;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(expressRouteGatewayParameters);
             request.Content = content;
             return message;
         }
@@ -293,10 +283,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates express route gateway tags. </summary>
         /// <param name="resourceGroupName"> The resource group name of the ExpressRouteGateway. </param>
         /// <param name="expressRouteGatewayName"> The name of the gateway. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRouteGatewayName"/> is null. </exception>
-        public async Task<Response> UpdateTagsAsync(string resourceGroupName, string expressRouteGatewayName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="expressRouteGatewayParameters"/> is null. </exception>
+        public async Task<Response> UpdateTagsAsync(string resourceGroupName, string expressRouteGatewayName, TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -306,8 +296,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(expressRouteGatewayName));
             }
+            if (expressRouteGatewayParameters == null)
+            {
+                throw new ArgumentNullException(nameof(expressRouteGatewayParameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, expressRouteGatewayName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, expressRouteGatewayName, expressRouteGatewayParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -322,10 +316,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates express route gateway tags. </summary>
         /// <param name="resourceGroupName"> The resource group name of the ExpressRouteGateway. </param>
         /// <param name="expressRouteGatewayName"> The name of the gateway. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="expressRouteGatewayParameters"> Parameters supplied to update a virtual wan express route gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRouteGatewayName"/> is null. </exception>
-        public Response UpdateTags(string resourceGroupName, string expressRouteGatewayName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRouteGatewayName"/>, or <paramref name="expressRouteGatewayParameters"/> is null. </exception>
+        public Response UpdateTags(string resourceGroupName, string expressRouteGatewayName, TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -335,8 +329,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(expressRouteGatewayName));
             }
+            if (expressRouteGatewayParameters == null)
+            {
+                throw new ArgumentNullException(nameof(expressRouteGatewayParameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, expressRouteGatewayName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, expressRouteGatewayName, expressRouteGatewayParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

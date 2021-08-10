@@ -100,6 +100,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("We need to replace storage management with either generic resource or template")]
         public async Task PrivateEndpointTest()
         {
             virtualNetwork = (await createVirtualNetwork()).Value;
@@ -160,6 +161,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("We need to replace storage management with either generic resource or template")]
         public async Task PrivateDnsZoneGroupTest()
         {
             virtualNetwork = (await createVirtualNetwork()).Value;

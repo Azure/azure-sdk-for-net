@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update virtual network tap operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkTapsCreateOrUpdateOperation StartCreateOrUpdate(string tapName, VirtualNetworkTapData parameters, CancellationToken cancellationToken = default)
+        public virtual VirtualNetworkTapCreateOrUpdateOperation StartCreateOrUpdate(string tapName, VirtualNetworkTapData parameters, CancellationToken cancellationToken = default)
         {
             if (tapName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, tapName, parameters, cancellationToken);
-                return new VirtualNetworkTapsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, tapName, parameters).Request, response);
+                return new VirtualNetworkTapCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, tapName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update virtual network tap operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkTapsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string tapName, VirtualNetworkTapData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualNetworkTapCreateOrUpdateOperation> StartCreateOrUpdateAsync(string tapName, VirtualNetworkTapData parameters, CancellationToken cancellationToken = default)
         {
             if (tapName == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, tapName, parameters, cancellationToken).ConfigureAwait(false);
-                return new VirtualNetworkTapsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, tapName, parameters).Request, response);
+                return new VirtualNetworkTapCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, tapName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -398,9 +398,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -421,9 +421,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkTapContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

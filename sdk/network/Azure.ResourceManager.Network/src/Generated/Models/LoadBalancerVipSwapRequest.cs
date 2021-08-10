@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The request for a VIP swap. </summary>
-    internal partial class LoadBalancerVipSwapRequest
+    public partial class LoadBalancerVipSwapRequest
     {
         /// <summary> Initializes a new instance of LoadBalancerVipSwapRequest. </summary>
         public LoadBalancerVipSwapRequest()

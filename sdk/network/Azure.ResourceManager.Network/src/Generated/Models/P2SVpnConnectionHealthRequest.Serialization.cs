@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class P2SVpnConnectionHealthRequest : IUtf8JsonSerializable
+    public partial class P2SVpnConnectionHealthRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

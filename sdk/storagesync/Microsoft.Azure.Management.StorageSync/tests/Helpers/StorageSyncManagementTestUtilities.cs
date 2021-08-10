@@ -227,16 +227,17 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
         // Note: Secondary certificate must be different from primary certificate.
         internal static string GetSecondaryCertificate()
         {
-            return "MIIC4jCCAcqgAwIBAgIQEznq4fKV6oxN2xcLsYVeLjANBgkqhkiG9w0BAQ0FADAZMRcwFQYDVQQDEw5hbnBpbnQtVGVzdFZNMzAeFw0yMDA2MTAyMjAwNDVaFw0yMTA2MTEyMjAwNDVaMBkxFzAVBgNVBAMTDmFucGludC1UZXN0Vk0zMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvpNGR61sk6f+5CosYIRzo1+qOU2PfpDT/J3ol2gWOt0hIWGYjx3aH/bU1kY5pf1uPTDvRtP38Oe6RmGJ+0KUsjYws9WVXem/p6xYOuJnBGHekGLsJpBcqBRaj74uc4eaFe7tKEFqdOBIlRhFYyR71AR46kThMeJaAcwsf/bnDZ6SLVyKVHYTYotm/UDX/51F1ekpLgzw1mcryS3ShxiJocVL1gDQbUTh6MJLAUn3wfE8tDaMHVrslOuav+QooR/tBjKqld4bsx2e5cF9ESRcXG2Lky+TbEIqWwQHiH9h9YagLYwXp1ippX94M2/BDlrNBGiwNIfUm9uTYUT47Fru2wIDAQABoyYwJDAiBgNVHSUBAf8EGDAWBggrBgEFBQcDAgYKKwYBBAGCNwoDDDANBgkqhkiG9w0BAQ0FAAOCAQEAYF6Ga8wjRa0Aj4ZhKuQxz4g0yK5R8BlbA0FjMc989DBk+G0Bhd+S8+glQRbP3cYfapuCQQvKrnAxk4whP8iFr+NBFtUcz7GzGVHCs1NfqhlhPPOWw2ejklmrlbOthF6ofQ4ZCGL9aQ2Cd0gHR9TSod9PHmupEAKSeEoI++D9AuxIX0emD6QLf4TFGzN2/7bmBNhmEoDdDSOIiwjo2AF1oVNkSmNfH1bswPigrD2va4orP9xsxEaYsI181EXq5xcHO/sfHOGALcHEX/ph5VQ6Gn87vrQih6TfpegtC328ckcPAkpDJS6idB4U6B7S3ceZo6bWYnVW3DitwEytxkQkoA==";
+
+            return "MIIC4jCCAcqgAwIBAgIQRNDzNi8+T6BHMrXdZ8EjOTANBgkqhkiG9w0BAQ0FADAZMRcwFQYDVQQDEw5hbnBpbnQtdGVzdHZtMTAeFw0yMTA2MTQxODMwMzFaFw0yMjA2MTUxODMwMzFaMBkxFzAVBgNVBAMTDmFucGludC10ZXN0dm0xMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvy29We6LV8k2j4GB7zMHAXlmwVlgnOniatA11zTZLa/GBr9MkXTjVWC6388ldsB8gIUxpcaeygk3T4VX38PRXflSctwp+0lzGoDgoba2tUUkZauXAW8nr9con0zVCQQJfLx2GSneqzo3pLybUqePonEDQPgJ8tsbRVGpMr/reMlh39YWyPdEBdUqRrJBo/AzKu3B/nVcvxgyDOBBtdM/tpeJoItS2BI60mX5KeaRSQDzraWz6LtQW0uxdijVoDJ486zKDhevCq/RjKQgkLIEfPxA0uclGP8SilPXNC8muOnMrnVq7kkK7qq3u3mzUVL07a4YlYcTpG9Z9QeT/WTllQIDAQABoyYwJDAiBgNVHSUBAf8EGDAWBggrBgEFBQcDAgYKKwYBBAGCNwoDDDANBgkqhkiG9w0BAQ0FAAOCAQEAoXiYUC9fBXUAI5q41tIsYNh4kUxiAaHhgH2tuE9ez3M1oHRZDWe6cAN+R2dkZyvgO3YYxX4sRIeKIS0EvJ+lRBCVmQoWSMNS9WUdsc2ForRS/0vwxDoDdCrdGhREjGRqoM4CvYEIZdFmyx3Rg0RDezuBzNbTPG8AF9bZz0PQ5sNwVlUJ2Jy4OswjF7ixr3/nAKdvPWIUgfQ1xyWfW2I1c8KQCdadFNEpFXH1U6cr8UfW3n5Oo+oAEDmjR0WV/0B34ZVYEOca9SKDja1jRvKfY8SfhEKs8/xb5IaQ9yMYNVlvBsW+l01TmG+ixFC9xaO6PIVr6RLkXBVruFGef+fuGg==";
         }
 
         public static CloudEndpointCreateParameters GetDefaultCloudEndpointParameters()
         {
             return new CloudEndpointCreateParameters
             {
-                StorageAccountResourceId = "/subscriptions/1d16f9b3-bbe3-48d4-930a-27a74dca003b/resourcegroups/sasdkcentraluseuap/providers/Microsoft.Storage/storageAccounts/sasdkcentraluseuap",
+                StorageAccountResourceId = "/subscriptions/7b96cb02-4663-40f4-9a89-603d3849e46a/resourcegroups/DotNetSdkTests/providers/Microsoft.Storage/storageAccounts/sadotnetsdktests",
                 AzureFileShareName = "afsfileshare1",
-                StorageAccountTenantId = "\"72f988bf-86f1-41af-91ab-2d7cd011db47\""
+                StorageAccountTenantId = "0483643a-cb2f-462a-bc27-1a270e5bdc0a"
             };
         }
         public static ServerEndpointUpdateParameters GetDefaultServerEndpointUpdateParameters()
@@ -263,13 +264,13 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
         {
             return new RegisteredServerCreateParameters
             {
-                ServerCertificate = "\"MIIC4jCCAcqgAwIBAgIQP7n31LE24L1CfAmLKBKi6TANBgkqhkiG9w0BAQ0FADAZMRcwFQYDVQQDEw5hbnBpbnQtVGVzdFZNMzAeFw0yMDA0MDYyMDE5NDJaFw0yMTA0MDcyMDE5NDJaMBkxFzAVBgNVBAMTDmFucGludC1UZXN0Vk0zMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr9n0XUYEuWmXzZw9DNhSsp3QALPTPvHizpRJS4+g/ZRsjkiAwrgmOUX2XLYD/ThTNrHc7xga71gyuo7p+AsJy5dxdwi+bK2j7fJI/qU4waFKR9oA/Uu0uhWJ1GcPK72zM/DiG0rGlgEJUJe/Eq/DxWHDydYN2LLcI1fA9SpN3TawEs2zP1wxNX4olhstCm7J7ip3m9UY1gnKaI95ZOutEyrq9nEBMw/PaV9U0Tzq6w22aQDtu1CNrge5Kzpduw1qo2b/+eOZycsPuvupSB6Hl0/BUpqNVgQg56Q1znrTt0NKHcEumpu/v5w1OV7NcDNcsQmujvsHvk5Ze8FptsVA3QIDAQABoyYwJDAiBgNVHSUBAf8EGDAWBggrBgEFBQcDAgYKKwYBBAGCNwoDDDANBgkqhkiG9w0BAQ0FAAOCAQEACverHCPOmBbUuZnnrqBc2z5hL+K22WjpHBL5sxhaAiexqvM0OjH+ifFWHyGge+03/UEjhfdN3OFe0n0gAsweWuyc33pNVDb+DBXT2oW6TZrNVqs+eWw+4Haa2DiKV3+JqSK2148AY82Ny31ni2SACSCvvodxwWGWjiP6evq84+4wOCxwbUk+rPmJCimG9Ha7iDJ1xLt75hDgNB4eiODyzgMF3u8BswaIIyvBMYr3GGMgp2yAPe6jV0EJyoQ8hxwmb2ChB5VVL5lYTe1fU9Ro2c+T2KPhemmBLXM0yRghe/FcfSU8ZcrTx69pUwhKg5OtErhHTw4QvRkkHnsHvDjcjA==\"",
-                AgentVersion = "3.2.0.0",
+                ServerCertificate = "MIIC4jCCAcqgAwIBAgIQFw2jvtLs4b5D/tdXOmXM4jANBgkqhkiG9w0BAQ0FADAZMRcwFQYDVQQDEw5hbnBpbnQtdGVzdHZtNzAeFw0yMTAxMjEyMDQwMzhaFw0yMjAxMjIyMDQwMzhaMBkxFzAVBgNVBAMTDmFucGludC10ZXN0dm03MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyd6oJe1b380HSzCm2paNJk3PJY1EuNnpmJzDT1atuCs7cI4bLFhiiboMPnBALurXjiKrQPP0sbgNuxdFMryyE9JGQcLaKoQi6EMJ4iMSVHveVSjIb1UHN/bMvl8Y+cvwQTQgQMpcE9BJgmVREkaWFqL6r7nLOlrzWLT4QG8QGdUw7NnEUif86Wcor556KrR5yz8Z9o49Fy8x5ZRvUcBTOrBLlkdEyyGicWT/t0ED8M68atRpOkzyxzQYW3Y65M8rjIdnrnSCsMABC9+HtZf9yHHMu6srToOnwWM1tdSGd5a2XGcnoOJ1zBdH8/ySz3fcot+xl24oSdzg3GKL+Yep+QIDAQABoyYwJDAiBgNVHSUBAf8EGDAWBggrBgEFBQcDAgYKKwYBBAGCNwoDDDANBgkqhkiG9w0BAQ0FAAOCAQEAtcYxBaLFdc1M+ZRhF57MMzA4/ob71lhs2twOk0z9NZcsGGG/8NMH0+JHsPje5SCM9D2NAsBqqCYoW5OAyXGfAAsljgRQEbx6Ejc8Fr0osbWXRkHfkPewjX+9r76belYIR4H/XJ8uVW9SIoST84KSWrf2wdeGhms20/VWM562C7X60zGTWCWDwdioEm7Z9LJRTSZ/XvSZ14STwBI2J8U6eeKUlFZLhHBTt0jLAVhGciKCUHyPw6kWw7vdhonuigYNYwclxDYUhm8YbmmJzHQSzuQS/upKU6I/AMZIU/AcwWhchd1t+jZ2aQBh1JJ8+PXs0HARzWltK3i8a5IMHNdYTQ==",
+                AgentVersion = "12.2.0.0",
                 ServerOSVersion = "10.0.14393.0",
-                LastHeartBeat = "\"2018-09-10T20:05:02.5134384Z\"",
+                LastHeartBeat = "\"2021-06-10T20:05:02.5134384Z\"",
                 ServerRole = "Standalone",
                 ServerId = $"\"{serverId}\"",
-                FriendlyName = "ankushb-vm02.ntdev.corp.microsoft.com"
+                FriendlyName = "myserver.ntdev.corp.microsoft.com"
             };
         }
 

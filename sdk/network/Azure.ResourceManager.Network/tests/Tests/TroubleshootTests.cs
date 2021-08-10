@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             var virtualNetworkGatewayContainer = GetVirtualNetworkGatewayContainer(resourceGroupName);
-            VirtualNetworkGatewaysCreateOrUpdateOperation putVirtualNetworkGatewayResponseOperation =
+            var putVirtualNetworkGatewayResponseOperation =
                 await virtualNetworkGatewayContainer.StartCreateOrUpdateAsync(virtualNetworkGatewayName, virtualNetworkGateway);
             await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();;
             // GetVirtualNetworkGateway API
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             //Get troubleshooting
             var networkWatcherContainer = GetNetworkWatcherContainer("NetworkWatcherRG");
-            NetworkWatchersGetTroubleshootingOperation troubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingAsync(parameters);
+            var troubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingAsync(parameters);
             await troubleshootOperation.WaitForCompletionAsync();;
 
             //Query last troubleshoot
-            NetworkWatchersGetTroubleshootingResultOperation queryTroubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingResultAsync(getVirtualNetworkGatewayResponse.Value.Id);
+            var queryTroubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingResultAsync(new QueryTroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id));
             await queryTroubleshootOperation.WaitForCompletionAsync();;
             //TODO: make verification once fixed for troubleshoot API deployed
         }

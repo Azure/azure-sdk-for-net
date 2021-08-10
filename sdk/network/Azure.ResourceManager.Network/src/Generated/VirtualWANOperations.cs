@@ -145,14 +145,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes a VirtualWAN. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualWansDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualWanDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualWANOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new VirtualWansDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new VirtualWanDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes a VirtualWAN. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualWansDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual VirtualWanDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualWANOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new VirtualWansDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new VirtualWanDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -179,15 +179,21 @@ namespace Azure.ResourceManager.Network
             }
         }
         /// <summary> Updates a VirtualWAN tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="wANParameters"> Parameters supplied to Update VirtualWAN tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualWAN>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="wANParameters"/> is null. </exception>
+        public virtual async Task<Response<VirtualWAN>> UpdateTagsAsync(TagsObject wANParameters, CancellationToken cancellationToken = default)
         {
+            if (wANParameters == null)
+            {
+                throw new ArgumentNullException(nameof(wANParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualWANOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, wANParameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,15 +204,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates a VirtualWAN tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="wANParameters"> Parameters supplied to Update VirtualWAN tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualWAN> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="wANParameters"/> is null. </exception>
+        public virtual Response<VirtualWAN> UpdateTags(TagsObject wANParameters, CancellationToken cancellationToken = default)
         {
+            if (wANParameters == null)
+            {
+                throw new ArgumentNullException(nameof(wANParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualWANOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, wANParameters, cancellationToken);
                 return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

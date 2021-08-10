@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string networkVirtualApplianceName, IDictionary<string, string> tags)
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string networkVirtualApplianceName, TagsObject parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -228,17 +227,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            TagsObject tagsObject = new TagsObject();
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    tagsObject.Tags.Add(value);
-                }
-            }
-            var model = tagsObject;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -246,10 +236,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a Network Virtual Appliance. </summary>
         /// <param name="resourceGroupName"> The resource group name of Network Virtual Appliance. </param>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance being updated. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to Update Network Virtual Appliance Tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public async Task<Response<NetworkVirtualApplianceData>> UpdateTagsAsync(string resourceGroupName, string networkVirtualApplianceName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<NetworkVirtualApplianceData>> UpdateTagsAsync(string resourceGroupName, string networkVirtualApplianceName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -259,8 +249,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(networkVirtualApplianceName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, networkVirtualApplianceName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, networkVirtualApplianceName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -279,10 +273,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a Network Virtual Appliance. </summary>
         /// <param name="resourceGroupName"> The resource group name of Network Virtual Appliance. </param>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance being updated. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to Update Network Virtual Appliance Tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public Response<NetworkVirtualApplianceData> UpdateTags(string resourceGroupName, string networkVirtualApplianceName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkVirtualApplianceName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<NetworkVirtualApplianceData> UpdateTags(string resourceGroupName, string networkVirtualApplianceName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -292,8 +286,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(networkVirtualApplianceName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, networkVirtualApplianceName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, networkVirtualApplianceName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
