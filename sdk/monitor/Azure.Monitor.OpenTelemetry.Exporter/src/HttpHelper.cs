@@ -143,14 +143,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     var netHostPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetHostPort)?.ToString();
                     if (!string.IsNullOrWhiteSpace(netHostPort))
                     {
-                        string colon = ":";
                         if (netHostPort == "80" || netHostPort == "443")
                         {
-                            netHostPort = "";
-                            colon = "";
+                            url = $"{httpScheme}://{host}{httpTarget}";
+                            return url;
                         }
 
-                        url = $"{httpScheme}://{host}{colon}{netHostPort}{httpTarget}";
+                        url = $"{httpScheme}://{host}:{netHostPort}{httpTarget}";
                         return url;
                     }
                 }
