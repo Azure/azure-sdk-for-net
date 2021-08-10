@@ -3,7 +3,9 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
+using Azure.Core;
 using Azure.Storage.Models;
 
 namespace Azure.Storage
@@ -19,8 +21,34 @@ namespace Azure.Storage
             public byte[] StorageCrc64 { get; set; }
         }
 
+        public static void AssertResponseHashMatch(Stream content, TransactionalHashAlgorithm algorithm, Response response)
+        {
+            GetHashResult computedHash = GetHash(content, algorithm);
+            switch (algorithm)
+            {
+                case TransactionalHashAlgorithm.MD5:
+                    if (!Enumerable.SequenceEqual(
+                        computedHash.MD5,
+                        response.Headers.TryGetValue("Content-Length", out byte[] md5) ? md5 : default))
+                    {
+                        throw new Exception(); // TODO better exception
+                    }
+                    break;
+                case TransactionalHashAlgorithm.StorageCrc64:
+                    if (!Enumerable.SequenceEqual(
+                        computedHash.StorageCrc64,
+                        response.Headers.TryGetValue("x-ms-content-crc64", out byte[] crc) ? crc : default))
+                    {
+                        throw new Exception(); // TODO better exception
+                    }
+                    break;
+                default:
+                    throw new ArgumentException($"Could not verify payload with the specified transactional hash algorithm {algorithm}.");
+            }
+        }
+
         /// <summary>
-        /// Computes the requested hash, if desired.
+        /// Computes the requested hash for an upload operation, if desired.
         /// </summary>
         /// <param name="content">Content to hash.</param>
         /// <param name="options">Hash options.</param>
@@ -64,6 +92,12 @@ namespace Azure.Storage
             };
         }
 
+        /// <summary>
+        /// Compute hash on a stream and reset stream to original position.
+        /// </summary>
+        /// <param name="content">Seekable stream to compute on.</param>
+        /// <param name="hashAlgorithm">HashAlgorithm to compute with.</param>
+        /// <returns></returns>
         private static byte[] ComputeHash(Stream content, HashAlgorithm hashAlgorithm)
         {
             long startPosition = content.Position;

@@ -110,6 +110,9 @@ namespace Azure.Storage
                 response,
                 $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.", errorCode: response.GetErrorCode(null));
 
+        public static ArgumentException CannotDeferTransactionalHashVerification()
+            => new ArgumentException($"Cannot defer transactional hash verification. Returned hash is unavailable to caller.");
+
         public static void VerifyHttpsTokenAuth(Uri uri)
         {
             if (uri.Scheme != Constants.Https)

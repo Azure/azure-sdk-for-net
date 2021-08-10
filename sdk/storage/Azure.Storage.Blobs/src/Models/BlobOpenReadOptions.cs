@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Models;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -27,6 +28,11 @@ namespace Azure.Storage.Blobs.Models
         /// the download of the blob.
         /// </summary>
         public BlobRequestConditions Conditions { get; set; }
+
+        /// <summary>
+        /// Optional transactional hashing options.
+        /// </summary>
+        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
 
         internal bool AllowModifications { get; }
 

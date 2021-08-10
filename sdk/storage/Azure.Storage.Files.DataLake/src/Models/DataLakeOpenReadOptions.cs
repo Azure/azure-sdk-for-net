@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.Models;
+
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
@@ -25,6 +27,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// the download of the file.
         /// </summary>
         public DataLakeRequestConditions Conditions { get; set; }
+
+        /// <summary>
+        /// Optional transactional hashing options.
+        /// </summary>
+        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
 
         internal bool AllowModifications { get; }
 

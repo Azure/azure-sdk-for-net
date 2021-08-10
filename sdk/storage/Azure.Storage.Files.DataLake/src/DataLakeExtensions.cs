@@ -503,7 +503,23 @@ namespace Azure.Storage.Files.DataLake
             {
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                Position = options.Position
+                Position = options.Position,
+                TransactionalHashingOptions = options.TransactionalHashingOptions
+            };
+        }
+
+        internal static BlobBaseDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobBaseDownloadOptions()
+            {
+                Range = options.Range,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                TransactionalHashingOptions = options.TransactionalHashingOptions
             };
         }
 

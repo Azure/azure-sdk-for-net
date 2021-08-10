@@ -1281,9 +1281,9 @@ namespace Azure.Storage.Blobs.Specialized
                     // buffer response stream and ensure it matches the transactional hash if any
                     // Storage will not return a hash for payload >4MB, so this buffer is capped similarly
                     // hashing is opt-in, so this buffer is part of that opt-in
-                    if (options.TransactionalHashingOptions != default)
+                    if (options.TransactionalHashingOptions != default && !options.TransactionalHashingOptions.DeferValidation)
                     {
-                        // safe-truncate; we will have thrown before now if contentLength > maxInt
+                        // safe-truncate; transactional hash download limit well below maxInt
                         var readDestStream = new MemoryStream((int)response.Value.Details.ContentLength);
                         if (async)
                         {
@@ -1295,24 +1295,7 @@ namespace Azure.Storage.Blobs.Specialized
                         }
                         readDestStream.Position = 0;
 
-                        ContentHasher.GetHashResult computedHash = ContentHasher.GetHash(readDestStream, options.TransactionalHashingOptions.Algorithm);
-                        switch (options.TransactionalHashingOptions.Algorithm)
-                        {
-                            case TransactionalHashAlgorithm.MD5:
-                                if (!Enumerable.SequenceEqual(computedHash.MD5, response.Value.Details.ContentHash))
-                                {
-                                    throw new Exception(); // TODO better exception
-                                }
-                                break;
-                            case TransactionalHashAlgorithm.StorageCrc64:
-                                if (!Enumerable.SequenceEqual(computedHash.StorageCrc64, response.GetRawResponse().Headers.TryGetValue("x-ms-content-crc64", out byte[] crc) ? crc : default))
-                                {
-                                    throw new Exception(); // TODO better exception
-                                }
-                                break;
-                            default:
-                                throw new ArgumentException($"Could not verify payload with the specified transactional hash algorithm {options.TransactionalHashingOptions.Algorithm}.");
-                        }
+                        ContentHasher.AssertResponseHashMatch(readDestStream, options.TransactionalHashingOptions.Algorithm, response.GetRawResponse());
 
                         // we've consumed the network stream to hash it; return buffered stream to the user
                         stream = readDestStream;
@@ -1396,7 +1379,7 @@ namespace Azure.Storage.Blobs.Specialized
             // if requesting hash, range is necessary on request
             if (pageRange == default && options.TransactionalHashingOptions?.Algorithm != TransactionalHashAlgorithm.None)
             {
-                pageRange = new HttpRange(0, Constants.MB);
+                pageRange = new HttpRange();
             }
 
             ClientConfiguration.Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
@@ -2303,6 +2286,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
+                hashingOptions: options?.TransactionalHashingOptions,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2331,6 +2315,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
+                hashingOptions: options?.TransactionalHashingOptions,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2371,6 +2356,7 @@ namespace Azure.Storage.Blobs.Specialized
                 bufferSize,
                 conditions,
                 allowModifications: false,
+                hashingOptions: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2448,6 +2434,7 @@ namespace Azure.Storage.Blobs.Specialized
                 bufferSize,
                 conditions,
                 allowModifications: false,
+                hashingOptions: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2508,6 +2495,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="allowModifications">
         /// Whether to allow modifications during the read.
         /// </param>
+        /// <param name="hashingOptions">
+        /// Optional transactional hashing options.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2526,6 +2516,7 @@ namespace Azure.Storage.Blobs.Specialized
             int? bufferSize,
             BlobRequestConditions conditions,
             bool allowModifications,
+            DownloadTransactionalHashingOptions hashingOptions,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
@@ -2564,7 +2555,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
-                        bool rangeGetContentHash,
+                        DownloadTransactionalHashingOptions hashingOptions,
                         bool async,
                         CancellationToken cancellationToken) =>
                         {
@@ -2577,12 +2568,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 {
                                     Range = range,
                                     Conditions = conditions,
-                                    TransactionalHashingOptions = rangeGetContentHash
-                                        ? new DownloadTransactionalHashingOptions()
-                                        {
-                                            Algorithm = TransactionalHashAlgorithm.MD5
-                                        }
-                                        : default,
+                                    TransactionalHashingOptions = hashingOptions,
                                     OperationName = operationName
                                 },
                                 async,
@@ -2594,6 +2580,7 @@ namespace Azure.Storage.Blobs.Specialized
                         },
                         async (bool async, CancellationToken cancellationToken)
                             => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                        hashingOptions,
                         allowModifications,
                         blobProperties.Value.ContentLength,
                         position,

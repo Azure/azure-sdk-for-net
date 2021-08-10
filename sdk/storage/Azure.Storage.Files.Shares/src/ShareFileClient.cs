@@ -18,6 +18,7 @@ using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using System.Net.Http.Headers;
 using Azure.Storage.Models;
+using System.Linq;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -1637,7 +1638,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             DownloadInternal(
                 range,
-                rangeGetContentHash,
+                rangeGetContentHash ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 } : default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -1685,7 +1686,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken) =>
             DownloadInternal(
                 range,
-                rangeGetContentHash,
+                rangeGetContentHash ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 } : default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -1735,7 +1736,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             await DownloadInternal(
                 range,
-                rangeGetContentHash,
+                rangeGetContentHash ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 } : default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -1783,7 +1784,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken) =>
             await DownloadInternal(
                 range,
-                rangeGetContentHash,
+                rangeGetContentHash ? new DownloadTransactionalHashingOptions { Algorithm = TransactionalHashAlgorithm.MD5 } : default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -1800,13 +1801,8 @@ namespace Azure.Storage.Files.Shares
         /// Optional. Only download the bytes of the file in the specified
         /// range.  If not provided, download the entire file.
         /// </param>
-        /// <param name="rangeGetContentHash">
-        /// When set to true and specified together with the <paramref name="range"/>,
-        /// the service returns the MD5 hash for the range, as long as the
-        /// range is less than or equal to 4 MB in size.  If this value is
-        /// specified without <paramref name="range"/> or set to true when the
-        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
-        /// is thrown.
+        /// <param name="hashingOptions">
+        /// Optional transactional hashing options for downloads.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -1830,7 +1826,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileDownloadInfo>> DownloadInternal(
             HttpRange range,
-            bool rangeGetContentHash,
+            DownloadTransactionalHashingOptions hashingOptions,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1840,8 +1836,7 @@ namespace Azure.Storage.Files.Shares
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(rangeGetContentHash)}: {rangeGetContentHash}");
+                    $"{nameof(Uri)}: {Uri}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(Download)}");
 
@@ -1852,7 +1847,7 @@ namespace Azure.Storage.Files.Shares
                     // Start downloading the file
                     (Response<ShareFileDownloadInfo> initialResponse, Stream stream) = await StartDownloadAsync(
                         range,
-                        rangeGetContentHash,
+                        hashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5,
                         conditions: conditions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -1869,7 +1864,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             (Response<ShareFileDownloadInfo> Response, Stream ContentStream) = StartDownloadAsync(
                                 range,
-                                rangeGetContentHash,
+                                rangeGetContentHash: false,
                                 startOffset,
                                 conditions,
                                 async,
@@ -1887,7 +1882,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             (Response<ShareFileDownloadInfo> Response, Stream ContentStream) = await StartDownloadAsync(
                                 range,
-                                rangeGetContentHash,
+                                rangeGetContentHash: false,
                                 startOffset,
                                 conditions,
                                 async,
@@ -1903,6 +1898,30 @@ namespace Azure.Storage.Files.Shares
                         },
                         ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
+
+                    // comparing hash results comes BEFORE decryption
+                    // buffer response stream and ensure it matches the transactional hash if any
+                    // Storage will not return a hash for payload >4MB, so this buffer is capped similarly
+                    // hashing is opt-in, so this buffer is part of that opt-in
+                    if (hashingOptions != default && !hashingOptions.DeferValidation)
+                    {
+                        // safe-truncate; transactional hash download limit well below maxInt
+                        var readDestStream = new MemoryStream((int)initialResponse.Value.ContentLength);
+                        if (async)
+                        {
+                            await initialResponse.Value.Content.CopyToAsync(readDestStream).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            initialResponse.Value.Content.CopyTo(readDestStream);
+                        }
+                        readDestStream.Position = 0;
+
+                        ContentHasher.AssertResponseHashMatch(readDestStream, hashingOptions.Algorithm, initialResponse.GetRawResponse());
+
+                        // we've consumed the network stream to hash it; return buffered stream to the user
+                        initialResponse.Value.Content = readDestStream;
+                    }
 
                     return initialResponse;
                 }
@@ -2029,6 +2048,7 @@ namespace Azure.Storage.Files.Shares
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
+                hashingOptions: options.TransactionalHashingOptions,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2061,6 +2081,7 @@ namespace Azure.Storage.Files.Shares
                 options?.BufferSize,
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
+                hashingOptions: options.TransactionalHashingOptions,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2105,6 +2126,7 @@ namespace Azure.Storage.Files.Shares
                 bufferSize,
                 conditions,
                 allowModifications: false,
+                hashingOptions: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -2190,6 +2212,7 @@ namespace Azure.Storage.Files.Shares
                 bufferSize,
                 conditions,
                 allowModifications: false,
+                hashingOptions: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -2253,6 +2276,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="allowModifications">
         /// Whether to allow modifications during the read.
         /// </param>
+        /// <param name="hashingOptions">
+        /// Options for transactional hashing.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2275,6 +2301,7 @@ namespace Azure.Storage.Files.Shares
             int? bufferSize,
             ShareFileRequestConditions conditions,
             bool allowModifications,
+            DownloadTransactionalHashingOptions hashingOptions,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
@@ -2292,13 +2319,13 @@ namespace Azure.Storage.Files.Shares
 
                 return new LazyLoadingReadOnlyStream<ShareFileProperties>(
                     async (HttpRange range,
-                    bool rangeGetContentHash,
+                    DownloadTransactionalHashingOptions downloadTransactionalHashignOptions,
                     bool async,
                     CancellationToken cancellationToken) =>
                     {
                         Response<ShareFileDownloadInfo> response = await DownloadInternal(
                             range,
-                            rangeGetContentHash,
+                            downloadTransactionalHashignOptions,
                             conditions,
                             async,
                             cancellationToken).ConfigureAwait(false);
@@ -2316,6 +2343,7 @@ namespace Azure.Storage.Files.Shares
                     },
                     async (bool async, CancellationToken cancellationToken)
                         => await GetPropertiesInternal(conditions: default, async, cancellationToken).ConfigureAwait(false),
+                    hashingOptions,
                     allowModifications,
                     properties.ContentLength,
                     position,
