@@ -97,7 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         ///</summary>
         internal static string GetRequestUrl(this AzMonList tagObjects)
         {
-            // From spec: one of the following combinations is required:
+            // From spec: one of the following combinations is required in case of server spans:
             // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/http.md#http-server-semantic-conventions
             // http.url
             // http.scheme, http.host, http.target

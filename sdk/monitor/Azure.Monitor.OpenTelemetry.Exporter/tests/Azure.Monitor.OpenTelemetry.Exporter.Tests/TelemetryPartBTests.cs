@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             var httpUrl = "https://www.foo.bar/search";
             var httpResponsCode = "0";
             activity.SetStatus(Status.Ok);
-            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl);
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in HttpHelperTests.
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, null);
             var requestData = TelemetryPartB.GetRequestData(activity);
             Assert.Equal(requestData.Name, activity.DisplayName);

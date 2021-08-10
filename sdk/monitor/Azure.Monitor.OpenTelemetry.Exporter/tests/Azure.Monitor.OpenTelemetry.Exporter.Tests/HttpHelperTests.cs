@@ -184,7 +184,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         }
 
         [Fact]
-        public void RequestUrlIsSetUsingHttpUrl()
+        public void HttpRequestUrlIsSetUsingHttpUrl()
         {
             var PartBTags = AzMonList.Initialize();
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpUrl, "https://www.wiki.com"));
@@ -194,14 +194,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         }
 
         [Fact]
-        public void RequestUrlIsSetUsing_Scheme_HttpHost_Target()
+        public void HttpRequestUrlIsSetUsing_Scheme_Host_Target()
         {
             var PartBTags = AzMonList.Initialize();
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
-            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "www.example.org"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "www.httphost.org"));
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
 
-            string expectedUrl = "http://www.example.org/path";
+            string expectedUrl = "http://www.httphost.org/path";
             string url = PartBTags.GetRequestUrl();
             Assert.Equal(expectedUrl, url);
         }
@@ -211,11 +211,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         [InlineData("443")]
         [InlineData("8888")]
 
-        public void RequestUrlIsSetUsing_Scheme_ServerName_Port_Target(string port)
+        public void HttpRequestUrlIsSetUsing_Scheme_ServerName_Port_Target(string port)
         {
             var PartBTags = AzMonList.Initialize();
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
-            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpServerName, "example.com"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpServerName, "servername.com"));
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostPort, port));
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
             string colon = ":";
@@ -224,7 +224,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 port = "";
                 colon = "";
             }
-            string expectedUrl = $"http://example.com{colon}{port}/path";
+            string expectedUrl = $"http://servername.com{colon}{port}/path";
             string url = PartBTags.GetRequestUrl();
             Assert.Equal(expectedUrl, url);
         }
@@ -234,7 +234,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         [InlineData("443")]
         [InlineData("8888")]
 
-        public void RequestUrlIsSetUsing_Scheme_NetHostName_Port_Target(string port)
+        public void HttpRequestUrlIsSetUsing_Scheme_NetHostName_Port_Target(string port)
         {
             var PartBTags = AzMonList.Initialize();
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
@@ -248,6 +248,64 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 colon = "";
             }
             string expectedUrl = $"http://localhost{colon}{port}/path";
+            string url = PartBTags.GetRequestUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Fact]
+        public void HttpUrlAttributeTakesPrecedenceSettingHttpRequestUrl()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpUrl, "https://www.wiki.com"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostName, "localhost"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "www.httphost.org"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpServerName, "servername.com"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostPort, "8888"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string expectedUrl = "https://www.wiki.com";
+            string url = PartBTags.GetRequestUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Fact]
+        public void HttpHostAttributeTakesPrecedenceSettingHttpRequestUrl()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostName, "localhost"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "www.httphost.org"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpServerName, "servername.com"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostPort, "8888"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string expectedUrl = "http://www.httphost.org/path";
+            string url = PartBTags.GetRequestUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Fact]
+        public void HttpServerNameAttributeTakesPrecedenceSettingHttpRequestUrl()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostName, "localhost"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpServerName, "servername.com"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostPort, "8888"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string expectedUrl = "http://servername.com:8888/path";
+            string url = PartBTags.GetRequestUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Fact]
+        public void NetHostNameAttributeTakesPrecedenceSettingHttpRequestUrl()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostName, "localhost"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostPort, "8888"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string expectedUrl = "http://localhost:8888/path";
             string url = PartBTags.GetRequestUrl();
             Assert.Equal(expectedUrl, url);
         }
