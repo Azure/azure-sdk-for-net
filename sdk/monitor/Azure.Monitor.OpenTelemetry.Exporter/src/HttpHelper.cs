@@ -93,7 +93,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             url = string.IsNullOrWhiteSpace(url) ? null : url;
         }
         ///<summary>
-        /// Gets url from activity tag objects.
+        /// Gets http request url from activity tag objects.
         ///</summary>
         internal static string GetRequestUrl(this AzMonList tagObjects)
         {
