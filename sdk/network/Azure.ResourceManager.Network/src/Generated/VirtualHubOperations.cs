@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes a VirtualHub. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualHubsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualHubDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualHubOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new VirtualHubsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new VirtualHubDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes a VirtualHub. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualHubsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual VirtualHubDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualHubOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new VirtualHubsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new VirtualHubDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -171,15 +171,21 @@ namespace Azure.ResourceManager.Network
             }
         }
         /// <summary> Updates VirtualHub tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualHub>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualHubParameters"/> is null. </exception>
+        public virtual async Task<Response<VirtualHub>> UpdateTagsAsync(TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
         {
+            if (virtualHubParameters == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualHubOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, virtualHubParameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -190,15 +196,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates VirtualHub tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualHub> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualHubParameters"/> is null. </exception>
+        public virtual Response<VirtualHub> UpdateTags(TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
         {
+            if (virtualHubParameters == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualHubOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, virtualHubParameters, cancellationToken);
                 return Response.FromValue(new VirtualHub(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -209,16 +221,15 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
-        /// <param name="resourceId"> The resource whose effective routes are being requested. </param>
-        /// <param name="virtualWanResourceType"> The type of the specified resource like RouteTable, ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </param>
+        /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> GetEffectiveVirtualHubRoutesAsync(string resourceId = null, string virtualWanResourceType = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response> GetEffectiveVirtualHubRoutesAsync(EffectiveRoutesParameters effectiveRoutesParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualHubOperations.GetEffectiveVirtualHubRoutes");
             scope.Start();
             try
             {
-                var operation = await StartGetEffectiveVirtualHubRoutesAsync(resourceId, virtualWanResourceType, cancellationToken).ConfigureAwait(false);
+                var operation = await StartGetEffectiveVirtualHubRoutesAsync(effectiveRoutesParameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -229,16 +240,15 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
-        /// <param name="resourceId"> The resource whose effective routes are being requested. </param>
-        /// <param name="virtualWanResourceType"> The type of the specified resource like RouteTable, ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </param>
+        /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEffectiveVirtualHubRoutes(string resourceId = null, string virtualWanResourceType = null, CancellationToken cancellationToken = default)
+        public virtual Response GetEffectiveVirtualHubRoutes(EffectiveRoutesParameters effectiveRoutesParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualHubOperations.GetEffectiveVirtualHubRoutes");
             scope.Start();
             try
             {
-                var operation = StartGetEffectiveVirtualHubRoutes(resourceId, virtualWanResourceType, cancellationToken);
+                var operation = StartGetEffectiveVirtualHubRoutes(effectiveRoutesParameters, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -249,17 +259,16 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
-        /// <param name="resourceId"> The resource whose effective routes are being requested. </param>
-        /// <param name="virtualWanResourceType"> The type of the specified resource like RouteTable, ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </param>
+        /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualHubsGetEffectiveVirtualHubRoutesOperation> StartGetEffectiveVirtualHubRoutesAsync(string resourceId = null, string virtualWanResourceType = null, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualHubGetEffectiveVirtualHubRoutesOperation> StartGetEffectiveVirtualHubRoutesAsync(EffectiveRoutesParameters effectiveRoutesParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualHubOperations.StartGetEffectiveVirtualHubRoutes");
             scope.Start();
             try
             {
-                var response = await _restClient.GetEffectiveVirtualHubRoutesAsync(Id.ResourceGroupName, Id.Name, resourceId, virtualWanResourceType, cancellationToken).ConfigureAwait(false);
-                return new VirtualHubsGetEffectiveVirtualHubRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.ResourceGroupName, Id.Name, resourceId, virtualWanResourceType).Request, response);
+                var response = await _restClient.GetEffectiveVirtualHubRoutesAsync(Id.ResourceGroupName, Id.Name, effectiveRoutesParameters, cancellationToken).ConfigureAwait(false);
+                return new VirtualHubGetEffectiveVirtualHubRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.ResourceGroupName, Id.Name, effectiveRoutesParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -269,17 +278,16 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
-        /// <param name="resourceId"> The resource whose effective routes are being requested. </param>
-        /// <param name="virtualWanResourceType"> The type of the specified resource like RouteTable, ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </param>
+        /// <param name="effectiveRoutesParameters"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualHubsGetEffectiveVirtualHubRoutesOperation StartGetEffectiveVirtualHubRoutes(string resourceId = null, string virtualWanResourceType = null, CancellationToken cancellationToken = default)
+        public virtual VirtualHubGetEffectiveVirtualHubRoutesOperation StartGetEffectiveVirtualHubRoutes(EffectiveRoutesParameters effectiveRoutesParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualHubOperations.StartGetEffectiveVirtualHubRoutes");
             scope.Start();
             try
             {
-                var response = _restClient.GetEffectiveVirtualHubRoutes(Id.ResourceGroupName, Id.Name, resourceId, virtualWanResourceType, cancellationToken);
-                return new VirtualHubsGetEffectiveVirtualHubRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.ResourceGroupName, Id.Name, resourceId, virtualWanResourceType).Request, response);
+                var response = _restClient.GetEffectiveVirtualHubRoutes(Id.ResourceGroupName, Id.Name, effectiveRoutesParameters, cancellationToken);
+                return new VirtualHubGetEffectiveVirtualHubRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.ResourceGroupName, Id.Name, effectiveRoutesParameters).Request, response);
             }
             catch (Exception e)
             {

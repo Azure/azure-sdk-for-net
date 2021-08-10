@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The customer name to be printed on a letter of authorization. </summary>
-    internal partial class GenerateExpressRoutePortsLOARequest
+    public partial class GenerateExpressRoutePortsLOARequest
     {
         /// <summary> Initializes a new instance of GenerateExpressRoutePortsLOARequest. </summary>
         /// <param name="customerName"> The customer name. </param>

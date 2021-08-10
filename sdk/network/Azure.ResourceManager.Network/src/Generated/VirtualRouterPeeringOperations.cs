@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified peering from a Virtual Router. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualRouterPeeringsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualRouterPeeringDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualRouterPeeringOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new VirtualRouterPeeringsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new VirtualRouterPeeringDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified peering from a Virtual Router. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualRouterPeeringsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual VirtualRouterPeeringDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualRouterPeeringOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new VirtualRouterPeeringsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new VirtualRouterPeeringDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {

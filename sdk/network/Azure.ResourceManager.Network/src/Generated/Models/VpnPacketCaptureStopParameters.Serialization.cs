@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class VpnPacketCaptureStopParameters : IUtf8JsonSerializable
+    public partial class VpnPacketCaptureStopParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

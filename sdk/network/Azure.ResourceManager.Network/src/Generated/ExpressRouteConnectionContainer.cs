@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="putExpressRouteConnectionParameters"> Parameters required in an ExpressRouteConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="putExpressRouteConnectionParameters"/> is null. </exception>
-        public virtual ExpressRouteConnectionsCreateOrUpdateOperation StartCreateOrUpdate(string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteConnectionCreateOrUpdateOperation StartCreateOrUpdate(string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, connectionName, putExpressRouteConnectionParameters, cancellationToken);
-                return new ExpressRouteConnectionsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, putExpressRouteConnectionParameters).Request, response);
+                return new ExpressRouteConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, putExpressRouteConnectionParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="putExpressRouteConnectionParameters"> Parameters required in an ExpressRouteConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="putExpressRouteConnectionParameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteConnectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteConnectionCreateOrUpdateOperation> StartCreateOrUpdateAsync(string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, connectionName, putExpressRouteConnectionParameters, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteConnectionsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, putExpressRouteConnectionParameters).Request, response);
+                return new ExpressRouteConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, putExpressRouteConnectionParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -358,9 +358,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteConnectionContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteConnectionContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -381,9 +381,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteConnectionContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteConnectionContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the VM to check security groups for. </summary>
-    internal partial class SecurityGroupViewParameters
+    public partial class SecurityGroupViewParameters
     {
         /// <summary> Initializes a new instance of SecurityGroupViewParameters. </summary>
         /// <param name="targetResourceId"> ID of the target VM. </param>

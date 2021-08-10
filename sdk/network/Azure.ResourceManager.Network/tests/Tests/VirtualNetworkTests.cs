@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put Vnet
             var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
-            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put Vnet
             var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
-            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 }
             };
 
-            NetworkInterfacesCreateOrUpdateOperation putNicResponseOperation = await resourceGroup.Value.GetNetworkInterfaces().StartCreateOrUpdateAsync(nicName, nicParameters);
+            var putNicResponseOperation = await resourceGroup.Value.GetNetworkInterfaces().StartCreateOrUpdateAsync(nicName, nicParameters);
             await putNicResponseOperation.WaitForCompletionAsync();;
 
             // Check Ip Address availability API
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put Vnet
             var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
-            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnet1Name, vnet);
+            var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnet1Name, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put Vnet2
-            VirtualNetworksCreateOrUpdateOperation putVnet2Operation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnet2Name, vnet2);
+            var putVnet2Operation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnet2Name, vnet2);
             Response<VirtualNetwork> putVnet2 = await putVnet2Operation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnet2.Value.Data.ProvisioningState.ToString());
 
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put Vnet
             var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
-            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
-            NetworkInterfacesCreateOrUpdateOperation putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
+            var putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
             var nicResponse = await putNicResponseOperation.WaitForCompletionAsync();;
             // Get Vnet usage again
             // TODO: ADO 6030

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Virtual Wan Vpn profile parameters Vpn profile generation. </summary>
-    internal partial class VirtualWanVpnProfileParameters
+    public partial class VirtualWanVpnProfileParameters
     {
         /// <summary> Initializes a new instance of VirtualWanVpnProfileParameters. </summary>
         public VirtualWanVpnProfileParameters()

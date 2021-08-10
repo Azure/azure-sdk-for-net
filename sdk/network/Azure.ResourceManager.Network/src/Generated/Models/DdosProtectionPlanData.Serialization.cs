@@ -10,6 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -18,24 +19,16 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            writer.WritePropertyName("tags");
+            writer.WriteStartObject();
+            foreach (var item in Tags)
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WriteEndObject();
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -45,19 +38,39 @@ namespace Azure.ResourceManager.Network
         internal static DdosProtectionPlanData DeserializeDdosProtectionPlanData(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
+            Location location = default;
             ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<SubResource>> virtualNetworks = default;
+            Optional<IReadOnlyList<Models.SubResource>> virtualNetworks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tags"))
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -68,31 +81,6 @@ namespace Azure.ResourceManager.Network
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -126,10 +114,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<Models.SubResource> array = new List<Models.SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(Models.SubResource.DeserializeSubResource(item));
                             }
                             virtualNetworks = array;
                             continue;
@@ -138,7 +126,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DdosProtectionPlanData(id, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
+            return new DdosProtectionPlanData(id, name, type, location, tags, etag.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
         }
     }
 }

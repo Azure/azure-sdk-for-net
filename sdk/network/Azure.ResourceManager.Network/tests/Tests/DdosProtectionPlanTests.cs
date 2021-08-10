@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
     public class DdosProtectionPlanTests
         : NetworkServiceClientTestBase
     {
-        private const string NamePrefix = "test_ddos_protection_plan_";
+        private const string NamePrefix = "test_ddos_";
         private Resources.ResourceGroup resourceGroup;
 
         public DdosProtectionPlanTests(bool isAsync) : base(isAsync)
@@ -59,9 +59,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var name = Recording.GenerateAssetName(NamePrefix);
 
             // create
-            var ddosProtectionPlanResponse = await container.CreateOrUpdateAsync(name, new DdosProtectionPlanData{
-                Location = TestEnvironment.Location
-            });
+            var ddosProtectionPlanResponse = await container.CreateOrUpdateAsync(name, new DdosProtectionPlanData(TestEnvironment.Location));
 
             Assert.True(await container.CheckIfExistsAsync(name));
 
@@ -70,12 +68,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.IsEmpty(ddosProtectionPlanData.Tags);
 
             // update
-            ddosProtectionPlanResponse = await container.CreateOrUpdateAsync(name, new DdosProtectionPlanData{
-                Location = TestEnvironment.Location,
-                Tags = {
-                {"tag1", "value1" },
-                {"tag2", "value2" } }
-            });
+            var data = new DdosProtectionPlanData(TestEnvironment.Location);
+            data.Tags.Add("tag1", "value1");
+            data.Tags.Add("tag2", "value2");
+            ddosProtectionPlanResponse = await container.CreateOrUpdateAsync(name, data);
             ddosProtectionPlanData = ddosProtectionPlanResponse.Value.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);
@@ -93,7 +89,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.That(ddosProtectionPlanData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // patch
-            ddosProtectionPlanResponse = await ddosProtectionPlanResponse.Value.UpdateTagsAsync(new Dictionary<string, string>{{ "tag2", "value2"}});
+            var tags = new TagsObject();
+            tags.Tags.Add("tag2", "value2");
+            ddosProtectionPlanResponse = await ddosProtectionPlanResponse.Value.UpdateTagsAsync(tags);
             ddosProtectionPlanData = ddosProtectionPlanResponse.Value.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);
@@ -127,7 +125,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         private void ValidateCommon(DdosProtectionPlanData data, string name)
         {
             Assert.AreEqual(name, data.Name);
-            Assert.AreEqual(TestEnvironment.Location, data.Location);
+            Assert.AreEqual(TestEnvironment.Location, data.Location.Name);
         }
     }
 }

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update express route circuit operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ExpressRouteCircuitsCreateOrUpdateOperation StartCreateOrUpdate(string circuitName, ExpressRouteCircuitData parameters, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCircuitCreateOrUpdateOperation StartCreateOrUpdate(string circuitName, ExpressRouteCircuitData parameters, CancellationToken cancellationToken = default)
         {
             if (circuitName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, circuitName, parameters, cancellationToken);
-                return new ExpressRouteCircuitsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, circuitName, parameters).Request, response);
+                return new ExpressRouteCircuitCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, circuitName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update express route circuit operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteCircuitsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string circuitName, ExpressRouteCircuitData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCircuitCreateOrUpdateOperation> StartCreateOrUpdateAsync(string circuitName, ExpressRouteCircuitData parameters, CancellationToken cancellationToken = default)
         {
             if (circuitName == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, circuitName, parameters, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCircuitsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, circuitName, parameters).Request, response);
+                return new ExpressRouteCircuitCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, circuitName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -398,9 +398,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -421,9 +421,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

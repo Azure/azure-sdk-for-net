@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteCircuitConnectionParameters"> Parameters supplied to the create or update express route circuit connection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="expressRouteCircuitConnectionParameters"/> is null. </exception>
-        public virtual ExpressRouteCircuitConnectionsCreateOrUpdateOperation StartCreateOrUpdate(string connectionName, ExpressRouteCircuitConnectionData expressRouteCircuitConnectionParameters, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCircuitConnectionCreateOrUpdateOperation StartCreateOrUpdate(string connectionName, ExpressRouteCircuitConnectionData expressRouteCircuitConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters, cancellationToken);
-                return new ExpressRouteCircuitConnectionsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters).Request, response);
+                return new ExpressRouteCircuitConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteCircuitConnectionParameters"> Parameters supplied to the create or update express route circuit connection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="expressRouteCircuitConnectionParameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteCircuitConnectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string connectionName, ExpressRouteCircuitConnectionData expressRouteCircuitConnectionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCircuitConnectionCreateOrUpdateOperation> StartCreateOrUpdateAsync(string connectionName, ExpressRouteCircuitConnectionData expressRouteCircuitConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCircuitConnectionsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters).Request, response);
+                return new ExpressRouteCircuitConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, expressRouteCircuitConnectionParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -398,9 +398,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -421,9 +421,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Create the loadBalancer
-            LoadBalancersCreateOrUpdateOperation putLoadBalancerOperation = await resourceGroup.Value.GetLoadBalancers().StartCreateOrUpdateAsync(lbName, loadBalancer);
+            var putLoadBalancerOperation = await resourceGroup.Value.GetLoadBalancers().StartCreateOrUpdateAsync(lbName, loadBalancer);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             Response<LoadBalancer> getLoadBalancer = await resourceGroup.Value.GetLoadBalancers().GetAsync(lbName);
 
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Verify Put InboundNatRule in LoadBalancer
             var inboundNatRuleContainer = loadBalancerOperations.GetInboundNatRules();
-            InboundNatRulesCreateOrUpdateOperation putInboundNatRuleOperation = await inboundNatRuleContainer.StartCreateOrUpdateAsync(inboundNatRule3Name, inboundNatRule3Params);
+            var putInboundNatRuleOperation = await inboundNatRuleContainer.StartCreateOrUpdateAsync(inboundNatRule3Name, inboundNatRule3Params);
             Response<InboundNatRule> putInboundNatRule = await putInboundNatRuleOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual(inboundNatRule3Name, putInboundNatRule.Value.Data.Name);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //await inboundNatRuleContainer.StartDeleteAsync(inboundNatRule3Name);
 
             // Delete LoadBalancer
-            LoadBalancersDeleteOperation deleteOperation1 = await loadBalancerOperations.StartDeleteAsync();
+            var deleteOperation1 = await loadBalancerOperations.StartDeleteAsync();
             await deleteOperation1.WaitForCompletionResponseAsync();
             ;
 
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Create the loadBalancer
             var loadBalancerContainer = GetLoadBalancerContainer(resourceGroup);
-            LoadBalancersCreateOrUpdateOperation putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbName, loadbalancerparamater);
+            var putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbName, loadbalancerparamater);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             Response<LoadBalancer> getLoadBalancer = await resourceGroup.Value.GetLoadBalancers().GetAsync(lbName);
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Delete LoadBalancer
             // TODO ADO 5998
-            //LoadBalancersDeleteOperation deleteOperation = await ArmClient.GetGenericResourcesOperations(getLoadBalancer.Value.Id).StartDelete();
+            //var deleteOperation = await ArmClient.GetGenericResourcesOperations(getLoadBalancer.Value.Id).StartDelete();
             var deleteOperation = await ArmClient.GetGenericResourceOperations(getLoadBalancer.Value.Id).StartDeleteAsync();
             await deleteOperation.WaitForCompletionResponseAsync();
             ;
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Create the loadBalancer
             var loadBalancerContainer = GetLoadBalancerContainer(resourceGroup);
-            LoadBalancersCreateOrUpdateOperation putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbName, loadbalancerparamater);
+            var putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbName, loadbalancerparamater);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             Response<LoadBalancer> getLoadBalancer = await loadBalancerContainer.GetAsync(lbName);
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.NotNull(listLoadBalancerSubscription.First().Data.Etag);
 
             // Delete LoadBalancer
-            LoadBalancersDeleteOperation deleteOperation = await getLoadBalancer.Value.StartDeleteAsync();
+            var deleteOperation = await getLoadBalancer.Value.StartDeleteAsync();
             await deleteOperation.WaitForCompletionResponseAsync();
             ;
 
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Create the loadBalancer
             var loadBalancerContainer = resourceGroup.Value.GetLoadBalancers();
-            LoadBalancersCreateOrUpdateOperation putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbname, loadbalancerparamater);
+            var putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbname, loadbalancerparamater);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             Response<LoadBalancer> getLoadBalancer = await loadBalancerContainer.GetAsync(lbname);
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // update load balancer
-            LoadBalancersCreateOrUpdateOperation putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbname, getLoadBalancer.Value.Data);
+            var putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbname, getLoadBalancer.Value.Data);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             getLoadBalancer = await loadBalancerContainer.GetAsync(lbname);
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Create the loadBalancer
             var loadBalancerContainer = resourceGroup.Value.GetLoadBalancers();
-            LoadBalancersCreateOrUpdateOperation putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbName, loadBalancer);
+            var putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbName, loadBalancer);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             Response<LoadBalancer> getLoadBalancer = await loadBalancerContainer.GetAsync(lbName);
@@ -1135,13 +1135,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put Nics
             var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
-            NetworkInterfacesCreateOrUpdateOperation nic1Operation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Data);
+            var nic1Operation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Data);
             await nic1Operation.WaitForCompletionAsync();
 
-            NetworkInterfacesCreateOrUpdateOperation nic2Operation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Data);
+            var nic2Operation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Data);
             await nic2Operation.WaitForCompletionAsync();
 
-            NetworkInterfacesCreateOrUpdateOperation nic3Operation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic3name, nic3.Data);
+            var nic3Operation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic3name, nic3.Data);
             await nic3Operation.WaitForCompletionAsync();
 
             // Get Nics
@@ -1162,7 +1162,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(2, listLoadBalancerNetworkInterfaces.Count());
 
             // Delete LoadBalancer
-            LoadBalancersDeleteOperation deleteOperation = await getLoadBalancer.Value.StartDeleteAsync();
+            var deleteOperation = await getLoadBalancer.Value.StartDeleteAsync();
             await deleteOperation.WaitForCompletionResponseAsync();
 
             // Verify Delete
@@ -1267,7 +1267,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(2, getLoadBalancer.Value.Data.InboundNatPools.Count);
 
             // Delete LoadBalancer
-            LoadBalancersDeleteOperation deleteOperation = await getLoadBalancer.Value.StartDeleteAsync();
+            var deleteOperation = await getLoadBalancer.Value.StartDeleteAsync();
             await deleteOperation.WaitForCompletionResponseAsync();
             ;
 

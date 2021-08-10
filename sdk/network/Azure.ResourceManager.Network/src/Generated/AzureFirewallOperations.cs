@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified Azure Firewall. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AzureFirewallsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<AzureFirewallDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AzureFirewallOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new AzureFirewallsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new AzureFirewallDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified Azure Firewall. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AzureFirewallsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual AzureFirewallDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AzureFirewallOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new AzureFirewallsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new AzureFirewallDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -172,15 +172,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates tags of an Azure Firewall resource. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update azure firewall tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AzureFirewall>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<AzureFirewall>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("AzureFirewallOperations.UpdateTags");
             scope.Start();
             try
             {
-                var operation = await StartUpdateTagsAsync(tags, cancellationToken).ConfigureAwait(false);
+                var operation = await StartUpdateTagsAsync(parameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -191,15 +197,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates tags of an Azure Firewall resource. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update azure firewall tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AzureFirewall> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<AzureFirewall> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("AzureFirewallOperations.UpdateTags");
             scope.Start();
             try
             {
-                var operation = StartUpdateTags(tags, cancellationToken);
+                var operation = StartUpdateTags(parameters, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -210,16 +222,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates tags of an Azure Firewall resource. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update azure firewall tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<AzureFirewallsUpdateTagsOperation> StartUpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<AzureFirewallUpdateTagsOperation> StartUpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("AzureFirewallOperations.StartUpdateTags");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return new AzureFirewallsUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, tags).Request, response);
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new AzureFirewallUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -229,16 +247,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates tags of an Azure Firewall resource. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update azure firewall tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AzureFirewallsUpdateTagsOperation StartUpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual AzureFirewallUpdateTagsOperation StartUpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("AzureFirewallOperations.StartUpdateTags");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return new AzureFirewallsUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, tags).Request, response);
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return new AzureFirewallUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {

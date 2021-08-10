@@ -99,15 +99,21 @@ namespace Azure.ResourceManager.Network
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
         /// <summary> Updates an express route cross connection tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExpressRouteCrossConnection>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionParameters"/> is null. </exception>
+        public virtual async Task<Response<ExpressRouteCrossConnection>> UpdateTagsAsync(TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
         {
+            if (crossConnectionParameters == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, crossConnectionParameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ExpressRouteCrossConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -118,15 +124,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates an express route cross connection tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteCrossConnection> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionParameters"/> is null. </exception>
+        public virtual Response<ExpressRouteCrossConnection> UpdateTags(TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
         {
+            if (crossConnectionParameters == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, crossConnectionParameters, cancellationToken);
                 return Response.FromValue(new ExpressRouteCrossConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,14 +186,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised ARP table associated with the express route cross connection in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteCrossConnectionsGetArpTableOperation> StartGetArpTableAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCrossConnectionGetArpTableOperation> StartGetArpTableAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionOperations.StartGetArpTable");
             scope.Start();
             try
             {
                 var response = await _restClient.GetArpTableAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCrossConnectionsGetArpTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetArpTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                return new ExpressRouteCrossConnectionGetArpTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetArpTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -192,14 +204,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised ARP table associated with the express route cross connection in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteCrossConnectionsGetArpTableOperation StartGetArpTable(CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCrossConnectionGetArpTableOperation StartGetArpTable(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionOperations.StartGetArpTable");
             scope.Start();
             try
             {
                 var response = _restClient.GetArpTable(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ExpressRouteCrossConnectionsGetArpTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetArpTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                return new ExpressRouteCrossConnectionGetArpTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetArpTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -246,14 +258,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the route table summary associated with the express route cross connection in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteCrossConnectionsGetRoutesTableSummaryOperation> StartGetRoutesTableSummaryAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCrossConnectionGetRoutesTableSummaryOperation> StartGetRoutesTableSummaryAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionOperations.StartGetRoutesTableSummary");
             scope.Start();
             try
             {
                 var response = await _restClient.GetRoutesTableSummaryAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCrossConnectionsGetRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableSummaryRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                return new ExpressRouteCrossConnectionGetRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableSummaryRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -264,14 +276,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the route table summary associated with the express route cross connection in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteCrossConnectionsGetRoutesTableSummaryOperation StartGetRoutesTableSummary(CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCrossConnectionGetRoutesTableSummaryOperation StartGetRoutesTableSummary(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionOperations.StartGetRoutesTableSummary");
             scope.Start();
             try
             {
                 var response = _restClient.GetRoutesTableSummary(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ExpressRouteCrossConnectionsGetRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableSummaryRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                return new ExpressRouteCrossConnectionGetRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableSummaryRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -318,14 +330,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised routes table associated with the express route cross connection in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteCrossConnectionsGetRoutesTableOperation> StartGetRoutesTableAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCrossConnectionGetRoutesTableOperation> StartGetRoutesTableAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionOperations.StartGetRoutesTable");
             scope.Start();
             try
             {
                 var response = await _restClient.GetRoutesTableAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCrossConnectionsGetRoutesTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                return new ExpressRouteCrossConnectionGetRoutesTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -336,14 +348,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised routes table associated with the express route cross connection in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteCrossConnectionsGetRoutesTableOperation StartGetRoutesTable(CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCrossConnectionGetRoutesTableOperation StartGetRoutesTable(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionOperations.StartGetRoutesTable");
             scope.Start();
             try
             {
                 var response = _restClient.GetRoutesTable(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ExpressRouteCrossConnectionsGetRoutesTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                return new ExpressRouteCrossConnectionGetRoutesTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {

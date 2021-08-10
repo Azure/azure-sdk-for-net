@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual LocalNetworkGatewaysCreateOrUpdateOperation StartCreateOrUpdate(string localNetworkGatewayName, LocalNetworkGatewayData parameters, CancellationToken cancellationToken = default)
+        public virtual LocalNetworkGatewayCreateOrUpdateOperation StartCreateOrUpdate(string localNetworkGatewayName, LocalNetworkGatewayData parameters, CancellationToken cancellationToken = default)
         {
             if (localNetworkGatewayName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, localNetworkGatewayName, parameters, cancellationToken);
-                return new LocalNetworkGatewaysCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
+                return new LocalNetworkGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<LocalNetworkGatewaysCreateOrUpdateOperation> StartCreateOrUpdateAsync(string localNetworkGatewayName, LocalNetworkGatewayData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<LocalNetworkGatewayCreateOrUpdateOperation> StartCreateOrUpdateAsync(string localNetworkGatewayName, LocalNetworkGatewayData parameters, CancellationToken cancellationToken = default)
         {
             if (localNetworkGatewayName == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
-                return new LocalNetworkGatewaysCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
+                return new LocalNetworkGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -398,9 +398,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -421,9 +421,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

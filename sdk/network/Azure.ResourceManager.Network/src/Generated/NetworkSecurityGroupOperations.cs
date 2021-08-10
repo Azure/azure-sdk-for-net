@@ -142,14 +142,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified network security group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkSecurityGroupsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkSecurityGroupDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new NetworkSecurityGroupsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new NetworkSecurityGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified network security group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkSecurityGroupsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual NetworkSecurityGroupDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new NetworkSecurityGroupsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new NetworkSecurityGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -176,15 +176,21 @@ namespace Azure.ResourceManager.Network
             }
         }
         /// <summary> Updates a network security group tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update network security group tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetworkSecurityGroup>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<NetworkSecurityGroup>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,15 +201,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates a network security group tags. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update network security group tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkSecurityGroup> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<NetworkSecurityGroup> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

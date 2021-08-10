@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified private link service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PrivateLinkServicesDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<PrivateLinkServiceDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new PrivateLinkServicesDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new PrivateLinkServiceDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified private link service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PrivateLinkServicesDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual PrivateLinkServiceDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new PrivateLinkServicesDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new PrivateLinkServiceDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -451,14 +451,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Delete private end point connection for a private link service in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PrivateLinkServicesDeletePrivateEndpointConnectionOperation> StartDeletePrivateEndpointConnectionAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<PrivateLinkServiceDeletePrivateEndpointConnectionOperation> StartDeletePrivateEndpointConnectionAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.StartDeletePrivateEndpointConnection");
             scope.Start();
             try
             {
                 var response = await _restClient.DeletePrivateEndpointConnectionAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new PrivateLinkServicesDeletePrivateEndpointConnectionOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeletePrivateEndpointConnectionRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new PrivateLinkServiceDeletePrivateEndpointConnectionOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeletePrivateEndpointConnectionRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -469,14 +469,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Delete private end point connection for a private link service in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PrivateLinkServicesDeletePrivateEndpointConnectionOperation StartDeletePrivateEndpointConnection(CancellationToken cancellationToken = default)
+        public virtual PrivateLinkServiceDeletePrivateEndpointConnectionOperation StartDeletePrivateEndpointConnection(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.StartDeletePrivateEndpointConnection");
             scope.Start();
             try
             {
                 var response = _restClient.DeletePrivateEndpointConnection(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new PrivateLinkServicesDeletePrivateEndpointConnectionOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeletePrivateEndpointConnectionRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new PrivateLinkServiceDeletePrivateEndpointConnectionOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeletePrivateEndpointConnectionRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -486,15 +486,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Checks whether the subscription is visible to private link service. </summary>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityAsync(string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityAsync(CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.CheckPrivateLinkServiceVisibility");
             scope.Start();
             try
             {
-                var operation = await StartCheckPrivateLinkServiceVisibilityAsync(privateLinkServiceAlias, cancellationToken).ConfigureAwait(false);
+                var operation = await StartCheckPrivateLinkServiceVisibilityAsync(parameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -505,15 +511,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Checks whether the subscription is visible to private link service. </summary>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibility(string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibility(CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.CheckPrivateLinkServiceVisibility");
             scope.Start();
             try
             {
-                var operation = StartCheckPrivateLinkServiceVisibility(privateLinkServiceAlias, cancellationToken);
+                var operation = StartCheckPrivateLinkServiceVisibility(parameters, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -524,16 +536,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Checks whether the subscription is visible to private link service. </summary>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation> StartCheckPrivateLinkServiceVisibilityAsync(string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<PrivateLinkServiceCheckPrivateLinkServiceVisibilityOperation> StartCheckPrivateLinkServiceVisibilityAsync(CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.StartCheckPrivateLinkServiceVisibility");
             scope.Start();
             try
             {
-                var response = await _restClient.CheckPrivateLinkServiceVisibilityAsync(Id.Name, privateLinkServiceAlias, cancellationToken).ConfigureAwait(false);
-                return new PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.Name, privateLinkServiceAlias).Request, response);
+                var response = await _restClient.CheckPrivateLinkServiceVisibilityAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new PrivateLinkServiceCheckPrivateLinkServiceVisibilityOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -543,16 +561,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Checks whether the subscription is visible to private link service. </summary>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation StartCheckPrivateLinkServiceVisibility(string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual PrivateLinkServiceCheckPrivateLinkServiceVisibilityOperation StartCheckPrivateLinkServiceVisibility(CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.StartCheckPrivateLinkServiceVisibility");
             scope.Start();
             try
             {
-                var response = _restClient.CheckPrivateLinkServiceVisibility(Id.Name, privateLinkServiceAlias, cancellationToken);
-                return new PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.Name, privateLinkServiceAlias).Request, response);
+                var response = _restClient.CheckPrivateLinkServiceVisibility(Id.Name, parameters, cancellationToken);
+                return new PrivateLinkServiceCheckPrivateLinkServiceVisibilityOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -562,15 +586,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.CheckPrivateLinkServiceVisibilityByResourceGroup");
             scope.Start();
             try
             {
-                var operation = await StartCheckPrivateLinkServiceVisibilityByResourceGroupAsync(privateLinkServiceAlias, cancellationToken).ConfigureAwait(false);
+                var operation = await StartCheckPrivateLinkServiceVisibilityByResourceGroupAsync(parameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -581,15 +611,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroup(string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroup(CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.CheckPrivateLinkServiceVisibilityByResourceGroup");
             scope.Start();
             try
             {
-                var operation = StartCheckPrivateLinkServiceVisibilityByResourceGroup(privateLinkServiceAlias, cancellationToken);
+                var operation = StartCheckPrivateLinkServiceVisibilityByResourceGroup(parameters, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -600,16 +636,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation> StartCheckPrivateLinkServiceVisibilityByResourceGroupAsync(string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation> StartCheckPrivateLinkServiceVisibilityByResourceGroupAsync(CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.StartCheckPrivateLinkServiceVisibilityByResourceGroup");
             scope.Start();
             try
             {
-                var response = await _restClient.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(Id.ResourceGroupName, Id.Name, privateLinkServiceAlias, cancellationToken).ConfigureAwait(false);
-                return new PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Id.ResourceGroupName, Id.Name, privateLinkServiceAlias).Request, response);
+                var response = await _restClient.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -619,16 +661,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
-        /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
+        /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation StartCheckPrivateLinkServiceVisibilityByResourceGroup(string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation StartCheckPrivateLinkServiceVisibilityByResourceGroup(CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.StartCheckPrivateLinkServiceVisibilityByResourceGroup");
             scope.Start();
             try
             {
-                var response = _restClient.CheckPrivateLinkServiceVisibilityByResourceGroup(Id.ResourceGroupName, Id.Name, privateLinkServiceAlias, cancellationToken);
-                return new PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Id.ResourceGroupName, Id.Name, privateLinkServiceAlias).Request, response);
+                var response = _restClient.CheckPrivateLinkServiceVisibilityByResourceGroup(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return new PrivateLinkServiceCheckPrivateLinkServiceVisibilityByResourceGroupOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -330,7 +329,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateStartPacketCaptureRequest(string resourceGroupName, string gatewayName, string vpnConnectionName, string filterData, IEnumerable<string> linkConnectionNames)
+        internal HttpMessage CreateStartPacketCaptureRequest(string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -349,22 +348,13 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            VpnConnectionPacketCaptureStartParameters vpnConnectionPacketCaptureStartParameters = new VpnConnectionPacketCaptureStartParameters()
+            if (parameters != null)
             {
-                FilterData = filterData
-            };
-            if (linkConnectionNames != null)
-            {
-                foreach (var value in linkConnectionNames)
-                {
-                    vpnConnectionPacketCaptureStartParameters.LinkConnectionNames.Add(value);
-                }
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(parameters);
+                request.Content = content;
             }
-            var model = vpnConnectionPacketCaptureStartParameters;
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
             return message;
         }
 
@@ -372,11 +362,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="vpnConnectionName"> The name of the vpn connection. </param>
-        /// <param name="filterData"> Start Packet capture parameters on vpn connection. </param>
-        /// <param name="linkConnectionNames"> List of site link connection names. </param>
+        /// <param name="parameters"> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="vpnConnectionName"/> is null. </exception>
-        public async Task<Response> StartPacketCaptureAsync(string resourceGroupName, string gatewayName, string vpnConnectionName, string filterData = null, IEnumerable<string> linkConnectionNames = null, CancellationToken cancellationToken = default)
+        public async Task<Response> StartPacketCaptureAsync(string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -391,7 +380,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnConnectionName));
             }
 
-            using var message = CreateStartPacketCaptureRequest(resourceGroupName, gatewayName, vpnConnectionName, filterData, linkConnectionNames);
+            using var message = CreateStartPacketCaptureRequest(resourceGroupName, gatewayName, vpnConnectionName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -407,11 +396,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="vpnConnectionName"> The name of the vpn connection. </param>
-        /// <param name="filterData"> Start Packet capture parameters on vpn connection. </param>
-        /// <param name="linkConnectionNames"> List of site link connection names. </param>
+        /// <param name="parameters"> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="vpnConnectionName"/> is null. </exception>
-        public Response StartPacketCapture(string resourceGroupName, string gatewayName, string vpnConnectionName, string filterData = null, IEnumerable<string> linkConnectionNames = null, CancellationToken cancellationToken = default)
+        public Response StartPacketCapture(string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -426,7 +414,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnConnectionName));
             }
 
-            using var message = CreateStartPacketCaptureRequest(resourceGroupName, gatewayName, vpnConnectionName, filterData, linkConnectionNames);
+            using var message = CreateStartPacketCaptureRequest(resourceGroupName, gatewayName, vpnConnectionName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -438,7 +426,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateStopPacketCaptureRequest(string resourceGroupName, string gatewayName, string vpnConnectionName, string sasUrl, IEnumerable<string> linkConnectionNames)
+        internal HttpMessage CreateStopPacketCaptureRequest(string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -457,22 +445,13 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            VpnConnectionPacketCaptureStopParameters vpnConnectionPacketCaptureStopParameters = new VpnConnectionPacketCaptureStopParameters()
+            if (parameters != null)
             {
-                SasUrl = sasUrl
-            };
-            if (linkConnectionNames != null)
-            {
-                foreach (var value in linkConnectionNames)
-                {
-                    vpnConnectionPacketCaptureStopParameters.LinkConnectionNames.Add(value);
-                }
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(parameters);
+                request.Content = content;
             }
-            var model = vpnConnectionPacketCaptureStopParameters;
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
             return message;
         }
 
@@ -480,11 +459,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="vpnConnectionName"> The name of the vpn connection. </param>
-        /// <param name="sasUrl"> SAS url for packet capture on vpn connection. </param>
-        /// <param name="linkConnectionNames"> List of site link connection names. </param>
+        /// <param name="parameters"> Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="vpnConnectionName"/> is null. </exception>
-        public async Task<Response> StopPacketCaptureAsync(string resourceGroupName, string gatewayName, string vpnConnectionName, string sasUrl = null, IEnumerable<string> linkConnectionNames = null, CancellationToken cancellationToken = default)
+        public async Task<Response> StopPacketCaptureAsync(string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -499,7 +477,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnConnectionName));
             }
 
-            using var message = CreateStopPacketCaptureRequest(resourceGroupName, gatewayName, vpnConnectionName, sasUrl, linkConnectionNames);
+            using var message = CreateStopPacketCaptureRequest(resourceGroupName, gatewayName, vpnConnectionName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -515,11 +493,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="vpnConnectionName"> The name of the vpn connection. </param>
-        /// <param name="sasUrl"> SAS url for packet capture on vpn connection. </param>
-        /// <param name="linkConnectionNames"> List of site link connection names. </param>
+        /// <param name="parameters"> Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, or <paramref name="vpnConnectionName"/> is null. </exception>
-        public Response StopPacketCapture(string resourceGroupName, string gatewayName, string vpnConnectionName, string sasUrl = null, IEnumerable<string> linkConnectionNames = null, CancellationToken cancellationToken = default)
+        public Response StopPacketCapture(string resourceGroupName, string gatewayName, string vpnConnectionName, VpnConnectionPacketCaptureStopParameters parameters = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -534,7 +511,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnConnectionName));
             }
 
-            using var message = CreateStopPacketCaptureRequest(resourceGroupName, gatewayName, vpnConnectionName, sasUrl, linkConnectionNames);
+            using var message = CreateStopPacketCaptureRequest(resourceGroupName, gatewayName, vpnConnectionName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -343,7 +342,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string crossConnectionName, IDictionary<string, string> tags)
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string crossConnectionName, TagsObject crossConnectionParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -360,17 +359,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            TagsObject tagsObject = new TagsObject();
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    tagsObject.Tags.Add(value);
-                }
-            }
-            var model = tagsObject;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(crossConnectionParameters);
             request.Content = content;
             return message;
         }
@@ -378,10 +368,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates an express route cross connection tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="crossConnectionName"> The name of the cross connection. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="crossConnectionName"/> is null. </exception>
-        public async Task<Response<ExpressRouteCrossConnectionData>> UpdateTagsAsync(string resourceGroupName, string crossConnectionName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, or <paramref name="crossConnectionParameters"/> is null. </exception>
+        public async Task<Response<ExpressRouteCrossConnectionData>> UpdateTagsAsync(string resourceGroupName, string crossConnectionName, TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -391,8 +381,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(crossConnectionName));
             }
+            if (crossConnectionParameters == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionParameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, crossConnectionName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, crossConnectionName, crossConnectionParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -411,10 +405,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates an express route cross connection tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="crossConnectionName"> The name of the cross connection. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="crossConnectionParameters"> Parameters supplied to update express route cross connection tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="crossConnectionName"/> is null. </exception>
-        public Response<ExpressRouteCrossConnectionData> UpdateTags(string resourceGroupName, string crossConnectionName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="crossConnectionName"/>, or <paramref name="crossConnectionParameters"/> is null. </exception>
+        public Response<ExpressRouteCrossConnectionData> UpdateTags(string resourceGroupName, string crossConnectionName, TagsObject crossConnectionParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -424,8 +418,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(crossConnectionName));
             }
+            if (crossConnectionParameters == null)
+            {
+                throw new ArgumentNullException(nameof(crossConnectionParameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, crossConnectionName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, crossConnectionName, crossConnectionParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

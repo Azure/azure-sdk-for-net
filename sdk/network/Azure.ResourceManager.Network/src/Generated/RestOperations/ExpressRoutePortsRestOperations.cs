@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string expressRoutePortName, IDictionary<string, string> tags)
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string expressRoutePortName, TagsObject parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -311,17 +310,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            TagsObject tagsObject = new TagsObject();
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    tagsObject.Tags.Add(value);
-                }
-            }
-            var model = tagsObject;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -329,10 +319,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Update ExpressRoutePort tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update ExpressRoutePort resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRoutePortName"/> is null. </exception>
-        public async Task<Response<ExpressRoutePortData>> UpdateTagsAsync(string resourceGroupName, string expressRoutePortName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<ExpressRoutePortData>> UpdateTagsAsync(string resourceGroupName, string expressRoutePortName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -342,8 +332,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, expressRoutePortName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, expressRoutePortName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -362,10 +356,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Update ExpressRoutePort tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update ExpressRoutePort resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRoutePortName"/> is null. </exception>
-        public Response<ExpressRoutePortData> UpdateTags(string resourceGroupName, string expressRoutePortName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<ExpressRoutePortData> UpdateTags(string resourceGroupName, string expressRoutePortName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -375,8 +369,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, expressRoutePortName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, expressRoutePortName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -520,11 +518,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGenerateLOARequest(string resourceGroupName, string expressRoutePortName, string customerName)
+        internal HttpMessage CreateGenerateLOARequest(string resourceGroupName, string expressRoutePortName, GenerateExpressRoutePortsLOARequest request)
         {
             var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
+            var request0 = message.Request;
+            request0.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -535,23 +533,22 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(expressRoutePortName, true);
             uri.AppendPath("/generateLoa", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new GenerateExpressRoutePortsLOARequest(customerName);
+            request0.Uri = uri;
+            request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            content.JsonWriter.WriteObjectValue(request);
+            request0.Content = content;
             return message;
         }
 
         /// <summary> Generate a letter of authorization for the requested ExpressRoutePort resource. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
-        /// <param name="customerName"> The customer name. </param>
+        /// <param name="request"> Request parameters supplied to generate a letter of authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/>, or <paramref name="customerName"/> is null. </exception>
-        public async Task<Response<GenerateExpressRoutePortsLOAResult>> GenerateLOAAsync(string resourceGroupName, string expressRoutePortName, string customerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/>, or <paramref name="request"/> is null. </exception>
+        public async Task<Response<GenerateExpressRoutePortsLOAResult>> GenerateLOAAsync(string resourceGroupName, string expressRoutePortName, GenerateExpressRoutePortsLOARequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -561,12 +558,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
-            if (customerName == null)
+            if (request == null)
             {
-                throw new ArgumentNullException(nameof(customerName));
+                throw new ArgumentNullException(nameof(request));
             }
 
-            using var message = CreateGenerateLOARequest(resourceGroupName, expressRoutePortName, customerName);
+            using var message = CreateGenerateLOARequest(resourceGroupName, expressRoutePortName, request);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -585,10 +582,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Generate a letter of authorization for the requested ExpressRoutePort resource. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
-        /// <param name="customerName"> The customer name. </param>
+        /// <param name="request"> Request parameters supplied to generate a letter of authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/>, or <paramref name="customerName"/> is null. </exception>
-        public Response<GenerateExpressRoutePortsLOAResult> GenerateLOA(string resourceGroupName, string expressRoutePortName, string customerName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/>, or <paramref name="request"/> is null. </exception>
+        public Response<GenerateExpressRoutePortsLOAResult> GenerateLOA(string resourceGroupName, string expressRoutePortName, GenerateExpressRoutePortsLOARequest request, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -598,12 +595,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
-            if (customerName == null)
+            if (request == null)
             {
-                throw new ArgumentNullException(nameof(customerName));
+                throw new ArgumentNullException(nameof(request));
             }
 
-            using var message = CreateGenerateLOARequest(resourceGroupName, expressRoutePortName, customerName);
+            using var message = CreateGenerateLOARequest(resourceGroupName, expressRoutePortName, request);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

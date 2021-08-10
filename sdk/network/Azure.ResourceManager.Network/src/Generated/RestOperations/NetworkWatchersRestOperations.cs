@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -302,7 +301,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string networkWatcherName, IDictionary<string, string> tags)
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string networkWatcherName, TagsObject parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -319,17 +318,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            TagsObject tagsObject = new TagsObject();
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    tagsObject.Tags.Add(value);
-                }
-            }
-            var model = tagsObject;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -337,10 +327,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a network watcher tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update network watcher tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
-        public async Task<Response<NetworkWatcherData>> UpdateTagsAsync(string resourceGroupName, string networkWatcherName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<NetworkWatcherData>> UpdateTagsAsync(string resourceGroupName, string networkWatcherName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -350,8 +340,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(networkWatcherName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, networkWatcherName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -370,10 +364,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a network watcher tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update network watcher tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
-        public Response<NetworkWatcherData> UpdateTags(string resourceGroupName, string networkWatcherName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<NetworkWatcherData> UpdateTags(string resourceGroupName, string networkWatcherName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -383,8 +377,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(networkWatcherName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, networkWatcherName, tags);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -806,7 +804,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetVMSecurityRulesRequest(string resourceGroupName, string networkWatcherName, string targetResourceId)
+        internal HttpMessage CreateGetVMSecurityRulesRequest(string resourceGroupName, string networkWatcherName, SecurityGroupViewParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -824,9 +822,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new SecurityGroupViewParameters(targetResourceId);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -834,10 +831,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the configured and effective security group rules on the specified VM. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
-        /// <param name="targetResourceId"> ID of the target VM. </param>
+        /// <param name="parameters"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="targetResourceId"/> is null. </exception>
-        public async Task<Response> GetVMSecurityRulesAsync(string resourceGroupName, string networkWatcherName, string targetResourceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> GetVMSecurityRulesAsync(string resourceGroupName, string networkWatcherName, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -847,12 +844,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(networkWatcherName));
             }
-            if (targetResourceId == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(targetResourceId));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateGetVMSecurityRulesRequest(resourceGroupName, networkWatcherName, targetResourceId);
+            using var message = CreateGetVMSecurityRulesRequest(resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -867,10 +864,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the configured and effective security group rules on the specified VM. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
-        /// <param name="targetResourceId"> ID of the target VM. </param>
+        /// <param name="parameters"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="targetResourceId"/> is null. </exception>
-        public Response GetVMSecurityRules(string resourceGroupName, string networkWatcherName, string targetResourceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response GetVMSecurityRules(string resourceGroupName, string networkWatcherName, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -880,12 +877,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(networkWatcherName));
             }
-            if (targetResourceId == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(targetResourceId));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateGetVMSecurityRulesRequest(resourceGroupName, networkWatcherName, targetResourceId);
+            using var message = CreateGetVMSecurityRulesRequest(resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -987,7 +984,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetTroubleshootingResultRequest(string resourceGroupName, string networkWatcherName, string targetResourceId)
+        internal HttpMessage CreateGetTroubleshootingResultRequest(string resourceGroupName, string networkWatcherName, QueryTroubleshootingParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1005,9 +1002,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new QueryTroubleshootingParameters(targetResourceId);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -1015,10 +1011,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Get the last completed troubleshooting result on a specified resource. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkWatcherName"> The name of the network watcher resource. </param>
-        /// <param name="targetResourceId"> The target resource ID to query the troubleshooting result. </param>
+        /// <param name="parameters"> Parameters that define the resource to query the troubleshooting result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="targetResourceId"/> is null. </exception>
-        public async Task<Response> GetTroubleshootingResultAsync(string resourceGroupName, string networkWatcherName, string targetResourceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> GetTroubleshootingResultAsync(string resourceGroupName, string networkWatcherName, QueryTroubleshootingParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1028,12 +1024,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(networkWatcherName));
             }
-            if (targetResourceId == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(targetResourceId));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateGetTroubleshootingResultRequest(resourceGroupName, networkWatcherName, targetResourceId);
+            using var message = CreateGetTroubleshootingResultRequest(resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1048,10 +1044,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Get the last completed troubleshooting result on a specified resource. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkWatcherName"> The name of the network watcher resource. </param>
-        /// <param name="targetResourceId"> The target resource ID to query the troubleshooting result. </param>
+        /// <param name="parameters"> Parameters that define the resource to query the troubleshooting result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="targetResourceId"/> is null. </exception>
-        public Response GetTroubleshootingResult(string resourceGroupName, string networkWatcherName, string targetResourceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response GetTroubleshootingResult(string resourceGroupName, string networkWatcherName, QueryTroubleshootingParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1061,12 +1057,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(networkWatcherName));
             }
-            if (targetResourceId == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(targetResourceId));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateGetTroubleshootingResultRequest(resourceGroupName, networkWatcherName, targetResourceId);
+            using var message = CreateGetTroubleshootingResultRequest(resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1168,7 +1164,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetFlowLogStatusRequest(string resourceGroupName, string networkWatcherName, string targetResourceId)
+        internal HttpMessage CreateGetFlowLogStatusRequest(string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1186,9 +1182,8 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new FlowLogStatusParameters(targetResourceId);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -1196,10 +1191,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Queries status of flow log and traffic analytics (optional) on a specified resource. </summary>
         /// <param name="resourceGroupName"> The name of the network watcher resource group. </param>
         /// <param name="networkWatcherName"> The name of the network watcher resource. </param>
-        /// <param name="targetResourceId"> The target resource where getting the flow log and traffic analytics (optional) status. </param>
+        /// <param name="parameters"> Parameters that define a resource to query flow log and traffic analytics (optional) status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="targetResourceId"/> is null. </exception>
-        public async Task<Response> GetFlowLogStatusAsync(string resourceGroupName, string networkWatcherName, string targetResourceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response> GetFlowLogStatusAsync(string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1209,12 +1204,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(networkWatcherName));
             }
-            if (targetResourceId == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(targetResourceId));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateGetFlowLogStatusRequest(resourceGroupName, networkWatcherName, targetResourceId);
+            using var message = CreateGetFlowLogStatusRequest(resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1229,10 +1224,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Queries status of flow log and traffic analytics (optional) on a specified resource. </summary>
         /// <param name="resourceGroupName"> The name of the network watcher resource group. </param>
         /// <param name="networkWatcherName"> The name of the network watcher resource. </param>
-        /// <param name="targetResourceId"> The target resource where getting the flow log and traffic analytics (optional) status. </param>
+        /// <param name="parameters"> Parameters that define a resource to query flow log and traffic analytics (optional) status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="targetResourceId"/> is null. </exception>
-        public Response GetFlowLogStatus(string resourceGroupName, string networkWatcherName, string targetResourceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response GetFlowLogStatus(string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1242,12 +1237,12 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(networkWatcherName));
             }
-            if (targetResourceId == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(targetResourceId));
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateGetFlowLogStatusRequest(resourceGroupName, networkWatcherName, targetResourceId);
+            using var message = CreateGetFlowLogStatusRequest(resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

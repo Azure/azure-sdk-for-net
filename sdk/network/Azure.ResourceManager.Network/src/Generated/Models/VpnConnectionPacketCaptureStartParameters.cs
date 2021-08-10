@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Vpn Connection packet capture parameters supplied to start packet capture on gateway connection. </summary>
-    internal partial class VpnConnectionPacketCaptureStartParameters
+    public partial class VpnConnectionPacketCaptureStartParameters
     {
         /// <summary> Initializes a new instance of VpnConnectionPacketCaptureStartParameters. </summary>
         public VpnConnectionPacketCaptureStartParameters()

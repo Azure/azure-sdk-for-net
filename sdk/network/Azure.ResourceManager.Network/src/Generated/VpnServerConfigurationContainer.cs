@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnServerConfigurationParameters"> Parameters supplied to create or update VpnServerConfiguration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationName"/> or <paramref name="vpnServerConfigurationParameters"/> is null. </exception>
-        public virtual VpnServerConfigurationsCreateOrUpdateOperation StartCreateOrUpdate(string vpnServerConfigurationName, VpnServerConfigurationData vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
+        public virtual VpnServerConfigurationCreateOrUpdateOperation StartCreateOrUpdate(string vpnServerConfigurationName, VpnServerConfigurationData vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
         {
             if (vpnServerConfigurationName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters, cancellationToken);
-                return new VpnServerConfigurationsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters).Request, response);
+                return new VpnServerConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnServerConfigurationParameters"> Parameters supplied to create or update VpnServerConfiguration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationName"/> or <paramref name="vpnServerConfigurationParameters"/> is null. </exception>
-        public async virtual Task<VpnServerConfigurationsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string vpnServerConfigurationName, VpnServerConfigurationData vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VpnServerConfigurationCreateOrUpdateOperation> StartCreateOrUpdateAsync(string vpnServerConfigurationName, VpnServerConfigurationData vpnServerConfigurationParameters, CancellationToken cancellationToken = default)
         {
             if (vpnServerConfigurationName == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters, cancellationToken).ConfigureAwait(false);
-                return new VpnServerConfigurationsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters).Request, response);
+                return new VpnServerConfigurationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -398,9 +398,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnServerConfigurationContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("VpnServerConfigurationContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -421,9 +421,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VpnServerConfigurationContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("VpnServerConfigurationContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

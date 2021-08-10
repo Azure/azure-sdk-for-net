@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified connection monitor. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ConnectionMonitorsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ConnectionMonitorDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ConnectionMonitorsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new ConnectionMonitorDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified connection monitor. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ConnectionMonitorsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual ConnectionMonitorDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ConnectionMonitorsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new ConnectionMonitorDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -171,15 +171,21 @@ namespace Azure.ResourceManager.Network
             }
         }
         /// <summary> Update tags of the specified connection monitor. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update connection monitor tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConnectionMonitor>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<ConnectionMonitor>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -190,15 +196,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Update tags of the specified connection monitor. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to update connection monitor tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConnectionMonitor> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<ConnectionMonitor> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorOperations.UpdateTags");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tags, cancellationToken);
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -246,14 +258,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Stops the specified connection monitor. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ConnectionMonitorsStopOperation> StartStopAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ConnectionMonitorStopOperation> StartStopAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorOperations.StartStop");
             scope.Start();
             try
             {
                 var response = await _restClient.StopAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ConnectionMonitorsStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new ConnectionMonitorStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -264,14 +276,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Stops the specified connection monitor. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ConnectionMonitorsStopOperation StartStop(CancellationToken cancellationToken = default)
+        public virtual ConnectionMonitorStopOperation StartStop(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorOperations.StartStop");
             scope.Start();
             try
             {
                 var response = _restClient.Stop(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ConnectionMonitorsStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new ConnectionMonitorStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -318,14 +330,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Starts the specified connection monitor. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ConnectionMonitorsStartOperation> StartStartAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ConnectionMonitorStartOperation> StartStartAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorOperations.StartStart");
             scope.Start();
             try
             {
                 var response = await _restClient.StartAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ConnectionMonitorsStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new ConnectionMonitorStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -336,14 +348,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Starts the specified connection monitor. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ConnectionMonitorsStartOperation StartStart(CancellationToken cancellationToken = default)
+        public virtual ConnectionMonitorStartOperation StartStart(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorOperations.StartStart");
             scope.Start();
             try
             {
                 var response = _restClient.Start(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ConnectionMonitorsStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new ConnectionMonitorStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -390,14 +402,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Query a snapshot of the most recent connection states. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ConnectionMonitorsQueryOperation> StartQueryAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ConnectionMonitorQueryOperation> StartQueryAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorOperations.StartQuery");
             scope.Start();
             try
             {
                 var response = await _restClient.QueryAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ConnectionMonitorsQueryOperation(_clientDiagnostics, Pipeline, _restClient.CreateQueryRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new ConnectionMonitorQueryOperation(_clientDiagnostics, Pipeline, _restClient.CreateQueryRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -408,14 +420,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Query a snapshot of the most recent connection states. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ConnectionMonitorsQueryOperation StartQuery(CancellationToken cancellationToken = default)
+        public virtual ConnectionMonitorQueryOperation StartQuery(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorOperations.StartQuery");
             scope.Start();
             try
             {
                 var response = _restClient.Query(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ConnectionMonitorsQueryOperation(_clientDiagnostics, Pipeline, _restClient.CreateQueryRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new ConnectionMonitorQueryOperation(_clientDiagnostics, Pipeline, _restClient.CreateQueryRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {

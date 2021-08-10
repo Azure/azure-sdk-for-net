@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified ipGroups. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<IpGroupsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IpGroupDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("IpGroupOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new IpGroupsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new IpGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified ipGroups. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual IpGroupsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual IpGroupDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("IpGroupOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new IpGroupsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                return new IpGroupDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -173,15 +173,21 @@ namespace Azure.ResourceManager.Network
             }
         }
         /// <summary> Updates tags of an IpGroups resource. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to the update ipGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IpGroup>> UpdateGroupsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<IpGroup>> UpdateGroupsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("IpGroupOperations.UpdateGroups");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateGroupsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateGroupsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,15 +198,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Updates tags of an IpGroups resource. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="parameters"> Parameters supplied to the update ipGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IpGroup> UpdateGroups(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<IpGroup> UpdateGroups(TagsObject parameters, CancellationToken cancellationToken = default)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("IpGroupOperations.UpdateGroups");
             scope.Start();
             try
             {
-                var response = _restClient.UpdateGroups(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                var response = _restClient.UpdateGroups(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 return Response.FromValue(new IpGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

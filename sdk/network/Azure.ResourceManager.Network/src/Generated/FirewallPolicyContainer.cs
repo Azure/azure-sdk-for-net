@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update Firewall Policy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual FirewallPoliciesCreateOrUpdateOperation StartCreateOrUpdate(string firewallPolicyName, FirewallPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual FirewallPolicyCreateOrUpdateOperation StartCreateOrUpdate(string firewallPolicyName, FirewallPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (firewallPolicyName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, firewallPolicyName, parameters, cancellationToken);
-                return new FirewallPoliciesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, firewallPolicyName, parameters).Request, response);
+                return new FirewallPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, firewallPolicyName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update Firewall Policy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<FirewallPoliciesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string firewallPolicyName, FirewallPolicyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<FirewallPolicyCreateOrUpdateOperation> StartCreateOrUpdateAsync(string firewallPolicyName, FirewallPolicyData parameters, CancellationToken cancellationToken = default)
         {
             if (firewallPolicyName == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, firewallPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                return new FirewallPoliciesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, firewallPolicyName, parameters).Request, response);
+                return new FirewallPolicyCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, firewallPolicyName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -404,9 +404,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -427,9 +427,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
