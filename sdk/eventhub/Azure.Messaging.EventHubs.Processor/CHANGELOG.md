@@ -1,6 +1,6 @@
 # Release History
 
-## 5.6.0-beta.1 (Unreleased)
+## 5.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,17 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 5.6.0 (2021-08-10)
+
+### Bugs Fixed
+
 - Fixed an issue where partition processing would ignore cancellation when the processor was shutting down or partition ownership changed and continue dispatching events to the handler until the entire batch was complete.  Cancellation will now be properly respected.
 
 ### Other Changes
+
+- Added the ability to adjust the connection idle timeout using the `EventHubConnectionOptions` available within the options for each client type.
 
 ## 5.5.0 (2021-07-07)
 

@@ -1222,7 +1222,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Releases a key.
+        /// Releases the latest version of a key.
         /// </summary>
         /// <param name="name">The name of the key to release.</param>
         /// <param name="target">The attestation assertion for the target of the key release.</param>
@@ -1279,7 +1279,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Releases a key.
+        /// Releases the latest version of a key.
         /// </summary>
         /// <param name="name">The name of the key to release.</param>
         /// <param name="target">The attestation assertion for the target of the key release.</param>
