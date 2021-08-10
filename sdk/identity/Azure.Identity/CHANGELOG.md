@@ -10,6 +10,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 ### Features Added
 
+- Added `AzureApplicationCredential`
 - Added `IsPIILoggingEnabled` property to `TokenCredentialOptions`, which controls whether MSAL PII logging is enabled, and other sensitive credential related logging content.
 
 ### Breaking Changes
