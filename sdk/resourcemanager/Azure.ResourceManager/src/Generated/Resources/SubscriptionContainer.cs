@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public class SubscriptionContainer : ArmContainer
     {
-        private ClientDiagnostics _clientDiagnostics;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class for mocking.
@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.Resources
         internal SubscriptionContainer(Tenant parent)
             : base(parent)
         {
-            RestClient = new SubscriptionsRestOperations(Diagnostics, Pipeline, BaseUri);
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            RestClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
         }
 
         /// <summary>
@@ -51,8 +52,6 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         private SubscriptionsRestOperations RestClient;
 
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
-
         /// <summary>
         /// Lists all subscriptions in the current container.
         /// </summary>
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<Subscription> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SubscriptionContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Subscription> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SubscriptionContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<Subscription>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SubscriptionContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Subscription>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionContainer.GetAll");
+                using var scope = _clientDiagnostics.CreateScope("SubscriptionContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -146,13 +145,13 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> subscriptionGuid cannot be null or a whitespace. </exception>
         public Response<Subscription> Get(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("SubscriptionContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionContainer.Get");
             scope.Start();
             try
             {
                 var response = RestClient.Get(subscriptionGuid, cancellationToken);
                 if (response.Value == null)
-                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
 
                 return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
@@ -172,13 +171,13 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> subscriptionGuid cannot be null or a whitespace. </exception>
         public virtual async Task<Response<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("SubscriptionContainer.Get");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionContainer.Get");
             scope.Start();
             try
             {
                 var response = await RestClient.GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
                 return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<Subscription> GetIfExists(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("SubscriptionContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionContainer.GetIfExists");
             scope.Start();
 
             try
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<Subscription>> GetIfExistsAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("SubscriptionContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionContainer.GetIfExists");
             scope.Start();
 
             try
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<bool> CheckIfExists(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("SubscriptionContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionContainer.CheckIfExists");
             scope.Start();
 
             try
@@ -274,7 +273,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<bool>> CheckIfExistsAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("SubscriptionContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("SubscriptionContainer.CheckIfExists");
             scope.Start();
 
             try

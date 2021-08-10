@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.Tests
             StopSessionRecording();
         }
 
-        [TestCase]
-        [Ignore("4622 needs complete with a Mocked example to fill in this test")]
-        public void CreateResourceFromId()
+        [RecordedTest]
+        [SyncOnly]
+        public void ConstructWithInvalidSubscription()
         {
-            //TODO: 4622 needs complete with a Mocked example to fill in this test
-            //public ArmResponse<TOperations> CreateResource<TContainer, TOperations, TResource>(string subscription, string resourceGroup, string name, TResource model, azure_proto_core.Location location = default)
+            var ex = Assert.Throws<RequestFailedException>(() => new ArmClient(Guid.NewGuid().ToString(), TestEnvironment.Credential));
+            Assert.AreEqual(404, ex.Status);
         }
 
-        [TestCase]
+        [RecordedTest]
         public void TestArmClientParamCheck()
         {
             Assert.Throws<ArgumentNullException>(() => { new ArmClient(null, null); });
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Tests
             Assert.Throws<ArgumentNullException>(() => { new ArmClient(defaultSubscriptionId: null, null, null); });
         }
 
-        [TestCase]
+        [RecordedTest]
         public void GetGenericOperationsTests()
         {
             var ids = new List<string>()
@@ -72,21 +72,20 @@ namespace Azure.ResourceManager.Tests
             }
         }
 
-        [TestCase]
+        [RecordedTest]
         public void GetGenericResourcesOperationsTests()
         {
             string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/providers/Microsoft.Compute/virtualMachines/myVm";
             Assert.AreEqual(id, Client.GetGenericResource(new ResourceIdentifier(id)).Id.StringValue);
         }
 
-        [TestCase]
+        [RecordedTest]
         public void GetGenericResourceOperationsSingleIDTests()
         {
             string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
             Assert.AreEqual(id, Client.GetGenericResource(id).Id.StringValue);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task GetGenericResourceOperationsWithSingleValidResource()
         {
@@ -96,7 +95,6 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(200, genericResource.GetRawResponse().Status);
         }
 
-        [TestCase]
         [RecordedTest]
         public void GetGenericResourceOperationsWithSingleInvalidResource()
         {
@@ -106,7 +104,6 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task GetGenericOperationsWithListOfValidResource()
         {
@@ -124,7 +121,6 @@ namespace Azure.ResourceManager.Tests
             }
         }
 
-        [TestCase]
         [RecordedTest]
         public void GetGenericOperationsWithListOfInvalidResource()
         {
@@ -142,21 +138,21 @@ namespace Azure.ResourceManager.Tests
             }
         }
 
-        [TestCase]
+        [RecordedTest]
         public void GetGenericResourceOperationWithNullSetOfIds()
         {
             string[] x = null;
             Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResources(x); });
         }
 
-        [TestCase]
+        [RecordedTest]
         public void GetGenericResourceOperationWithNullId()
         {
             string x = null;
             Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResource(x); });
         }
 
-        [TestCase]
+        [RecordedTest]
         public void GetGenericResourceOperationEmptyTest()
         {
             var ids = new List<string>();
