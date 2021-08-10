@@ -10,6 +10,8 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 ### Features Added
 
+- Added `IsPIILoggingEnabled` property to `TokenCredentialOptions`, which controls whether MSAL PII logging is enabled, and other sensitive credential related logging content.
+
 ### Breaking Changes
 
 - Renamed `AZURE_POD_IDENTITY_TOKEN_URL` to `AZURE_POD_IDENTITY_AUTHORITY_HOST`. The value should now be a host, for example "http://169.254.169.254" (the default).
