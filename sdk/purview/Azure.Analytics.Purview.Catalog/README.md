@@ -17,7 +17,7 @@ Azure Purview Catalog is a fully managed cloud service whose users can discover 
 Install the Azure Purview Catalog client library for .NET with [NuGet][client_nuget_package]:
 
 ```
-dotnet add package Azure.Analysis.Purview.Catalog --prerelease
+dotnet add package Azure.Analytics.Purview.Catalog --prerelease
 ```
 
 ### Prerequisites
