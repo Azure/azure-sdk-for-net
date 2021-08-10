@@ -117,10 +117,14 @@ function DeployStressPackage(
     }
 
     Run helm dependency update $pkg.Directory
+    if ($LASTEXITCODE) { return }
+
+    if (Test-Path "$($pkg.Directory)/test-resources.bicep") {
+        Run az bicep build -f "$($pkg.Directory)/test-resources.bicep"
+        if ($LASTEXITCODE) { return }
+    }
 
     if ($pushImages) {
-        if ($LASTEXITCODE) { return $LASTEXITCODE }
-
         $dockerFiles = Get-ChildItem "$($pkg.Directory)/Dockerfile*"
         foreach ($dockerFile in $dockerFiles) {
             # Infer docker image name from parent directory name, if file is named `Dockerfile`
@@ -132,13 +136,13 @@ function DeployStressPackage(
             $imageTag = "${registry}.azurecr.io/$($repository.ToLower())/$($imageName):$deployId"
             Write-Host "Building and pushing stress test docker image '$imageTag'"
             Run docker build -t $imageTag -f $dockerFile.FullName $dockerFile.DirectoryName
-            if ($LASTEXITCODE) { return $LASTEXITCODE }
+            if ($LASTEXITCODE) { return }
             Run docker push $imageTag
             if ($LASTEXITCODE) {
                 if ($PSCmdlet.ParameterSetName -ne 'DoLogin') {
                     Write-Warning "If docker push is failing due to authentication issues, try calling this script with '-Login'"
                 }
-                return $LASTEXITCODE
+                return
             }
         }
     }
@@ -158,7 +162,7 @@ function DeployStressPackage(
         # can be the result of cancelled `upgrade` operations (e.g. ctrl-c).
         # See https://github.com/helm/helm/issues/4558
         Write-Warning "The issue may be fixable by first running 'helm rollback -n $($pkg.Namespace) $($pkg.ReleaseName)'"
-        return $LASTEXITCODE
+        return
     }
     
     # Helm 3 stores release information in kubernetes secrets. The only way to add extra labels around
