@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
 using NUnit.Framework;
 
@@ -51,6 +52,23 @@ namespace Azure.ResourceManager.Compute.Tests
             Disk disk2 = await disk1.GetAsync();
 
             DiskHelper.AssertDisk(disk1.Data, disk2.Data);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Update()
+        {
+            var diskName = Recording.GenerateAssetName("testDisk-");
+            var disk = await CreateDiskAsync(diskName);
+
+            var newDiskSize = 20;
+            var update = new DiskUpdate()
+            {
+                DiskSizeGB = newDiskSize
+            };
+            Disk updatedDisk = await disk.UpdateAsync(update);
+
+            Assert.AreEqual(newDiskSize, updatedDisk.Data.DiskSizeGB);
         }
     }
 }

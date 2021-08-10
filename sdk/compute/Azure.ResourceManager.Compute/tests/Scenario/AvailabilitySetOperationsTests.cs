@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
 using NUnit.Framework;
 
@@ -51,6 +52,22 @@ namespace Azure.ResourceManager.Compute.Tests
             AvailabilitySet set2 = await set1.GetAsync();
 
             AvailabilitySetHelper.AssertAvailabilitySet(set1.Data, set2.Data);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Update()
+        {
+            var setName = Recording.GenerateAssetName("testAS-");
+            var set = await CreateAvailabilitySetAsync(setName);
+            var updatedPlatformFaultDomainCount = 3;
+            var update = new AvailabilitySetUpdate()
+            {
+                PlatformFaultDomainCount = updatedPlatformFaultDomainCount
+            };
+            AvailabilitySet updatedSet = await set.UpdateAsync(update);
+
+            Assert.AreEqual(updatedPlatformFaultDomainCount, updatedSet.Data.PlatformFaultDomainCount);
         }
     }
 }
