@@ -23,16 +23,16 @@ namespace Azure.Identity
         private readonly ChainedTokenCredential _credential;
 
         /// <summary>
-        /// Constructor for instrumenting in tests
+        /// Initializes an instance of the <see cref="AzureApplicationCredential"/>.
         /// </summary>
-        protected AzureApplicationCredential()
+        public AzureApplicationCredential() : this(new AzureApplicationCredentialOptions(), null, null)
         { }
 
         /// <summary>
         /// Initializes an instance of the <see cref="AzureApplicationCredential"/>.
         /// </summary>
         /// <param name="options">The <see cref="TokenCredentialOptions"/> to configure this credential.</param>
-        public AzureApplicationCredential(AzureApplicationCredentialOptions options = null) : this(options ?? new AzureApplicationCredentialOptions(), null, null)
+        public AzureApplicationCredential(AzureApplicationCredentialOptions options) : this(options ?? new AzureApplicationCredentialOptions(), null, null)
         { }
 
         internal AzureApplicationCredential(AzureApplicationCredentialOptions options, EnvironmentCredential environmentCredential = null, ManagedIdentityCredential managedIdentityCredential = null)

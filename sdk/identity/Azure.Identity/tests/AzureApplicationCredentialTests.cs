@@ -36,8 +36,8 @@ namespace Azure.Identity.Tests
         [Test]
         public void CtorValidatesArgs()
         {
-            Assert.Throws<ArgumentNullException>(() => new AzureApplicationCredential(null));
-            Assert.Throws<ArgumentNullException>(() => new AzureApplicationCredential(new AzureApplicationCredentialOptions()));
+            new AzureApplicationCredential(null);
+            new AzureApplicationCredential(new AzureApplicationCredentialOptions());
             new AzureApplicationCredential(new AzureApplicationCredentialOptions { ManagedIdentityClientId = "clientId" });
         }
 
@@ -127,7 +127,8 @@ namespace Azure.Identity.Tests
                     mockEnvCred
                         .Verify(m => m.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()));
                 }
-            } else if (MsiAvailable)
+            }
+            else if (MsiAvailable)
             {
                 if (IsAsync)
                 {

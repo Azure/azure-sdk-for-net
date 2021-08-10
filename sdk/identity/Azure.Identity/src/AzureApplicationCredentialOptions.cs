@@ -10,7 +10,6 @@ namespace Azure.Identity
     /// </summary>
     public class AzureApplicationCredentialOptions : TokenCredentialOptions
     {
-
         /// <summary>
         /// Specifies the client id of the azure ManagedIdentity in the case of user assigned identity.
         /// </summary>
