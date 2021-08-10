@@ -1,14 +1,10 @@
 # Release History
 
-## 5.6.0-beta.1 (Unreleased)
+## 5.6.0 (2021-08-10)
 
 ### Features Added
 
 - Each Event Hubs client type now offers an option to set an Identifier. The identifier is informational and is associated with the AMQP links used, allowing the service to provide additional context in error messages and the SDK logs to provide an additional point of correlation.
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 
