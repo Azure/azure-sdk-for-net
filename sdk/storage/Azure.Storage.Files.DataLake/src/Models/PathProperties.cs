@@ -178,7 +178,8 @@ namespace Azure.Storage.Files.DataLake.Models
 
         /// <summary>
         /// Returns the name of the encryption scope used to encrypt the path contents and application metadata.
-        /// Note that the absence of this header implies use of the default account encryption scope.
+        /// Note that the absence of this header implies use of the default account encryption scope, or default
+        /// file system encryption scope, if it has been set.
         /// </summary>
         public string EncryptionScope { get; internal set; }
 
