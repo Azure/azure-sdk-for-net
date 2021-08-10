@@ -1,5 +1,15 @@
 # Release History
 
+## 12.2.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.2.0-beta.1 (2021-08-10)
 
 Thank you to our developer community members who helped to make Azure Tables better with their contributions to this release:
