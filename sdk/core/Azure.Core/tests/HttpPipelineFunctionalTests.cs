@@ -656,6 +656,33 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task HandlesRelativeRedirects()
+        {
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    if (context.Request.Path.ToString().Contains("/redirected"))
+                    {
+                        context.Response.StatusCode = 200;
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 300;
+                        context.Response.Headers.Add("Location", "/redirected");
+                    }
+                    return Task.CompletedTask;
+                });
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            using Response response = await ExecuteRequest(request, httpPipeline);
+            Assert.AreEqual(response.Status, 200);
+        }
+
+        [Test]
         public async Task PerRetryPolicyObservesRedirect()
         {
             List<string> uris = new List<string>();
