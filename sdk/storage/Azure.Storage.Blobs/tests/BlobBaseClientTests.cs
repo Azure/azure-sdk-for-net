@@ -3145,7 +3145,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(sourceBlob.Uri);
 
             // Assert
-            //Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
         [RecordedTest]

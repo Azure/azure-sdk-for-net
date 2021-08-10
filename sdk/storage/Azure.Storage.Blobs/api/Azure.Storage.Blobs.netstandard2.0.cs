@@ -419,6 +419,7 @@ namespace Azure.Storage.Blobs.Models
         internal BlobCopyInfo() { }
         public string CopyId { get { throw null; } }
         public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { get { throw null; } }
+        public string EncryptionScope { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public string VersionId { get { throw null; } }
