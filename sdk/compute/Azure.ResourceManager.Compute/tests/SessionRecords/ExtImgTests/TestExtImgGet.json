@@ -18,7 +18,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "472",
+        "Content-Length": "404",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:36 GMT",
         "Expires": "-1",
@@ -36,21 +36,19 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073537Z:394dc187-20fb-490e-bb93-fabfea8a3e15",
         "x-ms-served-by": "03e6c753-1db2-4ec7-a057-8ff6011fb55c_132448694658279652"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022operatingSystem\u0022: \u0022Windows\u0022,\r\n",
-        "    \u0022computeRole\u0022: \u0022IaaS\u0022,\r\n",
-        "    \u0022vmScaleSetEnabled\u0022: false,\r\n",
-        "    \u0022supportsMultipleExtensions\u0022: false,\r\n",
-        "    \u0022rollbackSupported\u0022: false,\r\n",
-        "    \u0022isJsonExtension\u0022: true\r\n",
-        "  },\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022name\u0022: \u00222.4.5\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.4.5\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "properties": {
+          "operatingSystem": "Windows",
+          "computeRole": "IaaS",
+          "vmScaleSetEnabled": false,
+          "supportsMultipleExtensions": false,
+          "rollbackSupported": false,
+          "isJsonExtension": true
+        },
+        "location": "westus",
+        "name": "2.4.5",
+        "id": "/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.4.5"
+      }
     }
   ],
   "Variables": {

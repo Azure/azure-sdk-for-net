@@ -18,7 +18,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "321",
+        "Content-Length": "290",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:05 GMT",
         "Expires": "-1",
@@ -36,15 +36,7 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T214905Z:9acc71fb-3a84-44de-bbdb-6ffbe3e4c6cc",
         "x-ms-served-by": "9fc414ea-410e-4600-9f7c-71bc36416f3f_132434320157981700"
       },
-      "ResponseBody": [
-        "[\r\n",
-        "  {\r\n",
-        "    \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "    \u0022name\u0022: \u00224.127.20180315\u0022,\r\n",
-        "    \u0022id\u0022: \u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.127.20180315\u0022\r\n",
-        "  }\r\n",
-        "]"
-      ]
+      "ResponseBody": "[{\u0022location\u0022:\u0022southeastasia\u0022,\u0022name\u0022:\u00224.127.20180315\u0022,\u0022id\u0022:\u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.127.20180315\u0022}]"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/crptestar24821?api-version=2019-10-01",
@@ -848,7 +840,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "295",
+        "Content-Length": "264",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:26 GMT",
         "Expires": "-1",
@@ -866,15 +858,7 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T214926Z:9bedf484-cfc6-47b1-b5b7-f46122b06587",
         "x-ms-served-by": "eca4a0e8-c3b6-402b-8581-3e72765d1d9f_132159286208513016"
       },
-      "ResponseBody": [
-        "[\r\n",
-        "  {\r\n",
-        "    \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "    \u0022name\u0022: \u00221.5.0\u0022,\r\n",
-        "    \u0022id\u0022: \u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/datastax/ArtifactTypes/VMImage/Offers/datastax-enterprise/Skus/datastaxenterprise/Versions/1.5.0\u0022\r\n",
-        "  }\r\n",
-        "]"
-      ]
+      "ResponseBody": "[{\u0022location\u0022:\u0022southeastasia\u0022,\u0022name\u0022:\u00221.5.0\u0022,\u0022id\u0022:\u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/datastax/ArtifactTypes/VMImage/Offers/datastax-enterprise/Skus/datastaxenterprise/Versions/1.5.0\u0022}]"
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/southeastasia/publishers/datastax/artifacttypes/vmimage/offers/datastax-enterprise/skus/datastaxenterprise/versions/1.5.0?api-version=2019-12-01",
@@ -894,7 +878,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "796",
+        "Content-Length": "625",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:26 GMT",
         "Expires": "-1",
@@ -912,34 +896,32 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T214926Z:575deb64-98c8-49b8-9476-b95e31d0d0d0",
         "x-ms-served-by": "eca4a0e8-c3b6-402b-8581-3e72765d1d9f_132159286208513016"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022hyperVGeneration\u0022: \u0022V1\u0022,\r\n",
-        "    \u0022replicaType\u0022: \u0022Unmanaged\u0022,\r\n",
-        "    \u0022disallowed\u0022: {\r\n",
-        "      \u0022vmDiskType\u0022: \u0022None\u0022\r\n",
-        "    },\r\n",
-        "    \u0022automaticOSUpgradeProperties\u0022: {\r\n",
-        "      \u0022automaticOSUpgradeSupported\u0022: false\r\n",
-        "    },\r\n",
-        "    \u0022plan\u0022: {\r\n",
-        "      \u0022publisher\u0022: \u0022datastax\u0022,\r\n",
-        "      \u0022name\u0022: \u0022datastaxenterprise\u0022,\r\n",
-        "      \u0022product\u0022: \u0022datastax-enterprise\u0022\r\n",
-        "    },\r\n",
-        "    \u0022osDiskImage\u0022: {\r\n",
-        "      \u0022operatingSystem\u0022: \u0022Linux\u0022,\r\n",
-        "      \u0022sizeInGb\u0022: 30,\r\n",
-        "      \u0022sizeInBytes\u0022: 32212255232\r\n",
-        "    },\r\n",
-        "    \u0022dataDiskImages\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022name\u0022: \u00221.5.0\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/datastax/ArtifactTypes/VMImage/Offers/datastax-enterprise/Skus/datastaxenterprise/Versions/1.5.0\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "properties": {
+          "hyperVGeneration": "V1",
+          "replicaType": "Unmanaged",
+          "disallowed": {
+            "vmDiskType": "None"
+          },
+          "automaticOSUpgradeProperties": {
+            "automaticOSUpgradeSupported": false
+          },
+          "plan": {
+            "publisher": "datastax",
+            "name": "datastaxenterprise",
+            "product": "datastax-enterprise"
+          },
+          "osDiskImage": {
+            "operatingSystem": "Linux",
+            "sizeInGb": 30,
+            "sizeInBytes": 32212255232
+          },
+          "dataDiskImages": []
+        },
+        "location": "southeastasia",
+        "name": "1.5.0",
+        "id": "/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/datastax/ArtifactTypes/VMImage/Offers/datastax-enterprise/Skus/datastaxenterprise/Versions/1.5.0"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/crptestar24821?api-version=2019-10-01",
@@ -1018,7 +1000,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/southeastasia/operations/18bce67e-cbe5-408f-b6cd-1f00c7438394?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "768",
+        "Content-Length": "627",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:30 GMT",
         "Expires": "-1",
@@ -1037,33 +1019,31 @@
         "x-ms-request-id": "18bce67e-cbe5-408f-b6cd-1f00c7438394",
         "x-ms-routing-request-id": "WESTUS2:20201006T214930Z:470ad0f3-adb1-4437-b3ee-90a932e1ee31"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022pip850\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/publicIPAddresses/pip850\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00227172b12f-0a04-4bb5-b630-c8b4bc818d18\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022171a77c5-34cc-4ae6-adaf-0266de11280e\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022dn2466\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022dn2466.southeastasia.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "pip850",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/publicIPAddresses/pip850",
+        "etag": "W/\u00227172b12f-0a04-4bb5-b630-c8b4bc818d18\u0022",
+        "location": "southeastasia",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "171a77c5-34cc-4ae6-adaf-0266de11280e",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "dn2466",
+            "fqdn": "dn2466.southeastasia.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/southeastasia/operations/18bce67e-cbe5-408f-b6cd-1f00c7438394?api-version=2020-04-01",
@@ -1081,7 +1061,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30",
+        "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:30 GMT",
         "Expires": "-1",
@@ -1100,11 +1080,9 @@
         "x-ms-request-id": "be83fbbd-13c6-4d2a-8951-24eec791a494",
         "x-ms-routing-request-id": "WESTUS2:20201006T214931Z:e3541cdd-dc3d-4fff-b167-abfbf2992049"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "InProgress"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/southeastasia/operations/18bce67e-cbe5-408f-b6cd-1f00c7438394?api-version=2020-04-01",
@@ -1122,7 +1100,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:31 GMT",
         "Expires": "-1",
@@ -1140,11 +1118,9 @@
         "x-ms-request-id": "189a87c6-181b-433a-bc3b-0ae24fc95b7b",
         "x-ms-routing-request-id": "WESTUS2:20201006T214932Z:4578ba69-2842-4b40-a7b2-1da35059d749"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/publicIPAddresses/pip850?api-version=2020-04-01",
@@ -1162,7 +1138,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "769",
+        "Content-Length": "628",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:32 GMT",
         "ETag": "W/\u002292034c1c-ca4a-4492-beeb-8212b84951b7\u0022",
@@ -1181,33 +1157,31 @@
         "x-ms-request-id": "d467b96f-3b62-4ca2-88ad-a79202bb543d",
         "x-ms-routing-request-id": "WESTUS2:20201006T214932Z:4065ff1b-7027-4936-a534-eec226be295b"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022pip850\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/publicIPAddresses/pip850\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002292034c1c-ca4a-4492-beeb-8212b84951b7\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022171a77c5-34cc-4ae6-adaf-0266de11280e\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022dn2466\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022dn2466.southeastasia.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "pip850",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/publicIPAddresses/pip850",
+        "etag": "W/\u002292034c1c-ca4a-4492-beeb-8212b84951b7\u0022",
+        "location": "southeastasia",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "171a77c5-34cc-4ae6-adaf-0266de11280e",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "dn2466",
+            "fqdn": "dn2466.southeastasia.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/publicIPAddresses/pip850?api-version=2020-04-01",
@@ -1227,7 +1201,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "769",
+        "Content-Length": "628",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:32 GMT",
         "ETag": "W/\u002292034c1c-ca4a-4492-beeb-8212b84951b7\u0022",
@@ -1246,33 +1220,31 @@
         "x-ms-request-id": "8fd6ab9d-f43e-47b0-a18a-407b33ce3b2e",
         "x-ms-routing-request-id": "WESTUS2:20201006T214932Z:526a8021-2fd3-4762-9504-bf76cdd5d91c"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022pip850\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/publicIPAddresses/pip850\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002292034c1c-ca4a-4492-beeb-8212b84951b7\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022171a77c5-34cc-4ae6-adaf-0266de11280e\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022dn2466\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022dn2466.southeastasia.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "pip850",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/publicIPAddresses/pip850",
+        "etag": "W/\u002292034c1c-ca4a-4492-beeb-8212b84951b7\u0022",
+        "location": "southeastasia",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "171a77c5-34cc-4ae6-adaf-0266de11280e",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "dn2466",
+            "fqdn": "dn2466.southeastasia.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864?api-version=2020-04-01",
@@ -1319,7 +1291,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/southeastasia/operations/33f69821-cd0e-4964-b3ae-855485d8a634?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "1383",
+        "Content-Length": "1050",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:35 GMT",
         "Expires": "-1",
@@ -1338,49 +1310,47 @@
         "x-ms-request-id": "33f69821-cd0e-4964-b3ae-855485d8a634",
         "x-ms-routing-request-id": "WESTUS2:20201006T214935Z:316de5c7-5281-4d91-a134-333076bcf9e1"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022vn2864\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022004aecae-f609-4775-92c9-a9e3a7f45091\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022614e3fc9-b459-41f4-bd19-1fbc6b2b574c\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022dhcpOptions\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [\r\n",
-        "        \u002210.1.1.1\u0022,\r\n",
-        "        \u002210.1.2.4\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022subnets\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022sn4988\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022004aecae-f609-4775-92c9-a9e3a7f45091\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: [],\r\n",
-        "    \u0022enableDdosProtection\u0022: false,\r\n",
-        "    \u0022enableVmProtection\u0022: false\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "vn2864",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864",
+        "etag": "W/\u0022004aecae-f609-4775-92c9-a9e3a7f45091\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "southeastasia",
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "614e3fc9-b459-41f4-bd19-1fbc6b2b574c",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "dhcpOptions": {
+            "dnsServers": [
+              "10.1.1.1",
+              "10.1.2.4"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "sn4988",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988",
+              "etag": "W/\u0022004aecae-f609-4775-92c9-a9e3a7f45091\u0022",
+              "properties": {
+                "provisioningState": "Updating",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false,
+          "enableVmProtection": false
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/southeastasia/operations/33f69821-cd0e-4964-b3ae-855485d8a634?api-version=2020-04-01",
@@ -1398,7 +1368,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30",
+        "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:35 GMT",
         "Expires": "-1",
@@ -1417,11 +1387,9 @@
         "x-ms-request-id": "17474b4d-d76d-4c98-9369-da91c6a1887b",
         "x-ms-routing-request-id": "WESTUS2:20201006T214935Z:ff78475e-55c9-4a62-a1a8-fbcc76d8db1f"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "InProgress"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/southeastasia/operations/33f69821-cd0e-4964-b3ae-855485d8a634?api-version=2020-04-01",
@@ -1439,7 +1407,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:36 GMT",
         "Expires": "-1",
@@ -1457,11 +1425,9 @@
         "x-ms-request-id": "f50ac191-abdc-43d4-8d3e-b98a508bccae",
         "x-ms-routing-request-id": "WESTUS2:20201006T214937Z:7d55dd99-08e5-4ba3-8948-4c0a4370bae7"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864?api-version=2020-04-01",
@@ -1479,7 +1445,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1385",
+        "Content-Length": "1052",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:36 GMT",
         "ETag": "W/\u00226b72b815-46d1-4279-9f72-5b98b1b42fe5\u0022",
@@ -1498,49 +1464,47 @@
         "x-ms-request-id": "3bd362e1-d932-4725-868c-0945efb16a74",
         "x-ms-routing-request-id": "WESTUS2:20201006T214937Z:3cd32fa9-5168-4552-abc5-fe4cb5727595"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022vn2864\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00226b72b815-46d1-4279-9f72-5b98b1b42fe5\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022614e3fc9-b459-41f4-bd19-1fbc6b2b574c\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022dhcpOptions\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [\r\n",
-        "        \u002210.1.1.1\u0022,\r\n",
-        "        \u002210.1.2.4\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022subnets\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022sn4988\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u00226b72b815-46d1-4279-9f72-5b98b1b42fe5\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: [],\r\n",
-        "    \u0022enableDdosProtection\u0022: false,\r\n",
-        "    \u0022enableVmProtection\u0022: false\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "vn2864",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864",
+        "etag": "W/\u00226b72b815-46d1-4279-9f72-5b98b1b42fe5\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "southeastasia",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "614e3fc9-b459-41f4-bd19-1fbc6b2b574c",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "dhcpOptions": {
+            "dnsServers": [
+              "10.1.1.1",
+              "10.1.2.4"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "sn4988",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988",
+              "etag": "W/\u00226b72b815-46d1-4279-9f72-5b98b1b42fe5\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false,
+          "enableVmProtection": false
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988?api-version=2020-04-01",
@@ -1560,7 +1524,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "544",
+        "Content-Length": "471",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:37 GMT",
         "ETag": "W/\u00226b72b815-46d1-4279-9f72-5b98b1b42fe5\u0022",
@@ -1579,22 +1543,20 @@
         "x-ms-request-id": "fc31e720-e103-45ed-8783-425ef00a0437",
         "x-ms-routing-request-id": "WESTUS2:20201006T214937Z:bb59bd4d-babe-4ccf-be3a-c3ad1558d22c"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022sn4988\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00226b72b815-46d1-4279-9f72-5b98b1b42fe5\\\u0022\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "    \u0022delegations\u0022: [],\r\n",
-        "    \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "    \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "    \u0022subnetID\u0022: 0\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "sn4988",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988",
+        "etag": "W/\u00226b72b815-46d1-4279-9f72-5b98b1b42fe5\u0022",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "addressPrefix": "10.0.0.0/24",
+          "delegations": [],
+          "privateEndpointNetworkPolicies": "Enabled",
+          "privateLinkServiceNetworkPolicies": "Enabled",
+          "subnetID": 0
+        },
+        "type": "Microsoft.Network/virtualNetworks/subnets"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796?api-version=2020-04-01",
@@ -1643,7 +1605,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/southeastasia/operations/342a3b46-8431-47f0-b0ec-2dd9f8e3d7ee?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "1662",
+        "Content-Length": "1322",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:39 GMT",
         "Expires": "-1",
@@ -1661,50 +1623,48 @@
         "x-ms-request-id": "342a3b46-8431-47f0-b0ec-2dd9f8e3d7ee",
         "x-ms-routing-request-id": "WESTUS2:20201006T214940Z:60710a63-fa88-49d3-ab88-494ca2964b40"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022nic9796\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00225c8842b4-14d9-4e87-9783-d38e2031c210\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00226c0931f3-e921-4151-8613-38e6ea5f23a5\u0022,\r\n",
-        "    \u0022ipConfigurations\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022ip1717\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796/ipConfigurations/ip1717\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u00225c8842b4-14d9-4e87-9783-d38e2031c210\\\u0022\u0022,\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022privateIPAddress\u0022: \u002210.0.0.4\u0022,\r\n",
-        "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988\u0022\r\n",
-        "          },\r\n",
-        "          \u0022primary\u0022: true,\r\n",
-        "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
-        "        }\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [],\r\n",
-        "      \u0022appliedDnsServers\u0022: [],\r\n",
-        "      \u0022internalDomainNameSuffix\u0022: \u0022ze5u2ykzwt0edpizd44gwk0xje.ix.internal.cloudapp.net\u0022\r\n",
-        "    },\r\n",
-        "    \u0022enableAcceleratedNetworking\u0022: false,\r\n",
-        "    \u0022enableIPForwarding\u0022: false,\r\n",
-        "    \u0022hostedWorkloads\u0022: [],\r\n",
-        "    \u0022tapConfigurations\u0022: [],\r\n",
-        "    \u0022nicType\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "nic9796",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796",
+        "etag": "W/\u00225c8842b4-14d9-4e87-9783-d38e2031c210\u0022",
+        "location": "southeastasia",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "6c0931f3-e921-4151-8613-38e6ea5f23a5",
+          "ipConfigurations": [
+            {
+              "name": "ip1717",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796/ipConfigurations/ip1717",
+              "etag": "W/\u00225c8842b4-14d9-4e87-9783-d38e2031c210\u0022",
+              "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "privateIPAddress": "10.0.0.4",
+                "privateIPAllocationMethod": "Dynamic",
+                "subnet": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988"
+                },
+                "primary": true,
+                "privateIPAddressVersion": "IPv4"
+              }
+            }
+          ],
+          "dnsSettings": {
+            "dnsServers": [],
+            "appliedDnsServers": [],
+            "internalDomainNameSuffix": "ze5u2ykzwt0edpizd44gwk0xje.ix.internal.cloudapp.net"
+          },
+          "enableAcceleratedNetworking": false,
+          "enableIPForwarding": false,
+          "hostedWorkloads": [],
+          "tapConfigurations": [],
+          "nicType": "Standard"
+        },
+        "type": "Microsoft.Network/networkInterfaces"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/southeastasia/operations/342a3b46-8431-47f0-b0ec-2dd9f8e3d7ee?api-version=2020-04-01",
@@ -1722,7 +1682,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:40 GMT",
         "Expires": "-1",
@@ -1740,11 +1700,9 @@
         "x-ms-request-id": "22e7c7c4-fd0e-42ab-9622-c8375c0b951f",
         "x-ms-routing-request-id": "WESTUS2:20201006T214940Z:f59df2dd-8f04-403c-80e9-12934280f86d"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796?api-version=2020-04-01",
@@ -1762,7 +1720,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1662",
+        "Content-Length": "1322",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:40 GMT",
         "ETag": "W/\u00225c8842b4-14d9-4e87-9783-d38e2031c210\u0022",
@@ -1781,50 +1739,48 @@
         "x-ms-request-id": "001f7f81-3031-4a6f-96f8-043dddf73dc1",
         "x-ms-routing-request-id": "WESTUS2:20201006T214940Z:b06bd679-4789-475f-9a5f-74906d70cbc9"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022nic9796\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00225c8842b4-14d9-4e87-9783-d38e2031c210\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00226c0931f3-e921-4151-8613-38e6ea5f23a5\u0022,\r\n",
-        "    \u0022ipConfigurations\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022ip1717\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796/ipConfigurations/ip1717\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u00225c8842b4-14d9-4e87-9783-d38e2031c210\\\u0022\u0022,\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022privateIPAddress\u0022: \u002210.0.0.4\u0022,\r\n",
-        "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988\u0022\r\n",
-        "          },\r\n",
-        "          \u0022primary\u0022: true,\r\n",
-        "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
-        "        }\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [],\r\n",
-        "      \u0022appliedDnsServers\u0022: [],\r\n",
-        "      \u0022internalDomainNameSuffix\u0022: \u0022ze5u2ykzwt0edpizd44gwk0xje.ix.internal.cloudapp.net\u0022\r\n",
-        "    },\r\n",
-        "    \u0022enableAcceleratedNetworking\u0022: false,\r\n",
-        "    \u0022enableIPForwarding\u0022: false,\r\n",
-        "    \u0022hostedWorkloads\u0022: [],\r\n",
-        "    \u0022tapConfigurations\u0022: [],\r\n",
-        "    \u0022nicType\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "nic9796",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796",
+        "etag": "W/\u00225c8842b4-14d9-4e87-9783-d38e2031c210\u0022",
+        "location": "southeastasia",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "6c0931f3-e921-4151-8613-38e6ea5f23a5",
+          "ipConfigurations": [
+            {
+              "name": "ip1717",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796/ipConfigurations/ip1717",
+              "etag": "W/\u00225c8842b4-14d9-4e87-9783-d38e2031c210\u0022",
+              "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "privateIPAddress": "10.0.0.4",
+                "privateIPAllocationMethod": "Dynamic",
+                "subnet": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988"
+                },
+                "primary": true,
+                "privateIPAddressVersion": "IPv4"
+              }
+            }
+          ],
+          "dnsSettings": {
+            "dnsServers": [],
+            "appliedDnsServers": [],
+            "internalDomainNameSuffix": "ze5u2ykzwt0edpizd44gwk0xje.ix.internal.cloudapp.net"
+          },
+          "enableAcceleratedNetworking": false,
+          "enableIPForwarding": false,
+          "hostedWorkloads": [],
+          "tapConfigurations": [],
+          "nicType": "Standard"
+        },
+        "type": "Microsoft.Network/networkInterfaces"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796?api-version=2020-04-01",
@@ -1844,7 +1800,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1662",
+        "Content-Length": "1322",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 21:49:40 GMT",
         "ETag": "W/\u00225c8842b4-14d9-4e87-9783-d38e2031c210\u0022",
@@ -1863,50 +1819,48 @@
         "x-ms-request-id": "82dcfc19-b55a-4231-bbd0-ec8cdda58981",
         "x-ms-routing-request-id": "WESTUS2:20201006T214940Z:cd2e8b17-3f30-4af7-87aa-a16c8b47f3f7"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022nic9796\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00225c8842b4-14d9-4e87-9783-d38e2031c210\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00226c0931f3-e921-4151-8613-38e6ea5f23a5\u0022,\r\n",
-        "    \u0022ipConfigurations\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022ip1717\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796/ipConfigurations/ip1717\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u00225c8842b4-14d9-4e87-9783-d38e2031c210\\\u0022\u0022,\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022privateIPAddress\u0022: \u002210.0.0.4\u0022,\r\n",
-        "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988\u0022\r\n",
-        "          },\r\n",
-        "          \u0022primary\u0022: true,\r\n",
-        "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
-        "        }\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [],\r\n",
-        "      \u0022appliedDnsServers\u0022: [],\r\n",
-        "      \u0022internalDomainNameSuffix\u0022: \u0022ze5u2ykzwt0edpizd44gwk0xje.ix.internal.cloudapp.net\u0022\r\n",
-        "    },\r\n",
-        "    \u0022enableAcceleratedNetworking\u0022: false,\r\n",
-        "    \u0022enableIPForwarding\u0022: false,\r\n",
-        "    \u0022hostedWorkloads\u0022: [],\r\n",
-        "    \u0022tapConfigurations\u0022: [],\r\n",
-        "    \u0022nicType\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "nic9796",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796",
+        "etag": "W/\u00225c8842b4-14d9-4e87-9783-d38e2031c210\u0022",
+        "location": "southeastasia",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "6c0931f3-e921-4151-8613-38e6ea5f23a5",
+          "ipConfigurations": [
+            {
+              "name": "ip1717",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/networkInterfaces/nic9796/ipConfigurations/ip1717",
+              "etag": "W/\u00225c8842b4-14d9-4e87-9783-d38e2031c210\u0022",
+              "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "privateIPAddress": "10.0.0.4",
+                "privateIPAllocationMethod": "Dynamic",
+                "subnet": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Network/virtualNetworks/vn2864/subnets/sn4988"
+                },
+                "primary": true,
+                "privateIPAddressVersion": "IPv4"
+              }
+            }
+          ],
+          "dnsSettings": {
+            "dnsServers": [],
+            "appliedDnsServers": [],
+            "internalDomainNameSuffix": "ze5u2ykzwt0edpizd44gwk0xje.ix.internal.cloudapp.net"
+          },
+          "enableAcceleratedNetworking": false,
+          "enableIPForwarding": false,
+          "hostedWorkloads": [],
+          "tapConfigurations": [],
+          "nicType": "Standard"
+        },
+        "type": "Microsoft.Network/networkInterfaces"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar24821/providers/Microsoft.Compute/virtualMachineScaleSets/vmss4073?api-version=2019-12-01",

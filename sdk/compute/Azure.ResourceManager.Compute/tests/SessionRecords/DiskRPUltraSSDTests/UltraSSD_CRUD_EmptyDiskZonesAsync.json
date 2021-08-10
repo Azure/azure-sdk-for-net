@@ -82,7 +82,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/DiskOperations/215ee69b-76cc-42bf-ad17-ab0b0d318124?api-version=2019-11-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "470",
+        "Content-Length": "333",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:32 GMT",
         "Expires": "-1",
@@ -103,32 +103,30 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073532Z:27cf9387-9295-4418-985f-f31561803b23",
         "x-ms-served-by": "8278dd3f-3f1e-4c21-b82d-89be46bb3fd2_132374460203765992"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp1325\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
-        "  \u0022zones\u0022: [\r\n",
-        "    \u00221\u0022\r\n",
-        "  ],\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022UltraSSD_LRS\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 32,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 512,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 8,\r\n",
-        "    \u0022readOnly\u0022: false,\r\n",
-        "    \u0022diskIOPSReadOnly\u0022: 100,\r\n",
-        "    \u0022diskMBpsReadOnly\u0022: 13,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022isArmResource\u0022: true\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "diskrp1325",
+        "location": "eastus",
+        "zones": [
+          "1"
+        ],
+        "sku": {
+          "name": "UltraSSD_LRS"
+        },
+        "properties": {
+          "osType": "Linux",
+          "creationData": {
+            "createOption": "Empty"
+          },
+          "diskSizeGB": 32,
+          "diskIOPSReadWrite": 512,
+          "diskMBpsReadWrite": 8,
+          "readOnly": false,
+          "diskIOPSReadOnly": 100,
+          "diskMBpsReadOnly": 13,
+          "provisioningState": "Updating",
+          "isArmResource": true
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/DiskOperations/215ee69b-76cc-42bf-ad17-ab0b0d318124?api-version=2019-11-01",
@@ -146,7 +144,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "134",
+        "Content-Length": "117",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:32 GMT",
         "Expires": "-1",
@@ -166,13 +164,11 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073532Z:36d7b464-623e-40ab-a190-4844bb75308d",
         "x-ms-served-by": "8278dd3f-3f1e-4c21-b82d-89be46bb3fd2_132374460203765992"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T07:35:32.5055488\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022,\r\n",
-        "  \u0022name\u0022: \u0022215ee69b-76cc-42bf-ad17-ab0b0d318124\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T07:35:32.5055488\u002B00:00",
+        "status": "InProgress",
+        "name": "215ee69b-76cc-42bf-ad17-ab0b0d318124"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/DiskOperations/215ee69b-76cc-42bf-ad17-ab0b0d318124?api-version=2019-11-01",
@@ -190,7 +186,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1145",
+        "Content-Length": "903",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:33 GMT",
         "Expires": "-1",
@@ -209,50 +205,48 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073533Z:e28f36a7-24a9-4de0-bdbd-15f00dcbeae3",
         "x-ms-served-by": "8278dd3f-3f1e-4c21-b82d-89be46bb3fd2_132374460203765992"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T07:35:32.5055488\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T07:35:32.8961584\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp1325\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
-        "  \u0022zones\u0022: [\r\n",
-        "    \u00221\u0022\r\n",
-        "  ],\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022UltraSSD_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Ultra\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 32,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 512,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 8,\r\n",
-        "    \u0022readOnly\u0022: false,\r\n",
-        "    \u0022diskIOPSReadOnly\u0022: 100,\r\n",
-        "    \u0022diskMBpsReadOnly\u0022: 13,\r\n",
-        "    \u0022encryption\u0022: {\r\n",
-        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "    },\r\n",
-        "    \u0022maxShares\u0022: 1,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:32.5211828\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "    \u0022diskSizeBytes\u0022: 34359738368,\r\n",
-        "    \u0022uniqueId\u0022: \u0022685de2ac-c061-4a35-810a-d89c2ace881a\u0022\r\n",
-        "  }\r\n",
-        "}\r\n",
-        "  },\r\n",
-        "  \u0022name\u0022: \u0022215ee69b-76cc-42bf-ad17-ab0b0d318124\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T07:35:32.5055488\u002B00:00",
+        "endTime": "2020-10-06T07:35:32.8961584\u002B00:00",
+        "status": "Succeeded",
+        "properties": {
+          "output": {
+            "name": "diskrp1325",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325",
+            "type": "Microsoft.Compute/disks",
+            "location": "eastus",
+            "zones": [
+              "1"
+            ],
+            "sku": {
+              "name": "UltraSSD_LRS",
+              "tier": "Ultra"
+            },
+            "properties": {
+              "osType": "Linux",
+              "creationData": {
+                "createOption": "Empty"
+              },
+              "diskSizeGB": 32,
+              "diskIOPSReadWrite": 512,
+              "diskMBpsReadWrite": 8,
+              "readOnly": false,
+              "diskIOPSReadOnly": 100,
+              "diskMBpsReadOnly": 13,
+              "encryption": {
+                "type": "EncryptionAtRestWithPlatformKey"
+              },
+              "maxShares": 1,
+              "timeCreated": "2020-10-06T07:35:32.5211828\u002B00:00",
+              "provisioningState": "Succeeded",
+              "diskState": "Unattached",
+              "diskSizeBytes": 34359738368,
+              "uniqueId": "685de2ac-c061-4a35-810a-d89c2ace881a"
+            }
+          }
+        },
+        "name": "215ee69b-76cc-42bf-ad17-ab0b0d318124"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325?api-version=2019-11-01",
@@ -270,7 +264,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "920",
+        "Content-Length": "716",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:33 GMT",
         "Expires": "-1",
@@ -289,42 +283,40 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073534Z:78d2db34-2df5-4475-a791-ff476bc78937",
         "x-ms-served-by": "8278dd3f-3f1e-4c21-b82d-89be46bb3fd2_132374460203765992"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp1325\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
-        "  \u0022zones\u0022: [\r\n",
-        "    \u00221\u0022\r\n",
-        "  ],\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022UltraSSD_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Ultra\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 32,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 512,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 8,\r\n",
-        "    \u0022readOnly\u0022: false,\r\n",
-        "    \u0022diskIOPSReadOnly\u0022: 100,\r\n",
-        "    \u0022diskMBpsReadOnly\u0022: 13,\r\n",
-        "    \u0022encryption\u0022: {\r\n",
-        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "    },\r\n",
-        "    \u0022maxShares\u0022: 1,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:32.5211828\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "    \u0022diskSizeBytes\u0022: 34359738368,\r\n",
-        "    \u0022uniqueId\u0022: \u0022685de2ac-c061-4a35-810a-d89c2ace881a\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "diskrp1325",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325",
+        "type": "Microsoft.Compute/disks",
+        "location": "eastus",
+        "zones": [
+          "1"
+        ],
+        "sku": {
+          "name": "UltraSSD_LRS",
+          "tier": "Ultra"
+        },
+        "properties": {
+          "osType": "Linux",
+          "creationData": {
+            "createOption": "Empty"
+          },
+          "diskSizeGB": 32,
+          "diskIOPSReadWrite": 512,
+          "diskMBpsReadWrite": 8,
+          "readOnly": false,
+          "diskIOPSReadOnly": 100,
+          "diskMBpsReadOnly": 13,
+          "encryption": {
+            "type": "EncryptionAtRestWithPlatformKey"
+          },
+          "maxShares": 1,
+          "timeCreated": "2020-10-06T07:35:32.5211828\u002B00:00",
+          "provisioningState": "Succeeded",
+          "diskState": "Unattached",
+          "diskSizeBytes": 34359738368,
+          "uniqueId": "685de2ac-c061-4a35-810a-d89c2ace881a"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325?api-version=2019-11-01",
@@ -344,7 +336,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "920",
+        "Content-Length": "716",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:33 GMT",
         "Expires": "-1",
@@ -363,42 +355,40 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073534Z:cf2f2cf9-a582-4a79-8a5c-726639357873",
         "x-ms-served-by": "8278dd3f-3f1e-4c21-b82d-89be46bb3fd2_132374460203765992"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp1325\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
-        "  \u0022zones\u0022: [\r\n",
-        "    \u00221\u0022\r\n",
-        "  ],\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022UltraSSD_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Ultra\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 32,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 512,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 8,\r\n",
-        "    \u0022readOnly\u0022: false,\r\n",
-        "    \u0022diskIOPSReadOnly\u0022: 100,\r\n",
-        "    \u0022diskMBpsReadOnly\u0022: 13,\r\n",
-        "    \u0022encryption\u0022: {\r\n",
-        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "    },\r\n",
-        "    \u0022maxShares\u0022: 1,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:32.5211828\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "    \u0022diskSizeBytes\u0022: 34359738368,\r\n",
-        "    \u0022uniqueId\u0022: \u0022685de2ac-c061-4a35-810a-d89c2ace881a\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "diskrp1325",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325",
+        "type": "Microsoft.Compute/disks",
+        "location": "eastus",
+        "zones": [
+          "1"
+        ],
+        "sku": {
+          "name": "UltraSSD_LRS",
+          "tier": "Ultra"
+        },
+        "properties": {
+          "osType": "Linux",
+          "creationData": {
+            "createOption": "Empty"
+          },
+          "diskSizeGB": 32,
+          "diskIOPSReadWrite": 512,
+          "diskMBpsReadWrite": 8,
+          "readOnly": false,
+          "diskIOPSReadOnly": 100,
+          "diskMBpsReadOnly": 13,
+          "encryption": {
+            "type": "EncryptionAtRestWithPlatformKey"
+          },
+          "maxShares": 1,
+          "timeCreated": "2020-10-06T07:35:32.5211828\u002B00:00",
+          "provisioningState": "Succeeded",
+          "diskState": "Unattached",
+          "diskSizeBytes": 34359738368,
+          "uniqueId": "685de2ac-c061-4a35-810a-d89c2ace881a"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325?api-version=2019-11-01",
@@ -432,7 +422,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/DiskOperations/b6151726-ee2e-4811-9d14-7ae3edc80813?api-version=2019-11-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "572",
+        "Content-Length": "407",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:34 GMT",
         "Expires": "-1",
@@ -453,37 +443,35 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073534Z:5f705c9c-5334-40de-81da-5c47dfbe2c0e",
         "x-ms-served-by": "8278dd3f-3f1e-4c21-b82d-89be46bb3fd2_132374460203765992"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp1325\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022tagKey\u0022: \u0022tagValue\u0022\r\n",
-        "  },\r\n",
-        "  \u0022zones\u0022: [\r\n",
-        "    \u00221\u0022\r\n",
-        "  ],\r\n",
-        "  \u0022physicalZone\u0022: \u0022useast-AZ02\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022UltraSSD_LRS\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 32,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 600,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 9,\r\n",
-        "    \u0022readOnly\u0022: false,\r\n",
-        "    \u0022diskIOPSReadOnly\u0022: 100,\r\n",
-        "    \u0022diskMBpsReadOnly\u0022: 13,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022isArmResource\u0022: true,\r\n",
-        "    \u0022faultDomain\u0022: 0\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "diskrp1325",
+        "location": "eastus",
+        "tags": {
+          "tagKey": "tagValue"
+        },
+        "zones": [
+          "1"
+        ],
+        "physicalZone": "useast-AZ02",
+        "sku": {
+          "name": "UltraSSD_LRS"
+        },
+        "properties": {
+          "osType": "Linux",
+          "creationData": {
+            "createOption": "Empty"
+          },
+          "diskSizeGB": 32,
+          "diskIOPSReadWrite": 600,
+          "diskMBpsReadWrite": 9,
+          "readOnly": false,
+          "diskIOPSReadOnly": 100,
+          "diskMBpsReadOnly": 13,
+          "provisioningState": "Updating",
+          "isArmResource": true,
+          "faultDomain": 0
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/DiskOperations/b6151726-ee2e-4811-9d14-7ae3edc80813?api-version=2019-11-01",
@@ -501,7 +489,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1190",
+        "Content-Length": "932",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:34 GMT",
         "Expires": "-1",
@@ -520,53 +508,51 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073534Z:1460102c-ceb7-4227-ab94-b8d82f0ed4c7",
         "x-ms-served-by": "8278dd3f-3f1e-4c21-b82d-89be46bb3fd2_132374460203765992"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T07:35:34.3961925\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T07:35:34.6149622\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp1325\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022tagKey\u0022: \u0022tagValue\u0022\r\n",
-        "  },\r\n",
-        "  \u0022zones\u0022: [\r\n",
-        "    \u00221\u0022\r\n",
-        "  ],\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022UltraSSD_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Ultra\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 32,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 600,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 9,\r\n",
-        "    \u0022readOnly\u0022: false,\r\n",
-        "    \u0022diskIOPSReadOnly\u0022: 100,\r\n",
-        "    \u0022diskMBpsReadOnly\u0022: 13,\r\n",
-        "    \u0022encryption\u0022: {\r\n",
-        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "    },\r\n",
-        "    \u0022maxShares\u0022: 1,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:32.5211828\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "    \u0022diskSizeBytes\u0022: 34359738368,\r\n",
-        "    \u0022uniqueId\u0022: \u0022685de2ac-c061-4a35-810a-d89c2ace881a\u0022\r\n",
-        "  }\r\n",
-        "}\r\n",
-        "  },\r\n",
-        "  \u0022name\u0022: \u0022b6151726-ee2e-4811-9d14-7ae3edc80813\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T07:35:34.3961925\u002B00:00",
+        "endTime": "2020-10-06T07:35:34.6149622\u002B00:00",
+        "status": "Succeeded",
+        "properties": {
+          "output": {
+            "name": "diskrp1325",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325",
+            "type": "Microsoft.Compute/disks",
+            "location": "eastus",
+            "tags": {
+              "tagKey": "tagValue"
+            },
+            "zones": [
+              "1"
+            ],
+            "sku": {
+              "name": "UltraSSD_LRS",
+              "tier": "Ultra"
+            },
+            "properties": {
+              "osType": "Linux",
+              "creationData": {
+                "createOption": "Empty"
+              },
+              "diskSizeGB": 32,
+              "diskIOPSReadWrite": 600,
+              "diskMBpsReadWrite": 9,
+              "readOnly": false,
+              "diskIOPSReadOnly": 100,
+              "diskMBpsReadOnly": 13,
+              "encryption": {
+                "type": "EncryptionAtRestWithPlatformKey"
+              },
+              "maxShares": 1,
+              "timeCreated": "2020-10-06T07:35:32.5211828\u002B00:00",
+              "provisioningState": "Succeeded",
+              "diskState": "Unattached",
+              "diskSizeBytes": 34359738368,
+              "uniqueId": "685de2ac-c061-4a35-810a-d89c2ace881a"
+            }
+          }
+        },
+        "name": "b6151726-ee2e-4811-9d14-7ae3edc80813"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/DiskOperations/b6151726-ee2e-4811-9d14-7ae3edc80813?monitor=true\u0026api-version=2019-11-01",
@@ -659,7 +645,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "965",
+        "Content-Length": "745",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:34 GMT",
         "Expires": "-1",
@@ -678,45 +664,43 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073534Z:337076c3-9147-4bf0-b47b-a59091682bc8",
         "x-ms-served-by": "8278dd3f-3f1e-4c21-b82d-89be46bb3fd2_132374460203765992"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp1325\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022tagKey\u0022: \u0022tagValue\u0022\r\n",
-        "  },\r\n",
-        "  \u0022zones\u0022: [\r\n",
-        "    \u00221\u0022\r\n",
-        "  ],\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022UltraSSD_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Ultra\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 32,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 600,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 9,\r\n",
-        "    \u0022readOnly\u0022: false,\r\n",
-        "    \u0022diskIOPSReadOnly\u0022: 100,\r\n",
-        "    \u0022diskMBpsReadOnly\u0022: 13,\r\n",
-        "    \u0022encryption\u0022: {\r\n",
-        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "    },\r\n",
-        "    \u0022maxShares\u0022: 1,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:32.5211828\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "    \u0022diskSizeBytes\u0022: 34359738368,\r\n",
-        "    \u0022uniqueId\u0022: \u0022685de2ac-c061-4a35-810a-d89c2ace881a\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "diskrp1325",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325",
+        "type": "Microsoft.Compute/disks",
+        "location": "eastus",
+        "tags": {
+          "tagKey": "tagValue"
+        },
+        "zones": [
+          "1"
+        ],
+        "sku": {
+          "name": "UltraSSD_LRS",
+          "tier": "Ultra"
+        },
+        "properties": {
+          "osType": "Linux",
+          "creationData": {
+            "createOption": "Empty"
+          },
+          "diskSizeGB": 32,
+          "diskIOPSReadWrite": 600,
+          "diskMBpsReadWrite": 9,
+          "readOnly": false,
+          "diskIOPSReadOnly": 100,
+          "diskMBpsReadOnly": 13,
+          "encryption": {
+            "type": "EncryptionAtRestWithPlatformKey"
+          },
+          "maxShares": 1,
+          "timeCreated": "2020-10-06T07:35:32.5211828\u002B00:00",
+          "provisioningState": "Succeeded",
+          "diskState": "Unattached",
+          "diskSizeBytes": 34359738368,
+          "uniqueId": "685de2ac-c061-4a35-810a-d89c2ace881a"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325?api-version=2019-11-01",
@@ -773,7 +757,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "133",
+        "Content-Length": "116",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:34 GMT",
         "Expires": "-1",
@@ -792,13 +776,11 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073535Z:01e31203-df5b-49ab-8b23-88e0cb1941d4",
         "x-ms-served-by": "8278dd3f-3f1e-4c21-b82d-89be46bb3fd2_132374460203765992"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T07:35:35.411789\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022,\r\n",
-        "  \u0022name\u0022: \u00229077aa9a-1eee-485e-86c7-93f04dba24ec\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T07:35:35.411789\u002B00:00",
+        "status": "InProgress",
+        "name": "9077aa9a-1eee-485e-86c7-93f04dba24ec"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/DiskOperations/9077aa9a-1eee-485e-86c7-93f04dba24ec?api-version=2019-11-01",
@@ -816,7 +798,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "183",
+        "Content-Length": "161",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:36 GMT",
         "Expires": "-1",
@@ -835,14 +817,12 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073536Z:cea1b69a-5efc-4b84-91aa-2f48925852b1",
         "x-ms-served-by": "8278dd3f-3f1e-4c21-b82d-89be46bb3fd2_132374460203765992"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T07:35:35.411789\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T07:35:35.6618396\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022name\u0022: \u00229077aa9a-1eee-485e-86c7-93f04dba24ec\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T07:35:35.411789\u002B00:00",
+        "endTime": "2020-10-06T07:35:35.6618396\u002B00:00",
+        "status": "Succeeded",
+        "name": "9077aa9a-1eee-485e-86c7-93f04dba24ec"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar626/providers/Microsoft.Compute/disks/diskrp1325?api-version=2019-11-01",
@@ -862,7 +842,7 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "96",
+        "Content-Length": "71",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:36 GMT",
         "Expires": "-1",
@@ -881,14 +861,12 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073536Z:084b9834-38eb-407b-90eb-368c8e9207be",
         "x-ms-served-by": "8278dd3f-3f1e-4c21-b82d-89be46bb3fd2_132374460203765992"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022error\u0022: {\r\n",
-        "    \u0022code\u0022: \u0022NotFound\u0022,\r\n",
-        "    \u0022message\u0022: \u0022Disk diskrp1325 is not found.\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "error": {
+          "code": "NotFound",
+          "message": "Disk diskrp1325 is not found."
+        }
+      }
     }
   ],
   "Variables": {

@@ -18,7 +18,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1033",
+        "Content-Length": "915",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:35:37 GMT",
         "Expires": "-1",
@@ -36,30 +36,7 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073538Z:51829060-a817-4fb7-a384-bef3a807f7b8",
         "x-ms-served-by": "03e6c753-1db2-4ec7-a057-8ff6011fb55c_132448694658279652"
       },
-      "ResponseBody": [
-        "[\r\n",
-        "  {\r\n",
-        "    \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "    \u0022name\u0022: \u0022BGInfo\u0022,\r\n",
-        "    \u0022id\u0022: \u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/BGInfo\u0022\r\n",
-        "  },\r\n",
-        "  {\r\n",
-        "    \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "    \u0022name\u0022: \u0022CustomScriptExtension\u0022,\r\n",
-        "    \u0022id\u0022: \u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/CustomScriptExtension\u0022\r\n",
-        "  },\r\n",
-        "  {\r\n",
-        "    \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "    \u0022name\u0022: \u0022JsonADDomainExtension\u0022,\r\n",
-        "    \u0022id\u0022: \u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/JsonADDomainExtension\u0022\r\n",
-        "  },\r\n",
-        "  {\r\n",
-        "    \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "    \u0022name\u0022: \u0022VMAccessAgent\u0022,\r\n",
-        "    \u0022id\u0022: \u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent\u0022\r\n",
-        "  }\r\n",
-        "]"
-      ]
+      "ResponseBody": "[{\u0022location\u0022:\u0022westus\u0022,\u0022name\u0022:\u0022BGInfo\u0022,\u0022id\u0022:\u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/BGInfo\u0022},{\u0022location\u0022:\u0022westus\u0022,\u0022name\u0022:\u0022CustomScriptExtension\u0022,\u0022id\u0022:\u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/CustomScriptExtension\u0022},{\u0022location\u0022:\u0022westus\u0022,\u0022name\u0022:\u0022JsonADDomainExtension\u0022,\u0022id\u0022:\u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/JsonADDomainExtension\u0022},{\u0022location\u0022:\u0022westus\u0022,\u0022name\u0022:\u0022VMAccessAgent\u0022,\u0022id\u0022:\u0022/Subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent\u0022}]"
     }
   ],
   "Variables": {

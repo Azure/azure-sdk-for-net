@@ -95,7 +95,7 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "339",
+        "Content-Length": "307",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:39:11 GMT",
         "Expires": "-1",
@@ -114,15 +114,13 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063912Z:14af14f8-4e2a-4dcd-b854-ab598c207c6d",
         "x-ms-served-by": "edd9902d-5b74-4e42-a457-c90105dcf064_132325353451853561"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022error\u0022: {\r\n",
-        "    \u0022code\u0022: \u0022InvalidParameter\u0022,\r\n",
-        "    \u0022message\u0022: \u0022https://testvault.vault.azure.net/secrets/swaggersecret/test123 is not a valid versioned Key Vault Secret URL. It should be in the format https://\u003CvaultEndpoint\u003E/secrets/\u003CsecretName\u003E/\u003CsecretVersion\u003E.\u0022,\r\n",
-        "    \u0022target\u0022: \u0022encryptionSettings.diskEncryptionKey.secretUrl\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidParameter",
+          "message": "https://testvault.vault.azure.net/secrets/swaggersecret/test123 is not a valid versioned Key Vault Secret URL. It should be in the format https://\u003CvaultEndpoint\u003E/secrets/\u003CsecretName\u003E/\u003CsecretVersion\u003E.",
+          "target": "encryptionSettings.diskEncryptionKey.secretUrl"
+        }
+      }
     }
   ],
   "Variables": {

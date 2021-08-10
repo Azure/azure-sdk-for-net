@@ -6858,7 +6858,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/b8668621-4867-4c09-9f41-d0997653da0c?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "1928",
+        "Content-Length": "1486",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:42:06 GMT",
         "Expires": "-1",
@@ -6877,57 +6877,55 @@
         "x-ms-request-id": "b8668621-4867-4c09-9f41-d0997653da0c",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054206Z:3b89ede9-4ca5-4dd0-97fd-21ede6f3e2df"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet6234\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002237a98f8e-3d0d-4078-bf95-0a7f8c8b9e3c\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022565d83e5-cbd6-46b0-af1f-4b9f9a06a42f\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022subnets\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet8830\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet8830\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u002237a98f8e-3d0d-4078-bf95-0a7f8c8b9e3c\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet7612\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet7612\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u002237a98f8e-3d0d-4078-bf95-0a7f8c8b9e3c\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: [],\r\n",
-        "    \u0022enableDdosProtection\u0022: false,\r\n",
-        "    \u0022enableVmProtection\u0022: false\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet6234",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234",
+        "etag": "W/\u002237a98f8e-3d0d-4078-bf95-0a7f8c8b9e3c\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "565d83e5-cbd6-46b0-af1f-4b9f9a06a42f",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "azsmnet8830",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet8830",
+              "etag": "W/\u002237a98f8e-3d0d-4078-bf95-0a7f8c8b9e3c\u0022",
+              "properties": {
+                "provisioningState": "Updating",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            },
+            {
+              "name": "azsmnet7612",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet7612",
+              "etag": "W/\u002237a98f8e-3d0d-4078-bf95-0a7f8c8b9e3c\u0022",
+              "properties": {
+                "provisioningState": "Updating",
+                "addressPrefix": "10.0.1.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false,
+          "enableVmProtection": false
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/b8668621-4867-4c09-9f41-d0997653da0c?api-version=2020-04-01",
@@ -6945,7 +6943,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:42:06 GMT",
         "Expires": "-1",
@@ -6963,11 +6961,9 @@
         "x-ms-request-id": "1e86ca11-a891-4c96-b5f0-5f5840c9ddb2",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054206Z:4e69804b-98b1-4607-a4f0-e37f6787c5cd"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234?api-version=2020-04-01",
@@ -6985,7 +6981,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1931",
+        "Content-Length": "1489",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:42:06 GMT",
         "ETag": "W/\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\u0022",
@@ -7004,57 +7000,55 @@
         "x-ms-request-id": "b58b8ab3-4467-4299-915b-ea13be19ad5a",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054206Z:87d8ecde-34e8-4818-9ef5-876b192b5e30"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet6234\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022565d83e5-cbd6-46b0-af1f-4b9f9a06a42f\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022subnets\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet8830\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet8830\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet7612\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet7612\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: [],\r\n",
-        "    \u0022enableDdosProtection\u0022: false,\r\n",
-        "    \u0022enableVmProtection\u0022: false\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet6234",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234",
+        "etag": "W/\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "565d83e5-cbd6-46b0-af1f-4b9f9a06a42f",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "azsmnet8830",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet8830",
+              "etag": "W/\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            },
+            {
+              "name": "azsmnet7612",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet7612",
+              "etag": "W/\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.1.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false,
+          "enableVmProtection": false
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet8830?api-version=2020-04-01",
@@ -7074,7 +7068,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "554",
+        "Content-Length": "481",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:42:06 GMT",
         "ETag": "W/\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\u0022",
@@ -7093,22 +7087,20 @@
         "x-ms-request-id": "69189abd-bfb0-4e8c-bde6-335a317fb0f5",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054206Z:7750282e-dc8d-4f94-9abd-80e15d01d2b8"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet8830\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet8830\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\\\u0022\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "    \u0022delegations\u0022: [],\r\n",
-        "    \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "    \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "    \u0022subnetID\u0022: 0\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet8830",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet8830",
+        "etag": "W/\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\u0022",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "addressPrefix": "10.0.0.0/24",
+          "delegations": [],
+          "privateEndpointNetworkPolicies": "Enabled",
+          "privateLinkServiceNetworkPolicies": "Enabled",
+          "subnetID": 0
+        },
+        "type": "Microsoft.Network/virtualNetworks/subnets"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet7612?api-version=2020-04-01",
@@ -7128,7 +7120,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "554",
+        "Content-Length": "481",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:42:07 GMT",
         "ETag": "W/\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\u0022",
@@ -7147,22 +7139,20 @@
         "x-ms-request-id": "14bdcd20-fbe6-4cc7-a785-31194f600f23",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054207Z:b6f92675-0dc2-49b5-a4c5-02bdba4636d2"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet7612\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet7612\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\\\u0022\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
-        "    \u0022delegations\u0022: [],\r\n",
-        "    \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "    \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "    \u0022subnetID\u0022: 0\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet7612",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet7612",
+        "etag": "W/\u0022bdc97429-7162-45c8-b50f-06ba9b58b79f\u0022",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "addressPrefix": "10.0.1.0/24",
+          "delegations": [],
+          "privateEndpointNetworkPolicies": "Enabled",
+          "privateLinkServiceNetworkPolicies": "Enabled",
+          "subnetID": 0
+        },
+        "type": "Microsoft.Network/virtualNetworks/subnets"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/networkInterfaces/azsmnet5268?api-version=2020-04-01",
@@ -7215,7 +7205,7 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "649",
+        "Content-Length": "617",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:42:12 GMT",
         "Expires": "-1",
@@ -7233,15 +7223,13 @@
         "x-ms-request-id": "3a071dca-d0ed-4fa1-9e79-529090255075",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054212Z:190ba9d1-8c95-4eaf-a1da-af99fb62c9c0"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022error\u0022: {\r\n",
-        "    \u0022code\u0022: \u0022IpConfigurationsOnSameNicCannotUseDifferentSubnets\u0022,\r\n",
-        "    \u0022message\u0022: \u0022IPConfigurations on a Nic /subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/networkInterfaces/azsmnet5268 cannot belong to different subnets. Subnets referred: /subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet8830;/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet7612\u0022,\r\n",
-        "    \u0022details\u0022: []\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "error": {
+          "code": "IpConfigurationsOnSameNicCannotUseDifferentSubnets",
+          "message": "IPConfigurations on a Nic /subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/networkInterfaces/azsmnet5268 cannot belong to different subnets. Subnets referred: /subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet8830;/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg1471/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet7612",
+          "details": []
+        }
+      }
     }
   ],
   "Variables": {

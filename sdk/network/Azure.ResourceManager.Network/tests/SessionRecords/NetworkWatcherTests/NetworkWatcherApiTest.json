@@ -69,7 +69,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/eastus/operations/0f889fa2-e377-41cc-870e-247aa4d43489?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "395",
+        "Content-Length": "345",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:47:42 GMT",
         "Expires": "-1",
@@ -87,19 +87,17 @@
         "x-ms-request-id": "0f889fa2-e377-41cc-870e-247aa4d43489",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054743Z:c65a1d01-34c4-4482-80f6-10037b53bbab"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet3149\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/nw685/providers/Microsoft.Network/networkWatchers/azsmnet3149\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002213ffdf42-4f89-415e-ad76-e54111d172e5\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/networkWatchers\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022runningOperationIds\u0022: []\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet3149",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/nw685/providers/Microsoft.Network/networkWatchers/azsmnet3149",
+        "etag": "W/\u002213ffdf42-4f89-415e-ad76-e54111d172e5\u0022",
+        "type": "Microsoft.Network/networkWatchers",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "runningOperationIds": []
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/nw685/providers/Microsoft.Network/networkWatchers/azsmnet3149?api-version=2020-04-01",
@@ -119,7 +117,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "395",
+        "Content-Length": "345",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:47:42 GMT",
         "ETag": "W/\u0022faf2805a-9741-472f-84ab-32b2d251fd16\u0022",
@@ -138,19 +136,17 @@
         "x-ms-request-id": "190f85de-50f6-4c1f-9b3f-555a2cbbc615",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054743Z:5d01d664-34b3-4cf7-ba87-977313062dec"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet3149\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/nw685/providers/Microsoft.Network/networkWatchers/azsmnet3149\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022faf2805a-9741-472f-84ab-32b2d251fd16\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/networkWatchers\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022runningOperationIds\u0022: []\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet3149",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/nw685/providers/Microsoft.Network/networkWatchers/azsmnet3149",
+        "etag": "W/\u0022faf2805a-9741-472f-84ab-32b2d251fd16\u0022",
+        "type": "Microsoft.Network/networkWatchers",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "runningOperationIds": []
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/nw685/providers/Microsoft.Network/networkWatchers?api-version=2020-04-01",
@@ -169,7 +165,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "464",
+        "Content-Length": "357",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:47:43 GMT",
         "Expires": "-1",
@@ -187,23 +183,21 @@
         "x-ms-request-id": "8093167e-6cc5-47e3-a550-a917b200a6f3",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054743Z:9e9e5f62-0d29-486c-a1d0-e4e350fb7874"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet3149\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/nw685/providers/Microsoft.Network/networkWatchers/azsmnet3149\u0022,\r\n",
-        "      \u0022etag\u0022: \u0022W/\\\u0022faf2805a-9741-472f-84ab-32b2d251fd16\\\u0022\u0022,\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Network/networkWatchers\u0022,\r\n",
-        "      \u0022location\u0022: \u0022eastus\u0022,\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "        \u0022runningOperationIds\u0022: []\r\n",
-        "      }\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "azsmnet3149",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/nw685/providers/Microsoft.Network/networkWatchers/azsmnet3149",
+            "etag": "W/\u0022faf2805a-9741-472f-84ab-32b2d251fd16\u0022",
+            "type": "Microsoft.Network/networkWatchers",
+            "location": "eastus",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "runningOperationIds": []
+            }
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/networkWatchers?api-version=2020-04-01",

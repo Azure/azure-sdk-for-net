@@ -6849,7 +6849,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/86364c40-953f-46ea-a7ab-488f4d2e0a11?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "1074",
+        "Content-Length": "858",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:04:53 GMT",
         "Expires": "-1",
@@ -6868,35 +6868,33 @@
         "x-ms-request-id": "86364c40-953f-46ea-a7ab-488f4d2e0a11",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060454Z:00a43a83-ffaf-41f1-8e9c-bf14c8c99f15"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet5161\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00228df58c99-512d-4d16-8352-6593b505e73f\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/routeTables\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00228d196a74-ae1f-4465-ab19-4c933652e587\u0022,\r\n",
-        "    \u0022disableBgpRoutePropagation\u0022: false,\r\n",
-        "    \u0022routes\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet3390\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u00228df58c99-512d-4d16-8352-6593b505e73f\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u0022192.168.1.0/24\u0022,\r\n",
-        "          \u0022nextHopType\u0022: \u0022VirtualAppliance\u0022,\r\n",
-        "          \u0022nextHopIpAddress\u0022: \u002223.108.1.1\u0022,\r\n",
-        "          \u0022hasBgpOverride\u0022: false\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/routeTables/routes\u0022\r\n",
-        "      }\r\n",
-        "    ]\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet5161",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161",
+        "etag": "W/\u00228df58c99-512d-4d16-8352-6593b505e73f\u0022",
+        "type": "Microsoft.Network/routeTables",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "8d196a74-ae1f-4465-ab19-4c933652e587",
+          "disableBgpRoutePropagation": false,
+          "routes": [
+            {
+              "name": "azsmnet3390",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390",
+              "etag": "W/\u00228df58c99-512d-4d16-8352-6593b505e73f\u0022",
+              "properties": {
+                "provisioningState": "Updating",
+                "addressPrefix": "192.168.1.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "23.108.1.1",
+                "hasBgpOverride": false
+              },
+              "type": "Microsoft.Network/routeTables/routes"
+            }
+          ]
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/86364c40-953f-46ea-a7ab-488f4d2e0a11?api-version=2020-04-01",
@@ -6914,7 +6912,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:04:53 GMT",
         "Expires": "-1",
@@ -6932,11 +6930,9 @@
         "x-ms-request-id": "831b4c7b-59b9-4ec6-bc73-3b76c102b173",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060454Z:2707e441-b3d9-417a-9d71-d90a19eeeeae"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161?api-version=2020-04-01",
@@ -6954,7 +6950,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1076",
+        "Content-Length": "860",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:04:54 GMT",
         "ETag": "W/\u002215b3824e-79da-4e8c-80eb-34be64507573\u0022",
@@ -6973,35 +6969,33 @@
         "x-ms-request-id": "c2fec388-8dc9-42c4-8d78-6230b1efb5a5",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060454Z:d305df71-9d9c-49fa-a5e6-014011d4b65c"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet5161\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002215b3824e-79da-4e8c-80eb-34be64507573\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/routeTables\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00228d196a74-ae1f-4465-ab19-4c933652e587\u0022,\r\n",
-        "    \u0022disableBgpRoutePropagation\u0022: false,\r\n",
-        "    \u0022routes\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet3390\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u002215b3824e-79da-4e8c-80eb-34be64507573\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u0022192.168.1.0/24\u0022,\r\n",
-        "          \u0022nextHopType\u0022: \u0022VirtualAppliance\u0022,\r\n",
-        "          \u0022nextHopIpAddress\u0022: \u002223.108.1.1\u0022,\r\n",
-        "          \u0022hasBgpOverride\u0022: false\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/routeTables/routes\u0022\r\n",
-        "      }\r\n",
-        "    ]\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet5161",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161",
+        "etag": "W/\u002215b3824e-79da-4e8c-80eb-34be64507573\u0022",
+        "type": "Microsoft.Network/routeTables",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "8d196a74-ae1f-4465-ab19-4c933652e587",
+          "disableBgpRoutePropagation": false,
+          "routes": [
+            {
+              "name": "azsmnet3390",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390",
+              "etag": "W/\u002215b3824e-79da-4e8c-80eb-34be64507573\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "192.168.1.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "23.108.1.1",
+                "hasBgpOverride": false
+              },
+              "type": "Microsoft.Network/routeTables/routes"
+            }
+          ]
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161?api-version=2020-04-01",
@@ -7021,7 +7015,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1076",
+        "Content-Length": "860",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:04:54 GMT",
         "ETag": "W/\u002215b3824e-79da-4e8c-80eb-34be64507573\u0022",
@@ -7040,35 +7034,33 @@
         "x-ms-request-id": "01eaad9f-643b-410e-a0b3-a1bbf10730c9",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060455Z:390de241-10f9-4358-afdb-46b55453916a"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet5161\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002215b3824e-79da-4e8c-80eb-34be64507573\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/routeTables\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00228d196a74-ae1f-4465-ab19-4c933652e587\u0022,\r\n",
-        "    \u0022disableBgpRoutePropagation\u0022: false,\r\n",
-        "    \u0022routes\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet3390\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u002215b3824e-79da-4e8c-80eb-34be64507573\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u0022192.168.1.0/24\u0022,\r\n",
-        "          \u0022nextHopType\u0022: \u0022VirtualAppliance\u0022,\r\n",
-        "          \u0022nextHopIpAddress\u0022: \u002223.108.1.1\u0022,\r\n",
-        "          \u0022hasBgpOverride\u0022: false\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/routeTables/routes\u0022\r\n",
-        "      }\r\n",
-        "    ]\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet5161",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161",
+        "etag": "W/\u002215b3824e-79da-4e8c-80eb-34be64507573\u0022",
+        "type": "Microsoft.Network/routeTables",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "8d196a74-ae1f-4465-ab19-4c933652e587",
+          "disableBgpRoutePropagation": false,
+          "routes": [
+            {
+              "name": "azsmnet3390",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390",
+              "etag": "W/\u002215b3824e-79da-4e8c-80eb-34be64507573\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "192.168.1.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "23.108.1.1",
+                "hasBgpOverride": false
+              },
+              "type": "Microsoft.Network/routeTables/routes"
+            }
+          ]
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390?api-version=2020-04-01",
@@ -7088,7 +7080,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "509",
+        "Content-Length": "443",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:04:54 GMT",
         "ETag": "W/\u002215b3824e-79da-4e8c-80eb-34be64507573\u0022",
@@ -7107,21 +7099,19 @@
         "x-ms-request-id": "b6598d3d-578a-4e74-a92e-ec86b5d80ee6",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060455Z:da538d75-ed35-49e5-9072-9d26ab2fd2ec"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet3390\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002215b3824e-79da-4e8c-80eb-34be64507573\\\u0022\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022addressPrefix\u0022: \u0022192.168.1.0/24\u0022,\r\n",
-        "    \u0022nextHopType\u0022: \u0022VirtualAppliance\u0022,\r\n",
-        "    \u0022nextHopIpAddress\u0022: \u002223.108.1.1\u0022,\r\n",
-        "    \u0022hasBgpOverride\u0022: false\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/routeTables/routes\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet3390",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390",
+        "etag": "W/\u002215b3824e-79da-4e8c-80eb-34be64507573\u0022",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "addressPrefix": "192.168.1.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "23.108.1.1",
+          "hasBgpOverride": false
+        },
+        "type": "Microsoft.Network/routeTables/routes"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237?api-version=2020-04-01",
@@ -7150,7 +7140,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/592e8866-0f74-4007-92dc-f022d1f22e64?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "459",
+        "Content-Length": "400",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:04:55 GMT",
         "Expires": "-1",
@@ -7169,20 +7159,18 @@
         "x-ms-request-id": "592e8866-0f74-4007-92dc-f022d1f22e64",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060456Z:3fa75597-2a9c-48ff-b010-e4dde825edda"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet8237\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022b535f6ba-44a5-45f5-8b85-c246b287035c\\\u0022\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
-        "    \u0022nextHopType\u0022: \u0022VnetLocal\u0022,\r\n",
-        "    \u0022hasBgpOverride\u0022: false\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/routeTables/routes\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet8237",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237",
+        "etag": "W/\u0022b535f6ba-44a5-45f5-8b85-c246b287035c\u0022",
+        "properties": {
+          "provisioningState": "Updating",
+          "addressPrefix": "10.0.1.0/24",
+          "nextHopType": "VnetLocal",
+          "hasBgpOverride": false
+        },
+        "type": "Microsoft.Network/routeTables/routes"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161?api-version=2020-04-01",
@@ -7202,7 +7190,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1611",
+        "Content-Length": "1262",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:04:55 GMT",
         "ETag": "W/\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\u0022",
@@ -7221,47 +7209,45 @@
         "x-ms-request-id": "43b142b7-2919-42d7-a6c8-6d7a5a2919b3",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060456Z:b8774864-5b69-44c1-bce0-72b3cc0bd91a"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet5161\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/routeTables\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00228d196a74-ae1f-4465-ab19-4c933652e587\u0022,\r\n",
-        "    \u0022disableBgpRoutePropagation\u0022: false,\r\n",
-        "    \u0022routes\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet3390\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u0022192.168.1.0/24\u0022,\r\n",
-        "          \u0022nextHopType\u0022: \u0022VirtualAppliance\u0022,\r\n",
-        "          \u0022nextHopIpAddress\u0022: \u002223.108.1.1\u0022,\r\n",
-        "          \u0022hasBgpOverride\u0022: false\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/routeTables/routes\u0022\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet8237\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
-        "          \u0022nextHopType\u0022: \u0022VnetLocal\u0022,\r\n",
-        "          \u0022hasBgpOverride\u0022: false\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/routeTables/routes\u0022\r\n",
-        "      }\r\n",
-        "    ]\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet5161",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161",
+        "etag": "W/\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\u0022",
+        "type": "Microsoft.Network/routeTables",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "8d196a74-ae1f-4465-ab19-4c933652e587",
+          "disableBgpRoutePropagation": false,
+          "routes": [
+            {
+              "name": "azsmnet3390",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390",
+              "etag": "W/\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "192.168.1.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "23.108.1.1",
+                "hasBgpOverride": false
+              },
+              "type": "Microsoft.Network/routeTables/routes"
+            },
+            {
+              "name": "azsmnet8237",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237",
+              "etag": "W/\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.1.0/24",
+                "nextHopType": "VnetLocal",
+                "hasBgpOverride": false
+              },
+              "type": "Microsoft.Network/routeTables/routes"
+            }
+          ]
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237?api-version=2020-04-01",
@@ -7281,7 +7267,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "460",
+        "Content-Length": "401",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:04:55 GMT",
         "ETag": "W/\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\u0022",
@@ -7300,20 +7286,18 @@
         "x-ms-request-id": "27038cf1-4ac9-4495-b820-e6a81b577936",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060456Z:29731757-3ab8-4a42-885f-c44ad069d594"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet8237\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\\\u0022\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
-        "    \u0022nextHopType\u0022: \u0022VnetLocal\u0022,\r\n",
-        "    \u0022hasBgpOverride\u0022: false\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/routeTables/routes\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet8237",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237",
+        "etag": "W/\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\u0022",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "addressPrefix": "10.0.1.0/24",
+          "nextHopType": "VnetLocal",
+          "hasBgpOverride": false
+        },
+        "type": "Microsoft.Network/routeTables/routes"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes?api-version=2020-04-01",
@@ -7332,7 +7316,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1097",
+        "Content-Length": "857",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:04:56 GMT",
         "Expires": "-1",
@@ -7350,37 +7334,35 @@
         "x-ms-request-id": "b8ef5285-bc4e-45f7-bdc4-285c36dbff48",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060456Z:5c045ed2-ba0e-4638-a82b-0a8e19558a94"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet3390\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390\u0022,\r\n",
-        "      \u0022etag\u0022: \u0022W/\\\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\\\u0022\u0022,\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "        \u0022addressPrefix\u0022: \u0022192.168.1.0/24\u0022,\r\n",
-        "        \u0022nextHopType\u0022: \u0022VirtualAppliance\u0022,\r\n",
-        "        \u0022nextHopIpAddress\u0022: \u002223.108.1.1\u0022,\r\n",
-        "        \u0022hasBgpOverride\u0022: false\r\n",
-        "      },\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Network/routeTables/routes\u0022\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet8237\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237\u0022,\r\n",
-        "      \u0022etag\u0022: \u0022W/\\\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\\\u0022\u0022,\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "        \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
-        "        \u0022nextHopType\u0022: \u0022VnetLocal\u0022,\r\n",
-        "        \u0022hasBgpOverride\u0022: false\r\n",
-        "      },\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Network/routeTables/routes\u0022\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "azsmnet3390",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390",
+            "etag": "W/\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\u0022",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "addressPrefix": "192.168.1.0/24",
+              "nextHopType": "VirtualAppliance",
+              "nextHopIpAddress": "23.108.1.1",
+              "hasBgpOverride": false
+            },
+            "type": "Microsoft.Network/routeTables/routes"
+          },
+          {
+            "name": "azsmnet8237",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237",
+            "etag": "W/\u002236571ed0-b0ef-4f2b-b2ae-b3b005bc6ce1\u0022",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "addressPrefix": "10.0.1.0/24",
+              "nextHopType": "VnetLocal",
+              "hasBgpOverride": false
+            },
+            "type": "Microsoft.Network/routeTables/routes"
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet3390?api-version=2020-04-01",
@@ -7439,7 +7421,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "533",
+        "Content-Length": "413",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:04:56 GMT",
         "Expires": "-1",
@@ -7457,24 +7439,22 @@
         "x-ms-request-id": "58b1cd4f-cc3b-491e-a140-8df4dc190e75",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060457Z:c6f66615-7a45-4c92-89ce-40f4d9206302"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet8237\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237\u0022,\r\n",
-        "      \u0022etag\u0022: \u0022W/\\\u002295832866-cfc8-488b-8644-66509c5174c7\\\u0022\u0022,\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "        \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
-        "        \u0022nextHopType\u0022: \u0022VnetLocal\u0022,\r\n",
-        "        \u0022hasBgpOverride\u0022: false\r\n",
-        "      },\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Network/routeTables/routes\u0022\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "azsmnet8237",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237",
+            "etag": "W/\u002295832866-cfc8-488b-8644-66509c5174c7\u0022",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "addressPrefix": "10.0.1.0/24",
+              "nextHopType": "VnetLocal",
+              "hasBgpOverride": false
+            },
+            "type": "Microsoft.Network/routeTables/routes"
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161/routes/azsmnet8237?api-version=2020-04-01",
@@ -7533,7 +7513,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "19",
+        "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:04:57 GMT",
         "Expires": "-1",
@@ -7551,11 +7531,9 @@
         "x-ms-request-id": "7a2f29aa-d0e0-4952-8393-02f6d2d8350b",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060458Z:ea54ad05-7d71-4842-a52f-4698fff72d58"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: []\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": []
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5190/providers/Microsoft.Network/routeTables/azsmnet5161?api-version=2020-04-01",
@@ -7615,7 +7593,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "19",
+        "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:04:58 GMT",
         "Expires": "-1",
@@ -7633,11 +7611,9 @@
         "x-ms-request-id": "2bb115a3-cf30-4a71-9ba4-a975cbe1ac00",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060459Z:1eb80412-c971-4c11-9aea-e19a888e34f5"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: []\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": []
+      }
     }
   ],
   "Variables": {

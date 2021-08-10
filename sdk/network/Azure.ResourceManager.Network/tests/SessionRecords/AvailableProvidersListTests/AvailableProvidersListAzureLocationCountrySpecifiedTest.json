@@ -2,77 +2,1625 @@
   "Entries": [
     {
       "RequestUri": "/subscriptions/6926fc75-ce7d-4c9e-a87f-c4e38c594eb5/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher/availableProvidersList?api-version=2017-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjkyNmZjNzUtY2U3ZC00YzllLWE4N2YtYzRlMzhjNTk0ZWI1L3Jlc291cmNlR3JvdXBzL05ldHdvcmtXYXRjaGVyUkcvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL25ldHdvcmtXYXRjaGVycy9OZXR3b3JrV2F0Y2hlci9hdmFpbGFibGVQcm92aWRlcnNMaXN0P2FwaS12ZXJzaW9uPTIwMTctMDktMDE=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"azureLocations\": [\r\n    \"West US\"\r\n  ],\r\n  \"country\": \"United States\"\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "78"
-        ],
-        "x-ms-client-request-id": [
-          "e1459dc3-35e0-49ad-90cf-0979cfcdb520"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
+        "accept-language": "en-US",
+        "Content-Length": "56",
+        "Content-Type": "application/json; charset=utf-8",
         "User-Agent": [
           "FxVersion/4.6.25211.01",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/15.0.0.0"
-        ]
+        ],
+        "x-ms-client-request-id": "e1459dc3-35e0-49ad-90cf-0979cfcdb520"
       },
-      "ResponseBody": "{\r\n  \"countries\": [\r\n    {\r\n      \"countryName\": \"United States\",\r\n      \"providers\": [\r\n        \"1&1 Internet AG\",\r\n        \"1&1 Internet AG - ASN 8560\",\r\n        \"1&1 Internet SE - ASN 8560\",\r\n        \"AT&T Data Communications Services\",\r\n        \"AT&T Data Communications Services - ASN 2386\",\r\n        \"AT&T Internet Services\",\r\n        \"AT&T Internet Services - ASN 10774\",\r\n        \"AT&T Internet Services - ASN 7132\",\r\n        \"AT&T Mobility LLC\",\r\n        \"AT&T Mobility LLC - ASN 20057\",\r\n        \"AT&T Services, Inc.\",\r\n        \"AT&T Services, Inc. - ASN 7018\",\r\n        \"Abovenet Communications, Inc\",\r\n        \"Abovenet Communications, Inc - ASN 6461\",\r\n        \"Amazon.com, Inc.\",\r\n        \"Amazon.com, Inc. - ASN 14618\",\r\n        \"Amazon.com, Inc. - ASN 16509\",\r\n        \"Anthem Blue Cross Blue Shield - ASN 22703\",\r\n        \"Armstrong Cable Services\",\r\n        \"Armstrong Cable Services - ASN 27364\",\r\n        \"Atlantic Broadband Finance, LLC - ASN 11776\",\r\n        \"Aureon Network Services - ASN 5056\",\r\n        \"Automatic Data Processing, Inc. - ASN 14299\",\r\n        \"B2 Net Solutions Inc.\",\r\n        \"B2 Net Solutions Inc. - ASN 55286\",\r\n        \"BRIGHT HOUSE NETWORKS, LLC\",\r\n        \"BRIGHT HOUSE NETWORKS, LLC - ASN 33363\",\r\n        \"BellSouth.net Inc.\",\r\n        \"BellSouth.net Inc. - ASN 6389\",\r\n        \"Blue Coat Systems, Inc\",\r\n        \"Blue Coat Systems, Inc - ASN 27471\",\r\n        \"Buckeye Cablevision, Inc. - ASN 13490\",\r\n        \"CABLE ONE, INC.\",\r\n        \"CABLE ONE, INC. - ASN 11492\",\r\n        \"Cablevision Systems Corp.\",\r\n        \"Cablevision Systems Corp. - ASN 6128\",\r\n        \"California State University, Office of the Chancellor\",\r\n        \"California State University, Office of the Chancellor - ASN 2152\",\r\n        \"California Technology Agency - ASN 1226\",\r\n        \"Cellco Partnership DBA Verizon Wireless\",\r\n        \"Cellco Partnership DBA Verizon Wireless - ASN 22394\",\r\n        \"CenturyTel Internet Holdings, Inc.\",\r\n        \"CenturyTel Internet Holdings, Inc. - ASN 22561\",\r\n        \"Charter Communications\",\r\n        \"Charter Communications - ASN 20115\",\r\n        \"Charter Communications - ASN 33588\",\r\n        \"Cincinnati Bell Telephone\",\r\n        \"Cincinnati Bell Telephone - ASN 6181\",\r\n        \"Cincinnati Bell Telephone Company LLC - ASN 6181\",\r\n        \"Clayton County Public Schools - ASN 63165\",\r\n        \"Cleveland Clinic Foundation\",\r\n        \"Cleveland Clinic Foundation - ASN 22093\",\r\n        \"Cogent Communications\",\r\n        \"Cogent Communications - ASN 174\",\r\n        \"ColoCrossing\",\r\n        \"Colocation America Corporation - ASN 21769\",\r\n        \"Comcast Cable Communications, Inc.\",\r\n        \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n        \"Comcast Cable Communications, LLC - ASN 7922\",\r\n        \"Community Health Systems Professional Services Corporation\",\r\n        \"Community Health Systems Professional Services Corporation - ASN 29766\",\r\n        \"Comporium, Inc - ASN 14615\",\r\n        \"Cox Communications Inc.\",\r\n        \"Cox Communications Inc. - ASN 22773\",\r\n        \"Delta Technology - ASN 26034\",\r\n        \"Department of Administrative Services - ASN 19902\",\r\n        \"Digital Energy Technologies Chile SpA - ASN 61440\",\r\n        \"Digital Ocean, Inc.\",\r\n        \"Digital Ocean, Inc. - ASN 14061\",\r\n        \"DigitalOcean, LLC - ASN 14061\",\r\n        \"DoD Network Information Center - ASN 721\",\r\n        \"EPB Fiber Optics - ASN 26827\",\r\n        \"Earthlink, Inc. - ASN 6983\",\r\n        \"Education Networks of America\",\r\n        \"Education Networks of America - ASN 11686\",\r\n        \"Energy Technologies Chile SpA - ASN 61440\",\r\n        \"FAIRPOINT COMMUNICATIONS, INC. - ASN 13977\",\r\n        \"Fibertech Networks, LLC - ASN 16657\",\r\n        \"Florida Department of Management Services - Technology Program\",\r\n        \"Florida Department of Management Services - Technology Program - ASN 8103\",\r\n        \"Froedtert Memorial Lutheran Hospital, Inc. - ASN 36600\",\r\n        \"Frontier Communications of America, Inc.\",\r\n        \"Frontier Communications of America, Inc. - ASN 5650\",\r\n        \"Fulton County Schools - ASN 394723\",\r\n        \"GENERAL COMMUNICATION, INC. - ASN 8047\",\r\n        \"General Services Commission - ASN 1761\",\r\n        \"Google Fiber Inc.\",\r\n        \"Google Fiber Inc. - ASN 16591\",\r\n        \"Grande Communications Networks, LLC\",\r\n        \"Grande Communications Networks, LLC - ASN 7459\",\r\n        \"HUMANA\",\r\n        \"HUMANA - ASN 19510\",\r\n        \"Hosting Services, Inc. - ASN 32780\",\r\n        \"HugeServer Networks, LLC\",\r\n        \"HugeServer Networks, LLC - ASN 25780\",\r\n        \"Hughes Network Systems\",\r\n        \"Hughes Network Systems - ASN 6621\",\r\n        \"Hurricane Electric, Inc. - ASN 6939\",\r\n        \"IO Capital Princess, LLC\",\r\n        \"IO Capital Princess, LLC - ASN 12025\",\r\n        \"IOWA HEALTH SYSTEM\",\r\n        \"IOWA HEALTH SYSTEM - ASN 32885\",\r\n        \"Integra Telecom, Inc.\",\r\n        \"Integra Telecom, Inc. - ASN 7385\",\r\n        \"Iowa Network Services - ASN 5056\",\r\n        \"Kennesaw State University\",\r\n        \"Kennesaw State University - ASN 3480\",\r\n        \"LOS ANGELES COUNTY - INTERNAL SERVICESDIVISION - ASN 11188\",\r\n        \"Level 3 Communications, Inc.\",\r\n        \"Level 3 Communications, Inc. (GBLX) - ASN 3549\",\r\n        \"Level 3 Communications, Inc. - ASN 3356\",\r\n        \"Level 3 Communications, Inc. - ASN 3549\",\r\n        \"Lightower Fiber Networks I, LLC\",\r\n        \"Lightower Fiber Networks I, LLC - ASN 46887\",\r\n        \"MCI Communications Services, Inc. d/b/a Verizon Business\",\r\n        \"MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701\",\r\n        \"MCNC\",\r\n        \"MCNC - ASN 81\",\r\n        \"Mediacom Communications Corp\",\r\n        \"Mediacom Communications Corp - ASN 30036\",\r\n        \"Merit Network Inc. - ASN 237\",\r\n        \"Micfo, LLC. - ASN 53889\",\r\n        \"Microsoft Corporation\",\r\n        \"Microsoft Corporation - ASN 3598\",\r\n        \"Microsoft Corporation - ASN 8075\",\r\n        \"Midcontinent Communications - ASN 11232\",\r\n        \"Midcontinent Media, Inc.\",\r\n        \"Midcontinent Media, Inc. - ASN 11232\",\r\n        \"NFOrce Entertainment BV\",\r\n        \"NFOrce Entertainment BV - ASN 43350\",\r\n        \"NForce Entertainment B.V. - ASN 43350\",\r\n        \"NJ OIT - ASN 394417\",\r\n        \"Nobis Technology Group, LLC\",\r\n        \"Nobis Technology Group, LLC - ASN 15003\",\r\n        \"Northeast Regional Data Center - ASN 6356\",\r\n        \"Off Campus Telecommunications - ASN 29933\",\r\n        \"Ohio Public Library Information Network (OPLIN) - ASN 26923\",\r\n        \"Palm Beach County - ASN 46093\",\r\n        \"Peak 10\",\r\n        \"Peak 10 - ASN 19271\",\r\n        \"PenTeleData Inc.\",\r\n        \"PenTeleData Inc. - ASN 3737\",\r\n        \"Penn Medicine - ASN 46274\",\r\n        \"Qwest Communications Company, LLC\",\r\n        \"Qwest Communications Company, LLC - ASN 209\",\r\n        \"RCN\",\r\n        \"RCN - ASN 6079\",\r\n        \"Savvis\",\r\n        \"Savvis - ASN 3561\",\r\n        \"Southern New England Telephone Company and SNET America, Inc.\",\r\n        \"Southern New England Telephone Company and SNET America, Inc. - ASN 46690\",\r\n        \"Spirit Communications - ASN 2711\",\r\n        \"Spirit Telecom - ASN 2711\",\r\n        \"Sprint\",\r\n        \"Sprint - ASN 1239\",\r\n        \"State of Minnesota - ASN 1998\",\r\n        \"State of NC - State Telecommunications Services - ASN 6559\",\r\n        \"Suddenlink Communications\",\r\n        \"Suddenlink Communications - ASN 19108\",\r\n        \"SunGard Availability Services LP - ASN 7381\",\r\n        \"Symantec Corporation - ASN 27471\",\r\n        \"T-Mobile USA, Inc.\",\r\n        \"T-Mobile USA, Inc. - ASN 21928\",\r\n        \"TDS TELECOM\",\r\n        \"TDS TELECOM - ASN 4181\",\r\n        \"TPx Communications - ASN 14265\",\r\n        \"Telepacific Communications\",\r\n        \"Telepacific Communications - ASN 14265\",\r\n        \"The City of New York - ASN 22252\",\r\n        \"The Dow Chemical Company - ASN 1678\",\r\n        \"Time Warner Cable Internet LLC\",\r\n        \"Time Warner Cable Internet LLC - ASN 10796\",\r\n        \"Time Warner Cable Internet LLC - ASN 11351\",\r\n        \"Time Warner Cable Internet LLC - ASN 11426\",\r\n        \"Time Warner Cable Internet LLC - ASN 11427\",\r\n        \"Time Warner Cable Internet LLC - ASN 12271\",\r\n        \"Time Warner Cable Internet LLC - ASN 20001\",\r\n        \"Travelers Property Casualty Corp. - ASN 17166\",\r\n        \"U.S. Dept. of Health and Human Services - ASN 26810\",\r\n        \"UBS AG\",\r\n        \"UBS AG - ASN 10615\",\r\n        \"Union Pacific Railroad Company - ASN 10405\",\r\n        \"Unitedhealthcare\",\r\n        \"Unitedhealthcare - ASN 10879\",\r\n        \"Verizon Business/UUnet - ASN 701\",\r\n        \"Verizon Online LLC - ASN 11486\",\r\n        \"ViaSat,Inc. - ASN 7155\",\r\n        \"Washington State K-20 Telecommunications Network - ASN 10430\",\r\n        \"Wells Fargo & Company\",\r\n        \"Wells Fargo & Company - ASN 4196\",\r\n        \"West Virginia Network for Educational Telecomputing - ASN 7925\",\r\n        \"WestHost, Inc.\",\r\n        \"WestHost, Inc. - ASN 29854\",\r\n        \"WholeSale Internet, Inc.\",\r\n        \"WholeSale Internet, Inc. - ASN 32097\",\r\n        \"WideOpenWest Finance LLC\",\r\n        \"WideOpenWest Finance LLC - ASN 12083\",\r\n        \"Windstream Communications Inc\",\r\n        \"Windstream Communications Inc - ASN 7029\",\r\n        \"Windstream Communications LLC - ASN 7029\",\r\n        \"XMission, L.C.\",\r\n        \"XMission, L.C. - ASN 6315\",\r\n        \"XO Communications\",\r\n        \"XO Communications - ASN 2828\",\r\n        \"ZSCALER, INC. - ASN 22616\",\r\n        \"Zayo Bandwidth - ASN 6461\",\r\n        \"vanoppen.biz LLC\",\r\n        \"vanoppen.biz LLC - ASN 11404\"\r\n      ],\r\n      \"states\": [\r\n        {\r\n          \"stateName\": \"alabama\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Charter Communications\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Wells Fargo & Company - ASN 4196\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"oxford\",\r\n              \"providers\": [\r\n                \"Wells Fargo & Company - ASN 4196\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"alaska\",\r\n          \"providers\": [\r\n            \"GENERAL COMMUNICATION, INC. - ASN 8047\"\r\n          ],\r\n          \"cities\": []\r\n        },\r\n        {\r\n          \"stateName\": \"arizona\",\r\n          \"providers\": [\r\n            \"Cox Communications Inc.\",\r\n            \"Cox Communications Inc. - ASN 22773\",\r\n            \"Qwest Communications Company, LLC\",\r\n            \"Qwest Communications Company, LLC - ASN 209\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"phoenix\",\r\n              \"providers\": [\r\n                \"Cox Communications Inc.\",\r\n                \"Cox Communications Inc. - ASN 22773\",\r\n                \"Qwest Communications Company, LLC\",\r\n                \"Qwest Communications Company, LLC - ASN 209\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"tucson\",\r\n              \"providers\": [\r\n                \"Cox Communications Inc. - ASN 22773\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"arkansas\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Cox Communications Inc. - ASN 22773\"\r\n          ],\r\n          \"cities\": []\r\n        },\r\n        {\r\n          \"stateName\": \"california\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"California State University, Office of the Chancellor\",\r\n            \"California State University, Office of the Chancellor - ASN 2152\",\r\n            \"California Technology Agency - ASN 1226\",\r\n            \"Charter Communications\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Cogent Communications - ASN 174\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Cox Communications Inc.\",\r\n            \"Cox Communications Inc. - ASN 22773\",\r\n            \"Frontier Communications of America, Inc.\",\r\n            \"Frontier Communications of America, Inc. - ASN 5650\",\r\n            \"HugeServer Networks, LLC\",\r\n            \"HugeServer Networks, LLC - ASN 25780\",\r\n            \"LOS ANGELES COUNTY - INTERNAL SERVICESDIVISION - ASN 11188\",\r\n            \"Level 3 Communications, Inc.\",\r\n            \"Level 3 Communications, Inc. (GBLX) - ASN 3549\",\r\n            \"Level 3 Communications, Inc. - ASN 3549\",\r\n            \"Nobis Technology Group, LLC\",\r\n            \"Nobis Technology Group, LLC - ASN 15003\",\r\n            \"TPx Communications - ASN 14265\",\r\n            \"Telepacific Communications\",\r\n            \"Telepacific Communications - ASN 14265\",\r\n            \"Time Warner Cable Internet LLC\",\r\n            \"Time Warner Cable Internet LLC - ASN 20001\",\r\n            \"WestHost, Inc. - ASN 29854\",\r\n            \"XO Communications - ASN 2828\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"lebec\",\r\n              \"providers\": [\r\n                \"AT&T Services, Inc. - ASN 7018\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"los angeles\",\r\n              \"providers\": [\r\n                \"AT&T Services, Inc.\",\r\n                \"AT&T Services, Inc. - ASN 7018\",\r\n                \"HugeServer Networks, LLC\",\r\n                \"HugeServer Networks, LLC - ASN 25780\",\r\n                \"LOS ANGELES COUNTY - INTERNAL SERVICESDIVISION - ASN 11188\",\r\n                \"Time Warner Cable Internet LLC\",\r\n                \"Time Warner Cable Internet LLC - ASN 20001\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"sacramento\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"san diego\",\r\n              \"providers\": [\r\n                \"AT&T Services, Inc. - ASN 7018\",\r\n                \"Cox Communications Inc. - ASN 22773\",\r\n                \"Time Warner Cable Internet LLC - ASN 20001\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"san francisco\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"san jose\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"thousand oaks\",\r\n              \"providers\": [\r\n                \"Nobis Technology Group, LLC\",\r\n                \"Nobis Technology Group, LLC - ASN 15003\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"colorado\",\r\n          \"providers\": [\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Qwest Communications Company, LLC\",\r\n            \"Qwest Communications Company, LLC - ASN 209\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"colorado springs\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\",\r\n                \"Qwest Communications Company, LLC - ASN 209\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"denver\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc.\",\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\",\r\n                \"Qwest Communications Company, LLC - ASN 209\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"fountain\",\r\n              \"providers\": [\r\n                \"Qwest Communications Company, LLC - ASN 209\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"connecticut\",\r\n          \"providers\": [\r\n            \"Cablevision Systems Corp.\",\r\n            \"Cablevision Systems Corp. - ASN 6128\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Southern New England Telephone Company and SNET America, Inc.\",\r\n            \"Southern New England Telephone Company and SNET America, Inc. - ASN 46690\"\r\n          ],\r\n          \"cities\": []\r\n        },\r\n        {\r\n          \"stateName\": \"delaware\",\r\n          \"providers\": [\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\"\r\n          ],\r\n          \"cities\": []\r\n        },\r\n        {\r\n          \"stateName\": \"district of columbia\",\r\n          \"providers\": [\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"washington\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"florida\",\r\n          \"providers\": [\r\n            \"AT&T Internet Services\",\r\n            \"AT&T Internet Services - ASN 10774\",\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"BRIGHT HOUSE NETWORKS, LLC\",\r\n            \"BRIGHT HOUSE NETWORKS, LLC - ASN 33363\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Cox Communications Inc.\",\r\n            \"Cox Communications Inc. - ASN 22773\",\r\n            \"Florida Department of Management Services - Technology Program\",\r\n            \"Florida Department of Management Services - Technology Program - ASN 8103\",\r\n            \"Frontier Communications of America, Inc.\",\r\n            \"Frontier Communications of America, Inc. - ASN 5650\",\r\n            \"Level 3 Communications, Inc.\",\r\n            \"Level 3 Communications, Inc. - ASN 3356\",\r\n            \"Level 3 Communications, Inc. - ASN 3549\",\r\n            \"Micfo, LLC. - ASN 53889\",\r\n            \"Northeast Regional Data Center - ASN 6356\",\r\n            \"Palm Beach County - ASN 46093\",\r\n            \"Qwest Communications Company, LLC\",\r\n            \"Qwest Communications Company, LLC - ASN 209\",\r\n            \"Windstream Communications Inc - ASN 7029\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"fort lauderdale\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"gainesville\",\r\n              \"providers\": [\r\n                \"Cox Communications Inc. - ASN 22773\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"jacksonville\",\r\n              \"providers\": [\r\n                \"AT&T Internet Services - ASN 10774\",\r\n                \"Comcast Cable Communications, Inc.\",\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"miami\",\r\n              \"providers\": [\r\n                \"AT&T Services, Inc. - ASN 7018\",\r\n                \"Comcast Cable Communications, Inc.\",\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\",\r\n                \"Micfo, LLC. - ASN 53889\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"orlando\",\r\n              \"providers\": [\r\n                \"BRIGHT HOUSE NETWORKS, LLC\",\r\n                \"BRIGHT HOUSE NETWORKS, LLC - ASN 33363\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"tallahassee\",\r\n              \"providers\": [\r\n                \"Florida Department of Management Services - Technology Program\",\r\n                \"Florida Department of Management Services - Technology Program - ASN 8103\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"tampa\",\r\n              \"providers\": [\r\n                \"BRIGHT HOUSE NETWORKS, LLC\",\r\n                \"BRIGHT HOUSE NETWORKS, LLC - ASN 33363\",\r\n                \"Frontier Communications of America, Inc. - ASN 5650\",\r\n                \"Level 3 Communications, Inc.\",\r\n                \"Level 3 Communications, Inc. - ASN 3356\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"georgia\",\r\n          \"providers\": [\r\n            \"AT&T Mobility LLC - ASN 20057\",\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Charter Communications\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Clayton County Public Schools - ASN 63165\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Cox Communications Inc. - ASN 22773\",\r\n            \"Delta Technology - ASN 26034\",\r\n            \"Fulton County Schools - ASN 394723\",\r\n            \"Kennesaw State University\",\r\n            \"Kennesaw State University - ASN 3480\",\r\n            \"Windstream Communications Inc\",\r\n            \"Windstream Communications Inc - ASN 7029\",\r\n            \"Windstream Communications LLC - ASN 7029\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"alpharetta\",\r\n              \"providers\": [\r\n                \"Fulton County Schools - ASN 394723\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"atlanta\",\r\n              \"providers\": [\r\n                \"AT&T Mobility LLC - ASN 20057\",\r\n                \"AT&T Services, Inc. - ASN 7018\",\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\",\r\n                \"Delta Technology - ASN 26034\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"kennesaw\",\r\n              \"providers\": [\r\n                \"Kennesaw State University - ASN 3480\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"marietta\",\r\n              \"providers\": [\r\n                \"Kennesaw State University - ASN 3480\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"hawaii\",\r\n          \"providers\": [\r\n            \"Time Warner Cable Internet LLC\",\r\n            \"Time Warner Cable Internet LLC - ASN 20001\"\r\n          ],\r\n          \"cities\": []\r\n        },\r\n        {\r\n          \"stateName\": \"idaho\",\r\n          \"providers\": [\r\n            \"Qwest Communications Company, LLC - ASN 209\"\r\n          ],\r\n          \"cities\": []\r\n        },\r\n        {\r\n          \"stateName\": \"illinois\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Cogent Communications\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Frontier Communications of America, Inc. - ASN 5650\",\r\n            \"Mediacom Communications Corp - ASN 30036\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"chicago\",\r\n              \"providers\": [\r\n                \"AT&T Services, Inc.\",\r\n                \"AT&T Services, Inc. - ASN 7018\",\r\n                \"Comcast Cable Communications, Inc.\",\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"indiana\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Frontier Communications of America, Inc. - ASN 5650\",\r\n            \"Time Warner Cable Internet LLC - ASN 10796\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"indianapolis\",\r\n              \"providers\": [\r\n                \"AT&T Services, Inc. - ASN 7018\",\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"iowa\",\r\n          \"providers\": [\r\n            \"Aureon Network Services - ASN 5056\",\r\n            \"IOWA HEALTH SYSTEM - ASN 32885\",\r\n            \"Iowa Network Services - ASN 5056\",\r\n            \"Mediacom Communications Corp\",\r\n            \"Mediacom Communications Corp - ASN 30036\",\r\n            \"Microsoft Corporation - ASN 8075\",\r\n            \"Qwest Communications Company, LLC - ASN 209\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"des moines\",\r\n              \"providers\": [\r\n                \"Microsoft Corporation - ASN 8075\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"kansas\",\r\n          \"providers\": [\r\n            \"1&1 Internet AG\",\r\n            \"1&1 Internet AG - ASN 8560\",\r\n            \"1&1 Internet SE - ASN 8560\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Cox Communications Inc.\",\r\n            \"Cox Communications Inc. - ASN 22773\",\r\n            \"Google Fiber Inc. - ASN 16591\",\r\n            \"Time Warner Cable Internet LLC - ASN 11427\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"lenexa\",\r\n              \"providers\": [\r\n                \"1&1 Internet AG\",\r\n                \"1&1 Internet AG - ASN 8560\",\r\n                \"1&1 Internet SE - ASN 8560\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"wichita\",\r\n              \"providers\": [\r\n                \"Cox Communications Inc. - ASN 22773\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"kentucky\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"HUMANA\",\r\n            \"HUMANA - ASN 19510\",\r\n            \"Time Warner Cable Internet LLC\",\r\n            \"Time Warner Cable Internet LLC - ASN 10796\",\r\n            \"Windstream Communications Inc - ASN 7029\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"louisville\",\r\n              \"providers\": [\r\n                \"HUMANA\",\r\n                \"HUMANA - ASN 19510\",\r\n                \"Time Warner Cable Internet LLC - ASN 10796\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"louisiana\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Cox Communications Inc.\",\r\n            \"Cox Communications Inc. - ASN 22773\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"baton rouge\",\r\n              \"providers\": [\r\n                \"Cox Communications Inc. - ASN 22773\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"maine\",\r\n          \"providers\": [\r\n            \"Time Warner Cable Internet LLC\",\r\n            \"Time Warner Cable Internet LLC - ASN 11351\"\r\n          ],\r\n          \"cities\": []\r\n        },\r\n        {\r\n          \"stateName\": \"maryland\",\r\n          \"providers\": [\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Hughes Network Systems\",\r\n            \"Hughes Network Systems - ASN 6621\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701\",\r\n            \"Verizon Business/UUnet - ASN 701\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"baltimore\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"germantown\",\r\n              \"providers\": [\r\n                \"Hughes Network Systems\",\r\n                \"Hughes Network Systems - ASN 6621\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"silver spring\",\r\n              \"providers\": [\r\n                \"MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"massachusetts\",\r\n          \"providers\": [\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701\",\r\n            \"Verizon Business/UUnet - ASN 701\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"boston\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc.\",\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"michigan\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Charter Communications\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Merit Network Inc. - ASN 237\",\r\n            \"The Dow Chemical Company - ASN 1678\",\r\n            \"WideOpenWest Finance LLC - ASN 12083\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"dearborn\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"minnesota\",\r\n          \"providers\": [\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Qwest Communications Company, LLC\",\r\n            \"Qwest Communications Company, LLC - ASN 209\",\r\n            \"State of Minnesota - ASN 1998\",\r\n            \"Travelers Property Casualty Corp. - ASN 17166\",\r\n            \"Unitedhealthcare\",\r\n            \"Unitedhealthcare - ASN 10879\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"minneapolis\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\",\r\n                \"Qwest Communications Company, LLC - ASN 209\",\r\n                \"Unitedhealthcare\",\r\n                \"Unitedhealthcare - ASN 10879\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"saint paul\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Travelers Property Casualty Corp. - ASN 17166\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"mississippi\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\"\r\n          ],\r\n          \"cities\": []\r\n        },\r\n        {\r\n          \"stateName\": \"missouri\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Charter Communications\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Google Fiber Inc. - ASN 16591\",\r\n            \"WholeSale Internet, Inc.\",\r\n            \"WholeSale Internet, Inc. - ASN 32097\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"kansas city\",\r\n              \"providers\": [\r\n                \"WholeSale Internet, Inc.\",\r\n                \"WholeSale Internet, Inc. - ASN 32097\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"saint louis\",\r\n              \"providers\": [\r\n                \"AT&T Services, Inc. - ASN 7018\",\r\n                \"Charter Communications - ASN 20115\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"montana\",\r\n          \"providers\": [\r\n            \"Charter Communications - ASN 33588\"\r\n          ],\r\n          \"cities\": []\r\n        },\r\n        {\r\n          \"stateName\": \"nebraska\",\r\n          \"providers\": [\r\n            \"Cox Communications Inc. - ASN 22773\",\r\n            \"Time Warner Cable Internet LLC - ASN 11427\",\r\n            \"Union Pacific Railroad Company - ASN 10405\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"lincoln\",\r\n              \"providers\": [\r\n                \"Time Warner Cable Internet LLC - ASN 11427\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"omaha\",\r\n              \"providers\": [\r\n                \"Cox Communications Inc. - ASN 22773\",\r\n                \"Union Pacific Railroad Company - ASN 10405\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"nevada\",\r\n          \"providers\": [\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Cox Communications Inc.\",\r\n            \"Cox Communications Inc. - ASN 22773\",\r\n            \"NFOrce Entertainment BV\",\r\n            \"NFOrce Entertainment BV - ASN 43350\",\r\n            \"NForce Entertainment B.V. - ASN 43350\",\r\n            \"WestHost, Inc. - ASN 29854\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"las vegas\",\r\n              \"providers\": [\r\n                \"Cox Communications Inc.\",\r\n                \"Cox Communications Inc. - ASN 22773\",\r\n                \"NFOrce Entertainment BV\",\r\n                \"NFOrce Entertainment BV - ASN 43350\",\r\n                \"NForce Entertainment B.V. - ASN 43350\",\r\n                \"WestHost, Inc. - ASN 29854\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"new hampshire\",\r\n          \"providers\": [\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\"\r\n          ],\r\n          \"cities\": []\r\n        },\r\n        {\r\n          \"stateName\": \"new jersey\",\r\n          \"providers\": [\r\n            \"Automatic Data Processing, Inc. - ASN 14299\",\r\n            \"Cablevision Systems Corp.\",\r\n            \"Cablevision Systems Corp. - ASN 6128\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"IO Capital Princess, LLC\",\r\n            \"IO Capital Princess, LLC - ASN 12025\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701\",\r\n            \"NJ OIT - ASN 394417\",\r\n            \"Verizon Business/UUnet - ASN 701\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"edison\",\r\n              \"providers\": [\r\n                \"IO Capital Princess, LLC\",\r\n                \"IO Capital Princess, LLC - ASN 12025\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"princeton junction\",\r\n              \"providers\": [\r\n                \"NJ OIT - ASN 394417\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"trenton\",\r\n              \"providers\": [\r\n                \"NJ OIT - ASN 394417\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"new mexico\",\r\n          \"providers\": [\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Qwest Communications Company, LLC - ASN 209\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"albuquerque\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Qwest Communications Company, LLC - ASN 209\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"silver city\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"new york\",\r\n          \"providers\": [\r\n            \"\",\r\n            \"B2 Net Solutions Inc.\",\r\n            \"B2 Net Solutions Inc. - ASN 55286\",\r\n            \"Cablevision Systems Corp.\",\r\n            \"Cablevision Systems Corp. - ASN 6128\",\r\n            \"Cogent Communications - ASN 174\",\r\n            \"ColoCrossing\",\r\n            \"Digital Ocean, Inc.\",\r\n            \"Digital Ocean, Inc. - ASN 14061\",\r\n            \"DigitalOcean, LLC - ASN 14061\",\r\n            \"Frontier Communications of America, Inc. - ASN 5650\",\r\n            \"Hosting Services, Inc. - ASN 32780\",\r\n            \"Lightower Fiber Networks I, LLC - ASN 46887\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701\",\r\n            \"The City of New York - ASN 22252\",\r\n            \"Time Warner Cable Internet LLC\",\r\n            \"Time Warner Cable Internet LLC - ASN 11351\",\r\n            \"Time Warner Cable Internet LLC - ASN 12271\",\r\n            \"UBS AG - ASN 10615\",\r\n            \"Verizon Business/UUnet - ASN 701\",\r\n            \"WestHost, Inc.\",\r\n            \"WestHost, Inc. - ASN 29854\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"brockport\",\r\n              \"providers\": [\r\n                \"ColoCrossing\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"bronx\",\r\n              \"providers\": [\r\n                \"Cablevision Systems Corp. - ASN 6128\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"brooklyn\",\r\n              \"providers\": [\r\n                \"Cablevision Systems Corp.\",\r\n                \"Cablevision Systems Corp. - ASN 6128\",\r\n                \"The City of New York - ASN 22252\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"buffalo\",\r\n              \"providers\": [\r\n                \"B2 Net Solutions Inc.\",\r\n                \"B2 Net Solutions Inc. - ASN 55286\",\r\n                \"ColoCrossing\",\r\n                \"Time Warner Cable Internet LLC - ASN 11351\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"hempstead\",\r\n              \"providers\": [\r\n                \"MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701\",\r\n                \"Verizon Business/UUnet - ASN 701\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"new york\",\r\n              \"providers\": [\r\n                \"\",\r\n                \"Cogent Communications - ASN 174\",\r\n                \"Digital Ocean, Inc.\",\r\n                \"Digital Ocean, Inc. - ASN 14061\",\r\n                \"DigitalOcean, LLC - ASN 14061\",\r\n                \"Hosting Services, Inc. - ASN 32780\",\r\n                \"MCI Communications Services, Inc. d/b/a Verizon Business\",\r\n                \"MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701\",\r\n                \"Time Warner Cable Internet LLC\",\r\n                \"Time Warner Cable Internet LLC - ASN 12271\",\r\n                \"UBS AG - ASN 10615\",\r\n                \"Verizon Business/UUnet - ASN 701\",\r\n                \"WestHost, Inc.\",\r\n                \"WestHost, Inc. - ASN 29854\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"rochester\",\r\n              \"providers\": [\r\n                \"Time Warner Cable Internet LLC\",\r\n                \"Time Warner Cable Internet LLC - ASN 11351\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"north carolina\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Charter Communications\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Level 3 Communications, Inc. (GBLX) - ASN 3549\",\r\n            \"Level 3 Communications, Inc. - ASN 3549\",\r\n            \"MCNC\",\r\n            \"MCNC - ASN 81\",\r\n            \"Qwest Communications Company, LLC\",\r\n            \"Qwest Communications Company, LLC - ASN 209\",\r\n            \"State of NC - State Telecommunications Services - ASN 6559\",\r\n            \"Time Warner Cable Internet LLC\",\r\n            \"Time Warner Cable Internet LLC - ASN 11426\",\r\n            \"Windstream Communications Inc - ASN 7029\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"asheville\",\r\n              \"providers\": [\r\n                \"MCNC - ASN 81\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"charlotte\",\r\n              \"providers\": [\r\n                \"Time Warner Cable Internet LLC\",\r\n                \"Time Warner Cable Internet LLC - ASN 11426\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"raleigh\",\r\n              \"providers\": [\r\n                \"Time Warner Cable Internet LLC - ASN 11426\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"ohio\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Buckeye Cablevision, Inc. - ASN 13490\",\r\n            \"Cincinnati Bell Telephone\",\r\n            \"Cincinnati Bell Telephone - ASN 6181\",\r\n            \"Cincinnati Bell Telephone Company LLC - ASN 6181\",\r\n            \"Cleveland Clinic Foundation\",\r\n            \"Department of Administrative Services - ASN 19902\",\r\n            \"Level 3 Communications, Inc. - ASN 3549\",\r\n            \"Ohio Public Library Information Network (OPLIN) - ASN 26923\",\r\n            \"Time Warner Cable Internet LLC\",\r\n            \"Time Warner Cable Internet LLC - ASN 10796\",\r\n            \"WideOpenWest Finance LLC - ASN 12083\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"cincinnati\",\r\n              \"providers\": [\r\n                \"Cincinnati Bell Telephone - ASN 6181\",\r\n                \"Cincinnati Bell Telephone Company LLC - ASN 6181\",\r\n                \"Time Warner Cable Internet LLC - ASN 10796\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"columbus\",\r\n              \"providers\": [\r\n                \"Department of Administrative Services - ASN 19902\",\r\n                \"Time Warner Cable Internet LLC - ASN 10796\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"oklahoma\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Cox Communications Inc.\",\r\n            \"Cox Communications Inc. - ASN 22773\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"oklahoma city\",\r\n              \"providers\": [\r\n                \"Cox Communications Inc. - ASN 22773\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"tulsa\",\r\n              \"providers\": [\r\n                \"Cox Communications Inc. - ASN 22773\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"oregon\",\r\n          \"providers\": [\r\n            \"Amazon.com, Inc.\",\r\n            \"Amazon.com, Inc. - ASN 16509\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Frontier Communications of America, Inc. - ASN 5650\",\r\n            \"Qwest Communications Company, LLC - ASN 209\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"boardman\",\r\n              \"providers\": [\r\n                \"Amazon.com, Inc.\",\r\n                \"Amazon.com, Inc. - ASN 16509\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"portland\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc.\",\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"pennsylvania\",\r\n          \"providers\": [\r\n            \"1&1 Internet AG\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Armstrong Cable Services - ASN 27364\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701\",\r\n            \"PenTeleData Inc.\",\r\n            \"PenTeleData Inc. - ASN 3737\",\r\n            \"Penn Medicine - ASN 46274\",\r\n            \"RCN - ASN 6079\",\r\n            \"Verizon Business/UUnet - ASN 701\",\r\n            \"Windstream Communications Inc - ASN 7029\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"philadelphia\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc.\",\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\",\r\n                \"MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701\",\r\n                \"Penn Medicine - ASN 46274\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"pittsburgh\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"wayne\",\r\n              \"providers\": [\r\n                \"1&1 Internet AG\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"rhode island\",\r\n          \"providers\": [\r\n            \"Cox Communications Inc. - ASN 22773\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701\"\r\n          ],\r\n          \"cities\": []\r\n        },\r\n        {\r\n          \"stateName\": \"south carolina\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Charter Communications\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Comporium, Inc - ASN 14615\",\r\n            \"Micfo, LLC. - ASN 53889\",\r\n            \"Spirit Communications - ASN 2711\",\r\n            \"Spirit Telecom - ASN 2711\",\r\n            \"Time Warner Cable Internet LLC\",\r\n            \"Time Warner Cable Internet LLC - ASN 11426\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"charleston\",\r\n              \"providers\": [\r\n                \"Micfo, LLC. - ASN 53889\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"tennessee\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Charter Communications\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Community Health Systems Professional Services Corporation\",\r\n            \"Community Health Systems Professional Services Corporation - ASN 29766\",\r\n            \"EPB Fiber Optics - ASN 26827\",\r\n            \"Education Networks of America\",\r\n            \"Education Networks of America - ASN 11686\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"brentwood\",\r\n              \"providers\": [\r\n                \"Community Health Systems Professional Services Corporation\",\r\n                \"Community Health Systems Professional Services Corporation - ASN 29766\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"memphis\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"nashville\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\",\r\n                \"Education Networks of America - ASN 11686\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"texas\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Charter Communications\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Cogent Communications - ASN 174\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Frontier Communications of America, Inc.\",\r\n            \"Frontier Communications of America, Inc. - ASN 5650\",\r\n            \"General Services Commission - ASN 1761\",\r\n            \"Grande Communications Networks, LLC\",\r\n            \"Grande Communications Networks, LLC - ASN 7459\",\r\n            \"Level 3 Communications, Inc.\",\r\n            \"Level 3 Communications, Inc. (GBLX) - ASN 3549\",\r\n            \"Level 3 Communications, Inc. - ASN 3356\",\r\n            \"Level 3 Communications, Inc. - ASN 3549\",\r\n            \"Suddenlink Communications\",\r\n            \"Suddenlink Communications - ASN 19108\",\r\n            \"Time Warner Cable Internet LLC\",\r\n            \"Time Warner Cable Internet LLC - ASN 11427\",\r\n            \"Windstream Communications Inc - ASN 7029\",\r\n            \"Windstream Communications LLC - ASN 7029\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"austin\",\r\n              \"providers\": [\r\n                \"AT&T Services, Inc. - ASN 7018\",\r\n                \"Time Warner Cable Internet LLC\",\r\n                \"Time Warner Cable Internet LLC - ASN 11427\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"dallas\",\r\n              \"providers\": [\r\n                \"AT&T Services, Inc. - ASN 7018\",\r\n                \"Time Warner Cable Internet LLC - ASN 11427\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"fort worth\",\r\n              \"providers\": [\r\n                \"AT&T Services, Inc. - ASN 7018\",\r\n                \"Charter Communications - ASN 20115\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"houston\",\r\n              \"providers\": [\r\n                \"AT&T Services, Inc.\",\r\n                \"AT&T Services, Inc. - ASN 7018\",\r\n                \"Comcast Cable Communications, Inc.\",\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"san antonio\",\r\n              \"providers\": [\r\n                \"AT&T Services, Inc. - ASN 7018\",\r\n                \"Time Warner Cable Internet LLC\",\r\n                \"Time Warner Cable Internet LLC - ASN 11427\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"utah\",\r\n          \"providers\": [\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Off Campus Telecommunications - ASN 29933\",\r\n            \"Qwest Communications Company, LLC - ASN 209\",\r\n            \"XMission, L.C.\",\r\n            \"XMission, L.C. - ASN 6315\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"lindon\",\r\n              \"providers\": [\r\n                \"XMission, L.C. - ASN 6315\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"pleasant grove\",\r\n              \"providers\": [\r\n                \"Off Campus Telecommunications - ASN 29933\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"salt lake city\",\r\n              \"providers\": [\r\n                \"XMission, L.C.\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"virginia\",\r\n          \"providers\": [\r\n            \"Amazon.com, Inc.\",\r\n            \"Amazon.com, Inc. - ASN 14618\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Cox Communications Inc.\",\r\n            \"Cox Communications Inc. - ASN 22773\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business\",\r\n            \"MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701\",\r\n            \"Microsoft Corporation - ASN 8075\",\r\n            \"Verizon Business/UUnet - ASN 701\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"ashburn\",\r\n              \"providers\": [\r\n                \"Amazon.com, Inc.\",\r\n                \"Amazon.com, Inc. - ASN 14618\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"richmond\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"washington\",\r\n          \"providers\": [\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Comcast Cable Communications, Inc.\",\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Frontier Communications of America, Inc.\",\r\n            \"Frontier Communications of America, Inc. - ASN 5650\",\r\n            \"Microsoft Corporation\",\r\n            \"Microsoft Corporation - ASN 3598\",\r\n            \"Qwest Communications Company, LLC\",\r\n            \"Qwest Communications Company, LLC - ASN 209\",\r\n            \"Washington State K-20 Telecommunications Network - ASN 10430\",\r\n            \"vanoppen.biz LLC - ASN 11404\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"bellevue\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"redmond\",\r\n              \"providers\": [\r\n                \"Microsoft Corporation\",\r\n                \"Microsoft Corporation - ASN 3598\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"seattle\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc.\",\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n                \"Comcast Cable Communications, LLC - ASN 7922\",\r\n                \"Qwest Communications Company, LLC - ASN 209\"\r\n              ]\r\n            },\r\n            {\r\n              \"cityName\": \"vancouver\",\r\n              \"providers\": [\r\n                \"Comcast Cable Communications, Inc. - ASN 7922\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"west virginia\",\r\n          \"providers\": [\r\n            \"Comcast Cable Communications, Inc. - ASN 7922\",\r\n            \"Comcast Cable Communications, LLC - ASN 7922\",\r\n            \"Frontier Communications of America, Inc. - ASN 5650\",\r\n            \"Suddenlink Communications - ASN 19108\",\r\n            \"West Virginia Network for Educational Telecomputing - ASN 7925\"\r\n          ],\r\n          \"cities\": []\r\n        },\r\n        {\r\n          \"stateName\": \"wisconsin\",\r\n          \"providers\": [\r\n            \"AT&T Services, Inc.\",\r\n            \"AT&T Services, Inc. - ASN 7018\",\r\n            \"Charter Communications\",\r\n            \"Charter Communications - ASN 20115\",\r\n            \"Froedtert Memorial Lutheran Hospital, Inc. - ASN 36600\",\r\n            \"Time Warner Cable Internet LLC\",\r\n            \"Time Warner Cable Internet LLC - ASN 10796\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"milwaukee\",\r\n              \"providers\": [\r\n                \"Froedtert Memorial Lutheran Hospital, Inc. - ASN 36600\",\r\n                \"Time Warner Cable Internet LLC - ASN 10796\"\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"stateName\": \"wyoming\",\r\n          \"providers\": [\r\n            \"WestHost, Inc.\",\r\n            \"WestHost, Inc. - ASN 29854\"\r\n          ],\r\n          \"cities\": [\r\n            {\r\n              \"cityName\": \"cheyenne\",\r\n              \"providers\": [\r\n                \"WestHost, Inc.\",\r\n                \"WestHost, Inc. - ASN 29854\"\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "RequestBody": {
+        "azureLocations": [
+          "West US"
+        ],
+        "country": "United States"
+      },
+      "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 17 Sep 2017 05:19:21 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/6926fc75-ce7d-4c9e-a87f-c4e38c594eb5/providers/Microsoft.Network/locations/westus.validation/operationResults/2c8d95c8-ce2e-42da-8329-0b040784af3c?api-version=2017-09-01"
-        ],
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 17 Sep 2017 05:19:21 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/6926fc75-ce7d-4c9e-a87f-c4e38c594eb5/providers/Microsoft.Network/locations/westus.validation/operationResults/2c8d95c8-ce2e-42da-8329-0b040784af3c?api-version=2017-09-01",
+        "Pragma": "no-cache",
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "2c8d95c8-ce2e-42da-8329-0b040784af3c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "50ef833b-0501-457d-88ef-17543b0a8ec8"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20170917T051921Z:50ef833b-0501-457d-88ef-17543b0a8ec8"
-        ]
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": "Accept-Encoding",
+        "x-ms-correlation-request-id": "50ef833b-0501-457d-88ef-17543b0a8ec8",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "2c8d95c8-ce2e-42da-8329-0b040784af3c",
+        "x-ms-routing-request-id": "WESTUS:20170917T051921Z:50ef833b-0501-457d-88ef-17543b0a8ec8"
       },
-      "StatusCode": 200
+      "ResponseBody": {
+        "countries": [
+          {
+            "countryName": "United States",
+            "providers": [
+              "1\u00261 Internet AG",
+              "1\u00261 Internet AG - ASN 8560",
+              "1\u00261 Internet SE - ASN 8560",
+              "AT\u0026T Data Communications Services",
+              "AT\u0026T Data Communications Services - ASN 2386",
+              "AT\u0026T Internet Services",
+              "AT\u0026T Internet Services - ASN 10774",
+              "AT\u0026T Internet Services - ASN 7132",
+              "AT\u0026T Mobility LLC",
+              "AT\u0026T Mobility LLC - ASN 20057",
+              "AT\u0026T Services, Inc.",
+              "AT\u0026T Services, Inc. - ASN 7018",
+              "Abovenet Communications, Inc",
+              "Abovenet Communications, Inc - ASN 6461",
+              "Amazon.com, Inc.",
+              "Amazon.com, Inc. - ASN 14618",
+              "Amazon.com, Inc. - ASN 16509",
+              "Anthem Blue Cross Blue Shield - ASN 22703",
+              "Armstrong Cable Services",
+              "Armstrong Cable Services - ASN 27364",
+              "Atlantic Broadband Finance, LLC - ASN 11776",
+              "Aureon Network Services - ASN 5056",
+              "Automatic Data Processing, Inc. - ASN 14299",
+              "B2 Net Solutions Inc.",
+              "B2 Net Solutions Inc. - ASN 55286",
+              "BRIGHT HOUSE NETWORKS, LLC",
+              "BRIGHT HOUSE NETWORKS, LLC - ASN 33363",
+              "BellSouth.net Inc.",
+              "BellSouth.net Inc. - ASN 6389",
+              "Blue Coat Systems, Inc",
+              "Blue Coat Systems, Inc - ASN 27471",
+              "Buckeye Cablevision, Inc. - ASN 13490",
+              "CABLE ONE, INC.",
+              "CABLE ONE, INC. - ASN 11492",
+              "Cablevision Systems Corp.",
+              "Cablevision Systems Corp. - ASN 6128",
+              "California State University, Office of the Chancellor",
+              "California State University, Office of the Chancellor - ASN 2152",
+              "California Technology Agency - ASN 1226",
+              "Cellco Partnership DBA Verizon Wireless",
+              "Cellco Partnership DBA Verizon Wireless - ASN 22394",
+              "CenturyTel Internet Holdings, Inc.",
+              "CenturyTel Internet Holdings, Inc. - ASN 22561",
+              "Charter Communications",
+              "Charter Communications - ASN 20115",
+              "Charter Communications - ASN 33588",
+              "Cincinnati Bell Telephone",
+              "Cincinnati Bell Telephone - ASN 6181",
+              "Cincinnati Bell Telephone Company LLC - ASN 6181",
+              "Clayton County Public Schools - ASN 63165",
+              "Cleveland Clinic Foundation",
+              "Cleveland Clinic Foundation - ASN 22093",
+              "Cogent Communications",
+              "Cogent Communications - ASN 174",
+              "ColoCrossing",
+              "Colocation America Corporation - ASN 21769",
+              "Comcast Cable Communications, Inc.",
+              "Comcast Cable Communications, Inc. - ASN 7922",
+              "Comcast Cable Communications, LLC - ASN 7922",
+              "Community Health Systems Professional Services Corporation",
+              "Community Health Systems Professional Services Corporation - ASN 29766",
+              "Comporium, Inc - ASN 14615",
+              "Cox Communications Inc.",
+              "Cox Communications Inc. - ASN 22773",
+              "Delta Technology - ASN 26034",
+              "Department of Administrative Services - ASN 19902",
+              "Digital Energy Technologies Chile SpA - ASN 61440",
+              "Digital Ocean, Inc.",
+              "Digital Ocean, Inc. - ASN 14061",
+              "DigitalOcean, LLC - ASN 14061",
+              "DoD Network Information Center - ASN 721",
+              "EPB Fiber Optics - ASN 26827",
+              "Earthlink, Inc. - ASN 6983",
+              "Education Networks of America",
+              "Education Networks of America - ASN 11686",
+              "Energy Technologies Chile SpA - ASN 61440",
+              "FAIRPOINT COMMUNICATIONS, INC. - ASN 13977",
+              "Fibertech Networks, LLC - ASN 16657",
+              "Florida Department of Management Services - Technology Program",
+              "Florida Department of Management Services - Technology Program - ASN 8103",
+              "Froedtert Memorial Lutheran Hospital, Inc. - ASN 36600",
+              "Frontier Communications of America, Inc.",
+              "Frontier Communications of America, Inc. - ASN 5650",
+              "Fulton County Schools - ASN 394723",
+              "GENERAL COMMUNICATION, INC. - ASN 8047",
+              "General Services Commission - ASN 1761",
+              "Google Fiber Inc.",
+              "Google Fiber Inc. - ASN 16591",
+              "Grande Communications Networks, LLC",
+              "Grande Communications Networks, LLC - ASN 7459",
+              "HUMANA",
+              "HUMANA - ASN 19510",
+              "Hosting Services, Inc. - ASN 32780",
+              "HugeServer Networks, LLC",
+              "HugeServer Networks, LLC - ASN 25780",
+              "Hughes Network Systems",
+              "Hughes Network Systems - ASN 6621",
+              "Hurricane Electric, Inc. - ASN 6939",
+              "IO Capital Princess, LLC",
+              "IO Capital Princess, LLC - ASN 12025",
+              "IOWA HEALTH SYSTEM",
+              "IOWA HEALTH SYSTEM - ASN 32885",
+              "Integra Telecom, Inc.",
+              "Integra Telecom, Inc. - ASN 7385",
+              "Iowa Network Services - ASN 5056",
+              "Kennesaw State University",
+              "Kennesaw State University - ASN 3480",
+              "LOS ANGELES COUNTY - INTERNAL SERVICESDIVISION - ASN 11188",
+              "Level 3 Communications, Inc.",
+              "Level 3 Communications, Inc. (GBLX) - ASN 3549",
+              "Level 3 Communications, Inc. - ASN 3356",
+              "Level 3 Communications, Inc. - ASN 3549",
+              "Lightower Fiber Networks I, LLC",
+              "Lightower Fiber Networks I, LLC - ASN 46887",
+              "MCI Communications Services, Inc. d/b/a Verizon Business",
+              "MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701",
+              "MCNC",
+              "MCNC - ASN 81",
+              "Mediacom Communications Corp",
+              "Mediacom Communications Corp - ASN 30036",
+              "Merit Network Inc. - ASN 237",
+              "Micfo, LLC. - ASN 53889",
+              "Microsoft Corporation",
+              "Microsoft Corporation - ASN 3598",
+              "Microsoft Corporation - ASN 8075",
+              "Midcontinent Communications - ASN 11232",
+              "Midcontinent Media, Inc.",
+              "Midcontinent Media, Inc. - ASN 11232",
+              "NFOrce Entertainment BV",
+              "NFOrce Entertainment BV - ASN 43350",
+              "NForce Entertainment B.V. - ASN 43350",
+              "NJ OIT - ASN 394417",
+              "Nobis Technology Group, LLC",
+              "Nobis Technology Group, LLC - ASN 15003",
+              "Northeast Regional Data Center - ASN 6356",
+              "Off Campus Telecommunications - ASN 29933",
+              "Ohio Public Library Information Network (OPLIN) - ASN 26923",
+              "Palm Beach County - ASN 46093",
+              "Peak 10",
+              "Peak 10 - ASN 19271",
+              "PenTeleData Inc.",
+              "PenTeleData Inc. - ASN 3737",
+              "Penn Medicine - ASN 46274",
+              "Qwest Communications Company, LLC",
+              "Qwest Communications Company, LLC - ASN 209",
+              "RCN",
+              "RCN - ASN 6079",
+              "Savvis",
+              "Savvis - ASN 3561",
+              "Southern New England Telephone Company and SNET America, Inc.",
+              "Southern New England Telephone Company and SNET America, Inc. - ASN 46690",
+              "Spirit Communications - ASN 2711",
+              "Spirit Telecom - ASN 2711",
+              "Sprint",
+              "Sprint - ASN 1239",
+              "State of Minnesota - ASN 1998",
+              "State of NC - State Telecommunications Services - ASN 6559",
+              "Suddenlink Communications",
+              "Suddenlink Communications - ASN 19108",
+              "SunGard Availability Services LP - ASN 7381",
+              "Symantec Corporation - ASN 27471",
+              "T-Mobile USA, Inc.",
+              "T-Mobile USA, Inc. - ASN 21928",
+              "TDS TELECOM",
+              "TDS TELECOM - ASN 4181",
+              "TPx Communications - ASN 14265",
+              "Telepacific Communications",
+              "Telepacific Communications - ASN 14265",
+              "The City of New York - ASN 22252",
+              "The Dow Chemical Company - ASN 1678",
+              "Time Warner Cable Internet LLC",
+              "Time Warner Cable Internet LLC - ASN 10796",
+              "Time Warner Cable Internet LLC - ASN 11351",
+              "Time Warner Cable Internet LLC - ASN 11426",
+              "Time Warner Cable Internet LLC - ASN 11427",
+              "Time Warner Cable Internet LLC - ASN 12271",
+              "Time Warner Cable Internet LLC - ASN 20001",
+              "Travelers Property Casualty Corp. - ASN 17166",
+              "U.S. Dept. of Health and Human Services - ASN 26810",
+              "UBS AG",
+              "UBS AG - ASN 10615",
+              "Union Pacific Railroad Company - ASN 10405",
+              "Unitedhealthcare",
+              "Unitedhealthcare - ASN 10879",
+              "Verizon Business/UUnet - ASN 701",
+              "Verizon Online LLC - ASN 11486",
+              "ViaSat,Inc. - ASN 7155",
+              "Washington State K-20 Telecommunications Network - ASN 10430",
+              "Wells Fargo \u0026 Company",
+              "Wells Fargo \u0026 Company - ASN 4196",
+              "West Virginia Network for Educational Telecomputing - ASN 7925",
+              "WestHost, Inc.",
+              "WestHost, Inc. - ASN 29854",
+              "WholeSale Internet, Inc.",
+              "WholeSale Internet, Inc. - ASN 32097",
+              "WideOpenWest Finance LLC",
+              "WideOpenWest Finance LLC - ASN 12083",
+              "Windstream Communications Inc",
+              "Windstream Communications Inc - ASN 7029",
+              "Windstream Communications LLC - ASN 7029",
+              "XMission, L.C.",
+              "XMission, L.C. - ASN 6315",
+              "XO Communications",
+              "XO Communications - ASN 2828",
+              "ZSCALER, INC. - ASN 22616",
+              "Zayo Bandwidth - ASN 6461",
+              "vanoppen.biz LLC",
+              "vanoppen.biz LLC - ASN 11404"
+            ],
+            "states": [
+              {
+                "stateName": "alabama",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Charter Communications",
+                  "Charter Communications - ASN 20115",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Wells Fargo \u0026 Company - ASN 4196"
+                ],
+                "cities": [
+                  {
+                    "cityName": "oxford",
+                    "providers": [
+                      "Wells Fargo \u0026 Company - ASN 4196"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "alaska",
+                "providers": [
+                  "GENERAL COMMUNICATION, INC. - ASN 8047"
+                ],
+                "cities": []
+              },
+              {
+                "stateName": "arizona",
+                "providers": [
+                  "Cox Communications Inc.",
+                  "Cox Communications Inc. - ASN 22773",
+                  "Qwest Communications Company, LLC",
+                  "Qwest Communications Company, LLC - ASN 209"
+                ],
+                "cities": [
+                  {
+                    "cityName": "phoenix",
+                    "providers": [
+                      "Cox Communications Inc.",
+                      "Cox Communications Inc. - ASN 22773",
+                      "Qwest Communications Company, LLC",
+                      "Qwest Communications Company, LLC - ASN 209"
+                    ]
+                  },
+                  {
+                    "cityName": "tucson",
+                    "providers": [
+                      "Cox Communications Inc. - ASN 22773"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "arkansas",
+                "providers": [
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Cox Communications Inc. - ASN 22773"
+                ],
+                "cities": []
+              },
+              {
+                "stateName": "california",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "California State University, Office of the Chancellor",
+                  "California State University, Office of the Chancellor - ASN 2152",
+                  "California Technology Agency - ASN 1226",
+                  "Charter Communications",
+                  "Charter Communications - ASN 20115",
+                  "Cogent Communications - ASN 174",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Cox Communications Inc.",
+                  "Cox Communications Inc. - ASN 22773",
+                  "Frontier Communications of America, Inc.",
+                  "Frontier Communications of America, Inc. - ASN 5650",
+                  "HugeServer Networks, LLC",
+                  "HugeServer Networks, LLC - ASN 25780",
+                  "LOS ANGELES COUNTY - INTERNAL SERVICESDIVISION - ASN 11188",
+                  "Level 3 Communications, Inc.",
+                  "Level 3 Communications, Inc. (GBLX) - ASN 3549",
+                  "Level 3 Communications, Inc. - ASN 3549",
+                  "Nobis Technology Group, LLC",
+                  "Nobis Technology Group, LLC - ASN 15003",
+                  "TPx Communications - ASN 14265",
+                  "Telepacific Communications",
+                  "Telepacific Communications - ASN 14265",
+                  "Time Warner Cable Internet LLC",
+                  "Time Warner Cable Internet LLC - ASN 20001",
+                  "WestHost, Inc. - ASN 29854",
+                  "XO Communications - ASN 2828"
+                ],
+                "cities": [
+                  {
+                    "cityName": "lebec",
+                    "providers": [
+                      "AT\u0026T Services, Inc. - ASN 7018"
+                    ]
+                  },
+                  {
+                    "cityName": "los angeles",
+                    "providers": [
+                      "AT\u0026T Services, Inc.",
+                      "AT\u0026T Services, Inc. - ASN 7018",
+                      "HugeServer Networks, LLC",
+                      "HugeServer Networks, LLC - ASN 25780",
+                      "LOS ANGELES COUNTY - INTERNAL SERVICESDIVISION - ASN 11188",
+                      "Time Warner Cable Internet LLC",
+                      "Time Warner Cable Internet LLC - ASN 20001"
+                    ]
+                  },
+                  {
+                    "cityName": "sacramento",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922"
+                    ]
+                  },
+                  {
+                    "cityName": "san diego",
+                    "providers": [
+                      "AT\u0026T Services, Inc. - ASN 7018",
+                      "Cox Communications Inc. - ASN 22773",
+                      "Time Warner Cable Internet LLC - ASN 20001"
+                    ]
+                  },
+                  {
+                    "cityName": "san francisco",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922"
+                    ]
+                  },
+                  {
+                    "cityName": "san jose",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922"
+                    ]
+                  },
+                  {
+                    "cityName": "thousand oaks",
+                    "providers": [
+                      "Nobis Technology Group, LLC",
+                      "Nobis Technology Group, LLC - ASN 15003"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "colorado",
+                "providers": [
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Qwest Communications Company, LLC",
+                  "Qwest Communications Company, LLC - ASN 209"
+                ],
+                "cities": [
+                  {
+                    "cityName": "colorado springs",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922",
+                      "Qwest Communications Company, LLC - ASN 209"
+                    ]
+                  },
+                  {
+                    "cityName": "denver",
+                    "providers": [
+                      "Comcast Cable Communications, Inc.",
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922",
+                      "Qwest Communications Company, LLC - ASN 209"
+                    ]
+                  },
+                  {
+                    "cityName": "fountain",
+                    "providers": [
+                      "Qwest Communications Company, LLC - ASN 209"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "connecticut",
+                "providers": [
+                  "Cablevision Systems Corp.",
+                  "Cablevision Systems Corp. - ASN 6128",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Southern New England Telephone Company and SNET America, Inc.",
+                  "Southern New England Telephone Company and SNET America, Inc. - ASN 46690"
+                ],
+                "cities": []
+              },
+              {
+                "stateName": "delaware",
+                "providers": [
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922"
+                ],
+                "cities": []
+              },
+              {
+                "stateName": "district of columbia",
+                "providers": [
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922"
+                ],
+                "cities": [
+                  {
+                    "cityName": "washington",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "florida",
+                "providers": [
+                  "AT\u0026T Internet Services",
+                  "AT\u0026T Internet Services - ASN 10774",
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "BRIGHT HOUSE NETWORKS, LLC",
+                  "BRIGHT HOUSE NETWORKS, LLC - ASN 33363",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Cox Communications Inc.",
+                  "Cox Communications Inc. - ASN 22773",
+                  "Florida Department of Management Services - Technology Program",
+                  "Florida Department of Management Services - Technology Program - ASN 8103",
+                  "Frontier Communications of America, Inc.",
+                  "Frontier Communications of America, Inc. - ASN 5650",
+                  "Level 3 Communications, Inc.",
+                  "Level 3 Communications, Inc. - ASN 3356",
+                  "Level 3 Communications, Inc. - ASN 3549",
+                  "Micfo, LLC. - ASN 53889",
+                  "Northeast Regional Data Center - ASN 6356",
+                  "Palm Beach County - ASN 46093",
+                  "Qwest Communications Company, LLC",
+                  "Qwest Communications Company, LLC - ASN 209",
+                  "Windstream Communications Inc - ASN 7029"
+                ],
+                "cities": [
+                  {
+                    "cityName": "fort lauderdale",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922"
+                    ]
+                  },
+                  {
+                    "cityName": "gainesville",
+                    "providers": [
+                      "Cox Communications Inc. - ASN 22773"
+                    ]
+                  },
+                  {
+                    "cityName": "jacksonville",
+                    "providers": [
+                      "AT\u0026T Internet Services - ASN 10774",
+                      "Comcast Cable Communications, Inc.",
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922"
+                    ]
+                  },
+                  {
+                    "cityName": "miami",
+                    "providers": [
+                      "AT\u0026T Services, Inc. - ASN 7018",
+                      "Comcast Cable Communications, Inc.",
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922",
+                      "Micfo, LLC. - ASN 53889"
+                    ]
+                  },
+                  {
+                    "cityName": "orlando",
+                    "providers": [
+                      "BRIGHT HOUSE NETWORKS, LLC",
+                      "BRIGHT HOUSE NETWORKS, LLC - ASN 33363"
+                    ]
+                  },
+                  {
+                    "cityName": "tallahassee",
+                    "providers": [
+                      "Florida Department of Management Services - Technology Program",
+                      "Florida Department of Management Services - Technology Program - ASN 8103"
+                    ]
+                  },
+                  {
+                    "cityName": "tampa",
+                    "providers": [
+                      "BRIGHT HOUSE NETWORKS, LLC",
+                      "BRIGHT HOUSE NETWORKS, LLC - ASN 33363",
+                      "Frontier Communications of America, Inc. - ASN 5650",
+                      "Level 3 Communications, Inc.",
+                      "Level 3 Communications, Inc. - ASN 3356"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "georgia",
+                "providers": [
+                  "AT\u0026T Mobility LLC - ASN 20057",
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Charter Communications",
+                  "Charter Communications - ASN 20115",
+                  "Clayton County Public Schools - ASN 63165",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Cox Communications Inc. - ASN 22773",
+                  "Delta Technology - ASN 26034",
+                  "Fulton County Schools - ASN 394723",
+                  "Kennesaw State University",
+                  "Kennesaw State University - ASN 3480",
+                  "Windstream Communications Inc",
+                  "Windstream Communications Inc - ASN 7029",
+                  "Windstream Communications LLC - ASN 7029"
+                ],
+                "cities": [
+                  {
+                    "cityName": "alpharetta",
+                    "providers": [
+                      "Fulton County Schools - ASN 394723"
+                    ]
+                  },
+                  {
+                    "cityName": "atlanta",
+                    "providers": [
+                      "AT\u0026T Mobility LLC - ASN 20057",
+                      "AT\u0026T Services, Inc. - ASN 7018",
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922",
+                      "Delta Technology - ASN 26034"
+                    ]
+                  },
+                  {
+                    "cityName": "kennesaw",
+                    "providers": [
+                      "Kennesaw State University - ASN 3480"
+                    ]
+                  },
+                  {
+                    "cityName": "marietta",
+                    "providers": [
+                      "Kennesaw State University - ASN 3480"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "hawaii",
+                "providers": [
+                  "Time Warner Cable Internet LLC",
+                  "Time Warner Cable Internet LLC - ASN 20001"
+                ],
+                "cities": []
+              },
+              {
+                "stateName": "idaho",
+                "providers": [
+                  "Qwest Communications Company, LLC - ASN 209"
+                ],
+                "cities": []
+              },
+              {
+                "stateName": "illinois",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Charter Communications - ASN 20115",
+                  "Cogent Communications",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Frontier Communications of America, Inc. - ASN 5650",
+                  "Mediacom Communications Corp - ASN 30036"
+                ],
+                "cities": [
+                  {
+                    "cityName": "chicago",
+                    "providers": [
+                      "AT\u0026T Services, Inc.",
+                      "AT\u0026T Services, Inc. - ASN 7018",
+                      "Comcast Cable Communications, Inc.",
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "indiana",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Frontier Communications of America, Inc. - ASN 5650",
+                  "Time Warner Cable Internet LLC - ASN 10796"
+                ],
+                "cities": [
+                  {
+                    "cityName": "indianapolis",
+                    "providers": [
+                      "AT\u0026T Services, Inc. - ASN 7018",
+                      "Comcast Cable Communications, Inc. - ASN 7922"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "iowa",
+                "providers": [
+                  "Aureon Network Services - ASN 5056",
+                  "IOWA HEALTH SYSTEM - ASN 32885",
+                  "Iowa Network Services - ASN 5056",
+                  "Mediacom Communications Corp",
+                  "Mediacom Communications Corp - ASN 30036",
+                  "Microsoft Corporation - ASN 8075",
+                  "Qwest Communications Company, LLC - ASN 209"
+                ],
+                "cities": [
+                  {
+                    "cityName": "des moines",
+                    "providers": [
+                      "Microsoft Corporation - ASN 8075"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "kansas",
+                "providers": [
+                  "1\u00261 Internet AG",
+                  "1\u00261 Internet AG - ASN 8560",
+                  "1\u00261 Internet SE - ASN 8560",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Cox Communications Inc.",
+                  "Cox Communications Inc. - ASN 22773",
+                  "Google Fiber Inc. - ASN 16591",
+                  "Time Warner Cable Internet LLC - ASN 11427"
+                ],
+                "cities": [
+                  {
+                    "cityName": "lenexa",
+                    "providers": [
+                      "1\u00261 Internet AG",
+                      "1\u00261 Internet AG - ASN 8560",
+                      "1\u00261 Internet SE - ASN 8560"
+                    ]
+                  },
+                  {
+                    "cityName": "wichita",
+                    "providers": [
+                      "Cox Communications Inc. - ASN 22773"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "kentucky",
+                "providers": [
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "HUMANA",
+                  "HUMANA - ASN 19510",
+                  "Time Warner Cable Internet LLC",
+                  "Time Warner Cable Internet LLC - ASN 10796",
+                  "Windstream Communications Inc - ASN 7029"
+                ],
+                "cities": [
+                  {
+                    "cityName": "louisville",
+                    "providers": [
+                      "HUMANA",
+                      "HUMANA - ASN 19510",
+                      "Time Warner Cable Internet LLC - ASN 10796"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "louisiana",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Charter Communications - ASN 20115",
+                  "Cox Communications Inc.",
+                  "Cox Communications Inc. - ASN 22773"
+                ],
+                "cities": [
+                  {
+                    "cityName": "baton rouge",
+                    "providers": [
+                      "Cox Communications Inc. - ASN 22773"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "maine",
+                "providers": [
+                  "Time Warner Cable Internet LLC",
+                  "Time Warner Cable Internet LLC - ASN 11351"
+                ],
+                "cities": []
+              },
+              {
+                "stateName": "maryland",
+                "providers": [
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Hughes Network Systems",
+                  "Hughes Network Systems - ASN 6621",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701",
+                  "Verizon Business/UUnet - ASN 701"
+                ],
+                "cities": [
+                  {
+                    "cityName": "baltimore",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922"
+                    ]
+                  },
+                  {
+                    "cityName": "germantown",
+                    "providers": [
+                      "Hughes Network Systems",
+                      "Hughes Network Systems - ASN 6621"
+                    ]
+                  },
+                  {
+                    "cityName": "silver spring",
+                    "providers": [
+                      "MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "massachusetts",
+                "providers": [
+                  "Charter Communications - ASN 20115",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701",
+                  "Verizon Business/UUnet - ASN 701"
+                ],
+                "cities": [
+                  {
+                    "cityName": "boston",
+                    "providers": [
+                      "Comcast Cable Communications, Inc.",
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "michigan",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Charter Communications",
+                  "Charter Communications - ASN 20115",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Merit Network Inc. - ASN 237",
+                  "The Dow Chemical Company - ASN 1678",
+                  "WideOpenWest Finance LLC - ASN 12083"
+                ],
+                "cities": [
+                  {
+                    "cityName": "dearborn",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "minnesota",
+                "providers": [
+                  "Charter Communications - ASN 20115",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Qwest Communications Company, LLC",
+                  "Qwest Communications Company, LLC - ASN 209",
+                  "State of Minnesota - ASN 1998",
+                  "Travelers Property Casualty Corp. - ASN 17166",
+                  "Unitedhealthcare",
+                  "Unitedhealthcare - ASN 10879"
+                ],
+                "cities": [
+                  {
+                    "cityName": "minneapolis",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922",
+                      "Qwest Communications Company, LLC - ASN 209",
+                      "Unitedhealthcare",
+                      "Unitedhealthcare - ASN 10879"
+                    ]
+                  },
+                  {
+                    "cityName": "saint paul",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Travelers Property Casualty Corp. - ASN 17166"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "mississippi",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922"
+                ],
+                "cities": []
+              },
+              {
+                "stateName": "missouri",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Charter Communications",
+                  "Charter Communications - ASN 20115",
+                  "Google Fiber Inc. - ASN 16591",
+                  "WholeSale Internet, Inc.",
+                  "WholeSale Internet, Inc. - ASN 32097"
+                ],
+                "cities": [
+                  {
+                    "cityName": "kansas city",
+                    "providers": [
+                      "WholeSale Internet, Inc.",
+                      "WholeSale Internet, Inc. - ASN 32097"
+                    ]
+                  },
+                  {
+                    "cityName": "saint louis",
+                    "providers": [
+                      "AT\u0026T Services, Inc. - ASN 7018",
+                      "Charter Communications - ASN 20115"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "montana",
+                "providers": [
+                  "Charter Communications - ASN 33588"
+                ],
+                "cities": []
+              },
+              {
+                "stateName": "nebraska",
+                "providers": [
+                  "Cox Communications Inc. - ASN 22773",
+                  "Time Warner Cable Internet LLC - ASN 11427",
+                  "Union Pacific Railroad Company - ASN 10405"
+                ],
+                "cities": [
+                  {
+                    "cityName": "lincoln",
+                    "providers": [
+                      "Time Warner Cable Internet LLC - ASN 11427"
+                    ]
+                  },
+                  {
+                    "cityName": "omaha",
+                    "providers": [
+                      "Cox Communications Inc. - ASN 22773",
+                      "Union Pacific Railroad Company - ASN 10405"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "nevada",
+                "providers": [
+                  "Charter Communications - ASN 20115",
+                  "Cox Communications Inc.",
+                  "Cox Communications Inc. - ASN 22773",
+                  "NFOrce Entertainment BV",
+                  "NFOrce Entertainment BV - ASN 43350",
+                  "NForce Entertainment B.V. - ASN 43350",
+                  "WestHost, Inc. - ASN 29854"
+                ],
+                "cities": [
+                  {
+                    "cityName": "las vegas",
+                    "providers": [
+                      "Cox Communications Inc.",
+                      "Cox Communications Inc. - ASN 22773",
+                      "NFOrce Entertainment BV",
+                      "NFOrce Entertainment BV - ASN 43350",
+                      "NForce Entertainment B.V. - ASN 43350",
+                      "WestHost, Inc. - ASN 29854"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "new hampshire",
+                "providers": [
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922"
+                ],
+                "cities": []
+              },
+              {
+                "stateName": "new jersey",
+                "providers": [
+                  "Automatic Data Processing, Inc. - ASN 14299",
+                  "Cablevision Systems Corp.",
+                  "Cablevision Systems Corp. - ASN 6128",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "IO Capital Princess, LLC",
+                  "IO Capital Princess, LLC - ASN 12025",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701",
+                  "NJ OIT - ASN 394417",
+                  "Verizon Business/UUnet - ASN 701"
+                ],
+                "cities": [
+                  {
+                    "cityName": "edison",
+                    "providers": [
+                      "IO Capital Princess, LLC",
+                      "IO Capital Princess, LLC - ASN 12025"
+                    ]
+                  },
+                  {
+                    "cityName": "princeton junction",
+                    "providers": [
+                      "NJ OIT - ASN 394417"
+                    ]
+                  },
+                  {
+                    "cityName": "trenton",
+                    "providers": [
+                      "NJ OIT - ASN 394417"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "new mexico",
+                "providers": [
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Qwest Communications Company, LLC - ASN 209"
+                ],
+                "cities": [
+                  {
+                    "cityName": "albuquerque",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Qwest Communications Company, LLC - ASN 209"
+                    ]
+                  },
+                  {
+                    "cityName": "silver city",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "new york",
+                "providers": [
+                  "",
+                  "B2 Net Solutions Inc.",
+                  "B2 Net Solutions Inc. - ASN 55286",
+                  "Cablevision Systems Corp.",
+                  "Cablevision Systems Corp. - ASN 6128",
+                  "Cogent Communications - ASN 174",
+                  "ColoCrossing",
+                  "Digital Ocean, Inc.",
+                  "Digital Ocean, Inc. - ASN 14061",
+                  "DigitalOcean, LLC - ASN 14061",
+                  "Frontier Communications of America, Inc. - ASN 5650",
+                  "Hosting Services, Inc. - ASN 32780",
+                  "Lightower Fiber Networks I, LLC - ASN 46887",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701",
+                  "The City of New York - ASN 22252",
+                  "Time Warner Cable Internet LLC",
+                  "Time Warner Cable Internet LLC - ASN 11351",
+                  "Time Warner Cable Internet LLC - ASN 12271",
+                  "UBS AG - ASN 10615",
+                  "Verizon Business/UUnet - ASN 701",
+                  "WestHost, Inc.",
+                  "WestHost, Inc. - ASN 29854"
+                ],
+                "cities": [
+                  {
+                    "cityName": "brockport",
+                    "providers": [
+                      "ColoCrossing"
+                    ]
+                  },
+                  {
+                    "cityName": "bronx",
+                    "providers": [
+                      "Cablevision Systems Corp. - ASN 6128"
+                    ]
+                  },
+                  {
+                    "cityName": "brooklyn",
+                    "providers": [
+                      "Cablevision Systems Corp.",
+                      "Cablevision Systems Corp. - ASN 6128",
+                      "The City of New York - ASN 22252"
+                    ]
+                  },
+                  {
+                    "cityName": "buffalo",
+                    "providers": [
+                      "B2 Net Solutions Inc.",
+                      "B2 Net Solutions Inc. - ASN 55286",
+                      "ColoCrossing",
+                      "Time Warner Cable Internet LLC - ASN 11351"
+                    ]
+                  },
+                  {
+                    "cityName": "hempstead",
+                    "providers": [
+                      "MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701",
+                      "Verizon Business/UUnet - ASN 701"
+                    ]
+                  },
+                  {
+                    "cityName": "new york",
+                    "providers": [
+                      "",
+                      "Cogent Communications - ASN 174",
+                      "Digital Ocean, Inc.",
+                      "Digital Ocean, Inc. - ASN 14061",
+                      "DigitalOcean, LLC - ASN 14061",
+                      "Hosting Services, Inc. - ASN 32780",
+                      "MCI Communications Services, Inc. d/b/a Verizon Business",
+                      "MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701",
+                      "Time Warner Cable Internet LLC",
+                      "Time Warner Cable Internet LLC - ASN 12271",
+                      "UBS AG - ASN 10615",
+                      "Verizon Business/UUnet - ASN 701",
+                      "WestHost, Inc.",
+                      "WestHost, Inc. - ASN 29854"
+                    ]
+                  },
+                  {
+                    "cityName": "rochester",
+                    "providers": [
+                      "Time Warner Cable Internet LLC",
+                      "Time Warner Cable Internet LLC - ASN 11351"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "north carolina",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Charter Communications",
+                  "Charter Communications - ASN 20115",
+                  "Level 3 Communications, Inc. (GBLX) - ASN 3549",
+                  "Level 3 Communications, Inc. - ASN 3549",
+                  "MCNC",
+                  "MCNC - ASN 81",
+                  "Qwest Communications Company, LLC",
+                  "Qwest Communications Company, LLC - ASN 209",
+                  "State of NC - State Telecommunications Services - ASN 6559",
+                  "Time Warner Cable Internet LLC",
+                  "Time Warner Cable Internet LLC - ASN 11426",
+                  "Windstream Communications Inc - ASN 7029"
+                ],
+                "cities": [
+                  {
+                    "cityName": "asheville",
+                    "providers": [
+                      "MCNC - ASN 81"
+                    ]
+                  },
+                  {
+                    "cityName": "charlotte",
+                    "providers": [
+                      "Time Warner Cable Internet LLC",
+                      "Time Warner Cable Internet LLC - ASN 11426"
+                    ]
+                  },
+                  {
+                    "cityName": "raleigh",
+                    "providers": [
+                      "Time Warner Cable Internet LLC - ASN 11426"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "ohio",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Buckeye Cablevision, Inc. - ASN 13490",
+                  "Cincinnati Bell Telephone",
+                  "Cincinnati Bell Telephone - ASN 6181",
+                  "Cincinnati Bell Telephone Company LLC - ASN 6181",
+                  "Cleveland Clinic Foundation",
+                  "Department of Administrative Services - ASN 19902",
+                  "Level 3 Communications, Inc. - ASN 3549",
+                  "Ohio Public Library Information Network (OPLIN) - ASN 26923",
+                  "Time Warner Cable Internet LLC",
+                  "Time Warner Cable Internet LLC - ASN 10796",
+                  "WideOpenWest Finance LLC - ASN 12083"
+                ],
+                "cities": [
+                  {
+                    "cityName": "cincinnati",
+                    "providers": [
+                      "Cincinnati Bell Telephone - ASN 6181",
+                      "Cincinnati Bell Telephone Company LLC - ASN 6181",
+                      "Time Warner Cable Internet LLC - ASN 10796"
+                    ]
+                  },
+                  {
+                    "cityName": "columbus",
+                    "providers": [
+                      "Department of Administrative Services - ASN 19902",
+                      "Time Warner Cable Internet LLC - ASN 10796"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "oklahoma",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Cox Communications Inc.",
+                  "Cox Communications Inc. - ASN 22773"
+                ],
+                "cities": [
+                  {
+                    "cityName": "oklahoma city",
+                    "providers": [
+                      "Cox Communications Inc. - ASN 22773"
+                    ]
+                  },
+                  {
+                    "cityName": "tulsa",
+                    "providers": [
+                      "Cox Communications Inc. - ASN 22773"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "oregon",
+                "providers": [
+                  "Amazon.com, Inc.",
+                  "Amazon.com, Inc. - ASN 16509",
+                  "Charter Communications - ASN 20115",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Frontier Communications of America, Inc. - ASN 5650",
+                  "Qwest Communications Company, LLC - ASN 209"
+                ],
+                "cities": [
+                  {
+                    "cityName": "boardman",
+                    "providers": [
+                      "Amazon.com, Inc.",
+                      "Amazon.com, Inc. - ASN 16509"
+                    ]
+                  },
+                  {
+                    "cityName": "portland",
+                    "providers": [
+                      "Comcast Cable Communications, Inc.",
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "pennsylvania",
+                "providers": [
+                  "1\u00261 Internet AG",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Armstrong Cable Services - ASN 27364",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701",
+                  "PenTeleData Inc.",
+                  "PenTeleData Inc. - ASN 3737",
+                  "Penn Medicine - ASN 46274",
+                  "RCN - ASN 6079",
+                  "Verizon Business/UUnet - ASN 701",
+                  "Windstream Communications Inc - ASN 7029"
+                ],
+                "cities": [
+                  {
+                    "cityName": "philadelphia",
+                    "providers": [
+                      "Comcast Cable Communications, Inc.",
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922",
+                      "MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701",
+                      "Penn Medicine - ASN 46274"
+                    ]
+                  },
+                  {
+                    "cityName": "pittsburgh",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922"
+                    ]
+                  },
+                  {
+                    "cityName": "wayne",
+                    "providers": [
+                      "1\u00261 Internet AG"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "rhode island",
+                "providers": [
+                  "Cox Communications Inc. - ASN 22773",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701"
+                ],
+                "cities": []
+              },
+              {
+                "stateName": "south carolina",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Charter Communications",
+                  "Charter Communications - ASN 20115",
+                  "Comporium, Inc - ASN 14615",
+                  "Micfo, LLC. - ASN 53889",
+                  "Spirit Communications - ASN 2711",
+                  "Spirit Telecom - ASN 2711",
+                  "Time Warner Cable Internet LLC",
+                  "Time Warner Cable Internet LLC - ASN 11426"
+                ],
+                "cities": [
+                  {
+                    "cityName": "charleston",
+                    "providers": [
+                      "Micfo, LLC. - ASN 53889"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "tennessee",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Charter Communications",
+                  "Charter Communications - ASN 20115",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Community Health Systems Professional Services Corporation",
+                  "Community Health Systems Professional Services Corporation - ASN 29766",
+                  "EPB Fiber Optics - ASN 26827",
+                  "Education Networks of America",
+                  "Education Networks of America - ASN 11686"
+                ],
+                "cities": [
+                  {
+                    "cityName": "brentwood",
+                    "providers": [
+                      "Community Health Systems Professional Services Corporation",
+                      "Community Health Systems Professional Services Corporation - ASN 29766"
+                    ]
+                  },
+                  {
+                    "cityName": "memphis",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922"
+                    ]
+                  },
+                  {
+                    "cityName": "nashville",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922",
+                      "Education Networks of America - ASN 11686"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "texas",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Charter Communications",
+                  "Charter Communications - ASN 20115",
+                  "Cogent Communications - ASN 174",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Frontier Communications of America, Inc.",
+                  "Frontier Communications of America, Inc. - ASN 5650",
+                  "General Services Commission - ASN 1761",
+                  "Grande Communications Networks, LLC",
+                  "Grande Communications Networks, LLC - ASN 7459",
+                  "Level 3 Communications, Inc.",
+                  "Level 3 Communications, Inc. (GBLX) - ASN 3549",
+                  "Level 3 Communications, Inc. - ASN 3356",
+                  "Level 3 Communications, Inc. - ASN 3549",
+                  "Suddenlink Communications",
+                  "Suddenlink Communications - ASN 19108",
+                  "Time Warner Cable Internet LLC",
+                  "Time Warner Cable Internet LLC - ASN 11427",
+                  "Windstream Communications Inc - ASN 7029",
+                  "Windstream Communications LLC - ASN 7029"
+                ],
+                "cities": [
+                  {
+                    "cityName": "austin",
+                    "providers": [
+                      "AT\u0026T Services, Inc. - ASN 7018",
+                      "Time Warner Cable Internet LLC",
+                      "Time Warner Cable Internet LLC - ASN 11427"
+                    ]
+                  },
+                  {
+                    "cityName": "dallas",
+                    "providers": [
+                      "AT\u0026T Services, Inc. - ASN 7018",
+                      "Time Warner Cable Internet LLC - ASN 11427"
+                    ]
+                  },
+                  {
+                    "cityName": "fort worth",
+                    "providers": [
+                      "AT\u0026T Services, Inc. - ASN 7018",
+                      "Charter Communications - ASN 20115"
+                    ]
+                  },
+                  {
+                    "cityName": "houston",
+                    "providers": [
+                      "AT\u0026T Services, Inc.",
+                      "AT\u0026T Services, Inc. - ASN 7018",
+                      "Comcast Cable Communications, Inc.",
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922"
+                    ]
+                  },
+                  {
+                    "cityName": "san antonio",
+                    "providers": [
+                      "AT\u0026T Services, Inc. - ASN 7018",
+                      "Time Warner Cable Internet LLC",
+                      "Time Warner Cable Internet LLC - ASN 11427"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "utah",
+                "providers": [
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Off Campus Telecommunications - ASN 29933",
+                  "Qwest Communications Company, LLC - ASN 209",
+                  "XMission, L.C.",
+                  "XMission, L.C. - ASN 6315"
+                ],
+                "cities": [
+                  {
+                    "cityName": "lindon",
+                    "providers": [
+                      "XMission, L.C. - ASN 6315"
+                    ]
+                  },
+                  {
+                    "cityName": "pleasant grove",
+                    "providers": [
+                      "Off Campus Telecommunications - ASN 29933"
+                    ]
+                  },
+                  {
+                    "cityName": "salt lake city",
+                    "providers": [
+                      "XMission, L.C."
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "virginia",
+                "providers": [
+                  "Amazon.com, Inc.",
+                  "Amazon.com, Inc. - ASN 14618",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Cox Communications Inc.",
+                  "Cox Communications Inc. - ASN 22773",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business",
+                  "MCI Communications Services, Inc. d/b/a Verizon Business - ASN 701",
+                  "Microsoft Corporation - ASN 8075",
+                  "Verizon Business/UUnet - ASN 701"
+                ],
+                "cities": [
+                  {
+                    "cityName": "ashburn",
+                    "providers": [
+                      "Amazon.com, Inc.",
+                      "Amazon.com, Inc. - ASN 14618"
+                    ]
+                  },
+                  {
+                    "cityName": "richmond",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "washington",
+                "providers": [
+                  "Charter Communications - ASN 20115",
+                  "Comcast Cable Communications, Inc.",
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Frontier Communications of America, Inc.",
+                  "Frontier Communications of America, Inc. - ASN 5650",
+                  "Microsoft Corporation",
+                  "Microsoft Corporation - ASN 3598",
+                  "Qwest Communications Company, LLC",
+                  "Qwest Communications Company, LLC - ASN 209",
+                  "Washington State K-20 Telecommunications Network - ASN 10430",
+                  "vanoppen.biz LLC - ASN 11404"
+                ],
+                "cities": [
+                  {
+                    "cityName": "bellevue",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922"
+                    ]
+                  },
+                  {
+                    "cityName": "redmond",
+                    "providers": [
+                      "Microsoft Corporation",
+                      "Microsoft Corporation - ASN 3598"
+                    ]
+                  },
+                  {
+                    "cityName": "seattle",
+                    "providers": [
+                      "Comcast Cable Communications, Inc.",
+                      "Comcast Cable Communications, Inc. - ASN 7922",
+                      "Comcast Cable Communications, LLC - ASN 7922",
+                      "Qwest Communications Company, LLC - ASN 209"
+                    ]
+                  },
+                  {
+                    "cityName": "vancouver",
+                    "providers": [
+                      "Comcast Cable Communications, Inc. - ASN 7922"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "west virginia",
+                "providers": [
+                  "Comcast Cable Communications, Inc. - ASN 7922",
+                  "Comcast Cable Communications, LLC - ASN 7922",
+                  "Frontier Communications of America, Inc. - ASN 5650",
+                  "Suddenlink Communications - ASN 19108",
+                  "West Virginia Network for Educational Telecomputing - ASN 7925"
+                ],
+                "cities": []
+              },
+              {
+                "stateName": "wisconsin",
+                "providers": [
+                  "AT\u0026T Services, Inc.",
+                  "AT\u0026T Services, Inc. - ASN 7018",
+                  "Charter Communications",
+                  "Charter Communications - ASN 20115",
+                  "Froedtert Memorial Lutheran Hospital, Inc. - ASN 36600",
+                  "Time Warner Cable Internet LLC",
+                  "Time Warner Cable Internet LLC - ASN 10796"
+                ],
+                "cities": [
+                  {
+                    "cityName": "milwaukee",
+                    "providers": [
+                      "Froedtert Memorial Lutheran Hospital, Inc. - ASN 36600",
+                      "Time Warner Cable Internet LLC - ASN 10796"
+                    ]
+                  }
+                ]
+              },
+              {
+                "stateName": "wyoming",
+                "providers": [
+                  "WestHost, Inc.",
+                  "WestHost, Inc. - ASN 29854"
+                ],
+                "cities": [
+                  {
+                    "cityName": "cheyenne",
+                    "providers": [
+                      "WestHost, Inc.",
+                      "WestHost, Inc. - ASN 29854"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
-  "Names": {},
   "Variables": {
     "SubscriptionId": "6926fc75-ce7d-4c9e-a87f-c4e38c594eb5"
   }

@@ -6846,7 +6846,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/38d93f17-2dc0-4fb2-b688-a0261431f362?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "769",
+        "Content-Length": "628",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:44:59 GMT",
         "Expires": "-1",
@@ -6865,33 +6865,31 @@
         "x-ms-request-id": "38d93f17-2dc0-4fb2-b688-a0261431f362",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054500Z:3ce13bdc-1245-4f31-8e8d-ab53d34265f2"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet9256\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022239697ed-ac4c-41c4-9bde-c43349dbd9da\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002207b14d55-16f0-47e8-9aa2-72de543d90fb\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022azsmnet5148\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022azsmnet5148.westus.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet9256",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256",
+        "etag": "W/\u0022239697ed-ac4c-41c4-9bde-c43349dbd9da\u0022",
+        "location": "westus",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "07b14d55-16f0-47e8-9aa2-72de543d90fb",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "azsmnet5148",
+            "fqdn": "azsmnet5148.westus.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/38d93f17-2dc0-4fb2-b688-a0261431f362?api-version=2020-04-01",
@@ -6909,7 +6907,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:00 GMT",
         "Expires": "-1",
@@ -6927,11 +6925,9 @@
         "x-ms-request-id": "f154e1b4-31d7-4f57-92fb-8348680eac79",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054500Z:335388b6-73fa-4fb4-b961-a9cd3b4bbb88"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256?api-version=2020-04-01",
@@ -6949,7 +6945,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "770",
+        "Content-Length": "629",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:00 GMT",
         "ETag": "W/\u0022708628ba-6e96-48ec-b37f-a577f8aa20ce\u0022",
@@ -6968,33 +6964,31 @@
         "x-ms-request-id": "93160429-a28b-41f6-b11d-1230e999ab8a",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054500Z:9c603467-b815-4b1e-a23a-53fb89971300"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet9256\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022708628ba-6e96-48ec-b37f-a577f8aa20ce\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002207b14d55-16f0-47e8-9aa2-72de543d90fb\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022azsmnet5148\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022azsmnet5148.westus.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet9256",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256",
+        "etag": "W/\u0022708628ba-6e96-48ec-b37f-a577f8aa20ce\u0022",
+        "location": "westus",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "07b14d55-16f0-47e8-9aa2-72de543d90fb",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "azsmnet5148",
+            "fqdn": "azsmnet5148.westus.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256?api-version=2020-04-01",
@@ -7014,7 +7008,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "770",
+        "Content-Length": "629",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:00 GMT",
         "ETag": "W/\u0022708628ba-6e96-48ec-b37f-a577f8aa20ce\u0022",
@@ -7033,33 +7027,31 @@
         "x-ms-request-id": "7fb2b8ab-93f7-4c9b-bed0-6bcfac56ce08",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054501Z:4b79cfa9-5dab-420c-a614-db7b734cb6fa"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet9256\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022708628ba-6e96-48ec-b37f-a577f8aa20ce\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002207b14d55-16f0-47e8-9aa2-72de543d90fb\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022azsmnet5148\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022azsmnet5148.westus.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet9256",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256",
+        "etag": "W/\u0022708628ba-6e96-48ec-b37f-a577f8aa20ce\u0022",
+        "location": "westus",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "07b14d55-16f0-47e8-9aa2-72de543d90fb",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "azsmnet5148",
+            "fqdn": "azsmnet5148.westus.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423?api-version=2020-04-01",
@@ -7106,7 +7098,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/aeaa65b3-ed88-4dd6-8129-6af3595d8f47?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "1391",
+        "Content-Length": "1058",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:03 GMT",
         "Expires": "-1",
@@ -7125,49 +7117,47 @@
         "x-ms-request-id": "aeaa65b3-ed88-4dd6-8129-6af3595d8f47",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054504Z:7bbb956f-8035-4c92-aace-7a147a2e5966"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet1423\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00220511f533-9e9f-43d7-af98-5cf4a8d4ff5d\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00229a79c88f-af61-4069-92a3-3681796a21f3\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022dhcpOptions\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [\r\n",
-        "        \u002210.1.1.1\u0022,\r\n",
-        "        \u002210.1.2.4\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022subnets\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet1994\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u00220511f533-9e9f-43d7-af98-5cf4a8d4ff5d\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: [],\r\n",
-        "    \u0022enableDdosProtection\u0022: false,\r\n",
-        "    \u0022enableVmProtection\u0022: false\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet1423",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423",
+        "etag": "W/\u00220511f533-9e9f-43d7-af98-5cf4a8d4ff5d\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "9a79c88f-af61-4069-92a3-3681796a21f3",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "dhcpOptions": {
+            "dnsServers": [
+              "10.1.1.1",
+              "10.1.2.4"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "azsmnet1994",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994",
+              "etag": "W/\u00220511f533-9e9f-43d7-af98-5cf4a8d4ff5d\u0022",
+              "properties": {
+                "provisioningState": "Updating",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false,
+          "enableVmProtection": false
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/aeaa65b3-ed88-4dd6-8129-6af3595d8f47?api-version=2020-04-01",
@@ -7185,7 +7175,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:04 GMT",
         "Expires": "-1",
@@ -7203,11 +7193,9 @@
         "x-ms-request-id": "3080327a-b1ca-4150-a099-30d1ef075550",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054504Z:b52d4f5b-c6c9-428e-9edc-ac6b395cf1da"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423?api-version=2020-04-01",
@@ -7225,7 +7213,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1393",
+        "Content-Length": "1060",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:04 GMT",
         "ETag": "W/\u002228fe8fac-4a64-4418-975f-6ef8604800a5\u0022",
@@ -7244,49 +7232,47 @@
         "x-ms-request-id": "bd6fcd5c-0381-490a-b02a-b82f77b57725",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054504Z:633bedae-5ac8-4dcf-835f-8656a98480c2"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet1423\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002228fe8fac-4a64-4418-975f-6ef8604800a5\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00229a79c88f-af61-4069-92a3-3681796a21f3\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022dhcpOptions\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [\r\n",
-        "        \u002210.1.1.1\u0022,\r\n",
-        "        \u002210.1.2.4\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022subnets\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet1994\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u002228fe8fac-4a64-4418-975f-6ef8604800a5\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: [],\r\n",
-        "    \u0022enableDdosProtection\u0022: false,\r\n",
-        "    \u0022enableVmProtection\u0022: false\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet1423",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423",
+        "etag": "W/\u002228fe8fac-4a64-4418-975f-6ef8604800a5\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "9a79c88f-af61-4069-92a3-3681796a21f3",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "dhcpOptions": {
+            "dnsServers": [
+              "10.1.1.1",
+              "10.1.2.4"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "azsmnet1994",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994",
+              "etag": "W/\u002228fe8fac-4a64-4418-975f-6ef8604800a5\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false,
+          "enableVmProtection": false
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994?api-version=2020-04-01",
@@ -7306,7 +7292,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "554",
+        "Content-Length": "481",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:04 GMT",
         "ETag": "W/\u002228fe8fac-4a64-4418-975f-6ef8604800a5\u0022",
@@ -7325,22 +7311,20 @@
         "x-ms-request-id": "ae6037a0-840c-4cdf-bbe1-633237242a05",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054505Z:29be9fe3-5805-469b-83cc-bdd655f30acf"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet1994\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002228fe8fac-4a64-4418-975f-6ef8604800a5\\\u0022\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "    \u0022delegations\u0022: [],\r\n",
-        "    \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "    \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "    \u0022subnetID\u0022: 0\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet1994",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994",
+        "etag": "W/\u002228fe8fac-4a64-4418-975f-6ef8604800a5\u0022",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "addressPrefix": "10.0.0.0/24",
+          "delegations": [],
+          "privateEndpointNetworkPolicies": "Enabled",
+          "privateLinkServiceNetworkPolicies": "Enabled",
+          "subnetID": 0
+        },
+        "type": "Microsoft.Network/virtualNetworks/subnets"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177?api-version=2020-04-01",
@@ -7387,7 +7371,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/75402fba-d4fa-433b-bdf5-e653a7c3c69a?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "1874",
+        "Content-Length": "1494",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:08 GMT",
         "Expires": "-1",
@@ -7405,53 +7389,51 @@
         "x-ms-request-id": "75402fba-d4fa-433b-bdf5-e653a7c3c69a",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054509Z:5555198f-f680-4140-b201-9bdf27474123"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet6177\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022950141d6-e89e-4816-8654-5e840d9a9592\u0022,\r\n",
-        "    \u0022ipConfigurations\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet1350\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\\\u0022\u0022,\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022privateIPAddress\u0022: \u002210.0.0.4\u0022,\r\n",
-        "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "          \u0022publicIPAddress\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256\u0022\r\n",
-        "          },\r\n",
-        "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994\u0022\r\n",
-        "          },\r\n",
-        "          \u0022primary\u0022: true,\r\n",
-        "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
-        "        }\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [],\r\n",
-        "      \u0022appliedDnsServers\u0022: [],\r\n",
-        "      \u0022internalDomainNameSuffix\u0022: \u0022r5ehtgtbv3uubevdg0axs0rb4d.dx.internal.cloudapp.net\u0022\r\n",
-        "    },\r\n",
-        "    \u0022enableAcceleratedNetworking\u0022: false,\r\n",
-        "    \u0022enableIPForwarding\u0022: false,\r\n",
-        "    \u0022hostedWorkloads\u0022: [],\r\n",
-        "    \u0022tapConfigurations\u0022: [],\r\n",
-        "    \u0022nicType\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet6177",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177",
+        "etag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
+        "location": "westus",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "950141d6-e89e-4816-8654-5e840d9a9592",
+          "ipConfigurations": [
+            {
+              "name": "azsmnet1350",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350",
+              "etag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
+              "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "privateIPAddress": "10.0.0.4",
+                "privateIPAllocationMethod": "Dynamic",
+                "publicIPAddress": {
+                  "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256"
+                },
+                "subnet": {
+                  "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994"
+                },
+                "primary": true,
+                "privateIPAddressVersion": "IPv4"
+              }
+            }
+          ],
+          "dnsSettings": {
+            "dnsServers": [],
+            "appliedDnsServers": [],
+            "internalDomainNameSuffix": "r5ehtgtbv3uubevdg0axs0rb4d.dx.internal.cloudapp.net"
+          },
+          "enableAcceleratedNetworking": false,
+          "enableIPForwarding": false,
+          "hostedWorkloads": [],
+          "tapConfigurations": [],
+          "nicType": "Standard"
+        },
+        "type": "Microsoft.Network/networkInterfaces"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/75402fba-d4fa-433b-bdf5-e653a7c3c69a?api-version=2020-04-01",
@@ -7469,7 +7451,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:09 GMT",
         "Expires": "-1",
@@ -7487,11 +7469,9 @@
         "x-ms-request-id": "a975c0cb-d98d-43b4-bd97-e6edb7d065a5",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054509Z:a50346a5-0c10-4212-8d05-db362e27d75a"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177?api-version=2020-04-01",
@@ -7509,7 +7489,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1874",
+        "Content-Length": "1494",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:09 GMT",
         "ETag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
@@ -7528,53 +7508,51 @@
         "x-ms-request-id": "60b16f17-454d-4586-b9e8-57223e9a1526",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054509Z:387e4547-8ce8-40a8-b7e4-aaa734c11e74"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet6177\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022950141d6-e89e-4816-8654-5e840d9a9592\u0022,\r\n",
-        "    \u0022ipConfigurations\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet1350\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\\\u0022\u0022,\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022privateIPAddress\u0022: \u002210.0.0.4\u0022,\r\n",
-        "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "          \u0022publicIPAddress\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256\u0022\r\n",
-        "          },\r\n",
-        "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994\u0022\r\n",
-        "          },\r\n",
-        "          \u0022primary\u0022: true,\r\n",
-        "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
-        "        }\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [],\r\n",
-        "      \u0022appliedDnsServers\u0022: [],\r\n",
-        "      \u0022internalDomainNameSuffix\u0022: \u0022r5ehtgtbv3uubevdg0axs0rb4d.dx.internal.cloudapp.net\u0022\r\n",
-        "    },\r\n",
-        "    \u0022enableAcceleratedNetworking\u0022: false,\r\n",
-        "    \u0022enableIPForwarding\u0022: false,\r\n",
-        "    \u0022hostedWorkloads\u0022: [],\r\n",
-        "    \u0022tapConfigurations\u0022: [],\r\n",
-        "    \u0022nicType\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet6177",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177",
+        "etag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
+        "location": "westus",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "950141d6-e89e-4816-8654-5e840d9a9592",
+          "ipConfigurations": [
+            {
+              "name": "azsmnet1350",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350",
+              "etag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
+              "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "privateIPAddress": "10.0.0.4",
+                "privateIPAllocationMethod": "Dynamic",
+                "publicIPAddress": {
+                  "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256"
+                },
+                "subnet": {
+                  "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994"
+                },
+                "primary": true,
+                "privateIPAddressVersion": "IPv4"
+              }
+            }
+          ],
+          "dnsSettings": {
+            "dnsServers": [],
+            "appliedDnsServers": [],
+            "internalDomainNameSuffix": "r5ehtgtbv3uubevdg0axs0rb4d.dx.internal.cloudapp.net"
+          },
+          "enableAcceleratedNetworking": false,
+          "enableIPForwarding": false,
+          "hostedWorkloads": [],
+          "tapConfigurations": [],
+          "nicType": "Standard"
+        },
+        "type": "Microsoft.Network/networkInterfaces"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177?api-version=2020-04-01",
@@ -7594,7 +7572,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1874",
+        "Content-Length": "1494",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:09 GMT",
         "ETag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
@@ -7613,53 +7591,51 @@
         "x-ms-request-id": "daea7640-80dd-41bc-a10f-b15e071ae039",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054510Z:59553786-199b-4794-8846-e9033527f16d"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet6177\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022950141d6-e89e-4816-8654-5e840d9a9592\u0022,\r\n",
-        "    \u0022ipConfigurations\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet1350\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\\\u0022\u0022,\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022privateIPAddress\u0022: \u002210.0.0.4\u0022,\r\n",
-        "          \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "          \u0022publicIPAddress\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256\u0022\r\n",
-        "          },\r\n",
-        "          \u0022subnet\u0022: {\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994\u0022\r\n",
-        "          },\r\n",
-        "          \u0022primary\u0022: true,\r\n",
-        "          \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
-        "        }\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022dnsServers\u0022: [],\r\n",
-        "      \u0022appliedDnsServers\u0022: [],\r\n",
-        "      \u0022internalDomainNameSuffix\u0022: \u0022r5ehtgtbv3uubevdg0axs0rb4d.dx.internal.cloudapp.net\u0022\r\n",
-        "    },\r\n",
-        "    \u0022enableAcceleratedNetworking\u0022: false,\r\n",
-        "    \u0022enableIPForwarding\u0022: false,\r\n",
-        "    \u0022hostedWorkloads\u0022: [],\r\n",
-        "    \u0022tapConfigurations\u0022: [],\r\n",
-        "    \u0022nicType\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet6177",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177",
+        "etag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
+        "location": "westus",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "950141d6-e89e-4816-8654-5e840d9a9592",
+          "ipConfigurations": [
+            {
+              "name": "azsmnet1350",
+              "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350",
+              "etag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
+              "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "privateIPAddress": "10.0.0.4",
+                "privateIPAllocationMethod": "Dynamic",
+                "publicIPAddress": {
+                  "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256"
+                },
+                "subnet": {
+                  "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994"
+                },
+                "primary": true,
+                "privateIPAddressVersion": "IPv4"
+              }
+            }
+          ],
+          "dnsSettings": {
+            "dnsServers": [],
+            "appliedDnsServers": [],
+            "internalDomainNameSuffix": "r5ehtgtbv3uubevdg0axs0rb4d.dx.internal.cloudapp.net"
+          },
+          "enableAcceleratedNetworking": false,
+          "enableIPForwarding": false,
+          "hostedWorkloads": [],
+          "tapConfigurations": [],
+          "nicType": "Standard"
+        },
+        "type": "Microsoft.Network/networkInterfaces"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations?api-version=2020-04-01",
@@ -7678,7 +7654,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1014",
+        "Content-Length": "815",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:10 GMT",
         "Expires": "-1",
@@ -7696,31 +7672,29 @@
         "x-ms-request-id": "7ba863cc-a441-4b0d-80b2-2fc9df68e4e7",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054510Z:02cd0022-c5e2-4f2f-a429-928bcf3b3000"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet1350\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350\u0022,\r\n",
-        "      \u0022etag\u0022: \u0022W/\\\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\\\u0022\u0022,\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "        \u0022privateIPAddress\u0022: \u002210.0.0.4\u0022,\r\n",
-        "        \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "        \u0022publicIPAddress\u0022: {\r\n",
-        "          \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256\u0022\r\n",
-        "        },\r\n",
-        "        \u0022subnet\u0022: {\r\n",
-        "          \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994\u0022\r\n",
-        "        },\r\n",
-        "        \u0022primary\u0022: true,\r\n",
-        "        \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
-        "      }\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "azsmnet1350",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350",
+            "etag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
+            "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "privateIPAddress": "10.0.0.4",
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256"
+              },
+              "subnet": {
+                "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994"
+              },
+              "primary": true,
+              "privateIPAddressVersion": "IPv4"
+            }
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350?api-version=2020-04-01",
@@ -7740,7 +7714,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "913",
+        "Content-Length": "803",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:10 GMT",
         "ETag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
@@ -7759,27 +7733,25 @@
         "x-ms-request-id": "fb0672b1-153e-4e5e-9eec-56a62c146e5f",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054510Z:ec8e57f3-5887-4f5c-89e1-dcd3e567ff81"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet1350\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022privateIPAddress\u0022: \u002210.0.0.4\u0022,\r\n",
-        "    \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022publicIPAddress\u0022: {\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256\u0022\r\n",
-        "    },\r\n",
-        "    \u0022subnet\u0022: {\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994\u0022\r\n",
-        "    },\r\n",
-        "    \u0022primary\u0022: true,\r\n",
-        "    \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet1350",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350",
+        "etag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
+        "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "privateIPAddress": "10.0.0.4",
+          "privateIPAllocationMethod": "Dynamic",
+          "publicIPAddress": {
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256"
+          },
+          "subnet": {
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994"
+          },
+          "primary": true,
+          "privateIPAddressVersion": "IPv4"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/loadBalancers?api-version=2020-04-01",
@@ -7798,7 +7770,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "19",
+        "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:10 GMT",
         "Expires": "-1",
@@ -7816,11 +7788,9 @@
         "x-ms-request-id": "670c42be-3b38-4a76-8b00-9825998048ae",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054511Z:c5e0dc2e-d601-4645-9d2b-be5474cbdde8"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: []\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": []
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces?api-version=2020-04-01",
@@ -7839,7 +7809,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "2079",
+        "Content-Length": "1506",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:10 GMT",
         "Expires": "-1",
@@ -7857,57 +7827,55 @@
         "x-ms-request-id": "35a62600-77ee-4763-9718-2590274bccdb",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054511Z:2d665284-cd7e-4ece-bb4e-d9ecb27a00c0"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet6177\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177\u0022,\r\n",
-        "      \u0022etag\u0022: \u0022W/\\\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\\\u0022\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "      \u0022tags\u0022: {\r\n",
-        "        \u0022key\u0022: \u0022value\u0022\r\n",
-        "      },\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "        \u0022resourceGuid\u0022: \u0022950141d6-e89e-4816-8654-5e840d9a9592\u0022,\r\n",
-        "        \u0022ipConfigurations\u0022: [\r\n",
-        "          {\r\n",
-        "            \u0022name\u0022: \u0022azsmnet1350\u0022,\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350\u0022,\r\n",
-        "            \u0022etag\u0022: \u0022W/\\\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\\\u0022\u0022,\r\n",
-        "            \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
-        "            \u0022properties\u0022: {\r\n",
-        "              \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "              \u0022privateIPAddress\u0022: \u002210.0.0.4\u0022,\r\n",
-        "              \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "              \u0022publicIPAddress\u0022: {\r\n",
-        "                \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256\u0022\r\n",
-        "              },\r\n",
-        "              \u0022subnet\u0022: {\r\n",
-        "                \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994\u0022\r\n",
-        "              },\r\n",
-        "              \u0022primary\u0022: true,\r\n",
-        "              \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
-        "            }\r\n",
-        "          }\r\n",
-        "        ],\r\n",
-        "        \u0022dnsSettings\u0022: {\r\n",
-        "          \u0022dnsServers\u0022: [],\r\n",
-        "          \u0022appliedDnsServers\u0022: [],\r\n",
-        "          \u0022internalDomainNameSuffix\u0022: \u0022r5ehtgtbv3uubevdg0axs0rb4d.dx.internal.cloudapp.net\u0022\r\n",
-        "        },\r\n",
-        "        \u0022enableAcceleratedNetworking\u0022: false,\r\n",
-        "        \u0022enableIPForwarding\u0022: false,\r\n",
-        "        \u0022hostedWorkloads\u0022: [],\r\n",
-        "        \u0022tapConfigurations\u0022: [],\r\n",
-        "        \u0022nicType\u0022: \u0022Standard\u0022\r\n",
-        "      },\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces\u0022\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "azsmnet6177",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177",
+            "etag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
+            "location": "westus",
+            "tags": {
+              "key": "value"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "resourceGuid": "950141d6-e89e-4816-8654-5e840d9a9592",
+              "ipConfigurations": [
+                {
+                  "name": "azsmnet1350",
+                  "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350",
+                  "etag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
+                  "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "privateIPAddress": "10.0.0.4",
+                    "privateIPAllocationMethod": "Dynamic",
+                    "publicIPAddress": {
+                      "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256"
+                    },
+                    "subnet": {
+                      "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994"
+                    },
+                    "primary": true,
+                    "privateIPAddressVersion": "IPv4"
+                  }
+                }
+              ],
+              "dnsSettings": {
+                "dnsServers": [],
+                "appliedDnsServers": [],
+                "internalDomainNameSuffix": "r5ehtgtbv3uubevdg0axs0rb4d.dx.internal.cloudapp.net"
+              },
+              "enableAcceleratedNetworking": false,
+              "enableIPForwarding": false,
+              "hostedWorkloads": [],
+              "tapConfigurations": [],
+              "nicType": "Standard"
+            },
+            "type": "Microsoft.Network/networkInterfaces"
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/networkInterfaces?api-version=2020-04-01",
@@ -7926,7 +7894,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "2079",
+        "Content-Length": "1506",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:11 GMT",
         "Expires": "-1",
@@ -7944,57 +7912,55 @@
         "x-ms-request-id": "802e0d31-8a75-4399-8af3-b6ca930febc1",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054511Z:3db2d433-10f6-4861-a62f-3377e264f4d8"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet6177\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177\u0022,\r\n",
-        "      \u0022etag\u0022: \u0022W/\\\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\\\u0022\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "      \u0022tags\u0022: {\r\n",
-        "        \u0022key\u0022: \u0022value\u0022\r\n",
-        "      },\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "        \u0022resourceGuid\u0022: \u0022950141d6-e89e-4816-8654-5e840d9a9592\u0022,\r\n",
-        "        \u0022ipConfigurations\u0022: [\r\n",
-        "          {\r\n",
-        "            \u0022name\u0022: \u0022azsmnet1350\u0022,\r\n",
-        "            \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350\u0022,\r\n",
-        "            \u0022etag\u0022: \u0022W/\\\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\\\u0022\u0022,\r\n",
-        "            \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
-        "            \u0022properties\u0022: {\r\n",
-        "              \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "              \u0022privateIPAddress\u0022: \u002210.0.0.4\u0022,\r\n",
-        "              \u0022privateIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "              \u0022publicIPAddress\u0022: {\r\n",
-        "                \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256\u0022\r\n",
-        "              },\r\n",
-        "              \u0022subnet\u0022: {\r\n",
-        "                \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994\u0022\r\n",
-        "              },\r\n",
-        "              \u0022primary\u0022: true,\r\n",
-        "              \u0022privateIPAddressVersion\u0022: \u0022IPv4\u0022\r\n",
-        "            }\r\n",
-        "          }\r\n",
-        "        ],\r\n",
-        "        \u0022dnsSettings\u0022: {\r\n",
-        "          \u0022dnsServers\u0022: [],\r\n",
-        "          \u0022appliedDnsServers\u0022: [],\r\n",
-        "          \u0022internalDomainNameSuffix\u0022: \u0022r5ehtgtbv3uubevdg0axs0rb4d.dx.internal.cloudapp.net\u0022\r\n",
-        "        },\r\n",
-        "        \u0022enableAcceleratedNetworking\u0022: false,\r\n",
-        "        \u0022enableIPForwarding\u0022: false,\r\n",
-        "        \u0022hostedWorkloads\u0022: [],\r\n",
-        "        \u0022tapConfigurations\u0022: [],\r\n",
-        "        \u0022nicType\u0022: \u0022Standard\u0022\r\n",
-        "      },\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces\u0022\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "azsmnet6177",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177",
+            "etag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
+            "location": "westus",
+            "tags": {
+              "key": "value"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "resourceGuid": "950141d6-e89e-4816-8654-5e840d9a9592",
+              "ipConfigurations": [
+                {
+                  "name": "azsmnet1350",
+                  "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177/ipConfigurations/azsmnet1350",
+                  "etag": "W/\u002253b9ca19-3fa7-4f48-ba2a-d5ca4d93ac87\u0022",
+                  "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "privateIPAddress": "10.0.0.4",
+                    "privateIPAllocationMethod": "Dynamic",
+                    "publicIPAddress": {
+                      "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256"
+                    },
+                    "subnet": {
+                      "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/virtualNetworks/azsmnet1423/subnets/azsmnet1994"
+                    },
+                    "primary": true,
+                    "privateIPAddressVersion": "IPv4"
+                  }
+                }
+              ],
+              "dnsSettings": {
+                "dnsServers": [],
+                "appliedDnsServers": [],
+                "internalDomainNameSuffix": "r5ehtgtbv3uubevdg0axs0rb4d.dx.internal.cloudapp.net"
+              },
+              "enableAcceleratedNetworking": false,
+              "enableIPForwarding": false,
+              "hostedWorkloads": [],
+              "tapConfigurations": [],
+              "nicType": "Standard"
+            },
+            "type": "Microsoft.Network/networkInterfaces"
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/networkInterfaces/azsmnet6177?api-version=2020-04-01",
@@ -8053,7 +8019,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "19",
+        "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:45:12 GMT",
         "Expires": "-1",
@@ -8071,11 +8037,9 @@
         "x-ms-request-id": "02b17600-4424-4f4a-9cf9-92f7d78154c7",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T054512Z:ed160b37-0fe2-4255-b0e2-bc2e50afc52e"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: []\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": []
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg2790/providers/Microsoft.Network/publicIPAddresses/azsmnet9256?api-version=2020-04-01",

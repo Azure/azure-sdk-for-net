@@ -50,7 +50,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "7449",
+        "Content-Length": "6729",
         "Content-Type": "application/json",
         "traceparent": "00-82e7ab9f9851184dad34eaf81bbb03dc-e805b562afc12444-00",
         "User-Agent": [
@@ -60,329 +60,7 @@
         "x-ms-client-request-id": "ec894e44c8b958bd7b092f359047a7e5",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": {
-        "properties": {
-          "template": {
-            "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-            "contentVersion": "1.0.0.0",
-            "parameters": {
-              "resourceGroupName": {
-                "type": "String"
-              },
-              "location": {
-                "type": "String"
-              },
-              "virtualMachineName": {
-                "type": "String"
-              },
-              "virtualMachineSize": {
-                "type": "String"
-              },
-              "adminUsername": {
-                "type": "String"
-              },
-              "storageAccountName": {
-                "type": "String"
-              },
-              "virtualNetworkName": {
-                "type": "String"
-              },
-              "routeTableName": {
-                "type": "String"
-              },
-              "networkInterfaceName": {
-                "type": "String"
-              },
-              "networkSecurityGroupName": {
-                "type": "String"
-              },
-              "adminPassword": {
-                "type": "SecureString"
-              },
-              "storageAccountType": {
-                "type": "String"
-              },
-              "diagnosticsStorageAccountName": {
-                "type": "String"
-              },
-              "diagnosticsStorageAccountId": {
-                "type": "String"
-              },
-              "diagnosticsStorageAccountType": {
-                "type": "String"
-              },
-              "addressPrefix": {
-                "type": "String"
-              },
-              "subnetName": {
-                "type": "String"
-              },
-              "subnetPrefix": {
-                "type": "String"
-              },
-              "publicIpAddressName": {
-                "type": "String"
-              },
-              "publicIpAddressType": {
-                "type": "String"
-              }
-            },
-            "variables": {
-              "vnetId": "[resourceId(parameters(\u0027resourceGroupName\u0027),\u0027Microsoft.Network/virtualNetworks\u0027, parameters(\u0027virtualNetworkName\u0027))]",
-              "subnetRef": "[concat(variables(\u0027vnetId\u0027), \u0027/subnets/\u0027, parameters(\u0027subnetName\u0027))]"
-            },
-            "resources": [
-              {
-                "type": "Microsoft.Compute/virtualMachines",
-                "name": "[parameters(\u0027virtualMachineName\u0027)]",
-                "apiVersion": "2015-06-15",
-                "location": "[parameters(\u0027location\u0027)]",
-                "properties": {
-                  "osProfile": {
-                    "computerName": "[parameters(\u0027virtualMachineName\u0027)]",
-                    "adminUsername": "[parameters(\u0027adminUsername\u0027)]",
-                    "adminPassword": "[parameters(\u0027adminPassword\u0027)]",
-                    "windowsConfiguration": {
-                      "provisionVmAgent": "true"
-                    }
-                  },
-                  "hardwareProfile": {
-                    "vmSize": "[parameters(\u0027virtualMachineSize\u0027)]"
-                  },
-                  "storageProfile": {
-                    "imageReference": {
-                      "publisher": "MicrosoftWindowsServer",
-                      "offer": "WindowsServer",
-                      "sku": "2016-Datacenter",
-                      "version": "latest"
-                    },
-                    "osDisk": {
-                      "name": "[parameters(\u0027virtualMachineName\u0027)]",
-                      "createOption": "fromImage",
-                      "vhd": {
-                        "uri": "[concat(concat(reference(resourceId(parameters(\u0027resourceGroupName\u0027), \u0027Microsoft.Storage/storageAccounts\u0027, parameters(\u0027storageAccountName\u0027)), \u00272015-06-15\u0027).primaryEndpoints[\u0027blob\u0027], \u0027vhds/\u0027), parameters(\u0027virtualMachineName\u0027), \u002720161217141554.vhd\u0027)]"
-                      }
-                    },
-                    "dataDisks": []
-                  },
-                  "networkProfile": {
-                    "networkInterfaces": [
-                      {
-                        "id": "[resourceId(\u0027Microsoft.Network/networkInterfaces\u0027, parameters(\u0027networkInterfaceName\u0027))]"
-                      }
-                    ]
-                  },
-                  "diagnosticsProfile": {
-                    "bootDiagnostics": {
-                      "enabled": true,
-                      "storageUri": "[reference(resourceId(parameters(\u0027resourceGroupName\u0027), \u0027Microsoft.Storage/storageAccounts\u0027, parameters(\u0027diagnosticsStorageAccountName\u0027)), \u00272015-06-15\u0027).primaryEndpoints[\u0027blob\u0027]]"
-                    }
-                  }
-                },
-                "dependsOn": [
-                  "[concat(\u0027Microsoft.Network/networkInterfaces/\u0027, parameters(\u0027networkInterfaceName\u0027))]",
-                  "[concat(\u0027Microsoft.Storage/storageAccounts/\u0027, parameters(\u0027storageAccountName\u0027))]",
-                  "[concat(\u0027Microsoft.Storage/storageAccounts/\u0027, parameters(\u0027diagnosticsStorageAccountName\u0027))]"
-                ]
-              },
-              {
-                "type": "Microsoft.Storage/storageAccounts",
-                "name": "[parameters(\u0027storageAccountName\u0027)]",
-                "apiVersion": "2015-06-15",
-                "location": "[parameters(\u0027location\u0027)]",
-                "properties": {
-                  "accountType": "[parameters(\u0027storageAccountType\u0027)]"
-                }
-              },
-              {
-                "type": "Microsoft.Storage/storageAccounts",
-                "name": "[parameters(\u0027diagnosticsStorageAccountName\u0027)]",
-                "apiVersion": "2015-06-15",
-                "location": "[parameters(\u0027location\u0027)]",
-                "properties": {
-                  "accountType": "[parameters(\u0027diagnosticsStorageAccountType\u0027)]"
-                }
-              },
-              {
-                "type": "Microsoft.Network/routeTables",
-                "name": "[parameters(\u0027routeTableName\u0027)]",
-                "apiVersion": "2016-09-01",
-                "location": "[parameters(\u0027location\u0027)]",
-                "properties": {
-                  "routes": [
-                    {
-                      "name": "route1",
-                      "properties": {
-                        "addressPrefix": "10.1.3.0/24",
-                        "nextHopType": "VirtualAppliance",
-                        "nextHopIpAddress": "10.0.1.2"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "Microsoft.Network/virtualNetworks",
-                "name": "[parameters(\u0027virtualNetworkName\u0027)]",
-                "apiVersion": "2016-09-01",
-                "location": "[parameters(\u0027location\u0027)]",
-                "properties": {
-                  "addressSpace": {
-                    "addressPrefixes": [
-                      "[parameters(\u0027addressPrefix\u0027)]"
-                    ]
-                  },
-                  "subnets": [
-                    {
-                      "name": "[parameters(\u0027subnetName\u0027)]",
-                      "properties": {
-                        "addressPrefix": "[parameters(\u0027subnetPrefix\u0027)]",
-                        "routeTable": {
-                          "id": "[resourceId(\u0027Microsoft.Network/routeTables\u0027, parameters(\u0027routeTableName\u0027))]"
-                        }
-                      }
-                    }
-                  ]
-                },
-                "dependsOn": [
-                  "[concat(\u0027Microsoft.Network/routeTables/\u0027, parameters(\u0027routeTableName\u0027))]"
-                ]
-              },
-              {
-                "type": "Microsoft.Network/networkInterfaces",
-                "name": "[parameters(\u0027networkInterfaceName\u0027)]",
-                "apiVersion": "2016-09-01",
-                "location": "[parameters(\u0027location\u0027)]",
-                "properties": {
-                  "ipConfigurations": [
-                    {
-                      "name": "ipconfig1",
-                      "properties": {
-                        "subnet": {
-                          "id": "[variables(\u0027subnetRef\u0027)]"
-                        },
-                        "privateIPAllocationMethod": "Dynamic",
-                        "publicIpAddress": {
-                          "id": "[resourceId(parameters(\u0027resourceGroupName\u0027),\u0027Microsoft.Network/publicIpAddresses\u0027, parameters(\u0027publicIpAddressName\u0027))]"
-                        }
-                      }
-                    }
-                  ],
-                  "networkSecurityGroup": {
-                    "id": "[resourceId(parameters(\u0027resourceGroupName\u0027), \u0027Microsoft.Network/networkSecurityGroups\u0027, parameters(\u0027networkSecurityGroupName\u0027))]"
-                  }
-                },
-                "dependsOn": [
-                  "[concat(\u0027Microsoft.Network/virtualNetworks/\u0027, parameters(\u0027virtualNetworkName\u0027))]",
-                  "[concat(\u0027Microsoft.Network/publicIpAddresses/\u0027, parameters(\u0027publicIpAddressName\u0027))]",
-                  "[concat(\u0027Microsoft.Network/networkSecurityGroups/\u0027, parameters(\u0027networkSecurityGroupName\u0027))]"
-                ]
-              },
-              {
-                "type": "Microsoft.Network/publicIpAddresses",
-                "name": "[parameters(\u0027publicIpAddressName\u0027)]",
-                "apiVersion": "2016-09-01",
-                "location": "[parameters(\u0027location\u0027)]",
-                "properties": {
-                  "publicIpAllocationMethod": "[parameters(\u0027publicIpAddressType\u0027)]"
-                }
-              },
-              {
-                "type": "Microsoft.Network/networkSecurityGroups",
-                "name": "[parameters(\u0027networkSecurityGroupName\u0027)]",
-                "apiVersion": "2016-09-01",
-                "location": "[parameters(\u0027location\u0027)]",
-                "properties": {
-                  "securityRules": [
-                    {
-                      "name": "default-allow-rdp",
-                      "properties": {
-                        "priority": 1000,
-                        "sourceAddressPrefix": "*",
-                        "protocol": "TCP",
-                        "destinationPortRange": "3389",
-                        "access": "Allow",
-                        "direction": "Inbound",
-                        "sourcePortRange": "*",
-                        "destinationAddressPrefix": "*"
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            "outputs": {
-              "adminUsername": {
-                "type": "String",
-                "value": "[parameters(\u0027adminUsername\u0027)]"
-              }
-            }
-          },
-          "parameters": {
-            "resourceGroupName": {
-              "value": "azsmnet6005"
-            },
-            "location": {
-              "value": "westus2"
-            },
-            "virtualMachineName": {
-              "value": "azsmnet5208"
-            },
-            "virtualMachineSize": {
-              "value": "Standard_DS1_v2"
-            },
-            "adminUsername": {
-              "value": "netanalytics32"
-            },
-            "storageAccountName": {
-              "value": "azsmnet5270"
-            },
-            "routeTableName": {
-              "value": "azsmnet6005RT"
-            },
-            "virtualNetworkName": {
-              "value": "azsmnet6005-vnet"
-            },
-            "networkInterfaceName": {
-              "value": "azsmnet1554"
-            },
-            "networkSecurityGroupName": {
-              "value": "azsmnet5208-nsg"
-            },
-            "adminPassword": {
-              "value": "AzureSDKNetworkTest#DUhwOXXu"
-            },
-            "storageAccountType": {
-              "value": "Premium_LRS"
-            },
-            "diagnosticsStorageAccountName": {
-              "value": "azsmnet9099"
-            },
-            "diagnosticsStorageAccountId": {
-              "value": "Microsoft.Storage/storageAccounts/azsmnet9099"
-            },
-            "diagnosticsStorageAccountType": {
-              "value": "Standard_LRS"
-            },
-            "addressPrefix": {
-              "value": "10.17.3.0/24"
-            },
-            "subnetName": {
-              "value": "default"
-            },
-            "subnetPrefix": {
-              "value": "10.17.3.0/24"
-            },
-            "publicIpAddressName": {
-              "value": "azsmnet5208-ip"
-            },
-            "publicIpAddressType": {
-              "value": "Dynamic"
-            }
-          },
-          "mode": "Incremental"
-        }
-      },
+      "RequestBody": "{\u0022properties\u0022:{\u0022template\u0022:{\u0022$schema\u0022:\u0022http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\u0022,\u0022contentVersion\u0022:\u00221.0.0.0\u0022,\u0022parameters\u0022:{\u0022resourceGroupName\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022location\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022virtualMachineName\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022virtualMachineSize\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022adminUsername\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022storageAccountName\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022virtualNetworkName\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022routeTableName\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022networkInterfaceName\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022networkSecurityGroupName\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022adminPassword\u0022:{\u0022type\u0022:\u0022SecureString\u0022},\u0022storageAccountType\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022diagnosticsStorageAccountName\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022diagnosticsStorageAccountId\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022diagnosticsStorageAccountType\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022addressPrefix\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022subnetName\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022subnetPrefix\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022publicIpAddressName\u0022:{\u0022type\u0022:\u0022String\u0022},\u0022publicIpAddressType\u0022:{\u0022type\u0022:\u0022String\u0022}},\u0022variables\u0022:{\u0022vnetId\u0022:\u0022[resourceId(parameters(\u0027resourceGroupName\u0027),\u0027Microsoft.Network/virtualNetworks\u0027, parameters(\u0027virtualNetworkName\u0027))]\u0022,\u0022subnetRef\u0022:\u0022[concat(variables(\u0027vnetId\u0027), \u0027/subnets/\u0027, parameters(\u0027subnetName\u0027))]\u0022},\u0022resources\u0022:[{\u0022type\u0022:\u0022Microsoft.Compute/virtualMachines\u0022,\u0022name\u0022:\u0022[parameters(\u0027virtualMachineName\u0027)]\u0022,\u0022apiVersion\u0022:\u00222015-06-15\u0022,\u0022location\u0022:\u0022[parameters(\u0027location\u0027)]\u0022,\u0022properties\u0022:{\u0022osProfile\u0022:{\u0022computerName\u0022:\u0022[parameters(\u0027virtualMachineName\u0027)]\u0022,\u0022adminUsername\u0022:\u0022[parameters(\u0027adminUsername\u0027)]\u0022,\u0022adminPassword\u0022:\u0022[parameters(\u0027adminPassword\u0027)]\u0022,\u0022windowsConfiguration\u0022:{\u0022provisionVmAgent\u0022:\u0022true\u0022}},\u0022hardwareProfile\u0022:{\u0022vmSize\u0022:\u0022[parameters(\u0027virtualMachineSize\u0027)]\u0022},\u0022storageProfile\u0022:{\u0022imageReference\u0022:{\u0022publisher\u0022:\u0022MicrosoftWindowsServer\u0022,\u0022offer\u0022:\u0022WindowsServer\u0022,\u0022sku\u0022:\u00222016-Datacenter\u0022,\u0022version\u0022:\u0022latest\u0022},\u0022osDisk\u0022:{\u0022name\u0022:\u0022[parameters(\u0027virtualMachineName\u0027)]\u0022,\u0022createOption\u0022:\u0022fromImage\u0022,\u0022vhd\u0022:{\u0022uri\u0022:\u0022[concat(concat(reference(resourceId(parameters(\u0027resourceGroupName\u0027), \u0027Microsoft.Storage/storageAccounts\u0027, parameters(\u0027storageAccountName\u0027)), \u00272015-06-15\u0027).primaryEndpoints[\u0027blob\u0027], \u0027vhds/\u0027), parameters(\u0027virtualMachineName\u0027), \u002720161217141554.vhd\u0027)]\u0022}},\u0022dataDisks\u0022:[]},\u0022networkProfile\u0022:{\u0022networkInterfaces\u0022:[{\u0022id\u0022:\u0022[resourceId(\u0027Microsoft.Network/networkInterfaces\u0027, parameters(\u0027networkInterfaceName\u0027))]\u0022}]},\u0022diagnosticsProfile\u0022:{\u0022bootDiagnostics\u0022:{\u0022enabled\u0022:true,\u0022storageUri\u0022:\u0022[reference(resourceId(parameters(\u0027resourceGroupName\u0027), \u0027Microsoft.Storage/storageAccounts\u0027, parameters(\u0027diagnosticsStorageAccountName\u0027)), \u00272015-06-15\u0027).primaryEndpoints[\u0027blob\u0027]]\u0022}}},\u0022dependsOn\u0022:[\u0022[concat(\u0027Microsoft.Network/networkInterfaces/\u0027, parameters(\u0027networkInterfaceName\u0027))]\u0022,\u0022[concat(\u0027Microsoft.Storage/storageAccounts/\u0027, parameters(\u0027storageAccountName\u0027))]\u0022,\u0022[concat(\u0027Microsoft.Storage/storageAccounts/\u0027, parameters(\u0027diagnosticsStorageAccountName\u0027))]\u0022]},{\u0022type\u0022:\u0022Microsoft.Storage/storageAccounts\u0022,\u0022name\u0022:\u0022[parameters(\u0027storageAccountName\u0027)]\u0022,\u0022apiVersion\u0022:\u00222015-06-15\u0022,\u0022location\u0022:\u0022[parameters(\u0027location\u0027)]\u0022,\u0022properties\u0022:{\u0022accountType\u0022:\u0022[parameters(\u0027storageAccountType\u0027)]\u0022}},{\u0022type\u0022:\u0022Microsoft.Storage/storageAccounts\u0022,\u0022name\u0022:\u0022[parameters(\u0027diagnosticsStorageAccountName\u0027)]\u0022,\u0022apiVersion\u0022:\u00222015-06-15\u0022,\u0022location\u0022:\u0022[parameters(\u0027location\u0027)]\u0022,\u0022properties\u0022:{\u0022accountType\u0022:\u0022[parameters(\u0027diagnosticsStorageAccountType\u0027)]\u0022}},{\u0022type\u0022:\u0022Microsoft.Network/routeTables\u0022,\u0022name\u0022:\u0022[parameters(\u0027routeTableName\u0027)]\u0022,\u0022apiVersion\u0022:\u00222016-09-01\u0022,\u0022location\u0022:\u0022[parameters(\u0027location\u0027)]\u0022,\u0022properties\u0022:{\u0022routes\u0022:[{\u0022name\u0022:\u0022route1\u0022,\u0022properties\u0022:{\u0022addressPrefix\u0022:\u002210.1.3.0/24\u0022,\u0022nextHopType\u0022:\u0022VirtualAppliance\u0022,\u0022nextHopIpAddress\u0022:\u002210.0.1.2\u0022}}]}},{\u0022type\u0022:\u0022Microsoft.Network/virtualNetworks\u0022,\u0022name\u0022:\u0022[parameters(\u0027virtualNetworkName\u0027)]\u0022,\u0022apiVersion\u0022:\u00222016-09-01\u0022,\u0022location\u0022:\u0022[parameters(\u0027location\u0027)]\u0022,\u0022properties\u0022:{\u0022addressSpace\u0022:{\u0022addressPrefixes\u0022:[\u0022[parameters(\u0027addressPrefix\u0027)]\u0022]},\u0022subnets\u0022:[{\u0022name\u0022:\u0022[parameters(\u0027subnetName\u0027)]\u0022,\u0022properties\u0022:{\u0022addressPrefix\u0022:\u0022[parameters(\u0027subnetPrefix\u0027)]\u0022,\u0022routeTable\u0022:{\u0022id\u0022:\u0022[resourceId(\u0027Microsoft.Network/routeTables\u0027, parameters(\u0027routeTableName\u0027))]\u0022}}}]},\u0022dependsOn\u0022:[\u0022[concat(\u0027Microsoft.Network/routeTables/\u0027, parameters(\u0027routeTableName\u0027))]\u0022]},{\u0022type\u0022:\u0022Microsoft.Network/networkInterfaces\u0022,\u0022name\u0022:\u0022[parameters(\u0027networkInterfaceName\u0027)]\u0022,\u0022apiVersion\u0022:\u00222016-09-01\u0022,\u0022location\u0022:\u0022[parameters(\u0027location\u0027)]\u0022,\u0022properties\u0022:{\u0022ipConfigurations\u0022:[{\u0022name\u0022:\u0022ipconfig1\u0022,\u0022properties\u0022:{\u0022subnet\u0022:{\u0022id\u0022:\u0022[variables(\u0027subnetRef\u0027)]\u0022},\u0022privateIPAllocationMethod\u0022:\u0022Dynamic\u0022,\u0022publicIpAddress\u0022:{\u0022id\u0022:\u0022[resourceId(parameters(\u0027resourceGroupName\u0027),\u0027Microsoft.Network/publicIpAddresses\u0027, parameters(\u0027publicIpAddressName\u0027))]\u0022}}}],\u0022networkSecurityGroup\u0022:{\u0022id\u0022:\u0022[resourceId(parameters(\u0027resourceGroupName\u0027), \u0027Microsoft.Network/networkSecurityGroups\u0027, parameters(\u0027networkSecurityGroupName\u0027))]\u0022}},\u0022dependsOn\u0022:[\u0022[concat(\u0027Microsoft.Network/virtualNetworks/\u0027, parameters(\u0027virtualNetworkName\u0027))]\u0022,\u0022[concat(\u0027Microsoft.Network/publicIpAddresses/\u0027, parameters(\u0027publicIpAddressName\u0027))]\u0022,\u0022[concat(\u0027Microsoft.Network/networkSecurityGroups/\u0027, parameters(\u0027networkSecurityGroupName\u0027))]\u0022]},{\u0022type\u0022:\u0022Microsoft.Network/publicIpAddresses\u0022,\u0022name\u0022:\u0022[parameters(\u0027publicIpAddressName\u0027)]\u0022,\u0022apiVersion\u0022:\u00222016-09-01\u0022,\u0022location\u0022:\u0022[parameters(\u0027location\u0027)]\u0022,\u0022properties\u0022:{\u0022publicIpAllocationMethod\u0022:\u0022[parameters(\u0027publicIpAddressType\u0027)]\u0022}},{\u0022type\u0022:\u0022Microsoft.Network/networkSecurityGroups\u0022,\u0022name\u0022:\u0022[parameters(\u0027networkSecurityGroupName\u0027)]\u0022,\u0022apiVersion\u0022:\u00222016-09-01\u0022,\u0022location\u0022:\u0022[parameters(\u0027location\u0027)]\u0022,\u0022properties\u0022:{\u0022securityRules\u0022:[{\u0022name\u0022:\u0022default-allow-rdp\u0022,\u0022properties\u0022:{\u0022priority\u0022:1000,\u0022sourceAddressPrefix\u0022:\u0022*\u0022,\u0022protocol\u0022:\u0022TCP\u0022,\u0022destinationPortRange\u0022:\u00223389\u0022,\u0022access\u0022:\u0022Allow\u0022,\u0022direction\u0022:\u0022Inbound\u0022,\u0022sourcePortRange\u0022:\u0022*\u0022,\u0022destinationAddressPrefix\u0022:\u0022*\u0022}}]}}],\u0022outputs\u0022:{\u0022adminUsername\u0022:{\u0022type\u0022:\u0022String\u0022,\u0022value\u0022:\u0022[parameters(\u0027adminUsername\u0027)]\u0022}}},\u0022parameters\u0022:{\u0022resourceGroupName\u0022:{\u0022value\u0022:\u0022azsmnet6005\u0022},\u0022location\u0022:{\u0022value\u0022:\u0022westus2\u0022},\u0022virtualMachineName\u0022:{\u0022value\u0022:\u0022azsmnet5208\u0022},\u0022virtualMachineSize\u0022:{\u0022value\u0022:\u0022Standard_DS1_v2\u0022},\u0022adminUsername\u0022:{\u0022value\u0022:\u0022netanalytics32\u0022},\u0022storageAccountName\u0022:{\u0022value\u0022:\u0022azsmnet5270\u0022},\u0022routeTableName\u0022:{\u0022value\u0022:\u0022azsmnet6005RT\u0022},\u0022virtualNetworkName\u0022:{\u0022value\u0022:\u0022azsmnet6005-vnet\u0022},\u0022networkInterfaceName\u0022:{\u0022value\u0022:\u0022azsmnet1554\u0022},\u0022networkSecurityGroupName\u0022:{\u0022value\u0022:\u0022azsmnet5208-nsg\u0022},\u0022adminPassword\u0022:{\u0022value\u0022:\u0022AzureSDKNetworkTest#DUhwOXXu\u0022},\u0022storageAccountType\u0022:{\u0022value\u0022:\u0022Premium_LRS\u0022},\u0022diagnosticsStorageAccountName\u0022:{\u0022value\u0022:\u0022azsmnet9099\u0022},\u0022diagnosticsStorageAccountId\u0022:{\u0022value\u0022:\u0022Microsoft.Storage/storageAccounts/azsmnet9099\u0022},\u0022diagnosticsStorageAccountType\u0022:{\u0022value\u0022:\u0022Standard_LRS\u0022},\u0022addressPrefix\u0022:{\u0022value\u0022:\u002210.17.3.0/24\u0022},\u0022subnetName\u0022:{\u0022value\u0022:\u0022default\u0022},\u0022subnetPrefix\u0022:{\u0022value\u0022:\u002210.17.3.0/24\u0022},\u0022publicIpAddressName\u0022:{\u0022value\u0022:\u0022azsmnet5208-ip\u0022},\u0022publicIpAddressType\u0022:{\u0022value\u0022:\u0022Dynamic\u0022}},\u0022mode\u0022:\u0022Incremental\u0022}}",
       "StatusCode": 201,
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/azsmnet6005/providers/Microsoft.Resources/deployments/azsmnet8757/operationStatuses/08586001609200739183?api-version=2019-10-01",
@@ -4201,7 +3879,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "3279",
+        "Content-Length": "2346",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:08:38 GMT",
         "Expires": "-1",
@@ -4219,102 +3897,106 @@
         "x-ms-request-id": "4129ca68-779c-4e39-9795-f53719db6852",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060838Z:8809ae88-d81a-436a-9577-fd4e87e13c4a"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet5208\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Compute/virtualMachines/azsmnet5208\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/virtualMachines\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022vmId\u0022: \u0022fd76de93-3aca-4a99-bf8c-158863776165\u0022,\r\n",
-        "    \u0022hardwareProfile\u0022: {\r\n",
-        "      \u0022vmSize\u0022: \u0022Standard_DS1_v2\u0022\r\n",
-        "    },\r\n",
-        "    \u0022storageProfile\u0022: {\r\n",
-        "      \u0022imageReference\u0022: {\r\n",
-        "        \u0022publisher\u0022: \u0022MicrosoftWindowsServer\u0022,\r\n",
-        "        \u0022offer\u0022: \u0022WindowsServer\u0022,\r\n",
-        "        \u0022sku\u0022: \u00222016-Datacenter\u0022,\r\n",
-        "        \u0022version\u0022: \u0022latest\u0022,\r\n",
-        "        \u0022exactVersion\u0022: \u002214393.3930.2009041537\u0022\r\n",
-        "      },\r\n",
-        "      \u0022osDisk\u0022: {\r\n",
-        "        \u0022osType\u0022: \u0022Windows\u0022,\r\n",
-        "        \u0022name\u0022: \u0022azsmnet5208\u0022,\r\n",
-        "        \u0022createOption\u0022: \u0022FromImage\u0022,\r\n",
-        "        \u0022vhd\u0022: {\r\n",
-        "          \u0022uri\u0022: \u0022https://azsmnet5270.blob.core.windows.net/vhds/azsmnet520820161217141554.vhd\u0022\r\n",
-        "        },\r\n",
-        "        \u0022caching\u0022: \u0022ReadWrite\u0022,\r\n",
-        "        \u0022diskSizeGB\u0022: 127\r\n",
-        "      },\r\n",
-        "      \u0022dataDisks\u0022: []\r\n",
-        "    },\r\n",
-        "    \u0022osProfile\u0022: {\r\n",
-        "      \u0022computerName\u0022: \u0022azsmnet5208\u0022,\r\n",
-        "      \u0022adminUsername\u0022: \u0022netanalytics32\u0022,\r\n",
-        "      \u0022windowsConfiguration\u0022: {\r\n",
-        "        \u0022provisionVMAgent\u0022: true,\r\n",
-        "        \u0022enableAutomaticUpdates\u0022: true\r\n",
-        "      },\r\n",
-        "      \u0022secrets\u0022: []\r\n",
-        "    },\r\n",
-        "    \u0022networkProfile\u0022: {\u0022networkInterfaces\u0022:[{\u0022id\u0022:\u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkInterfaces/azsmnet1554\u0022}]},\r\n",
-        "    \u0022diagnosticsProfile\u0022: {\r\n",
-        "      \u0022bootDiagnostics\u0022: {\r\n",
-        "        \u0022enabled\u0022: true,\r\n",
-        "        \u0022storageUri\u0022: \u0022https://azsmnet9099.blob.core.windows.net/\u0022\r\n",
-        "      }\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022instanceView\u0022: {\r\n",
-        "      \u0022vmAgent\u0022: {\r\n",
-        "        \u0022vmAgentVersion\u0022: \u0022Unknown\u0022,\r\n",
-        "        \u0022statuses\u0022: [\r\n",
-        "          {\r\n",
-        "            \u0022code\u0022: \u0022ProvisioningState/Unavailable\u0022,\r\n",
-        "            \u0022level\u0022: \u0022Warning\u0022,\r\n",
-        "            \u0022displayStatus\u0022: \u0022Not Ready\u0022,\r\n",
-        "            \u0022message\u0022: \u0022VM status blob is found but not yet populated.\u0022,\r\n",
-        "            \u0022time\u0022: \u00222020-09-30T06:08:37\u002B00:00\u0022\r\n",
-        "          }\r\n",
-        "        ]\r\n",
-        "      },\r\n",
-        "      \u0022disks\u0022: [\r\n",
-        "        {\r\n",
-        "          \u0022name\u0022: \u0022azsmnet5208\u0022,\r\n",
-        "          \u0022statuses\u0022: [\r\n",
-        "            {\r\n",
-        "              \u0022code\u0022: \u0022ProvisioningState/succeeded\u0022,\r\n",
-        "              \u0022level\u0022: \u0022Info\u0022,\r\n",
-        "              \u0022displayStatus\u0022: \u0022Provisioning succeeded\u0022,\r\n",
-        "              \u0022time\u0022: \u00222020-09-30T06:07:08.2423285\u002B00:00\u0022\r\n",
-        "            }\r\n",
-        "          ]\r\n",
-        "        }\r\n",
-        "      ],\r\n",
-        "      \u0022bootDiagnostics\u0022: {\r\n",
-        "        \u0022consoleScreenshotBlobUri\u0022: \u0022https://azsmnet9099.blob.core.windows.net/bootdiagnostics-azsmnet52-fd76de93-3aca-4a99-bf8c-158863776165/azsmnet5208.fd76de93-3aca-4a99-bf8c-158863776165.screenshot.bmp\u0022,\r\n",
-        "        \u0022serialConsoleLogBlobUri\u0022: \u0022https://azsmnet9099.blob.core.windows.net/bootdiagnostics-azsmnet52-fd76de93-3aca-4a99-bf8c-158863776165/azsmnet5208.fd76de93-3aca-4a99-bf8c-158863776165.serialconsole.log\u0022\r\n",
-        "      },\r\n",
-        "      \u0022hyperVGeneration\u0022: \u0022V1\u0022,\r\n",
-        "      \u0022statuses\u0022: [\r\n",
-        "        {\r\n",
-        "          \u0022code\u0022: \u0022ProvisioningState/succeeded\u0022,\r\n",
-        "          \u0022level\u0022: \u0022Info\u0022,\r\n",
-        "          \u0022displayStatus\u0022: \u0022Provisioning succeeded\u0022,\r\n",
-        "          \u0022time\u0022: \u00222020-09-30T06:08:31.0547804\u002B00:00\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "          \u0022code\u0022: \u0022PowerState/running\u0022,\r\n",
-        "          \u0022level\u0022: \u0022Info\u0022,\r\n",
-        "          \u0022displayStatus\u0022: \u0022VM running\u0022\r\n",
-        "        }\r\n",
-        "      ]\r\n",
-        "    }\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet5208",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Compute/virtualMachines/azsmnet5208",
+        "type": "Microsoft.Compute/virtualMachines",
+        "location": "westus2",
+        "properties": {
+          "vmId": "fd76de93-3aca-4a99-bf8c-158863776165",
+          "hardwareProfile": {
+            "vmSize": "Standard_DS1_v2"
+          },
+          "storageProfile": {
+            "imageReference": {
+              "publisher": "MicrosoftWindowsServer",
+              "offer": "WindowsServer",
+              "sku": "2016-Datacenter",
+              "version": "latest",
+              "exactVersion": "14393.3930.2009041537"
+            },
+            "osDisk": {
+              "osType": "Windows",
+              "name": "azsmnet5208",
+              "createOption": "FromImage",
+              "vhd": {
+                "uri": "https://azsmnet5270.blob.core.windows.net/vhds/azsmnet520820161217141554.vhd"
+              },
+              "caching": "ReadWrite",
+              "diskSizeGB": 127
+            },
+            "dataDisks": []
+          },
+          "osProfile": {
+            "computerName": "azsmnet5208",
+            "adminUsername": "netanalytics32",
+            "windowsConfiguration": {
+              "provisionVMAgent": true,
+              "enableAutomaticUpdates": true
+            },
+            "secrets": []
+          },
+          "networkProfile": {
+            "networkInterfaces": [
+              {
+                "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkInterfaces/azsmnet1554"
+              }
+            ]
+          },
+          "diagnosticsProfile": {
+            "bootDiagnostics": {
+              "enabled": true,
+              "storageUri": "https://azsmnet9099.blob.core.windows.net/"
+            }
+          },
+          "provisioningState": "Succeeded",
+          "instanceView": {
+            "vmAgent": {
+              "vmAgentVersion": "Unknown",
+              "statuses": [
+                {
+                  "code": "ProvisioningState/Unavailable",
+                  "level": "Warning",
+                  "displayStatus": "Not Ready",
+                  "message": "VM status blob is found but not yet populated.",
+                  "time": "2020-09-30T06:08:37\u002B00:00"
+                }
+              ]
+            },
+            "disks": [
+              {
+                "name": "azsmnet5208",
+                "statuses": [
+                  {
+                    "code": "ProvisioningState/succeeded",
+                    "level": "Info",
+                    "displayStatus": "Provisioning succeeded",
+                    "time": "2020-09-30T06:07:08.2423285\u002B00:00"
+                  }
+                ]
+              }
+            ],
+            "bootDiagnostics": {
+              "consoleScreenshotBlobUri": "https://azsmnet9099.blob.core.windows.net/bootdiagnostics-azsmnet52-fd76de93-3aca-4a99-bf8c-158863776165/azsmnet5208.fd76de93-3aca-4a99-bf8c-158863776165.screenshot.bmp",
+              "serialConsoleLogBlobUri": "https://azsmnet9099.blob.core.windows.net/bootdiagnostics-azsmnet52-fd76de93-3aca-4a99-bf8c-158863776165/azsmnet5208.fd76de93-3aca-4a99-bf8c-158863776165.serialconsole.log"
+            },
+            "hyperVGeneration": "V1",
+            "statuses": [
+              {
+                "code": "ProvisioningState/succeeded",
+                "level": "Info",
+                "displayStatus": "Provisioning succeeded",
+                "time": "2020-09-30T06:08:31.0547804\u002B00:00"
+              },
+              {
+                "code": "PowerState/running",
+                "level": "Info",
+                "displayStatus": "VM running"
+              }
+            ]
+          }
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/NetworkWatcherRG/providers/Microsoft.Network/networkWatchers/NetworkWatcher_westus2/topology?api-version=2020-04-01",
@@ -4339,7 +4021,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus2/operations/6de99a6f-9a42-4563-b409-a0ab7cbcf40c?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "5842",
+        "Content-Length": "4598",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:08:39 GMT",
         "Expires": "-1",
@@ -4359,140 +4041,138 @@
         "x-ms-request-id": "6de99a6f-9a42-4563-b409-a0ab7cbcf40c",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060839Z:36d871db-4aea-4f81-9f30-5644ffc9d80a"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022id\u0022: \u00224ab7e63a-e799-4d0a-948c-7d7e6042c7a8\u0022,\r\n",
-        "  \u0022createdDateTime\u0022: \u00222020-09-30T06:08:38.999724Z\u0022,\r\n",
-        "  \u0022lastModified\u0022: \u00222020-09-30T06:07:12.82816Z\u0022,\r\n",
-        "  \u0022resources\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet5208\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Compute/virtualMachines/azsmnet5208\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "      \u0022associations\u0022: [\r\n",
-        "        {\r\n",
-        "          \u0022name\u0022: \u0022azsmnet1554\u0022,\r\n",
-        "          \u0022resourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkInterfaces/azsmnet1554\u0022,\r\n",
-        "          \u0022associationType\u0022: \u0022Contains\u0022\r\n",
-        "        }\r\n",
-        "      ],\r\n",
-        "      \u0022properties\u0022: {}\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet1554\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkInterfaces/azsmnet1554\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "      \u0022associations\u0022: [\r\n",
-        "        {\r\n",
-        "          \u0022name\u0022: \u0022azsmnet5208\u0022,\r\n",
-        "          \u0022resourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Compute/virtualMachines/azsmnet5208\u0022,\r\n",
-        "          \u0022associationType\u0022: \u0022Associated\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "          \u0022name\u0022: \u0022azsmnet5208-nsg\u0022,\r\n",
-        "          \u0022resourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkSecurityGroups/azsmnet5208-nsg\u0022,\r\n",
-        "          \u0022associationType\u0022: \u0022Associated\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "          \u0022name\u0022: \u0022default\u0022,\r\n",
-        "          \u0022resourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/virtualNetworks/azsmnet6005-vnet/subnets/default\u0022,\r\n",
-        "          \u0022associationType\u0022: \u0022Associated\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "          \u0022name\u0022: \u0022azsmnet5208-ip\u0022,\r\n",
-        "          \u0022resourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/publicIPAddresses/azsmnet5208-ip\u0022,\r\n",
-        "          \u0022associationType\u0022: \u0022Associated\u0022\r\n",
-        "        }\r\n",
-        "      ],\r\n",
-        "      \u0022properties\u0022: {}\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet5208-nsg\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkSecurityGroups/azsmnet5208-nsg\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "      \u0022associations\u0022: [\r\n",
-        "        {\r\n",
-        "          \u0022name\u0022: \u0022default-allow-rdp\u0022,\r\n",
-        "          \u0022resourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkSecurityGroups/azsmnet5208-nsg/securityRules/default-allow-rdp\u0022,\r\n",
-        "          \u0022associationType\u0022: \u0022Contains\u0022\r\n",
-        "        }\r\n",
-        "      ],\r\n",
-        "      \u0022properties\u0022: {}\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022default-allow-rdp\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkSecurityGroups/azsmnet5208-nsg/securityRules/default-allow-rdp\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "      \u0022associations\u0022: [],\r\n",
-        "      \u0022properties\u0022: {}\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet5208-ip\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/publicIPAddresses/azsmnet5208-ip\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "      \u0022associations\u0022: [\r\n",
-        "        {\r\n",
-        "          \u0022name\u0022: \u0022azsmnet1554\u0022,\r\n",
-        "          \u0022resourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkInterfaces/azsmnet1554\u0022,\r\n",
-        "          \u0022associationType\u0022: \u0022Associated\u0022\r\n",
-        "        }\r\n",
-        "      ],\r\n",
-        "      \u0022properties\u0022: {}\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet6005RT\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/routeTables/azsmnet6005RT\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "      \u0022associations\u0022: [\r\n",
-        "        {\r\n",
-        "          \u0022name\u0022: \u0022route1\u0022,\r\n",
-        "          \u0022resourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/routeTables/azsmnet6005RT/routes/route1\u0022,\r\n",
-        "          \u0022associationType\u0022: \u0022Contains\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "          \u0022name\u0022: \u0022default\u0022,\r\n",
-        "          \u0022resourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/virtualNetworks/azsmnet6005-vnet/subnets/default\u0022,\r\n",
-        "          \u0022associationType\u0022: \u0022Associated\u0022\r\n",
-        "        }\r\n",
-        "      ],\r\n",
-        "      \u0022properties\u0022: {}\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022route1\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/routeTables/azsmnet6005RT/routes/route1\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "      \u0022associations\u0022: [],\r\n",
-        "      \u0022properties\u0022: {}\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet6005-vnet\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/virtualNetworks/azsmnet6005-vnet\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "      \u0022associations\u0022: [\r\n",
-        "        {\r\n",
-        "          \u0022name\u0022: \u0022default\u0022,\r\n",
-        "          \u0022resourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/virtualNetworks/azsmnet6005-vnet/subnets/default\u0022,\r\n",
-        "          \u0022associationType\u0022: \u0022Contains\u0022\r\n",
-        "        }\r\n",
-        "      ],\r\n",
-        "      \u0022properties\u0022: {}\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022default\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/virtualNetworks/azsmnet6005-vnet/subnets/default\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus2\u0022,\r\n",
-        "      \u0022associations\u0022: [\r\n",
-        "        {\r\n",
-        "          \u0022name\u0022: \u0022azsmnet6005RT\u0022,\r\n",
-        "          \u0022resourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/routeTables/azsmnet6005RT\u0022,\r\n",
-        "          \u0022associationType\u0022: \u0022Associated\u0022\r\n",
-        "        }\r\n",
-        "      ],\r\n",
-        "      \u0022properties\u0022: {}\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "id": "4ab7e63a-e799-4d0a-948c-7d7e6042c7a8",
+        "createdDateTime": "2020-09-30T06:08:38.999724Z",
+        "lastModified": "2020-09-30T06:07:12.82816Z",
+        "resources": [
+          {
+            "name": "azsmnet5208",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Compute/virtualMachines/azsmnet5208",
+            "location": "westus2",
+            "associations": [
+              {
+                "name": "azsmnet1554",
+                "resourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkInterfaces/azsmnet1554",
+                "associationType": "Contains"
+              }
+            ],
+            "properties": {}
+          },
+          {
+            "name": "azsmnet1554",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkInterfaces/azsmnet1554",
+            "location": "westus2",
+            "associations": [
+              {
+                "name": "azsmnet5208",
+                "resourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Compute/virtualMachines/azsmnet5208",
+                "associationType": "Associated"
+              },
+              {
+                "name": "azsmnet5208-nsg",
+                "resourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkSecurityGroups/azsmnet5208-nsg",
+                "associationType": "Associated"
+              },
+              {
+                "name": "default",
+                "resourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/virtualNetworks/azsmnet6005-vnet/subnets/default",
+                "associationType": "Associated"
+              },
+              {
+                "name": "azsmnet5208-ip",
+                "resourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/publicIPAddresses/azsmnet5208-ip",
+                "associationType": "Associated"
+              }
+            ],
+            "properties": {}
+          },
+          {
+            "name": "azsmnet5208-nsg",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkSecurityGroups/azsmnet5208-nsg",
+            "location": "westus2",
+            "associations": [
+              {
+                "name": "default-allow-rdp",
+                "resourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkSecurityGroups/azsmnet5208-nsg/securityRules/default-allow-rdp",
+                "associationType": "Contains"
+              }
+            ],
+            "properties": {}
+          },
+          {
+            "name": "default-allow-rdp",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkSecurityGroups/azsmnet5208-nsg/securityRules/default-allow-rdp",
+            "location": "westus2",
+            "associations": [],
+            "properties": {}
+          },
+          {
+            "name": "azsmnet5208-ip",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/publicIPAddresses/azsmnet5208-ip",
+            "location": "westus2",
+            "associations": [
+              {
+                "name": "azsmnet1554",
+                "resourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/networkInterfaces/azsmnet1554",
+                "associationType": "Associated"
+              }
+            ],
+            "properties": {}
+          },
+          {
+            "name": "azsmnet6005RT",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/routeTables/azsmnet6005RT",
+            "location": "westus2",
+            "associations": [
+              {
+                "name": "route1",
+                "resourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/routeTables/azsmnet6005RT/routes/route1",
+                "associationType": "Contains"
+              },
+              {
+                "name": "default",
+                "resourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/virtualNetworks/azsmnet6005-vnet/subnets/default",
+                "associationType": "Associated"
+              }
+            ],
+            "properties": {}
+          },
+          {
+            "name": "route1",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/routeTables/azsmnet6005RT/routes/route1",
+            "location": "westus2",
+            "associations": [],
+            "properties": {}
+          },
+          {
+            "name": "azsmnet6005-vnet",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/virtualNetworks/azsmnet6005-vnet",
+            "location": "westus2",
+            "associations": [
+              {
+                "name": "default",
+                "resourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/virtualNetworks/azsmnet6005-vnet/subnets/default",
+                "associationType": "Contains"
+              }
+            ],
+            "properties": {}
+          },
+          {
+            "name": "default",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/virtualNetworks/azsmnet6005-vnet/subnets/default",
+            "location": "westus2",
+            "associations": [
+              {
+                "name": "azsmnet6005RT",
+                "resourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/azsmnet6005/providers/Microsoft.Network/routeTables/azsmnet6005RT",
+                "associationType": "Associated"
+              }
+            ],
+            "properties": {}
+          }
+        ]
+      }
     }
   ],
   "Variables": {

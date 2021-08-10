@@ -80,7 +80,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "321",
+        "Content-Length": "268",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 09 Oct 2020 05:58:53 GMT",
         "Expires": "-1",
@@ -98,20 +98,18 @@
         "x-ms-request-id": "56ed15e8-946d-407c-aa26-7ca3a25bd976",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20201009T055853Z:fcb5e82a-68a7-4323-adc0-6d26cff43810"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022DHG-1\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/hostGroups\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022zones\u0022: [\r\n",
-        "    \u00221\u0022\r\n",
-        "  ],\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022platformFaultDomainCount\u0022: 1\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "DHG-1",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1",
+        "type": "Microsoft.Compute/hostGroups",
+        "location": "eastus2",
+        "zones": [
+          "1"
+        ],
+        "properties": {
+          "platformFaultDomainCount": 1
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1?api-version=2019-12-01",
@@ -132,7 +130,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "321",
+        "Content-Length": "268",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 09 Oct 2020 05:58:54 GMT",
         "Expires": "-1",
@@ -150,20 +148,18 @@
         "x-ms-request-id": "42a676f0-aed5-434c-b49c-b7239dc9e810",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20201009T055854Z:611f9f1e-0ab7-4ead-b330-b9898aaf7f95"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022DHG-1\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/hostGroups\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022zones\u0022: [\r\n",
-        "    \u00221\u0022\r\n",
-        "  ],\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022platformFaultDomainCount\u0022: 1\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "DHG-1",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1",
+        "type": "Microsoft.Compute/hostGroups",
+        "location": "eastus2",
+        "zones": [
+          "1"
+        ],
+        "properties": {
+          "platformFaultDomainCount": 1
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1?api-version=2019-12-01",
@@ -193,7 +189,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "368",
+        "Content-Length": "299",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 09 Oct 2020 05:58:56 GMT",
         "Expires": "-1",
@@ -211,23 +207,21 @@
         "x-ms-request-id": "02fbd222-d67d-49be-a060-f5786f57a21b",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20201009T055856Z:d39f30a3-627e-446c-aada-6c15b47b16aa"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022DHG-1\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/hostGroups\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022testKey\u0022: \u0022testValue\u0022\r\n",
-        "  },\r\n",
-        "  \u0022zones\u0022: [\r\n",
-        "    \u00221\u0022\r\n",
-        "  ],\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022platformFaultDomainCount\u0022: 1\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "DHG-1",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1",
+        "type": "Microsoft.Compute/hostGroups",
+        "location": "eastus2",
+        "tags": {
+          "testKey": "testValue"
+        },
+        "zones": [
+          "1"
+        ],
+        "properties": {
+          "platformFaultDomainCount": 1
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups?api-version=2019-12-01",
@@ -247,7 +241,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "453",
+        "Content-Length": "311",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 09 Oct 2020 05:58:56 GMT",
         "Expires": "-1",
@@ -265,27 +259,25 @@
         "x-ms-request-id": "a4ecceaf-6181-4130-b5d4-d9c1625267b2",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20201009T055856Z:5865bc0d-ebd9-4e7b-acda-92d980c97d59"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022DHG-1\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1\u0022,\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Compute/hostGroups\u0022,\r\n",
-        "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "      \u0022tags\u0022: {\r\n",
-        "        \u0022testKey\u0022: \u0022testValue\u0022\r\n",
-        "      },\r\n",
-        "      \u0022zones\u0022: [\r\n",
-        "        \u00221\u0022\r\n",
-        "      ],\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022platformFaultDomainCount\u0022: 1\r\n",
-        "      }\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "DHG-1",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1",
+            "type": "Microsoft.Compute/hostGroups",
+            "location": "eastus2",
+            "tags": {
+              "testKey": "testValue"
+            },
+            "zones": [
+              "1"
+            ],
+            "properties": {
+              "platformFaultDomainCount": 1
+            }
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/hostGroups?api-version=2019-12-01",
@@ -305,7 +297,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "453",
+        "Content-Length": "311",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 09 Oct 2020 05:58:57 GMT",
         "Expires": "-1",
@@ -323,27 +315,25 @@
         "x-ms-request-id": "aa8b0dff-156f-43fc-89aa-c6ad76a96352",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20201009T055857Z:397dabbb-8505-4084-86ef-8bfdc58799c0"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022DHG-1\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1\u0022,\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Compute/hostGroups\u0022,\r\n",
-        "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "      \u0022tags\u0022: {\r\n",
-        "        \u0022testKey\u0022: \u0022testValue\u0022\r\n",
-        "      },\r\n",
-        "      \u0022zones\u0022: [\r\n",
-        "        \u00221\u0022\r\n",
-        "      ],\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022platformFaultDomainCount\u0022: 1\r\n",
-        "      }\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "DHG-1",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1",
+            "type": "Microsoft.Compute/hostGroups",
+            "location": "eastus2",
+            "tags": {
+              "testKey": "testValue"
+            },
+            "zones": [
+              "1"
+            ],
+            "properties": {
+              "platformFaultDomainCount": 1
+            }
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1?api-version=2019-12-01",
@@ -364,7 +354,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "368",
+        "Content-Length": "299",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 09 Oct 2020 05:58:57 GMT",
         "Expires": "-1",
@@ -382,23 +372,21 @@
         "x-ms-request-id": "d0d45efb-cec7-4b9b-9d40-b8dd9b0274f8",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20201009T055857Z:f0191a79-2a99-4efb-8c15-22e59def838c"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022DHG-1\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/hostGroups\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022testKey\u0022: \u0022testValue\u0022\r\n",
-        "  },\r\n",
-        "  \u0022zones\u0022: [\r\n",
-        "    \u00221\u0022\r\n",
-        "  ],\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022platformFaultDomainCount\u0022: 1\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "DHG-1",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1",
+        "type": "Microsoft.Compute/hostGroups",
+        "location": "eastus2",
+        "tags": {
+          "testKey": "testValue"
+        },
+        "zones": [
+          "1"
+        ],
+        "properties": {
+          "platformFaultDomainCount": 1
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts/DH-1?api-version=2019-12-01",
@@ -432,7 +420,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/operations/a497c42c-7ba7-49f9-bcd6-84428e1e044e?api-version=2019-12-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "541",
+        "Content-Length": "450",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 09 Oct 2020 05:59:01 GMT",
         "Expires": "-1",
@@ -450,26 +438,24 @@
         "x-ms-request-id": "a497c42c-7ba7-49f9-bcd6-84428e1e044e",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20201009T055901Z:fe3aaed8-d6ef-4550-b98d-7857d21edae5"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022DH-1\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts/DH-1\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/hostGroups/hosts\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022crptestar6466DH\u0022: \u00222020-10-09 05:58:41Z\u0022\r\n",
-        "  },\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022ESv3-Type1\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022platformFaultDomain\u0022: 0,\r\n",
-        "    \u0022autoReplaceOnFailure\u0022: true,\r\n",
-        "    \u0022hostId\u0022: \u00227d2b254f-32e5-440f-b33f-c8dd862f83e7\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Creating\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "DH-1",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts/DH-1",
+        "type": "Microsoft.Compute/hostGroups/hosts",
+        "location": "eastus2",
+        "tags": {
+          "crptestar6466DH": "2020-10-09 05:58:41Z"
+        },
+        "sku": {
+          "name": "ESv3-Type1"
+        },
+        "properties": {
+          "platformFaultDomain": 0,
+          "autoReplaceOnFailure": true,
+          "hostId": "7d2b254f-32e5-440f-b33f-c8dd862f83e7",
+          "provisioningState": "Creating"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/operations/a497c42c-7ba7-49f9-bcd6-84428e1e044e?api-version=2019-12-01",
@@ -488,7 +474,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "184",
+        "Content-Length": "162",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 09 Oct 2020 05:59:02 GMT",
         "Expires": "-1",
@@ -506,14 +492,12 @@
         "x-ms-request-id": "60c6421d-07b2-4bc6-993d-36bbf604bdd4",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20201009T055902Z:14de1572-a977-4b7c-96c2-efa7f0bf71fe"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-09T05:59:00.1976352\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-09T05:59:00.4945212\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022name\u0022: \u0022a497c42c-7ba7-49f9-bcd6-84428e1e044e\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-09T05:59:00.1976352\u002B00:00",
+        "endTime": "2020-10-09T05:59:00.4945212\u002B00:00",
+        "status": "Succeeded",
+        "name": "a497c42c-7ba7-49f9-bcd6-84428e1e044e"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts/DH-1?api-version=2019-12-01",
@@ -532,7 +516,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "631",
+        "Content-Length": "526",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 09 Oct 2020 05:59:02 GMT",
         "Expires": "-1",
@@ -550,28 +534,26 @@
         "x-ms-request-id": "018fda1b-7604-4022-b931-af6445f52929",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20201009T055902Z:5fbffb7a-db39-4570-ae97-c6c773ef161d"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022DH-1\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts/DH-1\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/hostGroups/hosts\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022crptestar6466DH\u0022: \u00222020-10-09 05:58:41Z\u0022\r\n",
-        "  },\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022ESv3-Type1\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022platformFaultDomain\u0022: 0,\r\n",
-        "    \u0022autoReplaceOnFailure\u0022: true,\r\n",
-        "    \u0022hostId\u0022: \u00227d2b254f-32e5-440f-b33f-c8dd862f83e7\u0022,\r\n",
-        "    \u0022virtualMachines\u0022: [],\r\n",
-        "    \u0022provisioningTime\u0022: \u00222020-10-09T05:59:00.416379\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "DH-1",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts/DH-1",
+        "type": "Microsoft.Compute/hostGroups/hosts",
+        "location": "eastus2",
+        "tags": {
+          "crptestar6466DH": "2020-10-09 05:58:41Z"
+        },
+        "sku": {
+          "name": "ESv3-Type1"
+        },
+        "properties": {
+          "platformFaultDomain": 0,
+          "autoReplaceOnFailure": true,
+          "hostId": "7d2b254f-32e5-440f-b33f-c8dd862f83e7",
+          "virtualMachines": [],
+          "provisioningTime": "2020-10-09T05:59:00.416379\u002B00:00",
+          "provisioningState": "Succeeded"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts/DH-1?$expand=instanceView\u0026api-version=2019-12-01",
@@ -592,7 +574,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "2793",
+        "Content-Length": "1562",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 09 Oct 2020 05:59:03 GMT",
         "Expires": "-1",
@@ -610,116 +592,114 @@
         "x-ms-request-id": "caaf35f1-0271-4889-9e16-e21029c7a576",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20201009T055903Z:a00cc2b4-6114-4926-ac8a-053064f00a4d"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022DH-1\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts/DH-1\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/hostGroups/hosts\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022crptestar6466DH\u0022: \u00222020-10-09 05:58:41Z\u0022\r\n",
-        "  },\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022ESv3-Type1\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022platformFaultDomain\u0022: 0,\r\n",
-        "    \u0022autoReplaceOnFailure\u0022: true,\r\n",
-        "    \u0022hostId\u0022: \u00227d2b254f-32e5-440f-b33f-c8dd862f83e7\u0022,\r\n",
-        "    \u0022virtualMachines\u0022: [],\r\n",
-        "    \u0022provisioningTime\u0022: \u00222020-10-09T05:59:00.416379\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022instanceView\u0022: {\r\n",
-        "      \u0022assetId\u0022: \u002203dd81c0-e35c-4ef4-9b17-f8033f18d0d8\u0022,\r\n",
-        "      \u0022availableCapacity\u0022: {\r\n",
-        "        \u0022allocatableVMs\u0022: [\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E2s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 28\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E4-2s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 14\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E4s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 14\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E8-2s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 7\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E8-4s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 7\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E8s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 7\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E16-4s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 3\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E16-8s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 3\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E16s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 3\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E20s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 2\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E32-8s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 1\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E32-16s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 1\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E32s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 1\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E48s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 1\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E64-16s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 1\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E64-32s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 1\r\n",
-        "          },\r\n",
-        "          {\r\n",
-        "            \u0022vmSize\u0022: \u0022Standard_E64s_v3\u0022,\r\n",
-        "            \u0022count\u0022: 1\r\n",
-        "          }\r\n",
-        "        ]\r\n",
-        "      },\r\n",
-        "      \u0022statuses\u0022: [\r\n",
-        "        {\r\n",
-        "          \u0022code\u0022: \u0022ProvisioningState/succeeded\u0022,\r\n",
-        "          \u0022level\u0022: \u0022Info\u0022,\r\n",
-        "          \u0022displayStatus\u0022: \u0022Provisioning succeeded\u0022,\r\n",
-        "          \u0022time\u0022: \u00222020-10-09T05:59:00.416379\u002B00:00\u0022\r\n",
-        "        },\r\n",
-        "        {\r\n",
-        "          \u0022code\u0022: \u0022HealthState/available\u0022,\r\n",
-        "          \u0022level\u0022: \u0022Info\u0022,\r\n",
-        "          \u0022displayStatus\u0022: \u0022Host available\u0022\r\n",
-        "        }\r\n",
-        "      ]\r\n",
-        "    }\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "DH-1",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts/DH-1",
+        "type": "Microsoft.Compute/hostGroups/hosts",
+        "location": "eastus2",
+        "tags": {
+          "crptestar6466DH": "2020-10-09 05:58:41Z"
+        },
+        "sku": {
+          "name": "ESv3-Type1"
+        },
+        "properties": {
+          "platformFaultDomain": 0,
+          "autoReplaceOnFailure": true,
+          "hostId": "7d2b254f-32e5-440f-b33f-c8dd862f83e7",
+          "virtualMachines": [],
+          "provisioningTime": "2020-10-09T05:59:00.416379\u002B00:00",
+          "provisioningState": "Succeeded",
+          "instanceView": {
+            "assetId": "03dd81c0-e35c-4ef4-9b17-f8033f18d0d8",
+            "availableCapacity": {
+              "allocatableVMs": [
+                {
+                  "vmSize": "Standard_E2s_v3",
+                  "count": 28
+                },
+                {
+                  "vmSize": "Standard_E4-2s_v3",
+                  "count": 14
+                },
+                {
+                  "vmSize": "Standard_E4s_v3",
+                  "count": 14
+                },
+                {
+                  "vmSize": "Standard_E8-2s_v3",
+                  "count": 7
+                },
+                {
+                  "vmSize": "Standard_E8-4s_v3",
+                  "count": 7
+                },
+                {
+                  "vmSize": "Standard_E8s_v3",
+                  "count": 7
+                },
+                {
+                  "vmSize": "Standard_E16-4s_v3",
+                  "count": 3
+                },
+                {
+                  "vmSize": "Standard_E16-8s_v3",
+                  "count": 3
+                },
+                {
+                  "vmSize": "Standard_E16s_v3",
+                  "count": 3
+                },
+                {
+                  "vmSize": "Standard_E20s_v3",
+                  "count": 2
+                },
+                {
+                  "vmSize": "Standard_E32-8s_v3",
+                  "count": 1
+                },
+                {
+                  "vmSize": "Standard_E32-16s_v3",
+                  "count": 1
+                },
+                {
+                  "vmSize": "Standard_E32s_v3",
+                  "count": 1
+                },
+                {
+                  "vmSize": "Standard_E48s_v3",
+                  "count": 1
+                },
+                {
+                  "vmSize": "Standard_E64-16s_v3",
+                  "count": 1
+                },
+                {
+                  "vmSize": "Standard_E64-32s_v3",
+                  "count": 1
+                },
+                {
+                  "vmSize": "Standard_E64s_v3",
+                  "count": 1
+                }
+              ]
+            },
+            "statuses": [
+              {
+                "code": "ProvisioningState/succeeded",
+                "level": "Info",
+                "displayStatus": "Provisioning succeeded",
+                "time": "2020-10-09T05:59:00.416379\u002B00:00"
+              },
+              {
+                "code": "HealthState/available",
+                "level": "Info",
+                "displayStatus": "Host available"
+              }
+            ]
+          }
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts?api-version=2019-12-01",
@@ -739,7 +719,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "736",
+        "Content-Length": "538",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 09 Oct 2020 05:59:03 GMT",
         "Expires": "-1",
@@ -757,32 +737,30 @@
         "x-ms-request-id": "98f37d43-3af2-4f53-b6ac-4c14488a606b",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20201009T055903Z:6b363538-fe21-4d09-9a70-906dc1218aa5"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022DH-1\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts/DH-1\u0022,\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Compute/hostGroups/hosts\u0022,\r\n",
-        "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "      \u0022tags\u0022: {\r\n",
-        "        \u0022crptestar6466DH\u0022: \u00222020-10-09 05:58:41Z\u0022\r\n",
-        "      },\r\n",
-        "      \u0022sku\u0022: {\r\n",
-        "        \u0022name\u0022: \u0022ESv3-Type1\u0022\r\n",
-        "      },\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022platformFaultDomain\u0022: 0,\r\n",
-        "        \u0022autoReplaceOnFailure\u0022: true,\r\n",
-        "        \u0022hostId\u0022: \u00227d2b254f-32e5-440f-b33f-c8dd862f83e7\u0022,\r\n",
-        "        \u0022virtualMachines\u0022: [],\r\n",
-        "        \u0022provisioningTime\u0022: \u00222020-10-09T05:59:00.416379\u002B00:00\u0022,\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022\r\n",
-        "      }\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "DH-1",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts/DH-1",
+            "type": "Microsoft.Compute/hostGroups/hosts",
+            "location": "eastus2",
+            "tags": {
+              "crptestar6466DH": "2020-10-09 05:58:41Z"
+            },
+            "sku": {
+              "name": "ESv3-Type1"
+            },
+            "properties": {
+              "platformFaultDomain": 0,
+              "autoReplaceOnFailure": true,
+              "hostId": "7d2b254f-32e5-440f-b33f-c8dd862f83e7",
+              "virtualMachines": [],
+              "provisioningTime": "2020-10-09T05:59:00.416379\u002B00:00",
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1/hosts/DH-1?api-version=2019-12-01",
@@ -841,7 +819,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "184",
+        "Content-Length": "162",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 09 Oct 2020 05:59:04 GMT",
         "Expires": "-1",
@@ -859,14 +837,12 @@
         "x-ms-request-id": "33b8c144-712e-4120-aa95-ed8f6d68a40d",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20201009T055904Z:48ecd68c-5b3d-4527-8578-1a8d0bd63a37"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-09T05:59:04.3228266\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-09T05:59:04.4009288\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022name\u0022: \u0022ea115be4-98f0-43c3-8f8d-a51ed35421a3\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-09T05:59:04.3228266\u002B00:00",
+        "endTime": "2020-10-09T05:59:04.4009288\u002B00:00",
+        "status": "Succeeded",
+        "name": "ea115be4-98f0-43c3-8f8d-a51ed35421a3"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar6466DH/providers/Microsoft.Compute/hostGroups/DHG-1?api-version=2019-12-01",

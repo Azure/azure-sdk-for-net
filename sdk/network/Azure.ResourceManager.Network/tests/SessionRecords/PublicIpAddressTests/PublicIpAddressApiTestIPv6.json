@@ -6847,7 +6847,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/eastus2euap/operations/b9d68371-e852-46e8-9692-3759e3f0e825?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "819",
+        "Content-Length": "678",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:56 GMT",
         "Expires": "-1",
@@ -6866,33 +6866,31 @@
         "x-ms-request-id": "b9d68371-e852-46e8-9692-3759e3f0e825",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060156Z:9bfea02b-b337-405f-b733-3d298ae907db"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022csmipv6publicip2697\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv6publicip2697\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022ba13c5c1-9326-46ff-8855-5973c8da8860\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2euap\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00228b0192de-5784-422b-96d3-4a5e7f9d1742\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv6\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022csmdnslabelpublicip6387\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "csmipv6publicip2697",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv6publicip2697",
+        "etag": "W/\u0022ba13c5c1-9326-46ff-8855-5973c8da8860\u0022",
+        "location": "eastus2euap",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "8b0192de-5784-422b-96d3-4a5e7f9d1742",
+          "publicIPAddressVersion": "IPv6",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "csmdnslabelpublicip6387",
+            "fqdn": "csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/eastus2euap/operations/b9d68371-e852-46e8-9692-3759e3f0e825?api-version=2020-04-01",
@@ -6910,7 +6908,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:57 GMT",
         "Expires": "-1",
@@ -6928,11 +6926,9 @@
         "x-ms-request-id": "b327d7aa-e3c6-4a3b-8848-6d9e120c1bee",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060157Z:51c5b49e-2b91-4342-a13c-a45427f4a1e9"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv6publicip2697?api-version=2020-04-01",
@@ -6950,7 +6946,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "820",
+        "Content-Length": "679",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:57 GMT",
         "ETag": "W/\u002269bef208-041b-410f-a173-f60901f48178\u0022",
@@ -6969,33 +6965,31 @@
         "x-ms-request-id": "9f6ca3a7-b3de-48a3-be1c-3d6dc5c51a3f",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060158Z:443009f9-1d03-4ce7-9f43-2839db483e01"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022csmipv6publicip2697\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv6publicip2697\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002269bef208-041b-410f-a173-f60901f48178\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2euap\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00228b0192de-5784-422b-96d3-4a5e7f9d1742\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv6\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022csmdnslabelpublicip6387\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "csmipv6publicip2697",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv6publicip2697",
+        "etag": "W/\u002269bef208-041b-410f-a173-f60901f48178\u0022",
+        "location": "eastus2euap",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "8b0192de-5784-422b-96d3-4a5e7f9d1742",
+          "publicIPAddressVersion": "IPv6",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "csmdnslabelpublicip6387",
+            "fqdn": "csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv6publicip2697?api-version=2020-04-01",
@@ -7015,7 +7009,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "820",
+        "Content-Length": "679",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:58 GMT",
         "ETag": "W/\u002269bef208-041b-410f-a173-f60901f48178\u0022",
@@ -7034,33 +7028,31 @@
         "x-ms-request-id": "6bffa248-356c-47b7-8c93-f9a0eb522f68",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060158Z:f51c27dd-22ad-4321-9c0f-de066848fb96"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022csmipv6publicip2697\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv6publicip2697\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002269bef208-041b-410f-a173-f60901f48178\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2euap\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00228b0192de-5784-422b-96d3-4a5e7f9d1742\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv6\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022csmdnslabelpublicip6387\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "csmipv6publicip2697",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv6publicip2697",
+        "etag": "W/\u002269bef208-041b-410f-a173-f60901f48178\u0022",
+        "location": "eastus2euap",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "8b0192de-5784-422b-96d3-4a5e7f9d1742",
+          "publicIPAddressVersion": "IPv6",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "csmdnslabelpublicip6387",
+            "fqdn": "csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses?api-version=2020-04-01",
@@ -7079,7 +7071,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "945",
+        "Content-Length": "691",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:58 GMT",
         "Expires": "-1",
@@ -7097,37 +7089,35 @@
         "x-ms-request-id": "20a7a29c-6f53-4e7d-a5f1-5a9fed93be27",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060158Z:e5199f71-5306-46fd-9ffe-4f46f538b8ab"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022csmipv6publicip2697\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv6publicip2697\u0022,\r\n",
-        "      \u0022etag\u0022: \u0022W/\\\u002269bef208-041b-410f-a173-f60901f48178\\\u0022\u0022,\r\n",
-        "      \u0022location\u0022: \u0022eastus2euap\u0022,\r\n",
-        "      \u0022tags\u0022: {\r\n",
-        "        \u0022key\u0022: \u0022value\u0022\r\n",
-        "      },\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "        \u0022resourceGuid\u0022: \u00228b0192de-5784-422b-96d3-4a5e7f9d1742\u0022,\r\n",
-        "        \u0022publicIPAddressVersion\u0022: \u0022IPv6\u0022,\r\n",
-        "        \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "        \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "        \u0022dnsSettings\u0022: {\r\n",
-        "          \u0022domainNameLabel\u0022: \u0022csmdnslabelpublicip6387\u0022,\r\n",
-        "          \u0022fqdn\u0022: \u0022csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com\u0022\r\n",
-        "        },\r\n",
-        "        \u0022ipTags\u0022: []\r\n",
-        "      },\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "      \u0022sku\u0022: {\r\n",
-        "        \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "      }\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "csmipv6publicip2697",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv6publicip2697",
+            "etag": "W/\u002269bef208-041b-410f-a173-f60901f48178\u0022",
+            "location": "eastus2euap",
+            "tags": {
+              "key": "value"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "resourceGuid": "8b0192de-5784-422b-96d3-4a5e7f9d1742",
+              "publicIPAddressVersion": "IPv6",
+              "publicIPAllocationMethod": "Dynamic",
+              "idleTimeoutInMinutes": 4,
+              "dnsSettings": {
+                "domainNameLabel": "csmdnslabelpublicip6387",
+                "fqdn": "csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com"
+              },
+              "ipTags": []
+            },
+            "type": "Microsoft.Network/publicIPAddresses",
+            "sku": {
+              "name": "Basic"
+            }
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/publicIPAddresses?api-version=2020-04-01",
@@ -7271,7 +7261,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30",
+        "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:59 GMT",
         "Expires": "-1",
@@ -7290,11 +7280,9 @@
         "x-ms-request-id": "ab14d7c1-08b2-4856-a2da-d55b1a8ea732",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060200Z:d1563ca7-10eb-47a6-81c6-6b0ff249c68b"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "InProgress"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/eastus2euap/operations/41b42eca-ce57-4109-afc5-63e1524ea1da?api-version=2020-04-01",
@@ -7312,7 +7300,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:02:01 GMT",
         "Expires": "-1",
@@ -7330,11 +7318,9 @@
         "x-ms-request-id": "4ac66acd-dbd1-41c6-9f69-58c0f8cec088",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060201Z:e76ff663-dbc8-4d0a-90c6-c52fb6819d1e"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses?api-version=2020-04-01",
@@ -7353,7 +7339,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "19",
+        "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:02:01 GMT",
         "Expires": "-1",
@@ -7371,11 +7357,9 @@
         "x-ms-request-id": "dc19320c-e666-4708-b995-154c5d5982b9",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060202Z:0ea92e93-7c11-42d7-baef-c76f4848b77b"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: []\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": []
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip1275?api-version=2020-04-01",
@@ -7411,7 +7395,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/eastus2euap/operations/fa6cb2b5-a129-4e8b-a670-01a416e80564?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "819",
+        "Content-Length": "678",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:02:06 GMT",
         "Expires": "-1",
@@ -7430,33 +7414,31 @@
         "x-ms-request-id": "fa6cb2b5-a129-4e8b-a670-01a416e80564",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060206Z:c6065294-e274-4319-aa2c-eb0269ffeb2c"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022csmipv4publicip1275\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip1275\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022f66eb2eb-9010-4dbb-ac91-babfb23bab22\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2euap\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00226fc39703-c1d1-4802-ac04-a2b9e34b6df1\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022csmdnslabelpublicip6387\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "csmipv4publicip1275",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip1275",
+        "etag": "W/\u0022f66eb2eb-9010-4dbb-ac91-babfb23bab22\u0022",
+        "location": "eastus2euap",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "6fc39703-c1d1-4802-ac04-a2b9e34b6df1",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "csmdnslabelpublicip6387",
+            "fqdn": "csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/eastus2euap/operations/fa6cb2b5-a129-4e8b-a670-01a416e80564?api-version=2020-04-01",
@@ -7474,7 +7456,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:02:06 GMT",
         "Expires": "-1",
@@ -7492,11 +7474,9 @@
         "x-ms-request-id": "dcf0516b-5ac9-423f-93c5-cb6ebfcb11a8",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060207Z:c50525bf-8c1b-4f8d-9283-4133619b147b"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip1275?api-version=2020-04-01",
@@ -7514,7 +7494,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "820",
+        "Content-Length": "679",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:02:07 GMT",
         "ETag": "W/\u00227a354788-060f-485c-a253-cea9af6b6335\u0022",
@@ -7533,33 +7513,31 @@
         "x-ms-request-id": "dfdafc3d-0155-4495-a377-c0c5255d8acb",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060207Z:018bbff9-6c8e-4ea7-9c28-ed0a1af2f7a8"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022csmipv4publicip1275\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip1275\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00227a354788-060f-485c-a253-cea9af6b6335\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2euap\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00226fc39703-c1d1-4802-ac04-a2b9e34b6df1\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022csmdnslabelpublicip6387\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "csmipv4publicip1275",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip1275",
+        "etag": "W/\u00227a354788-060f-485c-a253-cea9af6b6335\u0022",
+        "location": "eastus2euap",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "6fc39703-c1d1-4802-ac04-a2b9e34b6df1",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "csmdnslabelpublicip6387",
+            "fqdn": "csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip1275?api-version=2020-04-01",
@@ -7579,7 +7557,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "820",
+        "Content-Length": "679",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:02:07 GMT",
         "ETag": "W/\u00227a354788-060f-485c-a253-cea9af6b6335\u0022",
@@ -7598,33 +7576,31 @@
         "x-ms-request-id": "bcc387ee-4a35-44de-9c3f-ce8c9da67813",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060208Z:dd5c18bd-b6de-472b-a77e-a7d5b3df3acf"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022csmipv4publicip1275\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip1275\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00227a354788-060f-485c-a253-cea9af6b6335\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2euap\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00226fc39703-c1d1-4802-ac04-a2b9e34b6df1\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022csmdnslabelpublicip6387\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "csmipv4publicip1275",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip1275",
+        "etag": "W/\u00227a354788-060f-485c-a253-cea9af6b6335\u0022",
+        "location": "eastus2euap",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "6fc39703-c1d1-4802-ac04-a2b9e34b6df1",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "csmdnslabelpublicip6387",
+            "fqdn": "csmdnslabelpublicip6387.eastus2euap.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg6149/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip1275?api-version=2020-04-01",

@@ -78,7 +78,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/westcentralus/DiskOperations/dd2313d7-c3f5-43ff-986c-b78b336d5174?api-version=2019-11-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "336",
+        "Content-Length": "242",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:39:23 GMT",
         "Expires": "-1",
@@ -99,25 +99,23 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063924Z:9871888a-25af-4357-abb2-720a5d29bb0d",
         "x-ms-served-by": "edd9902d-5b74-4e42-a457-c90105dcf064_132325353451853561"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp2620\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard_LRS\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022hyperVGeneration\u0022: \u0022V1\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 10,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022isArmResource\u0022: true\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "diskrp2620",
+        "location": "westcentralus",
+        "sku": {
+          "name": "Standard_LRS"
+        },
+        "properties": {
+          "osType": "Linux",
+          "hyperVGeneration": "V1",
+          "creationData": {
+            "createOption": "Empty"
+          },
+          "diskSizeGB": 10,
+          "provisioningState": "Updating",
+          "isArmResource": true
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/westcentralus/DiskOperations/dd2313d7-c3f5-43ff-986c-b78b336d5174?api-version=2019-11-01",
@@ -135,7 +133,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1055",
+        "Content-Length": "849",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:39:23 GMT",
         "Expires": "-1",
@@ -154,44 +152,42 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063924Z:ef44acde-625b-4764-8126-0481d10ba941",
         "x-ms-served-by": "edd9902d-5b74-4e42-a457-c90105dcf064_132325353451853561"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T06:39:23.9396575\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T06:39:24.0646649\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp2620\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar1823/providers/Microsoft.Compute/disks/diskrp2620\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022hyperVGeneration\u0022: \u0022V1\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 10,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 500,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 60,\r\n",
-        "    \u0022encryption\u0022: {\r\n",
-        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "    },\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-10-06T06:39:23.9396575\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "    \u0022diskSizeBytes\u0022: 10737418240,\r\n",
-        "    \u0022uniqueId\u0022: \u00226e567cae-b481-4578-bd4e-df3a3353c655\u0022\r\n",
-        "  }\r\n",
-        "}\r\n",
-        "  },\r\n",
-        "  \u0022name\u0022: \u0022dd2313d7-c3f5-43ff-986c-b78b336d5174\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T06:39:23.9396575\u002B00:00",
+        "endTime": "2020-10-06T06:39:24.0646649\u002B00:00",
+        "status": "Succeeded",
+        "properties": {
+          "output": {
+            "name": "diskrp2620",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar1823/providers/Microsoft.Compute/disks/diskrp2620",
+            "type": "Microsoft.Compute/disks",
+            "location": "westcentralus",
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "properties": {
+              "osType": "Linux",
+              "hyperVGeneration": "V1",
+              "creationData": {
+                "createOption": "Empty"
+              },
+              "diskSizeGB": 10,
+              "diskIOPSReadWrite": 500,
+              "diskMBpsReadWrite": 60,
+              "encryption": {
+                "type": "EncryptionAtRestWithPlatformKey"
+              },
+              "timeCreated": "2020-10-06T06:39:23.9396575\u002B00:00",
+              "provisioningState": "Succeeded",
+              "diskState": "Unattached",
+              "diskSizeBytes": 10737418240,
+              "uniqueId": "6e567cae-b481-4578-bd4e-df3a3353c655"
+            }
+          }
+        },
+        "name": "dd2313d7-c3f5-43ff-986c-b78b336d5174"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar1823/providers/Microsoft.Compute/disks/diskrp2620?api-version=2019-11-01",
@@ -209,7 +205,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "830",
+        "Content-Length": "662",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:39:23 GMT",
         "Expires": "-1",
@@ -228,36 +224,34 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063924Z:f564b58a-61f1-43b8-a377-ffcc39c13b05",
         "x-ms-served-by": "edd9902d-5b74-4e42-a457-c90105dcf064_132325353451853561"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp2620\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar1823/providers/Microsoft.Compute/disks/diskrp2620\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022hyperVGeneration\u0022: \u0022V1\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 10,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 500,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 60,\r\n",
-        "    \u0022encryption\u0022: {\r\n",
-        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "    },\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-10-06T06:39:23.9396575\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "    \u0022diskSizeBytes\u0022: 10737418240,\r\n",
-        "    \u0022uniqueId\u0022: \u00226e567cae-b481-4578-bd4e-df3a3353c655\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "diskrp2620",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar1823/providers/Microsoft.Compute/disks/diskrp2620",
+        "type": "Microsoft.Compute/disks",
+        "location": "westcentralus",
+        "sku": {
+          "name": "Standard_LRS",
+          "tier": "Standard"
+        },
+        "properties": {
+          "osType": "Linux",
+          "hyperVGeneration": "V1",
+          "creationData": {
+            "createOption": "Empty"
+          },
+          "diskSizeGB": 10,
+          "diskIOPSReadWrite": 500,
+          "diskMBpsReadWrite": 60,
+          "encryption": {
+            "type": "EncryptionAtRestWithPlatformKey"
+          },
+          "timeCreated": "2020-10-06T06:39:23.9396575\u002B00:00",
+          "provisioningState": "Succeeded",
+          "diskState": "Unattached",
+          "diskSizeBytes": 10737418240,
+          "uniqueId": "6e567cae-b481-4578-bd4e-df3a3353c655"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar1823/providers/Microsoft.Compute/disks/diskrp2620?api-version=2019-11-01",
@@ -277,7 +271,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "830",
+        "Content-Length": "662",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:39:23 GMT",
         "Expires": "-1",
@@ -296,36 +290,34 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063924Z:fc98a82a-086e-47ac-98d3-769968bbef21",
         "x-ms-served-by": "edd9902d-5b74-4e42-a457-c90105dcf064_132325353451853561"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp2620\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar1823/providers/Microsoft.Compute/disks/diskrp2620\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westcentralus\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022hyperVGeneration\u0022: \u0022V1\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 10,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 500,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 60,\r\n",
-        "    \u0022encryption\u0022: {\r\n",
-        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "    },\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-10-06T06:39:23.9396575\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "    \u0022diskSizeBytes\u0022: 10737418240,\r\n",
-        "    \u0022uniqueId\u0022: \u00226e567cae-b481-4578-bd4e-df3a3353c655\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "diskrp2620",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar1823/providers/Microsoft.Compute/disks/diskrp2620",
+        "type": "Microsoft.Compute/disks",
+        "location": "westcentralus",
+        "sku": {
+          "name": "Standard_LRS",
+          "tier": "Standard"
+        },
+        "properties": {
+          "osType": "Linux",
+          "hyperVGeneration": "V1",
+          "creationData": {
+            "createOption": "Empty"
+          },
+          "diskSizeGB": 10,
+          "diskIOPSReadWrite": 500,
+          "diskMBpsReadWrite": 60,
+          "encryption": {
+            "type": "EncryptionAtRestWithPlatformKey"
+          },
+          "timeCreated": "2020-10-06T06:39:23.9396575\u002B00:00",
+          "provisioningState": "Succeeded",
+          "diskState": "Unattached",
+          "diskSizeBytes": 10737418240,
+          "uniqueId": "6e567cae-b481-4578-bd4e-df3a3353c655"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar1823/providers/Microsoft.Compute/disks/diskrp2620?api-version=2019-11-01",
@@ -382,7 +374,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "134",
+        "Content-Length": "117",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:39:23 GMT",
         "Expires": "-1",
@@ -401,13 +393,11 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063924Z:ce1cc4af-b759-430b-9216-fa93312285b4",
         "x-ms-served-by": "edd9902d-5b74-4e42-a457-c90105dcf064_132325353451853561"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T06:39:24.4083896\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022,\r\n",
-        "  \u0022name\u0022: \u0022d510f5b2-9f24-4701-98df-1e8f61bcb9ae\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T06:39:24.4083896\u002B00:00",
+        "status": "InProgress",
+        "name": "d510f5b2-9f24-4701-98df-1e8f61bcb9ae"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/westcentralus/DiskOperations/d510f5b2-9f24-4701-98df-1e8f61bcb9ae?api-version=2019-11-01",
@@ -425,7 +415,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "183",
+        "Content-Length": "161",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:39:24 GMT",
         "Expires": "-1",
@@ -444,14 +434,12 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063925Z:345f3fee-fffc-425b-bd94-14e91cf7b85f",
         "x-ms-served-by": "edd9902d-5b74-4e42-a457-c90105dcf064_132325353451853561"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T06:39:24.4083896\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T06:39:24.564634\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022name\u0022: \u0022d510f5b2-9f24-4701-98df-1e8f61bcb9ae\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T06:39:24.4083896\u002B00:00",
+        "endTime": "2020-10-06T06:39:24.564634\u002B00:00",
+        "status": "Succeeded",
+        "name": "d510f5b2-9f24-4701-98df-1e8f61bcb9ae"
+      }
     }
   ],
   "Variables": {

@@ -6846,7 +6846,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/dd07b420-7ef7-41f0-b99e-36790e0dbb29?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "765",
+        "Content-Length": "624",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:36 GMT",
         "Expires": "-1",
@@ -6865,33 +6865,31 @@
         "x-ms-request-id": "dd07b420-7ef7-41f0-b99e-36790e0dbb29",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060136Z:92a023bb-0a3e-44cc-9c84-cb7903da388f"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022ipname9236\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg7411/providers/Microsoft.Network/publicIPAddresses/ipname9236\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022b408d5e6-f511-4f5b-a0e1-4c38fdd5b1e8\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022c35823e8-4153-4f30-88bd-198ee7c47f3d\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022domain4371\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022domain4371.westus.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "ipname9236",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg7411/providers/Microsoft.Network/publicIPAddresses/ipname9236",
+        "etag": "W/\u0022b408d5e6-f511-4f5b-a0e1-4c38fdd5b1e8\u0022",
+        "location": "westus",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "c35823e8-4153-4f30-88bd-198ee7c47f3d",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "domain4371",
+            "fqdn": "domain4371.westus.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/dd07b420-7ef7-41f0-b99e-36790e0dbb29?api-version=2020-04-01",
@@ -6909,7 +6907,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:36 GMT",
         "Expires": "-1",
@@ -6927,11 +6925,9 @@
         "x-ms-request-id": "d15f6c38-6772-45b7-ba05-2b25e08a7d08",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060137Z:bfd54f5c-4ea2-4aba-a5e1-4beea65bc070"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg7411/providers/Microsoft.Network/publicIPAddresses/ipname9236?api-version=2020-04-01",
@@ -6949,7 +6945,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "766",
+        "Content-Length": "625",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:37 GMT",
         "ETag": "W/\u002235d07956-2ada-49ce-bcf4-b456bf1069ac\u0022",
@@ -6968,33 +6964,31 @@
         "x-ms-request-id": "a477b719-3f47-40fc-9b6e-1b7dca696e5b",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060137Z:cb808fb1-be30-41c6-935e-10ed49056e28"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022ipname9236\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg7411/providers/Microsoft.Network/publicIPAddresses/ipname9236\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002235d07956-2ada-49ce-bcf4-b456bf1069ac\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022c35823e8-4153-4f30-88bd-198ee7c47f3d\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022domain4371\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022domain4371.westus.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "ipname9236",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg7411/providers/Microsoft.Network/publicIPAddresses/ipname9236",
+        "etag": "W/\u002235d07956-2ada-49ce-bcf4-b456bf1069ac\u0022",
+        "location": "westus",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "c35823e8-4153-4f30-88bd-198ee7c47f3d",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "domain4371",
+            "fqdn": "domain4371.westus.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg7411/providers/Microsoft.Network/publicIPAddresses/ipname9236?api-version=2020-04-01",
@@ -7014,7 +7008,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "766",
+        "Content-Length": "625",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:37 GMT",
         "ETag": "W/\u002235d07956-2ada-49ce-bcf4-b456bf1069ac\u0022",
@@ -7033,33 +7027,31 @@
         "x-ms-request-id": "8d2d9a8c-eb0a-43f1-9de7-0b956cad626f",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060137Z:144df78d-a35f-4b2c-8e8c-a442a511e384"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022ipname9236\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg7411/providers/Microsoft.Network/publicIPAddresses/ipname9236\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002235d07956-2ada-49ce-bcf4-b456bf1069ac\\\u0022\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022key\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022c35823e8-4153-4f30-88bd-198ee7c47f3d\u0022,\r\n",
-        "    \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "    \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "    \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "    \u0022dnsSettings\u0022: {\r\n",
-        "      \u0022domainNameLabel\u0022: \u0022domain4371\u0022,\r\n",
-        "      \u0022fqdn\u0022: \u0022domain4371.westus.cloudapp.azure.com\u0022\r\n",
-        "    },\r\n",
-        "    \u0022ipTags\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "ipname9236",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg7411/providers/Microsoft.Network/publicIPAddresses/ipname9236",
+        "etag": "W/\u002235d07956-2ada-49ce-bcf4-b456bf1069ac\u0022",
+        "location": "westus",
+        "tags": {
+          "key": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "c35823e8-4153-4f30-88bd-198ee7c47f3d",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Dynamic",
+          "idleTimeoutInMinutes": 4,
+          "dnsSettings": {
+            "domainNameLabel": "domain4371",
+            "fqdn": "domain4371.westus.cloudapp.azure.com"
+          },
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg7411/providers/Microsoft.Network/publicIPAddresses?api-version=2020-04-01",
@@ -7078,7 +7070,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "891",
+        "Content-Length": "637",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:37 GMT",
         "Expires": "-1",
@@ -7096,37 +7088,35 @@
         "x-ms-request-id": "4a2e7832-ee2c-4e45-a090-b9a25011a957",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060138Z:4a4e5b4a-c99c-46da-9abc-a93437a5b123"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022ipname9236\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg7411/providers/Microsoft.Network/publicIPAddresses/ipname9236\u0022,\r\n",
-        "      \u0022etag\u0022: \u0022W/\\\u002235d07956-2ada-49ce-bcf4-b456bf1069ac\\\u0022\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "      \u0022tags\u0022: {\r\n",
-        "        \u0022key\u0022: \u0022value\u0022\r\n",
-        "      },\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "        \u0022resourceGuid\u0022: \u0022c35823e8-4153-4f30-88bd-198ee7c47f3d\u0022,\r\n",
-        "        \u0022publicIPAddressVersion\u0022: \u0022IPv4\u0022,\r\n",
-        "        \u0022publicIPAllocationMethod\u0022: \u0022Dynamic\u0022,\r\n",
-        "        \u0022idleTimeoutInMinutes\u0022: 4,\r\n",
-        "        \u0022dnsSettings\u0022: {\r\n",
-        "          \u0022domainNameLabel\u0022: \u0022domain4371\u0022,\r\n",
-        "          \u0022fqdn\u0022: \u0022domain4371.westus.cloudapp.azure.com\u0022\r\n",
-        "        },\r\n",
-        "        \u0022ipTags\u0022: []\r\n",
-        "      },\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Network/publicIPAddresses\u0022,\r\n",
-        "      \u0022sku\u0022: {\r\n",
-        "        \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "      }\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "ipname9236",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg7411/providers/Microsoft.Network/publicIPAddresses/ipname9236",
+            "etag": "W/\u002235d07956-2ada-49ce-bcf4-b456bf1069ac\u0022",
+            "location": "westus",
+            "tags": {
+              "key": "value"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "resourceGuid": "c35823e8-4153-4f30-88bd-198ee7c47f3d",
+              "publicIPAddressVersion": "IPv4",
+              "publicIPAllocationMethod": "Dynamic",
+              "idleTimeoutInMinutes": 4,
+              "dnsSettings": {
+                "domainNameLabel": "domain4371",
+                "fqdn": "domain4371.westus.cloudapp.azure.com"
+              },
+              "ipTags": []
+            },
+            "type": "Microsoft.Network/publicIPAddresses",
+            "sku": {
+              "name": "Basic"
+            }
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/publicIPAddresses?api-version=2020-04-01",
@@ -7270,7 +7260,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30",
+        "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:38 GMT",
         "Expires": "-1",
@@ -7289,11 +7279,9 @@
         "x-ms-request-id": "427e246c-879b-4e49-82a8-b71c39b09a1a",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060139Z:6e625860-3859-4a9c-a1c9-583221959f06"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "InProgress"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/6f6bdf41-5390-48d4-9be8-3e10f95cffbf?api-version=2020-04-01",
@@ -7311,7 +7299,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:40 GMT",
         "Expires": "-1",
@@ -7329,11 +7317,9 @@
         "x-ms-request-id": "be322be1-4b89-44e5-a329-72824ad39994",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060140Z:d4e1e49a-b3a8-4dee-ac89-86aee1d05b60"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg7411/providers/Microsoft.Network/publicIPAddresses?api-version=2020-04-01",
@@ -7352,7 +7338,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "19",
+        "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:40 GMT",
         "Expires": "-1",
@@ -7370,11 +7356,9 @@
         "x-ms-request-id": "065c4435-291e-4604-b0f0-3ebdd6c11822",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060140Z:50479d2b-54cb-40dc-bdb2-7df76162dd88"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: []\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": []
+      }
     }
   ],
   "Variables": {

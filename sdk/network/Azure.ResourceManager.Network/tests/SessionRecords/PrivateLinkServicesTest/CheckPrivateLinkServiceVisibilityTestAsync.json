@@ -6874,7 +6874,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30",
+        "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:26 GMT",
         "Expires": "-1",
@@ -6893,11 +6893,9 @@
         "x-ms-request-id": "d5866511-fa69-474b-8f33-f6021288b21c",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060126Z:f634f568-2f6f-4a10-90b7-ad9ef3f24671"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "InProgress"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/f0cf43d0-f097-4916-a384-16683d91d589?api-version=2020-04-01",
@@ -6915,7 +6913,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "102",
+        "Content-Length": "64",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:27 GMT",
         "Expires": "-1",
@@ -6933,16 +6931,14 @@
         "x-ms-request-id": "c5db879b-a2f2-4673-b2ea-4f616cce3232",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060127Z:cd17a05f-7191-48e8-b009-c45ba6d6776b"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022output\u0022: {\r\n",
-        "      \u0022visible\u0022: false\r\n",
-        "    }\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded",
+        "properties": {
+          "output": {
+            "visible": false
+          }
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operationResults/f0cf43d0-f097-4916-a384-16683d91d589?api-version=2020-04-01",
@@ -6961,7 +6957,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/f0cf43d0-f097-4916-a384-16683d91d589?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "24",
+        "Content-Length": "17",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 06:01:27 GMT",
         "Expires": "-1",
@@ -6980,11 +6976,9 @@
         "x-ms-request-id": "f0cf43d0-f097-4916-a384-16683d91d589",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T060127Z:5f99d9ef-be46-4be8-a4d5-e60b4800dea6"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022visible\u0022: false\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "visible": false
+      }
     }
   ],
   "Variables": {

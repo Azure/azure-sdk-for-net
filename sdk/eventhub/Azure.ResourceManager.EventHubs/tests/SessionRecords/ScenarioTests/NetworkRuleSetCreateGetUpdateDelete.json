@@ -471,7 +471,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.Network/locations/eastus2/operations/f54b728c-f312-4b93-afed-0dc8b8a704a1?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "3342",
+        "Content-Length": "2327",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 09:24:54 GMT",
         "Expires": "-1",
@@ -490,98 +490,96 @@
         "x-ms-request-id": "f54b728c-f312-4b93-afed-0dc8b8a704a1",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200928T092455Z:195be64f-c6bd-4fbd-aa0f-9431f1babd12"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022sdktestvnet5910\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00221458e7bb-2bea-410a-ad42-79320bbd030f\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00226a7dbfcd-53ba-4c64-bb81-608e57844fe9\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022subnets\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022default1\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910/subnets/default1\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u00221458e7bb-2bea-410a-ad42-79320bbd030f\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "          \u0022serviceEndpoints\u0022: [\r\n",
-        "            {\r\n",
-        "              \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "              \u0022service\u0022: \u0022Microsoft.EventHub\u0022,\r\n",
-        "              \u0022locations\u0022: [\r\n",
-        "                \u0022*\u0022\r\n",
-        "              ]\r\n",
-        "            }\r\n",
-        "          ],\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022default2\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910/subnets/default2\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u00221458e7bb-2bea-410a-ad42-79320bbd030f\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
-        "          \u0022serviceEndpoints\u0022: [\r\n",
-        "            {\r\n",
-        "              \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "              \u0022service\u0022: \u0022Microsoft.EventHub\u0022,\r\n",
-        "              \u0022locations\u0022: [\r\n",
-        "                \u0022*\u0022\r\n",
-        "              ]\r\n",
-        "            }\r\n",
-        "          ],\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022default3\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910/subnets/default3\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u00221458e7bb-2bea-410a-ad42-79320bbd030f\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.2.0/24\u0022,\r\n",
-        "          \u0022serviceEndpoints\u0022: [\r\n",
-        "            {\r\n",
-        "              \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "              \u0022service\u0022: \u0022Microsoft.EventHub\u0022,\r\n",
-        "              \u0022locations\u0022: [\r\n",
-        "                \u0022*\u0022\r\n",
-        "              ]\r\n",
-        "            }\r\n",
-        "          ],\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: [],\r\n",
-        "    \u0022enableDdosProtection\u0022: false,\r\n",
-        "    \u0022enableVmProtection\u0022: false\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "sdktestvnet5910",
+        "id": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910",
+        "etag": "W/\u00221458e7bb-2bea-410a-ad42-79320bbd030f\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "eastus2",
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "6a7dbfcd-53ba-4c64-bb81-608e57844fe9",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "default1",
+              "id": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910/subnets/default1",
+              "etag": "W/\u00221458e7bb-2bea-410a-ad42-79320bbd030f\u0022",
+              "properties": {
+                "provisioningState": "Updating",
+                "addressPrefix": "10.0.0.0/24",
+                "serviceEndpoints": [
+                  {
+                    "provisioningState": "Updating",
+                    "service": "Microsoft.EventHub",
+                    "locations": [
+                      "*"
+                    ]
+                  }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            },
+            {
+              "name": "default2",
+              "id": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910/subnets/default2",
+              "etag": "W/\u00221458e7bb-2bea-410a-ad42-79320bbd030f\u0022",
+              "properties": {
+                "provisioningState": "Updating",
+                "addressPrefix": "10.0.1.0/24",
+                "serviceEndpoints": [
+                  {
+                    "provisioningState": "Updating",
+                    "service": "Microsoft.EventHub",
+                    "locations": [
+                      "*"
+                    ]
+                  }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            },
+            {
+              "name": "default3",
+              "id": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910/subnets/default3",
+              "etag": "W/\u00221458e7bb-2bea-410a-ad42-79320bbd030f\u0022",
+              "properties": {
+                "provisioningState": "Updating",
+                "addressPrefix": "10.0.2.0/24",
+                "serviceEndpoints": [
+                  {
+                    "provisioningState": "Updating",
+                    "service": "Microsoft.EventHub",
+                    "locations": [
+                      "*"
+                    ]
+                  }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false,
+          "enableVmProtection": false
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.Network/locations/eastus2/operations/f54b728c-f312-4b93-afed-0dc8b8a704a1?api-version=2020-04-01",
@@ -599,7 +597,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30",
+        "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 09:24:55 GMT",
         "Expires": "-1",
@@ -618,11 +616,9 @@
         "x-ms-request-id": "754c7455-6eb9-4b93-900a-8e5aac26b5c1",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200928T092456Z:a54c5965-d26a-45b6-9d5c-1481eddd453f"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "InProgress"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.Network/locations/eastus2/operations/f54b728c-f312-4b93-afed-0dc8b8a704a1?api-version=2020-04-01",
@@ -640,7 +636,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 09:24:57 GMT",
         "Expires": "-1",
@@ -658,11 +654,9 @@
         "x-ms-request-id": "eea934c6-477f-44ba-9d1f-276e20a26c90",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200928T092458Z:111b0096-a0b2-4576-80f8-05c02c59a3a2"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910?api-version=2020-04-01",
@@ -680,7 +674,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "3349",
+        "Content-Length": "2334",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 28 Sep 2020 09:24:57 GMT",
         "ETag": "W/\u0022505f6a8f-3028-4acc-8a28-24e1104e8122\u0022",
@@ -699,98 +693,96 @@
         "x-ms-request-id": "2476ae69-f0d5-45bc-a4bd-f899afe9bacb",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200928T092458Z:f2ca7095-ef16-4461-a9cf-211afb3e4795"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022sdktestvnet5910\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022505f6a8f-3028-4acc-8a28-24e1104e8122\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u00226a7dbfcd-53ba-4c64-bb81-608e57844fe9\u0022,\r\n",
-        "    \u0022addressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u002210.0.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022subnets\u0022: [\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022default1\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910/subnets/default1\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022505f6a8f-3028-4acc-8a28-24e1104e8122\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.0.0/24\u0022,\r\n",
-        "          \u0022serviceEndpoints\u0022: [\r\n",
-        "            {\r\n",
-        "              \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "              \u0022service\u0022: \u0022Microsoft.EventHub\u0022,\r\n",
-        "              \u0022locations\u0022: [\r\n",
-        "                \u0022*\u0022\r\n",
-        "              ]\r\n",
-        "            }\r\n",
-        "          ],\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022default2\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910/subnets/default2\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022505f6a8f-3028-4acc-8a28-24e1104e8122\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
-        "          \u0022serviceEndpoints\u0022: [\r\n",
-        "            {\r\n",
-        "              \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "              \u0022service\u0022: \u0022Microsoft.EventHub\u0022,\r\n",
-        "              \u0022locations\u0022: [\r\n",
-        "                \u0022*\u0022\r\n",
-        "              ]\r\n",
-        "            }\r\n",
-        "          ],\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      },\r\n",
-        "      {\r\n",
-        "        \u0022name\u0022: \u0022default3\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910/subnets/default3\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022505f6a8f-3028-4acc-8a28-24e1104e8122\\\u0022\u0022,\r\n",
-        "        \u0022properties\u0022: {\r\n",
-        "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "          \u0022addressPrefix\u0022: \u002210.0.2.0/24\u0022,\r\n",
-        "          \u0022serviceEndpoints\u0022: [\r\n",
-        "            {\r\n",
-        "              \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "              \u0022service\u0022: \u0022Microsoft.EventHub\u0022,\r\n",
-        "              \u0022locations\u0022: [\r\n",
-        "                \u0022*\u0022\r\n",
-        "              ]\r\n",
-        "            }\r\n",
-        "          ],\r\n",
-        "          \u0022delegations\u0022: [],\r\n",
-        "          \u0022privateEndpointNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022privateLinkServiceNetworkPolicies\u0022: \u0022Enabled\u0022,\r\n",
-        "          \u0022subnetID\u0022: 0\r\n",
-        "        },\r\n",
-        "        \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks/subnets\u0022\r\n",
-        "      }\r\n",
-        "    ],\r\n",
-        "    \u0022virtualNetworkPeerings\u0022: [],\r\n",
-        "    \u0022enableDdosProtection\u0022: false,\r\n",
-        "    \u0022enableVmProtection\u0022: false\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "sdktestvnet5910",
+        "id": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910",
+        "etag": "W/\u0022505f6a8f-3028-4acc-8a28-24e1104e8122\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "eastus2",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "6a7dbfcd-53ba-4c64-bb81-608e57844fe9",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "default1",
+              "id": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910/subnets/default1",
+              "etag": "W/\u0022505f6a8f-3028-4acc-8a28-24e1104e8122\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.0.0/24",
+                "serviceEndpoints": [
+                  {
+                    "provisioningState": "Succeeded",
+                    "service": "Microsoft.EventHub",
+                    "locations": [
+                      "*"
+                    ]
+                  }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            },
+            {
+              "name": "default2",
+              "id": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910/subnets/default2",
+              "etag": "W/\u0022505f6a8f-3028-4acc-8a28-24e1104e8122\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.1.0/24",
+                "serviceEndpoints": [
+                  {
+                    "provisioningState": "Succeeded",
+                    "service": "Microsoft.EventHub",
+                    "locations": [
+                      "*"
+                    ]
+                  }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            },
+            {
+              "name": "default3",
+              "id": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.Network/virtualNetworks/sdktestvnet5910/subnets/default3",
+              "etag": "W/\u0022505f6a8f-3028-4acc-8a28-24e1104e8122\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.2.0/24",
+                "serviceEndpoints": [
+                  {
+                    "provisioningState": "Succeeded",
+                    "service": "Microsoft.EventHub",
+                    "locations": [
+                      "*"
+                    ]
+                  }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "subnetID": 0
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false,
+          "enableVmProtection": false
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/Default-EventHub-6437/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-5116?api-version=2018-01-01-preview",

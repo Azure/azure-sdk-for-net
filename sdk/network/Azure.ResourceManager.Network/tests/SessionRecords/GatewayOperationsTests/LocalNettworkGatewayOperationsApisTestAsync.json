@@ -6848,7 +6848,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/f27feee1-b8f8-4758-9b3c-af4e70a7176d?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "623",
+        "Content-Length": "510",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:02 GMT",
         "Expires": "-1",
@@ -6867,28 +6867,26 @@
         "x-ms-request-id": "f27feee1-b8f8-4758-9b3c-af4e70a7176d",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041103Z:a383ea80-777b-4fed-9522-511de54ede0b"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet7615\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022de1fe4af-c1d2-4ae1-8eb1-3e5e009f35e0\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/localNetworkGateways\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022test\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002253e3b957-5e06-4af4-a5f6-8373daf67b1c\u0022,\r\n",
-        "    \u0022localNetworkAddressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u0022192.168.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022gatewayIpAddress\u0022: \u0022192.168.3.4\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet7615",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615",
+        "etag": "W/\u0022de1fe4af-c1d2-4ae1-8eb1-3e5e009f35e0\u0022",
+        "type": "Microsoft.Network/localNetworkGateways",
+        "location": "westus",
+        "tags": {
+          "test": "value"
+        },
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "53e3b957-5e06-4af4-a5f6-8373daf67b1c",
+          "localNetworkAddressSpace": {
+            "addressPrefixes": [
+              "192.168.0.0/16"
+            ]
+          },
+          "gatewayIpAddress": "192.168.3.4"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/f27feee1-b8f8-4758-9b3c-af4e70a7176d?api-version=2020-04-01",
@@ -6906,7 +6904,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30",
+        "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:03 GMT",
         "Expires": "-1",
@@ -6925,11 +6923,9 @@
         "x-ms-request-id": "9da8b4cb-856f-436c-8ac2-6a87af6616ab",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041104Z:8caaac39-a824-4426-9734-a93a034276b7"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "InProgress"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/f27feee1-b8f8-4758-9b3c-af4e70a7176d?api-version=2020-04-01",
@@ -6947,7 +6943,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30",
+        "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:04 GMT",
         "Expires": "-1",
@@ -6966,11 +6962,9 @@
         "x-ms-request-id": "cc6ae366-acfc-4319-b329-4be2cdf58377",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041105Z:07ad830c-34d6-47b3-bc3d-e4636392e64a"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "InProgress"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/f27feee1-b8f8-4758-9b3c-af4e70a7176d?api-version=2020-04-01",
@@ -6988,7 +6982,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30",
+        "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:05 GMT",
         "Expires": "-1",
@@ -7007,11 +7001,9 @@
         "x-ms-request-id": "2dc17194-2ec8-4c4e-8927-f5dfdadb2f14",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041106Z:3931c8da-ca1d-4a63-be31-d8f4a74abccd"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "InProgress"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/f27feee1-b8f8-4758-9b3c-af4e70a7176d?api-version=2020-04-01",
@@ -7029,7 +7021,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:07 GMT",
         "Expires": "-1",
@@ -7047,11 +7039,9 @@
         "x-ms-request-id": "256dbc61-0b7f-460d-aaee-836a9fa22cd1",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041108Z:0ecf0a80-ce79-4ea6-9413-c6de6acaef43"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615?api-version=2020-04-01",
@@ -7069,7 +7059,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "624",
+        "Content-Length": "511",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:07 GMT",
         "ETag": "W/\u00222d9cdec0-1ca0-437a-a528-fb9f859d2631\u0022",
@@ -7088,28 +7078,26 @@
         "x-ms-request-id": "671972d1-2d7f-401a-b062-b8b9beaebf4f",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041108Z:b1b8f5de-0f41-41e9-8053-4676072f2ce2"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet7615\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00222d9cdec0-1ca0-437a-a528-fb9f859d2631\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/localNetworkGateways\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022test\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002253e3b957-5e06-4af4-a5f6-8373daf67b1c\u0022,\r\n",
-        "    \u0022localNetworkAddressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u0022192.168.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022gatewayIpAddress\u0022: \u0022192.168.3.4\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet7615",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615",
+        "etag": "W/\u00222d9cdec0-1ca0-437a-a528-fb9f859d2631\u0022",
+        "type": "Microsoft.Network/localNetworkGateways",
+        "location": "westus",
+        "tags": {
+          "test": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "53e3b957-5e06-4af4-a5f6-8373daf67b1c",
+          "localNetworkAddressSpace": {
+            "addressPrefixes": [
+              "192.168.0.0/16"
+            ]
+          },
+          "gatewayIpAddress": "192.168.3.4"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615?api-version=2020-04-01",
@@ -7129,7 +7117,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "624",
+        "Content-Length": "511",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:08 GMT",
         "ETag": "W/\u00222d9cdec0-1ca0-437a-a528-fb9f859d2631\u0022",
@@ -7148,28 +7136,26 @@
         "x-ms-request-id": "f3bb7f9d-1f4b-4e0c-8023-8ee035649260",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041109Z:6ce020f0-69d7-4171-922d-4e0cb012b117"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet7615\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00222d9cdec0-1ca0-437a-a528-fb9f859d2631\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/localNetworkGateways\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022test\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002253e3b957-5e06-4af4-a5f6-8373daf67b1c\u0022,\r\n",
-        "    \u0022localNetworkAddressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u0022192.168.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022gatewayIpAddress\u0022: \u0022192.168.3.4\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet7615",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615",
+        "etag": "W/\u00222d9cdec0-1ca0-437a-a528-fb9f859d2631\u0022",
+        "type": "Microsoft.Network/localNetworkGateways",
+        "location": "westus",
+        "tags": {
+          "test": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "53e3b957-5e06-4af4-a5f6-8373daf67b1c",
+          "localNetworkAddressSpace": {
+            "addressPrefixes": [
+              "192.168.0.0/16"
+            ]
+          },
+          "gatewayIpAddress": "192.168.3.4"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615?api-version=2020-04-01",
@@ -7206,7 +7192,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/b9d7a736-4b72-4e8a-adaa-19eed2ec5ce7?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "623",
+        "Content-Length": "510",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:09 GMT",
         "Expires": "-1",
@@ -7225,28 +7211,26 @@
         "x-ms-request-id": "b9d7a736-4b72-4e8a-adaa-19eed2ec5ce7",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041110Z:3a2caad2-7fc5-46b1-9193-3c3d49b76a47"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet7615\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u002237864d4a-dcb7-49fa-b4da-6a37565bf31b\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/localNetworkGateways\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022test\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002253e3b957-5e06-4af4-a5f6-8373daf67b1c\u0022,\r\n",
-        "    \u0022localNetworkAddressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u0022200.168.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022gatewayIpAddress\u0022: \u0022192.168.3.4\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet7615",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615",
+        "etag": "W/\u002237864d4a-dcb7-49fa-b4da-6a37565bf31b\u0022",
+        "type": "Microsoft.Network/localNetworkGateways",
+        "location": "westus",
+        "tags": {
+          "test": "value"
+        },
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "53e3b957-5e06-4af4-a5f6-8373daf67b1c",
+          "localNetworkAddressSpace": {
+            "addressPrefixes": [
+              "200.168.0.0/16"
+            ]
+          },
+          "gatewayIpAddress": "192.168.3.4"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/b9d7a736-4b72-4e8a-adaa-19eed2ec5ce7?api-version=2020-04-01",
@@ -7264,7 +7248,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30",
+        "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:09 GMT",
         "Expires": "-1",
@@ -7283,11 +7267,9 @@
         "x-ms-request-id": "03166290-25f4-4fc6-bae0-4731625106ce",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041110Z:e1c7c243-acc4-4492-bee7-f279a786a3ac"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "InProgress"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/b9d7a736-4b72-4e8a-adaa-19eed2ec5ce7?api-version=2020-04-01",
@@ -7305,7 +7287,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30",
+        "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:11 GMT",
         "Expires": "-1",
@@ -7324,11 +7306,9 @@
         "x-ms-request-id": "5d30e020-8f00-4c42-8e49-b31ada33c253",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041111Z:8a31adcd-de41-47c4-9d4e-5eedad6f5f62"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "InProgress"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/b9d7a736-4b72-4e8a-adaa-19eed2ec5ce7?api-version=2020-04-01",
@@ -7346,7 +7326,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:12 GMT",
         "Expires": "-1",
@@ -7364,11 +7344,9 @@
         "x-ms-request-id": "48461143-55b1-4b65-862f-6b429724f54b",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041113Z:b9c2a135-7278-4659-83c8-135f06ac6a7b"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615?api-version=2020-04-01",
@@ -7386,7 +7364,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "624",
+        "Content-Length": "511",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:12 GMT",
         "ETag": "W/\u0022e9eb4d61-0136-4e57-8fc1-b5f399928dc5\u0022",
@@ -7405,28 +7383,26 @@
         "x-ms-request-id": "19a062b7-7aed-48ae-ae14-730b9c2481a6",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041113Z:8bcce367-b627-4761-8e4e-62a16b8b8c3c"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet7615\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022e9eb4d61-0136-4e57-8fc1-b5f399928dc5\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/localNetworkGateways\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022test\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002253e3b957-5e06-4af4-a5f6-8373daf67b1c\u0022,\r\n",
-        "    \u0022localNetworkAddressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u0022200.168.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022gatewayIpAddress\u0022: \u0022192.168.3.4\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet7615",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615",
+        "etag": "W/\u0022e9eb4d61-0136-4e57-8fc1-b5f399928dc5\u0022",
+        "type": "Microsoft.Network/localNetworkGateways",
+        "location": "westus",
+        "tags": {
+          "test": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "53e3b957-5e06-4af4-a5f6-8373daf67b1c",
+          "localNetworkAddressSpace": {
+            "addressPrefixes": [
+              "200.168.0.0/16"
+            ]
+          },
+          "gatewayIpAddress": "192.168.3.4"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615?api-version=2020-04-01",
@@ -7446,7 +7422,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "624",
+        "Content-Length": "511",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:12 GMT",
         "ETag": "W/\u0022e9eb4d61-0136-4e57-8fc1-b5f399928dc5\u0022",
@@ -7465,28 +7441,26 @@
         "x-ms-request-id": "4ace659e-2da5-4d95-9351-aff5336ef4bf",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041113Z:6b882c57-e733-4101-b71a-dc9e3cf577de"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet7615\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022e9eb4d61-0136-4e57-8fc1-b5f399928dc5\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/localNetworkGateways\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022test\u0022: \u0022value\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002253e3b957-5e06-4af4-a5f6-8373daf67b1c\u0022,\r\n",
-        "    \u0022localNetworkAddressSpace\u0022: {\r\n",
-        "      \u0022addressPrefixes\u0022: [\r\n",
-        "        \u0022200.168.0.0/16\u0022\r\n",
-        "      ]\r\n",
-        "    },\r\n",
-        "    \u0022gatewayIpAddress\u0022: \u0022192.168.3.4\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet7615",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615",
+        "etag": "W/\u0022e9eb4d61-0136-4e57-8fc1-b5f399928dc5\u0022",
+        "type": "Microsoft.Network/localNetworkGateways",
+        "location": "westus",
+        "tags": {
+          "test": "value"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "53e3b957-5e06-4af4-a5f6-8373daf67b1c",
+          "localNetworkAddressSpace": {
+            "addressPrefixes": [
+              "200.168.0.0/16"
+            ]
+          },
+          "gatewayIpAddress": "192.168.3.4"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways?api-version=2020-04-01",
@@ -7505,7 +7479,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "729",
+        "Content-Length": "523",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:13 GMT",
         "Expires": "-1",
@@ -7523,32 +7497,30 @@
         "x-ms-request-id": "c5353e07-5482-4b01-beea-d88d8479b0c8",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041114Z:08df7812-4c20-4b18-88cd-abd85f6ae02c"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: [\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022azsmnet7615\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615\u0022,\r\n",
-        "      \u0022etag\u0022: \u0022W/\\\u0022e9eb4d61-0136-4e57-8fc1-b5f399928dc5\\\u0022\u0022,\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Network/localNetworkGateways\u0022,\r\n",
-        "      \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "      \u0022tags\u0022: {\r\n",
-        "        \u0022test\u0022: \u0022value\u0022\r\n",
-        "      },\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "        \u0022resourceGuid\u0022: \u002253e3b957-5e06-4af4-a5f6-8373daf67b1c\u0022,\r\n",
-        "        \u0022localNetworkAddressSpace\u0022: {\r\n",
-        "          \u0022addressPrefixes\u0022: [\r\n",
-        "            \u0022200.168.0.0/16\u0022\r\n",
-        "          ]\r\n",
-        "        },\r\n",
-        "        \u0022gatewayIpAddress\u0022: \u0022192.168.3.4\u0022\r\n",
-        "      }\r\n",
-        "    }\r\n",
-        "  ]\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "azsmnet7615",
+            "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615",
+            "etag": "W/\u0022e9eb4d61-0136-4e57-8fc1-b5f399928dc5\u0022",
+            "type": "Microsoft.Network/localNetworkGateways",
+            "location": "westus",
+            "tags": {
+              "test": "value"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "resourceGuid": "53e3b957-5e06-4af4-a5f6-8373daf67b1c",
+              "localNetworkAddressSpace": {
+                "addressPrefixes": [
+                  "200.168.0.0/16"
+                ]
+              },
+              "gatewayIpAddress": "192.168.3.4"
+            }
+          }
+        ]
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways/azsmnet7615?api-version=2020-04-01",
@@ -7607,7 +7579,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30",
+        "Content-Length": "23",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:14 GMT",
         "Expires": "-1",
@@ -7626,11 +7598,9 @@
         "x-ms-request-id": "7d3dea1d-bb77-466c-ae49-4e1693a206c5",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041115Z:3a6ec611-0075-4e6c-b7ef-268b2c6c600d"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "InProgress"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/40c61968-efd7-437b-a76e-3fe76f61e188?api-version=2020-04-01",
@@ -7648,7 +7618,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:15 GMT",
         "Expires": "-1",
@@ -7666,11 +7636,9 @@
         "x-ms-request-id": "73999228-eb73-45c5-92ba-84b74bc58bcd",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041116Z:cb8c93ce-c23e-4754-b0fc-209cef07a8da"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg5890/providers/Microsoft.Network/localNetworkGateways?api-version=2020-04-01",
@@ -7689,7 +7657,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "19",
+        "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 04:11:15 GMT",
         "Expires": "-1",
@@ -7707,11 +7675,9 @@
         "x-ms-request-id": "9c1d8e4c-1790-481b-988c-5e37969bcbd5",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T041116Z:7f5fd76b-0243-4eb8-8fc5-c83e0b8589c7"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: []\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": []
+      }
     }
   ],
   "Variables": {

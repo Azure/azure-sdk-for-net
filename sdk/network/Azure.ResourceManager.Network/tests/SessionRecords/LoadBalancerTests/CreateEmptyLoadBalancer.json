@@ -6838,7 +6838,7 @@
         "Azure-AsyncNotification": "Enabled",
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/0c28a85e-a61d-4bcc-b206-9649e78ee176?api-version=2020-04-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "638",
+        "Content-Length": "530",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:36:04 GMT",
         "Expires": "-1",
@@ -6856,28 +6856,26 @@
         "x-ms-request-id": "0c28a85e-a61d-4bcc-b206-9649e78ee176",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T053605Z:28d6a086-7e80-4315-913b-90eab3e90ae4"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet6507\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg4426/providers/Microsoft.Network/loadBalancers/azsmnet6507\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00221779d521-e959-4a66-a18e-e13586547c95\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/loadBalancers\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002204c7015c-5aae-4120-a5b3-0bdd72814dc5\u0022,\r\n",
-        "    \u0022frontendIPConfigurations\u0022: [],\r\n",
-        "    \u0022backendAddressPools\u0022: [],\r\n",
-        "    \u0022loadBalancingRules\u0022: [],\r\n",
-        "    \u0022probes\u0022: [],\r\n",
-        "    \u0022inboundNatRules\u0022: [],\r\n",
-        "    \u0022inboundNatPools\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet6507",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg4426/providers/Microsoft.Network/loadBalancers/azsmnet6507",
+        "etag": "W/\u00221779d521-e959-4a66-a18e-e13586547c95\u0022",
+        "type": "Microsoft.Network/loadBalancers",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "04c7015c-5aae-4120-a5b3-0bdd72814dc5",
+          "frontendIPConfigurations": [],
+          "backendAddressPools": [],
+          "loadBalancingRules": [],
+          "probes": [],
+          "inboundNatRules": [],
+          "inboundNatPools": []
+        },
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Network/locations/westus/operations/0c28a85e-a61d-4bcc-b206-9649e78ee176?api-version=2020-04-01",
@@ -6895,7 +6893,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:36:04 GMT",
         "Expires": "-1",
@@ -6913,11 +6911,9 @@
         "x-ms-request-id": "09f97bab-1c22-4aed-bc4b-6f51586d14dd",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T053605Z:a7aff1a8-deeb-48bb-9447-1a685d211bb2"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg4426/providers/Microsoft.Network/loadBalancers/azsmnet6507?api-version=2020-04-01",
@@ -6935,7 +6931,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "638",
+        "Content-Length": "530",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:36:05 GMT",
         "ETag": "W/\u00221779d521-e959-4a66-a18e-e13586547c95\u0022",
@@ -6954,28 +6950,26 @@
         "x-ms-request-id": "e80a6a77-6ad1-4041-bccd-824113760bdd",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T053605Z:d625a34f-6dec-4b27-b180-6e21aec79cab"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet6507\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg4426/providers/Microsoft.Network/loadBalancers/azsmnet6507\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00221779d521-e959-4a66-a18e-e13586547c95\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/loadBalancers\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002204c7015c-5aae-4120-a5b3-0bdd72814dc5\u0022,\r\n",
-        "    \u0022frontendIPConfigurations\u0022: [],\r\n",
-        "    \u0022backendAddressPools\u0022: [],\r\n",
-        "    \u0022loadBalancingRules\u0022: [],\r\n",
-        "    \u0022probes\u0022: [],\r\n",
-        "    \u0022inboundNatRules\u0022: [],\r\n",
-        "    \u0022inboundNatPools\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet6507",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg4426/providers/Microsoft.Network/loadBalancers/azsmnet6507",
+        "etag": "W/\u00221779d521-e959-4a66-a18e-e13586547c95\u0022",
+        "type": "Microsoft.Network/loadBalancers",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "04c7015c-5aae-4120-a5b3-0bdd72814dc5",
+          "frontendIPConfigurations": [],
+          "backendAddressPools": [],
+          "loadBalancingRules": [],
+          "probes": [],
+          "inboundNatRules": [],
+          "inboundNatPools": []
+        },
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg4426/providers/Microsoft.Network/loadBalancers/azsmnet6507?api-version=2020-04-01",
@@ -6995,7 +6989,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "638",
+        "Content-Length": "530",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:36:05 GMT",
         "ETag": "W/\u00221779d521-e959-4a66-a18e-e13586547c95\u0022",
@@ -7014,28 +7008,26 @@
         "x-ms-request-id": "d985ad9d-ad3e-4023-be98-1122331a0eb2",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T053605Z:b4b12613-5681-4247-9634-48266239586e"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet6507\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg4426/providers/Microsoft.Network/loadBalancers/azsmnet6507\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u00221779d521-e959-4a66-a18e-e13586547c95\\\u0022\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Network/loadBalancers\u0022,\r\n",
-        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002204c7015c-5aae-4120-a5b3-0bdd72814dc5\u0022,\r\n",
-        "    \u0022frontendIPConfigurations\u0022: [],\r\n",
-        "    \u0022backendAddressPools\u0022: [],\r\n",
-        "    \u0022loadBalancingRules\u0022: [],\r\n",
-        "    \u0022probes\u0022: [],\r\n",
-        "    \u0022inboundNatRules\u0022: [],\r\n",
-        "    \u0022inboundNatPools\u0022: []\r\n",
-        "  },\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Basic\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "azsmnet6507",
+        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg4426/providers/Microsoft.Network/loadBalancers/azsmnet6507",
+        "etag": "W/\u00221779d521-e959-4a66-a18e-e13586547c95\u0022",
+        "type": "Microsoft.Network/loadBalancers",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "04c7015c-5aae-4120-a5b3-0bdd72814dc5",
+          "frontendIPConfigurations": [],
+          "backendAddressPools": [],
+          "loadBalancingRules": [],
+          "probes": [],
+          "inboundNatRules": [],
+          "inboundNatPools": []
+        },
+        "sku": {
+          "name": "Basic"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg4426/providers/Microsoft.Network/loadBalancers/azsmnet6507?api-version=2020-04-01",
@@ -7094,7 +7086,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:36:06 GMT",
         "Expires": "-1",
@@ -7112,11 +7104,9 @@
         "x-ms-request-id": "3b3202a8-bb66-4d5a-bcaa-839e16521cd0",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T053606Z:96b304af-b62a-49b5-a88c-4912ee937831"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/csmrg4426/providers/Microsoft.Network/loadBalancers?api-version=2020-04-01",
@@ -7135,7 +7125,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "19",
+        "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 05:36:06 GMT",
         "Expires": "-1",
@@ -7153,11 +7143,9 @@
         "x-ms-request-id": "21627573-69f9-4da8-9757-8e13bc21508e",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T053607Z:2876f41c-d6a9-4e95-84ca-3cb3ad1bc08c"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022value\u0022: []\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "value": []
+      }
     }
   ],
   "Variables": {

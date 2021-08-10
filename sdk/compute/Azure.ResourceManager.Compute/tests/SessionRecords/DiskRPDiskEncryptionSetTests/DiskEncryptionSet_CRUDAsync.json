@@ -50,7 +50,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "340",
+        "Content-Length": "326",
         "Content-Type": "application/json",
         "traceparent": "00-ff9ac92231de144797495531902160b3-3a8da75e36da4442-00",
         "User-Agent": [
@@ -61,9 +61,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "identity": {
-          "type": "SystemAssigned"
-        },
+        "identity": "Sanitized",
         "location": "southeastasia",
         "properties": {
           "activeKey": {
@@ -78,7 +76,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/southeastasia/DiskOperations/4bd5716b-bb28-468a-9b60-28bd12e57d0a?api-version=2019-11-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "460",
+        "Content-Length": "357",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:38:25 GMT",
         "Expires": "-1",
@@ -97,23 +95,19 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063826Z:a27bf755-941e-40a2-bf2b-6780f1b11fc2",
         "x-ms-served-by": "44e3dbc7-ab5f-4316-b3cf-76a67dbd63fb_132456231394388135"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022identity\u0022: {\r\n",
-        "    \u0022type\u0022: \u0022SystemAssigned\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022activeKey\u0022: {\r\n",
-        "      \u0022sourceVault\u0022: {\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault\u0022\r\n",
-        "      },\r\n",
-        "      \u0022keyUrl\u0022: \u0022https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "location": "southeastasia",
+        "identity": "Sanitized",
+        "properties": {
+          "activeKey": {
+            "sourceVault": {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault"
+            },
+            "keyUrl": "https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c"
+          },
+          "provisioningState": "Updating"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/southeastasia/DiskOperations/4bd5716b-bb28-468a-9b60-28bd12e57d0a?api-version=2019-11-01",
@@ -131,7 +125,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1029",
+        "Content-Length": "756",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:38:25 GMT",
         "Expires": "-1",
@@ -150,36 +144,30 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063826Z:b10cbc76-4b41-431f-b680-9446e934cd76",
         "x-ms-served-by": "44e3dbc7-ab5f-4316-b3cf-76a67dbd63fb_132456231394388135"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T06:38:25.4867184\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T06:38:25.5491871\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp1985\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/diskEncryptionSets\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022identity\u0022: {\r\n",
-        "    \u0022type\u0022: \u0022SystemAssigned\u0022,\r\n",
-        "    \u0022principalId\u0022: \u0022e74771cc-0acd-4cf5-94f4-7568251dd868\u0022,\r\n",
-        "    \u0022tenantId\u0022: \u002272f988bf-86f1-41af-91ab-2d7cd011db47\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022activeKey\u0022: {\r\n",
-        "      \u0022sourceVault\u0022: {\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault\u0022\r\n",
-        "      },\r\n",
-        "      \u0022keyUrl\u0022: \u0022https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022\r\n",
-        "  }\r\n",
-        "}\r\n",
-        "  },\r\n",
-        "  \u0022name\u0022: \u00224bd5716b-bb28-468a-9b60-28bd12e57d0a\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T06:38:25.4867184\u002B00:00",
+        "endTime": "2020-10-06T06:38:25.5491871\u002B00:00",
+        "status": "Succeeded",
+        "properties": {
+          "output": {
+            "name": "diskrp1985",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985",
+            "type": "Microsoft.Compute/diskEncryptionSets",
+            "location": "southeastasia",
+            "identity": "Sanitized",
+            "properties": {
+              "activeKey": {
+                "sourceVault": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault"
+                },
+                "keyUrl": "https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c"
+              },
+              "provisioningState": "Succeeded"
+            }
+          }
+        },
+        "name": "4bd5716b-bb28-468a-9b60-28bd12e57d0a"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985?api-version=2019-11-01",
@@ -197,7 +185,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "804",
+        "Content-Length": "569",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:38:26 GMT",
         "Expires": "-1",
@@ -216,28 +204,22 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063827Z:6316036f-9c61-422a-b5b3-6d78ddffef53",
         "x-ms-served-by": "44e3dbc7-ab5f-4316-b3cf-76a67dbd63fb_132456231394388135"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp1985\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/diskEncryptionSets\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022identity\u0022: {\r\n",
-        "    \u0022type\u0022: \u0022SystemAssigned\u0022,\r\n",
-        "    \u0022principalId\u0022: \u0022e74771cc-0acd-4cf5-94f4-7568251dd868\u0022,\r\n",
-        "    \u0022tenantId\u0022: \u002272f988bf-86f1-41af-91ab-2d7cd011db47\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022activeKey\u0022: {\r\n",
-        "      \u0022sourceVault\u0022: {\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault\u0022\r\n",
-        "      },\r\n",
-        "      \u0022keyUrl\u0022: \u0022https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "diskrp1985",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985",
+        "type": "Microsoft.Compute/diskEncryptionSets",
+        "location": "southeastasia",
+        "identity": "Sanitized",
+        "properties": {
+          "activeKey": {
+            "sourceVault": {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault"
+            },
+            "keyUrl": "https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c"
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985?api-version=2019-11-01",
@@ -257,7 +239,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "804",
+        "Content-Length": "569",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:38:26 GMT",
         "Expires": "-1",
@@ -276,28 +258,22 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063827Z:b3610645-0dd4-44f5-8170-c7aa36d45e22",
         "x-ms-served-by": "44e3dbc7-ab5f-4316-b3cf-76a67dbd63fb_132456231394388135"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp1985\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/diskEncryptionSets\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022identity\u0022: {\r\n",
-        "    \u0022type\u0022: \u0022SystemAssigned\u0022,\r\n",
-        "    \u0022principalId\u0022: \u0022e74771cc-0acd-4cf5-94f4-7568251dd868\u0022,\r\n",
-        "    \u0022tenantId\u0022: \u002272f988bf-86f1-41af-91ab-2d7cd011db47\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022activeKey\u0022: {\r\n",
-        "      \u0022sourceVault\u0022: {\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault\u0022\r\n",
-        "      },\r\n",
-        "      \u0022keyUrl\u0022: \u0022https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "diskrp1985",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985",
+        "type": "Microsoft.Compute/diskEncryptionSets",
+        "location": "southeastasia",
+        "identity": "Sanitized",
+        "properties": {
+          "activeKey": {
+            "sourceVault": {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault"
+            },
+            "keyUrl": "https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c"
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985?api-version=2019-11-01",
@@ -325,7 +301,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/southeastasia/DiskOperations/92ee9bf5-cd66-423e-9f4f-03e2fda4437b?api-version=2019-11-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "803",
+        "Content-Length": "568",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:38:27 GMT",
         "Expires": "-1",
@@ -344,28 +320,22 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063828Z:d90ec6d3-1299-471b-b967-6eb7876912b0",
         "x-ms-served-by": "44e3dbc7-ab5f-4316-b3cf-76a67dbd63fb_132456231394388135"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp1985\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/diskEncryptionSets\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022identity\u0022: {\r\n",
-        "    \u0022type\u0022: \u0022SystemAssigned\u0022,\r\n",
-        "    \u0022principalId\u0022: \u0022e74771cc-0acd-4cf5-94f4-7568251dd868\u0022,\r\n",
-        "    \u0022tenantId\u0022: \u002272f988bf-86f1-41af-91ab-2d7cd011db47\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022activeKey\u0022: {\r\n",
-        "      \u0022sourceVault\u0022: {\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault\u0022\r\n",
-        "      },\r\n",
-        "      \u0022keyUrl\u0022: \u0022https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "diskrp1985",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985",
+        "type": "Microsoft.Compute/diskEncryptionSets",
+        "location": "southeastasia",
+        "identity": "Sanitized",
+        "properties": {
+          "activeKey": {
+            "sourceVault": {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault"
+            },
+            "keyUrl": "https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c"
+          },
+          "provisioningState": "Updating"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/southeastasia/DiskOperations/92ee9bf5-cd66-423e-9f4f-03e2fda4437b?api-version=2019-11-01",
@@ -383,7 +353,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1075",
+        "Content-Length": "786",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:38:27 GMT",
         "Expires": "-1",
@@ -402,39 +372,33 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063828Z:802cc426-3e6a-4dda-8d7a-ea435a39ff59",
         "x-ms-served-by": "44e3dbc7-ab5f-4316-b3cf-76a67dbd63fb_132456231394388135"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T06:38:27.7991705\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T06:38:27.8772938\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp1985\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/diskEncryptionSets\u0022,\r\n",
-        "  \u0022location\u0022: \u0022southeastasia\u0022,\r\n",
-        "  \u0022tags\u0022: {\r\n",
-        "    \u0022tageKey\u0022: \u0022tagvalue\u0022\r\n",
-        "  },\r\n",
-        "  \u0022identity\u0022: {\r\n",
-        "    \u0022type\u0022: \u0022SystemAssigned\u0022,\r\n",
-        "    \u0022principalId\u0022: \u0022e74771cc-0acd-4cf5-94f4-7568251dd868\u0022,\r\n",
-        "    \u0022tenantId\u0022: \u002272f988bf-86f1-41af-91ab-2d7cd011db47\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022activeKey\u0022: {\r\n",
-        "      \u0022sourceVault\u0022: {\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault\u0022\r\n",
-        "      },\r\n",
-        "      \u0022keyUrl\u0022: \u0022https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022\r\n",
-        "  }\r\n",
-        "}\r\n",
-        "  },\r\n",
-        "  \u0022name\u0022: \u002292ee9bf5-cd66-423e-9f4f-03e2fda4437b\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T06:38:27.7991705\u002B00:00",
+        "endTime": "2020-10-06T06:38:27.8772938\u002B00:00",
+        "status": "Succeeded",
+        "properties": {
+          "output": {
+            "name": "diskrp1985",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985",
+            "type": "Microsoft.Compute/diskEncryptionSets",
+            "location": "southeastasia",
+            "tags": {
+              "tageKey": "tagvalue"
+            },
+            "identity": "Sanitized",
+            "properties": {
+              "activeKey": {
+                "sourceVault": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault"
+                },
+                "keyUrl": "https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c"
+              },
+              "provisioningState": "Succeeded"
+            }
+          }
+        },
+        "name": "92ee9bf5-cd66-423e-9f4f-03e2fda4437b"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/southeastasia/DiskOperations/92ee9bf5-cd66-423e-9f4f-03e2fda4437b?monitor=true\u0026api-version=2019-11-01",
@@ -452,7 +416,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "716",
+        "Content-Length": "599",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:38:27 GMT",
         "Expires": "-1",
@@ -479,11 +443,7 @@
         "tags": {
           "tageKey": "tagvalue"
         },
-        "identity": {
-          "type": "SystemAssigned",
-          "principalId": "e74771cc-0acd-4cf5-94f4-7568251dd868",
-          "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
-        },
+        "identity": "Sanitized",
         "properties": {
           "activeKey": {
             "sourceVault": {
@@ -551,7 +511,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "184",
+        "Content-Length": "162",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:38:28 GMT",
         "Expires": "-1",
@@ -570,14 +530,12 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063829Z:eb0fdcf5-7825-4f3d-b39e-2695188563d9",
         "x-ms-served-by": "44e3dbc7-ab5f-4316-b3cf-76a67dbd63fb_132456231394388135"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T06:38:28.9554263\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T06:38:29.0023172\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022name\u0022: \u0022464c4536-f29a-4622-9186-19327035c864\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T06:38:28.9554263\u002B00:00",
+        "endTime": "2020-10-06T06:38:29.0023172\u002B00:00",
+        "status": "Succeeded",
+        "name": "464c4536-f29a-4622-9186-19327035c864"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar657/providers/Microsoft.Compute/diskEncryptionSets/diskrp1985?api-version=2019-11-01",
@@ -597,7 +555,7 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "112",
+        "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 06:38:28 GMT",
         "Expires": "-1",
@@ -616,14 +574,12 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T063829Z:b611d1ec-744d-490c-9f46-d8dbabaf4ab2",
         "x-ms-served-by": "44e3dbc7-ab5f-4316-b3cf-76a67dbd63fb_132456231394388135"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022error\u0022: {\r\n",
-        "    \u0022code\u0022: \u0022NotFound\u0022,\r\n",
-        "    \u0022message\u0022: \u0022DiskEncryptionSet \u0027diskrp1985\u0027 was not found.\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "error": {
+          "code": "NotFound",
+          "message": "DiskEncryptionSet \u0027diskrp1985\u0027 was not found."
+        }
+      }
     }
   ],
   "Variables": {

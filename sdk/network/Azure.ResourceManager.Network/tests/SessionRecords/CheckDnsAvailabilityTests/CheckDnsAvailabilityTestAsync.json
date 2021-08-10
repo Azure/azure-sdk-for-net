@@ -6787,7 +6787,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "25",
+        "Content-Length": "18",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 30 Sep 2020 02:37:46 GMT",
         "Expires": "-1",
@@ -6805,11 +6805,9 @@
         "x-ms-request-id": "125fc807-1287-470c-933f-2fa740d89557",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20200930T023747Z:c6ba5df4-b42f-443e-b8bc-d720ffd8d2ab"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022available\u0022: true\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "available": true
+      }
     }
   ],
   "Variables": {

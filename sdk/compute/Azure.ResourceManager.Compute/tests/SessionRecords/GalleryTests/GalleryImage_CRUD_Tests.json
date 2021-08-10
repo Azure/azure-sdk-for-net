@@ -70,7 +70,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/capsOperations/3fde4f2d-823d-4914-970e-72c52a653c4b?api-version=2019-12-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "505",
+        "Content-Length": "438",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:12 GMT",
         "Expires": "-1",
@@ -89,21 +89,19 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073613Z:60a3df77-4a50-49dd-96cd-3e9b6d97425c",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022galleryPsTestGallery962\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/galleries\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022description\u0022: \u0022This is a sample gallery description\u0022,\r\n",
-        "    \u0022identifier\u0022: {\r\n",
-        "      \u0022uniqueName\u0022: \u0022db1ab6f0-4769-4b27-930e-01e2ef9c123c-GALLERYPSTESTGALLERY962\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Creating\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "galleryPsTestGallery962",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962",
+        "type": "Microsoft.Compute/galleries",
+        "location": "eastus2",
+        "properties": {
+          "description": "This is a sample gallery description",
+          "identifier": {
+            "uniqueName": "db1ab6f0-4769-4b27-930e-01e2ef9c123c-GALLERYPSTESTGALLERY962"
+          },
+          "provisioningState": "Creating"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/capsOperations/3fde4f2d-823d-4914-970e-72c52a653c4b?api-version=2019-12-01",
@@ -121,7 +119,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "184",
+        "Content-Length": "162",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:12 GMT",
         "Expires": "-1",
@@ -140,14 +138,12 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073613Z:84fa2d5c-5ec1-4aa2-ab10-f69e95e8330f",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T07:36:12.9228527\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T07:36:13.0166038\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022name\u0022: \u00223fde4f2d-823d-4914-970e-72c52a653c4b\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T07:36:12.9228527\u002B00:00",
+        "endTime": "2020-10-06T07:36:13.0166038\u002B00:00",
+        "status": "Succeeded",
+        "name": "3fde4f2d-823d-4914-970e-72c52a653c4b"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962?api-version=2019-12-01",
@@ -165,7 +161,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "506",
+        "Content-Length": "439",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:12 GMT",
         "Expires": "-1",
@@ -184,21 +180,19 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073613Z:261c472d-df26-47a4-9fff-f901eb28decd",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022galleryPsTestGallery962\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/galleries\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022description\u0022: \u0022This is a sample gallery description\u0022,\r\n",
-        "    \u0022identifier\u0022: {\r\n",
-        "      \u0022uniqueName\u0022: \u0022db1ab6f0-4769-4b27-930e-01e2ef9c123c-GALLERYPSTESTGALLERY962\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "galleryPsTestGallery962",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962",
+        "type": "Microsoft.Compute/galleries",
+        "location": "eastus2",
+        "properties": {
+          "description": "This is a sample gallery description",
+          "identifier": {
+            "uniqueName": "db1ab6f0-4769-4b27-930e-01e2ef9c123c-GALLERYPSTESTGALLERY962"
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343?api-version=2019-12-01",
@@ -233,7 +227,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/capsOperations/1066a393-4a8f-4bda-9713-fd15274d94ad?api-version=2019-12-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "645",
+        "Content-Length": "539",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:13 GMT",
         "Expires": "-1",
@@ -252,26 +246,24 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073614Z:82f5c380-409e-4e8a-95b4-32d82557ae9b",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022galleryPsTestGalleryImage8343\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/galleries/images\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022hyperVGeneration\u0022: \u0022V1\u0022,\r\n",
-        "    \u0022osType\u0022: \u0022Windows\u0022,\r\n",
-        "    \u0022osState\u0022: \u0022Generalized\u0022,\r\n",
-        "    \u0022identifier\u0022: {\r\n",
-        "      \u0022publisher\u0022: \u0022testPub\u0022,\r\n",
-        "      \u0022offer\u0022: \u0022testOffer\u0022,\r\n",
-        "      \u0022sku\u0022: \u0022testSku\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Creating\u0022,\r\n",
-        "    \u0022description\u0022: \u0022This is the gallery image description.\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "galleryPsTestGalleryImage8343",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343",
+        "type": "Microsoft.Compute/galleries/images",
+        "location": "eastus2",
+        "properties": {
+          "hyperVGeneration": "V1",
+          "osType": "Windows",
+          "osState": "Generalized",
+          "identifier": {
+            "publisher": "testPub",
+            "offer": "testOffer",
+            "sku": "testSku"
+          },
+          "provisioningState": "Creating",
+          "description": "This is the gallery image description."
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/capsOperations/1066a393-4a8f-4bda-9713-fd15274d94ad?api-version=2019-12-01",
@@ -289,7 +281,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "184",
+        "Content-Length": "162",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:14 GMT",
         "Expires": "-1",
@@ -308,14 +300,12 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073615Z:8f940a38-20bf-44c0-8ab4-cd0c9e12cd47",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T07:36:14.3760453\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T07:36:14.4854225\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022name\u0022: \u00221066a393-4a8f-4bda-9713-fd15274d94ad\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T07:36:14.3760453\u002B00:00",
+        "endTime": "2020-10-06T07:36:14.4854225\u002B00:00",
+        "status": "Succeeded",
+        "name": "1066a393-4a8f-4bda-9713-fd15274d94ad"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343?api-version=2019-12-01",
@@ -333,7 +323,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "646",
+        "Content-Length": "540",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:14 GMT",
         "Expires": "-1",
@@ -352,26 +342,24 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073615Z:71c0cbee-61c8-45c9-be2c-b63bec32e29c",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022galleryPsTestGalleryImage8343\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/galleries/images\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022hyperVGeneration\u0022: \u0022V1\u0022,\r\n",
-        "    \u0022osType\u0022: \u0022Windows\u0022,\r\n",
-        "    \u0022osState\u0022: \u0022Generalized\u0022,\r\n",
-        "    \u0022identifier\u0022: {\r\n",
-        "      \u0022publisher\u0022: \u0022testPub\u0022,\r\n",
-        "      \u0022offer\u0022: \u0022testOffer\u0022,\r\n",
-        "      \u0022sku\u0022: \u0022testSku\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022description\u0022: \u0022This is the gallery image description.\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "galleryPsTestGalleryImage8343",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343",
+        "type": "Microsoft.Compute/galleries/images",
+        "location": "eastus2",
+        "properties": {
+          "hyperVGeneration": "V1",
+          "osType": "Windows",
+          "osState": "Generalized",
+          "identifier": {
+            "publisher": "testPub",
+            "offer": "testOffer",
+            "sku": "testSku"
+          },
+          "provisioningState": "Succeeded",
+          "description": "This is the gallery image description."
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343?api-version=2019-12-01",
@@ -391,7 +379,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "646",
+        "Content-Length": "540",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:14 GMT",
         "Expires": "-1",
@@ -410,26 +398,24 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073615Z:238e1a75-89a7-492d-9953-b6e4d74cbe90",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022galleryPsTestGalleryImage8343\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/galleries/images\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022hyperVGeneration\u0022: \u0022V1\u0022,\r\n",
-        "    \u0022osType\u0022: \u0022Windows\u0022,\r\n",
-        "    \u0022osState\u0022: \u0022Generalized\u0022,\r\n",
-        "    \u0022identifier\u0022: {\r\n",
-        "      \u0022publisher\u0022: \u0022testPub\u0022,\r\n",
-        "      \u0022offer\u0022: \u0022testOffer\u0022,\r\n",
-        "      \u0022sku\u0022: \u0022testSku\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022description\u0022: \u0022This is the gallery image description.\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "galleryPsTestGalleryImage8343",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343",
+        "type": "Microsoft.Compute/galleries/images",
+        "location": "eastus2",
+        "properties": {
+          "hyperVGeneration": "V1",
+          "osType": "Windows",
+          "osState": "Generalized",
+          "identifier": {
+            "publisher": "testPub",
+            "offer": "testOffer",
+            "sku": "testSku"
+          },
+          "provisioningState": "Succeeded",
+          "description": "This is the gallery image description."
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343?api-version=2019-12-01",
@@ -464,7 +450,7 @@
       "ResponseHeaders": {
         "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/capsOperations/8f59cd77-41f4-46df-8b6b-fc137dff25cd?api-version=2019-12-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "627",
+        "Content-Length": "521",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:14 GMT",
         "Expires": "-1",
@@ -483,26 +469,24 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073615Z:5ac5a823-293c-44e8-a395-f52c699a5c8f",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022galleryPsTestGalleryImage8343\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/galleries/images\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022hyperVGeneration\u0022: \u0022V1\u0022,\r\n",
-        "    \u0022osType\u0022: \u0022Windows\u0022,\r\n",
-        "    \u0022osState\u0022: \u0022Generalized\u0022,\r\n",
-        "    \u0022identifier\u0022: {\r\n",
-        "      \u0022publisher\u0022: \u0022testPub\u0022,\r\n",
-        "      \u0022offer\u0022: \u0022testOffer\u0022,\r\n",
-        "      \u0022sku\u0022: \u0022testSku\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022description\u0022: \u0022Updated description.\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "galleryPsTestGalleryImage8343",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343",
+        "type": "Microsoft.Compute/galleries/images",
+        "location": "eastus2",
+        "properties": {
+          "hyperVGeneration": "V1",
+          "osType": "Windows",
+          "osState": "Generalized",
+          "identifier": {
+            "publisher": "testPub",
+            "offer": "testOffer",
+            "sku": "testSku"
+          },
+          "provisioningState": "Updating",
+          "description": "Updated description."
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/capsOperations/8f59cd77-41f4-46df-8b6b-fc137dff25cd?api-version=2019-12-01",
@@ -520,7 +504,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "183",
+        "Content-Length": "161",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:14 GMT",
         "Expires": "-1",
@@ -539,14 +523,12 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073615Z:52d08f17-ba4a-4dd8-ba05-176dd5d06838",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T07:36:15.422978\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T07:36:15.4542296\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022name\u0022: \u00228f59cd77-41f4-46df-8b6b-fc137dff25cd\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T07:36:15.422978\u002B00:00",
+        "endTime": "2020-10-06T07:36:15.4542296\u002B00:00",
+        "status": "Succeeded",
+        "name": "8f59cd77-41f4-46df-8b6b-fc137dff25cd"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343?api-version=2019-12-01",
@@ -564,7 +546,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "628",
+        "Content-Length": "522",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:14 GMT",
         "Expires": "-1",
@@ -583,26 +565,24 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073615Z:ed87cc0a-929a-48ca-bccc-6f0b72394e91",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022galleryPsTestGalleryImage8343\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/galleries/images\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022hyperVGeneration\u0022: \u0022V1\u0022,\r\n",
-        "    \u0022osType\u0022: \u0022Windows\u0022,\r\n",
-        "    \u0022osState\u0022: \u0022Generalized\u0022,\r\n",
-        "    \u0022identifier\u0022: {\r\n",
-        "      \u0022publisher\u0022: \u0022testPub\u0022,\r\n",
-        "      \u0022offer\u0022: \u0022testOffer\u0022,\r\n",
-        "      \u0022sku\u0022: \u0022testSku\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022description\u0022: \u0022Updated description.\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "galleryPsTestGalleryImage8343",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343",
+        "type": "Microsoft.Compute/galleries/images",
+        "location": "eastus2",
+        "properties": {
+          "hyperVGeneration": "V1",
+          "osType": "Windows",
+          "osState": "Generalized",
+          "identifier": {
+            "publisher": "testPub",
+            "offer": "testOffer",
+            "sku": "testSku"
+          },
+          "provisioningState": "Succeeded",
+          "description": "Updated description."
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343?api-version=2019-12-01",
@@ -622,7 +602,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "628",
+        "Content-Length": "522",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:14 GMT",
         "Expires": "-1",
@@ -641,26 +621,24 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073615Z:f972b6c4-2d68-4b50-ac2d-52f8486c42ef",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022galleryPsTestGalleryImage8343\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/galleries/images\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022hyperVGeneration\u0022: \u0022V1\u0022,\r\n",
-        "    \u0022osType\u0022: \u0022Windows\u0022,\r\n",
-        "    \u0022osState\u0022: \u0022Generalized\u0022,\r\n",
-        "    \u0022identifier\u0022: {\r\n",
-        "      \u0022publisher\u0022: \u0022testPub\u0022,\r\n",
-        "      \u0022offer\u0022: \u0022testOffer\u0022,\r\n",
-        "      \u0022sku\u0022: \u0022testSku\u0022\r\n",
-        "    },\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022description\u0022: \u0022Updated description.\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "name": "galleryPsTestGalleryImage8343",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images/galleryPsTestGalleryImage8343",
+        "type": "Microsoft.Compute/galleries/images",
+        "location": "eastus2",
+        "properties": {
+          "hyperVGeneration": "V1",
+          "osType": "Windows",
+          "osState": "Generalized",
+          "identifier": {
+            "publisher": "testPub",
+            "offer": "testOffer",
+            "sku": "testSku"
+          },
+          "provisioningState": "Succeeded",
+          "description": "Updated description."
+        }
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images?api-version=2019-12-01",
@@ -805,7 +783,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "134",
+        "Content-Length": "117",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:16 GMT",
         "Expires": "-1",
@@ -824,13 +802,11 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073617Z:08428ae4-56f0-4433-9754-1c50df04f520",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T07:36:17.5637082\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022,\r\n",
-        "  \u0022name\u0022: \u0022441a2103-372e-4d6b-b22b-afe4d417e894\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T07:36:17.5637082\u002B00:00",
+        "status": "InProgress",
+        "name": "441a2103-372e-4d6b-b22b-afe4d417e894"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/capsOperations/441a2103-372e-4d6b-b22b-afe4d417e894?api-version=2019-12-01",
@@ -848,7 +824,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "184",
+        "Content-Length": "162",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:17 GMT",
         "Expires": "-1",
@@ -867,14 +843,12 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073618Z:91beafba-2a4f-4cde-8e9e-abc7d4b447d3",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T07:36:17.5637082\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T07:36:17.7043434\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022name\u0022: \u0022441a2103-372e-4d6b-b22b-afe4d417e894\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T07:36:17.5637082\u002B00:00",
+        "endTime": "2020-10-06T07:36:17.7043434\u002B00:00",
+        "status": "Succeeded",
+        "name": "441a2103-372e-4d6b-b22b-afe4d417e894"
+      }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/galleryPsTestRg4787/providers/Microsoft.Compute/galleries/galleryPsTestGallery962/images?api-version=2019-12-01",
@@ -1000,7 +974,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "183",
+        "Content-Length": "161",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 06 Oct 2020 07:36:49 GMT",
         "Expires": "-1",
@@ -1019,14 +993,12 @@
         "x-ms-routing-request-id": "WESTUS2:20201006T073649Z:498dd171-5cd5-4443-8658-df4f130d5382",
         "x-ms-served-by": "58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358,58a06848-bcde-4ba3-8940-6057bbbd98f4_132412570759343358"
       },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-10-06T07:36:49.5028308\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-10-06T07:36:49.612213\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022name\u0022: \u002206f32472-1580-437c-8f98-987f62e86804\u0022\r\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "startTime": "2020-10-06T07:36:49.5028308\u002B00:00",
+        "endTime": "2020-10-06T07:36:49.612213\u002B00:00",
+        "status": "Succeeded",
+        "name": "06f32472-1580-437c-8f98-987f62e86804"
+      }
     }
   ],
   "Variables": {
