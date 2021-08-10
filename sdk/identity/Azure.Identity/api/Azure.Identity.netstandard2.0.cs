@@ -42,7 +42,7 @@ namespace Azure.Identity
     }
     public partial class AzureApplicationCredential : Azure.Core.TokenCredential
     {
-        protected AzureApplicationCredential() { }
+        public AzureApplicationCredential() { }
         public AzureApplicationCredential(Azure.Identity.AzureApplicationCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -51,7 +51,6 @@ namespace Azure.Identity
     {
         public AzureApplicationCredentialOptions() { }
         public string ManagedIdentityClientId { get { throw null; } set { } }
-        public string SharedTokenCacheUsername { get { throw null; } set { } }
     }
     public static partial class AzureAuthorityHosts
     {
