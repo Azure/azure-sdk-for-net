@@ -22,12 +22,18 @@ namespace Azure.Identity
         private readonly CancellationToken _cancellationToken;
         private readonly CancellationTokenSource _timeoutCts;
         private CancellationTokenRegistration _ctRegistration;
+        private bool _logPII;
 
-        public ProcessRunner(IProcess process, TimeSpan timeout, CancellationToken cancellationToken)
+        public ProcessRunner(IProcess process, TimeSpan timeout, bool logPII, CancellationToken cancellationToken)
         {
-            AzureIdentityEventSource.Singleton.ProcessRunnerInformational($"Running process `{process.StartInfo.FileName}' with arguments {string.Join(", ", process.StartInfo.Arguments)}");
+            _logPII = logPII;
             _process = process;
             _timeout = timeout;
+
+            if (_logPII)
+            {
+                AzureIdentityEventSource.Singleton.ProcessRunnerInformational($"Running process `{process.StartInfo.FileName}' with arguments {string.Join(", ", process.StartInfo.Arguments)}");
+            }
 
             _outputData = new List<string>();
             _errorData = new List<string>();
@@ -153,7 +159,10 @@ namespace Azure.Identity
 
         private void TrySetException(Exception exception)
         {
-            AzureIdentityEventSource.Singleton.ProcessRunnerError(exception.ToString());
+            if (_logPII)
+            {
+                AzureIdentityEventSource.Singleton.ProcessRunnerError(exception.ToString());
+            }
             _tcs.TrySetException(exception);
         }
 
