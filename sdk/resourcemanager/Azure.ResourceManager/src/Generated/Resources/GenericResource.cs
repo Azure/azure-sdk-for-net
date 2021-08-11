@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                var originalTags = TagResourceOperations.Get(cancellationToken).Value;
+                var originalTags = TagResource.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue[key] = value;
                 TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
                 var originalResponse = _restClient.GetById(Id, apiVersion, cancellationToken);
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var originalTags = (await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
+                var originalTags = (await TagResource.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
                 originalTags.Data.Properties.TagsValue[key] = value;
                 await TagContainer.CreateOrUpdateAsync(originalTags.Data, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
@@ -292,8 +292,8 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                TagResourceOperations.Delete(cancellationToken);
-                var newTags = TagResourceOperations.Get(cancellationToken);
+                TagResource.Delete(cancellationToken);
+                var newTags = TagResource.Get(cancellationToken);
                 newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagContainer.CreateOrUpdate(new TagResourceData(newTags.Value.Data.Properties), cancellationToken);
                 var originalResponse = _restClient.GetById(Id, apiVersion, cancellationToken);
@@ -319,8 +319,8 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                await TagResourceOperations.DeleteAsync(cancellationToken).ConfigureAwait(false);
-                var newTags = await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(cancellationToken).ConfigureAwait(false);
+                var newTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagContainer.CreateOrUpdateAsync(new TagResourceData(newTags.Value.Data.Properties), cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                var originalTags = TagResourceOperations.Get(cancellationToken).Value;
+                var originalTags = TagResource.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue.Remove(key);
                 TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
                 var originalResponse = _restClient.GetById(Id, apiVersion, cancellationToken);
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var originalTags = (await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
+                var originalTags = (await TagResource.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
                 originalTags.Data.Properties.TagsValue.Remove(key);
                 await TagContainer.CreateOrUpdateAsync(originalTags.Data, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
