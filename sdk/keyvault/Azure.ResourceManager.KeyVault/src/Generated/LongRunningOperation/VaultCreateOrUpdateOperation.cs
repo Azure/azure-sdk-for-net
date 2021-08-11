@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> Update a key vault in the specified subscription. </summary>
-    public partial class VaultsUpdateOperation : Operation<Vault>
+    /// <summary> Create or update a key vault in the specified subscription. </summary>
+    public partial class VaultCreateOrUpdateOperation : Operation<Vault>, IOperationSource<Vault>
     {
-        private readonly OperationOrResponseInternals<Vault> _operation;
+        private readonly OperationInternals<Vault> _operation;
 
-        /// <summary> Initializes a new instance of VaultsUpdateOperation for mocking. </summary>
-        protected VaultsUpdateOperation()
+        private readonly ResourceOperations _operationBase;
+
+        /// <summary> Initializes a new instance of VaultCreateOrUpdateOperation for mocking. </summary>
+        protected VaultCreateOrUpdateOperation()
         {
         }
 
-        internal VaultsUpdateOperation(ResourceOperations operationsBase, Response<VaultData> response)
+        internal VaultCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<Vault>(Response.FromValue(new Vault(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationInternals<Vault>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VaultCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
 
         /// <inheritdoc />
@@ -56,5 +61,17 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <inheritdoc />
         public override ValueTask<Response<Vault>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+
+        Vault IOperationSource<Vault>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            return new Vault(_operationBase, VaultData.DeserializeVaultData(document.RootElement));
+        }
+
+        async ValueTask<Vault> IOperationSource<Vault>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return new Vault(_operationBase, VaultData.DeserializeVaultData(document.RootElement));
+        }
     }
 }

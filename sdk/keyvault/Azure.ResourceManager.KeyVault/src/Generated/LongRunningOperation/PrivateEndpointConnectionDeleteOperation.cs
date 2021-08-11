@@ -17,18 +17,18 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Deletes the specified private endpoint connection associated with the key vault. </summary>
-    public partial class PrivateEndpointConnectionsDeleteOperation : Operation<PrivateEndpointConnectionData>, IOperationSource<PrivateEndpointConnectionData>
+    public partial class PrivateEndpointConnectionDeleteOperation : Operation<PrivateEndpointConnectionData>, IOperationSource<PrivateEndpointConnectionData>
     {
         private readonly OperationInternals<PrivateEndpointConnectionData> _operation;
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionsDeleteOperation for mocking. </summary>
-        protected PrivateEndpointConnectionsDeleteOperation()
+        /// <summary> Initializes a new instance of PrivateEndpointConnectionDeleteOperation for mocking. </summary>
+        protected PrivateEndpointConnectionDeleteOperation()
         {
         }
 
-        internal PrivateEndpointConnectionsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PrivateEndpointConnectionDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<PrivateEndpointConnectionData>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateEndpointConnectionsDeleteOperation");
+            _operation = new OperationInternals<PrivateEndpointConnectionData>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateEndpointConnectionDeleteOperation");
         }
 
         /// <inheritdoc />

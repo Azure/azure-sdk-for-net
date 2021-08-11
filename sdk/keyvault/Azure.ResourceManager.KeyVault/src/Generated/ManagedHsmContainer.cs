@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="parameters"> Parameters to create or update the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedHsmsCreateOrUpdateOperation StartCreateOrUpdate(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public virtual ManagedHsmCreateOrUpdateOperation StartCreateOrUpdate(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, name, parameters, cancellationToken);
-                return new ManagedHsmsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, name, parameters).Request, response);
+                return new ManagedHsmCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="parameters"> Parameters to create or update the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedHsmsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedHsmCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
-                return new ManagedHsmsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, name, parameters).Request, response);
+                return new ManagedHsmCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -400,9 +400,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -423,9 +423,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

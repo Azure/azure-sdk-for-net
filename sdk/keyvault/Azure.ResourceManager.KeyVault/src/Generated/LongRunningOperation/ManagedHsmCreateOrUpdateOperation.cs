@@ -18,20 +18,20 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Create or update a managed HSM Pool in the specified subscription. </summary>
-    public partial class ManagedHsmsCreateOrUpdateOperation : Operation<ManagedHsm>, IOperationSource<ManagedHsm>
+    public partial class ManagedHsmCreateOrUpdateOperation : Operation<ManagedHsm>, IOperationSource<ManagedHsm>
     {
         private readonly OperationInternals<ManagedHsm> _operation;
 
         private readonly ResourceOperations _operationBase;
 
-        /// <summary> Initializes a new instance of ManagedHsmsCreateOrUpdateOperation for mocking. </summary>
-        protected ManagedHsmsCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of ManagedHsmCreateOrUpdateOperation for mocking. </summary>
+        protected ManagedHsmCreateOrUpdateOperation()
         {
         }
 
-        internal ManagedHsmsCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagedHsmCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<ManagedHsm>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedHsmsCreateOrUpdateOperation");
+            _operation = new OperationInternals<ManagedHsm>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedHsmCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 

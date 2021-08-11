@@ -16,16 +16,16 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Updates the specified private endpoint connection associated with the managed hsm pool. </summary>
-    public partial class MhsmPrivateEndpointConnectionsPutOperation : Operation<MhsmPrivateEndpointConnection>
+    public partial class MhsmPrivateEndpointConnectionPutOperation : Operation<MhsmPrivateEndpointConnection>
     {
         private readonly OperationOrResponseInternals<MhsmPrivateEndpointConnection> _operation;
 
-        /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionsPutOperation for mocking. </summary>
-        protected MhsmPrivateEndpointConnectionsPutOperation()
+        /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionPutOperation for mocking. </summary>
+        protected MhsmPrivateEndpointConnectionPutOperation()
         {
         }
 
-        internal MhsmPrivateEndpointConnectionsPutOperation(ResourceOperations operationsBase, Response<MhsmPrivateEndpointConnectionData> response)
+        internal MhsmPrivateEndpointConnectionPutOperation(ResourceOperations operationsBase, Response<MhsmPrivateEndpointConnectionData> response)
         {
             _operation = new OperationOrResponseInternals<MhsmPrivateEndpointConnection>(Response.FromValue(new MhsmPrivateEndpointConnection(operationsBase, response.Value), response.GetRawResponse()));
         }

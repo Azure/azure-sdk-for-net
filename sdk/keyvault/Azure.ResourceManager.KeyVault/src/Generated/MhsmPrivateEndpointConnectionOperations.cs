@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified private endpoint connection associated with the managed hsm pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<MhsmPrivateEndpointConnectionsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<MhsmPrivateEndpointConnectionDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new MhsmPrivateEndpointConnectionsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new MhsmPrivateEndpointConnectionDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified private endpoint connection associated with the managed hsm pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual MhsmPrivateEndpointConnectionsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual MhsmPrivateEndpointConnectionDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new MhsmPrivateEndpointConnectionsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new MhsmPrivateEndpointConnectionDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {

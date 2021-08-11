@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Deletes the specified managed HSM Pool. </summary>
-    public partial class ManagedHsmsDeleteOperation : Operation
+    public partial class ManagedHsmDeleteOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of ManagedHsmsDeleteOperation for mocking. </summary>
-        protected ManagedHsmsDeleteOperation()
+        /// <summary> Initializes a new instance of ManagedHsmDeleteOperation for mocking. </summary>
+        protected ManagedHsmDeleteOperation()
         {
         }
 
-        internal ManagedHsmsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagedHsmDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedHsmsDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedHsmDeleteOperation");
         }
 
         /// <inheritdoc />

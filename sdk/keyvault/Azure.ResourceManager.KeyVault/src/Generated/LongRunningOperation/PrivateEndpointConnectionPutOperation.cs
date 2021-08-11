@@ -16,16 +16,16 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Updates the specified private endpoint connection associated with the key vault. </summary>
-    public partial class PrivateEndpointConnectionsPutOperation : Operation<PrivateEndpointConnection>
+    public partial class PrivateEndpointConnectionPutOperation : Operation<PrivateEndpointConnection>
     {
         private readonly OperationOrResponseInternals<PrivateEndpointConnection> _operation;
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionsPutOperation for mocking. </summary>
-        protected PrivateEndpointConnectionsPutOperation()
+        /// <summary> Initializes a new instance of PrivateEndpointConnectionPutOperation for mocking. </summary>
+        protected PrivateEndpointConnectionPutOperation()
         {
         }
 
-        internal PrivateEndpointConnectionsPutOperation(ResourceOperations operationsBase, Response<PrivateEndpointConnectionData> response)
+        internal PrivateEndpointConnectionPutOperation(ResourceOperations operationsBase, Response<PrivateEndpointConnectionData> response)
         {
             _operation = new OperationOrResponseInternals<PrivateEndpointConnection>(Response.FromValue(new PrivateEndpointConnection(operationsBase, response.Value), response.GetRawResponse()));
         }

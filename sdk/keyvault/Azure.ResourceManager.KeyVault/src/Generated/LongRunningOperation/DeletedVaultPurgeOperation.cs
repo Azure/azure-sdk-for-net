@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
-    public partial class DeletedVaultsPurgeOperation : Operation
+    public partial class DeletedVaultPurgeOperation : Operation
     {
         private readonly OperationInternals _operation;
 
-        /// <summary> Initializes a new instance of DeletedVaultsPurgeOperation for mocking. </summary>
-        protected DeletedVaultsPurgeOperation()
+        /// <summary> Initializes a new instance of DeletedVaultPurgeOperation for mocking. </summary>
+        protected DeletedVaultPurgeOperation()
         {
         }
 
-        internal DeletedVaultsPurgeOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DeletedVaultPurgeOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeletedVaultsPurgeOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeletedVaultPurgeOperation");
         }
 
         /// <inheritdoc />

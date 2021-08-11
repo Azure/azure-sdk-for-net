@@ -17,18 +17,18 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Deletes the specified private endpoint connection associated with the managed hsm pool. </summary>
-    public partial class MhsmPrivateEndpointConnectionsDeleteOperation : Operation<MhsmPrivateEndpointConnectionData>, IOperationSource<MhsmPrivateEndpointConnectionData>
+    public partial class MhsmPrivateEndpointConnectionDeleteOperation : Operation<MhsmPrivateEndpointConnectionData>, IOperationSource<MhsmPrivateEndpointConnectionData>
     {
         private readonly OperationInternals<MhsmPrivateEndpointConnectionData> _operation;
 
-        /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionsDeleteOperation for mocking. </summary>
-        protected MhsmPrivateEndpointConnectionsDeleteOperation()
+        /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionDeleteOperation for mocking. </summary>
+        protected MhsmPrivateEndpointConnectionDeleteOperation()
         {
         }
 
-        internal MhsmPrivateEndpointConnectionsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal MhsmPrivateEndpointConnectionDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<MhsmPrivateEndpointConnectionData>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "MhsmPrivateEndpointConnectionsDeleteOperation");
+            _operation = new OperationInternals<MhsmPrivateEndpointConnectionData>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "MhsmPrivateEndpointConnectionDeleteOperation");
         }
 
         /// <inheritdoc />
