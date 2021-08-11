@@ -2,12 +2,6 @@
 
 ## 4.3.0-beta.1 (2021-08-10)
 
-### Features Added
-
-### Breaking Changes
-
-### Key Bugs Fixed
-
 ### Fixed
 
 - The default service version is now "7.3-preview".
