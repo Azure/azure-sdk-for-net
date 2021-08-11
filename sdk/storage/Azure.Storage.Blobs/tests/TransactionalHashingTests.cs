@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test, Combinatorial]
-        public async Task DownloadRangeSuccessfulHashVerification(
+        public async Task DownloadContentSuccessfulHashVerification(
             [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
             [ValueSource("DefaultDataHttpRanges")] HttpRange range)
         {
@@ -63,12 +63,36 @@ namespace Azure.Storage.Blobs.Tests
             }));
         }
 
+        [Test, Combinatorial]
+        public async Task DownloadStreamingSuccessfulHashVerification(
+            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
+            [ValueSource("DefaultDataHttpRanges")] HttpRange range)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(DefaultDataSize);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+
+            // Act / Assert
+            Assert.DoesNotThrowAsync(async () => await (await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
+            {
+                TransactionalHashingOptions = hashingOptions,
+                Range = range
+            })).Value.Content.CopyToAsync(Stream.Null));
+        }
+
         // hashing, so we buffered the stream to hash then rewind before returning to user
         [TestCase(TransactionalHashAlgorithm.MD5, true)]
         [TestCase(TransactionalHashAlgorithm.StorageCrc64, true)]
         // no hashing, so we save users a buffer
         [TestCase(TransactionalHashAlgorithm.None, false)]
-        public async Task ExpectedDownloadRangeStreamTypeReturned(TransactionalHashAlgorithm algorithm, bool isBuffered)
+        public async Task ExpectedDownloadStreamingStreamTypeReturned(TransactionalHashAlgorithm algorithm, bool isBuffered)
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
