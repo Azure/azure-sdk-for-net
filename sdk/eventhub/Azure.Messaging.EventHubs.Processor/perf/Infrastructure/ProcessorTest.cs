@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
                 _checkpointStore,
                 EventHubConsumerClient.DefaultConsumerGroupName,
                 EventHubsTestEnvironment.Instance.EventHubsConnectionString,
-                EventHubsTestEnvironment.Instance.EventHubsNamespace,
+                EventHubsTestEnvironment.Instance.EventHubNameOverride,
                 new EventProcessorClientOptions()
                 {
                     LoadBalancingStrategy = options.LoadBalancingStrategy,
