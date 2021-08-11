@@ -92,6 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             url = string.IsNullOrWhiteSpace(url) ? null : url;
         }
+
         ///<summary>
         /// Gets http request url from activity tag objects.
         ///</summary>
@@ -113,6 +114,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var httpScheme = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpScheme)?.ToString();
             if (!string.IsNullOrWhiteSpace(httpScheme))
             {
+                string defaultPort;
+                if (httpScheme == "http")
+                {
+                    defaultPort = "80";
+                }
+                else
+                {
+                    defaultPort = "443";
+                }
                 var httpTarget = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpTarget)?.ToString();
                 // http.target is required in other three possible combinations
                 // If not available then do not proceed.
@@ -124,8 +134,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var httpHost = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpHost)?.ToString();
                 if (!string.IsNullOrWhiteSpace(httpHost))
                 {
-                    url = $"{httpScheme}://{httpHost}{httpTarget}";
-                    return url;
+                    string portSection = $":{defaultPort}";
+                    if (httpHost.EndsWith(portSection, StringComparison.OrdinalIgnoreCase))
+                    {
+                        var truncatedHost = httpHost.Substring(0, httpHost.IndexOf(portSection, StringComparison.OrdinalIgnoreCase));
+                        url = $"{httpScheme}://{truncatedHost}{httpTarget}";
+                        return url;
+                    }
+                    else
+                    {
+                        url = $"{httpScheme}://{httpHost}{httpTarget}";
+                        return url;
+                    }
                 }
 
                 var httpServerName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpServerName)?.ToString();
@@ -143,13 +163,97 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     var netHostPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetHostPort)?.ToString();
                     if (!string.IsNullOrWhiteSpace(netHostPort))
                     {
-                        if (netHostPort == "80" || netHostPort == "443")
+                        if (netHostPort == defaultPort)
                         {
                             url = $"{httpScheme}://{host}{httpTarget}";
                             return url;
                         }
 
                         url = $"{httpScheme}://{host}:{netHostPort}{httpTarget}";
+                        return url;
+                    }
+                }
+            }
+            return url;
+        }
+
+        ///<summary>
+        /// Gets http dependency url from activity tag objects.
+        ///</summary>
+        internal static string GetDependencyUrl(this AzMonList tagObjects)
+        {
+            // From spec: one of the following combinations is required in case of server spans:
+            // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/http.md#http-client
+            // http.url
+            // http.scheme, http.host, http.target
+            // http.scheme, net.peer.name, net.peer.port, http.target
+            // http.scheme, net.peer.ip, net.peer.port, http.target
+            string url = null;
+            var httpUrl = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpUrl)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpUrl))
+            {
+                url = httpUrl;
+                return url;
+            }
+            var httpScheme = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpScheme)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpScheme))
+            {
+                string defaultPort;
+                if (httpScheme == "http")
+                {
+                    defaultPort = "80";
+                }
+                else
+                {
+                    defaultPort = "443";
+                }
+                var httpTarget = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpTarget)?.ToString();
+                // http.target is required in other three possible combinations
+                // If not available then do not proceed.
+                if (string.IsNullOrWhiteSpace(httpTarget))
+                {
+                    return null;
+                }
+
+                var httpHost = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpHost)?.ToString();
+                if (!string.IsNullOrWhiteSpace(httpHost))
+                {
+                    string portSection = $":{defaultPort}";
+                    if (httpHost.EndsWith(portSection, StringComparison.OrdinalIgnoreCase))
+                    {
+                        var truncatedHost = httpHost.Substring(0, httpHost.IndexOf(portSection, StringComparison.OrdinalIgnoreCase));
+                        url = $"{httpScheme}://{truncatedHost}{httpTarget}";
+                        return url;
+                    }
+                    else
+                    {
+                        url = $"{httpScheme}://{httpHost}{httpTarget}";
+                        return url;
+                    }
+                }
+
+                var netPeerName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerName)?.ToString();
+                string host;
+                if (!string.IsNullOrWhiteSpace(netPeerName))
+                {
+                    host = netPeerName;
+                }
+                else
+                {
+                    host = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerIp)?.ToString();
+                }
+                if (!string.IsNullOrWhiteSpace(host))
+                {
+                    var netPeerPort = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerPort)?.ToString();
+                    if (!string.IsNullOrWhiteSpace(netPeerPort))
+                    {
+                        if (netPeerPort == defaultPort)
+                        {
+                            url = $"{httpScheme}://{host}{httpTarget}";
+                            return url;
+                        }
+
+                        url = $"{httpScheme}://{host}:{netPeerPort}{httpTarget}";
                         return url;
                     }
                 }
