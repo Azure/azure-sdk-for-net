@@ -10,18 +10,6 @@
 [CmdletBinding()]
 param (
     [Parameter()]
-    [string] $ResourceGroupName,
-
-    [Parameter()]
-    [string] $TenantId,
-
-    [Parameter()]
-    [string] $ProvisionerApplicationId,
-
-    [Parameter()]
-    [string] $ProvisionerApplicationSecret,
-
-    [Parameter()]
     [string] $SubscriptionId,
 
     # Captures any arguments from eng/common/Remove-TestResources.ps1 not declared here (no parameter errors).
@@ -55,8 +43,3 @@ function PurgePersonalizerInstance ($Resource) {
 
 Log "Permanently deleting all Personalizer instances"
 GetSoftDeletedInstances -SubscriptionId $SubscriptionId | ForEach-Object { PurgePersonalizerInstance($_) }
-
-if ($ProvisionerApplicationId) {
-  Log "Logging out of Azure CLI"
-  az logout --username "$ProvisionerApplicationId"
-}
