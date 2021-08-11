@@ -147,7 +147,6 @@ namespace Azure.Identity
                     sb.AppendLine()
                         .Append(" ---> ");
                 }
-
                 // Do not include StackTrace, but do include HResult (often useful for CryptographicExceptions or IOExceptions).
                 sb.Append(ex.GetType().FullName)
                     .Append(" (0x")
@@ -156,8 +155,8 @@ namespace Azure.Identity
                     .Append(ex.Message);
                 ex = ex.InnerException;
                 nest = true;
-            } while (ex != null);
-
+            }
+            while (ex != null);
             return sb.ToString();
         }
 
@@ -231,7 +230,7 @@ namespace Azure.Identity
         {
             WriteEvent(DefaultAzureCredentialCredentialSelectedEvent, credentialType);
         }
-        
+
         [NonEvent]
         public void ProcessRunnerError(string message)
         {
