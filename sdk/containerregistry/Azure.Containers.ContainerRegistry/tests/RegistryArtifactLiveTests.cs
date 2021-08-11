@@ -565,7 +565,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateClient();
             var artifact = client.GetArtifact(repository, digest);
 
-            var uploadClient = new ContainerRegistryArtifactDataClient(new System.Uri("example.azurecr.io"), new DefaultAzureCredential());
+            var uploadClient = new ContainerRegistryArtifactDataClient(new System.Uri("https://localtestacr1.azurecr.io"), new DefaultAzureCredential());
 
             // Act
             var manifestFilePath = Path.Combine(path, "manifest.json");
@@ -575,7 +575,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 {
                     if (file == manifestFilePath)
                     {
-                        await uploadClient.UploadManifestAsync(fs);
+                        await uploadClient.UploadManifestAsync(fs, new UploadManifestOptions() { Tag = "myTag" });
                     }
                     else
                     {

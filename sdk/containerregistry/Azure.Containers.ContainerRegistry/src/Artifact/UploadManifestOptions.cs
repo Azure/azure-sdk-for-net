@@ -7,5 +7,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// </summary>
     public class UploadManifestOptions
     {
+        /// <summary>
+        /// A tag to assign to the artifact represented by this manifest.
+        /// </summary>
+        public string Tag { get; set; }
     }
 }
