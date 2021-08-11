@@ -213,14 +213,36 @@ $verifyDeleteScript = {
     }
 }
 
+# Get any Key Vaults that will be deleted so they can be purged later if soft delete is enabled.
+$vaults = Get-AzKeyVault -ResourceGroupName "$ResourceGroupName" | ForEach-Object {
+    # Enumerating vaults from a resource group does not return all properties we required.
+    Get-AzKeyVault -VaultName $_.VaultName | Where-Object { $_.EnableSoftDelete }
+}
+
+# You may add additional resource checks that require the resource group to be deleted first before purging here.
+$purgeRequired = !!$vaults
+
 Log "Deleting resource group '$ResourceGroupName'"
-if ($Force) {
+if ($Force -and !$purgeRequired) {
     Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force -AsJob
+    Write-Verbose "Running background job to delete resource group '$ResourceGroupName'"
+
     Retry $verifyDeleteScript 3
-    Write-Verbose "Requested async deletion of resource group '$ResourceGroupName'"
 } else {
     # Don't swallow interactive confirmation when Force is false
     Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force
+}
+
+# Purge any soft deleted vaults since there is now a limit per-subscription.
+foreach ($vault in $vaults) {
+    Log "Attempting to purge Key Vault '$($vault.VaultName)'"
+
+    if ($vault.EnablePurgeProtection) {
+        # We will try anyway but will ignore errors
+        Write-Warning "Key Vault '$($vault.VaultName)' has purge protection enabled and may not be purged for $($vault.SoftDeleteRetentionInDays) days"
+    }
+
+    Remove-AzKeyVault -VaultName $vault.VaultName -Location $vault.Location -InRemovedState -Force -ErrorAction Ignore
 }
 
 $exitActions.Invoke()
