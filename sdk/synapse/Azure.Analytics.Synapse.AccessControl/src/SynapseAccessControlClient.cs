@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,7 +12,9 @@ namespace Azure.Analytics.Synapse.AccessControl
 {
     public partial class SynapseAccessControlClient
     {
-        public virtual Response<SynapseRoleAssignment> CreateRoleAssignment(SynapseRoleScope roleScope, string roleDefinitionId, string principalId, Guid? roleAssignmentName = null, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<SynapseRoleAssignment> CreateRoleAssignment(SynapseRoleScope roleScope, string roleDefinitionId, string principalId, Guid? roleAssignmentName = null)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
             Argument.AssertNotNullOrEmpty(principalId, nameof(principalId));
@@ -32,11 +32,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                             RoleId = roleDefinitionId,
                             PrincipalId = principalId,
                             Scope = roleScope.ToString()
-                        }),
-                    new RequestOptions()
-                    {
-                        CancellationToken = cancellationToken
-                    });
+                        }));
 
                 JsonDocument roleAssignment = JsonDocument.Parse(createRoleAssignmentResponse.Content.ToMemory());
 
@@ -55,7 +51,9 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        public virtual async Task<Response<SynapseRoleAssignment>> CreateRoleAssignmentAsync(SynapseRoleScope roleScope, string roleDefinitionId, string principalId, Guid? roleAssignmentName = null, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<SynapseRoleAssignment>> CreateRoleAssignmentAsync(SynapseRoleScope roleScope, string roleDefinitionId, string principalId, Guid? roleAssignmentName = null)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
             Argument.AssertNotNullOrEmpty(principalId, nameof(principalId));
@@ -73,13 +71,9 @@ namespace Azure.Analytics.Synapse.AccessControl
                             RoleId = roleDefinitionId,
                             PrincipalId = principalId,
                             Scope = roleScope.ToString()
-                        }),
-                    new RequestOptions()
-                    {
-                        CancellationToken = cancellationToken
-                    }).ConfigureAwait(false);
+                        })).ConfigureAwait(false);
 
-                JsonDocument roleAssignment = await JsonDocument.ParseAsync(createRoleAssignmentResponse.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                JsonDocument roleAssignment = await JsonDocument.ParseAsync(createRoleAssignmentResponse.ContentStream, default).ConfigureAwait(false);
 
                 return Response.FromValue(new SynapseRoleAssignment(
                     roleAssignment.RootElement.GetProperty("id").ToString(),
@@ -96,7 +90,9 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        public virtual Response DeleteRoleAssignment(SynapseRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response DeleteRoleAssignment(SynapseRoleScope roleScope, string roleAssignmentName)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SynapseAccessControlClient)}.{nameof(DeleteRoleAssignment)}");
@@ -105,11 +101,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 return DeleteRoleAssignmentById(
                     roleAssignmentName,
-                    roleScope.ToString(),
-                    new RequestOptions()
-                    {
-                        CancellationToken = cancellationToken
-                    });
+                    roleScope.ToString());
             }
             catch (Exception ex)
             {
@@ -118,7 +110,9 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        public virtual async Task<Response> DeleteRoleAssignmentAsync(SynapseRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response> DeleteRoleAssignmentAsync(SynapseRoleScope roleScope, string roleAssignmentName)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SynapseAccessControlClient)}.{nameof(DeleteRoleAssignment)}");
@@ -127,11 +121,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 return await DeleteRoleAssignmentByIdAsync(
                     roleAssignmentName,
-                    roleScope.ToString(),
-                    new RequestOptions()
-                    {
-                        CancellationToken = cancellationToken
-                    }).ConfigureAwait(false);
+                    roleScope.ToString()).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -142,19 +132,16 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         // TODO: do not use roleScope ?
         // GetRoleAssignmentById(string roleAssignmentId, RequestOptions options = null)
-        public virtual Response<SynapseRoleAssignment> GetRoleAssignment(SynapseRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<SynapseRoleAssignment> GetRoleAssignment(SynapseRoleScope roleScope, string roleAssignmentName)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SynapseAccessControlClient)}.{nameof(GetRoleAssignment)}");
             scope.Start();
             try
             {
-                Response roleAssignmentResponse = GetRoleAssignmentById(
-                    roleAssignmentName,
-                    new RequestOptions()
-                    {
-                        CancellationToken = cancellationToken
-                    });
+                Response roleAssignmentResponse = GetRoleAssignmentById(roleAssignmentName);
 
                 JsonDocument roleAssignment = JsonDocument.Parse(roleAssignmentResponse.Content.ToMemory());
 
@@ -173,21 +160,18 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        public virtual async Task<Response<SynapseRoleAssignment>> GetRoleAssignmentAsync(SynapseRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<SynapseRoleAssignment>> GetRoleAssignmentAsync(SynapseRoleScope roleScope, string roleAssignmentName)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SynapseAccessControlClient)}.{nameof(GetRoleAssignment)}");
             scope.Start();
             try
             {
-                Response roleAssignmentResponse = await GetRoleAssignmentByIdAsync(
-                    roleAssignmentName,
-                    new RequestOptions()
-                    {
-                        CancellationToken = cancellationToken
-                    }).ConfigureAwait(false);
+                Response roleAssignmentResponse = await GetRoleAssignmentByIdAsync(roleAssignmentName).ConfigureAwait(false);
 
-                JsonDocument roleAssignment = await JsonDocument.ParseAsync(roleAssignmentResponse.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                JsonDocument roleAssignment = await JsonDocument.ParseAsync(roleAssignmentResponse.ContentStream, default).ConfigureAwait(false);
 
                 return Response.FromValue(new SynapseRoleAssignment(
                     roleAssignment.RootElement.GetProperty("id").ToString(),
@@ -207,7 +191,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         // TODO: change return type from list to pageable
         // TODO: get by roleId or get by principalId ?
         // ListRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestOptions options = null)
-        public virtual Pageable<SynapseRoleAssignment> GetRoleAssignments(SynapseRoleScope? roleScope = null, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Pageable<SynapseRoleAssignment> GetRoleAssignments(SynapseRoleScope? roleScope = null)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             return PageableHelpers.CreateEnumerable(_ =>
             {
@@ -215,12 +201,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                 scope.Start();
                 try
                 {
-                    var response = ListRoleAssignments(
-                        scope: roleScope.ToString(),
-                        options: new RequestOptions()
-                        {
-                            CancellationToken = cancellationToken
-                        });
+                    var response = ListRoleAssignments(scope: roleScope.ToString());
 
                     JsonDocument roleAssignmentListJson = JsonDocument.Parse(response.Content.ToMemory());
                     List<SynapseRoleAssignment> roleAssignmentList = new List<SynapseRoleAssignment>();
@@ -244,7 +225,9 @@ namespace Azure.Analytics.Synapse.AccessControl
             }, (null));
         }
 
-        public virtual AsyncPageable<SynapseRoleAssignment> GetRoleAssignmentsAsync(SynapseRoleScope? roleScope = null, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual AsyncPageable<SynapseRoleAssignment> GetRoleAssignmentsAsync(SynapseRoleScope? roleScope = null)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
@@ -252,14 +235,9 @@ namespace Azure.Analytics.Synapse.AccessControl
                 scope.Start();
                 try
                 {
-                    var response = await ListRoleAssignmentsAsync(
-                        scope: roleScope.ToString(),
-                        options: new RequestOptions()
-                        {
-                            CancellationToken = cancellationToken
-                        }).ConfigureAwait(false);
+                    var response = await ListRoleAssignmentsAsync(scope: roleScope.ToString()).ConfigureAwait(false);
 
-                    JsonDocument roleAssignmentListJson = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                    JsonDocument roleAssignmentListJson = await JsonDocument.ParseAsync(response.ContentStream, default).ConfigureAwait(false);
                     List<SynapseRoleAssignment> roleAssignmentList = new List<SynapseRoleAssignment>();
                     foreach (var item in roleAssignmentListJson.RootElement.GetProperty("value").EnumerateArray())
                     {
@@ -283,18 +261,15 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         // TODO: do not use roleScope ?
         // GetRoleDefinitionById(string roleDefinitionId, RequestOptions options = null)
-        public virtual Response<SynapseRoleDefinition> GetRoleDefinition(SynapseRoleScope roleScope, Guid roleDefinitionName, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<SynapseRoleDefinition> GetRoleDefinition(SynapseRoleScope roleScope, Guid roleDefinitionName)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SynapseAccessControlClient)}.{nameof(GetRoleDefinition)}");
             scope.Start();
             try
             {
-                var response = GetRoleDefinitionById(
-                    roleDefinitionName.ToString(),
-                    options: new RequestOptions()
-                    {
-                        CancellationToken = cancellationToken
-                    });
+                var response = GetRoleDefinitionById(roleDefinitionName.ToString());
 
                 JsonDocument roleDefinitionJson = JsonDocument.Parse(response.Content.ToMemory());
                 List<SynapsePermission> permissions = new List<SynapsePermission>();
@@ -343,20 +318,17 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        public virtual async Task<Response<SynapseRoleDefinition>> GetRoleDefinitionAsync(SynapseRoleScope roleScope, Guid roleDefinitionName, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<SynapseRoleDefinition>> GetRoleDefinitionAsync(SynapseRoleScope roleScope, Guid roleDefinitionName)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SynapseAccessControlClient)}.{nameof(GetRoleDefinition)}");
             scope.Start();
             try
             {
-                var response = await GetRoleDefinitionByIdAsync(
-                    roleDefinitionName.ToString(),
-                    options: new RequestOptions()
-                    {
-                        CancellationToken = cancellationToken
-                    }).ConfigureAwait(false);
+                var response = await GetRoleDefinitionByIdAsync(roleDefinitionName.ToString()).ConfigureAwait(false);
 
-                JsonDocument roleDefinitionJson = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                JsonDocument roleDefinitionJson = await JsonDocument.ParseAsync(response.ContentStream, default).ConfigureAwait(false);
                 List<SynapsePermission> permissions = new List<SynapsePermission>();
                 foreach (var permissionsItem in roleDefinitionJson.RootElement.GetProperty("permissions").EnumerateArray())
                 {
@@ -404,7 +376,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         // TODO: change return type from list to pageable
-        public virtual Pageable<SynapseRoleDefinition> GetRoleDefinitions(SynapseRoleScope roleScope, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Pageable<SynapseRoleDefinition> GetRoleDefinitions(SynapseRoleScope roleScope)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             return PageableHelpers.CreateEnumerable(_ =>
             {
@@ -412,12 +386,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                 scope.Start();
                 try
                 {
-                    var response = ListRoleDefinitions(
-                        scope: roleScope.ToString(),
-                        options: new RequestOptions()
-                        {
-                            CancellationToken = cancellationToken
-                        });
+                    var response = ListRoleDefinitions(scope: roleScope.ToString());
 
                     JsonDocument roleDefinitionListJson = JsonDocument.Parse(response.Content.ToMemory());
                     List<SynapseRoleDefinition> roleDefinitionList = new List<SynapseRoleDefinition>();
@@ -472,7 +441,9 @@ namespace Azure.Analytics.Synapse.AccessControl
             }, (null));
         }
 
-        public virtual AsyncPageable<SynapseRoleDefinition> GetRoleDefinitionsAsync(SynapseRoleScope roleScope, CancellationToken cancellationToken = default)
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual AsyncPageable<SynapseRoleDefinition> GetRoleDefinitionsAsync(SynapseRoleScope roleScope)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
@@ -480,14 +451,9 @@ namespace Azure.Analytics.Synapse.AccessControl
                 scope.Start();
                 try
                 {
-                    var response = await ListRoleDefinitionsAsync(
-                        scope: roleScope.ToString(),
-                        options: new RequestOptions()
-                        {
-                            CancellationToken = cancellationToken
-                        }).ConfigureAwait(false);
+                    var response = await ListRoleDefinitionsAsync(scope: roleScope.ToString()).ConfigureAwait(false);
 
-                    JsonDocument roleDefinitionListJson = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                    JsonDocument roleDefinitionListJson = await JsonDocument.ParseAsync(response.ContentStream, default).ConfigureAwait(false);
                     List<SynapseRoleDefinition> roleDefinitionList = new List<SynapseRoleDefinition>();
                     foreach (var item in roleDefinitionListJson.RootElement.EnumerateArray())
                     {
