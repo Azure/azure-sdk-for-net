@@ -220,7 +220,7 @@ $vaults = Get-AzKeyVault -ResourceGroupName "$ResourceGroupName" | ForEach-Objec
 }
 
 # You may add additional resource checks that require the resource group to be deleted first before purging here.
-$purgeRequired = !!$vaults
+$purgeRequired = $vaults -or $false
 
 Log "Deleting resource group '$ResourceGroupName'"
 if ($Force -and !$purgeRequired) {
