@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("We have a bug in OperationInternals which breaks the LRO of PATCH")]
+        [Ignore("There is a bug in OperationInternals causing we cannot handle this kind of PATCH LRO right now")]
         public async Task Update()
         {
             var name = Recording.GenerateAssetName("testGallery_");
