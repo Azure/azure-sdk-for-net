@@ -100,7 +100,7 @@ namespace Azure.Monitor.Query.Tests
 
         private async Task<bool> MetricsPropagated(MetricsQueryClient metricQueryClient)
         {
-            var nsExists =  (await metricQueryClient.GetMetricNamespacesAsync(_testEnvironment.MetricsResource)).Value.Any(ns => ns.Name == MetricNamespace);
+            var nsExists =  (await metricQueryClient.GetMetricNamespacesAsync(_testEnvironment.MetricsResource).ToEnumerableAsync()).Any(ns => ns.Name == MetricNamespace);
 
             if (!nsExists)
             {

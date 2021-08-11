@@ -141,7 +141,7 @@ Next you'll need to add the App Configuration connection string from the templat
 2. With a *.cs* file open the command palette and run `Debug: Start debugging` or press `F5` (default binding).
 3. If prompted, select ".NET Core" to create a launch configuration and start debugging.
 
-#### [.NET CLI](#tab/dotnet_cli)
+#### [.NET](#tab/dotnet)
 
 1. In the project folder, run the following to add a variable named `ConnectionStrings:AppConfig` with the `value` of the `appConfigurationConnectionString` output variable:
 
@@ -155,7 +155,9 @@ Next you'll need to add the App Configuration connection string from the templat
    dotnet run
    ```
 
-#### Deploying the sample
+---
+
+### Deploying the sample
 
 See the [ASP.NET quickstart][aspnet_quickstart] for instructions to deploy for Visual Studio, Visual Studio Code, and the `dotnet` CLI. For Visual Studio and Visual Studio Code, make sure you select your existing resource if you deployed the Bicep template above; otherwise, for the `dotnet` CLI you can deploy to an existing resource by [configuring Git support][aspnet_deploy_localgit] and pushing source, which will be built automatically on the host.
 

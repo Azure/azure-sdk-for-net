@@ -19,7 +19,7 @@ namespace Azure.Monitor.Query.Tests
 
 #if SNIPPET
             string resourceId =
-                "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.OperationalInsights/workspaces/<workspace_name>";
+                "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
 #else
             string resourceId = TestEnvironment.MetricsResource;
 #endif
@@ -28,7 +28,7 @@ namespace Azure.Monitor.Query.Tests
             var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
             #endregion
 
-            Response<MetricQueryResult> results = await metricsClient.QueryAsync(
+            Response<MetricsQueryResult> results = await metricsClient.QueryAsync(
                 resourceId,
                 new[] {"Microsoft.OperationalInsights/workspaces"}
             );

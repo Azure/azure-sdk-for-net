@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ResourcesCreateOrUpdateByIdOperation StartCreateOrUpdate(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual ResourceCreateOrUpdateByIdOperation StartCreateOrUpdate(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(resourceId, cancellationToken);
                 var originalResponse = RestClient.CreateOrUpdateById(resourceId, apiVersion, parameters, cancellationToken);
-                return new ResourcesCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
+                return new ResourceCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ResourcesCreateOrUpdateByIdOperation> StartCreateOrUpdateAsync(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceCreateOrUpdateByIdOperation> StartCreateOrUpdateAsync(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(resourceId, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.CreateOrUpdateByIdAsync(resourceId, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                return new ResourcesCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
+                return new ResourceCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
