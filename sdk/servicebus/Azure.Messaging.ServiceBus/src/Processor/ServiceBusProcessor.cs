@@ -941,6 +941,7 @@ namespace Azure.Messaging.ServiceBus
         public async ValueTask DisposeAsync()
         {
             await CloseAsync().ConfigureAwait(false);
+            _handlerCts.Dispose();
             GC.SuppressFinalize(this);
         }
 
@@ -980,6 +981,7 @@ namespace Azure.Messaging.ServiceBus
             // wake up the handler loop
             var handlerCts = Interlocked.Exchange(ref _handlerCts, new CancellationTokenSource());
             handlerCts.Cancel();
+            handlerCts.Dispose();
         }
 
         private async Task ReconcileConcurrencyAsync()

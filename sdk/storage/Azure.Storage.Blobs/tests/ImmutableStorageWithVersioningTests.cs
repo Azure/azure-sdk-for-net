@@ -917,18 +917,11 @@ namespace Azure.Storage.Blobs.Test
                     await blobClient.DeleteIfExistsAsync();
                 }
 
-                try
-                {
-                    await _storageManagementClient.BlobContainers.DeleteAsync(
-                        resourceGroupName: "XClient",
-                        accountName: _tenantConfiguration.AccountName,
-                        containerName: Container.Name);
-                    Container = null;
-                }
-                catch
-                {
-                    // swallow the exception to avoid hiding another test failure
-                }
+                await _storageManagementClient.BlobContainers.DeleteAsync(
+                     resourceGroupName: _tenantConfiguration.ResourceGroupName,
+                     accountName: _tenantConfiguration.AccountName,
+                     containerName: Container.Name);
+                Container = null;
             }
         }
 

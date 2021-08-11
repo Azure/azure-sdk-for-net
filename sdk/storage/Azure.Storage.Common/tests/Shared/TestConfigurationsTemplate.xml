@@ -9,6 +9,7 @@
   <TargetManagedDiskTenant>ManagedDiskTenant</TargetManagedDiskTenant>
   <TargetBlobAndContainerSoftDeleteTenant>SoftDeleteTenant</TargetBlobAndContainerSoftDeleteTenant>
   <TargetPremiumFileTenant>PremiumFileTenant</TargetPremiumFileTenant>
+  <TargetManagedDisk>DefaultManagedDisk</TargetManagedDisk>
 
   <TenantConfigurations>
     <!-- A storage account with an Encryption Scope, Blob Versioning, and Last Access Time enabled -->
@@ -176,4 +177,17 @@
       <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
     </KeyVaultConfiguration>
   </KeyVaultConfigurations>
+
+  <ManagedDiskConfigurations>
+    <ManagedDiskConfiguration>
+      <Name>DefaultManagedDisk</Name>
+      <DiskNamePrefix>[DISK NAME PREFIX]</DiskNamePrefix>
+      <ResourceGroupName>[RESOURECE GROUP NAME]</ResourceGroupName>
+      <SubsriptionId>[SubscriptionId]</SubsriptionId>
+      <Location>[Location]</Location>
+      <ActiveDirectoryApplicationId>[ActiveDirectoryApplicationId]</ActiveDirectoryApplicationId>
+      <ActiveDirectoryApplicationSecret>[ActiveDirectoryApplicationSecret]</ActiveDirectoryApplicationSecret>
+      <ActiveDirectoryTenantId>[ActiveDirectoryTenantId]</ActiveDirectoryTenantId>
+    </ManagedDiskConfiguration>
+  </ManagedDiskConfigurations>
 </TestConfigurations>

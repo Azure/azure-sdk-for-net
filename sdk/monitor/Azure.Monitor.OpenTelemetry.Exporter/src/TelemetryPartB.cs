@@ -11,6 +11,8 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
+using System.Text;
+using System.Linq;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -21,16 +23,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     /// </summary>
     internal class TelemetryPartB
     {
+        private const int MaxlinksAllowed = 100;
         internal static RequestData GetRequestData(Activity activity)
         {
             string url = null;
-            string urlAuthority = null;
             var monitorTags = EnumerateActivityTags(activity);
+
+            AddActivityLinksToPartCTags(activity.Links, ref monitorTags.PartCTags);
 
             switch (monitorTags.activityType)
             {
                 case PartBType.Http:
-                    monitorTags.PartBTags.GenerateUrlAndAuthority(out url, out urlAuthority);
+                    url = monitorTags.PartBTags.GetRequestUrl();
                     break;
                 case PartBType.Messaging:
                     url = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeMessagingUrl)?.ToString();
@@ -43,7 +47,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 Name = activity.DisplayName,
                 Url = url,
-                Source = urlAuthority
             };
 
             AddPropertiesToTelemetry(request.Properties, ref monitorTags.PartCTags);
@@ -54,6 +57,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal static RemoteDependencyData GetRemoteDependencyData(Activity activity)
         {
             var monitorTags = EnumerateActivityTags(activity);
+
+            AddActivityLinksToPartCTags(activity.Links, ref monitorTags.PartCTags);
 
             var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
             {
@@ -120,6 +125,60 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             for (int i = 0; i < PartCTags.Length; i++)
             {
                 destination.Add(PartCTags[i].Key, PartCTags[i].Value?.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Converts Activity Links to custom property with key as _MS.links.
+        /// Value will be a JSON string formatted as [{"operation_Id":"{TraceId}","id":"{SpanId}"}].
+        /// </summary>
+        private static void AddActivityLinksToPartCTags(IEnumerable<ActivityLink> links, ref AzMonList PartCTags)
+        {
+            string msLinks = "_MS.links";
+            // max number of links that can fit in this json formatted string is 107. it is based on assumption that traceid and spanid will be of fixed length.
+            // Keeping max at 100 for now.
+            int maxLinks = MaxlinksAllowed;
+
+            if (links != null && links.Any())
+            {
+                var linksJson = new StringBuilder();
+                linksJson.Append('[');
+                foreach (var link in links)
+                {
+                    linksJson
+                        .Append('{')
+                        .Append("\"operation_Id\":")
+                        .Append('\"')
+                        .Append(link.Context.TraceId.ToHexString())
+                        .Append('\"')
+                        .Append(',');
+                    linksJson
+                        .Append("\"id\":")
+                        .Append('\"')
+                        .Append(link.Context.SpanId.ToHexString())
+                        .Append('\"');
+                    linksJson.Append("},");
+
+                    maxLinks--;
+                    if (maxLinks == 0)
+                    {
+                        if (MaxlinksAllowed < links.Count())
+                        {
+                            AzureMonitorExporterEventSource.Log.Write($"ActivityLinksIgnored{EventLevelSuffix.Informational}", $"Max count of {MaxlinksAllowed} has reached.");
+                        }
+                        break;
+                    }
+                }
+
+                if (linksJson.Length > 0)
+                {
+                    // trim trailing comma - json does not support it
+                    linksJson.Remove(linksJson.Length - 1, 1);
+                }
+
+                linksJson.Append(']');
+
+                AzMonList.Add(ref PartCTags, new KeyValuePair<string, object>(msLinks, linksJson.ToString()));
             }
         }
 

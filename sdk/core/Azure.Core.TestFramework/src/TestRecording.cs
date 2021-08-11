@@ -277,12 +277,12 @@ namespace Azure.Core.TestFramework
             return Session.Entries.FirstOrDefault()?.IsTrack1Recording ?? false;
         }
 
-        public string GetVariable(string variableName, string defaultValue)
+        public string GetVariable(string variableName, string defaultValue, Func<string, string> sanitizer = default)
         {
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    Session.Variables[variableName] = defaultValue;
+                    Session.Variables[variableName] = sanitizer == default ? defaultValue : sanitizer.Invoke(defaultValue);
                     return defaultValue;
                 case RecordedTestMode.Live:
                     return defaultValue;
@@ -294,12 +294,12 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        public void SetVariable(string variableName, string value)
+        public void SetVariable(string variableName, string value, Func<string, string> sanitizer = default)
         {
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    Session.Variables[variableName] = value;
+                    Session.Variables[variableName] = sanitizer == default ? value : sanitizer.Invoke(value);
                     break;
                 default:
                     break;
