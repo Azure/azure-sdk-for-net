@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Resources
         /// Delete the resource.
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
-        /// <returns> A <see cref="ResourcesDeleteByIdOperation"/> which allows the caller to control polling and waiting for resource deletion.
+        /// <returns> A <see cref="ResourceDeleteByIdOperation"/> which allows the caller to control polling and waiting for resource deletion.
         /// The operation yields the final http response to the delete request when complete. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual ResourcesDeleteByIdOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual ResourceDeleteByIdOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartDelete");
             scope.Start();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var originalResponse = RestClient.DeleteById(Id, apiVersion, cancellationToken);
-                return new ResourcesDeleteByIdOperation(Diagnostics, Pipeline, RestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
+                return new ResourceDeleteByIdOperation(Diagnostics, Pipeline, RestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a <see cref="ResourcesDeleteByIdOperation"/> which
+        /// <returns> A <see cref="Task"/> that on completion returns a <see cref="ResourceDeleteByIdOperation"/> which
         /// allows the caller to control polling and waiting for resource deletion.
         /// The operation yields the final http response to the delete request when complete. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<ResourcesDeleteByIdOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceDeleteByIdOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartDelete");
             scope.Start();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.DeleteByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                return new ResourcesDeleteByIdOperation(Diagnostics, Pipeline, RestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
+                return new ResourceDeleteByIdOperation(Diagnostics, Pipeline, RestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ResourcesUpdateByIdOperation StartUpdate(GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual ResourceUpdateByIdOperation StartUpdate(GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var originalResponse = RestClient.UpdateById(Id, apiVersion, parameters, cancellationToken);
-                return new ResourcesUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, originalResponse);
+                return new ResourceUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ResourcesUpdateByIdOperation> StartUpdateAsync(GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceUpdateByIdOperation> StartUpdateAsync(GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.UpdateByIdAsync(Id, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                return new ResourcesUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, originalResponse);
+                return new ResourceUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {

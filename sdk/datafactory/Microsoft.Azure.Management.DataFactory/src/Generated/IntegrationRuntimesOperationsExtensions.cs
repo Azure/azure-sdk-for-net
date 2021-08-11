@@ -321,6 +321,54 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
+            /// Gets the list of outbound network dependencies for a given Azure-SSIS
+            /// integration runtime.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            public static IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse ListOutboundNetworkDependenciesEndpoints(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName)
+            {
+                return operations.ListOutboundNetworkDependenciesEndpointsAsync(resourceGroupName, factoryName, integrationRuntimeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of outbound network dependencies for a given Azure-SSIS
+            /// integration runtime.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse> ListOutboundNetworkDependenciesEndpointsAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListOutboundNetworkDependenciesEndpointsWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the on-premises integration runtime connection information for
             /// encrypting the on-premises data source credentials.
             /// </summary>
