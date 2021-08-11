@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
@@ -37,30 +36,21 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         //}
 
         [Test]
+        [RecordedTest]
         [Ignore("Track2: The NetworkWathcer is involved, so disable the test")]
         public async Task ViewNsgRuleApiTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
 
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with template
-            VirtualMachine vm = await CreateVm(
-                resourceGroupName: resourceGroupName,
-                location: location,
-                virtualMachineName: virtualMachineName,
-                storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                networkInterfaceName: networkInterfaceName,
-                networkSecurityGroupName: networkSecurityGroupName,
-                diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                deploymentName: Recording.GenerateAssetName("azsmnet"),
-                adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                );
+            var vm = await CreateLinuxVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 Initialize();
             }
-            resourceGroup = (await CreateResourceGroup(Recording.GenerateAssetName(NamePrefix))).Value;
+            resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName(NamePrefix));
         }
 
         [TearDown]

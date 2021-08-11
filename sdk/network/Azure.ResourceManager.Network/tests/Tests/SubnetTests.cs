@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnet1Name, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             // Create a Subnet
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Response<Subnet> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnetName);

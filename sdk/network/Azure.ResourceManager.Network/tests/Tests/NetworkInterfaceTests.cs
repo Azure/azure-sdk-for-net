@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressContainer = resourceGroup.Value.GetPublicIPAddresses();
+            var publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
             var putPublicIpAddressResponseOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(publicIpName, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
             ;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
             ;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Test NIC apis
-            var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
+            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             var putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.NotNull(getNicResponse.Value.Data.ResourceGuid);
 
             // Verify List IpConfigurations in NetworkInterface
-            var networkInterfaceOperations = resourceGroup.Value.GetNetworkInterfaces().Get(nicName).Value;
+            var networkInterfaceOperations = resourceGroup.GetNetworkInterfaces().Get(nicName).Value;
             AsyncPageable<NetworkInterfaceIPConfiguration> listNicIpConfigurationsAP = networkInterfaceOperations.GetNetworkInterfaceIPConfigurationsAsync();
             List<NetworkInterfaceIPConfiguration> listNicIpConfigurations = await listNicIpConfigurationsAP.ToEnumerableAsync();
             Assert.AreEqual(ipConfigName, listNicIpConfigurations.First().Name);
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Test NIC apis
-            var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
+            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             var putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressContainer = resourceGroup.Value.GetPublicIPAddresses();
+            var publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
             var putPublicIpAddressResponseOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(publicIpName, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
             ;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Test NIC apis
-            var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
+            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             var putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             try
             {
                 // Test NIC apis
-                var putNicResponseOperation = await resourceGroup.Value.GetNetworkInterfaces().StartCreateOrUpdateAsync(nicName, nicParameters);
+                var putNicResponseOperation = await resourceGroup.GetNetworkInterfaces().StartCreateOrUpdateAsync(nicName, nicParameters);
                 Response<NetworkInterface> putNicResponse = await putNicResponseOperation.WaitForCompletionAsync();
                 ;
             }
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Test NIC apis
-            var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
+            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             var putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressContainer = resourceGroup.Value.GetPublicIPAddresses();
+            var publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
             var putPublicIpAddressResponseOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(publicIpName, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
             ;
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Test NIC apis
-            var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
+            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             var putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Test NIC apis
-            var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
+            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             var putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             await putVnetResponseOperation.WaitForCompletionAsync();
             ;
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Test NIC apis
-            var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
+            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             var putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
             ;
@@ -947,7 +947,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put Nsg
-            var networkSecurityGroupContainer = resourceGroup.Value.GetNetworkSecurityGroups();
+            var networkSecurityGroupContainer = resourceGroup.GetNetworkSecurityGroups();
             var putNsgResponseOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
             Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();
             ;
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Test NIC apis
-            var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
+            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             var putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
             ;
@@ -1054,7 +1054,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put Nsg
-            var networkSecurityGroupContainer = resourceGroup.Value.GetNetworkSecurityGroups();
+            var networkSecurityGroupContainer = resourceGroup.GetNetworkSecurityGroups();
             var putNsgResponseOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
             Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();
             ;
@@ -1083,7 +1083,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Test NIC apis
-            var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
+            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             var putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             routeTable.Routes.Add(route1);
 
             // Put RouteTable
-            var routeTableContainer = resourceGroup.Value.GetRouteTables();
+            var routeTableContainer = resourceGroup.GetRouteTables();
             var putRouteTableResponseOperation = await routeTableContainer.StartCreateOrUpdateAsync(routeTableName, routeTable);
             Response<RouteTable> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();
             ;
@@ -1159,7 +1159,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", RouteTable = putRouteTableResponse.Value.Data } }
             };
 
-            var virtualNetworkContainer = resourceGroup.Value.GetVirtualNetworks();
+            var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
             ;
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Test NIC apis
-            var networkInterfaceContainer = resourceGroup.Value.GetNetworkInterfaces();
+            var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             var putNicResponseOperation = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName, nicParameters);
             await putNicResponseOperation.WaitForCompletionAsync();
             ;

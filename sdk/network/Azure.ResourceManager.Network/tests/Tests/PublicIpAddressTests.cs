@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressContainer = resourceGroup.Value.GetPublicIPAddresses();
+            var publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
             var putPublicIpAddressResponseOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(publicIpName, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
@@ -94,7 +94,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await ResourcesManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/publicIPAddresses");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create the parameter for PUT PublicIPAddress
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             var publicIp = new PublicIPAddressData()
             {
-                Location = location,
+                Location = TestEnvironment.Location,
                 Tags = { { "key", "value" } },
                 PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel, },
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressContainer = resourceGroup.Value.GetPublicIPAddresses();
+            var publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
             var putPublicIpAddressResponseOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(publicIpName, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
@@ -159,7 +158,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await ResourcesManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/publicIPAddresses");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create the parameter for PUT PublicIPAddress
@@ -168,7 +166,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             var ipv6PublicIp = new PublicIPAddressData()
             {
-                Location = location,
+                Location = TestEnvironment.Location,
                 Tags = { { "key", "value" } },
                 PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
@@ -179,7 +177,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put PublicIPAddress
-            var publicIPAddressContainer = resourceGroup.Value.GetPublicIPAddresses();
+            var publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
             var putPublicIpAddressResponseOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(ipv6PublicIpName, ipv6PublicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
@@ -218,7 +216,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             var ipv4PublicIp = new PublicIPAddressData()
             {
-                Location = location,
+                Location = TestEnvironment.Location,
                 Tags = { { "key", "value" } },
                 PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
