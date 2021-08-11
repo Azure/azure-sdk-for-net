@@ -10,8 +10,5 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
     {
         [Option("loadBalancingStrategy")]
         public LoadBalancingStrategy LoadBalancingStrategy { get; set; } = LoadBalancingStrategy.Greedy;
-
-        [Option("delayMilliseconds", HelpText = "Adds delay after each message received (for debugging)")]
-        public int DelayMilliseconds { get; set; }
     }
 }
