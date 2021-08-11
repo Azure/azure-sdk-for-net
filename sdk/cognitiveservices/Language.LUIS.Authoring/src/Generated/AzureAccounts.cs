@@ -93,10 +93,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (azureAccountInfoObject != null)
             {
                 azureAccountInfoObject.Validate();
@@ -108,7 +104,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("armToken", armToken);
                 tracingParameters.Add("azureAccountInfoObject", azureAccountInfoObject);
@@ -119,7 +114,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/azureaccounts";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -276,10 +270,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -287,7 +277,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("armToken", armToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -297,7 +286,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/azureaccounts";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -450,10 +438,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (azureAccountInfoObject != null)
             {
                 azureAccountInfoObject.Validate();
@@ -465,7 +449,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("armToken", armToken);
                 tracingParameters.Add("azureAccountInfoObject", azureAccountInfoObject);
@@ -476,7 +459,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/azureaccounts";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -629,10 +611,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -640,7 +618,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("armToken", armToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListUserLUISAccounts", tracingParameters);
@@ -649,7 +626,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "azureaccounts";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;

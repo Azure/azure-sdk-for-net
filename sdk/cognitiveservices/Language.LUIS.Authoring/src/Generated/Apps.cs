@@ -86,10 +86,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (applicationCreateObject == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "applicationCreateObject");
@@ -105,7 +101,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("applicationCreateObject", applicationCreateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Add", tracingParameters);
@@ -114,7 +109,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -257,10 +251,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (skip < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
@@ -280,7 +270,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("skip", skip);
                 tracingParameters.Add("take", take);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -290,7 +279,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             List<string> _queryParameters = new List<string>();
             if (skip != null)
             {
@@ -443,10 +431,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (luisApp == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "luisApp");
@@ -458,7 +442,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appName", appName);
                 tracingParameters.Add("luisApp", luisApp);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -468,7 +451,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/import";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             List<string> _queryParameters = new List<string>();
             if (appName != null)
             {
@@ -614,10 +596,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -625,7 +603,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListCortanaEndpoints", tracingParameters);
             }
@@ -633,7 +610,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/assistants";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -764,10 +740,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -775,7 +747,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListDomains", tracingParameters);
             }
@@ -783,7 +754,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/domains";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -914,10 +884,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -925,7 +891,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListUsageScenarios", tracingParameters);
             }
@@ -933,7 +898,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/usagescenarios";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1066,10 +1030,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1077,7 +1037,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListSupportedCultures", tracingParameters);
             }
@@ -1085,7 +1044,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/cultures";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1219,10 +1177,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1230,7 +1184,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DownloadQueryLogs", tracingParameters);
@@ -1239,7 +1192,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/querylogs";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -1354,10 +1306,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1365,7 +1313,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
@@ -1374,7 +1321,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -1512,10 +1458,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (applicationUpdateObject == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "applicationUpdateObject");
@@ -1527,7 +1469,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("applicationUpdateObject", applicationUpdateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1537,7 +1478,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -1681,10 +1621,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1692,7 +1628,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("force", force);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1702,7 +1637,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (force != null)
@@ -1850,10 +1784,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (applicationPublishObject == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "applicationPublishObject");
@@ -1865,7 +1795,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("applicationPublishObject", applicationPublishObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1875,7 +1804,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/publish";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -2034,10 +1962,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2045,7 +1969,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetSettings", tracingParameters);
@@ -2054,7 +1977,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/settings";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -2192,10 +2114,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (applicationSettingUpdateObject == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "applicationSettingUpdateObject");
@@ -2207,7 +2125,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("applicationSettingUpdateObject", applicationSettingUpdateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -2217,7 +2134,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/settings";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -2358,10 +2274,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2369,7 +2281,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetPublishSettings", tracingParameters);
@@ -2378,7 +2289,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/publishsettings";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -2516,10 +2426,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (publishSettingUpdateObject == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "publishSettingUpdateObject");
@@ -2531,7 +2437,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("publishSettingUpdateObject", publishSettingUpdateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -2541,7 +2446,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/publishsettings";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -2682,10 +2586,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2693,7 +2593,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListEndpoints", tracingParameters);
@@ -2702,7 +2601,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/endpoints";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -2834,10 +2732,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2845,7 +2739,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListAvailableCustomPrebuiltDomains", tracingParameters);
             }
@@ -2853,7 +2746,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/customprebuiltdomains";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -2989,10 +2881,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (prebuiltDomainCreateObject == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "prebuiltDomainCreateObject");
@@ -3004,7 +2892,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("prebuiltDomainCreateObject", prebuiltDomainCreateObject);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "AddCustomPrebuiltDomain", tracingParameters);
@@ -3013,7 +2900,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/customprebuiltdomains";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3153,10 +3039,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (culture == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "culture");
@@ -3168,7 +3050,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("culture", culture);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListAvailableCustomPrebuiltDomainsForCulture", tracingParameters);
@@ -3177,7 +3058,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/customprebuiltdomains/{culture}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{culture}", System.Uri.EscapeDataString(culture));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -3320,10 +3200,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (slotName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "slotName");
@@ -3335,7 +3211,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("slotName", slotName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -3345,7 +3220,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "package/{appId}/slot/{slotName}/gzip";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{slotName}", System.Uri.EscapeDataString(slotName));
             // Create HTTP transport objects
@@ -3476,10 +3350,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -3491,7 +3361,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -3501,7 +3370,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "package/{appId}/versions/{versionId}/gzip";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -3630,10 +3498,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (luisAppV2 == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "luisAppV2");
@@ -3645,7 +3509,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appName", appName);
                 tracingParameters.Add("luisAppV2", luisAppV2);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -3655,7 +3518,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/import";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             List<string> _queryParameters = new List<string>();
             if (appName != null)
             {
@@ -3810,10 +3672,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if ( == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "");
-            }
             if (luisAppLu == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "luisAppLu");
@@ -3825,7 +3683,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("", );
                 tracingParameters.Add("appName", appName);
                 tracingParameters.Add("luisAppLu", luisAppLu);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -3835,7 +3692,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/import";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{}", System.Uri.EscapeDataString());
             List<string> _queryParameters = new List<string>();
             if (appName != null)
             {
