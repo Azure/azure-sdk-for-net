@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/publicIPAddresses");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/publicIPAddresses");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create the parameter for PUT PublicIPAddress
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await ResourcesManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/publicIPAddresses");
+            string location = await ResourcesManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/publicIPAddresses");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create the parameter for PUT PublicIPAddress
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await ResourcesManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/publicIPAddresses");
+            string location = await ResourcesManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/publicIPAddresses");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create the parameter for PUT PublicIPAddress

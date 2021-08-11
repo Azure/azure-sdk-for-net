@@ -11,6 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
@@ -42,15 +43,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
 
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
+            VirtualMachine vm = await CreateVm(
                 resourceGroupName: resourceGroupName,
                 location: location,
                 virtualMachineName: virtualMachineName,
@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
             //Response<NetworkWatcher> createNetworkWatcher = await networkWatcherContainer.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
 
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
             string localIPAddress = GetNetworkInterfaceContainer(resourceGroupName).GetAsync(networkInterfaceName).Result.Value.Data.IpConfigurations.FirstOrDefault().PrivateIPAddress;
 
             string securityRule1 = Recording.GenerateAssetName("azsmnet");
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Response<NetworkSecurityGroup> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //Get view security group rules
-            var viewNSGRulesOperation = await GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.StartGetVMSecurityRulesAsync(new SecurityGroupViewParameters(getVm.Value.Id));
+            var viewNSGRulesOperation = await GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.StartGetVMSecurityRulesAsync(new SecurityGroupViewParameters(vm.Id));
             Response<SecurityGroupViewResult> viewNSGRules = await viewNSGRulesOperation.WaitForCompletionAsync();;
 
             //Verify effective security rule defined earlier

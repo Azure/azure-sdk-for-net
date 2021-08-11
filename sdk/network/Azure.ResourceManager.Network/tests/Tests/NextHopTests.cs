@@ -10,6 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
@@ -40,14 +41,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
 
             //Deploy VM wih VNet,Subnet and Route Table from template
-            await CreateVm(
-                     resourcesClient: ResourceManagementClient,
+            VirtualMachine vm = await CreateVm(
                      resourceGroupName: resourceGroupName,
                      location: location,
                      virtualMachineName: virtualMachineName,
@@ -70,12 +70,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                                                             .GetAsync(networkInterfaceName).Result.Value.Data.IpConfigurations
                                                             .FirstOrDefault().PrivateIPAddress;
 
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
-
             //Use DestinationIPAddress from Route Table
-            NextHopParameters nhProperties1 = new NextHopParameters(getVm.Value.Id, sourceIPAddress, "10.1.3.6");
+            NextHopParameters nhProperties1 = new NextHopParameters(vm.Id, sourceIPAddress, "10.1.3.6");
 
-            NextHopParameters nhProperties2 = new NextHopParameters(getVm.Value.Id, sourceIPAddress, "12.11.12.14");
+            NextHopParameters nhProperties2 = new NextHopParameters(vm.Id, sourceIPAddress, "12.11.12.14");
 
             var networkWatcherContainer = GetNetworkWatcherContainer(resourceGroupName);
             var networkWatcherResponse = await networkWatcherContainer.GetAsync("NetworkWatcher_westus2");

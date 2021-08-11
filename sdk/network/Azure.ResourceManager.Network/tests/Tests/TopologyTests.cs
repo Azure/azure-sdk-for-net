@@ -10,6 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
@@ -41,15 +42,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName2 = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName1, new Resources.Models.ResourceGroup(location));
+            ResourceGroup rg1 = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName1, new ResourceGroupData(location));
 
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
 
             //Deploy Vm from template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
+            VirtualMachine vm1 = await CreateVm(
                 resourceGroupName: resourceGroupName1,
                 location: location,
                 virtualMachineName: virtualMachineName,
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
                 );
 
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName2, new Resources.Models.ResourceGroup(location));
+            ResourceGroup rg2 = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName2, new ResourceGroupData(location));
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create NetworkWatcher
@@ -70,8 +70,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //await networkWatcherContainer.CreateOrUpdateAsync(resourceGroupName2, networkWatcherName, properties);
 
             TopologyParameters tpProperties = new TopologyParameters() { TargetResourceGroupName = resourceGroupName1 };
-
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName1, virtualMachineName);
 
             //Get the current network topology of the resourceGroupName1
             var networkWatcherContainer = GetNetworkWatcherContainer("NetworkWatcherRG");
@@ -85,9 +83,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             //Verify that topology contain information about acreated VM
             Assert.AreEqual(virtualMachineName, vmResource.Name);
-            Assert.AreEqual(getVm.Value.Id, vmResource.Id);
+            Assert.AreEqual(vm1.Id, vmResource.Id);
             Assert.AreEqual(networkInterfaceName, vmResource.Associations.FirstOrDefault().Name);
-            Assert.AreEqual(getVm.Value.NetworkProfile.NetworkInterfaces.FirstOrDefault().Id, vmResource.Associations.FirstOrDefault().ResourceId);
+            Assert.AreEqual(vm1.Data.NetworkProfile.NetworkInterfaces.FirstOrDefault().Id, vmResource.Associations.FirstOrDefault().ResourceId);
             Assert.AreEqual("Contains", vmResource.Associations.FirstOrDefault().AssociationType.ToString());
         }
     }
