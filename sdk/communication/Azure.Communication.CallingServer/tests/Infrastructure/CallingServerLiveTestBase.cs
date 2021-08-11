@@ -25,7 +25,7 @@ namespace Azure.Communication.CallingServer.Tests
         protected const string RESOURCE_IDENTIFIER = "016a7064-0581-40b9-be73-6dde64d69d72";
 
         // Random Gen Guid
-        protected const string GROUP_IDENTIFIER = "650b71d1-ffd1-4b22-bed8-2d5bac545798";
+        protected const string GROUP_IDENTIFIER = "e9e70082-43b4-4aab-a53f-dff66658c28e";
 
         protected string GetResourceId()
         {
@@ -135,7 +135,7 @@ namespace Azure.Communication.CallingServer.Tests
                 tokenCredential = new DefaultAzureCredential();
             }
 
-            CallingServerClient client = new CallingServerClient(endpoint.ToString(), tokenCredential);
+            CallingServerClient client = new CallingServerClient(endpoint.ToString(), tokenCredential, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
             return InstrumentClient(client);
         }
 
