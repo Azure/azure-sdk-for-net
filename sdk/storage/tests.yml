@@ -16,7 +16,7 @@ extends:
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
       PrivatePreview:
         SubscriptionConfiguration: $(sub-config-storage-test-resources)
-    Clouds: 'Preview, Canary'
+    Clouds: Preview
     SupportedClouds: 'Preview, PrivatePreview, UsGov, China'
     MatrixReplace:
       # Use dedicated storage pool in canadacentral with higher memory capacity
