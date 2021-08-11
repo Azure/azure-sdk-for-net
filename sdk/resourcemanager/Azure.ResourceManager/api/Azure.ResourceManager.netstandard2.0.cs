@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Core
         public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } }
         protected internal virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         protected internal Azure.ResourceManager.Resources.TagResourceContainer TagContainer { get { throw null; } }
-        protected internal Azure.ResourceManager.Resources.TagResource TagResourceOperations { get { throw null; } }
+        protected internal Azure.ResourceManager.Resources.TagResource TagResource { get { throw null; } }
         protected abstract Azure.ResourceManager.ResourceType ValidResourceType { get; }
         protected System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location> ListAvailableLocations(Azure.ResourceManager.ResourceType resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> ListAvailableLocationsAsync(Azure.ResourceManager.ResourceType resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
