@@ -9,7 +9,7 @@ Azure Schema Registry is a schema repository service hosted by Azure Event Hubs,
 Install the Azure Schema Registry client library for .NET with [NuGet][nuget]:
 
 ```bash
-dotnet add package Azure.Data.SchemaRegistry --version 1.0.0-beta.1
+dotnet add package --prerelease Azure.Data.SchemaRegistry
 ```
 
 ### Prerequisites
@@ -125,8 +125,8 @@ string schemaContent = @"
     ]
 }";
 
-Response<SchemaProperties> schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
-string schemaId = schemaProperties.Value.Id;
+SchemaProperties schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
+string schemaId = schemaProperties.Id;
 ```
 
 ### Retrieve a schema
@@ -134,8 +134,8 @@ string schemaId = schemaProperties.Value.Id;
 Retrieve a previously registered schema's content from the Azure Schema Registry.
 
 ```C# Snippet:SchemaRegistryRetrieveSchema
-Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);
-string schemaContent = schemaProperties.Value.Content;
+SchemaProperties schemaProperties = client.GetSchema(schemaId);
+string schemaContent = schemaProperties.Content;
 ```
 
 ## Troubleshooting
