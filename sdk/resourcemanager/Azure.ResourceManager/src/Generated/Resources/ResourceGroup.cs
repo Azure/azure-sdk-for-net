@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var originalTags = TagResource.Get(cancellationToken).Value;
+                var originalTags = TagResourceOperations.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue[key] = value;
                 TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
                 var originalResponse = _restClient.Get(Id.Name, cancellationToken);
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue[key] = value;
                 await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
@@ -386,8 +386,8 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                TagResource.Delete(cancellationToken);
-                var newTags = TagResource.Get(cancellationToken);
+                TagResourceOperations.Delete(cancellationToken);
+                var newTags = TagResourceOperations.Get(cancellationToken);
                 newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 TagContainer.CreateOrUpdate(new TagResourceData(newTags.Value.Data.Properties), cancellationToken);
                 var originalResponse = _restClient.Get(Id.Name, cancellationToken);
@@ -416,8 +416,8 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                await TagResource.DeleteAsync(cancellationToken).ConfigureAwait(false);
-                var newTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                await TagResourceOperations.DeleteAsync(cancellationToken).ConfigureAwait(false);
+                var newTags = await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false);
                 newTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
                 await TagContainer.CreateOrUpdateAsync(new TagResourceData(newTags.Value.Data.Properties), cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var originalTags = TagResource.Get(cancellationToken).Value;
+                var originalTags = TagResourceOperations.Get(cancellationToken).Value;
                 originalTags.Data.Properties.TagsValue.Remove(key);
                 TagContainer.CreateOrUpdate(originalTags.Data, cancellationToken);
                 var originalResponse = _restClient.Get(Id.Name, cancellationToken);
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.Properties.TagsValue.Remove(key);
                 await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);

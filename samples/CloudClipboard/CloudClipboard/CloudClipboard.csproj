@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.6.0" />
     <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.2.2" />
     <PackageReference Include="Microsoft.Extensions.Azure" Version="1.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
     <PackageReference Include="System.Text.Encodings.Web" Version="4.5.1" />
 
     <PackageReference Include="OpenTelemetry" Version="0.2.0-alpha.5" />
