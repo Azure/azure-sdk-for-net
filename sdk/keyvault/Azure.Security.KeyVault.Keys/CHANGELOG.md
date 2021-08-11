@@ -8,10 +8,6 @@
 - Added `Exportable` and `ReleasePolicy` to `CreateKeyOptions`, `ImportKeyOptions`, and `KeyProperties` to support Secure Key Release for Key Vault and Managed HSM.
 - Added `ReleaseKey` and `ReleaseKeyAsync` to `KeyClient` to release a key for Key Vault and Managed HSM.
 
-### Breaking Changes
-
-### Key Bugs Fixed
-
 ### Fixed
 
 - The default service version is now "7.3-preview".
