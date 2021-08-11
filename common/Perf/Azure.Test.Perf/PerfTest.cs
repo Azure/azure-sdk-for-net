@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Test.Perf
 {
-    public abstract class PerfTest<TOptions> : IPerfTest where TOptions : PerfOptions
+    public abstract class PerfTest<TOptions> : PerfTestBase<TOptions> where TOptions : PerfOptions
     {
         private readonly HttpPipelineTransport _insecureTransport;
 
@@ -22,27 +22,11 @@ namespace Azure.Test.Perf
 
         private string _recordingId;
 
-        protected TOptions Options { get; private set; }
+        private long _completedOperations;
+        public override long CompletedOperations => _completedOperations;
 
-        private int _completedOperations;
-        public int CompletedOperations
+        public PerfTest(TOptions options) : base(options)
         {
-            get
-            {
-                return _completedOperations;
-            }
-            set
-            {
-                Interlocked.Exchange(ref _completedOperations, value);
-            }
-        }
-
-        public TimeSpan LastCompletionTime { get; set; }
-
-        public PerfTest(TOptions options)
-        {
-            Options = options;
-
             if (Options.Insecure)
             {
                 var transport = (new PerfClientOptions()).Transport;
@@ -100,17 +84,7 @@ namespace Azure.Test.Perf
             return clientOptions;
         }
 
-        public virtual Task GlobalSetupAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        public virtual Task SetupAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        public async Task RecordAndStartPlayback()
+        public override async Task RecordAndStartPlayback()
         {
             await StartRecording();
 
@@ -135,7 +109,13 @@ namespace Azure.Test.Perf
             _testProxyPolicy.RecordingId = _recordingId;
         }
 
-        public void RunAll(CancellationToken cancellationToken)
+        public override void Reset()
+        {
+            Interlocked.Exchange(ref _completedOperations, 0);
+            LastCompletionTime = default;
+        }
+
+        public override void RunAll(CancellationToken cancellationToken)
         {
             var sw = Stopwatch.StartNew();
             while (!cancellationToken.IsCancellationRequested)
@@ -146,14 +126,14 @@ namespace Azure.Test.Perf
             }
         }
 
-        public async Task RunAllAsync(CancellationToken cancellationToken)
+        public override async Task RunAllAsync(CancellationToken cancellationToken)
         {
             var sw = Stopwatch.StartNew();
 
             while (!cancellationToken.IsCancellationRequested)
             {
                 await RunAsync(cancellationToken);
-                CompletedOperations++;
+                Interlocked.Increment(ref _completedOperations);
                 LastCompletionTime = sw.Elapsed;
             }
         }
@@ -162,7 +142,7 @@ namespace Azure.Test.Perf
 
         public abstract Task RunAsync(CancellationToken cancellationToken);
 
-        public async Task StopPlayback()
+        public override async Task StopPlayback()
         {
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/playback/stop"));
             message.Headers.Add("x-recording-id", _recordingId);
@@ -173,50 +153,6 @@ namespace Azure.Test.Perf
             // Stop redirecting requests to test proxy
             _testProxyPolicy.Mode = null;
             _testProxyPolicy.RecordingId = null;
-        }
-
-        public virtual Task CleanupAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        public virtual Task GlobalCleanupAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        // https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#implement-both-dispose-and-async-dispose-patterns
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            await DisposeAsyncCore();
-
-            Dispose(disposing: false);
-            GC.SuppressFinalize(this);
-        }
-
-        public virtual void Dispose(bool disposing)
-        {
-        }
-
-        public virtual ValueTask DisposeAsyncCore()
-        {
-            return default;
-        }
-
-        protected static string GetEnvironmentVariable(string name)
-        {
-            var value = Environment.GetEnvironmentVariable(name);
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new InvalidOperationException($"Undefined environment variable {name}");
-            }
-            return value;
         }
 
         private async Task StartRecording()

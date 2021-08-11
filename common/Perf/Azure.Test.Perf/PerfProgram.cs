@@ -20,13 +20,13 @@ namespace Azure.Test.Perf
     public static class PerfProgram
     {
         private static IPerfTest[] _perfTests;
-        private static IEnumerable<int> _completedOperations => _perfTests.Select(p => p.CompletedOperations);
+        private static IEnumerable<long> _completedOperations => _perfTests.Select(p => p.CompletedOperations);
         private static IEnumerable<TimeSpan> _lastCompletionTimes => _perfTests.Select(p => p.LastCompletionTime);
         private static List<TimeSpan>[] _latencies;
         private static List<TimeSpan>[] _correctedLatencies;
         private static Channel<(TimeSpan, Stopwatch)> _pendingOperations;
 
-        private static int CompletedOperations => _completedOperations.Sum();
+        private static long CompletedOperations => _completedOperations.Sum();
         private static double OperationsPerSecond => _completedOperations.Zip(_lastCompletionTimes,
             (operations, time) => operations > 0 ? (operations / time.TotalSeconds) : 0)
             .Sum();
@@ -312,8 +312,7 @@ namespace Azure.Test.Perf
             // _lastCompletionTimes = new TimeSpan[options.Parallel];
             foreach (var test in tests)
             {
-                test.CompletedOperations = 0;
-                test.LastCompletionTime = default;
+                test.Reset();
             }
 
             if (latency)
@@ -338,7 +337,7 @@ namespace Azure.Test.Perf
             using var testCts = new CancellationTokenSource(duration);
             var cancellationToken = testCts.Token;
 
-            var lastCompleted = 0;
+            long lastCompleted = 0;
 
             using var progressStatusCts = new CancellationTokenSource();
             var progressStatusThread = PerfStressUtilities.PrintStatus(

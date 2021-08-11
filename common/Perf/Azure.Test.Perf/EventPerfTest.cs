@@ -1,47 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Test.Perf
 {
-    public abstract class EventPerfTest<TOptions> : IPerfTest where TOptions : PerfOptions
+    public abstract class EventPerfTest<TOptions> : PerfTestBase<TOptions> where TOptions : PerfOptions
     {
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
-        protected TOptions Options { get; private set; }
+        private long _completedOperations;
+        public override long CompletedOperations => _completedOperations;
 
-        private int _completedOperations;
-        public int CompletedOperations
+        public EventPerfTest(TOptions options) : base(options)
         {
-            get
-            {
-                return _completedOperations;
-            }
-            set
-            {
-                Interlocked.Exchange(ref _completedOperations, value);
-            }
-        }
-
-        public TimeSpan LastCompletionTime { get; set; }
-
-        public EventPerfTest(TOptions options)
-        {
-            Options = options;
-        }
-
-        public virtual Task GlobalSetupAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        public virtual Task SetupAsync()
-        {
-            return Task.CompletedTask;
         }
 
         protected void EventRaised()
@@ -50,70 +25,22 @@ namespace Azure.Test.Perf
             LastCompletionTime = _stopwatch.Elapsed;
         }
 
-        public void RunAll(CancellationToken cancellationToken)
+        public override void Reset()
+        {
+            Interlocked.Exchange(ref _completedOperations, 0);
+            LastCompletionTime = default;
+        }
+
+        public override void RunAll(CancellationToken cancellationToken)
         {
             _stopwatch.Restart();
             Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken).Wait();
         }
 
-        public Task RunAllAsync(CancellationToken cancellationToken)
+        public override Task RunAllAsync(CancellationToken cancellationToken)
         {
             _stopwatch.Restart();
             return Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
-        }
-
-        public virtual Task CleanupAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        public virtual Task GlobalCleanupAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        // https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#implement-both-dispose-and-async-dispose-patterns
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            await DisposeAsyncCore();
-
-            Dispose(disposing: false);
-            GC.SuppressFinalize(this);
-        }
-
-        public virtual void Dispose(bool disposing)
-        {
-        }
-
-        public virtual ValueTask DisposeAsyncCore()
-        {
-            return default;
-        }
-
-        protected static string GetEnvironmentVariable(string name)
-        {
-            var value = Environment.GetEnvironmentVariable(name);
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new InvalidOperationException($"Undefined environment variable {name}");
-            }
-            return value;
-        }
-
-        public Task RecordAndStartPlayback()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task StopPlayback()
-        {
-            throw new NotImplementedException();
         }
     }
 }
