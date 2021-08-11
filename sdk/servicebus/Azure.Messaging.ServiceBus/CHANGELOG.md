@@ -5,7 +5,7 @@
 ### Acknowledgments
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
-- Timothée Lecomte _([GitHub](https://github.com/tlecomte))_
+- Timothee Lecomte _([GitHub](https://github.com/tlecomte))_
 - Shlomi Assaf _([GitHub](https://github.com/shlomiassaf))_
 
 ### Features Added
