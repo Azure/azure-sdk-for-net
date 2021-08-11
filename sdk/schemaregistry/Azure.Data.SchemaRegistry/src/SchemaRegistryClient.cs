@@ -143,14 +143,14 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaContent">The string representation of the schema's content.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema ID provided by the service.</returns>
-#pragma warning disable AZC0015
+#pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async ValueTask<SchemaProperties> GetSchemaIdAsync(
             string groupName,
             string schemaName,
             SerializationType serializationType,
             string schemaContent,
             CancellationToken cancellationToken = default) =>
-#pragma warning restore AZC0015
+#pragma warning restore AZC0015 // Unexpected client method return type.
                 await GetSchemaIdInternalAsync(groupName, schemaName, serializationType, schemaContent, true, cancellationToken)
                     .ConfigureAwait(false);
 
@@ -163,14 +163,14 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaContent">The string representation of the schema's content.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema ID provided by the service.</returns>
-#pragma warning disable AZC0015
+#pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual SchemaProperties GetSchemaId(
             string groupName,
             string schemaName,
             SerializationType serializationType,
             string schemaContent,
             CancellationToken cancellationToken = default) =>
-#pragma warning restore AZC0015
+#pragma warning restore AZC0015 // Unexpected client method return type.
                 GetSchemaIdInternalAsync(groupName, schemaName, serializationType, schemaContent, false, cancellationToken).EnsureCompleted();
 
         private async ValueTask<SchemaProperties> GetSchemaIdInternalAsync(
@@ -221,9 +221,9 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaId">The schema ID of the the schema from the SchemaRegistry.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
-#pragma warning disable AZC0015
+#pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async ValueTask<SchemaProperties> GetSchemaAsync(string schemaId, CancellationToken cancellationToken = default) =>
-#pragma warning restore AZC0015
+#pragma warning restore AZC0015 // Unexpected client method return type.
             await GetSchemaInternalAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -232,9 +232,9 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaId">The schema ID of the the schema from the SchemaRegistry.</param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
-#pragma warning disable AZC0015  Client methods should return Response<T>
+#pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual SchemaProperties GetSchema(string schemaId, CancellationToken cancellationToken = default) =>
-#pragma warning restore AZC0015
+#pragma warning restore AZC0015 // Unexpected client method return type.
             GetSchemaInternalAsync(schemaId, false, cancellationToken).EnsureCompleted();
 
         private async ValueTask<SchemaProperties> GetSchemaInternalAsync(string schemaId, bool async, CancellationToken cancellationToken)
