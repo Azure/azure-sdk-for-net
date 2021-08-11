@@ -308,8 +308,6 @@ namespace Azure.Test.Perf
             var jobStatistics = warmup ? false : options.JobStatistics;
             var latency = warmup ? false : options.Latency;
 
-            // _completedOperations = new int[options.Parallel];
-            // _lastCompletionTimes = new TimeSpan[options.Parallel];
             foreach (var test in tests)
             {
                 test.Reset();
