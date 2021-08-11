@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Sample.Perf
+namespace Azure.Sample.Perf.Event
 {
     public class MockEventArgs
     {

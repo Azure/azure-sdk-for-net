@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Sample.Perf
+namespace Azure.Sample.Perf.Event
 {
     public class MockEventProcessorBaseTest : PerfTestBase<MockEventProcessorOptions>
     {

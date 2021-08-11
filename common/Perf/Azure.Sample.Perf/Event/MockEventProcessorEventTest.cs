@@ -4,7 +4,7 @@
 using Azure.Test.Perf;
 using System.Threading.Tasks;
 
-namespace Azure.Sample.Perf
+namespace Azure.Sample.Perf.Event
 {
     public class MockEventProcessorEventTest : EventPerfTest<MockEventProcessorOptions>
     {

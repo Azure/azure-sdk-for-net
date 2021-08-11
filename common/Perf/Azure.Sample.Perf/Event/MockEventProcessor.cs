@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Sample.Perf
+namespace Azure.Sample.Perf.Event
 {
     public class MockEventProcessor
     {
