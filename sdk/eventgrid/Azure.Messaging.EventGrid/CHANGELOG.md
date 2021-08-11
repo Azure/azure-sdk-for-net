@@ -5,7 +5,7 @@
 ### Features Added
 - Added `ContainerServiceNewKubernetesVersionAvailableEventData` system event.
 
-### Key Bugs Fixed
+### Bugs Fixed
 - Updated deserialization of KeyVault system events to match the casing used in the events published by the service.
 
 ## 4.5.0 (2021-07-19)
