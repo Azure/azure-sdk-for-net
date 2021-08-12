@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        internal ResourceGroupCreateOrUpdateOperation(ResourceOperations parentOperation, Response<ResourceGroupData> response)
+        internal ResourceGroupCreateOrUpdateOperation(ArmResource parentOperation, Response<ResourceGroupData> response)
         {
             _operation = new OperationOrResponseInternals<ResourceGroup>(Response.FromValue(new ResourceGroup(parentOperation, response.Value), response.GetRawResponse()));
         }

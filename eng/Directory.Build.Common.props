@@ -126,7 +126,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true'">
-    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core" VersionOverride="1.18.0-alpha.20210810.5"/>
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

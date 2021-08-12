@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
@@ -13,8 +14,10 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of Tenant and their operations over their parent.
     /// </summary>
-    public class TenantContainer : ResourceContainer
+    public class TenantContainer : ArmContainer
     {
+        private ClientDiagnostics _clientDiagnostics;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TenantContainer"/> class for mocking.
         /// </summary>
@@ -35,6 +38,8 @@ namespace Azure.ResourceManager.Resources
         protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
 
         private TenantsRestOperations RestClient => new TenantsRestOperations(Diagnostics, Pipeline, BaseUri);
+
+        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary> Gets the tenants for your account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
