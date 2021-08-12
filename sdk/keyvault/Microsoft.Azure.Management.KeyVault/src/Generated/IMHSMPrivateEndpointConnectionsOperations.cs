@@ -19,23 +19,19 @@ namespace Microsoft.Azure.Management.KeyVault
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PrivateEndpointConnectionsOperations operations.
+    /// MHSMPrivateEndpointConnectionsOperations operations.
     /// </summary>
-    public partial interface IPrivateEndpointConnectionsOperations
+    public partial interface IMHSMPrivateEndpointConnectionsOperations
     {
         /// <summary>
-        /// Gets the specified private endpoint connection associated with the
-        /// key vault.
+        /// The List operation gets information about the private endpoint
+        /// connections associated with the managed HSM Pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group that contains the key vault.
+        /// Name of the resource group that contains the managed HSM pool.
         /// </param>
-        /// <param name='vaultName'>
-        /// The name of the key vault.
-        /// </param>
-        /// <param name='privateEndpointConnectionName'>
-        /// Name of the private endpoint connection associated with the key
-        /// vault.
+        /// <param name='name'>
+        /// Name of the managed HSM Pool
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -43,7 +39,7 @@ namespace Microsoft.Azure.Management.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ManagedHsmErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -52,20 +48,50 @@ namespace Microsoft.Azure.Management.KeyVault
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<MHSMPrivateEndpointConnection>>> ListByResourceWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the specified private endpoint connection associated with
-        /// the key vault.
+        /// Gets the specified private endpoint connection associated with the
+        /// managed HSM Pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group that contains the key vault.
+        /// Name of the resource group that contains the managed HSM pool.
         /// </param>
-        /// <param name='vaultName'>
-        /// The name of the key vault.
+        /// <param name='name'>
+        /// Name of the managed HSM Pool
         /// </param>
         /// <param name='privateEndpointConnectionName'>
-        /// Name of the private endpoint connection associated with the key
-        /// vault.
+        /// Name of the private endpoint connection associated with the managed
+        /// hsm pool.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ManagedHsmErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<MHSMPrivateEndpointConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates the specified private endpoint connection associated with
+        /// the managed hsm pool.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group that contains the managed HSM pool.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the managed HSM Pool
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// Name of the private endpoint connection associated with the managed
+        /// hsm pool.
         /// </param>
         /// <param name='properties'>
         /// The intended state of private endpoint connection.
@@ -85,20 +111,20 @@ namespace Microsoft.Azure.Management.KeyVault
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionsPutHeaders>> PutWithHttpMessagesAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, PrivateEndpointConnection properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MHSMPrivateEndpointConnection,MHSMPrivateEndpointConnectionsPutHeaders>> PutWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, MHSMPrivateEndpointConnection properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified private endpoint connection associated with
-        /// the key vault.
+        /// the managed hsm pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group that contains the key vault.
+        /// Name of the resource group that contains the managed HSM pool.
         /// </param>
-        /// <param name='vaultName'>
-        /// The name of the key vault.
+        /// <param name='name'>
+        /// Name of the managed HSM Pool
         /// </param>
         /// <param name='privateEndpointConnectionName'>
-        /// Name of the private endpoint connection associated with the key
-        /// vault.
+        /// Name of the private endpoint connection associated with the managed
+        /// hsm pool.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -115,46 +141,20 @@ namespace Microsoft.Azure.Management.KeyVault
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionsDeleteHeaders>> DeleteWithHttpMessagesAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// The List operation gets information about the private endpoint
-        /// connections associated with the vault.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group that contains the key vault.
-        /// </param>
-        /// <param name='vaultName'>
-        /// The name of the key vault.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListByResourceWithHttpMessagesAsync(string resourceGroupName, string vaultName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MHSMPrivateEndpointConnection,MHSMPrivateEndpointConnectionsDeleteHeaders>> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified private endpoint connection associated with
-        /// the key vault.
+        /// the managed hsm pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group that contains the key vault.
+        /// Name of the resource group that contains the managed HSM pool.
         /// </param>
-        /// <param name='vaultName'>
-        /// The name of the key vault.
+        /// <param name='name'>
+        /// Name of the managed HSM Pool
         /// </param>
         /// <param name='privateEndpointConnectionName'>
-        /// Name of the private endpoint connection associated with the key
-        /// vault.
+        /// Name of the private endpoint connection associated with the managed
+        /// hsm pool.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -171,10 +171,10 @@ namespace Microsoft.Azure.Management.KeyVault
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection,PrivateEndpointConnectionsDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vaultName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MHSMPrivateEndpointConnection,MHSMPrivateEndpointConnectionsDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The List operation gets information about the private endpoint
-        /// connections associated with the vault.
+        /// connections associated with the managed HSM Pool.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ManagedHsmErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -194,6 +194,6 @@ namespace Microsoft.Azure.Management.KeyVault
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListByResourceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<MHSMPrivateEndpointConnection>>> ListByResourceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

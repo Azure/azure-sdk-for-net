@@ -44,6 +44,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// access policies are required.</param>
         /// <param name="vaultUri">The URI of the vault for performing
         /// operations on keys and secrets.</param>
+        /// <param name="hsmPoolResourceId">The resource id of HSM
+        /// Pool.</param>
         /// <param name="enabledForDeployment">Property to specify whether
         /// Azure Virtual Machines are permitted to retrieve certificates
         /// stored as secrets from the key vault.</param>
@@ -63,13 +65,12 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="enableRbacAuthorization">Property that controls how
         /// data actions are authorized. When true, the key vault will use Role
         /// Based Access Control (RBAC) for authorization of data actions, and
-        /// the access policies specified in vault properties will be  ignored
-        /// (warning: this is a preview feature). When false, the key vault
-        /// will use the access policies specified in vault properties, and any
-        /// policy stored on Azure Resource Manager will be ignored. If null or
-        /// not specified, the vault is created with the default value of
-        /// false. Note that management actions are always authorized with
-        /// RBAC.</param>
+        /// the access policies specified in vault properties will be  ignored.
+        /// When false, the key vault will use the access policies specified in
+        /// vault properties, and any policy stored on Azure Resource Manager
+        /// will be ignored. If null or not specified, the vault is created
+        /// with the default value of false. Note that management actions are
+        /// always authorized with RBAC.</param>
         /// <param name="createMode">The vault's create mode to indicate
         /// whether the vault need to be recovered or not. Possible values
         /// include: 'recover', 'default'</param>
@@ -82,14 +83,17 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// - that is, the property does not accept false as its value.</param>
         /// <param name="networkAcls">Rules governing the accessibility of the
         /// key vault from specific network locations.</param>
+        /// <param name="provisioningState">Provisioning state of the vault.
+        /// Possible values include: 'Succeeded', 'RegisteringDns'</param>
         /// <param name="privateEndpointConnections">List of private endpoint
         /// connections associated with the key vault.</param>
-        public VaultProperties(System.Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies = default(IList<AccessPolicyEntry>), string vaultUri = default(string), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?), int? softDeleteRetentionInDays = default(int?), bool? enableRbacAuthorization = default(bool?), CreateMode? createMode = default(CreateMode?), bool? enablePurgeProtection = default(bool?), NetworkRuleSet networkAcls = default(NetworkRuleSet), IList<PrivateEndpointConnectionItem> privateEndpointConnections = default(IList<PrivateEndpointConnectionItem>))
+        public VaultProperties(System.Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies = default(IList<AccessPolicyEntry>), string vaultUri = default(string), string hsmPoolResourceId = default(string), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?), int? softDeleteRetentionInDays = default(int?), bool? enableRbacAuthorization = default(bool?), CreateMode? createMode = default(CreateMode?), bool? enablePurgeProtection = default(bool?), NetworkRuleSet networkAcls = default(NetworkRuleSet), string provisioningState = default(string), IList<PrivateEndpointConnectionItem> privateEndpointConnections = default(IList<PrivateEndpointConnectionItem>))
         {
             TenantId = tenantId;
             Sku = sku;
             AccessPolicies = accessPolicies;
             VaultUri = vaultUri;
+            HsmPoolResourceId = hsmPoolResourceId;
             EnabledForDeployment = enabledForDeployment;
             EnabledForDiskEncryption = enabledForDiskEncryption;
             EnabledForTemplateDeployment = enabledForTemplateDeployment;
@@ -99,6 +103,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
             CreateMode = createMode;
             EnablePurgeProtection = enablePurgeProtection;
             NetworkAcls = networkAcls;
+            ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
             CustomInit();
         }
@@ -137,6 +142,12 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "vaultUri")]
         public string VaultUri { get; set; }
+
+        /// <summary>
+        /// Gets the resource id of HSM Pool.
+        /// </summary>
+        [JsonProperty(PropertyName = "hsmPoolResourceId")]
+        public string HsmPoolResourceId { get; private set; }
 
         /// <summary>
         /// Gets or sets property to specify whether Azure Virtual Machines are
@@ -180,12 +191,12 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// Gets or sets property that controls how data actions are
         /// authorized. When true, the key vault will use Role Based Access
         /// Control (RBAC) for authorization of data actions, and the access
-        /// policies specified in vault properties will be  ignored (warning:
-        /// this is a preview feature). When false, the key vault will use the
-        /// access policies specified in vault properties, and any policy
-        /// stored on Azure Resource Manager will be ignored. If null or not
-        /// specified, the vault is created with the default value of false.
-        /// Note that management actions are always authorized with RBAC.
+        /// policies specified in vault properties will be  ignored. When
+        /// false, the key vault will use the access policies specified in
+        /// vault properties, and any policy stored on Azure Resource Manager
+        /// will be ignored. If null or not specified, the vault is created
+        /// with the default value of false. Note that management actions are
+        /// always authorized with RBAC.
         /// </summary>
         [JsonProperty(PropertyName = "enableRbacAuthorization")]
         public bool? EnableRbacAuthorization { get; set; }
@@ -216,6 +227,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "networkAcls")]
         public NetworkRuleSet NetworkAcls { get; set; }
+
+        /// <summary>
+        /// Gets or sets provisioning state of the vault. Possible values
+        /// include: 'Succeeded', 'RegisteringDns'
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets list of private endpoint connections associated with the key

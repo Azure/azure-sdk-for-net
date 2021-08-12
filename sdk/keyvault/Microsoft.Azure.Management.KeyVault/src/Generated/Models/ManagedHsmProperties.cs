@@ -60,7 +60,16 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// include: 'Succeeded', 'Provisioning', 'Failed', 'Updating',
         /// 'Deleting', 'Activated', 'SecurityDomainRestore',
         /// 'Restoring'</param>
-        public ManagedHsmProperties(System.Guid? tenantId = default(System.Guid?), IList<string> initialAdminObjectIds = default(IList<string>), string hsmUri = default(string), bool? enableSoftDelete = default(bool?), int? softDeleteRetentionInDays = default(int?), bool? enablePurgeProtection = default(bool?), CreateMode? createMode = default(CreateMode?), string statusMessage = default(string), string provisioningState = default(string))
+        /// <param name="networkAcls">Rules governing the accessibility of the
+        /// key vault from specific network locations.</param>
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connections associated with the managed hsm pool.</param>
+        /// <param name="publicNetworkAccess">Control permission for data plane
+        /// traffic coming from public networks while private endpoint is
+        /// enabled. Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="scheduledPurgeDate">The scheduled purge date in
+        /// UTC.</param>
+        public ManagedHsmProperties(System.Guid? tenantId = default(System.Guid?), IList<string> initialAdminObjectIds = default(IList<string>), string hsmUri = default(string), bool? enableSoftDelete = default(bool?), int? softDeleteRetentionInDays = default(int?), bool? enablePurgeProtection = default(bool?), CreateMode? createMode = default(CreateMode?), string statusMessage = default(string), string provisioningState = default(string), MHSMNetworkRuleSet networkAcls = default(MHSMNetworkRuleSet), IList<MHSMPrivateEndpointConnectionItem> privateEndpointConnections = default(IList<MHSMPrivateEndpointConnectionItem>), string publicNetworkAccess = default(string), System.DateTime? scheduledPurgeDate = default(System.DateTime?))
         {
             TenantId = tenantId;
             InitialAdminObjectIds = initialAdminObjectIds;
@@ -71,6 +80,10 @@ namespace Microsoft.Azure.Management.KeyVault.Models
             CreateMode = createMode;
             StatusMessage = statusMessage;
             ProvisioningState = provisioningState;
+            NetworkAcls = networkAcls;
+            PrivateEndpointConnections = privateEndpointConnections;
+            PublicNetworkAccess = publicNetworkAccess;
+            ScheduledPurgeDate = scheduledPurgeDate;
             CustomInit();
         }
 
@@ -94,11 +107,11 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public IList<string> InitialAdminObjectIds { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI of the managed hsm pool for performing
-        /// operations on keys.
+        /// Gets the URI of the managed hsm pool for performing operations on
+        /// keys.
         /// </summary>
         [JsonProperty(PropertyName = "hsmUri")]
-        public string HsmUri { get; set; }
+        public string HsmUri { get; private set; }
 
         /// <summary>
         /// Gets or sets property to specify whether the 'soft delete'
@@ -150,6 +163,34 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets rules governing the accessibility of the key vault
+        /// from specific network locations.
+        /// </summary>
+        [JsonProperty(PropertyName = "networkAcls")]
+        public MHSMNetworkRuleSet NetworkAcls { get; set; }
+
+        /// <summary>
+        /// Gets list of private endpoint connections associated with the
+        /// managed hsm pool.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateEndpointConnections")]
+        public IList<MHSMPrivateEndpointConnectionItem> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets or sets control permission for data plane traffic coming from
+        /// public networks while private endpoint is enabled. Possible values
+        /// include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets the scheduled purge date in UTC.
+        /// </summary>
+        [JsonProperty(PropertyName = "scheduledPurgeDate")]
+        public System.DateTime? ScheduledPurgeDate { get; private set; }
 
     }
 }

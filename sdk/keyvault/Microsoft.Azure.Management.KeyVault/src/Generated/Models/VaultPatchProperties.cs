@@ -53,11 +53,11 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="enableRbacAuthorization">Property that controls how
         /// data actions are authorized. When true, the key vault will use Role
         /// Based Access Control (RBAC) for authorization of data actions, and
-        /// the access policies specified in vault properties will be  ignored
-        /// (warning: this is a preview feature). When false, the key vault
-        /// will use the access policies specified in vault properties, and any
-        /// policy stored on Azure Resource Manager will be ignored. If null or
-        /// not specified, the value of this property will not change.</param>
+        /// the access policies specified in vault properties will be  ignored.
+        /// When false, the key vault will use the access policies specified in
+        /// vault properties, and any policy stored on Azure Resource Manager
+        /// will be ignored. If null or not specified, the value of this
+        /// property will not change.</param>
         /// <param name="softDeleteRetentionInDays">softDelete data retention
         /// days. It accepts &gt;=7 and &lt;=90.</param>
         /// <param name="createMode">The vault's create mode to indicate
@@ -149,11 +149,11 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// Gets or sets property that controls how data actions are
         /// authorized. When true, the key vault will use Role Based Access
         /// Control (RBAC) for authorization of data actions, and the access
-        /// policies specified in vault properties will be  ignored (warning:
-        /// this is a preview feature). When false, the key vault will use the
-        /// access policies specified in vault properties, and any policy
-        /// stored on Azure Resource Manager will be ignored. If null or not
-        /// specified, the value of this property will not change.
+        /// policies specified in vault properties will be  ignored. When
+        /// false, the key vault will use the access policies specified in
+        /// vault properties, and any policy stored on Azure Resource Manager
+        /// will be ignored. If null or not specified, the value of this
+        /// property will not change.
         /// </summary>
         [JsonProperty(PropertyName = "enableRbacAuthorization")]
         public bool? EnableRbacAuthorization { get; set; }

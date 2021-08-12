@@ -49,6 +49,11 @@ namespace Microsoft.Azure.Management.KeyVault
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// Client Api Version.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -83,14 +88,24 @@ namespace Microsoft.Azure.Management.KeyVault
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
         /// Gets the IManagedHsmsOperations.
         /// </summary>
         IManagedHsmsOperations ManagedHsms { get; }
+
+        /// <summary>
+        /// Gets the IMHSMPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IMHSMPrivateEndpointConnectionsOperations MHSMPrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IMHSMPrivateLinkResourcesOperations.
+        /// </summary>
+        IMHSMPrivateLinkResourcesOperations MHSMPrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
 
     }
 }

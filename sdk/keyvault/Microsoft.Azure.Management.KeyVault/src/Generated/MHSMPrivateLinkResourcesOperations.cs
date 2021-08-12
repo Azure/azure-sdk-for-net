@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.KeyVault
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PrivateLinkResourcesOperations operations.
+    /// MHSMPrivateLinkResourcesOperations operations.
     /// </summary>
-    internal partial class PrivateLinkResourcesOperations : IServiceOperations<KeyVaultManagementClient>, IPrivateLinkResourcesOperations
+    internal partial class MHSMPrivateLinkResourcesOperations : IServiceOperations<KeyVaultManagementClient>, IMHSMPrivateLinkResourcesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the PrivateLinkResourcesOperations class.
+        /// Initializes a new instance of the MHSMPrivateLinkResourcesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.KeyVault
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal PrivateLinkResourcesOperations(KeyVaultManagementClient client)
+        internal MHSMPrivateLinkResourcesOperations(KeyVaultManagementClient client)
         {
             if (client == null)
             {
@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Management.KeyVault
         public KeyVaultManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the private link resources supported for the key vault.
+        /// Gets the private link resources supported for the managed hsm pool.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group that contains the key vault.
+        /// Name of the resource group that contains the managed HSM pool.
         /// </param>
-        /// <param name='vaultName'>
-        /// The name of the key vault.
+        /// <param name='name'>
+        /// Name of the managed HSM Pool
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PrivateLinkResourceListResult>> ListByVaultWithHttpMessagesAsync(string resourceGroupName, string vaultName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MHSMPrivateLinkResourceListResult>> ListByMHSMResourceWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -90,16 +90,9 @@ namespace Microsoft.Azure.Management.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (vaultName == null)
+            if (name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vaultName");
-            }
-            if (vaultName != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(vaultName, "^[a-zA-Z0-9-]{3,24}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "vaultName", "^[a-zA-Z0-9-]{3,24}$");
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
             if (Client.ApiVersion == null)
             {
@@ -113,16 +106,16 @@ namespace Microsoft.Azure.Management.KeyVault
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("vaultName", vaultName);
+                tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByVault", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByMHSMResource", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateLinkResources").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/privateLinkResources").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
+            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -221,7 +214,7 @@ namespace Microsoft.Azure.Management.KeyVault
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PrivateLinkResourceListResult>();
+            var _result = new AzureOperationResponse<MHSMPrivateLinkResourceListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -234,7 +227,7 @@ namespace Microsoft.Azure.Management.KeyVault
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PrivateLinkResourceListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<MHSMPrivateLinkResourceListResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

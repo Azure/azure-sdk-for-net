@@ -15,31 +15,27 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using System.Linq;
 
     /// <summary>
-    /// A rule governing the accessibility of a vault from a specific virtual
-    /// network.
+    /// A rule governing the accessibility of a managed hsm pool from a
+    /// specific virtual network.
     /// </summary>
-    public partial class VirtualNetworkRule
+    public partial class MHSMVirtualNetworkRule
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkRule class.
+        /// Initializes a new instance of the MHSMVirtualNetworkRule class.
         /// </summary>
-        public VirtualNetworkRule()
+        public MHSMVirtualNetworkRule()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkRule class.
+        /// Initializes a new instance of the MHSMVirtualNetworkRule class.
         /// </summary>
         /// <param name="id">Full resource id of a vnet subnet, such as
         /// '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'.</param>
-        /// <param name="ignoreMissingVnetServiceEndpoint">Property to specify
-        /// whether NRP will ignore the check if parent subnet has
-        /// serviceEndpoints configured.</param>
-        public VirtualNetworkRule(string id, bool? ignoreMissingVnetServiceEndpoint = default(bool?))
+        public MHSMVirtualNetworkRule(string id)
         {
             Id = id;
-            IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
             CustomInit();
         }
 
@@ -54,13 +50,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets property to specify whether NRP will ignore the check
-        /// if parent subnet has serviceEndpoints configured.
-        /// </summary>
-        [JsonProperty(PropertyName = "ignoreMissingVnetServiceEndpoint")]
-        public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
 
         /// <summary>
         /// Validate the object.
