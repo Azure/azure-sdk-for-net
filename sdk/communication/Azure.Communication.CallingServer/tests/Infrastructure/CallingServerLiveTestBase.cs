@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Identity;
 using Azure.Core;
+using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
@@ -25,7 +25,7 @@ namespace Azure.Communication.CallingServer.Tests
         protected const string RESOURCE_IDENTIFIER = "016a7064-0581-40b9-be73-6dde64d69d72";
 
         // Random Gen Guid
-        protected const string GROUP_IDENTIFIER = "e9e70082-43b4-4aab-a53f-dff66658c28e";
+        protected const string GROUP_IDENTIFIER = "3500769f-e11b-4ceb-85cb-bc8df2a01768";
 
         protected string GetResourceId()
         {
@@ -132,10 +132,17 @@ namespace Azure.Communication.CallingServer.Tests
             }
             else
             {
+                #region Snippet:Azure_Communication_CallingServer_Tests_Samples_CreateCallingServerClientWithToken
+                //@@ string endpoint = "<endpoint_url>";
+                //@@ string userAssignedClientId = "<your managed identity client Id>";
+                //@@ var tokenCredential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
+                /*@@*/
                 tokenCredential = new DefaultAzureCredential();
+                //@@ CallingServerClient client = new CallingServerClient(new Uri(endpoint), tokenCredential);
+                #endregion Snippet:Azure_Communication_CallingServer_Tests_Samples_CreateCallingServerClientWithToken
             }
 
-            CallingServerClient client = new CallingServerClient(endpoint.ToString(), tokenCredential, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+            CallingServerClient client = new CallingServerClient(endpoint, tokenCredential, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
             return InstrumentClient(client);
         }
 
@@ -316,7 +323,7 @@ namespace Azure.Communication.CallingServer.Tests
         {
             Console.WriteLine("Performing add participant operation to add a participant");
 
-            string invitedUser = GetFixedUserId("0000000a-b200-7a0d-570c-113a0d00288d");
+            string invitedUser = GetFixedUserId("0000000b-d8d8-aaa3-3ef0-8b3a0d002f3f");
 
             var response = await serverCall.AddParticipantAsync(
                 new CommunicationUserIdentifier(invitedUser),
