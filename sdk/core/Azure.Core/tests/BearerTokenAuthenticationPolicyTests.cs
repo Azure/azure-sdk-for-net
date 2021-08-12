@@ -34,24 +34,24 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task BearerTokenAuthenticationPolicy_SupportsCaching_True()
+        public async Task BearerTokenAuthenticationPolicy_RefreshOnSetToNow()
         {
+            var now = DateTimeOffset.UtcNow;
             int expectedCalls = 3;
             int tokenCalls = 0;
             var credential = new TokenCredentialStub(
                 (r, c) =>
                 {
                     tokenCalls++;
-                    return r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default;
-                },
-                IsAsync);
-            credential.SetSupportsCaching(true);
+                    return r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? new AccessToken("token", DateTimeOffset.MaxValue, now) : default;
+                }, IsAsync);
             var policy = new BearerTokenAuthenticationPolicy(credential, new[] { "scope1", "scope2" });
 
             MockTransport transport = CreateMockTransport(_ => new MockResponse(200));
 
             for (int i = 0; i < expectedCalls; i++)
             {
+                await Task.Delay(100);
                 await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
             }
 
@@ -833,10 +833,6 @@ namespace Azure.Core.Tests
 
             public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
                 => _getTokenHandler(requestContext, cancellationToken);
-
-            private bool _supportsCaching = false;
-            public void SetSupportsCaching(bool supportsCaching) => _supportsCaching = supportsCaching;
-            public override bool SupportsCaching => _supportsCaching;
         }
     }
 }

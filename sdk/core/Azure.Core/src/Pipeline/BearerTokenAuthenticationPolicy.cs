@@ -197,18 +197,12 @@ namespace Azure.Core.Pipeline
                 bool getTokenFromCredential;
                 TaskCompletionSource<HeaderValueInfo> headerValueTcs;
                 TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs;
-                HeaderValueInfo info;
                 int maxCancellationRetries = 3;
-
-                if (_credential.SupportsCaching)
-                {
-                    info = await GetHeaderValueFromCredentialAsync(context, async, message.CancellationToken).ConfigureAwait(false);
-                    return info.HeaderValue;
-                }
 
                 while (true)
                 {
                     (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context);
+                    HeaderValueInfo info;
                     if (getTokenFromCredential)
                     {
                         if (backgroundUpdateTcs != null)
@@ -317,21 +311,21 @@ namespace Azure.Core.Pipeline
                     // Access token has been successfully acquired in background and it is not expired yet, use it instead of current one
                     if (_backgroundUpdateTcs != null &&
                         _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion &&
-                        _backgroundUpdateTcs.Task.Result.ExpiresOn > now)
+                        _backgroundUpdateTcs.Task.Result.Token.ExpiresOn >= now)
                     {
                         _infoTcs = _backgroundUpdateTcs;
                         _backgroundUpdateTcs = default;
                     }
 
                     // Attempt to get access token has failed or it has already expired. Need to get a new one
-                    if (_infoTcs.Task.Status != TaskStatus.RanToCompletion || now >= _infoTcs.Task.Result.ExpiresOn)
+                    if (_infoTcs.Task.Status != TaskStatus.RanToCompletion || now >= _infoTcs.Task.Result.Token.ExpiresOn)
                     {
                         _infoTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
                         return (_infoTcs, default, true);
                     }
 
                     // Access token is still valid but is about to expire, try to get it in background
-                    if (now >= _infoTcs.Task.Result.RefreshOn && _backgroundUpdateTcs == null)
+                    if (now >= _infoTcs.Task.Result.Token.RefreshOn && _backgroundUpdateTcs == null)
                     {
                         _backgroundUpdateTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
                         return (_infoTcs, _backgroundUpdateTcs, true);
@@ -362,12 +356,16 @@ namespace Azure.Core.Pipeline
                 }
                 catch (OperationCanceledException oce) when (cts.IsCancellationRequested)
                 {
-                    backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow));
+                    AccessToken token =  info.Token;
+                    token.RefreshOn = DateTimeOffset.UtcNow;
+                    backgroundUpdateTcs.SetResult(new HeaderValueInfo(token));
                     AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
                 }
                 catch (Exception e)
                 {
-                    backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryDelay));
+                    AccessToken token = info.Token;
+                    token.RefreshOn = DateTimeOffset.UtcNow + _tokenRefreshRetryDelay;
+                    backgroundUpdateTcs.SetResult(new HeaderValueInfo(token));
                     AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
                 }
                 finally
@@ -382,20 +380,20 @@ namespace Azure.Core.Pipeline
                     ? await _credential.GetTokenAsync(context, cancellationToken).ConfigureAwait(false)
                     : _credential.GetToken(context, cancellationToken);
 
-                return new HeaderValueInfo("Bearer " + token.Token, token.ExpiresOn, token.ExpiresOn - _tokenRefreshOffset);
+                // Set the RefreshOn value only if it is not already set by the credential.
+                token.RefreshOn ??= token.ExpiresOn - _tokenRefreshOffset;
+                return new HeaderValueInfo(token);
             }
 
             private readonly struct HeaderValueInfo
             {
                 public string HeaderValue { get; }
-                public DateTimeOffset ExpiresOn { get; }
-                public DateTimeOffset RefreshOn { get; }
+                public AccessToken Token { get; }
 
-                public HeaderValueInfo(string headerValue, DateTimeOffset expiresOn, DateTimeOffset refreshOn)
+                public HeaderValueInfo(AccessToken token)
                 {
-                    HeaderValue = headerValue;
-                    ExpiresOn = expiresOn;
-                    RefreshOn = refreshOn;
+                    Token = token;
+                    HeaderValue = "Bearer " + token.Token;
                 }
             }
         }

@@ -27,11 +27,5 @@ namespace Azure.Core
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A valid <see cref="AccessToken"/>.</returns>
         public abstract AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Indicates if a <see cref="TokenCredential"/> supports token caching.
-        /// If <c>true</c>, upstream components such as a <see cref="HttpPipelinePolicy"/> should rely on the credential itself to manage any token caching.
-        /// </summary>
-        public virtual bool SupportsCaching => false;
     }
 }
