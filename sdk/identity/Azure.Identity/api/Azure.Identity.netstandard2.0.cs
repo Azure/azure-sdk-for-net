@@ -229,7 +229,6 @@ namespace Azure.Identity
     {
         protected OnBehalfOfCredential() { }
         public OnBehalfOfCredential(string tenantId, string clientId, string clientSecret, Azure.Identity.OnBehalfOfCredentialOptions options = null) { }
-        public override bool SupportsCaching { get { throw null; } }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
     }

@@ -22,9 +22,6 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly string _clientSecret;
 
-        /// <inheritdoc />
-        public override bool SupportsCaching => true;
-
         /// <summary>
         /// Protected constructor for mocking.
         /// </summary>
@@ -89,7 +86,7 @@ namespace Azure.Identity
                     .AcquireTokenOnBehalfOf(requestContext.Scopes, tenantId, UserAssertionScope.Current.UserAssertion, async, cancellationToken)
                     .ConfigureAwait(false);
 
-                return new AccessToken(result.AccessToken, result.ExpiresOn);
+                return new AccessToken(result.AccessToken, result.ExpiresOn, DateTimeOffset.UtcNow);
             }
             catch (Exception e)
             {
