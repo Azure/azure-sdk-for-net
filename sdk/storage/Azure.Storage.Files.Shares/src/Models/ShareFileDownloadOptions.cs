@@ -3,12 +3,12 @@
 
 using Azure.Storage.Models;
 
-namespace Azure.Storage.Files.DataLake.Models
+namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
     /// Optional paratmers for downloading some range of a file.
     /// </summary>
-    public class DataLakeFileReadOptions
+    public class ShareFileDownloadOptions
     {
         /// <summary>
         /// If provided, only download the bytes of the blob in the specified
@@ -17,10 +17,10 @@ namespace Azure.Storage.Files.DataLake.Models
         public HttpRange Range { get; set; }
 
         /// <summary>
-        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
         /// downloading this file.
         /// </summary>
-        public DataLakeRequestConditions Conditions { get; set; }
+        public ShareFileRequestConditions Conditions { get; set; }
 
         /// <summary>
         /// Optional transactional hashing options.

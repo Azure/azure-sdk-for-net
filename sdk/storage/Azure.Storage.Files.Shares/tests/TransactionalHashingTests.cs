@@ -1,17 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.Models;
+using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Models;
-using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Files.Shares.Tests
 {
-    public class TransactionalHashingTests : BlobTestBase
+    public class TransactionalHashingTests : FileTestBase
     {
         #region Test Arg Definitions
         private const long DefaultDataSize = Constants.KB;
@@ -34,53 +36,29 @@ namespace Azure.Storage.Blobs.Tests
         }
         #endregion
 
-        public TransactionalHashingTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+        public TransactionalHashingTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         [Test, Combinatorial]
-        public async Task DownloadContentSuccessfulHashVerification(
+        public async Task ReadSuccessfulHashVerification(
             [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
             [ValueSource("DefaultDataHttpRanges")] HttpRange range)
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(DefaultDataSize);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(stream);
+                await file.UploadAsync(stream);
             }
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
             // Act / Assert
-            Assert.DoesNotThrowAsync(async () => await blob.DownloadContentAsync(new BlobBaseDownloadOptions
-            {
-                TransactionalHashingOptions = hashingOptions,
-                Range = range
-            }));
-        }
-
-        [Test, Combinatorial]
-        public async Task DownloadStreamingSuccessfulHashVerification(
-            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
-            [ValueSource("DefaultDataHttpRanges")] HttpRange range)
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(DefaultDataSize);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
-
-            // Act / Assert
-            Assert.DoesNotThrowAsync(async () => await (await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
+            Assert.DoesNotThrowAsync(async () => await (await file.DownloadAsync(new ShareFileDownloadOptions
             {
                 TransactionalHashingOptions = hashingOptions,
                 Range = range
@@ -92,16 +70,16 @@ namespace Azure.Storage.Blobs.Tests
         [TestCase(TransactionalHashAlgorithm.StorageCrc64, true)]
         // no hashing, so we save users a buffer
         [TestCase(TransactionalHashAlgorithm.None, false)]
-        public async Task ExpectedDownloadStreamingStreamTypeReturned(TransactionalHashAlgorithm algorithm, bool isBuffered)
+        public async Task ExpectedReadStreamTypeReturned(TransactionalHashAlgorithm algorithm, bool isBuffered)
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(stream);
+                await file.UploadAsync(stream);
             }
             // don't make options instance at all for no hash request
             DownloadTransactionalHashingOptions hashingOptions = algorithm == TransactionalHashAlgorithm.None
@@ -109,7 +87,7 @@ namespace Azure.Storage.Blobs.Tests
                 : new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
             // Act
-            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions { TransactionalHashingOptions = hashingOptions });
+            var response = await file.DownloadAsync(new ShareFileDownloadOptions { TransactionalHashingOptions = hashingOptions });
 
             // Assert
             if (isBuffered)
@@ -128,19 +106,19 @@ namespace Azure.Storage.Blobs.Tests
             [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
             [ValueSource("StorageStreamDefinitions")] (int DataSize, int BufferSize) storageStreamDefinitions)
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
 
             // Arrange
             var data = GetRandomBuffer(storageStreamDefinitions.DataSize);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(stream);
+                await file.UploadAsync(stream);
             }
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
             // Act
-            var readStream = await blob.OpenReadAsync(new BlobOpenReadOptions(false)
+            var readStream = await file.OpenReadAsync(new DataLakeOpenReadOptions(false)
             {
                 TransactionalHashingOptions = hashingOptions,
                 BufferSize = storageStreamDefinitions.BufferSize
@@ -149,7 +127,5 @@ namespace Azure.Storage.Blobs.Tests
             // Assert
             Assert.DoesNotThrowAsync(async () => await readStream.CopyToAsync(Stream.Null));
         }
-
-        // TODO test partitioned download
     }
 }
