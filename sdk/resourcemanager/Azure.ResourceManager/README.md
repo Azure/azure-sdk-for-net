@@ -74,20 +74,20 @@ await foreach (VirtualMachine vm in rg.GetVirtualMachines().GetAllAsync())
 
 #### **[Resource]Data.cs**
 
-This represents the data that makes up a given resource. Typically, this is the response data from a service call such as HTTP GET and provides details about the underlying resource. Previously, this was represented by a **Model** class.
+This represents the model that makes up a given resource. Typically, this is the response data from a service call such as HTTP GET and provides details about the underlying resource. Previously, this was represented by a **Model** class.
 
 #### **[Resource]Container.cs**
 
 This represents the operations you can perform on a collection of resources belonging to a specific parent resource.
-Most of the logical collection operations can be mapped to a function operation on this object
+This object provides most of the logical collection operations.
 
 | Collection Behavior | Container Method |
 |-|-|
-| Iterate | GetAllAsync() |
-| Index | GetAsync(string name) |
-| Add | CreateOrUpdateAsync(string name, [Resource]Data data) |
-| Contains | CheckIfExistsAsync(string name) |
-| TryGet | GetIfExistsAsync(string name) |
+| Iterate/List | GetAll() |
+| Index | Get(string name) |
+| Add | CreateOrUpdate(string name, [Resource]Data data) |
+| Contains | CheckIfExists(string name) |
+| TryGet | GetIfExists(string name) |
 
 For most things, the parent will be a **ResourceGroup**. However, each parent / child relationship is represented this way. For example, a **Subnet** is a child of a **VirtualNetwork** and a **ResourceGroup** is a child of a **Subscription**.
 
@@ -121,7 +121,7 @@ Console.WriteLine($"Subnet: {id.Name}");
 ```
 
 ### Managing Existing Resources By Id
-Performing operations on resources that already exist is a common use case when using the management SDK. In this scenario you usually have the identifier of the resource you want to work on as a string.  Although the new object hierarchy is great for provisioning and working within the scope of a given parent, it is not the most efficient when it comes to this specific scenario.  
+Performing operations on resources that already exist is a common use case when using the management client libraries. In this scenario you usually have the identifier of the resource you want to work on as a string.  Although the new object hierarchy is great for provisioning and working within the scope of a given parent, it is not the most efficient when it comes to this specific scenario.  
 
 Here is an example how you to access an `AvailabilitySet` object and manage it directly with its id: 
 ```csharp
@@ -170,6 +170,26 @@ Console.WriteLine(availabilitySet.Data.Name);
 If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoked from any [Resource]Container class.
 
 `GetIfExists()` and `GetIfExistsAsync()` return a `Response<T>` where T is null if the specified resource does not exist. On the other hand, `CheckIfExists()` and `CheckIfExistsAsync()` return `Response<bool>` where the bool will be false if the specified resource does not exist.  Both of these methods still give you access to the underlying raw response.
+
+Before these methods were introduced you would need to catch the `RequestFailedException` and inspect the status code for 404.
+
+```C# Snippet:Readme_OldCheckIfExistsRG
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+string rgName = "myRgName";
+
+try
+{
+    ResourceGroup myRG = await subscription.GetResourceGroups().GetAsync(rgName);
+    // At this point, we are sure that myRG is a not null Resource Group, so we can use this object to perform any operations we want.
+}
+catch (RequestFailedException ex) when (ex.Status == 404)
+{
+    Console.WriteLine($"Resource Group {rgName} does not exist.");
+}
+```
+
+Now with these convenience methods we can simply do the following.
 
 ```C# Snippet:Readme_CheckIfExistssRG
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());

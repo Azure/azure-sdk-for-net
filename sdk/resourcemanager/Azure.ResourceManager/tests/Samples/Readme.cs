@@ -104,5 +104,26 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             }
             #endregion Snippet:Readme_TryGetRG
         }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task TryGetResourceGroupOld()
+        {
+            #region Snippet:Readme_OldCheckIfExistsRG
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+            Subscription subscription = armClient.DefaultSubscription;
+            string rgName = "myRgName";
+
+            try
+            {
+                ResourceGroup myRG = await subscription.GetResourceGroups().GetAsync(rgName);
+                // At this point, we are sure that myRG is a not null Resource Group, so we can use this object to perform any operations we want.
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+                Console.WriteLine($"Resource Group {rgName} does not exist.");
+            }
+            #endregion Snippet:Readme_OldCheckIfExistsRG
+        }
     }
 }
