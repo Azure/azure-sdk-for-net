@@ -2,6 +2,8 @@
 
 ## 1.0.0-preview.7 (2021-08-10)
 
+### Changed
+- Updated to use service API version `2020-12-01`
 
 ## 1.0.0-preview.6 (2021-05-11)
 ### Key Bug Fixes
