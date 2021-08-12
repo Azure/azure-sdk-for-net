@@ -188,7 +188,6 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
-        ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="entityPath">The queue name or subscription path to process messages from.</param>
         /// <param name="isSessionEntity">Whether or not the processor is associated with a session entity.</param>
@@ -199,6 +198,7 @@ namespace Azure.Messaging.ServiceBus
         /// Only applies if isSessionEntity is true.</param>
         /// <param name="maxConcurrentCallsPerSession">The max number of concurrent calls per session.
         /// Only applies if isSessionEntity is true.</param>
+        /// <param name="maxConcurrentCallsAcrossAllSessions">The max number of concurrent calls across all sessions.</param>
         /// <param name="sessionProcessor">If this is for a session processor, will contain the session processor instance.</param>
         internal ServiceBusProcessor(
             ServiceBusConnection connection,
@@ -208,6 +208,7 @@ namespace Azure.Messaging.ServiceBus
             string[] sessionIds = default,
             int maxConcurrentSessions = default,
             int maxConcurrentCallsPerSession = default,
+            int? maxConcurrentCallsAcrossAllSessions = default,
             ServiceBusSessionProcessor sessionProcessor = default)
         {
             Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
@@ -232,9 +233,16 @@ namespace Azure.Messaging.ServiceBus
 
             if (isSessionEntity)
             {
-                _maxConcurrentCalls = _sessionIds.Length > 0
-                    ? Math.Min(_sessionIds.Length, _maxConcurrentSessions)
-                    : _maxConcurrentSessions * _maxConcurrentCallsPerSession;
+                if (maxConcurrentCallsAcrossAllSessions.HasValue)
+                {
+                    _maxConcurrentCalls = maxConcurrentCallsAcrossAllSessions.Value;
+                }
+                else
+                {
+                    _maxConcurrentCalls = _sessionIds.Length > 0
+                        ? Math.Min(_sessionIds.Length, _maxConcurrentSessions)
+                        : _maxConcurrentSessions * _maxConcurrentCallsPerSession;
+                }
             }
 
             var maxAcceptSessions = Math.Min(_maxConcurrentCalls, 2 * Environment.ProcessorCount);
@@ -960,21 +968,21 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        internal void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession, int? maxConcurrentCalls = default)
+        internal void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession, int? maxConcurrentCallsAcrossAllSessions = default)
         {
             Argument.AssertAtLeast(maxConcurrentSessions, 1, nameof(maxConcurrentSessions));
             Argument.AssertAtLeast(maxConcurrentCallsPerSession, 1, nameof(maxConcurrentCallsPerSession));
 
-            if (maxConcurrentCalls.HasValue)
+            if (maxConcurrentCallsAcrossAllSessions.HasValue)
             {
-                Argument.AssertAtLeast(maxConcurrentCalls.Value, 1, nameof(maxConcurrentCalls));
+                Argument.AssertAtLeast(maxConcurrentCallsAcrossAllSessions.Value, 1, nameof(maxConcurrentCallsAcrossAllSessions));
             }
 
             lock (_maxConcurrencySyncLock)
             {
-                if (maxConcurrentCalls.HasValue)
+                if (maxConcurrentCallsAcrossAllSessions.HasValue)
                 {
-                    _maxConcurrentCalls = maxConcurrentCalls.Value;
+                    _maxConcurrentCalls = maxConcurrentCallsAcrossAllSessions.Value;
                 }
                 else
                 {

@@ -138,6 +138,41 @@ namespace Azure.Messaging.ServiceBus
         }
         private int _maxConcurrentCallsPerSessions = 1;
 
+        /// <summary>Gets or sets the maximum number of concurrent calls to the
+        /// message handler the processor should initiate across all sessions. If not specified, this value
+        /// will be computed based on the <see cref="MaxConcurrentSessions"/> and <see cref="MaxConcurrentCallsPerSession"/> properties.
+        /// </summary>
+        ///
+        /// <value>The maximum number of concurrent calls to the message handler.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
+        /// <remarks>
+        /// This does not override the limits specified in <see cref="MaxConcurrentSessions"/> and <see cref="MaxConcurrentCallsPerSession"/>, but acts as further limit
+        /// to the total calls. As an example, suppose you want to allow 100 concurrent invocations of the message handler,
+        /// and you want to process up to 20 sessions concurrently. You can try setting MaxConcurrentSessions to 20, and MaxConcurrentCallsPerSession to 5.
+        /// However, in practice, your queue might typically have only 10 sessions with messages at a given time. So in order to achieve
+        /// your desired throughput, you can instead set MaxConcurrentCallsPerSession to 10. This would mean that if your queue ever did have
+        /// 20 sessions at a time, you would be doing 200 invocations. In order to prevent this, you can set MaxConcurrentCallsAcrossAllSessions to 100.
+        /// This allows the processor to attempt to scale up to the MaxConcurrentCallsPerSession when the number of available sessions is lower,
+        /// while still being able to accept new sessions without breaking your throughput requirement as the number of available sessions
+        /// increases.
+        /// </remarks>
+        public int? MaxConcurrentCallsAcrossAllSessions
+        {
+            get => _maxConcurrentCallsAcrossAllSessions;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertAtLeast(value.Value, 1, nameof(MaxConcurrentCallsAcrossAllSessions));
+                    _maxConcurrentCallsAcrossAllSessions = value;
+                }
+            }
+        }
+        private int? _maxConcurrentCallsAcrossAllSessions;
+
         /// <summary>
         /// Gets an optional list of session IDs to scope
         /// the <see cref="ServiceBusSessionProcessor"/> to. If the list is

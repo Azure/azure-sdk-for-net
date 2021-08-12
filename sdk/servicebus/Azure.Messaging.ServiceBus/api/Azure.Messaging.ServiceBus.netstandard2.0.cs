@@ -384,6 +384,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual bool IsClosed { get { throw null; } }
         public virtual bool IsProcessing { get { throw null; } }
         public virtual System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
+        public virtual int MaxConcurrentCallsAcrossAllSessions { get { throw null; } }
         public virtual int MaxConcurrentCallsPerSession { get { throw null; } }
         public virtual int MaxConcurrentSessions { get { throw null; } }
         public virtual int PrefetchCount { get { throw null; } }
@@ -407,13 +408,14 @@ namespace Azure.Messaging.ServiceBus
         public virtual System.Threading.Tasks.Task StopProcessingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
-        public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession) { }
+        public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession, int? maxConcurrentCallsAcrossAllSessions = default(int?)) { }
     }
     public partial class ServiceBusSessionProcessorOptions
     {
         public ServiceBusSessionProcessorOptions() { }
         public bool AutoCompleteMessages { get { throw null; } set { } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
+        public int? MaxConcurrentCallsAcrossAllSessions { get { throw null; } set { } }
         public int MaxConcurrentCallsPerSession { get { throw null; } set { } }
         public int MaxConcurrentSessions { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }

@@ -1943,12 +1943,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 100;
-                await sender.SendMessagesAsync(GetMessages(messageCount, "sessionId"));
+                await sender.SendMessagesAsync(GetMessages(10, "sessionId1"));
+                await sender.SendMessagesAsync(GetMessages(10, "sessionId2"));
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
-                    MaxConcurrentSessions = 1,
-                    MaxConcurrentCallsPerSession = 1
+                    MaxConcurrentSessions = 10,
+                    MaxConcurrentCallsPerSession = 10,
+                    MaxConcurrentCallsAcrossAllSessions = 50
                 });
 
                 int receivedCount = 0;
@@ -1969,22 +1971,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (ct == 5)
                     {
-                        processor.UpdateConcurrency(5, 20, 50);
-                        Assert.AreEqual(5, processor.MaxConcurrentSessions);
-                        Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
+                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Count, processor.MaxConcurrentCallsAcrossAllSessions);
+                        // send messages to a bunch of sessions
+                        for (int i = 0; i < 40; i++)
+                        {
+                            await sender.SendMessagesAsync(GetMessages(2, $"session{i}"));
+                        }
                     }
                     if (ct == 50)
                     {
                         // tasks will generally be 50 here, but allow some forgiveness as this is not deterministic
                         Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 25);
                         Assert.LessOrEqual(processor.InnerProcessor._tasks.Count, 50);
-                        processor.UpdateConcurrency(1, 1);
-                        Assert.AreEqual(1, processor.MaxConcurrentSessions);
-                        Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
+                        processor.UpdateConcurrency(50, 10, 20);
+                        Assert.AreEqual(50, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(10, processor.MaxConcurrentCallsPerSession);
+                        Assert.AreEqual(20, processor.MaxConcurrentCallsAcrossAllSessions);
                     }
                     if (ct == 95)
                     {
-                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
+                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), processor.MaxConcurrentCallsAcrossAllSessions);
                     }
                 }
 
