@@ -24,7 +24,7 @@
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
 
     <!-- This is needed for non-nightly smoke test runs -->
-    <PackageReference Include="Azure.Template">
+    <PackageReference Include="Azure.Template" />
   </ItemGroup>
 
   <!-- Sample: IoT Hub Connection String Translation -->
