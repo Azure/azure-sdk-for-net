@@ -61,6 +61,21 @@ if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
     $ErrorActionPreference = 'Stop'
 }
 
+# Support actions to invoke on exit.
+$exitActions = @({
+    if ($exitActions.Count -gt 1) {
+        Write-Verbose 'Running registered exit actions.'
+    }
+})
+
+trap {
+    # Like using try..finally in PowerShell, but without keeping track of more braces or tabbing content.
+    $exitActions.Invoke()
+}
+
+# Source helpers to purge resources.
+. "$PSScriptRoot\..\scripts\Helpers\Resource-Helpers.ps1"
+
 function Log($Message) {
     Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
 }
@@ -84,18 +99,6 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5) {
             }
         }
     }
-}
-
-# Support actions to invoke on exit.
-$exitActions = @({
-    if ($exitActions.Count -gt 1) {
-        Write-Verbose 'Running registered exit actions.'
-    }
-})
-
-trap {
-    # Like using try..finally in PowerShell, but without keeping track of more braces or tabbing content.
-    $exitActions.Invoke()
 }
 
 if ($ProvisionerApplicationId) {
@@ -213,17 +216,11 @@ $verifyDeleteScript = {
     }
 }
 
-# Get any Key Vaults that will be deleted so they can be purged later if soft delete is enabled.
-$vaults = Get-AzKeyVault -ResourceGroupName "$ResourceGroupName" | ForEach-Object {
-    # Enumerating vaults from a resource group does not return all properties we required.
-    Get-AzKeyVault -VaultName $_.VaultName | Where-Object { $_.EnableSoftDelete }
-}
-
-# You may add additional resource checks that require the resource group to be deleted first before purging here.
-$purgeRequired = $vaults -or $false
+# Get any resources that can be purged after the resource group is deleted.
+$purgeableResources = Get-PurgeableResources $ResourceGroupName
 
 Log "Deleting resource group '$ResourceGroupName'"
-if ($Force -and !$purgeRequired) {
+if ($Force -and !$purgeableResources) {
     Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force -AsJob
     Write-Verbose "Running background job to delete resource group '$ResourceGroupName'"
 
@@ -233,17 +230,8 @@ if ($Force -and !$purgeRequired) {
     Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force
 }
 
-# Purge any soft deleted vaults since there is now a limit per-subscription.
-foreach ($vault in $vaults) {
-    Log "Attempting to purge Key Vault '$($vault.VaultName)'"
-
-    if ($vault.EnablePurgeProtection) {
-        # We will try anyway but will ignore errors
-        Write-Warning "Key Vault '$($vault.VaultName)' has purge protection enabled and may not be purged for $($vault.SoftDeleteRetentionInDays) days"
-    }
-
-    Remove-AzKeyVault -VaultName $vault.VaultName -Location $vault.Location -InRemovedState -Force -ErrorAction Ignore
-}
+# Now purge the resources that should have been deleted with the resource group.
+Remove-PurgeableResources $purgeableResources
 
 $exitActions.Invoke()
 
