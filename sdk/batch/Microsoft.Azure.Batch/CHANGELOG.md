@@ -1,14 +1,10 @@
 # Release History
 
-## 15.1.0-beta.1 (Unreleased)
+## 15.1.0 (2021-08-10)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added an identity reference argument to various constructors and utility functions to make identities easier to use.
 
 ## 15.0.0 (2021-07-30)
 

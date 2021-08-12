@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,8 +15,11 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    public class ProviderContainer : ResourceContainer
+    public class ProviderContainer : ArmContainer
     {
+        private ClientDiagnostics _clientDiagnostics;
+        private ProviderRestOperations _restClient;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderContainer"/> class for mocking.
         /// </summary>
@@ -27,31 +31,17 @@ namespace Azure.ResourceManager.Resources
         /// Initializes a new instance of the <see cref="ProviderContainer"/> class.
         /// </summary>
         /// <param name="parent"> The client context to use. </param>
-        internal ProviderContainer(SubscriptionOperations parent)
+        internal ProviderContainer(Subscription parent)
             : base(parent)
         {
         }
 
         /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
+        protected override ResourceType ValidResourceType => Subscription.ResourceType;
 
-        private ProviderRestOperations RestClient
-        {
-            get
-            {
-                string subscription;
-                if (Id is null || !Id.TryGetSubscriptionId(out subscription))
-                {
-                    subscription = Guid.Empty.ToString();
-                }
+        private ProviderRestOperations RestClient => _restClient ??= new ProviderRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
 
-                return new ProviderRestOperations(
-                    Diagnostics,
-                    Pipeline,
-                    subscription,
-                    BaseUri);
-            }
-        }
+        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary>
         /// Gets the provider for a namespace.
