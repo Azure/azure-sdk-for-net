@@ -26,7 +26,6 @@ pr:
     - sdk/testcommon/
     - eng/
     - samples/
-    - sdk/resourcemanager/
     exclude:
     - eng/mgmt/
 
