@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         [Test]
         public async Task BGPCommunityApiTest()
         {
-            _ = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/routefilters");
+            _ = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/routefilters");
             AsyncPageable<BgpServiceCommunity> communitiesAsync = ArmClient.DefaultSubscription.GetBgpServiceCommunitiesAsync();
             List<BgpServiceCommunity> communities = await communitiesAsync.ToEnumerableAsync();
             Assert.IsNotEmpty(communities);

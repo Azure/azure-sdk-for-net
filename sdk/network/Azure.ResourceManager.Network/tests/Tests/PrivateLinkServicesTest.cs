@@ -7,6 +7,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
@@ -35,8 +36,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         public async Task CheckPrivateLinkServiceVisibilityTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("cplsrg");
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/connections");
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/connections");
+            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
             var param = new CheckPrivateLinkServiceVisibilityRequest()
             {
                 PrivateLinkServiceAlias = "mypls.00000000-0000-0000-0000-000000000000.azure.privatelinkservice"

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkInterfaces");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/networkInterfaces");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create publicIP
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkInterfaces");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/networkInterfaces");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create Vnet
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkInterfaces");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/networkInterfaces");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create publicIP
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkInterfaces");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/networkInterfaces");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create Vnet
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkInterfaces");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/networkInterfaces");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create Vnet
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkInterfaces", Network.Tests.Helpers.FeaturesInfo.Type.All);
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/networkInterfaces", Network.Tests.Helpers.FeaturesInfo.Type.All);
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create publicIP
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkInterfaces");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/networkInterfaces");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create Vnet
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkInterfaces");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/networkInterfaces");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create Vnet
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkInterfaces");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/networkInterfaces");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create Vnet
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkInterfaces");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/networkInterfaces");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create Vnet
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/networkInterfaces");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/networkInterfaces");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create Vnet
