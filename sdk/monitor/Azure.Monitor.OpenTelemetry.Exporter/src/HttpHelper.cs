@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -213,6 +214,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return url;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static string GetDefaultPort(string httpScheme)
         {
             if (string.Equals(httpScheme, "http", StringComparison.OrdinalIgnoreCase))
@@ -225,6 +227,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static string GetUrlUsingHttpUrl(this AzMonList tagObjects)
         {
             string url = null;
