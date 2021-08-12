@@ -29,7 +29,6 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_CastToSpecificType
             string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-            // We know the subnet is a resource group level identifier since it has a resource group name in its string
             ResourceIdentifier id = new ResourceIdentifier(resourceId);
             Console.WriteLine($"Subscription: {id.SubscriptionId}");
             Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
@@ -51,7 +50,9 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
                 Console.WriteLine($"Subscription: {property}");
             if (id.TryGetResourceGroupName(out property))
                 Console.WriteLine($"ResourceGroup: {property}");
+            // Parent is only null when we reach the top of the chain which is a Tenant
             Console.WriteLine($"Vnet: {id.Parent.Name}");
+            // Name will never be null
             Console.WriteLine($"Subnet: {id.Name}");
             #endregion Snippet:Readme_CastToBaseResourceIdentifier
         }
@@ -71,7 +72,8 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             {
                 Console.WriteLine($"Resource Group {rgName} exists.");
 
-                // We can get the resource group now that we are sure it exists.
+                // We can get the resource group now that we know it exists.
+                // This does introduce a small race condition where resource group could have been deleted between the check and the get.
                 ResourceGroup myRG = await subscription.GetResourceGroups().GetAsync(rgName);
             }
             else
@@ -95,11 +97,11 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             if (myRG == null)
             {
                 Console.WriteLine($"Resource Group {rgName} does not exist.");
-                return;
             }
-
-            // At this point, we are sure that myRG is a not null Resource Group, so we can use this object to perform any operations we want.
-            
+            else
+            {
+                // At this point, we are sure that myRG is a not null Resource Group, so we can use this object to perform any operations we want.
+            }
             #endregion Snippet:Readme_TryGetRG
         }
     }

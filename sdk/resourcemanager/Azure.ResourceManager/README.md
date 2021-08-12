@@ -52,25 +52,44 @@ Additional documentation for the `Azure.Identity.DefaultAzureCredential` class c
 
 To reduce both the number of clients needed to perform common tasks and the amount of redundant parameters that each of those clients take, we have introduced an object hierarchy in the SDK that mimics the object hierarchy in Azure. Each resource client in the SDK has methods to access the resource clients of its children that is already scoped to the proper subscription and resource group.
 
-To accomplish this, we're introducing 4 standard types for all resources in Azure:
+To accomplish this, we're introducing 3 standard types for all resources in Azure:
 
-#### [Resource]Data
+#### **[Resource].cs**
+
+This represents a full resource client object which contains a **Data** property exposing the details as a **[Resource]Data** type.
+It also has access to all of the operations on that resource without needing to pass in scope parameters such as subscription ID or resource name.  This makes it very convenient to directly execute operations on the result of list calls
+since everything is returned as a full resource client now.
+
+```csharp
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+string rgName = "myResourceGroup";
+ResourceGroup rg = await armClient.DefaultSubscription.GetResourceGroups().GetAsync(rgName);
+await foreach (VirtualMachine vm in rg.GetVirtualMachines().GetAllAsync())
+{
+    //previously we would have to take the resourceGroupName and the vmName from the vm object
+    //and pass those into the powerOff method as well as we would need to execute that on a separate compute client
+    await vm.StartPowerOff().WaitForCompletionAsync();
+}
+```
+
+#### **[Resource]Data.cs**
+
 This represents the data that makes up a given resource. Typically, this is the response data from a service call such as HTTP GET and provides details about the underlying resource. Previously, this was represented by a **Model** class.
 
-#### [Resource]Operations
-
-This represents a service client that's scoped to a particular resource. You can directly execute all operations on that client without needing to pass in scope parameters such as subscription ID or resource name.
-
-#### [Resource]Container
+#### **[Resource]Container.cs**
 
 This represents the operations you can perform on a collection of resources belonging to a specific parent resource.
-This mainly consists of List or Create operations. For most things, the parent will be a **ResourceGroup**. However, each parent / child relationship is represented this way. For example, a **Subnet** is a child of a **VirtualNetwork** and a **ResourceGroup** is a child of a **Subscription**.
+Most of the logical collection operations can be mapped to a function operation on this object
 
-#### [Resource]
+| Collection Behavior | Container Method |
+|-|-|
+| Iterate | GetAllAsync() |
+| Index | GetAsync(string name) |
+| Add | CreateOrUpdateAsync(string name, [Resource]Data data) |
+| Contains | CheckIfExistsAsync(string name) |
+| TryGet | GetIfExistsAsync(string name) |
 
-This represents a full resource object which contains a **Data** property exposing the details as a **[Resource]Data** type.
-It also has access to all of the operations and like the **[Resource]Operations** object is already scoped
-to a specific resource in Azure.
+For most things, the parent will be a **ResourceGroup**. However, each parent / child relationship is represented this way. For example, a **Subnet** is a child of a **VirtualNetwork** and a **ResourceGroup** is a child of a **Subscription**.
 
 ### Structured Resource Identifier
 Resource IDs contain useful information about the resource itself, but they are plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object which will do the parsing for you: `new ResourceIdentifer("myid");`.
@@ -78,7 +97,6 @@ Resource IDs contain useful information about the resource itself, but they are 
 #### Example: Parsing an ID using a ResourceIdentifier object 
 ```C# Snippet:Readme_CastToSpecificType
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-// We know the subnet is a resource group level identifier since it has a resource group name in its string
 ResourceIdentifier id = new ResourceIdentifier(resourceId);
 Console.WriteLine($"Subscription: {id.SubscriptionId}");
 Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
@@ -96,12 +114,14 @@ if (id.TryGetSubscriptionId(out property))
     Console.WriteLine($"Subscription: {property}");
 if (id.TryGetResourceGroupName(out property))
     Console.WriteLine($"ResourceGroup: {property}");
+// Parent is only null when we reach the top of the chain which is a Tenant
 Console.WriteLine($"Vnet: {id.Parent.Name}");
+// Name will never be null
 Console.WriteLine($"Subnet: {id.Name}");
 ```
 
 ### Managing Existing Resources By Id
-Performing operations on resources that already exist is a common use case when using the management SDK. In this scenario you usually have the identifier of the resource you want to work on as a string. Although the new object hierarchy is great for provisioning and working within the scope of a given parent, it is a tad awkward when it comes to this specific scenario.  
+Performing operations on resources that already exist is a common use case when using the management SDK. In this scenario you usually have the identifier of the resource you want to work on as a string.  Although the new object hierarchy is great for provisioning and working within the scope of a given parent, it is not the most efficient when it comes to this specific scenario.  
 
 Here is an example how you to access an `AvailabilitySet` object and manage it directly with its id: 
 ```csharp
@@ -115,9 +135,8 @@ using System.Threading.Tasks;
 // Code omitted for brevity
 
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet";
-// We know the availability set is a resource group level identifier since it has a resource group name in its string
-ResourceGroupResourceIdentifier id = resourceId;
-// We then construct a new armClient to work with
+ResourceIdentifier id = new ResourceIdentifier(resourceId);
+// We construct a new armClient to work with
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Next we get the specific subscription this resource belongs to
 Subscription subscription = await armClient.GetSubscriptions().GetAsync(id.SubscriptionId);
@@ -127,7 +146,8 @@ ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(id
 // Note: for this last step in this example, Azure.ResourceManager.Compute is needed
 AvailabilitySet availabilitySet = await resourceGroup.GetAvailabilitySets().GetAsync(id.Name);
 ```
-However, this approach required a lot of code and 3 API calls to Azure. The same can be done with less code and without any API calls by using extension methods that we have provided on the client itself. These extension methods allow you to pass in a resource identifier and retrieve a scoped client. The object returned is a *[Resource]Operations* mentioned above, since it has not reached out to Azure to retrieve the data yet.
+
+This approach required a lot of code and 3 API calls to Azure. The same can be done with less code and without any API calls by using extension methods that we have provided on the client itself. These extension methods allow you to pass in a resource identifier and retrieve a scoped resource client. The object returned is a *[Resource]* mentioned above, since it has not reached out to Azure to retrieve the data yet the Data property will be null.
 
 So, the previous example would end up looking like this:
 
@@ -135,19 +155,61 @@ So, the previous example would end up looking like this:
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet";
 // We construct a new armClient to work with
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-// Next we get the AvailabilitySetOperations object from the client
+// Next we get the AvailabilitySet resource client from the armClient
 // The method takes in a ResourceIdentifier but we can use the implicit cast from string
-AvailabilitySetOperations availabilitySetOperations = armClient.GetAvailabilitySetOperations(resourceId);
-// Now if we want to retrieve the objects data we can simply call get
-AvailabilitySet availabilitySet = await availabilitySetOperations.GetAsync();
+AvailabilitySet availabilitySet = armClient.GetAvailabilitySet(resourceId);
+// At this point availabilitySet.Data will be null and trying to access it will throw
+// If we want to retrieve the objects data we can simply call get
+availabilitySet = await availabilitySet.GetAsync();
+// we now have the data representing the availabilitySet
+Console.WriteLine(availabilitySet.Data.Name);
 ```
 
-### `GetIfExists()` and `CheckIfExists` convenience methods
+### Check if a [Resource] exists
+
 If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoked from any [Resource]Container class.
 
-`GetIfExists()` and `GetIfExistsAsync()` return a null object if the specified resource does not exist. On the other hand, `CheckIfExists()` and `CheckIfExistsAsync()` return ```false``` if the specified resource does not exist.
+`GetIfExists()` and `GetIfExistsAsync()` return a `Response<T>` where T is null if the specified resource does not exist. On the other hand, `CheckIfExists()` and `CheckIfExistsAsync()` return `Response<bool>` where the bool will be false if the specified resource does not exist.  Both of these methods still give you access to the underlying raw response.
 
-You can find an example for these methods [below](#check-if-resource-group-exists).
+```C# Snippet:Readme_CheckIfExistssRG
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+string rgName = "myRgName";
+
+bool exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
+
+if (exists)
+{
+    Console.WriteLine($"Resource Group {rgName} exists.");
+
+    // We can get the resource group now that we know it exists.
+    // This does introduce a small race condition where resource group could have been deleted between the check and the get.
+    ResourceGroup myRG = await subscription.GetResourceGroups().GetAsync(rgName);
+}
+else
+{
+    Console.WriteLine($"Resource Group {rgName} does not exist.");
+}
+```
+
+Another way to do this is by using `GetIfExists()` which will avoid the race condition mentioned above:
+
+```C# Snippet:Readme_TryGetRG
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+string rgName = "myRgName";
+
+ResourceGroup myRG = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
+
+if (myRG == null)
+{
+    Console.WriteLine($"Resource Group {rgName} does not exist.");
+}
+else
+{
+    // At this point, we are sure that myRG is a not null Resource Group, so we can use this object to perform any operations we want.
+}
+```
 
 ## Examples
 
@@ -173,9 +235,8 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 // Now we get a ResourceGroup container for that subscription
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-// With ListAsync(), we can get a list of the resources in the container
-AsyncPageable<ResourceGroup> response = rgContainer.GetAllAsync();
-await foreach (ResourceGroup rg in response)
+// With GetAllAsync(), we can get a list of the resources in the container
+await foreach (ResourceGroup rg in rgContainer.GetAllAsync())
 {
     Console.WriteLine(rg.Data.Name);
 }
@@ -200,46 +261,6 @@ ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rg
 await resourceGroup.DeleteAsync();
 ```
 
-### Check if Resource Group exists
-```C# Snippet:Readme_CheckIfExistssRG
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
-string rgName = "myRgName";
-
-bool exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
-
-if (exists)
-{
-    Console.WriteLine($"Resource Group {rgName} exists.");
-
-    // We can get the resource group now that we are sure it exists.
-    ResourceGroup myRG = await subscription.GetResourceGroups().GetAsync(rgName);
-}
-else
-{
-    Console.WriteLine($"Resource Group {rgName} does not exist.");
-}
-```
-
-Another way to do this is by using `GetIfExists()`:
-
-```C# Snippet:Readme_TryGetRG
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
-string rgName = "myRgName";
-
-ResourceGroup myRG = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
-
-if (myRG == null)
-{
-    Console.WriteLine($"Resource Group {rgName} does not exist.");
-    return;
-}
-
-// At this point, we are sure that myRG is a not null Resource Group, so we can use this object to perform any operations we want.
-```
-
-
 ### Add a tag to a virtual machine
 Imagine that our company requires all virtual machines to be tagged with the owner. We're tasked with writing a program to add the tag to any missing virtual machines in a given resource group.
 
@@ -257,12 +278,12 @@ VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
 
 // Next we loop over all vms in the container
 // Each vm is a [Resource] object from above
-await foreach(VirtualMachine vm in vmContainer.GetAll())
+await foreach(VirtualMachine vm in vmContainer.GetAllAsync())
 {
     // We access the [Resource]Data properties from vm.Data
     if(!vm.Data.Tags.ContainsKey("owner"))
     {
-        // We can also access all [Resource]Operations from vm since it is already scoped for us
+        // We can also access all operations from vm since it is already scoped for us
         await vm.StartAddTag("owner", GetOwner()).WaitForCompletionAsync();
     }
 }
