@@ -114,15 +114,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var httpScheme = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpScheme)?.ToString();
             if (!string.IsNullOrWhiteSpace(httpScheme))
             {
-                string defaultPort;
-                if (httpScheme == "http")
-                {
-                    defaultPort = "80";
-                }
-                else
-                {
-                    defaultPort = "443";
-                }
+                string defaultPort = GetDefaultPort(httpScheme);
                 var httpTarget = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpTarget)?.ToString();
                 // http.target is required in other three possible combinations
                 // If not available then do not proceed.
@@ -182,15 +174,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var httpScheme = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpScheme)?.ToString();
             if (!string.IsNullOrWhiteSpace(httpScheme))
             {
-                string defaultPort;
-                if (httpScheme == "http")
-                {
-                    defaultPort = "80";
-                }
-                else
-                {
-                    defaultPort = "443";
-                }
+                string defaultPort = GetDefaultPort(httpScheme);
                 var httpTarget = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpTarget)?.ToString();
                 // http.target is required in other three possible combinations
                 // If not available then do not proceed.
@@ -227,6 +211,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return url;
+        }
+
+        internal static string GetDefaultPort(string httpScheme)
+        {
+            if (httpScheme == "http")
+            {
+                return "80";
+            }
+            else
+            {
+                return "443";
+            }
         }
 
         internal static string GetUrlUsingHttpUrl(this AzMonList tagObjects)
