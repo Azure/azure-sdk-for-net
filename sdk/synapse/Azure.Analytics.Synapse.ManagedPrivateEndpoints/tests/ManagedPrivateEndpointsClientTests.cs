@@ -7,6 +7,7 @@ using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
@@ -42,6 +43,11 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
 
         // private ManagedPrivateEndpointsClient client { get; set; }
         private readonly Uri _url = new Uri("https://exampleworkspace.dev.azuresynapse.net");
+
+        private TokenCredential GetCredential()
+        {
+            return new EnvironmentCredential();
+        }
 
         private ManagedPrivateEndpointsClient CreateTestClient(ManagedPrivateEndpointsClientOptions.ServiceVersion version, HttpPipelineTransport transport)
         {
