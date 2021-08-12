@@ -49,6 +49,10 @@ function Remove-PurgeableResources {
         [psobject[]] $Resource
     )
 
+    if (!$Resource) {
+        return
+    }
+
     $subscriptionId = (Get-AzContext).Subscription.Id
 
     foreach ($r in $Resource) {
