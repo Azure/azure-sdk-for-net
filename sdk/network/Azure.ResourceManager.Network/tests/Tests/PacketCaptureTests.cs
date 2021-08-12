@@ -42,14 +42,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
+            VirtualMachine vm = await CreateVm(
                 resourceGroupName: resourceGroupName,
                 location: location,
                 virtualMachineName: virtualMachineName,
@@ -61,17 +60,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
                 );
 
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
-
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
+            VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
             {
                 Publisher = "Microsoft.Azure.NetworkWatcher",
                 TypeHandlerVersion = "1.4",
                 TypePropertiesType = "NetworkWatcherAgentWindows"
             };
 
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
+            VirtualMachineExtensionCreateOrUpdateOperation createOrUpdateOperation = await vm.GetVirtualMachineExtensionVirtualMachines().StartCreateOrUpdateAsync("NetworkWatcherAgent", parameters);
             await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
@@ -83,7 +80,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string pcName1 = "pc1";
             string pcName2 = "pc2";
 
-            var pcProperties = new PacketCaptureInput(getVm.Value.Id, new PacketCaptureStorageLocation(){/*Id = getVm.Value.Data.Id, StorageLocation = new PacketCaptureStorageLocation { FilePath = @"C:\tmp\Capture.cap" }*/});
+            var pcProperties = new PacketCaptureInput(vm.Id, new PacketCaptureStorageLocation(){/*Id = getVm.Value.Data.Id, StorageLocation = new PacketCaptureStorageLocation { FilePath = @"C:\tmp\Capture.cap" }*/});
 
             var packetCaptureContainer = GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetPacketCaptures();
             var  createPacketCapture1Operation = await packetCaptureContainer.StartCreateOrUpdateAsync(pcName1, pcProperties);

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/routeTables");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/routeTables");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string routeTableName = Recording.GenerateAssetName("azsmnet");
             var routeTable = new RouteTableData() { Location = location, };
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/routeTables");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/routeTables");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string routeTableName = Recording.GenerateAssetName("azsmnet");
             string route1Name = Recording.GenerateAssetName("azsmnet");
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/routeTables");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/routeTables");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string routeTableName = Recording.GenerateAssetName("azsmnet");
             string route1Name = Recording.GenerateAssetName("azsmnet");

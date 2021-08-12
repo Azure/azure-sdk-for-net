@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/loadBalancers");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create lbPublicIP

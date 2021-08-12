@@ -10,6 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
@@ -41,15 +42,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
 
             string virtualMachineName1 = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName1 = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName1 + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
+            VirtualMachine vm = await CreateVm(
                 resourceGroupName: resourceGroupName,
                 location: location,
                 virtualMachineName: virtualMachineName1,
@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
             //await networkWatcherContainer.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
 
-            Response<VirtualMachine> getVm1 = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName1);
             string localIPAddress = GetNetworkInterfaceContainer(resourceGroupName).GetAsync(networkInterfaceName1).Result.Value.Data.IpConfigurations.FirstOrDefault().PrivateIPAddress;
 
             string securityRule1 = Recording.GenerateAssetName("azsmnet");
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var createOrUpdateOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, nsg.Value.Data);
             await createOrUpdateOperation.WaitForCompletionAsync();;
 
-            VerificationIPFlowParameters ipFlowProperties = new VerificationIPFlowParameters(getVm1.Value.Id, "Outbound", "TCP", "80", "80", localIPAddress, "12.11.12.14");
+            VerificationIPFlowParameters ipFlowProperties = new VerificationIPFlowParameters(vm.Id, "Outbound", "TCP", "80", "80", localIPAddress, "12.11.12.14");
 
             //Verify IP flow from a VM to a location given the configured  rule
             var verifyIpFlowOperation = await GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.StartVerifyIPFlowAsync(ipFlowProperties);

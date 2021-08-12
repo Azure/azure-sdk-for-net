@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         [Test]
         public async Task CheckDnsAvailabilityTest()
         {
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ResourceManagementClient, "Microsoft.Network/publicIPAddresses");
+            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/publicIPAddresses");
             location = location.Replace(" ", "");
 
             string domainNameLabel = Recording.GenerateAssetName("domainnamelabel");

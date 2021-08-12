@@ -50,14 +50,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                 resourcesClient: ResourceManagementClient,
+            VirtualMachine vm = await CreateVm(
                  resourceGroupName: resourceGroupName,
                  location: location,
                  virtualMachineName: virtualMachineName,
@@ -69,17 +68,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                  adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
                  );
 
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
-
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
+            VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
             {
                 Publisher = "Microsoft.Azure.NetworkWatcher",
                 TypeHandlerVersion = "1.4",
                 TypePropertiesType = "NetworkWatcherAgentWindows"
             };
 
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
+            VirtualMachineExtensionCreateOrUpdateOperation createOrUpdateOperation = await vm.GetVirtualMachineExtensionVirtualMachines().StartCreateOrUpdateAsync("NetworkWatcherAgent", parameters);
             await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
@@ -92,7 +89,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var cm = new ConnectionMonitorInput
             {
                 Location = location,
-                Source = new ConnectionMonitorSource(getVm.Value.Id),
+                Source = new ConnectionMonitorSource(vm.Id),
                 Destination = new ConnectionMonitorDestination
                 {
                     Address = "bing.com",
@@ -108,7 +105,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual("centraluseuap", putConnectionMonitor.Value.Data.Location);
             Assert.AreEqual(30, putConnectionMonitor.Value.Data.MonitoringIntervalInSeconds);
             Assert.AreEqual(connectionMonitorName, putConnectionMonitor.Value.Data.Name);
-            Assert.AreEqual(getVm.Value.Id, putConnectionMonitor.Value.Data.Source.ResourceId);
+            Assert.AreEqual(vm.Id, putConnectionMonitor.Value.Data.Source.ResourceId);
             Assert.AreEqual("bing.com", putConnectionMonitor.Value.Data.Destination.Address);
             Assert.AreEqual(80, putConnectionMonitor.Value.Data.Destination.Port);
         }
@@ -120,15 +117,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
 
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                 resourcesClient: ResourceManagementClient,
+            VirtualMachine vm = await CreateVm(
                  resourceGroupName: resourceGroupName,
                  location: location,
                  virtualMachineName: virtualMachineName,
@@ -140,17 +136,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                  adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
                  );
 
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
-
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
+            VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
             {
                 Publisher = "Microsoft.Azure.NetworkWatcher",
                 TypeHandlerVersion = "1.4",
                 TypePropertiesType = "NetworkWatcherAgentWindows"
             };
 
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
+            VirtualMachineExtensionCreateOrUpdateOperation createOrUpdateOperation = await vm.GetVirtualMachineExtensionVirtualMachines().StartCreateOrUpdateAsync("NetworkWatcherAgent", parameters);
             await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
@@ -163,7 +157,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var cm = new ConnectionMonitorInput
             {
                 Location = location,
-                Source = new ConnectionMonitorSource(getVm.Value.Id),
+                Source = new ConnectionMonitorSource(vm.Id),
                 Destination = new ConnectionMonitorDestination
                 {
                     Address = "bing.com",
@@ -191,14 +185,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
+            VirtualMachine vm = await CreateVm(
                 resourceGroupName: resourceGroupName,
                 location: location,
                 virtualMachineName: virtualMachineName,
@@ -210,17 +203,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
                 );
 
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
-
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
+            VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
             {
                 Publisher = "Microsoft.Azure.NetworkWatcher",
                 TypeHandlerVersion = "1.4",
                 TypePropertiesType = "NetworkWatcherAgentWindows"
             };
 
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
+            VirtualMachineExtensionCreateOrUpdateOperation createOrUpdateOperation = await vm.GetVirtualMachineExtensionVirtualMachines().StartCreateOrUpdateAsync("NetworkWatcherAgent", parameters);
             await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
@@ -233,7 +224,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var cm = new ConnectionMonitorInput
             {
                 Location = location,
-                Source = new ConnectionMonitorSource(getVm.Value.Id),
+                Source = new ConnectionMonitorSource(vm.Id),
                 Destination = new ConnectionMonitorDestination
                 {
                     Address = "bing.com",
@@ -260,14 +251,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
+            VirtualMachine vm = await CreateVm(
                 resourceGroupName: resourceGroupName,
                 location: location,
                 virtualMachineName: virtualMachineName,
@@ -279,17 +269,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
                 );
 
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
-
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
+            VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
             {
                 Publisher = "Microsoft.Azure.NetworkWatcher",
                 TypeHandlerVersion = "1.4",
                 TypePropertiesType = "NetworkWatcherAgentWindows"
             };
 
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
+            VirtualMachineExtensionCreateOrUpdateOperation createOrUpdateOperation = await vm.GetVirtualMachineExtensionVirtualMachines().StartCreateOrUpdateAsync("NetworkWatcherAgent", parameters);
             await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
@@ -302,7 +290,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var cm = new ConnectionMonitorInput
             {
                 Location = location,
-                Source = new ConnectionMonitorSource(getVm.Value.Id),
+                Source = new ConnectionMonitorSource(vm.Id),
                 Destination = new ConnectionMonitorDestination
                 {
                     Address = "bing.com",
@@ -335,14 +323,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
+            VirtualMachine vm = await CreateVm(
                 resourceGroupName: resourceGroupName,
                 location: location,
                 virtualMachineName: virtualMachineName,
@@ -354,17 +341,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
                 );
 
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
-
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
+            VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
             {
                 Publisher = "Microsoft.Azure.NetworkWatcher",
                 TypeHandlerVersion = "1.4",
                 TypePropertiesType = "NetworkWatcherAgentWindows"
             };
 
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
+            VirtualMachineExtensionCreateOrUpdateOperation createOrUpdateOperation = await vm.GetVirtualMachineExtensionVirtualMachines().StartCreateOrUpdateAsync("NetworkWatcherAgent", parameters);
             await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
@@ -377,7 +362,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var cm = new ConnectionMonitorInput
             {
                 Location = location,
-                Source = new ConnectionMonitorSource(getVm.Value.Id),
+                Source = new ConnectionMonitorSource(vm.Id),
                 Destination = new ConnectionMonitorDestination
                 {
                     Address = "bing.com",
@@ -403,14 +388,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
+            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            await CreateVm(
-                resourcesClient: ResourceManagementClient,
+            VirtualMachine vm = await CreateVm(
                 resourceGroupName: resourceGroupName,
                 location: location,
                 virtualMachineName: virtualMachineName,
@@ -422,17 +406,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
                 );
 
-            Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
-
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtension parameters = new VirtualMachineExtension(location)
+            VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
             {
                 Publisher = "Microsoft.Azure.NetworkWatcher",
                 TypeHandlerVersion = "1.4",
                 TypePropertiesType = "NetworkWatcherAgentWindows"
             };
 
-            VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
+            VirtualMachineExtensionCreateOrUpdateOperation createOrUpdateOperation = await vm.GetVirtualMachineExtensionVirtualMachines().StartCreateOrUpdateAsync("NetworkWatcherAgent", parameters);
             await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
@@ -446,7 +428,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var cm = new ConnectionMonitorInput
             {
                 Location = location,
-                Source = new ConnectionMonitorSource(getVm.Value.Id),
+                Source = new ConnectionMonitorSource(vm.Id),
                 Destination = new ConnectionMonitorDestination
                 {
                     Address = "bing.com",
