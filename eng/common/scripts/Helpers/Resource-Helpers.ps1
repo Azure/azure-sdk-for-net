@@ -32,7 +32,7 @@ function Get-PurgeableResources {
         foreach ($r in $content.value) {
             [pscustomobject] @{
                 AzsdkResourceType = 'Managed HSM'
-                Id = $r.
+                Id = $r.id
                 Name = $r.name
                 Location = $r.properties.location
                 DeletionDate = $r.properties.deletionDate -as [DateTime]
