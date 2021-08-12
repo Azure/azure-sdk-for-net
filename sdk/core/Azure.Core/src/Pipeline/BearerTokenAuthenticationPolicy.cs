@@ -198,11 +198,19 @@ namespace Azure.Core.Pipeline
                 TaskCompletionSource<HeaderValueInfo> headerValueTcs;
                 TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs;
                 int maxCancellationRetries = 3;
+                HeaderValueInfo info;
+                DateTimeOffset now = DateTimeOffset.UtcNow;
+
+                if (_infoTcs != null && _infoTcs.Task.Status == TaskStatus.RanToCompletion &&
+                    _infoTcs.Task.Result.Token.RefreshOn <= now)
+                {
+                    info = await GetHeaderValueFromCredentialAsync(context, async, message.CancellationToken).ConfigureAwait(false);
+                    return info.HeaderValue;
+                }
 
                 while (true)
                 {
-                    (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context);
-                    HeaderValueInfo info;
+                    (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context, now);
                     if (getTokenFromCredential)
                     {
                         if (backgroundUpdateTcs != null)
@@ -287,7 +295,7 @@ namespace Azure.Core.Pipeline
             }
 
             private (TaskCompletionSource<HeaderValueInfo> InfoTcs, TaskCompletionSource<HeaderValueInfo>? BackgroundUpdateTcs, bool GetTokenFromCredential)
-                GetTaskCompletionSources(TokenRequestContext context)
+                GetTaskCompletionSources(TokenRequestContext context, DateTimeOffset now)
             {
                 lock (_syncObj)
                 {
@@ -307,7 +315,6 @@ namespace Azure.Core.Pipeline
                         return (_infoTcs, _backgroundUpdateTcs, false);
                     }
 
-                    DateTimeOffset now = DateTimeOffset.UtcNow;
                     // Access token has been successfully acquired in background and it is not expired yet, use it instead of current one
                     if (_backgroundUpdateTcs != null &&
                         _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion &&
@@ -356,7 +363,7 @@ namespace Azure.Core.Pipeline
                 }
                 catch (OperationCanceledException oce) when (cts.IsCancellationRequested)
                 {
-                    AccessToken token =  info.Token;
+                    AccessToken token = info.Token;
                     token.RefreshOn = DateTimeOffset.UtcNow;
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(token));
                     AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
