@@ -217,7 +217,7 @@ $verifyDeleteScript = {
 }
 
 # Get any resources that can be purged after the resource group is deleted.
-$purgeableResources = Get-PurgeableResources $ResourceGroupName
+$purgeableResources = Get-PurgeableGroupResources $ResourceGroupName
 
 Log "Deleting resource group '$ResourceGroupName'"
 if ($Force -and !$purgeableResources) {

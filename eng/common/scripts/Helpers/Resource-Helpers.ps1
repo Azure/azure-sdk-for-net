@@ -1,9 +1,8 @@
 # Add 'AzsdkResourceType' member to outputs since actual output types have changed over the years.
 
-function Get-PurgeableResources {
+function Get-PurgeableGroupResources {
     param (
-        [Parameter(Position=0)]
-        [ValidateNotNullOrEmpty()]
+        [Parameter(Mandatory=$true, Position=0)]
         [string] $ResourceGroupName
     )
 
@@ -17,6 +16,31 @@ function Get-PurgeableResources {
     # Get any Managed HSMs in the resource group, for which soft delete cannot be disabled.
     Get-AzKeyVaultManagedHsm @PSBoundParameters `
         | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Managed HSM' -PassThru
+}
+
+function Get-PurgeableResources {
+    $subscriptionId = (Get-AzContext).Subscription.Id
+
+    # Get deleted Key Vaults for the current subscription.
+    Get-AzKeyVault -InRemovedState `
+        | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Key Vault' -PassThru
+
+    # Get deleted Managed HSMs for the current subscription.
+    $response = Invoke-AzRestMethod -Method GET -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/deletedManagedHSMs?api-version=2021-04-01-preview" -ErrorAction Ignore
+    if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300 -and $response.Content) {
+        $content = $response.Content | ConvertFrom-Json
+        foreach ($r in $content.value) {
+            [pscustomobject] @{
+                AzsdkResourceType = 'Managed HSM'
+                Id = $r.
+                Name = $r.name
+                Location = $r.properties.location
+                DeletionDate = $r.properties.deletionDate -as [DateTime]
+                ScheduledPurgeDate = $r.properties.scheduledPurgeDate -as [DateTime]
+                EnablePurgeProtection = $r.properties.purgeProtectionEnabled
+            }
+        }
+    }
 }
 
 function Remove-PurgeableResources {
