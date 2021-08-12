@@ -23,7 +23,7 @@
     <!-- This is needed to resolve a build conflict and force the correct version -->
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
 
-    <!-- This is needed for non-nightly smoke test runs -->>
+    <!-- This is needed for non-nightly smoke test runs -->
     <PackageReference Include="Azure.Template">
   </ItemGroup>
 
