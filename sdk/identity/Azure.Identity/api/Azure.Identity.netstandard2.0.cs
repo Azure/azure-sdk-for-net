@@ -40,6 +40,18 @@ namespace Azure.Identity
         public AuthorizationCodeCredentialOptions() { }
         public System.Uri RedirectUri { get { throw null; } set { } }
     }
+    public partial class AzureApplicationCredential : Azure.Core.TokenCredential
+    {
+        public AzureApplicationCredential() { }
+        public AzureApplicationCredential(Azure.Identity.AzureApplicationCredentialOptions options) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AzureApplicationCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public AzureApplicationCredentialOptions() { }
+        public string ManagedIdentityClientId { get { throw null; } set { } }
+    }
     public static partial class AzureAuthorityHosts
     {
         public static System.Uri AzureChina { get { throw null; } }
@@ -330,6 +342,7 @@ namespace Azure.Identity
         public TokenCredentialOptions() { }
         public bool AllowMultiTenantAuthentication { get { throw null; } set { } }
         public System.Uri AuthorityHost { get { throw null; } set { } }
+        public bool IsLoggingPIIEnabled { get { throw null; } set { } }
     }
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {

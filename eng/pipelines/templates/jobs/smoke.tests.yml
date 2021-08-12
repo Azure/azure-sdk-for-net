@@ -54,13 +54,6 @@ jobs:
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
           Location: "westus"
-        Linux (AzureCloud Canary):
-          Pool: "azsdk-pool-mms-ubuntu-2004-general"
-          OSVmImage: "MMSUbuntu20.04"
-          TestTargetFramework: netcoreapp3.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
-          ArmTemplateParameters: $(azureCloudArmParameters)
-          Location: "centraluseuap"
         Windows_NetCoreApp (AzureCloud):
           Pool: "azsdk-pool-mms-win-2019-general"
           OSVmImage: "MMS2019"
