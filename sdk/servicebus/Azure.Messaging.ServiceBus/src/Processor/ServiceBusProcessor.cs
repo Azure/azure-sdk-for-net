@@ -960,16 +960,29 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        internal void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession)
+        internal void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession, int? maxConcurrentCalls = default)
         {
             Argument.AssertAtLeast(maxConcurrentSessions, 1, nameof(maxConcurrentSessions));
             Argument.AssertAtLeast(maxConcurrentCallsPerSession, 1, nameof(maxConcurrentCallsPerSession));
 
+            if (maxConcurrentCalls.HasValue)
+            {
+                Argument.AssertAtLeast(maxConcurrentCalls.Value, 1, nameof(maxConcurrentCalls));
+            }
+
             lock (_maxConcurrencySyncLock)
             {
-                _maxConcurrentCalls = _sessionIds.Length > 0
-                    ? Math.Min(_sessionIds.Length, maxConcurrentSessions)
-                    : maxConcurrentSessions * maxConcurrentCallsPerSession;
+                if (maxConcurrentCalls.HasValue)
+                {
+                    _maxConcurrentCalls = maxConcurrentCalls.Value;
+                }
+                else
+                {
+                    _maxConcurrentCalls = _sessionIds.Length > 0
+                        ? Math.Min(_sessionIds.Length, maxConcurrentSessions)
+                        : maxConcurrentSessions * maxConcurrentCallsPerSession;
+                }
+
                 _maxConcurrentSessions = maxConcurrentSessions;
                 _maxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
                 WakeLoop();

@@ -1935,6 +1935,68 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             }
         }
 
+        [Test]
+        public async Task CanUpdateMaxCallsAcrossAllSessionsConcurrency()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 100;
+                await sender.SendMessagesAsync(GetMessages(messageCount, "sessionId"));
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = 1,
+                    MaxConcurrentCallsPerSession = 1
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        await args.AbandonMessageAsync(args.Message);
+                    }
+
+                    var ct = Interlocked.Increment(ref receivedCount);
+                    if (ct == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    if (ct == 5)
+                    {
+                        processor.UpdateConcurrency(5, 20, 50);
+                        Assert.AreEqual(5, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
+                    }
+                    if (ct == 50)
+                    {
+                        // tasks will generally be 50 here, but allow some forgiveness as this is not deterministic
+                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 25);
+                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Count, 50);
+                        processor.UpdateConcurrency(1, 1);
+                        Assert.AreEqual(1, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
+                    }
+                    if (ct == 95)
+                    {
+                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
+                    }
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
+
         private Task SessionErrorHandler(ProcessErrorEventArgs args)
         {
             // If the connection drops due to network flakiness

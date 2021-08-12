@@ -310,9 +310,19 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusSessionProcessor.MaxConcurrentSessions"/>property.</param>
         /// <param name="maxConcurrentCallsPerSession">The new max concurrent calls per session value. This will be reflect in the
         /// <see cref="ServiceBusSessionProcessor.MaxConcurrentCallsPerSession"/>.</param>
-        public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession)
+        /// <param name="maxConcurrentCalls">If specified, limits the total max concurrent calls to this value. This does not override the
+        /// limits specified in <paramref name="maxConcurrentSessions"/> and <paramref name="maxConcurrentCallsPerSession"/>, but acts as further limit
+        /// to the total calls. As an example, suppose you want to allow 100 concurrent invocations of the message handler,
+        /// and you want to process up to 20 sessions concurrently. You can try setting maxConcurrentSessions to 20, and maxConcurrentCallsPerSession to 5.
+        /// However, in practice, your queue might typically have only 10 sessions with messages at a given time. So in order to achieve
+        /// your desired throughput, you can instead set maxConcurrentCallsPerSession to 10. This would mean that if your queue ever did have
+        /// 20 sessions at a time, you would be doing 200 invocations. In order to prevent this, you can set maxConcurrentCalls to 100.
+        /// This allows the processor to attempt to scale up to the maxConcurrentCallsPerSession when the number of available sessions is lower,
+        /// while still being able to accept new sessions without breaking your throughput requirement as the number of available sessions
+        /// increases.</param>
+        public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession, int? maxConcurrentCalls = default)
         {
-            InnerProcessor.UpdateConcurrency(maxConcurrentSessions, maxConcurrentCallsPerSession);
+            InnerProcessor.UpdateConcurrency(maxConcurrentSessions, maxConcurrentCallsPerSession, maxConcurrentCalls);
         }
     }
 }
