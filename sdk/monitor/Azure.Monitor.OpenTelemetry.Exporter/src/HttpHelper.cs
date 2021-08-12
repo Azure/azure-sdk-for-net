@@ -215,7 +215,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static string GetDefaultPort(string httpScheme)
         {
-            if (httpScheme == "http")
+            if (string.Equals(httpScheme, "http", StringComparison.OrdinalIgnoreCase))
             {
                 return "80";
             }
