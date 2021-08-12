@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if false
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var networkSecurityGroup = new NetworkSecurityGroupData() { Location = location, };
 
             // Put Nsg
-            var securityGroupContainer = resourceGroup.Value.GetNetworkSecurityGroups();
+            var securityGroupContainer = resourceGroup.GetNetworkSecurityGroups();
             var putNsgResponseOperation = await securityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
             await putNsgResponseOperation.WaitForCompletionAsync();;
             // Get NSG
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var properties = new NetworkWatcherData { Location = location };
 
             //Create network Watcher
-            var networkWatcherContainer = resourceGroup.Value.GetNetworkWatchers();
+            var networkWatcherContainer = resourceGroup.GetNetworkWatchers();
             await networkWatcherContainer.CreateOrUpdateAsync(networkWatcherName, properties);
 
             //Create storage
@@ -147,3 +148,4 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
     }
 }
+#endif

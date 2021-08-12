@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             routeTable.Routes.Add(route1);
 
             // Put RouteTable
-            var routeTableContainer = resourceGroup.Value.GetRouteTables();
+            var routeTableContainer = resourceGroup.GetRouteTables();
             var putRouteTableResponseOperation = await routeTableContainer.StartCreateOrUpdateAsync(routeTableName, routeTable);
             Response<RouteTable> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             routeTable.Routes.Add(route1);
 
             // Put RouteTable
-            var routeTableContainer = resourceGroup.Value.GetRouteTables();
+            var routeTableContainer = resourceGroup.GetRouteTables();
             var putRouteTableResponseOperation =
                 await routeTableContainer.StartCreateOrUpdateAsync(routeTableName, routeTable);
             Response<RouteTable> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;

@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         //}
 
         [Test]
+        [RecordedTest]
+        [Ignore("Investigate how we can do this right later")]
         public async Task CheckPrivateLinkServiceVisibilityTest()
         {
-            string resourceGroupName = Recording.GenerateAssetName("cplsrg");
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/connections");
-            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("cplsrg"));
             var param = new CheckPrivateLinkServiceVisibilityRequest()
             {
                 PrivateLinkServiceAlias = "mypls.00000000-0000-0000-0000-000000000000.azure.privatelinkservice"

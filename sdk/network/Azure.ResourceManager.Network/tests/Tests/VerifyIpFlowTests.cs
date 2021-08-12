@@ -4,7 +4,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
@@ -36,30 +35,21 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         //}
 
         [Test]
+        [RecordedTest]
         [Ignore("Track2: The NetworkWathcer is involved, so disable the test")]
         public async Task VerifyIpFlowApiTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
 
             string virtualMachineName1 = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName1 = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName1 + "-nsg";
 
             //Deploy VM with a template
-            VirtualMachine vm = await CreateVm(
-                resourceGroupName: resourceGroupName,
-                location: location,
-                virtualMachineName: virtualMachineName1,
-                storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                networkInterfaceName: networkInterfaceName1,
-                networkSecurityGroupName: networkSecurityGroupName,
-                diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                deploymentName: Recording.GenerateAssetName("azsmnet"),
-                adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                );
+            var vm = await CreateWindowsVM(virtualMachineName1, networkInterfaceName1, location, resourceGroup);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
