@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
@@ -29,6 +30,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         public static bool operator !=(SynapseRoleScope left, SynapseRoleScope right) => !left.Equals(right);
         /// <summary> Converts a string to a <see cref="SynapseRoleScope"/>. </summary>
         public static implicit operator SynapseRoleScope(string value) => new SynapseRoleScope(value);
+        /// <summary> Converts a <see cref="SynapseRoleScope"/> to a <see cref="RequestContent"/>. </summary>
+        public static implicit operator RequestContent(SynapseRoleScope scope) => RequestContent.Create(scope._value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

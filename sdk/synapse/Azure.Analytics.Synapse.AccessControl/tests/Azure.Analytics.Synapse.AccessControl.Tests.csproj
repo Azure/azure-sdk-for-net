@@ -12,6 +12,7 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.Extensions.Configuration" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    <PackageReference Include="System.Linq.Async"/>
   </ItemGroup>
 
   <ItemGroup>

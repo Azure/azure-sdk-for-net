@@ -1,16 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// TODO: replace these with tests for updated API
-
-/*
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Analytics.Synapse.AccessControl;
-using Azure.Core.TestFramework;
 using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.AccessControl.Tests
@@ -27,26 +22,26 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
     {
         internal class DisposableClientRole : IAsyncDisposable
         {
-            private readonly RoleAssignmentsClient _client;
-            public RoleAssignmentDetails Assignment;
+            private readonly SynapseAccessControlClient _client;
+            public SynapseRoleAssignment Assignment;
 
-            private DisposableClientRole(RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, RoleAssignmentDetails assignment)
+            private DisposableClientRole(SynapseAccessControlClient client, SynapseRoleAssignment assignment)
             {
-                _client = assignmentsClient;
+                _client = client;
                 Assignment = assignment;
             }
 
-            public static async ValueTask<DisposableClientRole> Create(RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, SynapseTestEnvironment testEnvironment) =>
-                new DisposableClientRole(assignmentsClient, definitionsClient, await CreateResource(assignmentsClient, definitionsClient, testEnvironment));
+            public static async ValueTask<DisposableClientRole> Create(SynapseAccessControlClient client, SynapseTestEnvironment testEnvironment) =>
+                new DisposableClientRole(client, await CreateResource(client, testEnvironment));
 
-            public static async ValueTask<RoleAssignmentDetails> CreateResource(RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, SynapseTestEnvironment testEnvironment)
+            public static async ValueTask<SynapseRoleAssignment> CreateResource(SynapseAccessControlClient client, SynapseTestEnvironment testEnvironment)
             {
                 string scope = "workspaces/" + testEnvironment.WorkspaceName;
 
-                Guid? roleID = (await definitionsClient.ListRoleDefinitionsAsync()).Value.First(x => x.Name == "Synapse Administrator").Id;
+                Guid? roleID = new Guid((await client.GetRoleDefinitionsAsync(scope).FirstAsync(x => x.Name == "Synapse Administrator")).Id);
                 Guid principalId = Guid.NewGuid();
-                string roleAssignmentId = Guid.NewGuid().ToString();
-                return await assignmentsClient.CreateRoleAssignmentAsync(roleAssignmentId, roleID.Value, principalId, scope);
+                Guid roleAssignmentId = Guid.NewGuid();
+                return await client.CreateRoleAssignmentAsync(scope, roleID.Value.ToString(), principalId.ToString(), roleAssignmentId);
             }
 
             public async ValueTask DisposeAsync()
@@ -55,84 +50,72 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             }
         }
 
-        public AccessControlClientLiveTests(bool isAsync) : base(isAsync)
+        public AccessControlClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
-        private RoleAssignmentsClient CreateAssignmentClient()
+        private SynapseAccessControlClient CreateClient()
         {
-            return InstrumentClient(new RoleAssignmentsClient(
+            return InstrumentClient(new SynapseAccessControlClient(
                 new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new AccessControlClientOptions())
-            ));
-        }
-
-        private RoleDefinitionsClient CreateDefinitionsClient()
-        {
-            return InstrumentClient(new RoleDefinitionsClient(
-                new Uri(TestEnvironment.EndpointUrl),
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new AccessControlClientOptions())
+                InstrumentClientOptions(new SynapseAdministrationClientOptions())
             ));
         }
 
         [Test]
         public async Task CreateRoleAssignment()
         {
-            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
-            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
+            SynapseAccessControlClient client = CreateClient();
 
-            await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
+            await using DisposableClientRole role = await DisposableClientRole.Create(client, TestEnvironment);
 
             Assert.NotNull(role.Assignment.Id);
-            Assert.NotNull(role.Assignment.RoleDefinitionId);
-            Assert.NotNull(role.Assignment.PrincipalId);
+            Assert.NotNull(role.Assignment.Properties.RoleDefinitionId);
+            Assert.NotNull(role.Assignment.Properties.PrincipalId);
         }
 
         [Test]
         public async Task GetRoleAssignment()
         {
-            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
-            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
+            SynapseAccessControlClient client = CreateClient();
 
-            await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
+            await using DisposableClientRole role = await DisposableClientRole.Create(client, TestEnvironment);
 
-            RoleAssignmentDetails roleAssignment = await assignmentsClient.GetRoleAssignmentByIdAsync(role.Assignment.Id);
+            SynapseRoleAssignment roleAssignment = await client.GetRoleAssignmentAsync("", role.Assignment.Id);
 
-            Assert.AreEqual(role.Assignment.RoleDefinitionId, roleAssignment.RoleDefinitionId);
-            Assert.AreEqual(role.Assignment.PrincipalId, roleAssignment.PrincipalId);
+            Assert.AreEqual(role.Assignment.Properties.RoleDefinitionId, roleAssignment.Properties.RoleDefinitionId);
+            Assert.AreEqual(role.Assignment.Properties.PrincipalId, roleAssignment.Properties.PrincipalId);
         }
 
         [Test]
         public async Task ListRoleAssignments()
         {
-            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
-            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
+            SynapseAccessControlClient client = CreateClient();
 
-            await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
+            await using DisposableClientRole role = await DisposableClientRole.Create(client, TestEnvironment);
 
-            Response<IReadOnlyList<SynapseRoleDefinition>> roleAssignments = await definitionsClient.ListRoleDefinitionsAsync();
-            foreach (SynapseRoleDefinition expected in roleAssignments.Value)
+            AsyncPageable<SynapseRoleDefinition> roleDefinitions = client.GetRoleDefinitionsAsync("");
+            int count = 0;
+            await foreach (SynapseRoleDefinition expected in roleDefinitions)
             {
-                SynapseRoleDefinition actual = await definitionsClient.GetRoleDefinitionByIdAsync(expected.Id.ToString());
+                SynapseRoleDefinition actual = await client.GetRoleDefinitionAsync("", new Guid(expected.Id));
                 Assert.AreEqual(expected.Id, actual.Id);
                 Assert.AreEqual(expected.Name, actual.Name);
+                count++;
             }
-            Assert.GreaterOrEqual(roleAssignments.Value.Count, 1);
+            Assert.GreaterOrEqual(count, 1);
         }
 
         [Test]
         public async Task DeleteRoleAssignments()
         {
-            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
-            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
+            SynapseAccessControlClient client = CreateClient();
 
-            RoleAssignmentDetails assignment = await DisposableClientRole.CreateResource(assignmentsClient, definitionsClient, TestEnvironment);
+            SynapseRoleAssignment assignment = await DisposableClientRole.CreateResource(client, TestEnvironment);
 
-            Response response = await assignmentsClient.DeleteRoleAssignmentByIdAsync(assignment.Id);
+            Response response = await client.DeleteRoleAssignmentAsync("", assignment.Id);
             response.AssertSuccess();
         }
     }
 }
-*/

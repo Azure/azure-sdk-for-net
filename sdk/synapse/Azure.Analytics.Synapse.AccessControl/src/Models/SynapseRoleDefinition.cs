@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
@@ -26,7 +27,16 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         public IList<SynapseRoleScope> AssignableScopes { get; }
 
-        // TODO: solve the missing properties
+        public static implicit operator RequestContent(SynapseRoleDefinition value) => RequestContent.Create(
+            new {
+                Id = value.Id,
+                Name = value.Name,
+                Description = value.Description,
+                Permissions = value.Permissions,
+                AssignableScopes = value.AssignableScopes
+            });
+
+        // TODO: solve the missing properties, in order to bring this type into alignment with ARM and KeyVault RBAC APIs
         //public SynapseRoleDefinitionType? Type { get; }
 
         //public string RoleName { get; set; }

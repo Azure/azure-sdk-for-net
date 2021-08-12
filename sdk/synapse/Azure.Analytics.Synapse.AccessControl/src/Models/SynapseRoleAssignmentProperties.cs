@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
@@ -19,5 +17,13 @@ namespace Azure.Analytics.Synapse.AccessControl
         public string PrincipalId { get; }
         public string RoleDefinitionId { get; }
         public SynapseRoleScope? Scope { get; }
+
+        public static implicit operator RequestContent(SynapseRoleAssignmentProperties value) => RequestContent.Create(
+            new
+            {
+                PrincipalId = value.PrincipalId,
+                RoleDefinitionId = value.RoleDefinitionId,
+                Scope = value.Scope
+            });
     }
 }
