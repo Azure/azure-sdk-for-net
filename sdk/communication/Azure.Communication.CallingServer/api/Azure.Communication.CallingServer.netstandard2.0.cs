@@ -79,7 +79,7 @@ namespace Azure.Communication.CallingServer
     }
     public partial class CallingServerClientOptions : Azure.Core.ClientOptions
     {
-        public CallingServerClientOptions(Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion version = Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion.V2021_06_15_Preview, bool allowAutoRedirect = false) { }
+        public CallingServerClientOptions(Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion version = Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion.V2021_06_15_Preview) { }
         public enum ServiceVersion
         {
             V2021_06_15_Preview = 1,
