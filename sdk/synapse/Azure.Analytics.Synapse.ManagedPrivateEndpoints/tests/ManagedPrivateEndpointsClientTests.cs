@@ -14,7 +14,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
 {
     public class ManagedPrivateEndpointsClientTests : ClientTestBase
     {
-        private ManagedPrivateEndpointsTestEnvironment _testEnvironment;
         private string managedPrivateEndpointJson = @"{
                     ""type"": ""Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints"",
                     ""name"": ""myPrivateEndpoint"",
@@ -38,16 +37,9 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
 
         public ManagedPrivateEndpointsClientTests(bool isAsync) : base(isAsync)
         {
-            _testEnvironment = new ManagedPrivateEndpointsTestEnvironment();
         }
 
-        // private ManagedPrivateEndpointsClient client { get; set; }
         private readonly Uri _url = new Uri("https://exampleworkspace.dev.azuresynapse.net");
-
-        private TokenCredential GetCredential()
-        {
-            return new EnvironmentCredential();
-        }
 
         private ManagedPrivateEndpointsClient CreateTestClient(ManagedPrivateEndpointsClientOptions.ServiceVersion version, HttpPipelineTransport transport)
         {
@@ -56,7 +48,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
                 Transport = transport
             };
 
-            var client = InstrumentClient(new ManagedPrivateEndpointsClient(_url, _testEnvironment.Credential, options));
+            var client = InstrumentClient(new ManagedPrivateEndpointsClient(_url, new MockCredential(), options));
 
             return client;
         }
