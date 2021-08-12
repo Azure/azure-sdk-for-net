@@ -19,7 +19,6 @@ namespace Azure.Test.Perf
 
         private readonly HttpClient _recordPlaybackHttpClient;
         private readonly TestProxyPolicy _testProxyPolicy;
-
         private string _recordingId;
 
         private long _completedOperations;
@@ -84,29 +83,31 @@ namespace Azure.Test.Perf
             return clientOptions;
         }
 
-        public override async Task RecordAndStartPlayback()
+        public override async Task PostSetupAsync()
         {
-            await StartRecording();
+            if (_testProxyPolicy != null) {
+                await StartRecording();
 
-            _testProxyPolicy.RecordingId = _recordingId;
-            _testProxyPolicy.Mode = "record";
+                _testProxyPolicy.RecordingId = _recordingId;
+                _testProxyPolicy.Mode = "record";
 
-            // Record one call to Run()
-            if (Options.Sync)
-            {
-                Run(CancellationToken.None);
+                // Record one call to Run()
+                if (Options.Sync)
+                {
+                    Run(CancellationToken.None);
+                }
+                else
+                {
+                    await RunAsync(CancellationToken.None);
+                }
+
+                await StopRecording();
+
+                await StartPlayback();
+
+                _testProxyPolicy.Mode = "playback";
+                _testProxyPolicy.RecordingId = _recordingId;
             }
-            else
-            {
-                await RunAsync(CancellationToken.None);
-            }
-
-            await StopRecording();
-
-            await StartPlayback();
-
-            _testProxyPolicy.Mode = "playback";
-            _testProxyPolicy.RecordingId = _recordingId;
         }
 
         public override void Reset()
@@ -142,17 +143,21 @@ namespace Azure.Test.Perf
 
         public abstract Task RunAsync(CancellationToken cancellationToken);
 
-        public override async Task StopPlayback()
+        public override async Task PreCleanupAsync()
         {
-            var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/playback/stop"));
-            message.Headers.Add("x-recording-id", _recordingId);
-            message.Headers.Add("x-purge-inmemory-recording", bool.TrueString);
+            // Only stop playback if it was successfully started
+            if (_testProxyPolicy != null && _testProxyPolicy.Mode == "playback")
+            {
+                var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/playback/stop"));
+                message.Headers.Add("x-recording-id", _recordingId);
+                message.Headers.Add("x-purge-inmemory-recording", bool.TrueString);
 
-            await _recordPlaybackHttpClient.SendAsync(message);
+                await _recordPlaybackHttpClient.SendAsync(message);
 
-            // Stop redirecting requests to test proxy
-            _testProxyPolicy.Mode = null;
-            _testProxyPolicy.RecordingId = null;
+                // Stop redirecting requests to test proxy
+                _testProxyPolicy.Mode = null;
+                _testProxyPolicy.RecordingId = null;
+            }
         }
 
         private async Task StartRecording()

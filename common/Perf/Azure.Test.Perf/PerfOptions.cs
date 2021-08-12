@@ -8,5 +8,7 @@ namespace Azure.Test.Perf
 {
     public class PerfOptions : PerfOptionsBase
     {
+        [Option('x', "test-proxy", HelpText = "URI of TestProxy Server")]
+        public Uri TestProxy { get; set; }
     }
 }

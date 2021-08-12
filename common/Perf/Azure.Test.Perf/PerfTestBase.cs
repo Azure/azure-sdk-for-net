@@ -29,9 +29,9 @@ namespace Azure.Test.Perf
             return Task.CompletedTask;
         }
 
-        public virtual Task RecordAndStartPlayback()
+        public virtual Task PostSetupAsync()
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         public abstract void Reset();
@@ -40,9 +40,9 @@ namespace Azure.Test.Perf
 
         public abstract Task RunAllAsync(CancellationToken cancellationToken);
 
-        public virtual Task StopPlayback()
+        public virtual Task PreCleanupAsync()
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         public virtual Task CleanupAsync()

@@ -108,25 +108,19 @@ namespace Azure.Test.Perf
                 {
                     await tests[0].GlobalSetupAsync();
 
-                    var startedPlayback = false;
-
                     try
                     {
                         await Task.WhenAll(tests.Select(t => t.SetupAsync()));
                         setupStatusCts.Cancel();
                         setupStatusThread.Join();
 
-                        if (options.TestProxy != null)
-                        {
-                            using var recordStatusCts = new CancellationTokenSource();
-                            var recordStatusThread = PerfStressUtilities.PrintStatus("=== Record and Start Playback ===", () => ".", newLine: false, recordStatusCts.Token);
+                        using var postSetupStatusCts = new CancellationTokenSource();
+                        var postSetupStatusThread = PerfStressUtilities.PrintStatus("=== Post Setup ===", () => ".", newLine: false, postSetupStatusCts.Token);
 
-                            await Task.WhenAll(tests.Select(t => t.RecordAndStartPlayback()));
-                            startedPlayback = true;
+                        await Task.WhenAll(tests.Select(t => t.PostSetupAsync()));
 
-                            recordStatusCts.Cancel();
-                            recordStatusThread.Join();
-                        }
+                        postSetupStatusCts.Cancel();
+                        postSetupStatusThread.Join();
 
                         if (options.Warmup > 0)
                         {
@@ -160,14 +154,11 @@ namespace Azure.Test.Perf
                     {
                         try
                         {
-                            if (startedPlayback)
-                            {
-                                using var playbackStatusCts = new CancellationTokenSource();
-                                var playbackStatusThread = PerfStressUtilities.PrintStatus("=== Stop Playback ===", () => ".", newLine: false, playbackStatusCts.Token);
-                                await Task.WhenAll(tests.Select(t => t.StopPlayback()));
-                                playbackStatusCts.Cancel();
-                                playbackStatusThread.Join();
-                            }
+                            using var preCleanupStatusCts = new CancellationTokenSource();
+                            var preCleanupStatusThread = PerfStressUtilities.PrintStatus("=== Pre Cleanup ===", () => ".", newLine: false, preCleanupStatusCts.Token);
+                            await Task.WhenAll(tests.Select(t => t.PreCleanupAsync()));
+                            preCleanupStatusCts.Cancel();
+                            preCleanupStatusThread.Join();
                         }
                         finally
                         {
