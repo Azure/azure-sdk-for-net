@@ -2012,7 +2012,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             // that the message will be completed eventually.
             if (args.Exception is not ServiceBusException { Reason: ServiceBusFailureReason.SessionLockLost })
             {
-                Assert.Fail(args.Exception.ToString());
+                Assert.Fail($"Error source: {args.ErrorSource}, Exception: {args.Exception}");
             }
             return Task.CompletedTask;
         }
