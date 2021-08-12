@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,12 +9,6 @@
 ### Bugs Fixed
 
 ### Other Changes
-
-## 1.1.0 (2021-08-06)
-
-### Features Added
-
-- Added the static class `MetricsAdvisorModelFactory`. It can be used to instantiate Metrics Advisor models for mocking.
 
 ## 1.0.0 (2021-07-08)
 

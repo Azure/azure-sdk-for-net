@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Resources.Models;
 
@@ -31,10 +30,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="sku"> The SKU of the resource. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="createdTime"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
-        /// <param name="changedTime"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        internal GenericResourceData(string id, string name, string type, string location, IDictionary<string, string> tags, Plan plan, object properties, string kind, string managedBy, Sku sku, ResourceIdentity identity, DateTimeOffset? createdTime, DateTimeOffset? changedTime, string provisioningState) : base(id, name, type, location, tags)
+        internal GenericResourceData(string id, string name, string type, string location, IDictionary<string, string> tags, Plan plan, object properties, string kind, string managedBy, Sku sku, ResourceIdentity identity) : base(id, name, type, location, tags)
         {
             Plan = plan;
             Properties = properties;
@@ -42,9 +38,6 @@ namespace Azure.ResourceManager.Resources
             ManagedBy = managedBy;
             Sku = sku;
             Identity = identity;
-            CreatedTime = createdTime;
-            ChangedTime = changedTime;
-            ProvisioningState = provisioningState;
         }
 
         /// <summary> The plan of the resource. </summary>
@@ -59,11 +52,5 @@ namespace Azure.ResourceManager.Resources
         public Sku Sku { get; set; }
         /// <summary> The identity of the resource. </summary>
         public ResourceIdentity Identity { get; set; }
-        /// <summary> The created time of the resource. This is only present if requested via the $expand query parameter. </summary>
-        public DateTimeOffset? CreatedTime { get; }
-        /// <summary> The changed time of the resource. This is only present if requested via the $expand query parameter. </summary>
-        public DateTimeOffset? ChangedTime { get; }
-        /// <summary> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </summary>
-        public string ProvisioningState { get; }
     }
 }

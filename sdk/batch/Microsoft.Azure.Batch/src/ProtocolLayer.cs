@@ -1162,13 +1162,10 @@
             string containerUrl,
             DateTime startTime,
             DateTime? endTime,
-            ComputeNodeIdentityReference identityReference,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var identityRefModel = identityReference != null ? new Models.ComputeNodeIdentityReference(identityReference.ResourceId) : null;
-
-            var parameters = new Models.UploadBatchServiceLogsConfiguration(containerUrl, startTime, endTime, identityRefModel);
+            var parameters = new Models.UploadBatchServiceLogsConfiguration(containerUrl, startTime, endTime);
             var request = new ComputeNodeUploadBatchServiceLogsBatchRequest(this._client, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNode.UploadBatchServiceLogsWithHttpMessagesAsync(
@@ -1859,7 +1856,7 @@
                         // enforce that the returned object is the required type
                         ValidateReturnObject(request, typeof(IBatchRequest<TResponse>));
 
-                        // any changes must be communicated back to the caller
+                        // any changes must be communcated back to the caller
                         request = (Protocol.IBatchRequest<TResponse>)proxyObj;
                     }
                 }
@@ -1904,7 +1901,7 @@
                     // enforce that the returned object is the required type
                     ValidateReturnObject(responseFromIntercept, typeof(TResponse));
 
-                    // promote the interceptor response to official response
+                    // promote the intercetor response to official response
                     response = (TResponse)responseFromIntercept;
                 }
             }

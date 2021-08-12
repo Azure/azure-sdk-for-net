@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.TestFramework
                 {
                     try
                     {
-                        _cleanupClient.GetManagementGroup(mgmtGroupId).StartDelete();
+                        _cleanupClient.GetManagementGroupOperations(mgmtGroupId).StartDelete();
                     }
                     catch (RequestFailedException e) when (e.Status == 404 || e.Status == 403)
                     {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.TestFramework
                 });
                 Parallel.ForEach(OneTimeManagementGroupCleanupPolicy.ManagementGroupsCreated, mgmtGroupId =>
                 {
-                    _cleanupClient.GetManagementGroup(mgmtGroupId).StartDelete();
+                    _cleanupClient.GetManagementGroupOperations(mgmtGroupId).StartDelete();
                 });
             }
 

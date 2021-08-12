@@ -12,7 +12,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
 {
-    public class TestResourceContainer : ArmContainer
+    public class TestResourceContainer : ResourceContainer
     {
         private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
 

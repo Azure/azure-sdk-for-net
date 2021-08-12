@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -16,11 +15,8 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of ResourceGroupContainer and their operations over a ResourceGroup.
     /// </summary>
-    public class ResourceGroupContainer : ArmContainer
+    public class ResourceGroupContainer : ResourceContainer
     {
-        private ClientDiagnostics _clientDiagnostics;
-        private ResourceGroupsRestOperations _restClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupContainer"/> class for mocking.
         /// </summary>
@@ -32,22 +28,29 @@ namespace Azure.ResourceManager.Resources
         /// Initializes a new instance of the <see cref="ResourceGroupContainer"/> class.
         /// </summary>
         /// <param name="subscription"> The parent subscription. </param>
-        internal ResourceGroupContainer(Subscription subscription)
+        internal ResourceGroupContainer(SubscriptionOperations subscription)
             : base(subscription)
         {
         }
 
         /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => Subscription.ResourceType;
+        protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
 
         /// <summary>
         /// Gets the parent resource of this resource.
         /// </summary>
-        protected new Subscription Parent { get {return base.Parent as Subscription;} }
+        protected new SubscriptionOperations Parent { get {return base.Parent as SubscriptionOperations;} }
 
-        private ResourceGroupsRestOperations RestClient => _restClient ??= new ResourceGroupsRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
+        private ResourceGroupsRestOperations RestClient
+        {
+            get
+            {
+                string subscriptionId;
+                if (Id is null || !Id.TryGetSubscriptionId(out subscriptionId))
+                    subscriptionId = Guid.NewGuid().ToString();
+                return new ResourceGroupsRestOperations(Diagnostics, Pipeline, subscriptionId, BaseUri);
+            }
+        }
 
         /// <summary>
         /// Returns the resource from Azure if it exists.

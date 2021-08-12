@@ -75,13 +75,7 @@ namespace Azure.Identity
             _record = (options as SharedTokenCacheCredentialOptions)?.AuthenticationRecord;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
-            Client = client ?? new MsalPublicClient(
-                _pipeline,
-                tenantId,
-                (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId,
-                null,
-                (options as ITokenCacheOptions) ?? s_DefaultCacheOptions,
-                options?.IsLoggingPIIEnabled ?? false);
+            Client = client ?? new MsalPublicClient(_pipeline, tenantId, (options as SharedTokenCacheCredentialOptions)?.ClientId ?? Constants.DeveloperSignOnClientId, null, (options as ITokenCacheOptions) ?? s_DefaultCacheOptions);
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
         }
 

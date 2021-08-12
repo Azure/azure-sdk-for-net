@@ -14,16 +14,14 @@ namespace Azure.Identity
     internal class MsalPublicClient : MsalClientBase<IPublicClientApplication>
     {
         internal string RedirectUrl { get; }
-        internal bool LogPII { get; }
 
         protected MsalPublicClient()
         { }
 
-        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, ITokenCacheOptions cacheOptions, bool logPII)
+        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, ITokenCacheOptions cacheOptions)
             : base(pipeline, tenantId, clientId, cacheOptions)
         {
             RedirectUrl = redirectUrl;
-            LogPII = logPII;
         }
 
         protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
@@ -43,7 +41,7 @@ namespace Azure.Identity
                 .Create(ClientId)
                 .WithAuthority(authorityUri)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
-                .WithLogging(AzureIdentityEventSource.Singleton.LogMsal, enablePiiLogging: LogPII);
+                .WithLogging(AzureIdentityEventSource.Singleton.LogMsal);
 
             if (!string.IsNullOrEmpty(RedirectUrl))
             {
@@ -136,22 +134,22 @@ namespace Azure.Identity
         {
             IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
-            var builder = client.AcquireTokenInteractive(scopes)
-                .WithPrompt(prompt)
-                .WithClaims(claims)
-                .WithPrompt(prompt)
-                .WithClaims(claims);
-            if (loginHint != null)
-            {
-                builder.WithLoginHint(loginHint);
-            }
-            if (tenantId != null)
-            {
-                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
-            }
-            return await builder
-                .ExecuteAsync(async, cancellationToken)
-                .ConfigureAwait(false);
+                var builder = client.AcquireTokenInteractive(scopes)
+                    .WithPrompt(prompt)
+                    .WithClaims(claims)
+                    .WithPrompt(prompt)
+                    .WithClaims(claims);
+                if (loginHint != null)
+                {
+                    builder.WithLoginHint(loginHint);
+                }
+                if (tenantId != null)
+                {
+                    builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+                }
+                return await builder
+                    .ExecuteAsync(async, cancellationToken)
+                    .ConfigureAwait(false);
         }
 
         public async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string claims, string username, SecureString password, string tenantId, bool async, CancellationToken cancellationToken)

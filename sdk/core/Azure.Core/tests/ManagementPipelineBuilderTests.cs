@@ -7,24 +7,14 @@ using System.Reflection;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.ResourceManager;
 using NUnit.Framework;
-using static Azure.Core.Tests.Management.ManagementPipelineBuilderTests;
 
 namespace Azure.Core.Tests.Management
 {
-    internal class ManagementPipelineBuilderTests : RecordedTestBase<MgmtPipelineTestEnvironment>
+    public class ManagementPipelineBuilderTests
     {
-        internal class MgmtPipelineTestEnvironment : TestEnvironment { }
-
-        public ManagementPipelineBuilderTests(bool isAsync)
-           : base(isAsync)//, RecordedTestMode.Record)
-        {
-        }
-
         [TestCase]
-        [SyncOnly]
         public void AddPerCallPolicy()
         {
             var options = new ArmClientOptions();
@@ -37,14 +27,13 @@ namespace Azure.Core.Tests.Management
             Assert.IsNotNull(policies.ToArray().FirstOrDefault(p => p.GetType() == typeof(DummyPolicy)));
         }
 
-        [RecordedTest]
-        [SyncOnly]
+        [TestCase]
         public void AddPerCallPolicyViaClient()
         {
-            var options = InstrumentClientOptions(new ArmClientOptions());
+            var options = new ArmClientOptions();
             var dummyPolicy = new DummyPolicy();
             options.AddPolicy(dummyPolicy, HttpPipelinePosition.PerCall);
-            var client = InstrumentClient(new ArmClient(TestEnvironment.Credential, options));
+            var client = new ArmClient(Guid.NewGuid().ToString(), new MockCredential(), options);
 
             var pipelineProperty = client.GetType().GetProperty("Pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetProperty);
             var pipeline = pipelineProperty.GetValue(client) as HttpPipeline;

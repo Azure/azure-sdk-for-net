@@ -27,6 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal static RequestData GetRequestData(Activity activity)
         {
             string url = null;
+            string urlAuthority = null;
             var monitorTags = EnumerateActivityTags(activity);
 
             AddActivityLinksToPartCTags(activity.Links, ref monitorTags.PartCTags);
@@ -34,7 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             switch (monitorTags.activityType)
             {
                 case PartBType.Http:
-                    url = monitorTags.PartBTags.GetRequestUrl();
+                    monitorTags.PartBTags.GenerateUrlAndAuthority(out url, out urlAuthority);
                     break;
                 case PartBType.Messaging:
                     url = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeMessagingUrl)?.ToString();
@@ -47,6 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 Name = activity.DisplayName,
                 Url = url,
+                Source = urlAuthority
             };
 
             AddPropertiesToTelemetry(request.Properties, ref monitorTags.PartCTags);

@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
                 InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
 
-        [RecordedTest]
+        [Test]
         public async Task CanSerializeAndDeserialize()
         {
             var client = CreateClient();
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.AreEqual(42, readEmployee.Age);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CanSerializeAndDeserializeGenericRecord()
         {
             var client = CreateClient();
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.AreEqual(42, readRecord.GetValue(1));
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CannotSerializeUnsupportedType()
         {
             var client = CreateClient();
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             await Task.CompletedTask;
         }
 
-        [RecordedTest]
+        [Test]
         public async Task CannotDeserializeUnsupportedType()
         {
             var client = CreateClient();

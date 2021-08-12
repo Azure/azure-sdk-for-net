@@ -79,8 +79,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 ]
             }";
 
-            SchemaProperties schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
-            string schemaId = schemaProperties.Id;
+            Response<SchemaProperties> schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
+            string schemaId = schemaProperties.Value.Id;
             #endregion
 
             Assert.AreEqual(_schemaProperties.Id, schemaId);
@@ -93,8 +93,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             var schemaId = _schemaProperties.Id;
 
             #region Snippet:SchemaRegistryRetrieveSchema
-            SchemaProperties schemaProperties = client.GetSchema(schemaId);
-            string schemaContent = schemaProperties.Content;
+            Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);
+            string schemaContent = schemaProperties.Value.Content;
             #endregion
 
             Assert.AreEqual(Regex.Replace(_schemaProperties.Content, @"\s+", string.Empty), schemaContent);

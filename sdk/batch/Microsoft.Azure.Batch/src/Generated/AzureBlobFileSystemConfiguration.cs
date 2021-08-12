@@ -89,15 +89,13 @@ namespace Microsoft.Azure.Batch
         /// <param name='accountKey'>The Azure Storage Account key. This property is mutually exclusive with <see cref="SasKey"/>.</param>
         /// <param name='sasKey'>The Azure Storage SAS token. This property is mutually exclusive with <see cref="AccountKey"/>.</param>
         /// <param name='blobfuseOptions'>Additional command line options to pass to the mount command.</param>
-        /// <param name='identityReference'>The reference to the user assigned identity to use to access containerName</param>
         internal AzureBlobFileSystemConfiguration(
             string accountName,
             string containerName,
             string relativeMountPath,
             string accountKey = default(string),
             string sasKey = default(string),
-            string blobfuseOptions = default(string),
-            ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference))
+            string blobfuseOptions = default(string))
         {
             this.propertyContainer = new PropertyContainer();
             this.AccountName = accountName;
@@ -106,7 +104,6 @@ namespace Microsoft.Azure.Batch
             this.AccountKey = accountKey;
             this.SasKey = sasKey;
             this.BlobfuseOptions = blobfuseOptions;
-            this.IdentityReference = identityReference;
         }
 
         internal AzureBlobFileSystemConfiguration(Models.AzureBlobFileSystemConfiguration protocolObject)

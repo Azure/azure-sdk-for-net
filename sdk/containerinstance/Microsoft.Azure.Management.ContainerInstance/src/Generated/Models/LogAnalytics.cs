@@ -39,15 +39,12 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <param name="logType">The log type to be used. Possible values
         /// include: 'ContainerInsights', 'ContainerInstanceLogs'</param>
         /// <param name="metadata">Metadata for log analytics.</param>
-        /// <param name="workspaceResourceId">The workspace resource id for log
-        /// analytics</param>
-        public LogAnalytics(string workspaceId, string workspaceKey, string logType = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), IDictionary<string, string> workspaceResourceId = default(IDictionary<string, string>))
+        public LogAnalytics(string workspaceId, string workspaceKey, string logType = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>))
         {
             WorkspaceId = workspaceId;
             WorkspaceKey = workspaceKey;
             LogType = logType;
             Metadata = metadata;
-            WorkspaceResourceId = workspaceResourceId;
             CustomInit();
         }
 
@@ -80,12 +77,6 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IDictionary<string, string> Metadata { get; set; }
-
-        /// <summary>
-        /// Gets or sets the workspace resource id for log analytics
-        /// </summary>
-        [JsonProperty(PropertyName = "workspaceResourceId")]
-        public IDictionary<string, string> WorkspaceResourceId { get; set; }
 
         /// <summary>
         /// Validate the object.

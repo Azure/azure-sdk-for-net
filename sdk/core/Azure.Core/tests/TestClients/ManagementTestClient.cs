@@ -19,9 +19,9 @@ namespace Azure.Core.Tests
             _diagnostics = new ClientDiagnostics(options);
         }
 
-        public virtual TestResource GetTestResource()
+        public virtual TestResourceOperations GetTestResourceOperations()
         {
-            return new TestResource();
+            return new TestResourceOperations();
         }
 
         public virtual TestResourceContainer GetTestResourceContainer()

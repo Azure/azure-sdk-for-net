@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
@@ -13,6 +14,7 @@ using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Microsoft.Azure.Management.Storage;
+using Microsoft.Identity.Client;
 using Microsoft.Rest;
 using NUnit.Framework;
 
@@ -25,85 +27,13 @@ namespace Azure.Storage.Blobs.Test
         {
         }
 
-        // The container is shared by all tests in this class
-        private string _containerName;
-        private StorageManagementClient _storageManagementClient;
-
-        private BlobContainerClient _containerClient;
-
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            if (Mode != RecordedTestMode.Playback)
-            {
-                _containerName = Guid.NewGuid().ToString();
-                var configuration = TestConfigurations.DefaultTargetOAuthTenant;
-
-                string subscriptionId = configuration.SubscriptionId;
-                string[] scopes = new string[] { "https://management.azure.com/.default" };
-                string token = await GetAuthToken(scopes, configuration);
-                TokenCredentials tokenCredentials = new TokenCredentials(token);
-                _storageManagementClient = new StorageManagementClient(tokenCredentials) { SubscriptionId = subscriptionId };
-
-                await _storageManagementClient.BlobContainers.CreateAsync(
-                    resourceGroupName: configuration.ResourceGroupName,
-                    accountName: configuration.AccountName,
-                    containerName: _containerName,
-                    new Microsoft.Azure.Management.Storage.Models.BlobContainer(
-                        publicAccess: Microsoft.Azure.Management.Storage.Models.PublicAccess.Container,
-                        immutableStorageWithVersioning: new Microsoft.Azure.Management.Storage.Models.ImmutableStorageWithVersioning(true)));
-                return;
-            }
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            _containerName = Recording.GetVariable(nameof(_containerName), _containerName);
-            _containerClient = GetServiceClient_OAuthAccount_SharedKey().GetBlobContainerClient(_containerName);
-        }
-
-        [OneTimeTearDown]
-        public async Task GlobalTearDown()
-        {
-            if (Mode != RecordedTestMode.Playback)
-            {
-                var configuration = TestConfigurations.DefaultTargetOAuthTenant;
-                var containerClient = new BlobServiceClient(
-                    new Uri(TestConfigOAuth.BlobServiceEndpoint),
-                    new StorageSharedKeyCredential(TestConfigOAuth.AccountName,
-                    TestConfigOAuth.AccountKey))
-                    .GetBlobContainerClient(_containerName);
-                await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold))
-                {
-                    BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
-
-                    if (blobItem.Properties.HasLegalHold)
-                    {
-                        await blobClient.SetLegalHoldAsync(false);
-                    }
-
-                    if (blobItem.Properties.ImmutabilityPolicy.ExpiresOn != null)
-                    {
-                        await blobClient.DeleteImmutabilityPolicyAsync();
-                    }
-
-                    await blobClient.DeleteIfExistsAsync();
-                }
-
-                await _storageManagementClient.BlobContainers.DeleteAsync(
-                     resourceGroupName: configuration.ResourceGroupName,
-                     accountName: configuration.AccountName,
-                     containerName: _containerName);
-            }
-        }
-
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetImmutibilityPolicyAsync()
         {
             // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container);
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
@@ -133,7 +63,7 @@ namespace Azure.Storage.Blobs.Test
             // Validate we are correctly deserializing Blob Items.
             // Act
             List<BlobItem> blobItems = new List<BlobItem>();
-            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(traits: BlobTraits.ImmutabilityPolicy, prefix: blob.Name))
+            await foreach (BlobItem blobItem in vlwContainer.Container.GetBlobsAsync(traits: BlobTraits.ImmutabilityPolicy))
             {
                 blobItems.Add(blobItem);
             }
@@ -157,7 +87,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetImmutibilityPolicyAsync_IfModifiedSince()
         {
             // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container);
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
@@ -241,7 +172,9 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_AccoutnSas(AccountSasPermissions sasPermissions)
         {
             // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(_containerClient, GetNewBlobName());
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container, GetNewBlobName());
 
             BlobServiceClient sharedKeyServiceClient = InstrumentClient(
                 GetServiceClient_OAuthAccount_SharedKey());
@@ -250,7 +183,7 @@ namespace Azure.Storage.Blobs.Test
                 Recording.UtcNow.AddDays(1),
                 AccountSasResourceTypes.All);
             BlobBaseClient sasBlobClient = InstrumentClient(new BlobServiceClient(serviceSasUri, GetOptions())
-                .GetBlobContainerClient(_containerClient.Name)
+                .GetBlobContainerClient(vlwContainer.Container.Name)
                 .GetBlobBaseClient(blob.Name));
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
@@ -284,10 +217,12 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_ContainerSas(BlobContainerSasPermissions sasPermissions)
         {
             // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(_containerClient, GetNewBlobName());
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container, GetNewBlobName());
 
             BlobContainerClient sharedKeyContainer = InstrumentClient(
-                GetServiceClient_OAuthAccount_SharedKey().GetBlobContainerClient(_containerClient.Name));
+                GetServiceClient_OAuthAccount_SharedKey().GetBlobContainerClient(vlwContainer.Container.Name));
             Uri containerSasUri = sharedKeyContainer.GenerateSasUri(sasPermissions, Recording.UtcNow.AddDays(1));
             BlobBaseClient sasBlobClient = InstrumentClient(new BlobContainerClient(containerSasUri, GetOptions()).GetBlobBaseClient(blob.Name));
 
@@ -322,11 +257,13 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_BlobSas(BlobSasPermissions sasPermissions)
         {
             // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(_containerClient, GetNewBlobName());
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container, GetNewBlobName());
 
             BlobBaseClient sharedKeyBlob = InstrumentClient(
                 GetServiceClient_OAuthAccount_SharedKey()
-                    .GetBlobContainerClient(_containerClient.Name)
+                    .GetBlobContainerClient(vlwContainer.Container.Name)
                     .GetBlobBaseClient(blob.Name));
             Uri blobSasUri = sharedKeyBlob.GenerateSasUri(sasPermissions, Recording.UtcNow.AddDays(1));
             BlobBaseClient sasBlobClient = InstrumentClient(new BlobBaseClient(blobSasUri, GetOptions()));
@@ -362,13 +299,15 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_BlobSnapshotSas(SnapshotSasPermissions sasPermissions)
         {
             // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(_containerClient, GetNewBlobName());
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container, GetNewBlobName());
 
             Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder
             {
-                BlobContainerName = _containerClient.Name,
+                BlobContainerName = vlwContainer.Container.Name,
                 BlobName = blob.Name,
                 ExpiresOn = Recording.UtcNow.AddDays(1),
                 Snapshot = snapshotResponse.Value.Snapshot
@@ -419,14 +358,16 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_BlobVersionSas(BlobVersionSasPermissions sasPermissions)
         {
             // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(_containerClient, GetNewBlobName());
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container, GetNewBlobName());
 
             IDictionary<string, string> metadata = BuildMetadata();
             Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder
             {
-                BlobContainerName = _containerClient.Name,
+                BlobContainerName = vlwContainer.Container.Name,
                 BlobName = blob.Name,
                 ExpiresOn = Recording.UtcNow.AddDays(1),
                 Version = metadataResponse.Value.VersionId
@@ -470,7 +411,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetImmutibilityPolicyAsync_IfModifiedSince_Failed()
         {
             // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container);
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
@@ -496,7 +438,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetImmutibilityPolicyAsync_Error()
         {
             // Arrange
-            BlobBaseClient blob = InstrumentClient(_containerClient.GetBlobClient(GetNewBlobName()));
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = InstrumentClient(vlwContainer.Container.GetBlobClient(GetNewBlobName()));
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
@@ -515,7 +458,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetImmutibilityPolicyAsync_Mutable()
         {
             // Arrange
-            BlobBaseClient blob = InstrumentClient(_containerClient.GetBlobClient(GetNewBlobName()));
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = InstrumentClient(vlwContainer.Container.GetBlobClient(GetNewBlobName()));
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
@@ -534,7 +478,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task DeleteImmutibilityPolicyAsync()
         {
             // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container);
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
@@ -558,7 +503,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task DeleteImmutibilityPolicyAsync_Error()
         {
             // Arrange
-            BlobBaseClient blob = InstrumentClient(_containerClient.GetBlobClient(GetNewBlobName()));
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = InstrumentClient(vlwContainer.Container.GetBlobClient(GetNewBlobName()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -571,7 +517,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetLegalHoldAsync()
         {
             // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container);
 
             // Act
             Response<BlobLegalHoldResult> response = await blob.SetLegalHoldAsync(true);
@@ -589,7 +536,7 @@ namespace Azure.Storage.Blobs.Test
             // Validate we are correctly deserializing Blob Items.
             // Act
             List<BlobItem> blobItems = new List<BlobItem>();
-            await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync(traits: BlobTraits.LegalHold, prefix: blob.Name))
+            await foreach (BlobItem blobItem in vlwContainer.Container.GetBlobsAsync(traits: BlobTraits.LegalHold))
             {
                 blobItems.Add(blobItem);
             }
@@ -617,7 +564,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetLegalHoldAsync_Error()
         {
             // Arrange
-            BlobBaseClient blob = InstrumentClient(_containerClient.GetBlobClient(GetNewBlobName()));
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = InstrumentClient(vlwContainer.Container.GetBlobClient(GetNewBlobName()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -629,18 +577,21 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task ContainerImmutableStorageWithVersioning()
         {
+            // Arrange
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+
             // Validate we are deserializing Get Container Properties responses correctly.
             // Act
-            Response<BlobContainerProperties> propertiesResponse = await _containerClient.GetPropertiesAsync();
+            Response<BlobContainerProperties> propertiesResponse = await vlwContainer.Container.GetPropertiesAsync();
 
             // Assert
             Assert.IsTrue(propertiesResponse.Value.HasImmutableStorageWithVersioning);
 
             // Validate we are deserializing BlobContainerItems correctly.
             // Act
-            BlobServiceClient blobServiceClient = _containerClient.GetParentBlobServiceClient();
+            BlobServiceClient blobServiceClient = vlwContainer.Container.GetParentBlobServiceClient();
             IList<BlobContainerItem> containers = await blobServiceClient.GetBlobContainersAsync().ToListAsync();
-            BlobContainerItem containerItem = containers.Where(c => c.Name == _containerClient.Name).FirstOrDefault();
+            BlobContainerItem containerItem = containers.Where(c => c.Name == vlwContainer.Container.Name).FirstOrDefault();
 
             // Assert
             Assert.IsTrue(containerItem.Properties.HasImmutableStorageWithVersioning);
@@ -651,7 +602,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task CreateAppendBlob_ImmutableStorageWithVersioning()
         {
             // Arrange
-            AppendBlobClient appendBlob = InstrumentClient(_containerClient.GetAppendBlobClient(GetNewBlobName()));
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            AppendBlobClient appendBlob = InstrumentClient(vlwContainer.Container.GetAppendBlobClient(GetNewBlobName()));
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
@@ -683,7 +635,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task CreatePageBlob_ImmutableStorageWithVersioning()
         {
             // Arrange
-            PageBlobClient pageBlob = InstrumentClient(_containerClient.GetPageBlobClient(GetNewBlobName()));
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            PageBlobClient pageBlob = InstrumentClient(vlwContainer.Container.GetPageBlobClient(GetNewBlobName()));
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
@@ -715,7 +668,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task CommitBlockList_ImmutableStorageWithVersioning()
         {
             // Arrange
-            BlockBlobClient blockBlob = InstrumentClient(_containerClient.GetBlockBlobClient(GetNewBlobName()));
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlockBlobClient blockBlob = InstrumentClient(vlwContainer.Container.GetBlockBlobClient(GetNewBlobName()));
 
             byte[] data = GetRandomBuffer(Constants.KB);
             string blockName = GetNewBlockName();
@@ -759,7 +713,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task Upload_ImmutableStorageWithVersioning(bool multipart)
         {
             // Arrange
-            BlockBlobClient blockBlob = InstrumentClient(_containerClient.GetBlockBlobClient(GetNewBlobName()));
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlockBlobClient blockBlob = InstrumentClient(vlwContainer.Container.GetBlockBlobClient(GetNewBlobName()));
 
             byte[] data = GetRandomBuffer(Constants.KB);
             using Stream stream = new MemoryStream(data);
@@ -804,8 +759,9 @@ namespace Azure.Storage.Blobs.Test
         public async Task SyncCopyFromUri_ImmutableStorageWithVersioning()
         {
             // Arrange
-            BlobBaseClient srcBlob = await GetNewBlobClient(_containerClient);
-            BlockBlobClient destBlob = InstrumentClient(_containerClient.GetBlockBlobClient(GetNewBlobName()));
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient srcBlob = await GetNewBlobClient(vlwContainer.Container);
+            BlockBlobClient destBlob = InstrumentClient(vlwContainer.Container.GetBlockBlobClient(GetNewBlobName()));
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
@@ -837,8 +793,9 @@ namespace Azure.Storage.Blobs.Test
         public async Task StartCopyFromUri_ImmutableStorageWithVersioning()
         {
             // Arrange
-            BlobBaseClient srcBlob = await GetNewBlobClient(_containerClient);
-            BlockBlobClient destBlob = InstrumentClient(_containerClient.GetBlockBlobClient(GetNewBlobName()));
+            await using DisposingImmutableStorageWithVersioningContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient srcBlob = await GetNewBlobClient(vlwContainer.Container);
+            BlockBlobClient destBlob = InstrumentClient(vlwContainer.Container.GetBlockBlobClient(GetNewBlobName()));
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
@@ -866,6 +823,21 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
         }
 
+        private async Task <DisposingImmutableStorageWithVersioningContainer> GetTestVersionLevelWormContainer(TenantConfiguration tenantConfiguration)
+        {
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigOAuth.AccountName, TestConfigOAuth.AccountKey);
+            Uri serviceUri = new Uri(TestConfigOAuth.BlobServiceEndpoint);
+            BlobServiceClient blobServiceClient = InstrumentClient(new BlobServiceClient(serviceUri, sharedKeyCredential, GetOptions()));
+            BlobContainerClient containerClient = InstrumentClient(blobServiceClient.GetBlobContainerClient(GetNewContainerName()));
+
+            DisposingImmutableStorageWithVersioningContainer disposingVersionLevelWormContainer = new DisposingImmutableStorageWithVersioningContainer(
+                tenantConfiguration,
+                containerClient,
+                Mode);
+            await disposingVersionLevelWormContainer.CreateAsync();
+            return disposingVersionLevelWormContainer;
+        }
+
         private DateTimeOffset RoundToNearestSecond(DateTimeOffset initalDateTimeOffset)
             => new DateTimeOffset(
                 year: initalDateTimeOffset.Year,
@@ -875,5 +847,103 @@ namespace Azure.Storage.Blobs.Test
                 minute: initalDateTimeOffset.Minute,
                 second: initalDateTimeOffset.Second,
                 offset: TimeSpan.Zero);
+    }
+
+#pragma warning disable SA1402 // File may only contain a single type
+    public class DisposingImmutableStorageWithVersioningContainer : IAsyncDisposable
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        public BlobContainerClient Container;
+
+        private TenantConfiguration _tenantConfiguration;
+        private StorageManagementClient _storageManagementClient;
+
+        private RecordedTestMode _testMode;
+
+        public DisposingImmutableStorageWithVersioningContainer(
+            TenantConfiguration tenantConfiguration,
+            BlobContainerClient containerClient,
+            RecordedTestMode recordedTestMode)
+        {
+            _tenantConfiguration = tenantConfiguration;
+            Container = containerClient;
+            _testMode = recordedTestMode;
+        }
+
+        public async Task CreateAsync()
+        {
+            if (_testMode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+
+            string subscriptionId = _tenantConfiguration.SubscriptionId;
+            string token = await GetAuthToken();
+            TokenCredentials tokenCredentials = new TokenCredentials(token);
+            _storageManagementClient = new StorageManagementClient(tokenCredentials) { SubscriptionId = subscriptionId };
+
+            await _storageManagementClient.BlobContainers.CreateAsync(
+                resourceGroupName: _tenantConfiguration.ResourceGroupName,
+                accountName: _tenantConfiguration.AccountName,
+                containerName: Container.Name,
+                new Microsoft.Azure.Management.Storage.Models.BlobContainer(
+                    publicAccess: Microsoft.Azure.Management.Storage.Models.PublicAccess.Container,
+                    immutableStorageWithVersioning: new Microsoft.Azure.Management.Storage.Models.ImmutableStorageWithVersioning(true)));
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (_testMode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+
+            if (Container != null)
+            {
+                await foreach (BlobItem blobItem in Container.GetBlobsAsync(BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold))
+                {
+                    BlobClient blobClient = Container.GetBlobClient(blobItem.Name);
+
+                    if (blobItem.Properties.HasLegalHold)
+                    {
+                        await blobClient.SetLegalHoldAsync(false);
+                    }
+
+                    if (blobItem.Properties.ImmutabilityPolicy.ExpiresOn != null)
+                    {
+                        await blobClient.DeleteImmutabilityPolicyAsync();
+                    }
+
+                    await blobClient.DeleteIfExistsAsync();
+                }
+
+                try
+                {
+                    await _storageManagementClient.BlobContainers.DeleteAsync(
+                        resourceGroupName: "XClient",
+                        accountName: _tenantConfiguration.AccountName,
+                        containerName: Container.Name);
+                    Container = null;
+                }
+                catch
+                {
+                    // swallow the exception to avoid hiding another test failure
+                }
+            }
+        }
+
+        private async Task<string> GetAuthToken()
+        {
+            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(_tenantConfiguration.ActiveDirectoryApplicationId)
+                .WithAuthority(AzureCloudInstance.AzurePublic, _tenantConfiguration.ActiveDirectoryTenantId)
+                .WithClientSecret(_tenantConfiguration.ActiveDirectoryApplicationSecret)
+                .Build();
+
+            string[] scopes = new string[] { "https://management.azure.com/.default" };
+
+            AcquireTokenForClientParameterBuilder result = application.AcquireTokenForClient(scopes);
+            AuthenticationResult authenticationResult = await result.ExecuteAsync();
+            return authenticationResult.AccessToken;
+        }
     }
 }

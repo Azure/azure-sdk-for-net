@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -14,15 +13,6 @@ namespace Azure.ResourceManager.Tests
         }
 
         [RecordedTest]
-        [SyncOnly]
-        public void NoDataValidation()
-        {
-            ///subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Features/providers/Microsoft.Compute/features/AHUB
-            var resource = Client.GetFeature($"/subscriptions/{Guid.NewGuid()}/providers/Microsoft.Features/providers/Microsoft.FakeNamespace/features/fakeFeature");
-            Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
-        }
-
-        [RecordedTest]
         public async Task Get()
         {
             Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
@@ -33,7 +23,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(featureFromContainer.Data.Properties.State, feature.Data.Properties.State);
             Assert.AreEqual(featureFromContainer.Data.Type, feature.Data.Type);
 
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetFeature(feature.Data.Id + "x").GetAsync());
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetFeatureOperations(feature.Data.Id + "x").GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
 

@@ -42,12 +42,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient(bool useTokenCredential = false)
         {
-            // TODO: remove 'if' block when (https://github.com/Azure/azure-sdk-for-net/issues/23268) is solved
-            if (useTokenCredential)
-            {
-                Assert.Ignore();
-            }
-
             var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
             var instrumentedOptions = GetInstrumentedOptions();
 
@@ -60,12 +54,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         public MetricsAdvisorClient GetMetricsAdvisorClient(bool useTokenCredential = false)
         {
-            // TODO: remove 'if' block when (https://github.com/Azure/azure-sdk-for-net/issues/23268) is solved
-            if (useTokenCredential)
-            {
-                Assert.Ignore();
-            }
-
             var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
             var instrumentedOptions = GetInstrumentedOptions();
 
