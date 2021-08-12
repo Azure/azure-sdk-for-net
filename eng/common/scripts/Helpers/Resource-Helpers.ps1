@@ -45,7 +45,7 @@ function Get-PurgeableResources {
 
 function Remove-PurgeableResources {
     param (
-        [Parameter(Mandatory=$true, Position=0, ValueFromPipeline=$true)]
+        [Parameter(Position=0, ValueFromPipeline=$true)]
         [psobject[]] $Resource
     )
 
