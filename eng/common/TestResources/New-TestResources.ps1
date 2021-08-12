@@ -475,7 +475,7 @@ try {
             &$preDeploymentScript -ResourceGroupName $ResourceGroupName @PSBoundParameters
         }
 
-        Log "Deploying template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"
+        Log "Deploying template '$($templateFile.originalFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
         $deployment = Retry {
             $lastDebugPreference = $DebugPreference
             try {
