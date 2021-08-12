@@ -46,7 +46,7 @@ namespace Azure.Test.Perf
             if (testTypes.Any())
             {
                 var optionTypes = PerfStressUtilities.GetOptionTypes(testTypes);
-                await PerfStressUtilities.Parser.ParseArguments(args, optionTypes).MapResult<PerfOptions, Task>(
+                await PerfStressUtilities.Parser.ParseArguments(args, optionTypes).MapResult<PerfOptionsBase, Task>(
                     async o =>
                     {
                         var verbName = o.GetType().GetCustomAttribute<VerbAttribute>().Name;
@@ -62,7 +62,7 @@ namespace Azure.Test.Perf
             }
         }
 
-        private static async Task Run(Type testType, PerfOptions options)
+        private static async Task Run(Type testType, PerfOptionsBase options)
         {
             // Require Server GC, since most performance-sensitive usage will be in ASP.NET apps which
             // enable Server GC by default.  Though Server GC is disabled on 1-core machines as of
@@ -217,7 +217,7 @@ namespace Azure.Test.Perf
             PrintAssemblyVersions(testType);
         }
 
-        private static void ConfigureThreadPool(PerfOptions options)
+        private static void ConfigureThreadPool(PerfOptionsBase options)
         {
             if (options.MinWorkerThreads.HasValue || options.MinIOCompletionThreads.HasValue)
             {
@@ -300,7 +300,7 @@ namespace Azure.Test.Perf
             Console.WriteLine();
         }
 
-        private static async Task RunTestsAsync(IPerfTest[] tests, PerfOptions options, string title, bool warmup = false)
+        private static async Task RunTestsAsync(IPerfTest[] tests, PerfOptionsBase options, string title, bool warmup = false)
         {
             var durationSeconds = warmup ? options.Warmup : options.Duration;
 
