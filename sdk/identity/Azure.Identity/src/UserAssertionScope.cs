@@ -47,12 +47,12 @@ namespace Azure.Identity
 
         internal class UserAssertionCacheOptions : UnsafeTokenCacheOptions, ITokenCacheOptions
         {
-            private Func<Task<UserAssertionCacheDetails>> _hydrateCache;
+            private Func<TokenCacheNotificationDetails, Task<UserAssertionCacheDetails>> _hydrateCache;
             internal Func<UserAssertionCacheDetails, Task> _persistCache;
 
             public UserAssertionCacheOptions(UserAssertionScopeOptions options)
             {
-                _hydrateCache = options?.HydrateCache ?? (() => Task.FromResult(new UserAssertionCacheDetails { CacheBytes = ReadOnlyMemory<byte>.Empty }));
+                _hydrateCache = options?.HydrateCache ?? ((d) => Task.FromResult(new UserAssertionCacheDetails { CacheBytes = ReadOnlyMemory<byte>.Empty }));
                 _persistCache = options?.PersistCache ?? (_ => Task.CompletedTask);
             }
 
@@ -60,7 +60,7 @@ namespace Azure.Identity
 
             protected internal override Task<UserAssertionCacheDetails> RefreshCacheAsync(TokenCacheNotificationDetails details)
             {
-                return _hydrateCache();
+                return _hydrateCache(details);
             }
 
             protected internal override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)

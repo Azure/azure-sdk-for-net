@@ -370,7 +370,7 @@ namespace Azure.Identity
     public partial class UserAssertionScopeOptions
     {
         public UserAssertionScopeOptions() { }
-        public System.Func<System.Threading.Tasks.Task<Azure.Identity.UserAssertionCacheDetails>> HydrateCache { get { throw null; } set { } }
+        public System.Func<Azure.Identity.TokenCacheNotificationDetails, System.Threading.Tasks.Task<Azure.Identity.UserAssertionCacheDetails>> HydrateCache { get { throw null; } set { } }
         public System.Func<Azure.Identity.UserAssertionCacheDetails, System.Threading.Tasks.Task> PersistCache { get { throw null; } set { } }
     }
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential

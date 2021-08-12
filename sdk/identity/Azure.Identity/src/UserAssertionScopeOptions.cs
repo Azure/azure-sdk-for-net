@@ -14,7 +14,7 @@ namespace Azure.Identity
         /// <summary>
         /// The delegate to be called which retrieves the cache from persistence for this user assertion partition.
         /// </summary>
-        public Func<Task<UserAssertionCacheDetails>> HydrateCache { get; set; }
+        public Func<TokenCacheNotificationDetails, Task<UserAssertionCacheDetails>> HydrateCache { get; set; }
 
         /// <summary>
         /// The delegate to be called with the current state of the token cache on each time it is updated for this <see cref="UserAssertionScope"/> instance.
