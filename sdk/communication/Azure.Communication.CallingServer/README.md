@@ -35,6 +35,14 @@ var connectionString = "<connection_string>"; // Find your Communication Service
 CallingServerClient callingServerClient = new CallingServerClient(connectionString);
 ```
 
+```C# Snippet:Azure_Communication_CallingServer_Tests_Samples_CreateCallingServerClientWithToken
+string endpoint = "<endpoint_url>";
+string userAssignedClientId = "<your managed identity client Id>";
+var tokenCredential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
+tokenCredential = new DefaultAzureCredential();
+CallingServerClient client = new CallingServerClient(new Uri(endpoint), tokenCredential);
+```
+
 ## Examples
 ### Make a call to a phone number recipient
 To make an outbound call, call the `CreateCallConnection` or `CreateCallConnectionAsync` function from the `CallingServerClient`.

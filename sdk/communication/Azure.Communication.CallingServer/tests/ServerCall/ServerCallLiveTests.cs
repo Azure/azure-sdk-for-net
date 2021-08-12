@@ -29,9 +29,7 @@ namespace Azure.Communication.CallingServer.Tests
         public async Task RunAllRecordingFunctionsScenarioTests()
         {
             CallingServerClient[] callingServerClients = new CallingServerClient[] { CreateInstrumentedCallingServerClient(), CreateInstrumentedCallingServerClientWithToken() };
-
             var groupId = GetGroupId();
-
             try
             {
                 foreach (CallingServerClient callingServerClient in callingServerClients)
