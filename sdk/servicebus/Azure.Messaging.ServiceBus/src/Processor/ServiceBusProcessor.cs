@@ -233,16 +233,7 @@ namespace Azure.Messaging.ServiceBus
 
             if (isSessionEntity)
             {
-                if (maxConcurrentCallsAcrossAllSessions.HasValue)
-                {
-                    _maxConcurrentCalls = maxConcurrentCallsAcrossAllSessions.Value;
-                }
-                else
-                {
-                    _maxConcurrentCalls = _sessionIds.Length > 0
-                        ? Math.Min(_sessionIds.Length, _maxConcurrentSessions)
-                        : _maxConcurrentSessions * _maxConcurrentCallsPerSession;
-                }
+                SetMaxConcurrentCallsAcrossSessions(maxConcurrentCallsAcrossAllSessions);
             }
 
             var maxAcceptSessions = Math.Min(_maxConcurrentCalls, 2 * Environment.ProcessorCount);
@@ -980,20 +971,32 @@ namespace Azure.Messaging.ServiceBus
 
             lock (_maxConcurrencySyncLock)
             {
-                if (maxConcurrentCallsAcrossAllSessions.HasValue)
-                {
-                    _maxConcurrentCalls = maxConcurrentCallsAcrossAllSessions.Value;
-                }
-                else
-                {
-                    _maxConcurrentCalls = _sessionIds.Length > 0
-                        ? Math.Min(_sessionIds.Length, maxConcurrentSessions)
-                        : maxConcurrentSessions * maxConcurrentCallsPerSession;
-                }
-
                 _maxConcurrentSessions = maxConcurrentSessions;
                 _maxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
+
+                SetMaxConcurrentCallsAcrossSessions(maxConcurrentCallsAcrossAllSessions);
                 WakeLoop();
+            }
+        }
+
+        private void SetMaxConcurrentCallsAcrossSessions(int? maxConcurrentCallsAcrossAllSessions)
+        {
+            int calculatedMaxConcurrentCalls = _sessionIds.Length > 0
+                ? Math.Min(_sessionIds.Length, _maxConcurrentSessions)
+                : _maxConcurrentSessions * _maxConcurrentCallsPerSession;
+            if (maxConcurrentCallsAcrossAllSessions.HasValue)
+            {
+                if (maxConcurrentCallsAcrossAllSessions.Value > calculatedMaxConcurrentCalls)
+                {
+                    throw new ArgumentOutOfRangeException(Resources.InvalidMaxConcurrentCalls);
+                }
+                _maxConcurrentCalls = maxConcurrentCallsAcrossAllSessions.Value;
+            }
+            else
+            {
+                _maxConcurrentCalls = _sessionIds.Length > 0
+                    ? Math.Min(_sessionIds.Length, _maxConcurrentSessions)
+                    : _maxConcurrentSessions * _maxConcurrentCallsPerSession;
             }
         }
 

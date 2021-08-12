@@ -639,6 +639,10 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="options">The set of <see cref="ServiceBusSessionProcessorOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
         /// <returns>A <see cref="ServiceBusSessionProcessor"/> scoped to the specified queue.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The value specified for <see cref="ServiceBusSessionProcessorOptions.MaxConcurrentCallsAcrossAllSessions"/> was greater than the product of
+        /// <see cref="ServiceBusSessionProcessorOptions.MaxConcurrentSessions"/> and <see cref="ServiceBusSessionProcessorOptions.MaxConcurrentCallsPerSession"/>.
+        /// </exception>
         public virtual ServiceBusSessionProcessor CreateSessionProcessor(
             string queueName,
             ServiceBusSessionProcessorOptions options = default)

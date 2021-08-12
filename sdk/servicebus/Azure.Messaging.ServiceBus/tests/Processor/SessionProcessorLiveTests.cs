@@ -1946,6 +1946,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await sender.SendMessagesAsync(GetMessages(10, "sessionId1"));
                 await sender.SendMessagesAsync(GetMessages(10, "sessionId2"));
 
+                Assert.That(
+                    () => client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                    {
+                        MaxConcurrentSessions = 10,
+                        MaxConcurrentCallsPerSession = 10,
+                        MaxConcurrentCallsAcrossAllSessions = 500
+                    }),
+                    Throws.InstanceOf<InvalidOperationException>());
+
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = 10,
@@ -1983,6 +1992,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         // tasks will generally be 50 here, but allow some forgiveness as this is not deterministic
                         Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 25);
                         Assert.LessOrEqual(processor.InnerProcessor._tasks.Count, 60);
+                        Assert.That(
+                            () => processor.UpdateConcurrency(10, 10, 200),
+                            Throws.InstanceOf<InvalidOperationException>());
                         processor.UpdateConcurrency(50, 10, 20);
                         Assert.AreEqual(50, processor.MaxConcurrentSessions);
                         Assert.AreEqual(10, processor.MaxConcurrentCallsPerSession);

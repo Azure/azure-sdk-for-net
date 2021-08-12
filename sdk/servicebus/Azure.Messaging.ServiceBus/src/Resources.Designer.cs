@@ -331,6 +331,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The value for MaxConcurrentCallsAcrossAllSessions is greater than the product of MaxConcurrentSessions and MaxConcurrentCallsPerSessions. Either set the value so that it is lower than this product, or increase the values of MaxConcurrentSessions and MaxConcurrentCallsPerSession so that the product exceeds the value you are attempting to set here..
+        /// </summary>
+        internal static string InvalidMaxConcurrentCalls {
+            get {
+                return ResourceManager.GetString("InvalidMaxConcurrentCalls", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The shared access signature could not be parsed; it was either malformed or incorrectly encoded..
         /// </summary>
         internal static string InvalidSharedAccessSignature {

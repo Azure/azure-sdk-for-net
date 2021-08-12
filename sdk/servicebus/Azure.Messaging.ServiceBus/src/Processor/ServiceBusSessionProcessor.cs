@@ -328,6 +328,10 @@ namespace Azure.Messaging.ServiceBus
         /// This allows the processor to attempt to scale up to the maxConcurrentCallsPerSession when the number of available sessions is lower,
         /// while still being able to accept new sessions without breaking your throughput requirement as the number of available sessions
         /// increases.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The value specified for <see cref="MaxConcurrentCallsAcrossAllSessions"/> was greater than the product of
+        /// <see cref="MaxConcurrentSessions"/> and <see cref="MaxConcurrentCallsPerSession"/>.
+        /// </exception>
         public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession, int? maxConcurrentCallsAcrossAllSessions = default)
         {
             InnerProcessor.UpdateConcurrency(maxConcurrentSessions, maxConcurrentCallsPerSession, maxConcurrentCallsAcrossAllSessions);
