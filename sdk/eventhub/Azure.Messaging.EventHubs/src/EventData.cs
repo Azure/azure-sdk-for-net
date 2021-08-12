@@ -183,7 +183,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   A common use case for <see cref="EventData.Properties" /> is to associate serialization hints
-        ///   for the <see cref="EventData.EventBody" /> as an aid to consumers who wish to deserialize the binary data.
+        ///   for the <see cref="EventData.EventBody" /> as an aid to consumers who wish to deserialize the binary data
         ///   when the <see cref="ContentType" /> alone does not offer sufficient context.
         /// </remarks>
         ///
