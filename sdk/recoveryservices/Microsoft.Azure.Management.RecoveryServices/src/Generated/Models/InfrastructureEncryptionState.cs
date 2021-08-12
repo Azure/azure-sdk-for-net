@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
 
     /// <summary>
-    /// Defines values for ResourceIdentityType.
+    /// Defines values for InfrastructureEncryptionState.
     /// </summary>
-    public static class ResourceIdentityType
+    public static class InfrastructureEncryptionState
     {
-        public const string SystemAssigned = "SystemAssigned";
-        public const string None = "None";
-        public const string UserAssigned = "UserAssigned";
-        public const string SystemAssignedUserAssigned = "SystemAssigned, UserAssigned";
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }
