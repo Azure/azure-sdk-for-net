@@ -51,7 +51,6 @@ namespace Azure.Core.Tests
 
             for (int i = 0; i < expectedCalls; i++)
             {
-               // await Task.Delay(100);
                 await SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
             }
 
