@@ -23,11 +23,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="path"> The path of an alias. </param>
         /// <param name="apiVersions"> The API versions. </param>
         /// <param name="pattern"> The pattern for an alias path. </param>
-        internal AliasPath(string path, IReadOnlyList<string> apiVersions, AliasPattern pattern)
+        /// <param name="metadata"> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </param>
+        internal AliasPath(string path, IReadOnlyList<string> apiVersions, AliasPattern pattern, AliasPathMetadata metadata)
         {
             Path = path;
             ApiVersions = apiVersions;
             Pattern = pattern;
+            Metadata = metadata;
         }
 
         /// <summary> The path of an alias. </summary>
@@ -36,5 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> The pattern for an alias path. </summary>
         public AliasPattern Pattern { get; }
+        /// <summary> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </summary>
+        public AliasPathMetadata Metadata { get; }
     }
 }

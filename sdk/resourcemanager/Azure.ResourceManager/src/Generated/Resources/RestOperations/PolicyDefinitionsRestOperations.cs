@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateGetByManagementGroupRequest(string managementGroupId, string filter, int? top)
+        internal HttpMessage CreateGetAllByManagementGroupRequest(string managementGroupId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -782,14 +782,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
-        public async Task<Response<PolicyDefinitionListResult>> GetByManagementGroupAsync(string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyDefinitionListResult>> GetAllByManagementGroupAsync(string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (managementGroupId == null)
             {
                 throw new ArgumentNullException(nameof(managementGroupId));
             }
 
-            using var message = CreateGetByManagementGroupRequest(managementGroupId, filter, top);
+            using var message = CreateGetAllByManagementGroupRequest(managementGroupId, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -811,14 +811,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
-        public Response<PolicyDefinitionListResult> GetByManagementGroup(string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<PolicyDefinitionListResult> GetAllByManagementGroup(string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (managementGroupId == null)
             {
                 throw new ArgumentNullException(nameof(managementGroupId));
             }
 
-            using var message = CreateGetByManagementGroupRequest(managementGroupId, filter, top);
+            using var message = CreateGetAllByManagementGroupRequest(managementGroupId, filter, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateGetByManagementGroupNextPageRequest(string nextLink, string managementGroupId, string filter, int? top)
+        internal HttpMessage CreateGetAllByManagementGroupNextPageRequest(string nextLink, string managementGroupId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1006,7 +1006,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupId"/> is null. </exception>
-        public async Task<Response<PolicyDefinitionListResult>> GetByManagementGroupNextPageAsync(string nextLink, string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyDefinitionListResult>> GetAllByManagementGroupNextPageAsync(string nextLink, string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(managementGroupId));
             }
 
-            using var message = CreateGetByManagementGroupNextPageRequest(nextLink, managementGroupId, filter, top);
+            using var message = CreateGetAllByManagementGroupNextPageRequest(nextLink, managementGroupId, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupId"/> is null. </exception>
-        public Response<PolicyDefinitionListResult> GetByManagementGroupNextPage(string nextLink, string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<PolicyDefinitionListResult> GetAllByManagementGroupNextPage(string nextLink, string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(managementGroupId));
             }
 
-            using var message = CreateGetByManagementGroupNextPageRequest(nextLink, managementGroupId, filter, top);
+            using var message = CreateGetAllByManagementGroupNextPageRequest(nextLink, managementGroupId, filter, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateGetByScopeNextPageRequest(string nextLink, string scope, string filter)
+        internal HttpMessage CreateGetAllByScopeNextPageRequest(string nextLink, string scope, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<ManagementLockListResult>> GetByScopeNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockListResult>> GetAllByScopeNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scope));
             }
 
-            using var message = CreateGetByScopeNextPageRequest(nextLink, scope, filter);
+            using var message = CreateGetAllByScopeNextPageRequest(nextLink, scope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public Response<ManagementLockListResult> GetByScopeNextPage(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
+        public Response<ManagementLockListResult> GetAllByScopeNextPage(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(scope));
             }
 
-            using var message = CreateGetByScopeNextPageRequest(nextLink, scope, filter);
+            using var message = CreateGetAllByScopeNextPageRequest(nextLink, scope, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

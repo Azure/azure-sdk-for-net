@@ -99,21 +99,14 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes a resource link with the specified ID. </summary>
-        /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public async virtual Task<Response> DeleteAsync(ResourceIdentifier linkId, CancellationToken cancellationToken = default)
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
-
             using var scope = _clientDiagnostics.CreateScope("ResourceLinkOperations.Delete");
             scope.Start();
             try
             {
-                var operation = await StartDeleteAsync(linkId, cancellationToken).ConfigureAwait(false);
+                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -124,21 +117,14 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes a resource link with the specified ID. </summary>
-        /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public virtual Response Delete(ResourceIdentifier linkId, CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
-
             using var scope = _clientDiagnostics.CreateScope("ResourceLinkOperations.Delete");
             scope.Start();
             try
             {
-                var operation = StartDelete(linkId, cancellationToken);
+                var operation = StartDelete(cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -149,21 +135,14 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes a resource link with the specified ID. </summary>
-        /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public async virtual Task<ResourceLinksDeleteOperation> StartDeleteAsync(ResourceIdentifier linkId, CancellationToken cancellationToken = default)
+        public async virtual Task<ResourceLinksDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
-
             using var scope = _clientDiagnostics.CreateScope("ResourceLinkOperations.StartDelete");
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(linkId, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteAsync(Id, cancellationToken).ConfigureAwait(false);
                 return new ResourceLinksDeleteOperation(response);
             }
             catch (Exception e)
@@ -174,21 +153,14 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes a resource link with the specified ID. </summary>
-        /// <param name="linkId"> The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public virtual ResourceLinksDeleteOperation StartDelete(ResourceIdentifier linkId, CancellationToken cancellationToken = default)
+        public virtual ResourceLinksDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
-
             using var scope = _clientDiagnostics.CreateScope("ResourceLinkOperations.StartDelete");
             scope.Start();
             try
             {
-                var response = _restClient.Delete(linkId, cancellationToken);
+                var response = _restClient.Delete(Id, cancellationToken);
                 return new ResourceLinksDeleteOperation(response);
             }
             catch (Exception e)
