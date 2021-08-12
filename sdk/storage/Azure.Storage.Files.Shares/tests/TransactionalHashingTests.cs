@@ -118,7 +118,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
             // Act
-            var readStream = await file.OpenReadAsync(new DataLakeOpenReadOptions(false)
+            var readStream = await file.OpenReadAsync(new ShareFileOpenReadOptions(false)
             {
                 TransactionalHashingOptions = hashingOptions,
                 BufferSize = storageStreamDefinitions.BufferSize
