@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -36,9 +37,9 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<IDictionary<string, string>> tags = default;
             string location = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new TrackedResource(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location);
+            return new TrackedResource(id, name, type, Optional.ToDictionary(tags), location);
         }
     }
 }

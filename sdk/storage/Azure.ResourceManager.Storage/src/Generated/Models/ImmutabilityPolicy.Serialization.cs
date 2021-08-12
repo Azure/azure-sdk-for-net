@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -34,9 +35,9 @@ namespace Azure.ResourceManager.Storage.Models
         internal static ImmutabilityPolicy DeserializeImmutabilityPolicy(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
             Optional<int> immutabilityPeriodSinceCreationInDays = default;
             Optional<ImmutabilityPolicyState> state = default;
             Optional<bool> allowProtectedAppendWrites = default;
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ImmutabilityPolicy(id.Value, name.Value, type.Value, etag.Value, Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites));
+            return new ImmutabilityPolicy(id, name, type, etag.Value, Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites));
         }
     }
 }

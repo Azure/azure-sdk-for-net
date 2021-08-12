@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -20,16 +21,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static Resource DeserializeResource(JsonElement element)
         {
-            Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -40,8 +36,13 @@ namespace Azure.ResourceManager.Storage.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
             }
-            return new Resource(id.Value, name.Value, type.Value);
+            return new Resource(id, name.Value, type.Value);
         }
     }
 }

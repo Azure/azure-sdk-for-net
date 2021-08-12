@@ -6,112 +6,55 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> The Table service client. </summary>
-    public partial class TableOperations
+    /// <summary> A class representing the operations that can be performed over a specific Table. </summary>
+    public partial class TableOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly HttpPipeline _pipeline;
-        internal TableRestOperations RestClient { get; }
+        private TableRestOperations _restClient { get; }
 
-        /// <summary> Initializes a new instance of TableOperations for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TableOperations"/> class for mocking. </summary>
         protected TableOperations()
         {
         }
 
-        /// <summary> Initializes a new instance of TableOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal TableOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-06-01")
+        /// <summary> Initializes a new instance of the <see cref="TableOperations"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        protected internal TableOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
-            RestClient = new TableRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint, apiVersion);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new TableRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Creates a new table with the specified table name, under the specified account. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/tableServices/default/tables";
+        /// <summary> Gets the valid resource type for the operations. </summary>
+        protected override ResourceType ValidResourceType => ResourceType;
+
+        /// <summary> Gets the table with the specified table name, under the specified account if it exists. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Table>> CreateAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Table>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TableOperations.Create");
+            using var scope = _clientDiagnostics.CreateScope("TableOperations.Get");
             scope.Start();
             try
             {
-                return await RestClient.CreateAsync(resourceGroupName, accountName, tableName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a new table with the specified table name, under the specified account. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Table> Create(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TableOperations.Create");
-            scope.Start();
-            try
-            {
-                return RestClient.Create(resourceGroupName, accountName, tableName, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a new table with the specified table name, under the specified account. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Table>> UpdateAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TableOperations.Update");
-            scope.Start();
-            try
-            {
-                return await RestClient.UpdateAsync(resourceGroupName, accountName, tableName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a new table with the specified table name, under the specified account. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Table> Update(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("TableOperations.Update");
-            scope.Start();
-            try
-            {
-                return RestClient.Update(resourceGroupName, accountName, tableName, cancellationToken);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Table(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,17 +64,17 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the table with the specified table name, under the specified account if it exists. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Table>> GetAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        public virtual Response<Table> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TableOperations.Get");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(resourceGroupName, accountName, tableName, cancellationToken).ConfigureAwait(false);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Table(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,18 +83,32 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the table with the specified table name, under the specified account if it exists. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Table> Get(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TableOperations.Get");
+            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            return ListAvailableLocations(ResourceType, cancellationToken);
+        }
+
+        /// <summary> Deletes the table with the specified table name, under the specified account if it exists. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("TableOperations.Delete");
             scope.Start();
             try
             {
-                return RestClient.Get(resourceGroupName, accountName, tableName, cancellationToken);
+                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -161,17 +118,15 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Deletes the table with the specified table name, under the specified account if it exists. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TableOperations.Delete");
             scope.Start();
             try
             {
-                return await RestClient.DeleteAsync(resourceGroupName, accountName, tableName, cancellationToken).ConfigureAwait(false);
+                var operation = StartDelete(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -181,17 +136,15 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Deletes the table with the specified table name, under the specified account if it exists. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        public async virtual Task<TableDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TableOperations.Delete");
+            using var scope = _clientDiagnostics.CreateScope("TableOperations.StartDelete");
             scope.Start();
             try
             {
-                return RestClient.Delete(resourceGroupName, accountName, tableName, cancellationToken);
+                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new TableDeleteOperation(response);
             }
             catch (Exception e)
             {
@@ -200,102 +153,57 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets a list of all the tables under the specified storage account. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <summary> Deletes the table with the specified table name, under the specified account if it exists. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public virtual AsyncPageable<Table> ListAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public virtual TableDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
+            using var scope = _clientDiagnostics.CreateScope("TableOperations.StartDelete");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return new TableDeleteOperation(response);
             }
-            if (accountName == null)
+            catch (Exception e)
             {
-                throw new ArgumentNullException(nameof(accountName));
+                scope.Failed(e);
+                throw;
             }
-
-            async Task<Page<Table>> FirstPageFunc(int? pageSizeHint)
+        }
+        /// <summary> Creates a new table with the specified table name, under the specified account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<Table>> UpdateAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("TableOperations.Update");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("TableOperations.List");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListAsync(resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Table(this, response.Value), response.GetRawResponse());
             }
-            async Task<Page<Table>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("TableOperations.List");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListNextPageAsync(nextLink, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a list of all the tables under the specified storage account. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <summary> Creates a new table with the specified table name, under the specified account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public virtual Pageable<Table> List(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<Table> Update(CancellationToken cancellationToken = default)
         {
-            if (resourceGroupName == null)
+            using var scope = _clientDiagnostics.CreateScope("TableOperations.Update");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(resourceGroupName));
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new Table(this, response.Value), response.GetRawResponse());
             }
-            if (accountName == null)
+            catch (Exception e)
             {
-                throw new ArgumentNullException(nameof(accountName));
+                scope.Failed(e);
+                throw;
             }
-
-            Page<Table> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("TableOperations.List");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.List(resourceGroupName, accountName, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Table> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("TableOperations.List");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListNextPage(nextLink, resourceGroupName, accountName, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }
