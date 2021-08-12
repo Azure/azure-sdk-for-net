@@ -9,22 +9,22 @@ namespace Azure.Storage.Models
     /// <summary>
     /// Azure Storage CRC-64 implementation.
     /// </summary>
-    public class AzureStorageCrc64 : HashAlgorithm
+    public class StorageCrc64HashAlgorithm : HashAlgorithm
     {
         private ulong _uCRC;
 
-        private AzureStorageCrc64(ulong uCrc)
+        private StorageCrc64HashAlgorithm(ulong uCrc)
         {
             _uCRC = uCrc;
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="AzureStorageCrc64"/>.
+        /// Creates a new instance of <see cref="StorageCrc64HashAlgorithm"/>.
         /// </summary>
         /// <returns></returns>
-        public static new AzureStorageCrc64 Create()
+        public static new StorageCrc64HashAlgorithm Create()
         {
-            return new AzureStorageCrc64(0);
+            return new StorageCrc64HashAlgorithm(0);
         }
 
         /// <inheritdoc/>
@@ -42,7 +42,7 @@ namespace Azure.Storage.Models
             }
             if (cbSize > 0)
             {
-                _uCRC = AzureStorageCrc64Calculator.ComputeSlicedSafe(array, cbSize, _uCRC);
+                _uCRC = StorageCrc64Calculator.ComputeSlicedSafe(array, cbSize, _uCRC);
             }
         }
 

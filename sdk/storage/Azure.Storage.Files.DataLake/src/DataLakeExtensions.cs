@@ -523,6 +523,37 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
+        internal static BlobBaseDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            if (options.Stream != default)
+            {
+                return new BlobBaseDownloadToOptions(options.Stream)
+                {
+                    Conditions = options.Conditions.ToBlobRequestConditions(),
+                    TransferOptions = options.TransferOptions,
+                    HashingOptions = options.HashingOptions
+                };
+            }
+            else if (options.Path != default)
+            {
+                return new BlobBaseDownloadToOptions(options.Path)
+                {
+                    Conditions = options.Conditions.ToBlobRequestConditions(),
+                    TransferOptions = options.TransferOptions,
+                    HashingOptions = options.HashingOptions
+                };
+            }
+            else
+            {
+                throw new ArgumentException("No path or stream provided; cannot convert options.");
+            }
+        }
+
         internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)
             => new PathSegment
             {

@@ -2806,6 +2806,97 @@ namespace Azure.Storage.Files.DataLake
 
         #region Read To
         /// <summary>
+        /// The <see cref="ReadTo(DataLakeFileReadToOptions, CancellationToken)"/>
+        /// operation downloads an entire file using parallel requests,
+        /// and writes the content to the provided <see cref="DataLakeFileReadToOptions.Path"/>
+        /// or <see cref="DataLakeFileReadToOptions.Stream"/>.
+        /// </summary>
+        /// <param name="options">
+        /// Options for reading this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response ReadTo(
+            DataLakeFileReadToOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
+
+            try
+            {
+                scope.Start();
+
+                return _blockBlobClient.DownloadTo(
+                    options.ToBlobBaseDownloadToOptions(),
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReadToAsync(DataLakeFileReadToOptions, CancellationToken)"/>
+        /// operation downloads an entire file using parallel requests,
+        /// and writes the content to the provided <see cref="DataLakeFileReadToOptions.Path"/>
+        /// or <see cref="DataLakeFileReadToOptions.Stream"/>.
+        /// </summary>
+        /// <param name="options">
+        /// Options for reading this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> ReadToAsync(
+            DataLakeFileReadToOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
+
+            try
+            {
+                scope.Start();
+
+                return await _blockBlobClient.DownloadToAsync(
+                    options.ToBlobBaseDownloadToOptions(),
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
         /// The <see cref="ReadTo(Stream, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads an entire file using parallel requests,
         /// and writes the content to <paramref name="destination"/>.

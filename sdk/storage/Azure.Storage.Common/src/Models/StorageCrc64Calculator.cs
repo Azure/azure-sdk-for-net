@@ -11,7 +11,7 @@ namespace Azure.Storage.Models
     /// Port of https://github.com/Azure/azure-storage-net/blob/master/Lib/Common/Core/Util/Crc64.cs
     /// and the code used by Azure Storage to compute a CRC-64 with custom polynomial.
     /// </summary>
-    internal static class AzureStorageCrc64Calculator
+    internal static class StorageCrc64Calculator
     {
         private static ulong poly = 0x9A6C9329AC4BC9B5UL;
 
