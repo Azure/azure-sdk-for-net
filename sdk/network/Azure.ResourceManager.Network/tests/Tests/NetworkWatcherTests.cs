@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         private async Task<NetworkWatcherContainer> GetContainer()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("nw"));
-            return resourceGroup.Value.GetNetworkWatchers();
+            return resourceGroup.GetNetworkWatchers();
         }
 
         [Test]

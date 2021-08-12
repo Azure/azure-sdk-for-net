@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 Initialize();
             }
-            resourceGroup = (await CreateResourceGroup(Recording.GenerateAssetName("pe_rg"))).Value;
+            resourceGroup = (await CreateResourceGroup(Recording.GenerateAssetName("pe_rg")));
         }
 
         // TODO: create it through resource management, or we can instrutment ArmClient?

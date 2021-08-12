@@ -50,23 +50,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            VirtualMachine vm = await CreateVm(
-                 resourceGroupName: resourceGroupName,
-                 location: location,
-                 virtualMachineName: virtualMachineName,
-                 storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                 networkInterfaceName: networkInterfaceName,
-                 networkSecurityGroupName: networkSecurityGroupName,
-                 diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                 deploymentName: Recording.GenerateAssetName("azsmnet"),
-                 adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                 );
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
             VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
@@ -117,24 +107,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
 
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            VirtualMachine vm = await CreateVm(
-                 resourceGroupName: resourceGroupName,
-                 location: location,
-                 virtualMachineName: virtualMachineName,
-                 storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                 networkInterfaceName: networkInterfaceName,
-                 networkSecurityGroupName: networkSecurityGroupName,
-                 diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                 deploymentName: Recording.GenerateAssetName("azsmnet"),
-                 adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                 );
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
             VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
@@ -185,23 +165,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            VirtualMachine vm = await CreateVm(
-                resourceGroupName: resourceGroupName,
-                location: location,
-                virtualMachineName: virtualMachineName,
-                storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                networkInterfaceName: networkInterfaceName,
-                networkSecurityGroupName: networkSecurityGroupName,
-                diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                deploymentName: Recording.GenerateAssetName("azsmnet"),
-                adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                );
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
             VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
@@ -251,23 +221,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            VirtualMachine vm = await CreateVm(
-                resourceGroupName: resourceGroupName,
-                location: location,
-                virtualMachineName: virtualMachineName,
-                storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                networkInterfaceName: networkInterfaceName,
-                networkSecurityGroupName: networkSecurityGroupName,
-                diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                deploymentName: Recording.GenerateAssetName("azsmnet"),
-                adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                );
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
             VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
@@ -323,23 +283,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            var resourceGroup = await CreateResourceGroup (resourceGroupName, location);
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            VirtualMachine vm = await CreateVm(
-                resourceGroupName: resourceGroupName,
-                location: location,
-                virtualMachineName: virtualMachineName,
-                storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                networkInterfaceName: networkInterfaceName,
-                networkSecurityGroupName: networkSecurityGroupName,
-                diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                deploymentName: Recording.GenerateAssetName("azsmnet"),
-                adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                );
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
             VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
@@ -388,23 +338,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
+            var resourceGroup = await CreateResourceGroup (resourceGroupName, location);
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
 
             //Deploy VM with a template
-            VirtualMachine vm = await CreateVm(
-                resourceGroupName: resourceGroupName,
-                location: location,
-                virtualMachineName: virtualMachineName,
-                storageAccountName: Recording.GenerateAssetName("azsmnet"),
-                networkInterfaceName: networkInterfaceName,
-                networkSecurityGroupName: networkSecurityGroupName,
-                diagnosticsStorageAccountName: Recording.GenerateAssetName("azsmnet"),
-                deploymentName: Recording.GenerateAssetName("azsmnet"),
-                adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
-                );
+            var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
             VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         private async Task<RouteFilterContainer> GetContainer()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("route_filter_test_"));
-            return resourceGroup.Value.GetRouteFilters();
+            return resourceGroup.GetRouteFilters();
         }
 
         [Test]

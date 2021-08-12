@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var networkSecurityGroup = new NetworkSecurityGroupData() { Location = location, };
 
             // Put Nsg
-            var networkSecurityGroupContainer = resourceGroup.Value.GetNetworkSecurityGroups();
+            var networkSecurityGroupContainer = resourceGroup.GetNetworkSecurityGroups();
             var putNsgResponseOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
             Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put Nsg
-            var networkSecurityGroupContainer = resourceGroup.Value.GetNetworkSecurityGroups();
+            var networkSecurityGroupContainer = resourceGroup.GetNetworkSecurityGroups();
             var putNsgResponseOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
             Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var routeTable = new RouteTableData() { Location = location, };
 
             // Put RouteTable
-            var routeTableContainer = resourceGroup.Value.GetRouteTables();
+            var routeTableContainer = resourceGroup.GetRouteTables();
             var putRouteTableResponseOperation = await routeTableContainer.StartCreateOrUpdateAsync(routeTableName, routeTable);
             Response<RouteTable> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             routeTable.Routes.Add(route1);
 
             // Put RouteTable
-            var routeTableContainer = resourceGroup.Value.GetRouteTables();
+            var routeTableContainer = resourceGroup.GetRouteTables();
             var putRouteTableResponseOperation = await routeTableContainer.StartCreateOrUpdateAsync(routeTableName, routeTable);
             Response<RouteTable> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             routeTable.Routes.Add(route1);
 
             // Put RouteTable
-            var routeTableContainer = resourceGroup.Value.GetRouteTables();
+            var routeTableContainer = resourceGroup.GetRouteTables();
             var putRouteTableResponseOperation = await routeTableContainer.StartCreateOrUpdateAsync(routeTableName, routeTable);
             Response<RouteTable> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 }
             };
 
-            var putVnetResponseOperation = await resourceGroup.Value.GetVirtualNetworks().StartCreateOrUpdateAsync(vnetName, vnet);
+            var putVnetResponseOperation = await resourceGroup.GetVirtualNetworks().StartCreateOrUpdateAsync(vnetName, vnet);
             Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 

@@ -7,10 +7,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-//using Azure.ResourceManager.Storage;
+using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Tests;
 using Azure.ResourceManager.TestFramework;
@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
     [RunFrequency(RunTestFrequency.Manually)]
     public class NetworkServiceClientTestBase : ManagementRecordedTestBase<NetworkManagementTestEnvironment>
     {
+        private const string dummySSHKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com";
         public NetworkServiceClientTestBase(bool isAsync) : base(isAsync)
         {
         }
@@ -30,9 +31,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
         public Dictionary<string, string> Tags { get; internal set; }
 
-        //public ResourcesManagementClient ResourceManagementClient { get; set; }
-        //public StorageManagementClient StorageManagementClient { get; set; }
-        //public ComputeManagementClient ComputeManagementClient { get; set; }
         public ArmClient ArmClient { get; set; }
 
         public Resources.Subscription Subscription
@@ -56,118 +54,183 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return Subscription.GetResourceGroups().Get(name).Value;
         }
 
-        //public NetworkInterfacesOperations NetworkInterfacesOperations { get; set; }
-        //public ProvidersOperations ProvidersOperations { get; set; }
-        //public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
-        //public ResourcesOperations ResourcesOperations { get; set; }
-        //public NetworkManagementOperations ServiceOperations { get; set; }
-        //public PrivateLinkServicesOperations PrivateLinkServicesOperations { get; set; }
-
         protected void Initialize()
         {
-            //ResourceManagementClient = GetResourceManagementClient();
-            //StorageManagementClient = GetStorageManagementClient();
-            //ComputeManagementClient = GetComputeManagementClient();
             ArmClient = GetArmClient();
-
-            //NetworkInterfacesOperations = NetworkManagementClient.NetworkInterfaces;
-            //ProvidersOperations = ResourceManagementClient.Providers;
-            //ResourceGroupsOperations = ResourceManagementClient.ResourceGroups;
-            //ResourcesOperations = ResourceManagementClient.Resources;
-            //ServiceOperations = NetworkManagementClient.NetworkManagement;
-            //PrivateLinkServicesOperations = NetworkManagementClient.PrivateLinkServices;
         }
 
-        //protected ResourcesManagementClient GetResourceManagementClient()
-        //{
-        //    var options = InstrumentClientOptions(new ResourcesManagementClientOptions());
+        protected async Task<ResourceGroup> CreateResourceGroup(string name)
+        {
+            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(TestEnvironment.Location))).Value;
+        }
+        protected async Task<ResourceGroup> CreateResourceGroup(string name,string location)
+        {
+            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location))).Value;
+        }
 
-        //    return CreateClient<ResourcesManagementClient>(
-        //        TestEnvironment.SubscriptionId,
-        //        TestEnvironment.Credential,
-        //        options);
+        public async Task<VirtualMachine> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
+        {
+            var vnet = await CreateVirtualNetwork(Recording.GenerateAssetName("vnet_"), Recording.GenerateAssetName("subnet_"), location, resourceGroup.GetVirtualNetworks());
+            var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
+            var adminUsername = Recording.GenerateAssetName("vmadmin");
+
+            return (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, new VirtualMachineData(location)
+            {
+                HardwareProfile = new HardwareProfile()
+                {
+                    VmSize = VirtualMachineSizeTypes.StandardF2
+                },
+                OsProfile = new OSProfile()
+                {
+                    AdminUsername = adminUsername,
+                    ComputerName = vmName,
+                    LinuxConfiguration = new LinuxConfiguration()
+                    {
+                        DisablePasswordAuthentication = true,
+                        Ssh = new SshConfiguration()
+                        {
+                            PublicKeys = {
+                                new SshPublicKeyInfo()
+                                {
+                                    Path = $"/home/{adminUsername}/.ssh/authorized_keys",
+                                    KeyData = dummySSHKey,
+                                }
+                            }
+                        }
+                    }
+                },
+                NetworkProfile = new Compute.Models.NetworkProfile()
+                {
+                    NetworkInterfaces =
+                    {
+                        new NetworkInterfaceReference()
+                        {
+                            Id = networkInterface.Id,
+                            Primary = true,
+                        }
+                    }
+                },
+                StorageProfile = new StorageProfile()
+                {
+                    OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                    {
+                        Name = $"{vmName}_os_disk",
+                        OsType = OperatingSystemTypes.Linux,
+                        Caching = CachingTypes.ReadWrite,
+                        ManagedDisk = new ManagedDiskParameters()
+                        {
+                            StorageAccountType = StorageAccountTypes.StandardLRS
+                        }
+                    },
+                    ImageReference = new ImageReference()
+                    {
+                        Publisher = "Canonical",
+                        Offer = "UbuntuServer",
+                        Sku = "16.04-LTS",
+                        Version = "latest",
+                    }
+                }
+            })).Value;
+        }
+
+        public async Task<VirtualMachine> CreateWindowsVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
+        {
+            var vnet = await CreateVirtualNetwork(Recording.GenerateAssetName("vnet_"), Recording.GenerateAssetName("subnet_"), location, resourceGroup.GetVirtualNetworks());
+            var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
+
+            return (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, new VirtualMachineData(location)
+            {
+                HardwareProfile = new HardwareProfile()
+                {
+                    VmSize = VirtualMachineSizeTypes.StandardD1V2
+                },
+                OsProfile = new OSProfile()
+                {
+                    AdminUsername = Recording.GenerateAssetName("vmadmin"),
+                    AdminPassword = Recording.GenerateAlphaNumericId("vmadminpass"),
+                    ComputerName = vmName,
+                },
+                NetworkProfile = new Compute.Models.NetworkProfile()
+                {
+                    NetworkInterfaces =
+                    {
+                        new NetworkInterfaceReference()
+                        {
+                            Id = networkInterface.Id,
+                            Primary = true,
+                        }
+                    }
+                },
+                StorageProfile = new StorageProfile()
+                {
+                    OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                    {
+                        Name = $"{vmName}_os_disk",
+                        OsType = OperatingSystemTypes.Windows,
+                        Caching = CachingTypes.ReadWrite,
+                        ManagedDisk = new ManagedDiskParameters()
+                        {
+                            StorageAccountType = StorageAccountTypes.StandardLRS
+                        }
+                    },
+                    ImageReference = new ImageReference()
+                    {
+                        Publisher = "MicrosoftWindowsServer",
+                        Offer = "WindowsServer",
+                        Sku = "2016-Datacenter",
+                        Version = "latest",
+                    }
+                }
+            })).Value;
+        }
+
+        // TODO: we should try to create using template after new `Azure.ResourceManager.Resource` is available
+        //public async Task CreateVm(
+        //    string resourceGroupName,
+        //    string location,
+        //    string virtualMachineName,
+        //    string storageAccountName,
+        //    string networkInterfaceName,
+        //    string networkSecurityGroupName,
+        //    string diagnosticsStorageAccountName,
+        //    string deploymentName,
+        //    string adminPassword)
+        //{
+        //    string deploymentParams = "{" +
+        //        "\"resourceGroupName\": {\"value\": \"" + resourceGroupName + "\"}," +
+        //        "\"location\": {\"value\": \"" + location + "\"}," +
+        //        "\"virtualMachineName\": { \"value\": \"" + virtualMachineName + "\"}," +
+        //        "\"virtualMachineSize\": { \"value\": \"Standard_DS1_v2\"}," +
+        //        "\"adminUsername\": { \"value\": \"netanalytics32\"}," +
+        //        "\"storageAccountName\": { \"value\": \"" + storageAccountName + "\"}," +
+        //        "\"routeTableName\": { \"value\": \"" + resourceGroupName + "RT\"}," +
+        //        "\"virtualNetworkName\": { \"value\": \"" + resourceGroupName + "-vnet\"}," +
+        //        "\"networkInterfaceName\": { \"value\": \"" + networkInterfaceName + "\"}," +
+        //        "\"networkSecurityGroupName\": { \"value\": \"" + networkSecurityGroupName + "\"}," +
+        //        "\"adminPassword\": { \"value\": \"" + adminPassword + "\"}," +
+        //        "\"storageAccountType\": { \"value\": \"Premium_LRS\"}," +
+        //        "\"diagnosticsStorageAccountName\": { \"value\": \"" + diagnosticsStorageAccountName + "\"}," +
+        //        "\"diagnosticsStorageAccountId\": { \"value\": \"Microsoft.Storage/storageAccounts/" + diagnosticsStorageAccountName + "\"}," +
+        //        "\"diagnosticsStorageAccountType\": { \"value\": \"Standard_LRS\"}," +
+        //        "\"addressPrefix\": { \"value\": \"10.17.3.0/24\"}," +
+        //        "\"subnetName\": { \"value\": \"default\"}, \"subnetPrefix\": { \"value\": \"10.17.3.0/24\"}," +
+        //        "\"publicIpAddressName\": { \"value\": \"" + virtualMachineName + "-ip\"}," +
+        //        "\"publicIpAddressType\": { \"value\": \"Dynamic\"}" +
+        //        "}";
+        //    string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "DeploymentTemplate.json"));
+
+        //    DeploymentProperties deploymentProperties = new DeploymentProperties(DeploymentMode.Incremental)
+        //    {
+        //        Template = templateString,
+        //        Parameters = deploymentParams
+        //    };
+        //    Deployment deploymentModel = new Deployment(deploymentProperties);
+
+        //    Operation<DeploymentExtended> deploymentWait = await resourcesClient.Deployments.StartCreateOrUpdateAsync(resourceGroupName, deploymentName, deploymentModel);
+        //    await deploymentWait.WaitForCompletionAsync();
         //}
 
-        //private StorageManagementClient GetStorageManagementClient()
-        //{
-        //    return InstrumentClient(new StorageManagementClient(TestEnvironment.SubscriptionId,
-        //         TestEnvironment.Credential,
-        //         InstrumentClientOptions(new StorageManagementClientOptions())));
-        //}
-
-        //private ComputeManagementClient GetComputeManagementClient()
-        //{
-        //    return InstrumentClient(new ComputeManagementClient(TestEnvironment.SubscriptionId,
-        //         TestEnvironment.Credential,
-        //         InstrumentClientOptions(new ComputeManagementClientOptions())));
-        //}
-
-        protected async Task<Response<Resources.ResourceGroup>> CreateResourceGroup(string name)
-        {
-            return await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(TestEnvironment.Location));
-        }
-        protected async Task<Response<Resources.ResourceGroup>> CreateResourceGroup(string name,string location)
-        {
-            return await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location));
-        }
-
-        public async Task<VirtualMachine> CreateVm(
-            //ResourcesManagementClient resourcesClient,
-            string resourceGroupName,
-            string location,
-            string virtualMachineName,
-            string storageAccountName,
-            string networkInterfaceName,
-            string networkSecurityGroupName,
-            string diagnosticsStorageAccountName,
-            string deploymentName,
-            string adminPassword)
-        {
-            //string deploymentParams = "{" +
-            //    "\"resourceGroupName\": {\"value\": \"" + resourceGroupName + "\"}," +
-            //    "\"location\": {\"value\": \"" + location + "\"}," +
-            //    "\"virtualMachineName\": { \"value\": \"" + virtualMachineName + "\"}," +
-            //    "\"virtualMachineSize\": { \"value\": \"Standard_DS1_v2\"}," +
-            //    "\"adminUsername\": { \"value\": \"netanalytics32\"}," +
-            //    "\"storageAccountName\": { \"value\": \"" + storageAccountName + "\"}," +
-            //    "\"routeTableName\": { \"value\": \"" + resourceGroupName + "RT\"}," +
-            //    "\"virtualNetworkName\": { \"value\": \"" + resourceGroupName + "-vnet\"}," +
-            //    "\"networkInterfaceName\": { \"value\": \"" + networkInterfaceName + "\"}," +
-            //    "\"networkSecurityGroupName\": { \"value\": \"" + networkSecurityGroupName + "\"}," +
-            //    "\"adminPassword\": { \"value\": \"" + adminPassword + "\"}," +
-            //    "\"storageAccountType\": { \"value\": \"Premium_LRS\"}," +
-            //    "\"diagnosticsStorageAccountName\": { \"value\": \"" + diagnosticsStorageAccountName + "\"}," +
-            //    "\"diagnosticsStorageAccountId\": { \"value\": \"Microsoft.Storage/storageAccounts/" + diagnosticsStorageAccountName + "\"}," +
-            //    "\"diagnosticsStorageAccountType\": { \"value\": \"Standard_LRS\"}," +
-            //    "\"addressPrefix\": { \"value\": \"10.17.3.0/24\"}," +
-            //    "\"subnetName\": { \"value\": \"default\"}, \"subnetPrefix\": { \"value\": \"10.17.3.0/24\"}," +
-            //    "\"publicIpAddressName\": { \"value\": \"" + virtualMachineName + "-ip\"}," +
-            //    "\"publicIpAddressType\": { \"value\": \"Dynamic\"}" +
-            //    "}";
-            //string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "DeploymentTemplate.json"));
-
-            //DeploymentProperties deploymentProperties = new DeploymentProperties(DeploymentMode.Incremental)
-            //{
-            //    Template = templateString,
-            //    Parameters = deploymentParams
-            //};
-            //Deployment deploymentModel = new Deployment(deploymentProperties);
-
-            //Operation<DeploymentExtended> deploymentWait = await resourcesClient.Deployments.StartCreateOrUpdateAsync(resourceGroupName, deploymentName, deploymentModel);
-            //await deploymentWait.WaitForCompletionAsync();
-            ResourceGroup rg = await ArmClient.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
-            NetworkInterface nic = await rg.GetNetworkInterfaces().CreateOrUpdateAsync(networkInterfaceName, new NetworkInterfaceData());
-            var vnetData = new VirtualNetworkData();
-            vnetData.AddressSpace = new AddressSpace();
-            vnetData.AddressSpace.AddressPrefixes.Add("10.0.0.0/24");
-            VirtualNetwork vnet = await rg.GetVirtualNetworks().CreateOrUpdateAsync("myvnet", vnetData);
-            var subnetData = new SubnetData();
-            subnetData.AddressPrefix = "10.0.0.0/28";
-            Subnet subnet = await vnet.GetSubnets().CreateOrUpdateAsync("default", subnetData);
-            VirtualMachineData vmData = new VirtualMachineData(location);
-            return await rg.GetVirtualMachines().CreateOrUpdateAsync(virtualMachineName, vmData);
-        }
-
+        // TODO: we should decide after preview whehter we need to support compute resources like vmss in Network SDK
         //public async Task CreateVmss(ResourcesManagementClient resourcesClient, string resourceGroupName, string deploymentName)
         //{
         //    string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "VmssDeploymentTemplate.json"));
