@@ -346,7 +346,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 202,
+      "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Thu, 12 Aug 2021 17:09:45 GMT",
@@ -355,7 +355,12 @@
         "X-Microsoft-Skype-Chain-ID": "ab16cdfa-adaf-4315-b1a3-330bce40db04",
         "x-ms-client-request-id": "fb720b77381af95dd83ec7d495ae4a83"
       },
-      "ResponseBody": []
+      "ResponseBody": {
+        "error": {
+          "code": "8522",
+          "message": "Call not found."
+        }
+      }
     },
     {
       "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections/00000b80-a780-4d77-97d0-9c39c5e0176b/:hangup?api-version=2021-06-15-preview",
