@@ -23,13 +23,13 @@ namespace Azure.Test.Perf
         private string _recordingId;
 
         private long _completedOperations;
-        public override long CompletedOperations => _completedOperations;
+        public sealed override long CompletedOperations => _completedOperations;
 
         private List<TimeSpan> _latencies;
-        public override IList<TimeSpan> Latencies => _latencies;
+        public sealed override IList<TimeSpan> Latencies => _latencies;
 
         private List<TimeSpan> _correctedLatencies;
-        public override IList<TimeSpan> CorrectedLatencies => _correctedLatencies;
+        public sealed override IList<TimeSpan> CorrectedLatencies => _correctedLatencies;
 
         public PerfTest(TOptions options) : base(options)
         {
@@ -90,7 +90,7 @@ namespace Azure.Test.Perf
             return clientOptions;
         }
 
-        public override async Task PostSetupAsync()
+        public sealed override async Task PostSetupAsync()
         {
             if (_testProxyPolicy != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.Test.Perf
             }
         }
 
-        public override void RunAll(CancellationToken cancellationToken)
+        public sealed override void RunAll(CancellationToken cancellationToken)
         {
             _completedOperations = 0;
             LastCompletionTime = default;
@@ -166,7 +166,7 @@ namespace Azure.Test.Perf
             }
         }
 
-        public override async Task RunAllAsync(CancellationToken cancellationToken)
+        public sealed override async Task RunAllAsync(CancellationToken cancellationToken)
         {
             _completedOperations = 0;
             LastCompletionTime = default;
@@ -218,7 +218,7 @@ namespace Azure.Test.Perf
 
         public abstract Task RunAsync(CancellationToken cancellationToken);
 
-        public override async Task PreCleanupAsync()
+        public sealed override async Task PreCleanupAsync()
         {
             // Only stop playback if it was successfully started
             if (_testProxyPolicy != null && _testProxyPolicy.Mode == "playback")

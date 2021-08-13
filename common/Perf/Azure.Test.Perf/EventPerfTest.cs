@@ -14,12 +14,12 @@ namespace Azure.Test.Perf
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
         private long _completedOperations;
-        public override long CompletedOperations => _completedOperations;
+        public sealed override long CompletedOperations => _completedOperations;
 
-        public override IList<TimeSpan> Latencies =>
+        public sealed override IList<TimeSpan> Latencies =>
             throw new InvalidOperationException("EventPerfTest does not support Latencies");
 
-        public override IList<TimeSpan> CorrectedLatencies =>
+        public sealed override IList<TimeSpan> CorrectedLatencies =>
             throw new InvalidOperationException("EventPerfTest does not support CorrectedLatencies");
 
         public EventPerfTest(TOptions options) : base(options)
@@ -41,7 +41,12 @@ namespace Azure.Test.Perf
             LastCompletionTime = _stopwatch.Elapsed;
         }
 
-        public override void RunAll(CancellationToken cancellationToken)
+        public sealed override Task PostSetupAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        public sealed override void RunAll(CancellationToken cancellationToken)
         {
             // Must restart stopwatch before resetting LastCompletionTime, to avoid a race condition where an
             // event would use the stopwatch from Warmup at the start of Run.  The results of Warmup have already
@@ -54,7 +59,7 @@ namespace Azure.Test.Perf
             Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken).Wait();
         }
 
-        public override Task RunAllAsync(CancellationToken cancellationToken)
+        public sealed override Task RunAllAsync(CancellationToken cancellationToken)
         {
             // Must restart stopwatch before resetting LastCompletionTime, to avoid a race condition where an
             // event would use the stopwatch from Warmup at the start of Run.  The results of Warmup have already
@@ -65,6 +70,11 @@ namespace Azure.Test.Perf
             LastCompletionTime = default;
 
             return Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
+        }
+
+        public sealed override Task PreCleanupAsync()
+        {
+            return Task.CompletedTask;
         }
     }
 }
