@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        internal ProximityPlacementGroupCreateOrUpdateOperation(ResourceOperations operationsBase, Response<ProximityPlacementGroupData> response)
+        internal ProximityPlacementGroupCreateOrUpdateOperation(ArmResource operationsBase, Response<ProximityPlacementGroupData> response)
         {
             _operation = new OperationOrResponseInternals<ProximityPlacementGroup>(Response.FromValue(new ProximityPlacementGroup(operationsBase, response.Value), response.GetRawResponse()));
         }

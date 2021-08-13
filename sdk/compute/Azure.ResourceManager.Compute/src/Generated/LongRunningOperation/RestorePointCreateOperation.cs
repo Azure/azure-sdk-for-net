@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly OperationInternals<RestorePoint> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of RestorePointCreateOperation for mocking. </summary>
         protected RestorePointCreateOperation()
         {
         }
 
-        internal RestorePointCreateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal RestorePointCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<RestorePoint>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "RestorePointCreateOperation");
             _operationBase = operationsBase;

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        internal RestorePointCollectionCreateOrUpdateOperation(ResourceOperations operationsBase, Response<RestorePointCollectionData> response)
+        internal RestorePointCollectionCreateOrUpdateOperation(ArmResource operationsBase, Response<RestorePointCollectionData> response)
         {
             _operation = new OperationOrResponseInternals<RestorePointCollection>(Response.FromValue(new RestorePointCollection(operationsBase, response.Value), response.GetRawResponse()));
         }

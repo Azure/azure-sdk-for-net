@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.Compute
     {
         #region AvailabilitySet
         /// <summary> Gets an object representing a AvailabilitySetContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="AvailabilitySetContainer" /> object. </returns>
-        public static AvailabilitySetContainer GetAvailabilitySets(this ResourceGroupOperations resourceGroup)
+        public static AvailabilitySetContainer GetAvailabilitySets(this ResourceGroup resourceGroup)
         {
             return new AvailabilitySetContainer(resourceGroup);
         }
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Compute
 
         #region ProximityPlacementGroup
         /// <summary> Gets an object representing a ProximityPlacementGroupContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="ProximityPlacementGroupContainer" /> object. </returns>
-        public static ProximityPlacementGroupContainer GetProximityPlacementGroups(this ResourceGroupOperations resourceGroup)
+        public static ProximityPlacementGroupContainer GetProximityPlacementGroups(this ResourceGroup resourceGroup)
         {
             return new ProximityPlacementGroupContainer(resourceGroup);
         }
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Compute
 
         #region DedicatedHostGroup
         /// <summary> Gets an object representing a DedicatedHostGroupContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="DedicatedHostGroupContainer" /> object. </returns>
-        public static DedicatedHostGroupContainer GetDedicatedHostGroups(this ResourceGroupOperations resourceGroup)
+        public static DedicatedHostGroupContainer GetDedicatedHostGroups(this ResourceGroup resourceGroup)
         {
             return new DedicatedHostGroupContainer(resourceGroup);
         }
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Compute
 
         #region SshPublicKey
         /// <summary> Gets an object representing a SshPublicKeyContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="SshPublicKeyContainer" /> object. </returns>
-        public static SshPublicKeyContainer GetSshPublicKeys(this ResourceGroupOperations resourceGroup)
+        public static SshPublicKeyContainer GetSshPublicKeys(this ResourceGroup resourceGroup)
         {
             return new SshPublicKeyContainer(resourceGroup);
         }
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Compute
 
         #region VirtualMachine
         /// <summary> Gets an object representing a VirtualMachineContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="VirtualMachineContainer" /> object. </returns>
-        public static VirtualMachineContainer GetVirtualMachines(this ResourceGroupOperations resourceGroup)
+        public static VirtualMachineContainer GetVirtualMachines(this ResourceGroup resourceGroup)
         {
             return new VirtualMachineContainer(resourceGroup);
         }
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.Compute
 
         #region VirtualMachineScaleSet
         /// <summary> Gets an object representing a VirtualMachineScaleSetContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetContainer" /> object. </returns>
-        public static VirtualMachineScaleSetContainer GetVirtualMachineScaleSets(this ResourceGroupOperations resourceGroup)
+        public static VirtualMachineScaleSetContainer GetVirtualMachineScaleSets(this ResourceGroup resourceGroup)
         {
             return new VirtualMachineScaleSetContainer(resourceGroup);
         }
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.Compute
 
         #region Image
         /// <summary> Gets an object representing a ImageContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="ImageContainer" /> object. </returns>
-        public static ImageContainer GetImages(this ResourceGroupOperations resourceGroup)
+        public static ImageContainer GetImages(this ResourceGroup resourceGroup)
         {
             return new ImageContainer(resourceGroup);
         }
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Compute
 
         #region RestorePointCollection
         /// <summary> Gets an object representing a RestorePointCollectionContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="RestorePointCollectionContainer" /> object. </returns>
-        public static RestorePointCollectionContainer GetRestorePointCollections(this ResourceGroupOperations resourceGroup)
+        public static RestorePointCollectionContainer GetRestorePointCollections(this ResourceGroup resourceGroup)
         {
             return new RestorePointCollectionContainer(resourceGroup);
         }
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Compute
 
         #region Disk
         /// <summary> Gets an object representing a DiskContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="DiskContainer" /> object. </returns>
-        public static DiskContainer GetDisks(this ResourceGroupOperations resourceGroup)
+        public static DiskContainer GetDisks(this ResourceGroup resourceGroup)
         {
             return new DiskContainer(resourceGroup);
         }
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Compute
 
         #region Snapshot
         /// <summary> Gets an object representing a SnapshotContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="SnapshotContainer" /> object. </returns>
-        public static SnapshotContainer GetSnapshots(this ResourceGroupOperations resourceGroup)
+        public static SnapshotContainer GetSnapshots(this ResourceGroup resourceGroup)
         {
             return new SnapshotContainer(resourceGroup);
         }
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.Compute
 
         #region DiskEncryptionSet
         /// <summary> Gets an object representing a DiskEncryptionSetContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="DiskEncryptionSetContainer" /> object. </returns>
-        public static DiskEncryptionSetContainer GetDiskEncryptionSets(this ResourceGroupOperations resourceGroup)
+        public static DiskEncryptionSetContainer GetDiskEncryptionSets(this ResourceGroup resourceGroup)
         {
             return new DiskEncryptionSetContainer(resourceGroup);
         }
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Compute
 
         #region DiskAccess
         /// <summary> Gets an object representing a DiskAccessContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="DiskAccessContainer" /> object. </returns>
-        public static DiskAccessContainer GetDiskAccesses(this ResourceGroupOperations resourceGroup)
+        public static DiskAccessContainer GetDiskAccesses(this ResourceGroup resourceGroup)
         {
             return new DiskAccessContainer(resourceGroup);
         }
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Compute
 
         #region Gallery
         /// <summary> Gets an object representing a GalleryContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="GalleryContainer" /> object. </returns>
-        public static GalleryContainer GetGalleries(this ResourceGroupOperations resourceGroup)
+        public static GalleryContainer GetGalleries(this ResourceGroup resourceGroup)
         {
             return new GalleryContainer(resourceGroup);
         }
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.Compute
 
         #region CloudService
         /// <summary> Gets an object representing a CloudServiceContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="CloudServiceContainer" /> object. </returns>
-        public static CloudServiceContainer GetCloudServices(this ResourceGroupOperations resourceGroup)
+        public static CloudServiceContainer GetCloudServices(this ResourceGroup resourceGroup)
         {
             return new CloudServiceContainer(resourceGroup);
         }

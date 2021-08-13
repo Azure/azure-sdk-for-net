@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        internal SshPublicKeyUpdateOperation(ResourceOperations operationsBase, Response<SshPublicKeyData> response)
+        internal SshPublicKeyUpdateOperation(ArmResource operationsBase, Response<SshPublicKeyData> response)
         {
             _operation = new OperationOrResponseInternals<SshPublicKey>(Response.FromValue(new SshPublicKey(operationsBase, response.Value), response.GetRawResponse()));
         }
