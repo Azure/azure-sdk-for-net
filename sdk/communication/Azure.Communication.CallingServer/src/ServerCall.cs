@@ -460,7 +460,7 @@ namespace Azure.Communication.CallingServer
         /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
         public virtual async Task<Response<IEnumerable<CallParticipant>>> GetParticipantsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipantsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(GetParticipantsAsync)}");
             scope.Start();
             try
             {
@@ -484,7 +484,7 @@ namespace Azure.Communication.CallingServer
         /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
         public virtual Response<IEnumerable<CallParticipant>> GetParticipants(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipants)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(GetParticipants)}");
             scope.Start();
             try
             {
@@ -508,7 +508,7 @@ namespace Azure.Communication.CallingServer
         /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
         public virtual async Task<Response<CallParticipant>> GetParticipantAsync(string participantId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipantAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(GetParticipantAsync)}");
             scope.Start();
             try
             {
@@ -534,7 +534,7 @@ namespace Azure.Communication.CallingServer
         /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
         public virtual Response<CallParticipant> GetParticipant(string participantId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipantAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(GetParticipantAsync)}");
             scope.Start();
             try
             {
@@ -604,7 +604,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<StartHoldMusicResult>> StartHoldMusicAsync(string participantId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusicAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(StartHoldMusicAsync)}");
             scope.Start();
             try
             {
@@ -627,7 +627,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<StartHoldMusicResult> StartHoldMusic(string participantId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusic)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(StartHoldMusic)}");
             scope.Start();
             try
             {
@@ -652,7 +652,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<StartHoldMusicResult>> StartHoldMusicAsync(string participantId, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusicAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(StartHoldMusicAsync)}");
             scope.Start();
             try
             {
@@ -681,7 +681,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<StartHoldMusicResult> StartHoldMusic(string participantId, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusic)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(StartHoldMusic)}");
             scope.Start();
             try
             {
@@ -707,7 +707,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<StopHoldMusicResult>> StopHoldMusicAsync(string participantId, string operationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StopHoldMusicAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(StopHoldMusicAsync)}");
             scope.Start();
             try
             {
@@ -732,7 +732,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<StopHoldMusicResult> StopHoldMusic(string participantId, string operationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StopHoldMusic)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(StopHoldMusic)}");
             scope.Start();
             try
             {
@@ -742,6 +742,65 @@ namespace Azure.Communication.CallingServer
                     startHoldMusicOperationId: operationId,
                     cancellationToken: cancellationToken
                     );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Play audio to a participant </summary>
+        /// <param name="participantId">The participant id.</param>
+        /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<PlayAudioResult>> PlayAudioToParticipantAsync(string participantId, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudioToParticipantAsync)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.ParticipantPlayAudioAsync(
+                    serverCallId: ServerCallId,
+                    participantId: participantId,
+                    loop: false,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    audioFileId: audioFileId,
+                    callbackUri: callbackUri.AbsoluteUri,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Play audio to a participant </summary>
+        /// <param name="participantId">The participant id.</param>
+        /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<PlayAudioResult> PlayAudioToParticipant(string participantId, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(PlayAudioToParticipant)}");
+            scope.Start();
+            try
+            {
+                return RestClient.ParticipantPlayAudio(
+                    serverCallId: ServerCallId,
+                    participantId: participantId,
+                    loop: false,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    audioFileId: audioFileId,
+                    callbackUri: callbackUri.AbsoluteUri,
+                    cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {

@@ -766,5 +766,64 @@ namespace Azure.Communication.CallingServer
                 throw;
             }
         }
+
+        /// <summary> Play audio to a participant </summary>
+        /// <param name="participantId">The participant id.</param>
+        /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<PlayAudioResult>> PlayAudioToParticipantAsync(string participantId, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayAudioToParticipantAsync)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.ParticipantPlayAudioAsync(
+                    callConnectionId: CallConnectionId,
+                    participantId: participantId,
+                    loop: false,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    audioFileId: audioFileId,
+                    callbackUri: callbackUri.AbsoluteUri,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Play audio to a participant </summary>
+        /// <param name="participantId">The participant id.</param>
+        /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<PlayAudioResult> PlayAudioToParticipant(string participantId, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(PlayAudioToParticipant)}");
+            scope.Start();
+            try
+            {
+                return RestClient.ParticipantPlayAudio(
+                    callConnectionId: CallConnectionId,
+                    participantId: participantId,
+                    loop: false,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    audioFileId: audioFileId,
+                    callbackUri: callbackUri.AbsoluteUri,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

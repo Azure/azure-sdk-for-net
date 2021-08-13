@@ -1274,5 +1274,124 @@ namespace Azure.Communication.CallingServer
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateParticipantPlayAudioRequest(string callConnectionId, string participantId, bool loop, string audioFileUri, string operationContext, string audioFileId, string callbackUri)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/participants/", false);
+            uri.AppendPath(participantId, true);
+            uri.AppendPath("/:playAudio", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new PlayAudioRequest(loop)
+            {
+                AudioFileUri = audioFileUri,
+                OperationContext = operationContext,
+                AudioFileId = audioFileId,
+                CallbackUri = callbackUri
+            };
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Play audio to a participant. </summary>
+        /// <param name="callConnectionId"> The callConnectionId. </param>
+        /// <param name="participantId"> Participant id. </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
+        /// <param name="audioFileUri">
+        /// The media resource uri of the play audio request.
+        /// 
+        /// Currently only Wave file (.wav) format audio prompts are supported.
+        /// 
+        /// More specifically, the audio content in the wave file must be mono (single-channel),
+        /// 
+        /// 16-bit samples with a 16,000 (16KHz) sampling rate.
+        /// </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantId"/> is null. </exception>
+        public async Task<Response<PlayAudioResult>> ParticipantPlayAudioAsync(string callConnectionId, string participantId, bool loop, string audioFileUri = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
+
+            using var message = CreateParticipantPlayAudioRequest(callConnectionId, participantId, loop, audioFileUri, operationContext, audioFileId, callbackUri);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        PlayAudioResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = PlayAudioResult.DeserializePlayAudioResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Play audio to a participant. </summary>
+        /// <param name="callConnectionId"> The callConnectionId. </param>
+        /// <param name="participantId"> Participant id. </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
+        /// <param name="audioFileUri">
+        /// The media resource uri of the play audio request.
+        /// 
+        /// Currently only Wave file (.wav) format audio prompts are supported.
+        /// 
+        /// More specifically, the audio content in the wave file must be mono (single-channel),
+        /// 
+        /// 16-bit samples with a 16,000 (16KHz) sampling rate.
+        /// </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantId"/> is null. </exception>
+        public Response<PlayAudioResult> ParticipantPlayAudio(string callConnectionId, string participantId, bool loop, string audioFileUri = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
+
+            using var message = CreateParticipantPlayAudioRequest(callConnectionId, participantId, loop, audioFileUri, operationContext, audioFileId, callbackUri);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        PlayAudioResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = PlayAudioResult.DeserializePlayAudioResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
     }
 }
