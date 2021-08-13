@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Tests;
 using Azure.ResourceManager.TestFramework;
@@ -68,120 +66,181 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(name, new ResourceGroupData(location))).Value;
         }
 
-        public async Task<VirtualMachine> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
+        public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
         {
             var vnet = await CreateVirtualNetwork(Recording.GenerateAssetName("vnet_"), Recording.GenerateAssetName("subnet_"), location, resourceGroup.GetVirtualNetworks());
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
-            var adminUsername = Recording.GenerateAssetName("vmadmin");
 
-            return (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, new VirtualMachineData(location)
+            var adminUsername = Recording.GenerateAssetName("admin");
+            var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+            return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData
             {
-                HardwareProfile = new HardwareProfile()
+                Location = location,
+                Properties = new Dictionary<string, object>
                 {
-                    VmSize = VirtualMachineSizeTypes.StandardF2
-                },
-                OsProfile = new OSProfile()
-                {
-                    AdminUsername = adminUsername,
-                    ComputerName = vmName,
-                    LinuxConfiguration = new LinuxConfiguration()
-                    {
-                        DisablePasswordAuthentication = true,
-                        Ssh = new SshConfiguration()
+                    { "hardwareProfile", new Dictionary<string, object>
                         {
-                            PublicKeys = {
-                                new SshPublicKeyInfo()
+                            { "vmSize", "Standard_F2" }
+                        }
+                    },
+                    { "storageProfile", new Dictionary<string, object>
+                        {
+                            { "imageReference", new Dictionary<string, object>
                                 {
-                                    Path = $"/home/{adminUsername}/.ssh/authorized_keys",
-                                    KeyData = dummySSHKey,
+                                    { "sku", "16.04-LTS" },
+                                    { "publisher", "Canonical" },
+                                    { "version", "latest" },
+                                    { "offer", "UbuntuServer" }
+                                }
+                            },
+                            { "osDisk", new Dictionary<string, object>
+                                {
+                                    { "name", $"{vmName}_os_disk" },
+                                    { "osType", "Linux" },
+                                    { "caching", "ReadWrite" },
+                                    { "createOption", "FromImage" },
+                                    { "managedDisk", new Dictionary<string, object>
+                                        {
+                                            { "storageAccountType", "Standard_LRS" }
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
-                },
-                NetworkProfile = new Compute.Models.NetworkProfile()
-                {
-                    NetworkInterfaces =
-                    {
-                        new NetworkInterfaceReference()
+                    },
+                    { "osProfile", new Dictionary<string, object>
                         {
-                            Id = networkInterface.Id,
-                            Primary = true,
-                        }
-                    }
-                },
-                StorageProfile = new StorageProfile()
-                {
-                    OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
-                    {
-                        Name = $"{vmName}_os_disk",
-                        OsType = OperatingSystemTypes.Linux,
-                        Caching = CachingTypes.ReadWrite,
-                        ManagedDisk = new ManagedDiskParameters()
-                        {
-                            StorageAccountType = StorageAccountTypes.StandardLRS
+                            { "adminUsername",  adminUsername },
+                            { "computerName", vmName },
+                            { "linuxConfiguration", new Dictionary<string, object>
+                                {
+                                    { "ssh", new Dictionary<string, object>
+                                        {
+                                            { "publicKeys", new List<object>
+                                                { new Dictionary<string, object>
+                                                    {
+                                                        { "path", $"/home/{adminUsername}/.ssh/authorized_keys" },
+                                                        { "keyData", dummySSHKey }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    { "disablePasswordAuthentication", true },
+                                }
+                            },
                         }
                     },
-                    ImageReference = new ImageReference()
-                    {
-                        Publisher = "Canonical",
-                        Offer = "UbuntuServer",
-                        Sku = "16.04-LTS",
-                        Version = "latest",
+                    { "networkProfile", new Dictionary<string, object>
+                        {
+                            { "networkInterfaces", new List<object>
+                                { new Dictionary<string, object>
+                                    {
+                                        { "id", networkInterface.Id.ToString() },
+                                        { "properties", new Dictionary<string, object>
+                                            {
+                                                { "primary", true }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             })).Value;
         }
 
-        public async Task<VirtualMachine> CreateWindowsVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
+        public async Task<GenericResource> CreateWindowsVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
         {
             var vnet = await CreateVirtualNetwork(Recording.GenerateAssetName("vnet_"), Recording.GenerateAssetName("subnet_"), location, resourceGroup.GetVirtualNetworks());
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
 
-            return (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, new VirtualMachineData(location)
+            var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+            return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData
             {
-                HardwareProfile = new HardwareProfile()
+                Location = location,
+                Properties = new Dictionary<string, object>
                 {
-                    VmSize = VirtualMachineSizeTypes.StandardD1V2
-                },
-                OsProfile = new OSProfile()
-                {
-                    AdminUsername = Recording.GenerateAssetName("vmadmin"),
-                    AdminPassword = Recording.GenerateAlphaNumericId("vmadminpass"),
-                    ComputerName = vmName,
-                },
-                NetworkProfile = new Compute.Models.NetworkProfile()
-                {
-                    NetworkInterfaces =
-                    {
-                        new NetworkInterfaceReference()
+                    { "hardwareProfile", new Dictionary<string, object>
                         {
-                            Id = networkInterface.Id,
-                            Primary = true,
-                        }
-                    }
-                },
-                StorageProfile = new StorageProfile()
-                {
-                    OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
-                    {
-                        Name = $"{vmName}_os_disk",
-                        OsType = OperatingSystemTypes.Windows,
-                        Caching = CachingTypes.ReadWrite,
-                        ManagedDisk = new ManagedDiskParameters()
-                        {
-                            StorageAccountType = StorageAccountTypes.StandardLRS
+                            { "vmSize", "Standard_D1_v2" }
                         }
                     },
-                    ImageReference = new ImageReference()
-                    {
-                        Publisher = "MicrosoftWindowsServer",
-                        Offer = "WindowsServer",
-                        Sku = "2016-Datacenter",
-                        Version = "latest",
+                    { "storageProfile", new Dictionary<string, object>
+                        {
+                            { "imageReference", new Dictionary<string, object>
+                                {
+                                    { "sku", "2016-Datacenter" },
+                                    { "publisher", "MicrosoftWindowsServer" },
+                                    { "version", "latest" },
+                                    { "offer", "WindowsServer" }
+                                }
+                            },
+                            { "osDisk", new Dictionary<string, object>
+                                {
+                                    { "name", $"{vmName}_os_disk" },
+                                    { "osType", "Windows" },
+                                    { "caching", "ReadWrite" },
+                                    { "createOption", "FromImage" },
+                                    { "managedDisk", new Dictionary<string, object>
+                                        {
+                                            { "storageAccountType", "Standard_LRS" }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    { "osProfile", new Dictionary<string, object>
+                        {
+                            { "adminUsername", Recording.GenerateAssetName("admin") },
+                            { "adminPassword", Recording.GenerateAlphaNumericId("adminPass") },
+                            { "computerName", vmName }
+                        }
+                    },
+                    { "networkProfile", new Dictionary<string, object>
+                        {
+                            { "networkInterfaces", new List<object>
+                                { new Dictionary<string, object>
+                                    {
+                                        { "id", networkInterface.Id.ToString() },
+                                        { "properties", new Dictionary<string, object>
+                                            {
+                                                { "primary", true }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             })).Value;
+        }
+
+        protected async Task<GenericResource> deployWindowsNetworkAgent(string virtualMachineName, string location, ResourceGroup resourceGroup)
+        {
+            var extensionId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/extensions/NetworkWatcherAgent";
+            return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(extensionId, new GenericResourceData
+            {
+                Location = location,
+                Properties = new Dictionary<string, object>
+                {
+                    { "publisher", "Microsoft.Azure.NetworkWatcher" },
+                    { "typeHandlerVersion", "1.4" },
+                    { "type", "NetworkWatcherAgentWindows" },
+                }
+            })).Value;
+            //VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
+            //{
+            //    Publisher = "Microsoft.Azure.NetworkWatcher",
+            //    TypeHandlerVersion = "1.4",
+            //    TypePropertiesType = "NetworkWatcherAgentWindows"
+            //};
+
+            //VirtualMachineExtensionCreateOrUpdateOperation createOrUpdateOperation = await vm.GetVirtualMachineExtensionVirtualMachines().StartCreateOrUpdateAsync("NetworkWatcherAgent", parameters);
+            //await createOrUpdateOperation.WaitForCompletionAsync();;
         }
 
         // TODO: we should try to create using template after new `Azure.ResourceManager.Resource` is available
