@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExistsAsync()
+        public async Task CheckIfExists()
         {
             var container = await GetDedicatedHostGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testDHG-");
