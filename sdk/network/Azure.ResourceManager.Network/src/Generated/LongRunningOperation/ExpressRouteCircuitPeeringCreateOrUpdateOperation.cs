@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ExpressRouteCircuitPeering> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRouteCircuitPeeringCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRouteCircuitPeeringCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCircuitPeeringCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ExpressRouteCircuitPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCircuitPeeringCreateOrUpdateOperation");
             _operationBase = operationsBase;

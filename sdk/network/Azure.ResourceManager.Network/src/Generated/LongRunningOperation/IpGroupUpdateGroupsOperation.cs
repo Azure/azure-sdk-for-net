@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal IpGroupUpdateGroupsOperation(ResourceOperations operationsBase, Response<IpGroupData> response)
+        internal IpGroupUpdateGroupsOperation(ArmResource operationsBase, Response<IpGroupData> response)
         {
             _operation = new OperationOrResponseInternals<IpGroup>(Response.FromValue(new IpGroup(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<RouteTable> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of RouteTableCreateOrUpdateOperation for mocking. </summary>
         protected RouteTableCreateOrUpdateOperation()
         {
         }
 
-        internal RouteTableCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal RouteTableCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<RouteTable>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RouteTableCreateOrUpdateOperation");
             _operationBase = operationsBase;

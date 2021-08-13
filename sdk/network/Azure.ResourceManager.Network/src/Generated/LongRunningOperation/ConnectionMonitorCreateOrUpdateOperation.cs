@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ConnectionMonitor> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of ConnectionMonitorCreateOrUpdateOperation for mocking. </summary>
         protected ConnectionMonitorCreateOrUpdateOperation()
         {
         }
 
-        internal ConnectionMonitorCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ConnectionMonitorCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ConnectionMonitor>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ConnectionMonitorCreateOrUpdateOperation");
             _operationBase = operationsBase;

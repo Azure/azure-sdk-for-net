@@ -5,27 +5,742 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A Class representing a P2SVpnGateway along with the instance operations that can be performed on it. </summary>
-    public class P2SVpnGateway : P2SVpnGatewayOperations
+    public partial class P2SVpnGateway : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref = "P2SVpnGateway"/> class for mocking. </summary>
-        protected P2SVpnGateway() : base()
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly P2SVpnGatewaysRestOperations _restClient;
+        private readonly P2SVpnGatewayData _data;
+
+        /// <summary> Initializes a new instance of the <see cref="P2SVpnGateway"/> class for mocking. </summary>
+        protected P2SVpnGateway()
         {
         }
 
         /// <summary> Initializes a new instance of the <see cref = "P2SVpnGateway"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal P2SVpnGateway(ResourceOperations options, P2SVpnGatewayData resource) : base(options, resource.Id)
+        internal P2SVpnGateway(ArmResource options, P2SVpnGatewayData resource) : base(options, resource.Id)
         {
-            Data = resource;
+            HasData = true;
+            _data = resource;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Gets or sets the P2SVpnGatewayData. </summary>
-        public virtual P2SVpnGatewayData Data { get; private set; }
+        /// <summary> Initializes a new instance of the <see cref="P2SVpnGateway"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal P2SVpnGateway(ArmResource options, ResourceIdentifier id) : base(options, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+        }
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/p2svpnGateways";
+
+        /// <summary> Gets the valid resource type for the operations. </summary>
+        protected override ResourceType ValidResourceType => ResourceType;
+
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual P2SVpnGatewayData Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
+
+        /// <summary> Retrieves the details of a virtual wan p2s vpn gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<P2SVpnGateway>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.Get");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new P2SVpnGateway(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves the details of a virtual wan p2s vpn gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<P2SVpnGateway> Get(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.Get");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new P2SVpnGateway(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            return ListAvailableLocations(ResourceType, cancellationToken);
+        }
+
+        /// <summary> Deletes a virtual wan p2s vpn gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.Delete");
+            scope.Start();
+            try
+            {
+                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a virtual wan p2s vpn gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Delete(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.Delete");
+            scope.Start();
+            try
+            {
+                var operation = StartDelete(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a virtual wan p2s vpn gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<P2SVpnGatewayDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartDelete");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new P2SVpnGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a virtual wan p2s vpn gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual P2SVpnGatewayDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartDelete");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new P2SVpnGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates virtual wan p2s vpn gateway tags. </summary>
+        /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
+        public async virtual Task<Response<P2SVpnGateway>> UpdateTagsAsync(TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        {
+            if (p2SVpnGatewayParameters == null)
+            {
+                throw new ArgumentNullException(nameof(p2SVpnGatewayParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.UpdateTags");
+            scope.Start();
+            try
+            {
+                var operation = await StartUpdateTagsAsync(p2SVpnGatewayParameters, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates virtual wan p2s vpn gateway tags. </summary>
+        /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
+        public virtual Response<P2SVpnGateway> UpdateTags(TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        {
+            if (p2SVpnGatewayParameters == null)
+            {
+                throw new ArgumentNullException(nameof(p2SVpnGatewayParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.UpdateTags");
+            scope.Start();
+            try
+            {
+                var operation = StartUpdateTags(p2SVpnGatewayParameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates virtual wan p2s vpn gateway tags. </summary>
+        /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
+        public async virtual Task<P2SVpnGatewayUpdateTagsOperation> StartUpdateTagsAsync(TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        {
+            if (p2SVpnGatewayParameters == null)
+            {
+                throw new ArgumentNullException(nameof(p2SVpnGatewayParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartUpdateTags");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters, cancellationToken).ConfigureAwait(false);
+                return new P2SVpnGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates virtual wan p2s vpn gateway tags. </summary>
+        /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
+        public virtual P2SVpnGatewayUpdateTagsOperation StartUpdateTags(TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        {
+            if (p2SVpnGatewayParameters == null)
+            {
+                throw new ArgumentNullException(nameof(p2SVpnGatewayParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartUpdateTags");
+            scope.Start();
+            try
+            {
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters, cancellationToken);
+                return new P2SVpnGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, p2SVpnGatewayParameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resets the primary of the p2s vpn gateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<P2SVpnGatewayData>> ResetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.Reset");
+            scope.Start();
+            try
+            {
+                var operation = await StartResetAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resets the primary of the p2s vpn gateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<P2SVpnGatewayData> Reset(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.Reset");
+            scope.Start();
+            try
+            {
+                var operation = StartReset(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resets the primary of the p2s vpn gateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<P2SVpnGatewayResetOperation> StartResetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartReset");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.ResetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new P2SVpnGatewayResetOperation(_clientDiagnostics, Pipeline, _restClient.CreateResetRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resets the primary of the p2s vpn gateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual P2SVpnGatewayResetOperation StartReset(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartReset");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Reset(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new P2SVpnGatewayResetOperation(_clientDiagnostics, Pipeline, _restClient.CreateResetRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<VpnProfileResponse>> GenerateVpnProfileAsync(P2SVpnProfileParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.GenerateVpnProfile");
+            scope.Start();
+            try
+            {
+                var operation = await StartGenerateVpnProfileAsync(parameters, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<VpnProfileResponse> GenerateVpnProfile(P2SVpnProfileParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.GenerateVpnProfile");
+            scope.Start();
+            try
+            {
+                var operation = StartGenerateVpnProfile(parameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<P2SVpnGatewayGenerateVpnProfileOperation> StartGenerateVpnProfileAsync(P2SVpnProfileParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartGenerateVpnProfile");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GenerateVpnProfileAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new P2SVpnGatewayGenerateVpnProfileOperation(_clientDiagnostics, Pipeline, _restClient.CreateGenerateVpnProfileRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate P2SVpnGateway VPN client package operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual P2SVpnGatewayGenerateVpnProfileOperation StartGenerateVpnProfile(P2SVpnProfileParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartGenerateVpnProfile");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GenerateVpnProfile(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return new P2SVpnGatewayGenerateVpnProfileOperation(_clientDiagnostics, Pipeline, _restClient.CreateGenerateVpnProfileRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<P2SVpnGatewayData>> GetP2SVpnConnectionHealthAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.GetP2SVpnConnectionHealth");
+            scope.Start();
+            try
+            {
+                var operation = await StartGetP2SVpnConnectionHealthAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<P2SVpnGatewayData> GetP2SVpnConnectionHealth(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.GetP2SVpnConnectionHealth");
+            scope.Start();
+            try
+            {
+                var operation = StartGetP2SVpnConnectionHealth(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<P2SVpnGatewayGetP2SVpnConnectionHealthOperation> StartGetP2SVpnConnectionHealthAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartGetP2SVpnConnectionHealth");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetP2SVpnConnectionHealthAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new P2SVpnGatewayGetP2SVpnConnectionHealthOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetP2SVpnConnectionHealthRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual P2SVpnGatewayGetP2SVpnConnectionHealthOperation StartGetP2SVpnConnectionHealth(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartGetP2SVpnConnectionHealth");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetP2SVpnConnectionHealth(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new P2SVpnGatewayGetP2SVpnConnectionHealthOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetP2SVpnConnectionHealthRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public async virtual Task<Response<P2SVpnConnectionHealth>> GetP2SVpnConnectionHealthDetailedAsync(P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.GetP2SVpnConnectionHealthDetailed");
+            scope.Start();
+            try
+            {
+                var operation = await StartGetP2SVpnConnectionHealthDetailedAsync(request, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public virtual Response<P2SVpnConnectionHealth> GetP2SVpnConnectionHealthDetailed(P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.GetP2SVpnConnectionHealthDetailed");
+            scope.Start();
+            try
+            {
+                var operation = StartGetP2SVpnConnectionHealthDetailed(request, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public async virtual Task<P2SVpnGatewayGetP2SVpnConnectionHealthDetailedOperation> StartGetP2SVpnConnectionHealthDetailedAsync(P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartGetP2SVpnConnectionHealthDetailed");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetP2SVpnConnectionHealthDetailedAsync(Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                return new P2SVpnGatewayGetP2SVpnConnectionHealthDetailedOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetP2SVpnConnectionHealthDetailedRequest(Id.ResourceGroupName, Id.Name, request).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="request"> Request parameters supplied to get p2s vpn connections detailed health. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public virtual P2SVpnGatewayGetP2SVpnConnectionHealthDetailedOperation StartGetP2SVpnConnectionHealthDetailed(P2SVpnConnectionHealthRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartGetP2SVpnConnectionHealthDetailed");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetP2SVpnConnectionHealthDetailed(Id.ResourceGroupName, Id.Name, request, cancellationToken);
+                return new P2SVpnGatewayGetP2SVpnConnectionHealthDetailedOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetP2SVpnConnectionHealthDetailedRequest(Id.ResourceGroupName, Id.Name, request).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public async virtual Task<Response> DisconnectP2SVpnConnectionsAsync(P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.DisconnectP2SVpnConnections");
+            scope.Start();
+            try
+            {
+                var operation = await StartDisconnectP2SVpnConnectionsAsync(request, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public virtual Response DisconnectP2SVpnConnections(P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.DisconnectP2SVpnConnections");
+            scope.Start();
+            try
+            {
+                var operation = StartDisconnectP2SVpnConnections(request, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public async virtual Task<P2SVpnGatewayDisconnectP2SVpnConnectionsOperation> StartDisconnectP2SVpnConnectionsAsync(P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartDisconnectP2SVpnConnections");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.DisconnectP2SVpnConnectionsAsync(Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                return new P2SVpnGatewayDisconnectP2SVpnConnectionsOperation(_clientDiagnostics, Pipeline, _restClient.CreateDisconnectP2SVpnConnectionsRequest(Id.ResourceGroupName, Id.Name, request).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource group. </summary>
+        /// <param name="request"> The parameters are supplied to disconnect p2s vpn connections. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public virtual P2SVpnGatewayDisconnectP2SVpnConnectionsOperation StartDisconnectP2SVpnConnections(P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("P2SVpnGateway.StartDisconnectP2SVpnConnections");
+            scope.Start();
+            try
+            {
+                var response = _restClient.DisconnectP2SVpnConnections(Id.ResourceGroupName, Id.Name, request, cancellationToken);
+                return new P2SVpnGatewayDisconnectP2SVpnConnectionsOperation(_clientDiagnostics, Pipeline, _restClient.CreateDisconnectP2SVpnConnectionsRequest(Id.ResourceGroupName, Id.Name, request).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

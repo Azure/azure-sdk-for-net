@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal ConnectionMonitorUpdateTagsOperation(ResourceOperations operationsBase, Response<ConnectionMonitorData> response)
+        internal ConnectionMonitorUpdateTagsOperation(ArmResource operationsBase, Response<ConnectionMonitorData> response)
         {
             _operation = new OperationOrResponseInternals<ConnectionMonitor>(Response.FromValue(new ConnectionMonitor(operationsBase, response.Value), response.GetRawResponse()));
         }

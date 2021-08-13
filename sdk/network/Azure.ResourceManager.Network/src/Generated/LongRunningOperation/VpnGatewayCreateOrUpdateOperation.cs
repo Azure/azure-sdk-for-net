@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<VpnGateway> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of VpnGatewayCreateOrUpdateOperation for mocking. </summary>
         protected VpnGatewayCreateOrUpdateOperation()
         {
         }
 
-        internal VpnGatewayCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VpnGatewayCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VpnGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VpnGatewayCreateOrUpdateOperation");
             _operationBase = operationsBase;

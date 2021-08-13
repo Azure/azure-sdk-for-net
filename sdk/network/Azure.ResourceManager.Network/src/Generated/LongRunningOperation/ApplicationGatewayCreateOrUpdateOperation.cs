@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ApplicationGateway> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of ApplicationGatewayCreateOrUpdateOperation for mocking. </summary>
         protected ApplicationGatewayCreateOrUpdateOperation()
         {
         }
 
-        internal ApplicationGatewayCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ApplicationGatewayCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ApplicationGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ApplicationGatewayCreateOrUpdateOperation");
             _operationBase = operationsBase;

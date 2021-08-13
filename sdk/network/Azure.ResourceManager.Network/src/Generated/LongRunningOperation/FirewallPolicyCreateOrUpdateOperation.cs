@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<FirewallPolicy> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of FirewallPolicyCreateOrUpdateOperation for mocking. </summary>
         protected FirewallPolicyCreateOrUpdateOperation()
         {
         }
 
-        internal FirewallPolicyCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal FirewallPolicyCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<FirewallPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "FirewallPolicyCreateOrUpdateOperation");
             _operationBase = operationsBase;

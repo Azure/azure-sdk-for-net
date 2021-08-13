@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualNetworks");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualNetworks");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             string vnetName = Recording.GenerateAssetName("azsmnet");
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualNetworks");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualNetworks");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualNetworks");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualNetworks");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string vnet1Name = Recording.GenerateAssetName("azsmnet");
             string vnet2Name = Recording.GenerateAssetName("azsmnet");
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualNetworks");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualNetworks");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");

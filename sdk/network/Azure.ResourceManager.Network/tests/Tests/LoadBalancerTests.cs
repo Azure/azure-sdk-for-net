@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create lbPublicIP
@@ -297,9 +297,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(inboundNatRule3Name, listInboundNatRules[2].Data.Name);
 
             // Delete InboundNatRule in LoadBalancer
-            // TODO ADO 5998
-            await ArmClient.GetGenericResourceOperations(getInboundNatRule.Value.Id).StartDeleteAsync();
-            //await inboundNatRuleContainer.StartDeleteAsync(inboundNatRule3Name);
+            await getInboundNatRule.Value.DeleteAsync();
 
             // Delete LoadBalancer
             var deleteOperation1 = await loadBalancerOperations.StartDeleteAsync();
@@ -320,7 +318,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create Vnet
@@ -471,11 +469,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.NotNull(listLoadBalancerSubscription.First().Data.Etag);
 
             // Delete LoadBalancer
-            // TODO ADO 5998
-            //var deleteOperation = await ArmClient.GetGenericResourcesOperations(getLoadBalancer.Value.Id).StartDelete();
-            var deleteOperation = await ArmClient.GetGenericResourceOperations(getLoadBalancer.Value.Id).StartDeleteAsync();
-            await deleteOperation.WaitForCompletionResponseAsync();
-            ;
+            await getLoadBalancer.Value.DeleteAsync();
 
             // Verify Delete
             listLoadBalancerAP = loadBalancerContainer.GetAllAsync();
@@ -491,7 +485,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create Vnet
@@ -662,7 +656,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create Vnet
@@ -835,7 +829,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create the empty LoadBalancer
@@ -875,7 +869,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create Vnet
@@ -998,7 +992,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create lbPublicIP
@@ -1184,7 +1178,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create lbPublicIP

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<AzureFirewall> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of AzureFirewallUpdateTagsOperation for mocking. </summary>
         protected AzureFirewallUpdateTagsOperation()
         {
         }
 
-        internal AzureFirewallUpdateTagsOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal AzureFirewallUpdateTagsOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<AzureFirewall>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AzureFirewallUpdateTagsOperation");
             _operationBase = operationsBase;

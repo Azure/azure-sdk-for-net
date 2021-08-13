@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<NetworkInterfaceTapConfiguration> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationCreateOrUpdateOperation for mocking. </summary>
         protected NetworkInterfaceTapConfigurationCreateOrUpdateOperation()
         {
         }
 
-        internal NetworkInterfaceTapConfigurationCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NetworkInterfaceTapConfigurationCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<NetworkInterfaceTapConfiguration>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "NetworkInterfaceTapConfigurationCreateOrUpdateOperation");
             _operationBase = operationsBase;

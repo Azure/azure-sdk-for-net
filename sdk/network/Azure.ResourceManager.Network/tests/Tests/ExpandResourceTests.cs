@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create lbPublicIP
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var inboundNatRule2Name = Recording.GenerateAssetName("azsmnet");
 
             // Populate the loadBalancerCreateOrUpdateParameter
-            var loadBalancer = new LoadBalancerData()
+            var loadBalancerData = new LoadBalancerData()
             {
                 Location = location,
                 FrontendIPConfigurations = {
@@ -187,9 +187,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Create the loadBalancer
             var loadBalancerContainer = resourceGroup.GetLoadBalancers();
-            Operation<LoadBalancer> putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbName, loadBalancer);
-            await putLoadBalancerOperation.WaitForCompletionAsync();
-            Response<LoadBalancer> getLoadBalancer = await loadBalancerContainer.GetAsync(lbName);
+            LoadBalancer loadBalancer  = (await loadBalancerContainer.CreateOrUpdateAsync(lbName, loadBalancerData)).Value;
 
             // Associate the nic with LB
             //nic1.GetNetworkInterfaceIPConfigurations().List().First().`
@@ -198,11 +196,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //nic1.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.InboundNatRules.First());
             //nic2.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.BackendAddressPools.First());
             //nic3.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.InboundNatRules[1]);
-            nic1.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
-            nic1.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules[0]);
-            nic2.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
-            nic2.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules[1]);
-            nic3.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
+            nic1.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(loadBalancer.Data.BackendAddressPools.First());
+            nic1.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(loadBalancer.Data.InboundNatRules[0]);
+            nic2.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(loadBalancer.Data.BackendAddressPools.First());
+            nic2.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(loadBalancer.Data.InboundNatRules[1]);
+            nic3.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(loadBalancer.Data.BackendAddressPools.First());
 
             // Put Nics
             var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
@@ -221,9 +219,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             await networkInterfaceContainer.GetAsync(nic3name);
 
             // Get lb with expanded nics from nat rules
-            getLoadBalancer = await loadBalancerContainer.GetAsync(lbName, "InboundNatRules/backendIPConfiguration");
+            loadBalancer = await loadBalancerContainer.GetAsync(lbName, "InboundNatRules/backendIPConfiguration");
 
-            foreach (InboundNatRule natRule in getLoadBalancer.Value.GetInboundNatRules().GetAll())
+            foreach (InboundNatRule natRule in loadBalancer.GetInboundNatRules().GetAll())
             {
                 Assert.NotNull(natRule.Data.BackendIPConfiguration);
                 Assert.NotNull(natRule.Data.BackendIPConfiguration.Id);
@@ -233,11 +231,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
 
             // Get lb with expanded nics from pools
-            getLoadBalancer = await loadBalancerContainer.GetAsync(lbName, "BackendAddressPools/backendIPConfigurations");
+            loadBalancer = await loadBalancerContainer.GetAsync(lbName, "BackendAddressPools/backendIPConfigurations");
 
-            foreach (BackendAddressPool pool in getLoadBalancer.Value.GetBackendAddressPools().GetAll())
+            foreach (BackendAddressPool pool in loadBalancer.GetBackendAddressPools().GetAll())
             {
-                foreach (NetworkInterfaceIPConfiguration ipconfig in getLoadBalancer.Value.GetBackendAddressPools().GetAll().First().Data.BackendIPConfigurations)
+                foreach (NetworkInterfaceIPConfiguration ipconfig in loadBalancer.GetBackendAddressPools().GetAll().First().Data.BackendIPConfigurations)
                 {
                     Assert.NotNull(ipconfig.Id);
                     Assert.NotNull(ipconfig.Name);
@@ -247,8 +245,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
 
             // Get lb with expanded publicip
-            getLoadBalancer = await loadBalancerContainer.GetAsync(lbName, "FrontendIPConfigurations/PublicIPAddress");
-            foreach (FrontendIPConfiguration ipconfig in getLoadBalancer.Value.Data.FrontendIPConfigurations)
+            loadBalancer = await loadBalancerContainer.GetAsync(lbName, "FrontendIPConfigurations/PublicIPAddress");
+            foreach (FrontendIPConfiguration ipconfig in loadBalancer.Data.FrontendIPConfigurations)
             {
                 Assert.NotNull(ipconfig.PublicIPAddress);
                 Assert.NotNull(ipconfig.PublicIPAddress.Id);
@@ -294,7 +292,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Delete LoadBalancer
             Operation deleteOperation = await loadBalancerContainer.Get(lbName).Value.StartDeleteAsync();
             await deleteOperation.WaitForCompletionResponseAsync();
-            ;
 
             // Verify Delete
             AsyncPageable<LoadBalancer> listLoadBalancerAP = loadBalancerContainer.GetAllAsync();

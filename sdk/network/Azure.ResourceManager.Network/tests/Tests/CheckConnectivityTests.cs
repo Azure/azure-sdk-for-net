@@ -4,8 +4,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Compute;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
@@ -51,15 +49,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup);
 
             //Deploy networkWatcherAgent on VM
-            VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
-            {
-                Publisher = "Microsoft.Azure.NetworkWatcher",
-                TypeHandlerVersion = "1.4",
-                TypePropertiesType = "NetworkWatcherAgentWindows"
-            };
-
-            VirtualMachineExtensionCreateOrUpdateOperation createOrUpdateOperation = await vm.GetVirtualMachineExtensionVirtualMachines().StartCreateOrUpdateAsync("NetworkWatcherAgent", parameters);
-            await createOrUpdateOperation.WaitForCompletionAsync();;
+            await deployWindowsNetworkAgent(virtualMachineName, location, resourceGroup);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher

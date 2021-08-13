@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Compute/virtualMachineScaleSets");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Compute/virtualMachineScaleSets");
             string deploymentName = Recording.GenerateAssetName("vmss");
             var resourceGroup = CreateResourceGroup(resourceGroupName, location);
 

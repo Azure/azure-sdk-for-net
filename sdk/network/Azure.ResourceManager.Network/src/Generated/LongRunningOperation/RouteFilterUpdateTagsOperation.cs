@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal RouteFilterUpdateTagsOperation(ResourceOperations operationsBase, Response<RouteFilterData> response)
+        internal RouteFilterUpdateTagsOperation(ArmResource operationsBase, Response<RouteFilterData> response)
         {
             _operation = new OperationOrResponseInternals<RouteFilter>(Response.FromValue(new RouteFilter(operationsBase, response.Value), response.GetRawResponse()));
         }

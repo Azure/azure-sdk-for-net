@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal ExpressRouteCircuitUpdateTagsOperation(ResourceOperations operationsBase, Response<ExpressRouteCircuitData> response)
+        internal ExpressRouteCircuitUpdateTagsOperation(ArmResource operationsBase, Response<ExpressRouteCircuitData> response)
         {
             _operation = new OperationOrResponseInternals<ExpressRouteCircuit>(Response.FromValue(new ExpressRouteCircuit(operationsBase, response.Value), response.GetRawResponse()));
         }

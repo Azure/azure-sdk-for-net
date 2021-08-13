@@ -5,27 +5,463 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A Class representing a ConnectionMonitor along with the instance operations that can be performed on it. </summary>
-    public class ConnectionMonitor : ConnectionMonitorOperations
+    public partial class ConnectionMonitor : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref = "ConnectionMonitor"/> class for mocking. </summary>
-        protected ConnectionMonitor() : base()
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ConnectionMonitorsRestOperations _restClient;
+        private readonly ConnectionMonitorData _data;
+
+        /// <summary> Initializes a new instance of the <see cref="ConnectionMonitor"/> class for mocking. </summary>
+        protected ConnectionMonitor()
         {
         }
 
         /// <summary> Initializes a new instance of the <see cref = "ConnectionMonitor"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ConnectionMonitor(ResourceOperations options, ConnectionMonitorData resource) : base(options, resource.Id)
+        internal ConnectionMonitor(ArmResource options, ConnectionMonitorData resource) : base(options, resource.Id)
         {
-            Data = resource;
+            HasData = true;
+            _data = resource;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new ConnectionMonitorsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Gets or sets the ConnectionMonitorData. </summary>
-        public virtual ConnectionMonitorData Data { get; private set; }
+        /// <summary> Initializes a new instance of the <see cref="ConnectionMonitor"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal ConnectionMonitor(ArmResource options, ResourceIdentifier id) : base(options, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new ConnectionMonitorsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+        }
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkWatchers/connectionMonitors";
+
+        /// <summary> Gets the valid resource type for the operations. </summary>
+        protected override ResourceType ValidResourceType => ResourceType;
+
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual ConnectionMonitorData Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
+
+        /// <summary> Gets a connection monitor by name. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<ConnectionMonitor>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Get");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a connection monitor by name. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConnectionMonitor> Get(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Get");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            return ListAvailableLocations(ResourceType, cancellationToken);
+        }
+
+        /// <summary> Deletes the specified connection monitor. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Delete");
+            scope.Start();
+            try
+            {
+                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified connection monitor. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Delete(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Delete");
+            scope.Start();
+            try
+            {
+                var operation = StartDelete(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified connection monitor. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<ConnectionMonitorDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.StartDelete");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new ConnectionMonitorDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified connection monitor. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ConnectionMonitorDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.StartDelete");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return new ConnectionMonitorDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary> Update tags of the specified connection monitor. </summary>
+        /// <param name="parameters"> Parameters supplied to update connection monitor tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<ConnectionMonitor>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.UpdateTags");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update tags of the specified connection monitor. </summary>
+        /// <param name="parameters"> Parameters supplied to update connection monitor tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<ConnectionMonitor> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.UpdateTags");
+            scope.Start();
+            try
+            {
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                return Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Stops the specified connection monitor. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response> StopAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Stop");
+            scope.Start();
+            try
+            {
+                var operation = await StartStopAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Stops the specified connection monitor. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Stop(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Stop");
+            scope.Start();
+            try
+            {
+                var operation = StartStop(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Stops the specified connection monitor. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<ConnectionMonitorStopOperation> StartStopAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.StartStop");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.StopAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new ConnectionMonitorStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Stops the specified connection monitor. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ConnectionMonitorStopOperation StartStop(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.StartStop");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Stop(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return new ConnectionMonitorStopOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts the specified connection monitor. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response> StartAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Start");
+            scope.Start();
+            try
+            {
+                var operation = await StartStartAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts the specified connection monitor. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Start(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Start");
+            scope.Start();
+            try
+            {
+                var operation = StartStart(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts the specified connection monitor. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<ConnectionMonitorStartOperation> StartStartAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.StartStart");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.StartAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new ConnectionMonitorStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts the specified connection monitor. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ConnectionMonitorStartOperation StartStart(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.StartStart");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Start(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return new ConnectionMonitorStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Query a snapshot of the most recent connection states. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<ConnectionMonitorQueryResult>> QueryAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Query");
+            scope.Start();
+            try
+            {
+                var operation = await StartQueryAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Query a snapshot of the most recent connection states. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ConnectionMonitorQueryResult> Query(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.Query");
+            scope.Start();
+            try
+            {
+                var operation = StartQuery(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Query a snapshot of the most recent connection states. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<ConnectionMonitorQueryOperation> StartQueryAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.StartQuery");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.QueryAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new ConnectionMonitorQueryOperation(_clientDiagnostics, Pipeline, _restClient.CreateQueryRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Query a snapshot of the most recent connection states. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ConnectionMonitorQueryOperation StartQuery(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitor.StartQuery");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Query(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return new ConnectionMonitorQueryOperation(_clientDiagnostics, Pipeline, _restClient.CreateQueryRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

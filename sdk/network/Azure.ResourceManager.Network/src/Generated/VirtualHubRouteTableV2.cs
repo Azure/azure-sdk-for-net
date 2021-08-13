@@ -5,27 +5,198 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A Class representing a VirtualHubRouteTableV2 along with the instance operations that can be performed on it. </summary>
-    public class VirtualHubRouteTableV2 : VirtualHubRouteTableV2Operations
+    public partial class VirtualHubRouteTableV2 : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref = "VirtualHubRouteTableV2"/> class for mocking. </summary>
-        protected VirtualHubRouteTableV2() : base()
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly VirtualHubRouteTableV2SRestOperations _restClient;
+        private readonly VirtualHubRouteTableV2Data _data;
+
+        /// <summary> Initializes a new instance of the <see cref="VirtualHubRouteTableV2"/> class for mocking. </summary>
+        protected VirtualHubRouteTableV2()
         {
         }
 
         /// <summary> Initializes a new instance of the <see cref = "VirtualHubRouteTableV2"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualHubRouteTableV2(ResourceOperations options, VirtualHubRouteTableV2Data resource) : base(options, resource.Id)
+        internal VirtualHubRouteTableV2(ArmResource options, VirtualHubRouteTableV2Data resource) : base(options, resource.Id)
         {
-            Data = resource;
+            HasData = true;
+            _data = resource;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new VirtualHubRouteTableV2SRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Gets or sets the VirtualHubRouteTableV2Data. </summary>
-        public virtual VirtualHubRouteTableV2Data Data { get; private set; }
+        /// <summary> Initializes a new instance of the <see cref="VirtualHubRouteTableV2"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal VirtualHubRouteTableV2(ArmResource options, ResourceIdentifier id) : base(options, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new VirtualHubRouteTableV2SRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+        }
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/routeTables";
+
+        /// <summary> Gets the valid resource type for the operations. </summary>
+        protected override ResourceType ValidResourceType => ResourceType;
+
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual VirtualHubRouteTableV2Data Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
+
+        /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<VirtualHubRouteTableV2>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubRouteTableV2.Get");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VirtualHubRouteTableV2(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VirtualHubRouteTableV2> Get(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubRouteTableV2.Get");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualHubRouteTableV2(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            return ListAvailableLocations(ResourceType, cancellationToken);
+        }
+
+        /// <summary> Deletes a VirtualHubRouteTableV2. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubRouteTableV2.Delete");
+            scope.Start();
+            try
+            {
+                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a VirtualHubRouteTableV2. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Delete(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubRouteTableV2.Delete");
+            scope.Start();
+            try
+            {
+                var operation = StartDelete(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a VirtualHubRouteTableV2. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualHubRouteTableV2DeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubRouteTableV2.StartDelete");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new VirtualHubRouteTableV2DeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a VirtualHubRouteTableV2. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualHubRouteTableV2DeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubRouteTableV2.StartDelete");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return new VirtualHubRouteTableV2DeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

@@ -5,27 +5,1655 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A Class representing a VirtualNetworkGateway along with the instance operations that can be performed on it. </summary>
-    public class VirtualNetworkGateway : VirtualNetworkGatewayOperations
+    public partial class VirtualNetworkGateway : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkGateway"/> class for mocking. </summary>
-        protected VirtualNetworkGateway() : base()
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly VirtualNetworkGatewaysRestOperations _restClient;
+        private readonly VirtualNetworkGatewayData _data;
+
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkGateway"/> class for mocking. </summary>
+        protected VirtualNetworkGateway()
         {
         }
 
         /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkGateway"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualNetworkGateway(ResourceOperations options, VirtualNetworkGatewayData resource) : base(options, resource.Id)
+        internal VirtualNetworkGateway(ArmResource options, VirtualNetworkGatewayData resource) : base(options, resource.Id)
         {
-            Data = resource;
+            HasData = true;
+            _data = resource;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new VirtualNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Gets or sets the VirtualNetworkGatewayData. </summary>
-        public virtual VirtualNetworkGatewayData Data { get; private set; }
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkGateway"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal VirtualNetworkGateway(ArmResource options, ResourceIdentifier id) : base(options, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new VirtualNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+        }
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualNetworkGateways";
+
+        /// <summary> Gets the valid resource type for the operations. </summary>
+        protected override ResourceType ValidResourceType => ResourceType;
+
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual VirtualNetworkGatewayData Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
+
+        /// <summary> Gets the specified virtual network gateway by resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<VirtualNetworkGateway>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.Get");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new VirtualNetworkGateway(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the specified virtual network gateway by resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VirtualNetworkGateway> Get(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.Get");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkGateway(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            return ListAvailableLocations(ResourceType, cancellationToken);
+        }
+
+        /// <summary> Deletes the specified virtual network gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.Delete");
+            scope.Start();
+            try
+            {
+                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified virtual network gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Delete(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.Delete");
+            scope.Start();
+            try
+            {
+                var operation = StartDelete(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified virtual network gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualNetworkGatewayDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartDelete");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified virtual network gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualNetworkGatewayDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartDelete");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new VirtualNetworkGatewayDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary> Gets a xml format representation for supported vpn devices. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<string>> SupportedVpnDevicesAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.SupportedVpnDevices");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.SupportedVpnDevicesAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a xml format representation for supported vpn devices. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<string> SupportedVpnDevices(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.SupportedVpnDevices");
+            scope.Start();
+            try
+            {
+                var response = _restClient.SupportedVpnDevices(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a xml format representation for vpn device configuration script. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate vpn device script operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<string>> VpnDeviceConfigurationScriptAsync(VpnDeviceScriptParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.VpnDeviceConfigurationScript");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.VpnDeviceConfigurationScriptAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a xml format representation for vpn device configuration script. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate vpn device script operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<string> VpnDeviceConfigurationScript(VpnDeviceScriptParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.VpnDeviceConfigurationScript");
+            scope.Start();
+            try
+            {
+                var response = _restClient.VpnDeviceConfigurationScript(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets all the connections in a virtual network gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualNetworkGatewayConnectionListEntity" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualNetworkGatewayConnectionListEntity> GetConnections(CancellationToken cancellationToken = default)
+        {
+            Page<VirtualNetworkGatewayConnectionListEntity> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetConnections");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.GetConnections(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<VirtualNetworkGatewayConnectionListEntity> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetConnections");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.GetConnectionsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets all the connections in a virtual network gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualNetworkGatewayConnectionListEntity" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualNetworkGatewayConnectionListEntity> GetConnectionsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<VirtualNetworkGatewayConnectionListEntity>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetConnections");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.GetConnectionsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<VirtualNetworkGatewayConnectionListEntity>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetConnections");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.GetConnectionsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Updates a virtual network gateway tags. </summary>
+        /// <param name="parameters"> Parameters supplied to update virtual network gateway tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<VirtualNetworkGateway>> UpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.UpdateTags");
+            scope.Start();
+            try
+            {
+                var operation = await StartUpdateTagsAsync(parameters, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates a virtual network gateway tags. </summary>
+        /// <param name="parameters"> Parameters supplied to update virtual network gateway tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<VirtualNetworkGateway> UpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.UpdateTags");
+            scope.Start();
+            try
+            {
+                var operation = StartUpdateTags(parameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates a virtual network gateway tags. </summary>
+        /// <param name="parameters"> Parameters supplied to update virtual network gateway tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<VirtualNetworkGatewayUpdateTagsOperation> StartUpdateTagsAsync(TagsObject parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartUpdateTags");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates a virtual network gateway tags. </summary>
+        /// <param name="parameters"> Parameters supplied to update virtual network gateway tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual VirtualNetworkGatewayUpdateTagsOperation StartUpdateTags(TagsObject parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartUpdateTags");
+            scope.Start();
+            try
+            {
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return new VirtualNetworkGatewayUpdateTagsOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateTagsRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resets the primary of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="gatewayVip"> Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<VirtualNetworkGatewayData>> ResetAsync(string gatewayVip = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.Reset");
+            scope.Start();
+            try
+            {
+                var operation = await StartResetAsync(gatewayVip, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resets the primary of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="gatewayVip"> Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VirtualNetworkGatewayData> Reset(string gatewayVip = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.Reset");
+            scope.Start();
+            try
+            {
+                var operation = StartReset(gatewayVip, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resets the primary of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="gatewayVip"> Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualNetworkGatewayResetOperation> StartResetAsync(string gatewayVip = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartReset");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.ResetAsync(Id.ResourceGroupName, Id.Name, gatewayVip, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayResetOperation(_clientDiagnostics, Pipeline, _restClient.CreateResetRequest(Id.ResourceGroupName, Id.Name, gatewayVip).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resets the primary of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="gatewayVip"> Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualNetworkGatewayResetOperation StartReset(string gatewayVip = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartReset");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Reset(Id.ResourceGroupName, Id.Name, gatewayVip, cancellationToken);
+                return new VirtualNetworkGatewayResetOperation(_clientDiagnostics, Pipeline, _restClient.CreateResetRequest(Id.ResourceGroupName, Id.Name, gatewayVip).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resets the VPN client shared key of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response> ResetVpnClientSharedKeyAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.ResetVpnClientSharedKey");
+            scope.Start();
+            try
+            {
+                var operation = await StartResetVpnClientSharedKeyAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resets the VPN client shared key of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response ResetVpnClientSharedKey(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.ResetVpnClientSharedKey");
+            scope.Start();
+            try
+            {
+                var operation = StartResetVpnClientSharedKey(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resets the VPN client shared key of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualNetworkGatewayResetVpnClientSharedKeyOperation> StartResetVpnClientSharedKeyAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartResetVpnClientSharedKey");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.ResetVpnClientSharedKeyAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayResetVpnClientSharedKeyOperation(_clientDiagnostics, Pipeline, _restClient.CreateResetVpnClientSharedKeyRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resets the VPN client shared key of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualNetworkGatewayResetVpnClientSharedKeyOperation StartResetVpnClientSharedKey(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartResetVpnClientSharedKey");
+            scope.Start();
+            try
+            {
+                var response = _restClient.ResetVpnClientSharedKey(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new VirtualNetworkGatewayResetVpnClientSharedKeyOperation(_clientDiagnostics, Pipeline, _restClient.CreateResetVpnClientSharedKeyRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates VPN client package for P2S client of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<string>> GeneratevpnclientpackageAsync(VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.Generatevpnclientpackage");
+            scope.Start();
+            try
+            {
+                var operation = await StartGeneratevpnclientpackageAsync(parameters, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates VPN client package for P2S client of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<string> Generatevpnclientpackage(VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.Generatevpnclientpackage");
+            scope.Start();
+            try
+            {
+                var operation = StartGeneratevpnclientpackage(parameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates VPN client package for P2S client of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<VirtualNetworkGatewayGeneratevpnclientpackageOperation> StartGeneratevpnclientpackageAsync(VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGeneratevpnclientpackage");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GeneratevpnclientpackageAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayGeneratevpnclientpackageOperation(_clientDiagnostics, Pipeline, _restClient.CreateGeneratevpnclientpackageRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates VPN client package for P2S client of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual VirtualNetworkGatewayGeneratevpnclientpackageOperation StartGeneratevpnclientpackage(VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGeneratevpnclientpackage");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Generatevpnclientpackage(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return new VirtualNetworkGatewayGeneratevpnclientpackageOperation(_clientDiagnostics, Pipeline, _restClient.CreateGeneratevpnclientpackageRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<string>> GenerateVpnProfileAsync(VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GenerateVpnProfile");
+            scope.Start();
+            try
+            {
+                var operation = await StartGenerateVpnProfileAsync(parameters, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<string> GenerateVpnProfile(VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GenerateVpnProfile");
+            scope.Start();
+            try
+            {
+                var operation = StartGenerateVpnProfile(parameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<VirtualNetworkGatewayGenerateVpnProfileOperation> StartGenerateVpnProfileAsync(VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGenerateVpnProfile");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GenerateVpnProfileAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayGenerateVpnProfileOperation(_clientDiagnostics, Pipeline, _restClient.CreateGenerateVpnProfileRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication. </summary>
+        /// <param name="parameters"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual VirtualNetworkGatewayGenerateVpnProfileOperation StartGenerateVpnProfile(VpnClientParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGenerateVpnProfile");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GenerateVpnProfile(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return new VirtualNetworkGatewayGenerateVpnProfileOperation(_clientDiagnostics, Pipeline, _restClient.CreateGenerateVpnProfileRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<string>> GetVpnProfilePackageUrlAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetVpnProfilePackageUrl");
+            scope.Start();
+            try
+            {
+                var operation = await StartGetVpnProfilePackageUrlAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<string> GetVpnProfilePackageUrl(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetVpnProfilePackageUrl");
+            scope.Start();
+            try
+            {
+                var operation = StartGetVpnProfilePackageUrl(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualNetworkGatewayGetVpnProfilePackageUrlOperation> StartGetVpnProfilePackageUrlAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGetVpnProfilePackageUrl");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetVpnProfilePackageUrlAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayGetVpnProfilePackageUrlOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetVpnProfilePackageUrlRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualNetworkGatewayGetVpnProfilePackageUrlOperation StartGetVpnProfilePackageUrl(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGetVpnProfilePackageUrl");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetVpnProfilePackageUrl(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new VirtualNetworkGatewayGetVpnProfilePackageUrlOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetVpnProfilePackageUrlRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The GetBgpPeerStatus operation retrieves the status of all BGP peers. </summary>
+        /// <param name="peer"> The IP address of the peer to retrieve the status of. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<BgpPeerStatusListResult>> GetBgpPeerStatusAsync(string peer = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetBgpPeerStatus");
+            scope.Start();
+            try
+            {
+                var operation = await StartGetBgpPeerStatusAsync(peer, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The GetBgpPeerStatus operation retrieves the status of all BGP peers. </summary>
+        /// <param name="peer"> The IP address of the peer to retrieve the status of. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<BgpPeerStatusListResult> GetBgpPeerStatus(string peer = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetBgpPeerStatus");
+            scope.Start();
+            try
+            {
+                var operation = StartGetBgpPeerStatus(peer, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The GetBgpPeerStatus operation retrieves the status of all BGP peers. </summary>
+        /// <param name="peer"> The IP address of the peer to retrieve the status of. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualNetworkGatewayGetBgpPeerStatusOperation> StartGetBgpPeerStatusAsync(string peer = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGetBgpPeerStatus");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetBgpPeerStatusAsync(Id.ResourceGroupName, Id.Name, peer, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayGetBgpPeerStatusOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetBgpPeerStatusRequest(Id.ResourceGroupName, Id.Name, peer).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The GetBgpPeerStatus operation retrieves the status of all BGP peers. </summary>
+        /// <param name="peer"> The IP address of the peer to retrieve the status of. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualNetworkGatewayGetBgpPeerStatusOperation StartGetBgpPeerStatus(string peer = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGetBgpPeerStatus");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetBgpPeerStatus(Id.ResourceGroupName, Id.Name, peer, cancellationToken);
+                return new VirtualNetworkGatewayGetBgpPeerStatusOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetBgpPeerStatusRequest(Id.ResourceGroupName, Id.Name, peer).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<GatewayRouteListResult>> GetLearnedRoutesAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetLearnedRoutes");
+            scope.Start();
+            try
+            {
+                var operation = await StartGetLearnedRoutesAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<GatewayRouteListResult> GetLearnedRoutes(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetLearnedRoutes");
+            scope.Start();
+            try
+            {
+                var operation = StartGetLearnedRoutes(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualNetworkGatewayGetLearnedRoutesOperation> StartGetLearnedRoutesAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGetLearnedRoutes");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetLearnedRoutesAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayGetLearnedRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetLearnedRoutesRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualNetworkGatewayGetLearnedRoutesOperation StartGetLearnedRoutes(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGetLearnedRoutes");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetLearnedRoutes(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new VirtualNetworkGatewayGetLearnedRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetLearnedRoutesRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
+        /// <param name="peer"> The IP address of the peer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peer"/> is null. </exception>
+        public async virtual Task<Response<GatewayRouteListResult>> GetAdvertisedRoutesAsync(string peer, CancellationToken cancellationToken = default)
+        {
+            if (peer == null)
+            {
+                throw new ArgumentNullException(nameof(peer));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetAdvertisedRoutes");
+            scope.Start();
+            try
+            {
+                var operation = await StartGetAdvertisedRoutesAsync(peer, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
+        /// <param name="peer"> The IP address of the peer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peer"/> is null. </exception>
+        public virtual Response<GatewayRouteListResult> GetAdvertisedRoutes(string peer, CancellationToken cancellationToken = default)
+        {
+            if (peer == null)
+            {
+                throw new ArgumentNullException(nameof(peer));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetAdvertisedRoutes");
+            scope.Start();
+            try
+            {
+                var operation = StartGetAdvertisedRoutes(peer, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
+        /// <param name="peer"> The IP address of the peer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peer"/> is null. </exception>
+        public async virtual Task<VirtualNetworkGatewayGetAdvertisedRoutesOperation> StartGetAdvertisedRoutesAsync(string peer, CancellationToken cancellationToken = default)
+        {
+            if (peer == null)
+            {
+                throw new ArgumentNullException(nameof(peer));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGetAdvertisedRoutes");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetAdvertisedRoutesAsync(Id.ResourceGroupName, Id.Name, peer, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayGetAdvertisedRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetAdvertisedRoutesRequest(Id.ResourceGroupName, Id.Name, peer).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
+        /// <param name="peer"> The IP address of the peer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peer"/> is null. </exception>
+        public virtual VirtualNetworkGatewayGetAdvertisedRoutesOperation StartGetAdvertisedRoutes(string peer, CancellationToken cancellationToken = default)
+        {
+            if (peer == null)
+            {
+                throw new ArgumentNullException(nameof(peer));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGetAdvertisedRoutes");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetAdvertisedRoutes(Id.ResourceGroupName, Id.Name, peer, cancellationToken);
+                return new VirtualNetworkGatewayGetAdvertisedRoutesOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetAdvertisedRoutesRequest(Id.ResourceGroupName, Id.Name, peer).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIpsecParams"/> is null. </exception>
+        public async virtual Task<Response<VpnClientIPsecParameters>> SetVpnclientIpsecParametersAsync(VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        {
+            if (vpnclientIpsecParams == null)
+            {
+                throw new ArgumentNullException(nameof(vpnclientIpsecParams));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.SetVpnclientIpsecParameters");
+            scope.Start();
+            try
+            {
+                var operation = await StartSetVpnclientIpsecParametersAsync(vpnclientIpsecParams, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIpsecParams"/> is null. </exception>
+        public virtual Response<VpnClientIPsecParameters> SetVpnclientIpsecParameters(VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        {
+            if (vpnclientIpsecParams == null)
+            {
+                throw new ArgumentNullException(nameof(vpnclientIpsecParams));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.SetVpnclientIpsecParameters");
+            scope.Start();
+            try
+            {
+                var operation = StartSetVpnclientIpsecParameters(vpnclientIpsecParams, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIpsecParams"/> is null. </exception>
+        public async virtual Task<VirtualNetworkGatewaySetVpnclientIpsecParametersOperation> StartSetVpnclientIpsecParametersAsync(VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        {
+            if (vpnclientIpsecParams == null)
+            {
+                throw new ArgumentNullException(nameof(vpnclientIpsecParams));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartSetVpnclientIpsecParameters");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.SetVpnclientIpsecParametersAsync(Id.ResourceGroupName, Id.Name, vpnclientIpsecParams, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewaySetVpnclientIpsecParametersOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetVpnclientIpsecParametersRequest(Id.ResourceGroupName, Id.Name, vpnclientIpsecParams).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <param name="vpnclientIpsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIpsecParams"/> is null. </exception>
+        public virtual VirtualNetworkGatewaySetVpnclientIpsecParametersOperation StartSetVpnclientIpsecParameters(VpnClientIPsecParameters vpnclientIpsecParams, CancellationToken cancellationToken = default)
+        {
+            if (vpnclientIpsecParams == null)
+            {
+                throw new ArgumentNullException(nameof(vpnclientIpsecParams));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartSetVpnclientIpsecParameters");
+            scope.Start();
+            try
+            {
+                var response = _restClient.SetVpnclientIpsecParameters(Id.ResourceGroupName, Id.Name, vpnclientIpsecParams, cancellationToken);
+                return new VirtualNetworkGatewaySetVpnclientIpsecParametersOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetVpnclientIpsecParametersRequest(Id.ResourceGroupName, Id.Name, vpnclientIpsecParams).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<VpnClientIPsecParameters>> GetVpnclientIpsecParametersAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetVpnclientIpsecParameters");
+            scope.Start();
+            try
+            {
+                var operation = await StartGetVpnclientIpsecParametersAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VpnClientIPsecParameters> GetVpnclientIpsecParameters(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetVpnclientIpsecParameters");
+            scope.Start();
+            try
+            {
+                var operation = StartGetVpnclientIpsecParameters(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualNetworkGatewayGetVpnclientIpsecParametersOperation> StartGetVpnclientIpsecParametersAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGetVpnclientIpsecParameters");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetVpnclientIpsecParametersAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayGetVpnclientIpsecParametersOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetVpnclientIpsecParametersRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualNetworkGatewayGetVpnclientIpsecParametersOperation StartGetVpnclientIpsecParameters(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGetVpnclientIpsecParameters");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetVpnclientIpsecParameters(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new VirtualNetworkGatewayGetVpnclientIpsecParametersOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetVpnclientIpsecParametersRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<string>> StartPacketCaptureAsync(VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartPacketCapture");
+            scope.Start();
+            try
+            {
+                var operation = await StartStartPacketCaptureAsync(parameters, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<string> StartPacketCapture(VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartPacketCapture");
+            scope.Start();
+            try
+            {
+                var operation = StartStartPacketCapture(parameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualNetworkGatewayStartPacketCaptureOperation> StartStartPacketCaptureAsync(VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartStartPacketCapture");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.StartPacketCaptureAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayStartPacketCaptureOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartPacketCaptureRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to start packet capture on gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualNetworkGatewayStartPacketCaptureOperation StartStartPacketCapture(VpnPacketCaptureStartParameters parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartStartPacketCapture");
+            scope.Start();
+            try
+            {
+                var response = _restClient.StartPacketCapture(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return new VirtualNetworkGatewayStartPacketCaptureOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartPacketCaptureRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Stops packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<string>> StopPacketCaptureAsync(VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StopPacketCapture");
+            scope.Start();
+            try
+            {
+                var operation = await StartStopPacketCaptureAsync(parameters, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Stops packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<string> StopPacketCapture(VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StopPacketCapture");
+            scope.Start();
+            try
+            {
+                var operation = StartStopPacketCapture(parameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Stops packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<VirtualNetworkGatewayStopPacketCaptureOperation> StartStopPacketCaptureAsync(VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartStopPacketCapture");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.StopPacketCaptureAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayStopPacketCaptureOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopPacketCaptureRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Stops packet capture on virtual network gateway in the specified resource group. </summary>
+        /// <param name="parameters"> Virtual network gateway packet capture parameters supplied to stop packet capture on gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual VirtualNetworkGatewayStopPacketCaptureOperation StartStopPacketCapture(VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartStopPacketCapture");
+            scope.Start();
+            try
+            {
+                var response = _restClient.StopPacketCapture(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return new VirtualNetworkGatewayStopPacketCaptureOperation(_clientDiagnostics, Pipeline, _restClient.CreateStopPacketCaptureRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<VpnClientConnectionHealthDetailListResult>> GetVpnclientConnectionHealthAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetVpnclientConnectionHealth");
+            scope.Start();
+            try
+            {
+                var operation = await StartGetVpnclientConnectionHealthAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VpnClientConnectionHealthDetailListResult> GetVpnclientConnectionHealth(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.GetVpnclientConnectionHealth");
+            scope.Start();
+            try
+            {
+                var operation = StartGetVpnclientConnectionHealth(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VirtualNetworkGatewayGetVpnclientConnectionHealthOperation> StartGetVpnclientConnectionHealthAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGetVpnclientConnectionHealth");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetVpnclientConnectionHealthAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayGetVpnclientConnectionHealthOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetVpnclientConnectionHealthRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VirtualNetworkGatewayGetVpnclientConnectionHealthOperation StartGetVpnclientConnectionHealth(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartGetVpnclientConnectionHealth");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetVpnclientConnectionHealth(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new VirtualNetworkGatewayGetVpnclientConnectionHealthOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetVpnclientConnectionHealthRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Disconnect vpn connections of virtual network gateway in the specified resource group. </summary>
+        /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public async virtual Task<Response> DisconnectVirtualNetworkGatewayVpnConnectionsAsync(P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.DisconnectVirtualNetworkGatewayVpnConnections");
+            scope.Start();
+            try
+            {
+                var operation = await StartDisconnectVirtualNetworkGatewayVpnConnectionsAsync(request, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Disconnect vpn connections of virtual network gateway in the specified resource group. </summary>
+        /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public virtual Response DisconnectVirtualNetworkGatewayVpnConnections(P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.DisconnectVirtualNetworkGatewayVpnConnections");
+            scope.Start();
+            try
+            {
+                var operation = StartDisconnectVirtualNetworkGatewayVpnConnections(request, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Disconnect vpn connections of virtual network gateway in the specified resource group. </summary>
+        /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public async virtual Task<VirtualNetworkGatewayDisconnectVirtualNetworkGatewayVpnConnectionsOperation> StartDisconnectVirtualNetworkGatewayVpnConnectionsAsync(P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartDisconnectVirtualNetworkGatewayVpnConnections");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.DisconnectVirtualNetworkGatewayVpnConnectionsAsync(Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayDisconnectVirtualNetworkGatewayVpnConnectionsOperation(_clientDiagnostics, Pipeline, _restClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Id.ResourceGroupName, Id.Name, request).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Disconnect vpn connections of virtual network gateway in the specified resource group. </summary>
+        /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public virtual VirtualNetworkGatewayDisconnectVirtualNetworkGatewayVpnConnectionsOperation StartDisconnectVirtualNetworkGatewayVpnConnections(P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGateway.StartDisconnectVirtualNetworkGatewayVpnConnections");
+            scope.Start();
+            try
+            {
+                var response = _restClient.DisconnectVirtualNetworkGatewayVpnConnections(Id.ResourceGroupName, Id.Name, request, cancellationToken);
+                return new VirtualNetworkGatewayDisconnectVirtualNetworkGatewayVpnConnectionsOperation(_clientDiagnostics, Pipeline, _restClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Id.ResourceGroupName, Id.Name, request).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of VirtualNetworkGatewayNatRules in the VirtualNetworkGateway. </summary>
+        /// <returns> An object representing collection of VirtualNetworkGatewayNatRules and their operations over a VirtualNetworkGateway. </returns>
+        public VirtualNetworkGatewayNatRuleContainer GetVirtualNetworkGatewayNatRules()
+        {
+            return new VirtualNetworkGatewayNatRuleContainer(this);
+        }
     }
 }
