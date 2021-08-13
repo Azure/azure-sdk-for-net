@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -23,6 +24,12 @@ namespace Azure.Test.Perf
 
         private long _completedOperations;
         public override long CompletedOperations => _completedOperations;
+
+        private List<TimeSpan> _latencies;
+        public override IList<TimeSpan> Latencies => _latencies;
+
+        private List<TimeSpan> _correctedLatencies;
+        public override IList<TimeSpan> CorrectedLatencies => _correctedLatencies;
 
         public PerfTest(TOptions options) : base(options)
         {
@@ -85,7 +92,8 @@ namespace Azure.Test.Perf
 
         public override async Task PostSetupAsync()
         {
-            if (_testProxyPolicy != null) {
+            if (_testProxyPolicy != null)
+            {
                 await StartRecording();
 
                 _testProxyPolicy.RecordingId = _recordingId;
@@ -110,31 +118,98 @@ namespace Azure.Test.Perf
             }
         }
 
-        public override void Reset()
-        {
-            Interlocked.Exchange(ref _completedOperations, 0);
-            LastCompletionTime = default;
-        }
-
         public override void RunAll(CancellationToken cancellationToken)
         {
+            _completedOperations = 0;
+            LastCompletionTime = default;
+
             var sw = Stopwatch.StartNew();
+            var latencySw = new Stopwatch();
+
+            (TimeSpan Start, Stopwatch Stopwatch) operation = (default, default);
+
+            if (Options.Latency)
+            {
+                _latencies = new List<TimeSpan>();
+
+                if (PendingOperations != null)
+                {
+                    _correctedLatencies = new List<TimeSpan>();
+                }
+            }
+
             while (!cancellationToken.IsCancellationRequested)
             {
+                if (PendingOperations != null)
+                {
+                    operation = PendingOperations.Reader.ReadAsync(cancellationToken).AsTask().Result;
+                }
+
+                if (Options.Latency)
+                {
+                    latencySw.Restart();
+                }
+
                 Run(cancellationToken);
-                Interlocked.Increment(ref _completedOperations);
+
+                if (Options.Latency)
+                {
+                    _latencies.Add(latencySw.Elapsed);
+                    if (PendingOperations != null)
+                    {
+                        _correctedLatencies.Add(operation.Stopwatch.Elapsed - operation.Start);
+                    }
+                }
+
+                _completedOperations++;
                 LastCompletionTime = sw.Elapsed;
             }
         }
 
         public override async Task RunAllAsync(CancellationToken cancellationToken)
         {
+            _completedOperations = 0;
+            LastCompletionTime = default;
+
             var sw = Stopwatch.StartNew();
+            var latencySw = new Stopwatch();
+
+            (TimeSpan Start, Stopwatch Stopwatch) operation = (default, default);
+
+            if (Options.Latency)
+            {
+                _latencies = new List<TimeSpan>();
+
+                if (PendingOperations != null)
+                {
+                    _correctedLatencies = new List<TimeSpan>();
+                }
+            }
 
             while (!cancellationToken.IsCancellationRequested)
             {
+                if (PendingOperations != null)
+                {
+                    operation = await PendingOperations.Reader.ReadAsync(cancellationToken);
+                }
+
+                if (Options.Latency)
+                {
+                    latencySw.Restart();
+                }
+
                 await RunAsync(cancellationToken);
-                Interlocked.Increment(ref _completedOperations);
+
+                if (Options.Latency)
+                {
+                    _latencies.Add(latencySw.Elapsed);
+                    if (PendingOperations != null)
+                    {
+                        _correctedLatencies.Add(operation.Stopwatch.Elapsed - operation.Start);
+                    }
+                }
+
+                _completedOperations++;
                 LastCompletionTime = sw.Elapsed;
             }
         }

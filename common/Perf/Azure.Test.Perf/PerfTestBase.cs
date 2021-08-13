@@ -2,17 +2,25 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace Azure.Test.Perf
 {
-    public abstract class PerfTestBase<TOptions> : IPerfTest where TOptions: PerfOptionsBase
+    public abstract class PerfTestBase<TOptions> : IPerfTest where TOptions : PerfOptionsBase
     {
         protected TOptions Options { get; private set; }
 
         public abstract long CompletedOperations { get; }
         public TimeSpan LastCompletionTime { get; set; }
+
+        public abstract IList<TimeSpan> Latencies { get; }
+
+        public abstract IList<TimeSpan> CorrectedLatencies { get; }
+        public Channel<(TimeSpan Start, Stopwatch Stopwatch)> PendingOperations { get; set; }
 
         public PerfTestBase(TOptions options)
         {
@@ -33,8 +41,6 @@ namespace Azure.Test.Perf
         {
             return Task.CompletedTask;
         }
-
-        public abstract void Reset();
 
         public abstract void RunAll(CancellationToken cancellationToken);
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Test.PerfStress;
+using BenchmarkDotNet.Running;
 using CommandLine;
 using System;
 using System.Collections.Generic;
@@ -13,18 +14,17 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using BenchmarkDotNet.Running;
 
 namespace Azure.Test.Perf
 {
     public static class PerfProgram
     {
         private static IPerfTest[] _perfTests;
-        private static IEnumerable<long> _completedOperations => _perfTests.Select(p => p.CompletedOperations);
-        private static IEnumerable<TimeSpan> _lastCompletionTimes => _perfTests.Select(p => p.LastCompletionTime);
-        private static List<TimeSpan>[] _latencies;
-        private static List<TimeSpan>[] _correctedLatencies;
-        private static Channel<(TimeSpan, Stopwatch)> _pendingOperations;
+        private static IList<long> _completedOperations => _perfTests.Select(p => p.CompletedOperations).ToList();
+        private static IList<TimeSpan> _lastCompletionTimes => _perfTests.Select(p => p.LastCompletionTime).ToList();
+        private static IList<IList<TimeSpan>> _latencies => _perfTests.Select(p => p.Latencies).ToList();
+        private static IList<IList<TimeSpan>> _correctedLatencies => _perfTests.Select(p => p.CorrectedLatencies).ToList();
+        private static Channel<(TimeSpan Start, Stopwatch Stopwatch)> _pendingOperations;
 
         private static long CompletedOperations => _completedOperations.Sum();
         private static double OperationsPerSecond => _completedOperations.Zip(_lastCompletionTimes,
@@ -299,29 +299,6 @@ namespace Azure.Test.Perf
             var jobStatistics = warmup ? false : options.JobStatistics;
             var latency = warmup ? false : options.Latency;
 
-            foreach (var test in tests)
-            {
-                test.Reset();
-            }
-
-            if (latency)
-            {
-                _latencies = new List<TimeSpan>[options.Parallel];
-                for (var i = 0; i < options.Parallel; i++)
-                {
-                    _latencies[i] = new List<TimeSpan>();
-                }
-
-                if (options.Rate.HasValue)
-                {
-                    _correctedLatencies = new List<TimeSpan>[options.Parallel];
-                    for (var i = 0; i < options.Parallel; i++)
-                    {
-                        _correctedLatencies[i] = new List<TimeSpan>();
-                    }
-                }
-            }
-
             var duration = TimeSpan.FromSeconds(durationSeconds);
             using var testCts = new CancellationTokenSource(duration);
             var cancellationToken = testCts.Token;
@@ -350,6 +327,12 @@ namespace Azure.Test.Perf
             if (options.Rate.HasValue)
             {
                 _pendingOperations = Channel.CreateUnbounded<ValueTuple<TimeSpan, Stopwatch>>();
+
+                foreach (var test in tests)
+                {
+                    test.PendingOperations = _pendingOperations;
+                }
+
                 pendingOperationsThread = WritePendingOperations(options.Rate.Value, cancellationToken);
             }
 
@@ -438,7 +421,7 @@ namespace Azure.Test.Perf
             {
                 PrintLatencies("Latency Distribution", _latencies);
 
-                if (_correctedLatencies != null)
+                if (_correctedLatencies.Any(list => list != null))
                 {
                     PrintLatencies("Corrected Latency Distribution", _correctedLatencies);
                 }
@@ -470,7 +453,7 @@ namespace Azure.Test.Perf
             }
         }
 
-        private static void PrintLatencies(string header, List<TimeSpan>[] latencies)
+        private static void PrintLatencies(string header, IList<IList<TimeSpan>> latencies)
         {
             Console.WriteLine($"=== {header} ===");
             var sortedLatencies = latencies.Aggregate<IEnumerable<TimeSpan>>((list1, list2) => list1.Concat(list2)).ToArray();
@@ -482,92 +465,6 @@ namespace Azure.Test.Perf
             }
             Console.WriteLine();
         }
-
-        //private static void RunLoop(IPerfTest test, int index, bool latency, CancellationToken cancellationToken)
-        //{
-        //    var sw = Stopwatch.StartNew();
-        //    var latencySw = new Stopwatch();
-        //    try
-        //    {
-        //        while (!cancellationToken.IsCancellationRequested)
-        //        {
-        //            if (latency)
-        //            {
-        //                latencySw.Restart();
-        //            }
-
-        //            test.Run(cancellationToken);
-
-        //            if (latency)
-        //            {
-        //                _latencies[index].Add(latencySw.Elapsed);
-        //            }
-
-        //            _completedOperations[index]++;
-        //            _lastCompletionTimes[index] = sw.Elapsed;
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
-        //        {
-        //            // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-        //}
-
-        //private static async Task RunLoopAsync(IPerfTest test, int index, bool latency, CancellationToken cancellationToken)
-        //{
-        //    var sw = Stopwatch.StartNew();
-        //    var latencySw = new Stopwatch();
-        //    (TimeSpan Start, Stopwatch Stopwatch) operation = (TimeSpan.Zero, null);
-
-        //    try
-        //    {
-        //        while (!cancellationToken.IsCancellationRequested)
-        //        {
-        //            if (_pendingOperations != null)
-        //            {
-        //                operation = await _pendingOperations.Reader.ReadAsync(cancellationToken);
-        //            }
-
-        //            if (latency)
-        //            {
-        //                latencySw.Restart();
-        //            }
-
-        //            await test.RunAsync(cancellationToken);
-
-        //            if (latency)
-        //            {
-        //                _latencies[index].Add(latencySw.Elapsed);
-
-        //                if (_pendingOperations != null)
-        //                {
-        //                    _correctedLatencies[index].Add(operation.Stopwatch.Elapsed - operation.Start);
-        //                }
-        //            }
-
-        //            _completedOperations[index]++;
-        //            _lastCompletionTimes[index] = sw.Elapsed;
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
-        //        {
-        //            // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-        //}
 
         private static Thread WritePendingOperations(int rate, CancellationToken token)
         {

@@ -3,6 +3,7 @@
 
 using Azure.Test.Perf;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -17,6 +18,9 @@ namespace Azure.Sample.Perf.Event
 
         private long[] _eventsProcessed;
         public override long CompletedOperations => _eventsProcessed.Sum();
+
+        public override IList<TimeSpan> Latencies => throw new NotImplementedException();
+        public override IList<TimeSpan> CorrectedLatencies => throw new NotImplementedException();
 
         public MockEventProcessorBaseTest(MockEventProcessorOptions options) : base(options)
         {
@@ -42,22 +46,25 @@ namespace Azure.Sample.Perf.Event
             await _eventProcessor.StartProcessingAsync();
         }
 
-        public override void Reset()
+        public override void RunAll(CancellationToken cancellationToken)
         {
             for (var i = 0; i < _eventsProcessed.Length; i++)
             {
                 Interlocked.Exchange(ref _eventsProcessed[i], 0);
             }
             LastCompletionTime = default;
-        }
 
-        public override void RunAll(CancellationToken cancellationToken)
-        {
             RunAllAsync(cancellationToken).Wait();
         }
 
         public override async Task RunAllAsync(CancellationToken cancellationToken)
         {
+            for (var i = 0; i < _eventsProcessed.Length; i++)
+            {
+                Interlocked.Exchange(ref _eventsProcessed[i], 0);
+            }
+            LastCompletionTime = default;
+
             _stopwatch.Restart();
 
             try
