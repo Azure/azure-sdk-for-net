@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -442,6 +444,302 @@ namespace Azure.Communication.CallingServer
                 return RestClient.ResumeRecording(
                     serverCallId: ServerCallId,
                     recordingId: recordingId,
+                    cancellationToken: cancellationToken
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Get participants of the call. </summary>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
+        public virtual async Task<Response<IEnumerable<CallParticipant>>> GetParticipantsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipantsAsync)}");
+            scope.Start();
+            try
+            {
+                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = await RestClient.GetParticipantsAsync(
+                                        serverCallId: ServerCallId,
+                                        cancellationToken: cancellationToken
+                                        ).ConfigureAwait(false);
+
+                return Response.FromValue(callParticipantsInternal.Value.Select(x => new CallParticipant(x)), callParticipantsInternal.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Get participants of the call. </summary>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
+        public virtual Response<IEnumerable<CallParticipant>> GetParticipants(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipants)}");
+            scope.Start();
+            try
+            {
+                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = RestClient.GetParticipants(
+                                        serverCallId: ServerCallId,
+                                        cancellationToken: cancellationToken);
+
+                return Response.FromValue(callParticipantsInternal.Value.Select(x => new CallParticipant(x)), callParticipantsInternal.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Get participant of the call using participant id. </summary>
+        /// <param name="participantId">The participant id. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
+        public virtual async Task<Response<CallParticipant>> GetParticipantAsync(string participantId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipantAsync)}");
+            scope.Start();
+            try
+            {
+                Response<CallParticipantInternal> callParticipantInternal = await RestClient.GetParticipantAsync(
+                                        participantId: participantId,
+                                        serverCallId: ServerCallId,
+                                        cancellationToken: cancellationToken
+                                        ).ConfigureAwait(false);
+
+                return Response.FromValue(new CallParticipant(callParticipantInternal.Value), callParticipantInternal.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Get participant of the call using participant id. </summary>
+        /// <param name="participantId">The participant id. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
+        public virtual Response<CallParticipant> GetParticipant(string participantId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipantAsync)}");
+            scope.Start();
+            try
+            {
+                Response<CallParticipantInternal> callParticipantInternal = RestClient.GetParticipant(
+                                        participantId: participantId,
+                                        serverCallId: ServerCallId,
+                                        cancellationToken: cancellationToken);
+
+                return Response.FromValue(new CallParticipant(callParticipantInternal.Value), callParticipantInternal.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a participant from the call using <see cref="CommunicationIdentifier"/>.</summary>
+        /// <param name="participant"> The identity of participant to be removed from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> RemoveParticipantByIdAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(RemoveParticipantByIdAsync)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.RemoveParticipantByIdAsync(
+                    serverCallId: ServerCallId,
+                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a participant from the call using <see cref="CommunicationIdentifier"/>.</summary>
+        /// <param name="participant"> The identity of participant to be removed from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response RemoveParticipantById(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(RemoveParticipantById)}");
+            scope.Start();
+            try
+            {
+                return RestClient.RemoveParticipantById(
+                    serverCallId: ServerCallId,
+                    identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                    cancellationToken: cancellationToken
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Hold the participant and play default music. </summary>
+        /// <param name="participantId">The participant id.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<StartHoldMusicResult>> StartHoldMusicAsync(string participantId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusicAsync)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.StartHoldMusicAsync(
+                    serverCallId: ServerCallId,
+                    participantId: participantId,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Hold the participant and play default music. </summary>
+        /// <param name="participantId">The participant id.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<StartHoldMusicResult> StartHoldMusic(string participantId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusic)}");
+            scope.Start();
+            try
+            {
+                return RestClient.StartHoldMusic(
+                    serverCallId: ServerCallId,
+                    participantId: participantId,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Hold the participant and play the custom audio. </summary>
+        /// <param name="participantId">The participant id.</param>
+        /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<StartHoldMusicResult>> StartHoldMusicAsync(string participantId, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusicAsync)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.StartHoldMusicAsync(
+                    serverCallId: ServerCallId,
+                    participantId: participantId,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    audioFileId: audioFileId,
+                    callbackUri: callbackUri.AbsoluteUri,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Hold the participant and play the custom audio. </summary>
+        /// <param name="participantId">The participant id.</param>
+        /// <param name="audioFileUri"> The uri of the audio file. </param>
+        /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri">The callback Uri to receive PlayAudio status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<StartHoldMusicResult> StartHoldMusic(string participantId, Uri audioFileUri, string audioFileId, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StartHoldMusic)}");
+            scope.Start();
+            try
+            {
+                return RestClient.StartHoldMusic(
+                    serverCallId: ServerCallId,
+                    participantId: participantId,
+                    audioFileUri: audioFileUri.AbsoluteUri,
+                    audioFileId: audioFileId,
+                    callbackUri: callbackUri.AbsoluteUri,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Remove participant from the hold and stop playing audio. </summary>
+        /// <param name="participantId"> The participant id. </param>
+        /// <param name="operationId">The id of the start hold music operation. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<StopHoldMusicResult>> StopHoldMusicAsync(string participantId, string operationId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StopHoldMusicAsync)}");
+            scope.Start();
+            try
+            {
+                return await RestClient.StopHoldMusicAsync(
+                    serverCallId: ServerCallId,
+                    participantId: participantId,
+                    startHoldMusicOperationId: operationId,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Remove participant from the hold and stop playing audio. </summary>
+        /// <param name="participantId"> The participant id. </param>
+        /// <param name="operationId">The id of the start hold music operation. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<StopHoldMusicResult> StopHoldMusic(string participantId, string operationId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(StopHoldMusic)}");
+            scope.Start();
+            try
+            {
+                return RestClient.StopHoldMusic(
+                    serverCallId: ServerCallId,
+                    participantId: participantId,
+                    startHoldMusicOperationId: operationId,
                     cancellationToken: cancellationToken
                     );
             }

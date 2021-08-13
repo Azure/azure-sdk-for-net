@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class PlayAudioRequest : IUtf8JsonSerializable
+    internal partial class StartHoldMusicRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,13 +19,6 @@ namespace Azure.Communication.CallingServer
             {
                 writer.WritePropertyName("audioFileUri");
                 writer.WriteStringValue(AudioFileUri);
-            }
-            writer.WritePropertyName("loop");
-            writer.WriteBooleanValue(Loop);
-            if (Optional.IsDefined(OperationContext))
-            {
-                writer.WritePropertyName("operationContext");
-                writer.WriteStringValue(OperationContext);
             }
             if (Optional.IsDefined(AudioFileId))
             {

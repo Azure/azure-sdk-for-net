@@ -11,8 +11,10 @@ namespace Azure.Communication.CallingServer
     internal partial class PlayAudioRequest
     {
         /// <summary> Initializes a new instance of PlayAudioRequest. </summary>
-        public PlayAudioRequest()
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
+        public PlayAudioRequest(bool loop)
         {
+            Loop = loop;
         }
 
         /// <summary>
@@ -26,7 +28,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         public string AudioFileUri { get; set; }
         /// <summary> The flag indicating whether audio file needs to be played in loop or not. </summary>
-        public bool? Loop { get; set; }
+        public bool Loop { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
         /// <summary> An id for the media in the AudioFileUri, using which we cache the media resource. </summary>

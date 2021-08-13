@@ -15,18 +15,13 @@ namespace Azure.Communication.CallingServer
     {
         internal static CallParticipantInternal DeserializeCallParticipantInternal(JsonElement element)
         {
-            Optional<CommunicationIdentifierModel> identifier = default;
+            CommunicationIdentifierModel identifier = default;
             Optional<string> participantId = default;
             bool isMuted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     identifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
@@ -41,7 +36,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallParticipantInternal(identifier.Value, participantId.Value, isMuted);
+            return new CallParticipantInternal(identifier, participantId.Value, isMuted);
         }
     }
 }

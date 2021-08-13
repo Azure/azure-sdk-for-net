@@ -5,11 +5,11 @@ using System;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> Options for playing audio. </summary>
-    public class PlayAudioOptions
+    /// <summary> Options for start hold music. </summary>
+    public class StartHoldMusicOptions
     {
         /// <summary>
-        /// The media resource uri of the play audio request.
+        /// The media resource uri of the request.
         /// Currently only Wave file (.wav) format audio prompts are supported.
         /// More specifically, the audio content in the wave file must be mono (single-channel),
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
@@ -25,7 +25,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> An id for the media in the AudioFileUri, using which we cache the media resource. </summary>
         public string AudioFileId { get; set; }
 
-        /// <summary> The callback Uri to receive PlayAudio status notifications. </summary>
+        /// <summary> The callback Uri to receive StartHoldMusic status notifications. </summary>
         public Uri CallbackUri { get; set; }
     }
 }

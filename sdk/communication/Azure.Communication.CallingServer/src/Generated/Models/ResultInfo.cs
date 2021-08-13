@@ -12,7 +12,11 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of ResultInfo. </summary>
         /// <param name="code"> The result code associated with the operation. </param>
-        /// <param name="subcode"> The subcode that further classifies the result. </param>
+        /// <param name="subcode">
+        /// The subcode that further classifies the result.
+        /// 
+        /// The subcode further classifies a failure. For example.
+        /// </param>
         internal ResultInfo(int code, int subcode)
         {
             Code = code;
@@ -21,7 +25,11 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of ResultInfo. </summary>
         /// <param name="code"> The result code associated with the operation. </param>
-        /// <param name="subcode"> The subcode that further classifies the result. </param>
+        /// <param name="subcode">
+        /// The subcode that further classifies the result.
+        /// 
+        /// The subcode further classifies a failure. For example.
+        /// </param>
         /// <param name="message"> The message is a detail explanation of subcode. </param>
         internal ResultInfo(int code, int subcode, string message)
         {
@@ -32,7 +40,11 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> The result code associated with the operation. </summary>
         public int Code { get; }
-        /// <summary> The subcode that further classifies the result. </summary>
+        /// <summary>
+        /// The subcode that further classifies the result.
+        /// 
+        /// The subcode further classifies a failure. For example.
+        /// </summary>
         public int Subcode { get; }
         /// <summary> The message is a detail explanation of subcode. </summary>
         public string Message { get; }

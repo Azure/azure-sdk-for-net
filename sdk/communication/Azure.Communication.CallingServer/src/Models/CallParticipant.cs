@@ -17,6 +17,15 @@ namespace Azure.Communication.CallingServer
             IsMuted = isMuted;
         }
 
+        /// <summary> Initializes a new instance of CallParticipant. </summary>
+        /// <param name="callParticipantInternal"> The internal call participant. </param>
+        internal CallParticipant(CallParticipantInternal callParticipantInternal)
+        {
+            Identifier = CommunicationIdentifierSerializer.Deserialize(callParticipantInternal.Identifier);
+            ParticipantId = callParticipantInternal.ParticipantId;
+            IsMuted = callParticipantInternal.IsMuted;
+        }
+
         /// <summary> The communication identifier. </summary>
         public CommunicationIdentifier Identifier { get; }
 

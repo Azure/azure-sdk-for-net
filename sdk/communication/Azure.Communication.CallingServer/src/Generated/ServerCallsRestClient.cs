@@ -30,7 +30,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ServerCallsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-06-15-preview")
+        public ServerCallsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-09-15-preview")
         {
             if (endpoint == null)
             {
@@ -45,6 +45,86 @@ namespace Azure.Communication.CallingServer
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+        }
+
+        internal HttpMessage CreateGetParticipantsRequest(string serverCallId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/serverCalls/", false);
+            uri.AppendPath(serverCallId, true);
+            uri.AppendPath("/participants", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get participants from a server call. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> is null. </exception>
+        public async Task<Response<IReadOnlyList<CallParticipantInternal>>> GetParticipantsAsync(string serverCallId, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+
+            using var message = CreateGetParticipantsRequest(serverCallId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IReadOnlyList<CallParticipantInternal> value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        List<CallParticipantInternal> array = new List<CallParticipantInternal>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(CallParticipantInternal.DeserializeCallParticipantInternal(item));
+                        }
+                        value = array;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get participants from a server call. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> is null. </exception>
+        public Response<IReadOnlyList<CallParticipantInternal>> GetParticipants(string serverCallId, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+
+            using var message = CreateGetParticipantsRequest(serverCallId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        IReadOnlyList<CallParticipantInternal> value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        List<CallParticipantInternal> array = new List<CallParticipantInternal>();
+                        foreach (var item in document.RootElement.EnumerateArray())
+                        {
+                            array.Add(CallParticipantInternal.DeserializeCallParticipantInternal(item));
+                        }
+                        value = array;
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateAddParticipantRequest(string serverCallId, PhoneNumberIdentifierModel alternateCallerId, CommunicationIdentifierModel participant, string operationContext, string callbackUri)
@@ -136,6 +216,162 @@ namespace Azure.Communication.CallingServer
             }
         }
 
+        internal HttpMessage CreateRemoveParticipantByIdRequest(string serverCallId, CommunicationIdentifierModel identifier)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/serverCalls/", false);
+            uri.AppendPath(serverCallId, true);
+            uri.AppendPath("/participants/:removeUser", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new RemoveParticipantByIdRequest(identifier);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Remove participant from the call using identifier. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="identifier"> The identifier of the participant to be added from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> or <paramref name="identifier"/> is null. </exception>
+        public async Task<Response> RemoveParticipantByIdAsync(string serverCallId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+            if (identifier == null)
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
+
+            using var message = CreateRemoveParticipantByIdRequest(serverCallId, identifier);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Remove participant from the call using identifier. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="identifier"> The identifier of the participant to be added from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> or <paramref name="identifier"/> is null. </exception>
+        public Response RemoveParticipantById(string serverCallId, CommunicationIdentifierModel identifier, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+            if (identifier == null)
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
+
+            using var message = CreateRemoveParticipantByIdRequest(serverCallId, identifier);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetParticipantRequest(string serverCallId, string participantId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/serverCalls/", false);
+            uri.AppendPath(serverCallId, true);
+            uri.AppendPath("/participants/", false);
+            uri.AppendPath(participantId, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get participant by participant id from a call. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="participantId"> The participant id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> or <paramref name="participantId"/> is null. </exception>
+        public async Task<Response<CallParticipantInternal>> GetParticipantAsync(string serverCallId, string participantId, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
+
+            using var message = CreateGetParticipantRequest(serverCallId, participantId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CallParticipantInternal value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CallParticipantInternal.DeserializeCallParticipantInternal(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get participant by participant id from a call. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="participantId"> The participant id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> or <paramref name="participantId"/> is null. </exception>
+        public Response<CallParticipantInternal> GetParticipant(string serverCallId, string participantId, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
+
+            using var message = CreateGetParticipantRequest(serverCallId, participantId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CallParticipantInternal value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CallParticipantInternal.DeserializeCallParticipantInternal(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateRemoveParticipantRequest(string serverCallId, string participantId)
         {
             var message = _pipeline.CreateMessage();
@@ -154,8 +390,8 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Remove participant from the call. </summary>
-        /// <param name="serverCallId"> Server call id. </param>
-        /// <param name="participantId"> Participant id. </param>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="participantId"> The participant id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> or <paramref name="participantId"/> is null. </exception>
         public async Task<Response> RemoveParticipantAsync(string serverCallId, string participantId, CancellationToken cancellationToken = default)
@@ -181,8 +417,8 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Remove participant from the call. </summary>
-        /// <param name="serverCallId"> Server call id. </param>
-        /// <param name="participantId"> Participant id. </param>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="participantId"> The participant id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> or <paramref name="participantId"/> is null. </exception>
         public Response RemoveParticipant(string serverCallId, string participantId, CancellationToken cancellationToken = default)
@@ -202,6 +438,217 @@ namespace Azure.Communication.CallingServer
             {
                 case 202:
                     return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStartHoldMusicRequest(string serverCallId, string participantId, string audioFileUri, string audioFileId, string callbackUri)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/serverCalls/", false);
+            uri.AppendPath(serverCallId, true);
+            uri.AppendPath("/participants/", false);
+            uri.AppendPath(participantId, true);
+            uri.AppendPath("/:startHoldMusic", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new StartHoldMusicRequest()
+            {
+                AudioFileUri = audioFileUri,
+                AudioFileId = audioFileId,
+                CallbackUri = callbackUri
+            };
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Play hold music to a participant. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="participantId"> The participant id. </param>
+        /// <param name="audioFileUri">
+        /// The media resource uri of the hold music request.
+        /// 
+        /// Currently only Wave file (.wav) format audio prompts are supported.
+        /// 
+        /// More specifically, the audio content in the wave file must be mono (single-channel),
+        /// 
+        /// 16-bit samples with a 16,000 (16KHz) sampling rate.
+        /// </param>
+        /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> or <paramref name="participantId"/> is null. </exception>
+        public async Task<Response<StartHoldMusicResult>> StartHoldMusicAsync(string serverCallId, string participantId, string audioFileUri = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
+
+            using var message = CreateStartHoldMusicRequest(serverCallId, participantId, audioFileUri, audioFileId, callbackUri);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        StartHoldMusicResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = StartHoldMusicResult.DeserializeStartHoldMusicResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Play hold music to a participant. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="participantId"> The participant id. </param>
+        /// <param name="audioFileUri">
+        /// The media resource uri of the hold music request.
+        /// 
+        /// Currently only Wave file (.wav) format audio prompts are supported.
+        /// 
+        /// More specifically, the audio content in the wave file must be mono (single-channel),
+        /// 
+        /// 16-bit samples with a 16,000 (16KHz) sampling rate.
+        /// </param>
+        /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> or <paramref name="participantId"/> is null. </exception>
+        public Response<StartHoldMusicResult> StartHoldMusic(string serverCallId, string participantId, string audioFileUri = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
+
+            using var message = CreateStartHoldMusicRequest(serverCallId, participantId, audioFileUri, audioFileId, callbackUri);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        StartHoldMusicResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = StartHoldMusicResult.DeserializeStartHoldMusicResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStopHoldMusicRequest(string serverCallId, string participantId, string startHoldMusicOperationId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/calling/serverCalls/", false);
+            uri.AppendPath(serverCallId, true);
+            uri.AppendPath("/participants/", false);
+            uri.AppendPath(participantId, true);
+            uri.AppendPath("/:stopHoldMusic", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new StopHoldMusicRequest(startHoldMusicOperationId);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Stop hold music to a participant. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="participantId"> The participant id. </param>
+        /// <param name="startHoldMusicOperationId"> The operationId of the StartHoldMusicOperation to stop. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/>, <paramref name="participantId"/>, or <paramref name="startHoldMusicOperationId"/> is null. </exception>
+        public async Task<Response<StopHoldMusicResult>> StopHoldMusicAsync(string serverCallId, string participantId, string startHoldMusicOperationId, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
+            if (startHoldMusicOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(startHoldMusicOperationId));
+            }
+
+            using var message = CreateStopHoldMusicRequest(serverCallId, participantId, startHoldMusicOperationId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        StopHoldMusicResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = StopHoldMusicResult.DeserializeStopHoldMusicResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Stop hold music to a participant. </summary>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="participantId"> The participant id. </param>
+        /// <param name="startHoldMusicOperationId"> The operationId of the StartHoldMusicOperation to stop. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/>, <paramref name="participantId"/>, or <paramref name="startHoldMusicOperationId"/> is null. </exception>
+        public Response<StopHoldMusicResult> StopHoldMusic(string serverCallId, string participantId, string startHoldMusicOperationId, CancellationToken cancellationToken = default)
+        {
+            if (serverCallId == null)
+            {
+                throw new ArgumentNullException(nameof(serverCallId));
+            }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
+            if (startHoldMusicOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(startHoldMusicOperationId));
+            }
+
+            using var message = CreateStopHoldMusicRequest(serverCallId, participantId, startHoldMusicOperationId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    {
+                        StopHoldMusicResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = StopHoldMusicResult.DeserializeStopHoldMusicResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -231,7 +678,7 @@ namespace Azure.Communication.CallingServer
             return message;
         }
 
-        /// <summary> Start recording of the call. </summary>
+        /// <summary> Start recording the call. </summary>
         /// <param name="serverCallId"> The server call id. </param>
         /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -259,7 +706,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Start recording of the call. </summary>
+        /// <summary> Start recording the call. </summary>
         /// <param name="serverCallId"> The server call id. </param>
         /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -702,7 +1149,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreatePlayAudioRequest(string serverCallId, string audioFileUri, bool? loop, string operationContext, string audioFileId, string callbackUri)
+        internal HttpMessage CreatePlayAudioRequest(string serverCallId, bool loop, string audioFileUri, string operationContext, string audioFileId, string callbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -716,10 +1163,9 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new PlayAudioRequest()
+            var model = new PlayAudioRequest(loop)
             {
                 AudioFileUri = audioFileUri,
-                Loop = loop,
                 OperationContext = operationContext,
                 AudioFileId = audioFileId,
                 CallbackUri = callbackUri
@@ -732,6 +1178,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Play audio in the call. </summary>
         /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request.
         /// 
@@ -741,20 +1188,19 @@ namespace Azure.Communication.CallingServer
         /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
-        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> is null. </exception>
-        public async Task<Response<PlayAudioResult>> PlayAudioAsync(string serverCallId, string audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PlayAudioResult>> PlayAudioAsync(string serverCallId, bool loop, string audioFileUri = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (serverCallId == null)
             {
                 throw new ArgumentNullException(nameof(serverCallId));
             }
 
-            using var message = CreatePlayAudioRequest(serverCallId, audioFileUri, loop, operationContext, audioFileId, callbackUri);
+            using var message = CreatePlayAudioRequest(serverCallId, loop, audioFileUri, operationContext, audioFileId, callbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -772,6 +1218,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Play audio in the call. </summary>
         /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="audioFileUri">
         /// The media resource uri of the play audio request.
         /// 
@@ -781,20 +1228,19 @@ namespace Azure.Communication.CallingServer
         /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
-        /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="audioFileId"> An id for the media in the AudioFileUri, using which we cache the media resource. </param>
         /// <param name="callbackUri"> The callback Uri to receive PlayAudio status notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverCallId"/> is null. </exception>
-        public Response<PlayAudioResult> PlayAudio(string serverCallId, string audioFileUri = null, bool? loop = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
+        public Response<PlayAudioResult> PlayAudio(string serverCallId, bool loop, string audioFileUri = null, string operationContext = null, string audioFileId = null, string callbackUri = null, CancellationToken cancellationToken = default)
         {
             if (serverCallId == null)
             {
                 throw new ArgumentNullException(nameof(serverCallId));
             }
 
-            using var message = CreatePlayAudioRequest(serverCallId, audioFileUri, loop, operationContext, audioFileId, callbackUri);
+            using var message = CreatePlayAudioRequest(serverCallId, loop, audioFileUri, operationContext, audioFileId, callbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -25,7 +25,11 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of ResultInfo. </summary>
         /// <param name="code"> The result code associated with the operation. </param>
-        /// <param name="subcode"> The subcode that further classifies the result. </param>
+        /// <param name="subcode">
+        /// The subcode that further classifies the result.
+        /// 
+        /// The subcode further classifies a failure. For example.
+        /// </param>
         /// <param name="message"> The message is a detail explanation of subcode. </param>
         /// <returns> A new <see cref="CallingServer.ResultInfo"/> instance for mocking. </returns>
         public static ResultInfo ResultInfo(int code = default, int subcode = default, string message = null)
@@ -52,6 +56,28 @@ namespace Azure.Communication.CallingServer
             return new AddParticipantResult(participantId);
         }
 
+        /// <summary> Initializes a new instance of StartHoldMusicResult. </summary>
+        /// <param name="operationId"> The operation id. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <param name="resultInfo"> The result info for the operation. </param>
+        /// <returns> A new <see cref="CallingServer.StartHoldMusicResult"/> instance for mocking. </returns>
+        public static StartHoldMusicResult StartHoldMusicResult(string operationId = null, OperationStatus status = default, string operationContext = null, ResultInfo resultInfo = null)
+        {
+            return new StartHoldMusicResult(operationId, status, operationContext, resultInfo);
+        }
+
+        /// <summary> Initializes a new instance of StopHoldMusicResult. </summary>
+        /// <param name="operationId"> The operation id. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <param name="resultInfo"> The result info for the operation. </param>
+        /// <returns> A new <see cref="CallingServer.StopHoldMusicResult"/> instance for mocking. </returns>
+        public static StopHoldMusicResult StopHoldMusicResult(string operationId = null, OperationStatus status = default, string operationContext = null, ResultInfo resultInfo = null)
+        {
+            return new StopHoldMusicResult(operationId, status, operationContext, resultInfo);
+        }
+
         /// <summary> Initializes a new instance of StartCallRecordingResult. </summary>
         /// <param name="recordingId"> The recording id of the started recording. </param>
         /// <returns> A new <see cref="CallingServer.StartCallRecordingResult"/> instance for mocking. </returns>
@@ -71,7 +97,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of CallConnectionStateChangedEvent. </summary>
         /// <param name="serverCallId"> The server call.id. </param>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="callConnectionState"> The call connection state. </param>
+        /// <param name="callConnectionState"> The state of the call connection. </param>
         /// <returns> A new <see cref="CallingServer.CallConnectionStateChangedEvent"/> instance for mocking. </returns>
         public static CallConnectionStateChangedEvent CallConnectionStateChangedEvent(string serverCallId = null, string callConnectionId = null, CallConnectionState callConnectionState = default)
         {
