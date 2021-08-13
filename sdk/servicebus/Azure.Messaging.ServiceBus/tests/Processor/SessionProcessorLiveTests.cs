@@ -1953,7 +1953,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         MaxConcurrentCallsPerSession = 10,
                         MaxConcurrentCallsAcrossAllSessions = 500
                     }),
-                    Throws.InstanceOf<InvalidOperationException>());
+                    Throws.InstanceOf<ArgumentOutOfRangeException>());
 
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
@@ -1994,7 +1994,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.LessOrEqual(processor.InnerProcessor._tasks.Count, 60);
                         Assert.That(
                             () => processor.UpdateConcurrency(10, 10, 200),
-                            Throws.InstanceOf<InvalidOperationException>());
+                            Throws.InstanceOf<ArgumentOutOfRangeException>());
                         processor.UpdateConcurrency(50, 10, 20);
                         Assert.AreEqual(50, processor.MaxConcurrentSessions);
                         Assert.AreEqual(10, processor.MaxConcurrentCallsPerSession);
