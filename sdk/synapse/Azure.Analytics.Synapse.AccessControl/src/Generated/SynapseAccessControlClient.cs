@@ -6,8 +6,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Analytics.Synapse.AccessControl.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -16,13 +19,9 @@ namespace Azure.Analytics.Synapse.AccessControl
     /// <summary> The SynapseAccessControl service client. </summary>
     public partial class SynapseAccessControlClient
     {
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-        private readonly string[] AuthorizationScopes = { "https://dev.azuresynapse.net/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private Uri endpoint;
-        private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
+        internal SynapseAccessControlRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of SynapseAccessControlClient for mocking. </summary>
         protected SynapseAccessControlClient()
@@ -46,289 +45,55 @@ namespace Azure.Analytics.Synapse.AccessControl
 
             options ??= new SynapseAdministrationClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
-            _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
+            string[] scopes = { "https://dev.azuresynapse.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new SynapseAccessControlRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of SynapseAccessControlClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        internal SynapseAccessControlClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2020-12-01")
+        {
+            RestClient = new SynapseAccessControlRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>subject</term>
-        ///     <term>SubjectInfo</term>
-        ///     <term>Yes</term>
-        ///     <term>Subject details</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>actions</term>
-        ///     <term>RequiredAction[]</term>
-        ///     <term>Yes</term>
-        ///     <term>List of actions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scope</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Scope at which the check access is done.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>SubjectInfo</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>principalId</term>
-        ///     <term>SubjectInfoPrincipalId</term>
-        ///     <term>Yes</term>
-        ///     <term>Principal Id</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>groupIds</term>
-        ///     <term>SubjectInfoGroupIdsItem[]</term>
-        ///     <term></term>
-        ///     <term>List of group Ids that the principalId is part of.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>RequiredAction</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Action Id.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isDataAction</term>
-        ///     <term>boolean</term>
-        ///     <term>Yes</term>
-        ///     <term>Is a data action or not.</term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> CheckPrincipalAccessAsync(RequestContent content, RequestOptions options = null)
-#pragma warning restore AZC0002
+        /// <param name="subject"> Subject details. </param>
+        /// <param name="actions"> List of actions. </param>
+        /// <param name="scope"> Scope at which the check access is done. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateCheckPrincipalAccessRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("SynapseAccessControlClient.CheckPrincipalAccess");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>subject</term>
-        ///     <term>SubjectInfo</term>
-        ///     <term>Yes</term>
-        ///     <term>Subject details</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>actions</term>
-        ///     <term>RequiredAction[]</term>
-        ///     <term>Yes</term>
-        ///     <term>List of actions.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scope</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Scope at which the check access is done.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>SubjectInfo</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>principalId</term>
-        ///     <term>SubjectInfoPrincipalId</term>
-        ///     <term>Yes</term>
-        ///     <term>Principal Id</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>groupIds</term>
-        ///     <term>SubjectInfoGroupIdsItem[]</term>
-        ///     <term></term>
-        ///     <term>List of group Ids that the principalId is part of.</term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>RequiredAction</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>id</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Action Id.</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>isDataAction</term>
-        ///     <term>boolean</term>
-        ///     <term>Yes</term>
-        ///     <term>Is a data action or not.</term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response CheckPrincipalAccess(RequestContent content, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateCheckPrincipalAccessRequest(content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("SynapseAccessControlClient.CheckPrincipalAccess");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="CheckPrincipalAccess"/> and <see cref="CheckPrincipalAccessAsync"/> operations. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCheckPrincipalAccessRequest(RequestContent content, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/checkAccessSynapseRbac", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> List role assignments. </summary>
-        /// <param name="roleId"> Synapse Built-In Role Id. </param>
-        /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
-        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListRoleAssignmentsAsync(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListRoleAssignmentsRequest(roleId, principalId, scope, continuationToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListRoleAssignments");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.CheckPrincipalAccess");
             scope0.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await RestClient.CheckPrincipalAccessAsync(subject, actions, scope, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
+        /// <param name="subject"> Subject details. </param>
+        /// <param name="actions"> List of actions. </param>
+        /// <param name="scope"> Scope at which the check access is done. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CheckPrincipalAccessResponse> CheckPrincipalAccess(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
+        {
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.CheckPrincipalAccess");
+            scope0.Start();
+            try
+            {
+                return RestClient.CheckPrincipalAccess(subject, actions, scope, cancellationToken);
             }
             catch (Exception e)
             {
@@ -342,36 +107,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response ListRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RoleAssignmentDetailsList>> ListRoleAssignmentsAsync(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListRoleAssignmentsRequest(roleId, principalId, scope, continuationToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListRoleAssignments");
             scope0.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await RestClient.ListRoleAssignmentsAsync(roleId, principalId, scope, continuationToken, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -380,110 +123,19 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary> Create Request for <see cref="ListRoleAssignments"/> and <see cref="ListRoleAssignmentsAsync"/> operations. </summary>
+        /// <summary> List role assignments. </summary>
         /// <param name="roleId"> Synapse Built-In Role Id. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListRoleAssignmentsRequest(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestOptions options = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RoleAssignmentDetailsList> ListRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/roleAssignments", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            if (roleId != null)
-            {
-                uri.AppendQuery("roleId", roleId, true);
-            }
-            if (principalId != null)
-            {
-                uri.AppendQuery("principalId", principalId, true);
-            }
-            if (scope != null)
-            {
-                uri.AppendQuery("scope", scope, true);
-            }
-            request.Uri = uri;
-            if (continuationToken != null)
-            {
-                request.Headers.Add("x-ms-continuation", continuationToken);
-            }
-            request.Headers.Add("Accept", "application/json, text/json");
-            return message;
-        }
-
-        /// <summary> Create role assignment. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>roleId</term>
-        ///     <term>RoleAssignmentRequestRoleId</term>
-        ///     <term>Yes</term>
-        ///     <term>Role ID of the Synapse Built-In Role</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>principalId</term>
-        ///     <term>RoleAssignmentRequestPrincipalId</term>
-        ///     <term>Yes</term>
-        ///     <term>Object ID of the AAD principal or security-group</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scope</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Scope at which the role assignment is created</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>principalType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Type of the principal Id: User, Group or ServicePrincipal</term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
-        /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> CreateRoleAssignmentAsync(string roleAssignmentId, RequestContent content, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.CreateRoleAssignment");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListRoleAssignments");
             scope0.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return RestClient.ListRoleAssignments(roleId, principalId, scope, continuationToken, cancellationToken);
             }
             catch (Exception e)
             {
@@ -493,73 +145,19 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> Create role assignment. </summary>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <list type="table">
-        ///   <listheader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listheader>
-        ///   <item>
-        ///     <term>roleId</term>
-        ///     <term>RoleAssignmentRequestRoleId</term>
-        ///     <term>Yes</term>
-        ///     <term>Role ID of the Synapse Built-In Role</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>principalId</term>
-        ///     <term>RoleAssignmentRequestPrincipalId</term>
-        ///     <term>Yes</term>
-        ///     <term>Object ID of the AAD principal or security-group</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>scope</term>
-        ///     <term>string</term>
-        ///     <term>Yes</term>
-        ///     <term>Scope at which the role assignment is created</term>
-        ///   </item>
-        ///   <item>
-        ///     <term>principalType</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term>Type of the principal Id: User, Group or ServicePrincipal</term>
-        ///   </item>
-        /// </list>
-        /// </remarks>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response CreateRoleAssignment(string roleAssignmentId, RequestContent content, RequestOptions options = null)
-#pragma warning restore AZC0002
+        /// <param name="roleId"> Role ID of the Synapse Built-In Role. </param>
+        /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
+        /// <param name="scope"> Scope at which the role assignment is created. </param>
+        /// <param name="principalType"> Type of the principal Id: User, Group or ServicePrincipal. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RoleAssignmentDetails>> CreateRoleAssignmentAsync(string roleAssignmentId, Guid roleId, Guid principalId, string scope, string principalType = null, CancellationToken cancellationToken = default)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.CreateRoleAssignment");
             scope0.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await RestClient.CreateRoleAssignmentAsync(roleAssignmentId, roleId, principalId, scope, principalType, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -568,59 +166,20 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateRoleAssignment(string, RequestContent, RequestOptions)"/> and <see cref="CreateRoleAssignmentAsync(string, RequestContent, RequestOptions)"/> operations. </summary>
+        /// <summary> Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateRoleAssignmentRequest(string roleAssignmentId, RequestContent content, RequestOptions options = null)
+        /// <param name="roleId"> Role ID of the Synapse Built-In Role. </param>
+        /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
+        /// <param name="scope"> Scope at which the role assignment is created. </param>
+        /// <param name="principalType"> Type of the principal Id: User, Group or ServicePrincipal. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RoleAssignmentDetails> CreateRoleAssignment(string roleAssignmentId, Guid roleId, Guid principalId, string scope, string principalType = null, CancellationToken cancellationToken = default)
         {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/roleAssignments/", false);
-            uri.AppendPath(roleAssignmentId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Get role assignment by role assignment Id. </summary>
-        /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.GetRoleAssignmentById");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.CreateRoleAssignment");
             scope0.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return RestClient.CreateRoleAssignment(roleAssignmentId, roleId, principalId, scope, principalType, cancellationToken);
             }
             catch (Exception e)
             {
@@ -631,36 +190,14 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestOptions options = null)
-#pragma warning restore AZC0002
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RoleAssignmentDetails>> GetRoleAssignmentByIdAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetRoleAssignmentByIdRequest(roleAssignmentId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.GetRoleAssignmentById");
             scope0.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await RestClient.GetRoleAssignmentByIdAsync(roleAssignmentId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -669,58 +206,16 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary> Create Request for <see cref="GetRoleAssignmentById"/> and <see cref="GetRoleAssignmentByIdAsync"/> operations. </summary>
+        /// <summary> Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRoleAssignmentByIdRequest(string roleAssignmentId, RequestOptions options = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RoleAssignmentDetails> GetRoleAssignmentById(string roleAssignmentId, CancellationToken cancellationToken = default)
         {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/roleAssignments/", false);
-            uri.AppendPath(roleAssignmentId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            return message;
-        }
-
-        /// <summary> Delete role assignment by role assignment Id. </summary>
-        /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, string scope = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRoleAssignmentByIdRequest(roleAssignmentId, scope, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.DeleteRoleAssignmentById");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.GetRoleAssignmentById");
             scope0.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return RestClient.GetRoleAssignmentById(roleAssignmentId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -732,37 +227,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response DeleteRoleAssignmentById(string roleAssignmentId, string scope = null, RequestOptions options = null)
-#pragma warning restore AZC0002
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, string scope = null, CancellationToken cancellationToken = default)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRoleAssignmentByIdRequest(roleAssignmentId, scope, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.DeleteRoleAssignmentById");
             scope0.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                        case 204:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await RestClient.DeleteRoleAssignmentByIdAsync(roleAssignmentId, scope, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -771,62 +243,17 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteRoleAssignmentById"/> and <see cref="DeleteRoleAssignmentByIdAsync"/> operations. </summary>
+        /// <summary> Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteRoleAssignmentByIdRequest(string roleAssignmentId, string scope = null, RequestOptions options = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteRoleAssignmentById(string roleAssignmentId, string scope = null, CancellationToken cancellationToken = default)
         {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/roleAssignments/", false);
-            uri.AppendPath(roleAssignmentId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            if (scope != null)
-            {
-                uri.AppendQuery("scope", scope, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            return message;
-        }
-
-        /// <summary> List role definitions. </summary>
-        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
-        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListRoleDefinitionsAsync(bool? isBuiltIn = null, string scope = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListRoleDefinitionsRequest(isBuiltIn, scope, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListRoleDefinitions");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.DeleteRoleAssignmentById");
             scope0.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return RestClient.DeleteRoleAssignmentById(roleAssignmentId, scope, cancellationToken);
             }
             catch (Exception e)
             {
@@ -838,36 +265,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> List role definitions. </summary>
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response ListRoleDefinitions(bool? isBuiltIn = null, string scope = null, RequestOptions options = null)
-#pragma warning restore AZC0002
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<IReadOnlyList<Models.SynapseRoleDefinition>>> ListRoleDefinitionsAsync(bool? isBuiltIn = null, string scope = null, CancellationToken cancellationToken = default)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListRoleDefinitionsRequest(isBuiltIn, scope, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListRoleDefinitions");
             scope0.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await RestClient.ListRoleDefinitionsAsync(isBuiltIn, scope, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -876,64 +281,17 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary> Create Request for <see cref="ListRoleDefinitions"/> and <see cref="ListRoleDefinitionsAsync"/> operations. </summary>
+        /// <summary> List role definitions. </summary>
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListRoleDefinitionsRequest(bool? isBuiltIn = null, string scope = null, RequestOptions options = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<IReadOnlyList<Models.SynapseRoleDefinition>> ListRoleDefinitions(bool? isBuiltIn = null, string scope = null, CancellationToken cancellationToken = default)
         {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/roleDefinitions", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            if (isBuiltIn != null)
-            {
-                uri.AppendQuery("isBuiltIn", isBuiltIn.Value, true);
-            }
-            if (scope != null)
-            {
-                uri.AppendQuery("scope", scope, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            return message;
-        }
-
-        /// <summary> Get role definition by role definition Id. </summary>
-        /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.GetRoleDefinitionById");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListRoleDefinitions");
             scope0.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return RestClient.ListRoleDefinitions(isBuiltIn, scope, cancellationToken);
             }
             catch (Exception e)
             {
@@ -944,36 +302,14 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Get role definition by role definition Id. </summary>
         /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestOptions options = null)
-#pragma warning restore AZC0002
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<Models.SynapseRoleDefinition>> GetRoleDefinitionByIdAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.GetRoleDefinitionById");
             scope0.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await RestClient.GetRoleDefinitionByIdAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -982,55 +318,16 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary> Create Request for <see cref="GetRoleDefinitionById"/> and <see cref="GetRoleDefinitionByIdAsync"/> operations. </summary>
+        /// <summary> Get role definition by role definition Id. </summary>
         /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRoleDefinitionByIdRequest(string roleDefinitionId, RequestOptions options = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Models.SynapseRoleDefinition> GetRoleDefinitionById(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/roleDefinitions/", false);
-            uri.AppendPath(roleDefinitionId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            return message;
-        }
-
-        /// <summary> List rbac scopes. </summary>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListScopesAsync(RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListScopesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListScopes");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.GetRoleDefinitionById");
             scope0.Start();
             try
             {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return RestClient.GetRoleDefinitionById(roleDefinitionId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1040,36 +337,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> List rbac scopes. </summary>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response ListScopes(RequestOptions options = null)
-#pragma warning restore AZC0002
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<IReadOnlyList<string>>> ListScopesAsync(CancellationToken cancellationToken = default)
         {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListScopesRequest(options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
             using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListScopes");
             scope0.Start();
             try
             {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
+                return await RestClient.ListScopesAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1078,20 +353,21 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary> Create Request for <see cref="ListScopes"/> and <see cref="ListScopesAsync"/> operations. </summary>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListScopesRequest(RequestOptions options = null)
+        /// <summary> List rbac scopes. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<IReadOnlyList<string>> ListScopes(CancellationToken cancellationToken = default)
         {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/rbacScopes", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            return message;
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListScopes");
+            scope0.Start();
+            try
+            {
+                return RestClient.ListScopes(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
     }
 }

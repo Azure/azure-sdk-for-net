@@ -14,7 +14,7 @@ input-file:
   - $(this-folder)/swagger/roleDefinitions.json
 namespace: Azure.Analytics.Synapse.Administration
 public-clients: true
-low-level-client: true
+#low-level-client: true
 security: AADToken
 security-scopes: https://dev.azuresynapse.net/.default
 ```
