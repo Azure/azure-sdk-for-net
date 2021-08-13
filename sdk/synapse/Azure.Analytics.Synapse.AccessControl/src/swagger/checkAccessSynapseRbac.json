@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "version": "2020-08-01-preview",
+        "version": "2020-12-01",
         "title": "SynapseAdministrationClient"
     },
     "x-ms-parameterized-host": {
@@ -62,7 +62,7 @@
                     "default": {
                         "description": "Error response describing why the operation failed.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorContract"
+                            "$ref": "common/v1/types.json#/definitions/ErrorContract"
                         }
                     }
                 }
@@ -70,59 +70,6 @@
         }
     },
     "definitions": {
-        "ErrorContract": {
-            "title": "Error details.",
-            "description": "Contains details when the response code indicates an error.",
-            "type": "object",
-            "properties": {
-                "error": {
-                    "description": "The error details.",
-                    "$ref": "#/definitions/ErrorResponse"
-                }
-            }
-        },
-        "ErrorResponse": {
-            "required": [
-                "code",
-                "message"
-            ],
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "target": {
-                    "type": "string"
-                },
-                "details": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ErrorDetail"
-                    }
-                }
-            }
-        },
-        "ErrorDetail": {
-            "required": [
-                "code",
-                "message"
-            ],
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "target": {
-                    "type": "string"
-                }
-            }
-        },
         "CheckPrincipalAccessRequest": {
             "description": "Check access request details",
             "type": "object",
@@ -172,7 +119,7 @@
             "description": "Check access response details",
             "type": "object",
             "properties": {
-                "AccessDecisions": {
+                "accessDecisions": {
                     "description": "To check if the current user, group, or service principal has permission to read artifacts in the specified workspace.",
                     "type": "array",
                     "items": {

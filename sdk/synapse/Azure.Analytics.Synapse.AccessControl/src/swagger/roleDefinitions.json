@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "version": "2020-08-01-preview",
+        "version": "2020-12-01",
         "title": "SynapseAdministrationClient"
     },
     "x-ms-parameterized-host": {
@@ -55,7 +55,7 @@
                     "default": {
                         "description": "Error response describing why the operation failed.",
                         "schema": {
-                            "$ref": "./roleAssignments.json#/definitions/ErrorContract"
+                            "$ref": "common/v1/types.json#/definitions/ErrorContract"
                         }
                     }
                 }
@@ -96,7 +96,7 @@
                     "default": {
                         "description": "Error response describing why the operation failed.",
                         "schema": {
-                            "$ref": "./roleAssignments.json#/definitions/ErrorContract"
+                            "$ref": "common/v1/types.json#/definitions/ErrorContract"
                         }
                     }
                 }
@@ -139,7 +139,7 @@
                     "default": {
                         "description": "Error response describing why the operation failed.",
                         "schema": {
-                            "$ref": "./roleAssignments.json#/definitions/ErrorContract"
+                            "$ref": "common/v1/types.json#/definitions/ErrorContract"
                         }
                     }
                 }

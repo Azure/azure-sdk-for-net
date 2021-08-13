@@ -1,0 +1,184 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "v1",
+        "title": "Common types"
+    },
+    "paths": {},
+    "definitions": {
+        "ErrorContract": {
+            "title": "Error details.",
+            "description": "Contains details when the response code indicates an error.",
+            "type": "object",
+            "properties": {
+                "error": {
+                    "description": "The error details.",
+                    "$ref": "arm-common-types.json#/definitions/ErrorResponse"
+                }
+            }
+        },
+        "ErrorDetail": {
+            "description": "Error details",
+            "type": "object",
+            "properties": {
+                "message": {
+                    "description": "Error message",
+                    "type": "string"
+                },
+                "code": {
+                    "description": "Error code",
+                    "type": "string"
+                },
+                "target": {
+                    "description": "Error target",
+                    "type": "string"
+                }
+            }
+        },
+        "WorkspaceSubResource": {
+            "allOf": [
+                {
+                    "$ref": "arm-common-types.json#/definitions/Resource"
+                },
+                {
+                    "properties": {
+                        "location": {
+                            "description": "Location (region) of workspace",
+                            "type": "string"
+                        },
+                        "tags": {
+                            "type": "object",
+                            "description": "Resource tags",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "SystemData": {
+            "description": "ARM System Data.",
+            "type": "object",
+            "properties": {
+                "createdBy": {
+                    "description": "A string identifier for the identity that created the resource.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "createdByType": {
+                    "description": "The type of identity that created the resource: <User|Application|ManagedIdentity|Key>",
+                    "enum": [
+                        "User",
+                        "Application",
+                        "ManagedIdentity",
+                        "Key"
+                    ],
+                    "type": "string",
+                    "readOnly": true
+                },
+                "createdAt": {
+                    "format": "date-time",
+                    "description": "The timestamp of resource creation (UTC).",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "lastModifiedBy": {
+                    "description": "A string identifier for the identity that last modified the resource.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "lastModifiedByType": {
+                    "description": "The type of identity that last modified the resource: <User|Application|ManagedIdentity|Key>",
+                    "enum": [
+                        "User",
+                        "Application",
+                        "ManagedIdentity",
+                        "Key"
+                    ],
+                    "type": "string",
+                    "readOnly": true
+                },
+                "lastModifiedAt": {
+                    "format": "date-time",
+                    "description": "The timestamp of last modification (UTC).",
+                    "type": "string",
+                    "readOnly": true
+                }
+            },
+            "x-ms-azure-resource": true
+        },
+        "ResourcePropertiesBase": {
+            "properties": {
+                "provisioningState": {
+                    "description": "Provisioning state of the resource",
+                    "type": "string"
+                }
+            }
+        },
+        "AsyncOperationState": {
+            "type": "string",
+            "enum": [
+                "None",
+                "InProgress",
+                "Succeeded",
+                "Failed",
+                "Canceled"
+            ]
+        },
+        "OperationResource_Common": {
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "$ref": "#/definitions/AsyncOperationState"
+                },
+                "error": {
+                    "type": "object",
+                    "$ref": "#/definitions/ErrorDetail"
+                }
+            }
+        }
+    },
+    "parameters": {
+        "WorkspaceNameParameter": {
+            "name": "workspaceName",
+            "in": "path",
+            "description": "The name of the workspace.",
+            "required": true,
+            "type": "string",
+            "x-ms-parameter-location": "method"
+        },
+        "PrivateLinkHubNameParameter": {
+            "name": "privateLinkHubName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Name of the privateLinkHub",
+            "x-ms-parameter-location": "method"
+        },
+        "SqlPoolNameParameter": {
+            "name": "sqlPoolName",
+            "in": "path",
+            "description": "The name of the sql pool.",
+            "required": true,
+            "type": "string",
+            "x-ms-parameter-location": "method"
+        },
+        "SqlDatabaseNameParameter": {
+            "name": "sqlDatabaseName",
+            "in": "path",
+            "description": "The name of the sql database.",
+            "required": true,
+            "type": "string",
+            "x-ms-parameter-location": "method"
+        },
+        "KeyNameParameter": {
+            "name": "keyName",
+            "in": "path",
+            "description": "The name of a workspace key.",
+            "required": true,
+            "type": "string",
+            "x-ms-parameter-location": "method"
+        }
+    }
+}
