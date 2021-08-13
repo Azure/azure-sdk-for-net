@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal VpnServerConfigurationUpdateTagsOperation(ResourceOperations operationsBase, Response<VpnServerConfigurationData> response)
+        internal VpnServerConfigurationUpdateTagsOperation(ArmResource operationsBase, Response<VpnServerConfigurationData> response)
         {
             _operation = new OperationOrResponseInternals<VpnServerConfiguration>(Response.FromValue(new VpnServerConfiguration(operationsBase, response.Value), response.GetRawResponse()));
         }

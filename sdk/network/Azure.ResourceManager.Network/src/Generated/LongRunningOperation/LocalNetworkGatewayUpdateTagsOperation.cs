@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal LocalNetworkGatewayUpdateTagsOperation(ResourceOperations operationsBase, Response<LocalNetworkGatewayData> response)
+        internal LocalNetworkGatewayUpdateTagsOperation(ArmResource operationsBase, Response<LocalNetworkGatewayData> response)
         {
             _operation = new OperationOrResponseInternals<LocalNetworkGateway>(Response.FromValue(new LocalNetworkGateway(operationsBase, response.Value), response.GetRawResponse()));
         }

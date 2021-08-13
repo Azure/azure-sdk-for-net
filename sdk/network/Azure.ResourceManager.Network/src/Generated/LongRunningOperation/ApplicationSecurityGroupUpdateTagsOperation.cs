@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal ApplicationSecurityGroupUpdateTagsOperation(ResourceOperations operationsBase, Response<ApplicationSecurityGroupData> response)
+        internal ApplicationSecurityGroupUpdateTagsOperation(ArmResource operationsBase, Response<ApplicationSecurityGroupData> response)
         {
             _operation = new OperationOrResponseInternals<ApplicationSecurityGroup>(Response.FromValue(new ApplicationSecurityGroup(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal NetworkProfileUpdateTagsOperation(ResourceOperations operationsBase, Response<NetworkProfileData> response)
+        internal NetworkProfileUpdateTagsOperation(ArmResource operationsBase, Response<NetworkProfileData> response)
         {
             _operation = new OperationOrResponseInternals<NetworkProfile>(Response.FromValue(new NetworkProfile(operationsBase, response.Value), response.GetRawResponse()));
         }

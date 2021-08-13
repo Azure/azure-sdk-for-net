@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal NetworkVirtualApplianceUpdateTagsOperation(ResourceOperations operationsBase, Response<NetworkVirtualApplianceData> response)
+        internal NetworkVirtualApplianceUpdateTagsOperation(ArmResource operationsBase, Response<NetworkVirtualApplianceData> response)
         {
             _operation = new OperationOrResponseInternals<NetworkVirtualAppliance>(Response.FromValue(new NetworkVirtualAppliance(operationsBase, response.Value), response.GetRawResponse()));
         }

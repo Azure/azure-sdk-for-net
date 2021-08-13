@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualnetworkgateways");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualnetworkgateways");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // 1. CreateVirtualNetworkGateway API
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/localNetworkGateways");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/localNetworkGateways");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // 1. CreateLocalNetworkGateway API
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/connections");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/connections");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create a local network gateway with BGP
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/connections");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/connections");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // 1. CreateVirtualNetworkGatewayConnection API
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/connections");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/connections");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // 1. CreateVirtualNetworkGatewayConnection API
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/connections");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/connections");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // 1. SetVirtualNetworkGatewayConnectionSharedKey API
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualnetworkgateways");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualnetworkgateways");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create LocalNetworkGateway to set as default site
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualnetworkgateways");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualnetworkgateways");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // 1. Create Active-Active VirtualNetworkGateway
@@ -1201,7 +1201,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualnetworkgateways");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualnetworkgateways");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             string gatewaySubnetName = "GatewaySubnet";
@@ -1353,7 +1353,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualnetworkgateways");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/virtualnetworkgateways");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // 1.CreateVirtualNetworkGateway
@@ -1482,7 +1482,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = await NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/connections");
+            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/connections");
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // CreateVirtualNetworkGatewayConnection API

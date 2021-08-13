@@ -331,13 +331,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var connectionMonitor1Operation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName1, cm);
             await connectionMonitor1Operation.WaitForCompletionAsync();;
             var connectionMonitor2Operation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName2, cm);
-            await connectionMonitor2Operation.WaitForCompletionAsync();;
+            var connectionMonitor2 = (await connectionMonitor2Operation.WaitForCompletionAsync()).Value;
 
             AsyncPageable<ConnectionMonitor> getConnectionMonitors1AP = ConnectionMonitors.GetAllAsync();
             Task<List<ConnectionMonitor>> getConnectionMonitors1 = getConnectionMonitors1AP.ToEnumerableAsync();
             Assert.AreEqual(2, getConnectionMonitors1.Result.Count);
 
-            var operation = await ArmClient.GetGenericResourceOperations(ConnectionMonitors.Get(connectionMonitorName2).Value.Data.Id).StartDeleteAsync();
+            var operation = await connectionMonitor2.StartDeleteAsync();
             await operation.WaitForCompletionResponseAsync();
             // TODO: restore to use Delete of the specific resource container: ADO 5998
             //Operation connectionMonitorsDeleteOperation = await ConnectionMonitors.Get(connectionMonitorName2).Value.StartDeleteAsync();

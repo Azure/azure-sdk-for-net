@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<HubVirtualNetworkConnection> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of HubVirtualNetworkConnectionCreateOrUpdateOperation for mocking. </summary>
         protected HubVirtualNetworkConnectionCreateOrUpdateOperation()
         {
         }
 
-        internal HubVirtualNetworkConnectionCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal HubVirtualNetworkConnectionCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<HubVirtualNetworkConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "HubVirtualNetworkConnectionCreateOrUpdateOperation");
             _operationBase = operationsBase;

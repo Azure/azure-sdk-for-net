@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal DdosProtectionPlanUpdateTagsOperation(ResourceOperations operationsBase, Response<DdosProtectionPlanData> response)
+        internal DdosProtectionPlanUpdateTagsOperation(ArmResource operationsBase, Response<DdosProtectionPlanData> response)
         {
             _operation = new OperationOrResponseInternals<DdosProtectionPlan>(Response.FromValue(new DdosProtectionPlan(operationsBase, response.Value), response.GetRawResponse()));
         }
