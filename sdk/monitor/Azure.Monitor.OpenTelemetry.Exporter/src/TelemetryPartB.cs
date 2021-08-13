@@ -72,7 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 case PartBType.Http:
                     monitorTags.PartBTags.GenerateUrlAndAuthority(out var url, out var urlAuthority);
-                    dependency.Data = url;
+                    dependency.Data = monitorTags.PartBTags.GetDependencyUrl();
                     dependency.Target = urlAuthority;
                     dependency.Type = "Http";
                     dependency.ResultCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
