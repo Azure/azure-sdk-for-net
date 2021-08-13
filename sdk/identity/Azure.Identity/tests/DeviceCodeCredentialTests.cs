@@ -122,6 +122,15 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
+        {
+            var credential = new DeviceCodeCredential(new DeviceCodeCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled});
+
+            Assert.NotNull(credential.Client);
+            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.LogPII);
+        }
+
+        [Test]
         [NonParallelizable]
         public async Task AuthenticateWithDeviceCodeNoCallback()
         {
