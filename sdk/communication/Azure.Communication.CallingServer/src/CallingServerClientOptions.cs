@@ -21,28 +21,15 @@ namespace Azure.Communication.CallingServer
         internal string ApiVersion { get; }
 
         /// <summary>
-        /// Enable auto redirect
-        /// </summary>
-        internal bool AllowAutoRedirect { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CallingServerClientOptions"/>.
         /// </summary>
-        public CallingServerClientOptions(ServiceVersion version = LatestVersion, bool allowAutoRedirect = false)
+        public CallingServerClientOptions(ServiceVersion version = LatestVersion)
         {
-            AllowAutoRedirect = allowAutoRedirect;
             ApiVersion = version switch
             {
                 ServiceVersion.V2021_06_15_Preview => "2021-06-15-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
-
-            var clientHandler = new HttpClientHandler()
-            {
-                AllowAutoRedirect = allowAutoRedirect
-            };
-
-            Transport = new HttpClientTransport(clientHandler);
         }
 
         /// <summary>

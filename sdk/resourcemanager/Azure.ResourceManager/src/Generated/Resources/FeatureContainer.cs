@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of FeatureContainer and their operations over a Feature.
     /// </summary>
-    public class FeatureContainer : ResourceContainer
+    public class FeatureContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private FeaturesRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         /// Initializes a new instance of the <see cref="FeatureContainer"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-       internal FeatureContainer(ProviderOperations parent)
+       internal FeatureContainer(Provider parent)
             : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Gets the parent resource of this resource.
         /// </summary>
-        protected new ProviderOperations Parent { get {return base.Parent as ProviderOperations;} }
+        protected new Provider Parent { get {return base.Parent as Provider;} }
 
         /// <inheritdoc />
-        protected override ResourceType ValidResourceType => ProviderOperations.ResourceType;
+        protected override ResourceType ValidResourceType => Provider.ResourceType;
 
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _restClient.Get(Id.Provider, featureName, cancellationToken);
                 if (response.Value == null)
-                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
 
                 return Response.FromValue(new Feature(Parent, response.Value), response.GetRawResponse());
             }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _restClient.GetAsync(Id.Provider, featureName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
                 return Response.FromValue(new Feature(Parent, response.Value), response.GetRawResponse());
             }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<Feature> GetIfExists(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("FeatureContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FeatureContainer.GetIfExists");
             scope.Start();
 
             try
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<Feature>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("FeatureContainer.GetIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FeatureContainer.GetIfExists");
             scope.Start();
 
             try
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual Response<bool> CheckIfExists(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("FeatureContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FeatureContainer.CheckIfExists");
             scope.Start();
 
             try
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Whether or not the resource existed. </returns>
         public virtual async Task<Response<bool>> CheckIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("FeatureContainer.CheckIfExists");
+            using var scope = _clientDiagnostics.CreateScope("FeatureContainer.CheckIfExists");
             scope.Start();
 
             try
