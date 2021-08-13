@@ -5,15 +5,12 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Tests.Helpers;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
     public class DedicatedHostContainerTests : ComputeTestBase
     {
-        private ResourceGroup _resourceGroup;
-
         public DedicatedHostContainerTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -21,8 +18,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         private async Task<DedicatedHostGroup> CreateDedicatedHostGroupAsync(string groupName)
         {
-            _resourceGroup = await CreateResourceGroupAsync();
-            var container = _resourceGroup.GetDedicatedHostGroups();
+            var container = (await CreateResourceGroupAsync()).GetDedicatedHostGroups();
             var input = DedicatedHostGroupHelper.GetBasicDedicatedHostGroup(DefaultLocation);
             return await container.CreateOrUpdateAsync(groupName, input);
         }

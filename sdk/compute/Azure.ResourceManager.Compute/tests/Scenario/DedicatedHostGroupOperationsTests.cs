@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task Delete()
         {
             var groupName = Recording.GenerateAssetName("testDHG-");
-            var DedicatedHostGroup = await CreateDedicatedHostGroupAsync(groupName);
-            await DedicatedHostGroup.DeleteAsync();
+            var dedicatedHostGroup = await CreateDedicatedHostGroupAsync(groupName);
+            await dedicatedHostGroup.DeleteAsync();
         }
 
         [TestCase]
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task StartDelete()
         {
             var groupName = Recording.GenerateAssetName("testDHG-");
-            var DedicatedHostGroup = await CreateDedicatedHostGroupAsync(groupName);
-            var deleteOp = await DedicatedHostGroup.StartDeleteAsync();
+            var dedicatedHostGroup = await CreateDedicatedHostGroupAsync(groupName);
+            var deleteOp = await dedicatedHostGroup.StartDeleteAsync();
             await deleteOp.WaitForCompletionResponseAsync();
         }
 
