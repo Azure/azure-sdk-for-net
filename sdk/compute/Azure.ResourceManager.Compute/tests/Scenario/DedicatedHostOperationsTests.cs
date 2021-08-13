@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Tests
         private async Task<DedicatedHostGroup> CreateDedicatedHostGroupAsync(string groupName)
         {
             var container = (await CreateResourceGroupAsync()).GetDedicatedHostGroups();
-            var input = DedicatedHostGroupHelper.GetBasicDedicatedHostGroup(DefaultLocation);
+            var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
             return await container.CreateOrUpdateAsync(groupName, input);
         }
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var hostGroupName = Recording.GenerateAssetName("testDHG-");
             var container = (await CreateDedicatedHostGroupAsync(hostGroupName)).GetDedicatedHosts();
-            var input = DedicatedHostGroupHelper.GetBasicDedicatedHost(DefaultLocation, "DSv3-Type1", 0);
+            var input = ResourceDataHelper.GetBasicDedicatedHost(DefaultLocation, "DSv3-Type1", 0);
             return await container.CreateOrUpdateAsync(hostName, input);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var host1 = await CreateDedicatedHostAsync(hostName);
             DedicatedHost host2 = await host1.GetAsync();
 
-            DedicatedHostGroupHelper.AssertHost(host1.Data, host2.Data);
+            ResourceDataHelper.AssertHost(host1.Data, host2.Data);
         }
 
         [TestCase]

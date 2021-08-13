@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetDedicatedHostGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testDHG-");
-            DedicatedHostGroup group = await container.CreateOrUpdateAsync(groupName, DedicatedHostGroupHelper.GetBasicDedicatedHostGroup(DefaultLocation));
+            var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
+            DedicatedHostGroup group = await container.CreateOrUpdateAsync(groupName, input);
             Assert.AreEqual(groupName, group.Data.Name);
         }
 
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetDedicatedHostGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testDHG-");
-            var input = DedicatedHostGroupHelper.GetBasicDedicatedHostGroup(DefaultLocation);
+            var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
             var groupOp = await container.StartCreateOrUpdateAsync(groupName, input);
             DedicatedHostGroup group = await groupOp.WaitForCompletionAsync();
             Assert.AreEqual(groupName, group.Data.Name);
@@ -50,10 +51,10 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetDedicatedHostGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testDHG-");
-            var input = DedicatedHostGroupHelper.GetBasicDedicatedHostGroup(DefaultLocation);
+            var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
             DedicatedHostGroup group1 = await container.CreateOrUpdateAsync(groupName, input);
             DedicatedHostGroup group2 = await container.GetAsync(groupName);
-            DedicatedHostGroupHelper.AssertGroup(group1.Data, group2.Data);
+            ResourceDataHelper.AssertGroup(group1.Data, group2.Data);
         }
 
         [TestCase]
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetDedicatedHostGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testDHG-");
-            var input = DedicatedHostGroupHelper.GetBasicDedicatedHostGroup(DefaultLocation);
+            var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
             DedicatedHostGroup group = await container.CreateOrUpdateAsync(groupName, input);
             Assert.IsTrue(await container.CheckIfExistsAsync(groupName));
             Assert.IsFalse(await container.CheckIfExistsAsync(groupName + "1"));
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task GetAll()
         {
             var container = await GetDedicatedHostGroupContainerAsync();
-            var input = DedicatedHostGroupHelper.GetBasicDedicatedHostGroup(DefaultLocation);
+            var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
             _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testDHG-"), input);
             _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testDHG-"), input);
             int count = 0;
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetDedicatedHostGroupContainerAsync();
             var groupName1 = Recording.GenerateAssetName("testDHG-");
             var groupName2 = Recording.GenerateAssetName("testDHG-");
-            var input = DedicatedHostGroupHelper.GetBasicDedicatedHostGroup(DefaultLocation);
+            var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
             _ = await container.CreateOrUpdateAsync(groupName1, input);
             _ = await container.CreateOrUpdateAsync(groupName2, input);
 

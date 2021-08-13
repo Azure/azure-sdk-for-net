@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Tests
         private async Task<DiskAccess> CreateDiskAccessAsync(string name)
         {
             var container = (await CreateResourceGroupAsync()).GetDiskAccesses();
-            var input = DiskAccessHelper.GetEmptyDiskAccess(DefaultLocation);
+            var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
             return await container.CreateOrUpdateAsync(name, input);
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var access1 = await CreateDiskAccessAsync(name);
             DiskAccess access2 = await access1.GetAsync();
 
-            DiskAccessHelper.AssertDiskAccess(access1.Data, access2.Data);
+            ResourceDataHelper.AssertDiskAccess(access1.Data, access2.Data);
         }
     }
 }

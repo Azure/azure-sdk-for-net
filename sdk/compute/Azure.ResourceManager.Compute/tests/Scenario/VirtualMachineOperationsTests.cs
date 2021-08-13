@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetVirtualMachineContainerAsync();
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
-            var input = VirtualMachineHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
+            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             return await container.CreateOrUpdateAsync(vmName, input);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vm = await CreateVirtualMachineAsync(vmName);
             VirtualMachine vm2 = await vm.GetAsync();
 
-            VirtualMachineHelper.AssertVirtualMachine(vm.Data, vm2.Data);
+            ResourceDataHelper.AssertVirtualMachine(vm.Data, vm2.Data);
         }
 
         [TestCase]

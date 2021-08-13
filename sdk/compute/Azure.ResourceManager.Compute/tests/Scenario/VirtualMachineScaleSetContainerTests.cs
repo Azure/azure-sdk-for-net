@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetVirtualMachineScaleSetContainerAsync();
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
-            var input = VirtualMachineScaleSetHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
+            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             VirtualMachineScaleSet vmss = await container.CreateOrUpdateAsync(vmssName, input);
             Assert.AreEqual(vmssName, vmss.Data.Name);
         }
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetVirtualMachineScaleSetContainerAsync();
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
-            var input = VirtualMachineScaleSetHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
+            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             VirtualMachineScaleSet vmss1 = await container.CreateOrUpdateAsync(vmssName, input);
             VirtualMachineScaleSet vmss2 = await container.GetAsync(vmssName);
 
-            VirtualMachineScaleSetHelper.AssertVirtualMachineScaleSet(vmss1.Data, vmss2.Data);
+            ResourceDataHelper.AssertVirtualMachineScaleSet(vmss1.Data, vmss2.Data);
         }
 
         [TestCase]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetVirtualMachineScaleSetContainerAsync();
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
-            var input = VirtualMachineScaleSetHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
+            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             VirtualMachineScaleSet vmss = await container.CreateOrUpdateAsync(vmssName, input);
             Assert.IsTrue(await container.CheckIfExistsAsync(vmssName));
             Assert.IsFalse(await container.CheckIfExistsAsync(vmssName + "1"));
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmssName2 = Recording.GenerateAssetName("testVMSS-");
             var vnet1 = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var vnet2 = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
-            var input1 = VirtualMachineScaleSetHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName1, GetSubnetId(vnet1));
-            var input2 = VirtualMachineScaleSetHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName2, GetSubnetId(vnet2));
+            var input1 = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName1, GetSubnetId(vnet1));
+            var input2 = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName2, GetSubnetId(vnet2));
             _ = await container.CreateOrUpdateAsync(vmssName1, input1);
             _ = await container.CreateOrUpdateAsync(vmssName2, input2);
             int count = 0;
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmssName2 = Recording.GenerateAssetName("testVMSS-");
             var vnet1 = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var vnet2 = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
-            var input1 = VirtualMachineScaleSetHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName1, GetSubnetId(vnet1));
-            var input2 = VirtualMachineScaleSetHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName2, GetSubnetId(vnet2));
+            var input1 = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName1, GetSubnetId(vnet1));
+            var input2 = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName2, GetSubnetId(vnet2));
             _ = await container.CreateOrUpdateAsync(vmssName1, input1);
             _ = await container.CreateOrUpdateAsync(vmssName2, input2);
 

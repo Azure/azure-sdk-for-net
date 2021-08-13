@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetVirtualMachineContainerAsync();
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
-            var input = VirtualMachineHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
+            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             VirtualMachine virtualMachine = await container.CreateOrUpdateAsync(vmName, input);
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
         }
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetVirtualMachineContainerAsync();
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
-            var input = VirtualMachineHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
+            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             VirtualMachine vm1 = await container.CreateOrUpdateAsync(vmName, input);
             VirtualMachine vm2 = await container.GetAsync(vmName);
 
-            VirtualMachineHelper.AssertVirtualMachine(vm1.Data, vm2.Data);
+            ResourceDataHelper.AssertVirtualMachine(vm1.Data, vm2.Data);
         }
 
         [TestCase]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetVirtualMachineContainerAsync();
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
-            var input = VirtualMachineHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
+            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             VirtualMachine vm = await container.CreateOrUpdateAsync(vmName, input);
             Assert.IsTrue(await container.CheckIfExistsAsync(vmName));
             Assert.IsFalse(await container.CheckIfExistsAsync(vmName + "1"));
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName2 = Recording.GenerateAssetName("testVM-");
             var nic1 = await CreateBasicDependenciesOfVirtualMachineAsync();
             var nic2 = await CreateBasicDependenciesOfVirtualMachineAsync();
-            var input1 = VirtualMachineHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName1, nic1.Id);
-            var input2 = VirtualMachineHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName2, nic2.Id);
+            var input1 = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName1, nic1.Id);
+            var input2 = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName2, nic2.Id);
             _ = await container.CreateOrUpdateAsync(vmName1, input1);
             _ = await container.CreateOrUpdateAsync(vmName2, input2);
             int count = 0;
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmName2 = Recording.GenerateAssetName("testVM-");
             var nic1 = await CreateBasicDependenciesOfVirtualMachineAsync();
             var nic2 = await CreateBasicDependenciesOfVirtualMachineAsync();
-            var input1 = VirtualMachineHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName1, nic1.Id);
-            var input2 = VirtualMachineHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName2, nic2.Id);
+            var input1 = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName1, nic1.Id);
+            var input2 = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName2, nic2.Id);
             _ = await container.CreateOrUpdateAsync(vmName1, input1);
             _ = await container.CreateOrUpdateAsync(vmName2, input2);
 

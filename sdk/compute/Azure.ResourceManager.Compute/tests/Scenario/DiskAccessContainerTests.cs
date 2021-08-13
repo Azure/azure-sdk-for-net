@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetDiskAccessContainerAsync();
             var name = Recording.GenerateAssetName("testDA");
-            DiskAccess access = await container.CreateOrUpdateAsync(name, DiskAccessHelper.GetEmptyDiskAccess(DefaultLocation));
+            var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
+            DiskAccess access = await container.CreateOrUpdateAsync(name, input);
             Assert.AreEqual(name, access.Data.Name);
         }
 
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetDiskAccessContainerAsync();
             var name = Recording.GenerateAssetName("testDA");
-            var input = DiskAccessHelper.GetEmptyDiskAccess(DefaultLocation);
+            var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
             var op = await container.StartCreateOrUpdateAsync(name, input);
             DiskAccess access = await op.WaitForCompletionAsync();
             Assert.AreEqual(name, access.Data.Name);
@@ -50,10 +51,10 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetDiskAccessContainerAsync();
             var name = Recording.GenerateAssetName("testDA");
-            var input = DiskAccessHelper.GetEmptyDiskAccess(DefaultLocation);
+            var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
             DiskAccess access1 = await container.CreateOrUpdateAsync(name, input);
             DiskAccess access2 = await container.GetAsync(name);
-            DiskAccessHelper.AssertDiskAccess(access1.Data, access2.Data);
+            ResourceDataHelper.AssertDiskAccess(access1.Data, access2.Data);
         }
 
         [TestCase]
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetDiskAccessContainerAsync();
             var name = Recording.GenerateAssetName("testDA");
-            var input = DiskAccessHelper.GetEmptyDiskAccess(DefaultLocation);
+            var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
             DiskAccess access = await container.CreateOrUpdateAsync(name, input);
             Assert.IsTrue(await container.CheckIfExistsAsync(name));
             Assert.IsFalse(await container.CheckIfExistsAsync(name + "1"));
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task GetAll()
         {
             var container = await GetDiskAccessContainerAsync();
-            var input = DiskAccessHelper.GetEmptyDiskAccess(DefaultLocation);
+            var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
             _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testDA"), input);
             _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testDA"), input);
             int count = 0;
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetDiskAccessContainerAsync();
             var name1 = Recording.GenerateAssetName("testDA");
             var name2 = Recording.GenerateAssetName("testDA");
-            var input = DiskAccessHelper.GetEmptyDiskAccess(DefaultLocation);
+            var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
             _ = await container.CreateOrUpdateAsync(name1, input);
             _ = await container.CreateOrUpdateAsync(name2, input);
 

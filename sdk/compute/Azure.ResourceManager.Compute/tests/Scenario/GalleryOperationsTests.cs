@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             _resourceGroup = await CreateResourceGroupAsync();
             var container = _resourceGroup.GetGalleries();
-            var input = GalleryHelper.GetBasicGalleryData(DefaultLocation);
+            var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
             return await container.CreateOrUpdateAsync(name, input);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var gallery = await CreateGalleryAsync(name);
             Gallery gallery2 = await gallery.GetAsync();
 
-            GalleryHelper.AssertGallery(gallery.Data, gallery2.Data);
+            ResourceDataHelper.AssertGallery(gallery.Data, gallery2.Data);
         }
 
         [TestCase]

@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             _resourceGroup = await CreateResourceGroupAsync();
             var galleryName = Recording.GenerateAssetName("testGallery_");
-            var galleryInput = GalleryHelper.GetBasicGalleryData(DefaultLocation);
+            var galleryInput = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
             _gallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, galleryInput);
-            var identifier = GalleryImageHelper.GetGalleryImageIdentifier(
+            var identifier = ResourceDataHelper.GetGalleryImageIdentifier(
                     Recording.GenerateAssetName("publisher"),
                     Recording.GenerateAssetName("offer"),
                     Recording.GenerateAssetName("sku"));
-            var imageInput = GalleryImageHelper.GetBasicGalleryImageData(DefaultLocation, Models.OperatingSystemTypes.Linux, identifier);
+            var imageInput = ResourceDataHelper.GetBasicGalleryImageData(DefaultLocation, OperatingSystemTypes.Linux, identifier);
             return await _gallery.GetGalleryImages().CreateOrUpdateAsync(galleryImageName, imageInput);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var image = await CreateGalleryImageAsync(name);
             GalleryImage image2 = await image.GetAsync();
 
-            GalleryImageHelper.AssertGalleryImage(image.Data, image2.Data);
+            ResourceDataHelper.AssertGalleryImage(image.Data, image2.Data);
         }
 
         [TestCase]

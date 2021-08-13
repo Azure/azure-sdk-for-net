@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetVirtualMachineScaleSetContainerAsync();
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
-            var input = VirtualMachineScaleSetHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
+            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             return await container.CreateOrUpdateAsync(vmssName, input);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmss = await CreateVirtualMachineScaleSetAsync(vmssName);
             VirtualMachineScaleSet vmss2 = await vmss.GetAsync();
 
-            VirtualMachineScaleSetHelper.AssertVirtualMachineScaleSet(vmss.Data, vmss2.Data);
+            ResourceDataHelper.AssertVirtualMachineScaleSet(vmss.Data, vmss2.Data);
         }
 
         [TestCase]

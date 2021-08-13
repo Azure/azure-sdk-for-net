@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetGalleryContainerAsync();
             var name = Recording.GenerateAssetName("testGallery_");
-            var input = GalleryHelper.GetBasicGalleryData(DefaultLocation);
+            var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
             Gallery gallery = await container.CreateOrUpdateAsync(name, input);
             Assert.AreEqual(name, gallery.Data.Name);
         }
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetGalleryContainerAsync();
             var name = Recording.GenerateAssetName("testGallery_");
-            var input = GalleryHelper.GetBasicGalleryData(DefaultLocation);
+            var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
             Gallery gallery = await container.CreateOrUpdateAsync(name, input);
             Gallery gallery2 = await container.GetAsync(name);
 
-            GalleryHelper.AssertGallery(gallery.Data, gallery2.Data);
+            ResourceDataHelper.AssertGallery(gallery.Data, gallery2.Data);
         }
 
         [TestCase]
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetGalleryContainerAsync();
             var name = Recording.GenerateAssetName("testGallery_");
-            var input = GalleryHelper.GetBasicGalleryData(DefaultLocation);
+            var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
             Gallery gallery = await container.CreateOrUpdateAsync(name, input);
             Assert.IsTrue(await container.CheckIfExistsAsync(name));
             Assert.IsFalse(await container.CheckIfExistsAsync(name + "1"));
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetGalleryContainerAsync();
             var name1 = Recording.GenerateAssetName("testGallery_");
             var name2 = Recording.GenerateAssetName("testGallery_");
-            var input1 = GalleryHelper.GetBasicGalleryData(DefaultLocation);
-            var input2 = GalleryHelper.GetBasicGalleryData(DefaultLocation);
+            var input1 = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
+            var input2 = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
             _ = await container.CreateOrUpdateAsync(name1, input1);
             _ = await container.CreateOrUpdateAsync(name2, input2);
             int count = 0;
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetGalleryContainerAsync();
             var name1 = Recording.GenerateAssetName("testGallery_");
             var name2 = Recording.GenerateAssetName("testGallery_");
-            var input1 = GalleryHelper.GetBasicGalleryData(DefaultLocation);
-            var input2 = GalleryHelper.GetBasicGalleryData(DefaultLocation);
+            var input1 = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
+            var input2 = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
             _ = await container.CreateOrUpdateAsync(name1, input1);
             _ = await container.CreateOrUpdateAsync(name2, input2);
 

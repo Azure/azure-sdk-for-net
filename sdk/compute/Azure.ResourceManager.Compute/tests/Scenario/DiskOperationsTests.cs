@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Tests
         private async Task<Disk> CreateDiskAsync(string diskName)
         {
             var container = (await CreateResourceGroupAsync()).GetDisks();
-            var input = DiskHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
+            var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
             return await container.CreateOrUpdateAsync(diskName, input);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var disk1 = await CreateDiskAsync(diskName);
             Disk disk2 = await disk1.GetAsync();
 
-            DiskHelper.AssertDisk(disk1.Data, disk2.Data);
+            ResourceDataHelper.AssertDisk(disk1.Data, disk2.Data);
         }
 
         [TestCase]

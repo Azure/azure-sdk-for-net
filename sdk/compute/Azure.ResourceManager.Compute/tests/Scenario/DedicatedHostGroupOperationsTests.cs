@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Tests
         private async Task<DedicatedHostGroup> CreateDedicatedHostGroupAsync(string groupName)
         {
             var container = (await CreateResourceGroupAsync()).GetDedicatedHostGroups();
-            var input = DedicatedHostGroupHelper.GetBasicDedicatedHostGroup(DefaultLocation);
+            var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
             return await container.CreateOrUpdateAsync(groupName, input);
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var group1 = await CreateDedicatedHostGroupAsync(groupName);
             DedicatedHostGroup group2 = await group1.GetAsync();
 
-            DedicatedHostGroupHelper.AssertGroup(group1.Data, group2.Data);
+            ResourceDataHelper.AssertGroup(group1.Data, group2.Data);
         }
     }
 }
