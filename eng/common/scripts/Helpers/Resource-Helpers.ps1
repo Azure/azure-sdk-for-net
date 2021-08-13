@@ -43,10 +43,12 @@ function Get-PurgeableResources {
     }
 }
 
-function Remove-PurgeableResources {
+# A filter differs from a function by teating body as -process {} instead of -end {}.
+# This allows you to pipe a collection and process each item in the collection.
+filter Remove-PurgeableResources {
     param (
         [Parameter(Position=0, ValueFromPipeline=$true)]
-        [psobject[]] $Resource
+        [object[]] $Resource
     )
 
     if (!$Resource) {
@@ -56,10 +58,9 @@ function Remove-PurgeableResources {
     $subscriptionId = (Get-AzContext).Subscription.Id
 
     foreach ($r in $Resource) {
-        Log "Attempting to purge $($r.AzsdkResourceType) '$($r.VaultName)'"
-
         switch ($r.AzsdkResourceType) {
             'Key Vault' {
+                Log "Attempting to purge $($r.AzsdkResourceType) '$($r.VaultName)'"
                 if ($r.EnablePurgeProtection) {
                     # We will try anyway but will ignore errors
                     Write-Warning "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
@@ -69,6 +70,7 @@ function Remove-PurgeableResources {
             }
 
             'Managed HSM' {
+                Log "Attempting to purge $($r.AzsdkResourceType) '$($r.Name)'"
                 if ($r.EnablePurgeProtection) {
                     # We will try anyway but will ignore errors
                     Write-Warning "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
