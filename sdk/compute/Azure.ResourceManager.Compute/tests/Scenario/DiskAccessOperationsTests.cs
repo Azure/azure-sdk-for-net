@@ -1,0 +1,55 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Compute.Tests.Helpers;
+using NUnit.Framework;
+
+namespace Azure.ResourceManager.Compute.Tests
+{
+    public class DiskAccessOperationsTests : ComputeTestBase
+    {
+        public DiskAccessOperationsTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
+        {
+        }
+
+        private async Task<DiskAccess> CreateDiskAccessAsync(string name)
+        {
+            var container = (await CreateResourceGroupAsync()).GetDiskAccesses();
+            var input = DiskAccessHelper.GetEmptyDiskAccess(DefaultLocation);
+            return await container.CreateOrUpdateAsync(name, input);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Delete()
+        {
+            var name = Recording.GenerateAssetName("testDA-");
+            var access = await CreateDiskAccessAsync(name);
+            await access.DeleteAsync();
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task StartDelete()
+        {
+            var name = Recording.GenerateAssetName("testDA-");
+            var access = await CreateDiskAccessAsync(name);
+            var deleteOp = await access.StartDeleteAsync();
+            await deleteOp.WaitForCompletionResponseAsync();
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Get()
+        {
+            var name = Recording.GenerateAssetName("testDA-");
+            var access1 = await CreateDiskAccessAsync(name);
+            DiskAccess access2 = await access1.GetAsync();
+
+            DiskAccessHelper.AssertDiskAccess(access1.Data, access2.Data);
+        }
+    }
+}
