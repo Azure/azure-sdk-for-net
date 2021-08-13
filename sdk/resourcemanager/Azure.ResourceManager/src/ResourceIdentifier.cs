@@ -28,7 +28,7 @@ namespace Azure.ResourceManager
         /// <summary>
         /// The root of the resource hierarchy.
         /// </summary>
-        public static readonly ResourceIdentifier RootResourceIdentifier = new ResourceIdentifier(null, TenantOperations.ResourceType, string.Empty);
+        public static readonly ResourceIdentifier RootResourceIdentifier = new ResourceIdentifier(null, Tenant.ResourceType, string.Empty);
 
         /// <summary>
         /// For internal use only.
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager
                 ResourceGroupName = parent.ResourceGroupName;
             }
 
-            if (resourceType == SubscriptionOperations.ResourceType)
+            if (resourceType == Subscription.ResourceType)
             {
                 Guid output;
                 if (!Guid.TryParse(name, out output))
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager
             if (resourceType.LastType == LocationsKey)
                 Location = name;
 
-            if (resourceType == ResourceGroupOperations.ResourceType)
+            if (resourceType == ResourceGroup.ResourceType)
                 ResourceGroupName = name;
 
-            if (resourceType == ProviderOperations.ResourceType)
+            if (resourceType == Resources.Provider.ResourceType)
                 Provider = name;
 
             Parent = parent ?? RootResourceIdentifier;
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager
 
         private static ResourceType ChooseResourceType(string resourceTypeName, ResourceIdentifier parent) => resourceTypeName.ToLowerInvariant() switch
         {
-            ResourceGroupsLowerKey => ResourceGroupOperations.ResourceType,
-            SubscriptionsKey => SubscriptionOperations.ResourceType,
+            ResourceGroupsLowerKey => ResourceGroup.ResourceType,
+            SubscriptionsKey => Subscription.ResourceType,
             _ => new ResourceType(parent.ResourceType, resourceTypeName)
         };
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager
                     throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
 
                 //resourceGroup must contain either child or provider resource type
-                if (parent.ResourceType == ResourceGroupOperations.ResourceType)
+                if (parent.ResourceType == ResourceGroup.ResourceType)
                     throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
 
                 return new ResourceIdentifier(parent, parts[0], string.Empty);
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager
             if (lowerFirstPart == ProvidersKey && (parts.Count == 2 || parts[2].ToLowerInvariant() == ProvidersKey))
             {
                 //provider resource can only be on a tenant or a subscription parent
-                if (parent.ResourceType != SubscriptionOperations.ResourceType && parent.ResourceType != TenantOperations.ResourceType)
+                if (parent.ResourceType != Subscription.ResourceType && parent.ResourceType != Tenant.ResourceType)
                     throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
 
-                return AppendNext(new ResourceIdentifier(parent, ProviderOperations.ResourceType, parts[1]), parts.Trim(2));
+                return AppendNext(new ResourceIdentifier(parent, Resources.Provider.ResourceType, parts[1]), parts.Trim(2));
             }
 
             if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
