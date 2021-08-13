@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             public async ValueTask DisposeAsync()
             {
-                await _client.DeleteRoleAssignmentByIdAsync(Assignment.Id);
+                await _client.DeleteRoleAssignmentByIdAsync(Assignment.Id.ToString());
             }
         }
 
@@ -76,13 +76,35 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
         }
 
         [Test]
+        public async Task CreateRoleAssignment_ModelTypeParameterOverload()
+        {
+            SynapseAccessControlClient client = CreateClient();
+
+            string scope = "workspaces/" + TestEnvironment.WorkspaceName;
+            Guid roleId = new Guid((await client.GetRoleDefinitionsAsync(scope).FirstAsync(x => x.Name == "Synapse Administrator")).Id);
+            Guid principalId = Guid.NewGuid();
+            string roleAssignmentId = Guid.NewGuid().ToString();
+
+            SynapseRoleAssignment roleAssignment = new SynapseRoleAssignment(roleId, principalId, scope);
+
+            await client.CreateRoleAssignmentAsync(roleAssignmentId, roleAssignment);
+
+            await using DisposableClientRole role = await DisposableClientRole.Create(client, TestEnvironment);
+
+            Assert.NotNull(role.Assignment.Id);
+            Assert.NotNull(role.Assignment.Properties.RoleDefinitionId);
+            Assert.NotNull(role.Assignment.Properties.PrincipalId);
+        }
+
+        [Test]
         public async Task GetRoleAssignment()
         {
             SynapseAccessControlClient client = CreateClient();
 
             await using DisposableClientRole role = await DisposableClientRole.Create(client, TestEnvironment);
 
-            SynapseRoleAssignment roleAssignment = await client.GetRoleAssignmentAsync("", role.Assignment.Id);
+            // TODO: This string conversion is awkward -- should RoleAssignmentIdParameter be marked as a uuid?
+            SynapseRoleAssignment roleAssignment = await client.GetRoleAssignmentAsync("", role.Assignment.Id.ToString());
 
             Assert.AreEqual(role.Assignment.Properties.RoleDefinitionId, roleAssignment.Properties.RoleDefinitionId);
             Assert.AreEqual(role.Assignment.Properties.PrincipalId, roleAssignment.Properties.PrincipalId);
@@ -114,8 +136,26 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             SynapseRoleAssignment assignment = await DisposableClientRole.CreateResource(client, TestEnvironment);
 
-            Response response = await client.DeleteRoleAssignmentAsync("", assignment.Id);
+            // TODO: This string conversion is awkward -- should RoleAssignmentIdParameter be marked as a uuid?
+            Response response = await client.DeleteRoleAssignmentAsync("", assignment.Id.ToString());
             response.AssertSuccess();
         }
+
+        [Test]
+        public async Task GetRbacScopes()
+        {
+            SynapseAccessControlClient client = CreateClient();
+
+            var response = await client.ListScopesAsync();
+        }
+
+        //[Test]
+        //public async Task ListRoleDefinitions()
+        //{
+        //    SynapseAccessControlClient client = CreateClient();
+
+        //    client.ListRoleDefinitionsAsync()
+
+        //}
     }
 }

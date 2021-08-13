@@ -94,9 +94,9 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             #region Snippet:CreateRoleAssignment
 
             SynapseRoleAssignment roleAssignment = client.CreateRoleAssignment(SynapseRoleScope.Global, roleId, principalId.ToString(), assignmentId);
-            string roleAssignmentId = roleAssignment.Id;
-            string roleDefinitionId = roleAssignment.Properties.RoleDefinitionId;
-            string roleAssignmentPrincipalId = roleAssignment.Properties.PrincipalId;
+            Guid roleAssignmentId = roleAssignment.Id;
+            Guid roleDefinitionId = roleAssignment.Properties.RoleDefinitionId;
+            Guid roleAssignmentPrincipalId = roleAssignment.Properties.PrincipalId;
             string roleAssignmentScope = roleAssignment.Properties.Scope?.ToString();
 
             #endregion

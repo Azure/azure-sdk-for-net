@@ -1,23 +1,37 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
     public class SynapseRoleAssignment
     {
-        public SynapseRoleAssignment(string id, SynapseRoleAssignmentProperties properties)
+        public SynapseRoleAssignment(Guid roleId, Guid principalId, string scope, SynapsePrincipalType? principalType = null)
         {
-            Id = id;
-            Properties = properties;
+            Id = roleId;
+            Properties = new SynapseRoleAssignmentProperties(
+                principalId,
+                scope,
+                principalType);
 
-            // TODO: Why aren't name and type available?
+            // TODO: Why aren't name and type available? (Where they are available in ARM + KV APIs)
             //Name = name;
             //Type = type;
         }
 
-        public string Id { get; }
+        internal SynapseRoleAssignment(Guid roleId, Guid principalId, Guid roleDefinitionId, string scope, SynapsePrincipalType? principalType = null)
+        {
+            Id = roleId;
+            Properties = new SynapseRoleAssignmentProperties(
+                principalId,
+                roleDefinitionId,
+                scope,
+                principalType);
+        }
+
+        public Guid Id { get; }
 
         public SynapseRoleAssignmentProperties Properties { get; }
 

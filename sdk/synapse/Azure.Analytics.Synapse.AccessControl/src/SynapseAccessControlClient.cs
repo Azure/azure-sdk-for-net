@@ -37,11 +37,11 @@ namespace Azure.Analytics.Synapse.AccessControl
                 JsonDocument roleAssignment = JsonDocument.Parse(createRoleAssignmentResponse.Content.ToMemory());
 
                 return Response.FromValue(new SynapseRoleAssignment(
-                    roleAssignment.RootElement.GetProperty("id").ToString(),
-                    new SynapseRoleAssignmentProperties(
-                        roleAssignment.RootElement.GetProperty("principalId").ToString(),
-                        roleAssignment.RootElement.GetProperty("roleDefinitionId").ToString(),
-                        roleAssignment.RootElement.GetProperty("scope").ToString())),
+                        new Guid(roleAssignment.RootElement.GetProperty("id").ToString()),
+                        new Guid(roleAssignment.RootElement.GetProperty("principalId").ToString()),
+                        new Guid(roleAssignment.RootElement.GetProperty("roleDefinitionId").ToString()),
+                        roleAssignment.RootElement.GetProperty("scope").ToString(),
+                        roleAssignment.RootElement.GetProperty("principalType").ToString()),
                     createRoleAssignmentResponse);
             }
             catch (Exception ex)
@@ -76,11 +76,50 @@ namespace Azure.Analytics.Synapse.AccessControl
                 JsonDocument roleAssignment = await JsonDocument.ParseAsync(createRoleAssignmentResponse.ContentStream, default).ConfigureAwait(false);
 
                 return Response.FromValue(new SynapseRoleAssignment(
-                    roleAssignment.RootElement.GetProperty("id").ToString(),
-                    new SynapseRoleAssignmentProperties(
-                        roleAssignment.RootElement.GetProperty("principalId").ToString(),
-                        roleAssignment.RootElement.GetProperty("roleDefinitionId").ToString(),
-                        roleAssignment.RootElement.GetProperty("scope").ToString())),
+                        new Guid(roleAssignment.RootElement.GetProperty("id").ToString()),
+                        new Guid(roleAssignment.RootElement.GetProperty("principalId").ToString()),
+                        new Guid(roleAssignment.RootElement.GetProperty("roleDefinitionId").ToString()),
+                        roleAssignment.RootElement.GetProperty("scope").ToString(),
+                        roleAssignment.RootElement.GetProperty("principalType").ToString()),
+                    createRoleAssignmentResponse);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<SynapseRoleAssignment> CreateRoleAssignment(string roleAssignmentId, SynapseRoleAssignment roleAssignment)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNull(roleAssignment, nameof(roleAssignment));
+            Argument.AssertNotNull(roleAssignment.Properties.Scope, nameof(roleAssignment.Properties.Scope));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SynapseAccessControlClient)}.{nameof(CreateRoleAssignment)}");
+            scope.Start();
+            try
+            {
+                Response createRoleAssignmentResponse = CreateRoleAssignment(
+                    roleAssignmentId,
+                    RequestContent.Create(
+                        new
+                        {
+                            RoleId = roleAssignment.Properties.RoleDefinitionId,
+                            PrincipalId = roleAssignment.Properties.PrincipalId,
+                            Scope = roleAssignment.Properties.Scope.ToString()
+                        }));
+
+                JsonDocument responseJson = JsonDocument.Parse(createRoleAssignmentResponse.Content.ToMemory());
+
+                return Response.FromValue(new SynapseRoleAssignment(
+                        new Guid(responseJson.RootElement.GetProperty("id").ToString()),
+                        new Guid(responseJson.RootElement.GetProperty("principalId").ToString()),
+                        new Guid(responseJson.RootElement.GetProperty("roleDefinitionId").ToString()),
+                        responseJson.RootElement.GetProperty("scope").ToString(),
+                        responseJson.RootElement.GetProperty("principalType").ToString()),
                     createRoleAssignmentResponse);
             }
             catch (Exception ex)
@@ -146,11 +185,11 @@ namespace Azure.Analytics.Synapse.AccessControl
                 JsonDocument roleAssignment = JsonDocument.Parse(roleAssignmentResponse.Content.ToMemory());
 
                 return Response.FromValue(new SynapseRoleAssignment(
-                    roleAssignment.RootElement.GetProperty("id").ToString(),
-                    new SynapseRoleAssignmentProperties(
-                        roleAssignment.RootElement.GetProperty("principalId").ToString(),
-                        roleAssignment.RootElement.GetProperty("roleDefinitionId").ToString(),
-                        roleAssignment.RootElement.GetProperty("scope").ToString())),
+                        new Guid(roleAssignment.RootElement.GetProperty("id").ToString()),
+                        new Guid(roleAssignment.RootElement.GetProperty("principalId").ToString()),
+                        new Guid(roleAssignment.RootElement.GetProperty("roleDefinitionId").ToString()),
+                        roleAssignment.RootElement.GetProperty("scope").ToString(),
+                        roleAssignment.RootElement.GetProperty("principalType").ToString()),
                     roleAssignmentResponse);
             }
             catch (Exception ex)
@@ -174,11 +213,11 @@ namespace Azure.Analytics.Synapse.AccessControl
                 JsonDocument roleAssignment = await JsonDocument.ParseAsync(roleAssignmentResponse.ContentStream, default).ConfigureAwait(false);
 
                 return Response.FromValue(new SynapseRoleAssignment(
-                    roleAssignment.RootElement.GetProperty("id").ToString(),
-                    new SynapseRoleAssignmentProperties(
-                        roleAssignment.RootElement.GetProperty("principalId").ToString(),
-                        roleAssignment.RootElement.GetProperty("roleDefinitionId").ToString(),
-                        roleAssignment.RootElement.GetProperty("scope").ToString())),
+                        new Guid(roleAssignment.RootElement.GetProperty("id").ToString()),
+                        new Guid(roleAssignment.RootElement.GetProperty("principalId").ToString()),
+                        new Guid(roleAssignment.RootElement.GetProperty("roleDefinitionId").ToString()),
+                        roleAssignment.RootElement.GetProperty("scope").ToString(),
+                        roleAssignment.RootElement.GetProperty("principalType").ToString()),
                     roleAssignmentResponse);
             }
             catch (Exception ex)
@@ -205,14 +244,14 @@ namespace Azure.Analytics.Synapse.AccessControl
 
                     JsonDocument roleAssignmentListJson = JsonDocument.Parse(response.Content.ToMemory());
                     List<SynapseRoleAssignment> roleAssignmentList = new List<SynapseRoleAssignment>();
-                    foreach (var item in roleAssignmentListJson.RootElement.GetProperty("value").EnumerateArray())
+                    foreach (var roleAssignment in roleAssignmentListJson.RootElement.GetProperty("value").EnumerateArray())
                     {
                         roleAssignmentList.Add(new SynapseRoleAssignment(
-                            item.GetProperty("id").ToString(),
-                            new SynapseRoleAssignmentProperties(
-                                item.GetProperty("principalId").ToString(),
-                                item.GetProperty("roleDefinitionId").ToString(),
-                                item.GetProperty("scope").ToString())));
+                            new Guid(roleAssignment.GetProperty("id").ToString()),
+                            new Guid(roleAssignment.GetProperty("principalId").ToString()),
+                            new Guid(roleAssignment.GetProperty("roleDefinitionId").ToString()),
+                            roleAssignment.GetProperty("scope").ToString(),
+                            roleAssignment.GetProperty("principalType").ToString()));
                     }
 
                     return Page.FromValues(roleAssignmentList, null, response);
@@ -239,14 +278,14 @@ namespace Azure.Analytics.Synapse.AccessControl
 
                     JsonDocument roleAssignmentListJson = await JsonDocument.ParseAsync(response.ContentStream, default).ConfigureAwait(false);
                     List<SynapseRoleAssignment> roleAssignmentList = new List<SynapseRoleAssignment>();
-                    foreach (var item in roleAssignmentListJson.RootElement.GetProperty("value").EnumerateArray())
+                    foreach (var roleAssignment in roleAssignmentListJson.RootElement.GetProperty("value").EnumerateArray())
                     {
                         roleAssignmentList.Add(new SynapseRoleAssignment(
-                            item.GetProperty("id").ToString(),
-                            new SynapseRoleAssignmentProperties(
-                                item.GetProperty("principalId").ToString(),
-                                item.GetProperty("roleDefinitionId").ToString(),
-                                item.GetProperty("scope").ToString())));
+                            new Guid(roleAssignment.GetProperty("id").ToString()),
+                            new Guid(roleAssignment.GetProperty("principalId").ToString()),
+                            new Guid(roleAssignment.GetProperty("roleDefinitionId").ToString()),
+                            roleAssignment.GetProperty("scope").ToString(),
+                            roleAssignment.GetProperty("principalType").ToString()));
                     }
 
                     return Page.FromValues(roleAssignmentList, null, response);
