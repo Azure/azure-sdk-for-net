@@ -6,7 +6,7 @@ using CommandLine;
 
 namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
 {
-    public class ProcessorOptions : PerfOptions
+    public class ProcessorOptions : PerfOptionsBase
     {
         [Option("loadBalancingStrategy")]
         public LoadBalancingStrategy LoadBalancingStrategy { get; set; } = LoadBalancingStrategy.Greedy;
