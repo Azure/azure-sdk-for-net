@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         ///
         /// <param name="cancellationToken">The token used to signal when cancellation is requested.</param>
         ///
-        public async override Task RunAsync(CancellationToken cancellationToken)
+        public async override Task<int> RunBatchAsync(CancellationToken cancellationToken)
         {
             // Read the requested number of events.
 
@@ -97,6 +97,8 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
             // If iteration stopped due to cancellation, ensure that the expected exception is thrown.
 
             cancellationToken.ThrowIfCancellationRequested();
+
+            return Options.Count;
         }
     }
 }

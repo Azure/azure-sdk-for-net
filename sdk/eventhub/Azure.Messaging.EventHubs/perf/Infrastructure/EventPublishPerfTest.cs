@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         /// <param name="cancellationToken">The token used to signal when cancellation is requested.</param>
         ///
-        public async override Task RunAsync(CancellationToken cancellationToken)
+        public async override Task<int> RunBatchAsync(CancellationToken cancellationToken)
         {
             // Generate a set of events using the same body.  This will result in publishing a set of events
             // of equal size. The events will only differ by the id property that is assigned to them.
@@ -90,6 +90,8 @@ namespace Azure.Messaging.EventHubs.Perf
                 s_sendOptions,
                 cancellationToken
             ).ConfigureAwait(false);
+
+            return Options.Count;
         }
 
         /// <summary>

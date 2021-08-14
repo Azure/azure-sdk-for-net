@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Perf
     ///
     /// <seealso cref="Azure.Test.Perf.PerfTest{SizeCountOptions}" />
     ///
-    public abstract class EventHubsPerfTest : PerfTest<SizeCountOptions>
+    public abstract class EventHubsPerfTest : BatchPerfTest<SizeCountOptions>
     {
         /// <summary>
         ///   The active <see cref="EventHubsTestEnvironment" /> instance for the
@@ -39,6 +39,6 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         /// <param name="cancellationToken">The token used to signal when cancellation is requested.</param>
         ///
-        public override void Run(CancellationToken cancellationToken) => throw new InvalidOperationException("Only asynchronous execution is supported.");
+        public override int RunBatch(CancellationToken cancellationToken) => throw new InvalidOperationException("Only asynchronous execution is supported.");
     }
 }
