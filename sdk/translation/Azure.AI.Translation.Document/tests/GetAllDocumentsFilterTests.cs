@@ -25,7 +25,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetAllDocumentStatusesFilterByStatusTest()
+        public async Task GetDocumentStatusesFilterByStatusTest()
         {
             // create client
             var client = GetClient();
@@ -39,14 +39,14 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 Statuses = {DocumentTranslationStatus.Succeeded}
             };
-            var result = operation.GetAllDocumentStatuses(filter: filter);
+            var result = operation.GetDocumentStatuses(filter: filter);
 
             // assert.
             Assert.That(result.All(d => d.Status == DocumentTranslationStatus.Succeeded));
         }
 
         [RecordedTest]
-        public async Task GetAllDocumentStatusesFilterByIdsTest()
+        public async Task GetDocumentStatusesFilterByIdsTest()
         {
             // create client
             var client = GetClient();
@@ -54,7 +54,7 @@ namespace Azure.AI.Translation.Document.Tests
             // create translation job
             var operation = await CreateSingleTranslationJobAsync(client, docsCount: 2);
             await operation.WaitForCompletionAsync();
-            var testIds = operation.GetAllDocumentStatuses().Select(d => d.Id).ToList().GetRange(0, 1);
+            var testIds = operation.GetDocumentStatuses().Select(d => d.Id).ToList().GetRange(0, 1);
 
             // list docs
             var filter = new DocumentFilter
@@ -62,7 +62,7 @@ namespace Azure.AI.Translation.Document.Tests
                 Ids = { testIds[0] }
             };
 
-            var result = operation.GetAllDocumentStatuses(filter: filter);
+            var result = operation.GetDocumentStatuses(filter: filter);
 
             // assert
             Assert.That(result.All(d => testIds.Contains(d.Id)));
@@ -70,18 +70,18 @@ namespace Azure.AI.Translation.Document.Tests
 
         [Ignore("no way to test this filter")]
         [RecordedTest]
-        public void GetAllDocumentStatusesFilterByCreatedAfter()
+        public void GetDocumentStatusesFilterByCreatedAfter()
         {
         }
 
         [Ignore("no way to test this filter")]
         [RecordedTest]
-        public void GetAllDocumentStatusesFilterByCreatedBefore()
+        public void GetDocumentStatusesFilterByCreatedBefore()
         {
         }
 
         [RecordedTest]
-        public async Task GetAllDocumentStatusesOrderByCreatedOn()
+        public async Task GetDocumentStatusesOrderByCreatedOn()
         {
             // create client
             var client = GetClient();
@@ -96,7 +96,7 @@ namespace Azure.AI.Translation.Document.Tests
                 OrderBy = { new DocumentFilterOrder(property: DocumentFilterProperty.CreatedOn, asc: false) }
             };
 
-            var filterResults = operation.GetAllDocumentStatuses(filter: filter);
+            var filterResults = operation.GetDocumentStatuses(filter: filter);
 
             // assert
             var timestamp = Recording.UtcNow;
