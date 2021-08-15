@@ -1822,7 +1822,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     MaxConcurrentSessions = 1,
                     MaxConcurrentCallsPerSession = 1,
-                    SessionIdleTimeout = TimeSpan.FromSeconds(5)
+                    SessionIdleTimeout = TimeSpan.FromSeconds(3)
                 });
 
                 int receivedCount = 0;
@@ -1852,7 +1852,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 20);
                     }
-                    if (ct == 90)
+                    if (ct == 75)
                     {
                         processor.UpdateConcurrency(1, 1);
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
@@ -1959,7 +1959,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     MaxConcurrentSessions = 10,
                     MaxConcurrentCallsPerSession = 10,
-                    MaxConcurrentCallsAcrossAllSessions = 50
+                    MaxConcurrentCallsAcrossAllSessions = 50,
+                    SessionIdleTimeout = TimeSpan.FromSeconds(3)
                 });
 
                 int receivedCount = 0;
