@@ -3,12 +3,7 @@ parameters:
 
 steps:
   - pwsh: |
-        . $(Build.SourcesDirectory)/eng/common/scripts/common.ps1
-
-        if ($TestProxyTrustCertFn -and (Test-Path "Function:$TestProxyTrustCertFn"))
-        {
-            &$TestProxyTrustCertFn
-        }
+        $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
     displayName: 'Language Specific Certificate Trust'
 
   - pwsh: |
