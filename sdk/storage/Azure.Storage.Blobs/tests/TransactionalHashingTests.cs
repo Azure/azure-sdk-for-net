@@ -124,7 +124,11 @@ namespace Azure.Storage.Blobs.Tests
                 : new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
             // Act
-            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions { TransactionalHashingOptions = hashingOptions });
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobBaseDownloadOptions
+            {
+                TransactionalHashingOptions = hashingOptions,
+                Range = new HttpRange(length: data.Length)
+            });
 
             // Assert
             if (isBuffered)
@@ -182,25 +186,14 @@ namespace Azure.Storage.Blobs.Tests
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
             // Act
-            Response<BlobDownloadResult> response = await blob.DownloadContentAsync(new BlobBaseDownloadOptions
+            await blob.DownloadToAsync(new BlobBaseDownloadToOptions(Stream.Null)
             {
                 TransactionalHashingOptions = hashingOptions
             });
 
             // Assert
             // we didn't throw, so that's good
-            switch (algorithm)
-            {
-                case TransactionalHashAlgorithm.MD5:
-                    Assert.True(response.GetRawResponse().Headers.Contains("Content-MD5"));
-                    break;
-                case TransactionalHashAlgorithm.StorageCrc64:
-                    Assert.True(response.GetRawResponse().Headers.Contains("x-ms-content-crc64"));
-                    break;
-                default:
-                    Assert.Fail("Test can't validate given algorithm type.");
-                    break;
-            }
+            // TODO intercept responses in pipeline to check for hash responses
         }
     }
 }

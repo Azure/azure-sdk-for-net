@@ -1376,12 +1376,6 @@ namespace Azure.Storage.Blobs.Specialized
                         (long?)null);
             }
 
-            // if requesting hash, range is necessary on request
-            if (pageRange == default && options.TransactionalHashingOptions?.Algorithm != TransactionalHashAlgorithm.None)
-            {
-                pageRange = new HttpRange();
-            }
-
             ClientConfiguration.Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
 
             ResponseWithHeaders<Stream, BlobDownloadHeaders> response;

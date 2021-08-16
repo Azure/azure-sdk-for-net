@@ -157,11 +157,13 @@ namespace Azure.Storage
             }
 
             // separate potential precalculated hash from hashing options to deal with partitioning
-            _hashingOptions = new UploadTransactionalHashingOptions
-            {
-                Algorithm = hashingOptions.Algorithm
-            };
-            _precalculatedHash = hashingOptions.PrecalculatedHash;
+            _hashingOptions = hashingOptions == default
+                ? default
+                : new UploadTransactionalHashingOptions
+                {
+                    Algorithm = hashingOptions.Algorithm
+                };
+            _precalculatedHash = hashingOptions?.PrecalculatedHash;
 
             _operationName = operationName;
         }

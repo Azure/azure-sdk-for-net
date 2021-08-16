@@ -29,7 +29,7 @@ namespace Azure.Storage
                 case TransactionalHashAlgorithm.MD5:
                     if (!Enumerable.SequenceEqual(
                         computedHash.MD5,
-                        response.Headers.TryGetValue("Content-Length", out byte[] md5) ? md5 : default))
+                        response.Headers.TryGetValue("Content-MD5", out byte[] md5) ? md5 : default))
                     {
                         throw new Exception(); // TODO better exception
                     }

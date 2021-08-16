@@ -58,6 +58,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Transactional hashing options for data integrity checks.
         /// </summary>
-        public DownloadTransactionalHashingOptions HashingOptions { get; set; }
+        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

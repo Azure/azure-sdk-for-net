@@ -24,6 +24,10 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Optional transactional hashing options.
+        /// Range must be provided explicitly stating a range withing Azure
+        /// Storage size limits for requesting a transactional hash. See the
+        /// <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob">
+        /// REST documentation</a> for range limitation details.
         /// </summary>
         public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
 
