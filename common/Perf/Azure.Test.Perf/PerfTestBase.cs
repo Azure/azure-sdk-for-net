@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Test.Perf
 {
-    public abstract class PerfTestBase<TOptions> : IPerfTest where TOptions : PerfOptionsBase
+    public abstract class PerfTestBase<TOptions> : IPerfTest where TOptions : PerfOptions
     {
         protected TOptions Options { get; private set; }
 

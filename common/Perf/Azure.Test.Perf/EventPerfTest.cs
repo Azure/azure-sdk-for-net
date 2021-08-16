@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Test.Perf
 {
-    public abstract class EventPerfTest<TOptions> : PerfTestBase<TOptions> where TOptions : PerfOptionsBase
+    public abstract class EventPerfTest<TOptions> : PerfTestBase<TOptions> where TOptions : PerfOptions
     {
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
