@@ -21,4 +21,10 @@
     <Folder Include="SessionRecords" />
     <Folder Include="SessionRecords\ConfidentialLedgerClientLiveTests" />
   </ItemGroup>
+
+  <!-- Shared source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared" />
+  </ItemGroup>
 </Project>

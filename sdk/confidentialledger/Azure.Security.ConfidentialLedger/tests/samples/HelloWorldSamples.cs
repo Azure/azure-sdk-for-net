@@ -46,7 +46,8 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 .GetString();
 
             // construct an X509Certificate2 with the ECC PEM value.
-            X509Certificate2 ledgerTlsCert = new X509Certificate2(Encoding.UTF8.GetBytes(eccPem));
+            var span = new ReadOnlySpan<char>(eccPem.ToCharArray());
+            X509Certificate2 ledgerTlsCert = PemReader.LoadCertificate(span, null, PemReader.KeyType.Auto, true);
 
             #endregion
 
