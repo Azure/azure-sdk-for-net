@@ -346,7 +346,7 @@ Console.WriteLine($"The latest ledger entry from the sub-ledger is {latestSubLed
 ##### Ranged queries
 
 Ledger entries in a sub-ledger may be retrieved over a range of transaction ids.
-Note: Both ranges are optional; they can be provided individually or not all all.
+Note: Both ranges are optional; they can be provided individually or not at all.
 
 ```C# Snippet:RangedQuery
 ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: subLedgerTransactionId);
