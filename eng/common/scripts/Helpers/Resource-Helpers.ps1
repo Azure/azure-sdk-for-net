@@ -7,6 +7,18 @@ function Get-PurgeableGroupResources {
   )
   $purgeableResources = @()
 
+  # Discover Managed HSMs first since they are a premium resource.
+  Write-Verbose "Retrieving deleted Managed HSMs from resource group $ResourceGroupName"
+
+  # Get any Managed HSMs in the resource group, for which soft delete cannot be disabled.
+  $deletedHsms = Get-AzKeyVaultManagedHsm -ResourceGroupName $ResourceGroupName -ErrorAction Ignore `
+    | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Managed HSM' -PassThru
+
+  if ($deletedHsms) {
+    Write-Verbose "Found $($deletedHsms.Count) deleted Managed HSMs to potentially purge."
+    $purgeableResources += $deletedHsms
+  }
+
   Write-Verbose "Retrieving deleted Key Vaults from resource group $ResourceGroupName"
 
   # Get any Key Vaults that will be deleted so they can be purged later if soft delete is enabled.
@@ -21,34 +33,13 @@ function Get-PurgeableGroupResources {
     $purgeableResources += $deletedKeyVaults
   }
 
-  Write-Verbose "Retrieving deleted Managed HSMs from resource group $ResourceGroupName"
-
-  # Get any Managed HSMs in the resource group, for which soft delete cannot be disabled.
-  $deletedHsms = Get-AzKeyVaultManagedHsm -ResourceGroupName $ResourceGroupName -ErrorAction Ignore `
-    | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Managed HSM' -PassThru
-
-  if ($deletedHsms) {
-    Write-Verbose "Found $($deletedHsms.Count) deleted Managed HSMs to potentially purge."
-    $purgeableResources += $deletedHsms
-  }
-
   return $purgeableResources
 }
 function Get-PurgeableResources {
   $purgeableResources = @()
   $subscriptionId = (Get-AzContext).Subscription.Id
 
-  Write-Verbose "Retrieving deleted Key Vaults from subscription $subscriptionId"
-
-  # Get deleted Key Vaults for the current subscription.
-  $deletedKeyVaults  = Get-AzKeyVault -InRemovedState `
-    | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Key Vault' -PassThru
-
-  if ($deletedKeyVaults) {
-    Write-Verbose "Found $($deletedKeyVaults.Count) deleted Key Vaults to potentially purge."
-    $purgeableResources += $deletedKeyVaults
-  }
-
+  # Discover Managed HSMs first since they are a premium resource.
   Write-Verbose "Retrieving deleted Managed HSMs from subscription $subscriptionId"
 
   # Get deleted Managed HSMs for the current subscription.
@@ -73,6 +64,17 @@ function Get-PurgeableResources {
       Write-Verbose "Found $($deletedHsms.Count) deleted Managed HSMs to potentially purge."
       $purgeableResources += $deletedHsms
     }
+  }
+
+  Write-Verbose "Retrieving deleted Key Vaults from subscription $subscriptionId"
+
+  # Get deleted Key Vaults for the current subscription.
+  $deletedKeyVaults  = Get-AzKeyVault -InRemovedState `
+    | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Key Vault' -PassThru
+
+  if ($deletedKeyVaults) {
+    Write-Verbose "Found $($deletedKeyVaults.Count) deleted Key Vaults to potentially purge."
+    $purgeableResources += $deletedKeyVaults
   }
 
   return $purgeableResources
