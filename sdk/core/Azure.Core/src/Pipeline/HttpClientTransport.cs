@@ -500,12 +500,13 @@ namespace Azure.Core.Pipeline
             private Stream? _contentStream;
 #pragma warning restore CA2213
 
-            public PipelineResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream)
+            public PipelineResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream, ClientDiagnostics diagnostics)
             {
                 ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
                 _responseMessage = responseMessage ?? throw new ArgumentNullException(nameof(responseMessage));
                 _contentStream = contentStream;
                 _responseContent = _responseMessage.Content;
+                ClientDiagnostics = diagnostics;
             }
 
             public override int Status => (int)_responseMessage.StatusCode;
@@ -525,6 +526,8 @@ namespace Azure.Core.Pipeline
             }
 
             public override string ClientRequestId { get; set; }
+
+            internal override ClientDiagnostics ClientDiagnostics { get; set; }
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseContent, name, out value);
 

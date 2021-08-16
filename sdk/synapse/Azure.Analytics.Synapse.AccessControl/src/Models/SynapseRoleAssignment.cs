@@ -19,6 +19,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             // TODO: Why aren't name and type available? (Where they are available in ARM + KV APIs)
             //Name = name;
             //Type = type;
+            // TODO: Doesn't the principal already have a type?  What if we specify the wrong type for principalType?
         }
 
         internal SynapseRoleAssignment(Guid roleId, Guid principalId, Guid roleDefinitionId, string scope, SynapsePrincipalType? principalType = null)
@@ -41,5 +42,16 @@ namespace Azure.Analytics.Synapse.AccessControl
                 Id = value.Id,
                 Properties = value.Properties
             });
+
+        public static implicit operator SynapseRoleAssignment(Response response)
+        {
+            switch (response.Status)
+            {
+                case 200:
+                    return response.Content.ToObjectFromJson<SynapseRoleAssignment>();
+                default:
+                    throw response.GetRequestFailedException();
+            }
+        }
     }
 }

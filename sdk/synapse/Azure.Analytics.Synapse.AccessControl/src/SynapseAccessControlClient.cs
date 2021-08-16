@@ -91,45 +91,6 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual Response<SynapseRoleAssignment> CreateRoleAssignment(string roleAssignmentId, SynapseRoleAssignment roleAssignment)
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        {
-            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
-            Argument.AssertNotNull(roleAssignment, nameof(roleAssignment));
-            Argument.AssertNotNull(roleAssignment.Properties.Scope, nameof(roleAssignment.Properties.Scope));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SynapseAccessControlClient)}.{nameof(CreateRoleAssignment)}");
-            scope.Start();
-            try
-            {
-                Response createRoleAssignmentResponse = CreateRoleAssignment(
-                    roleAssignmentId,
-                    RequestContent.Create(
-                        new
-                        {
-                            RoleId = roleAssignment.Properties.RoleDefinitionId,
-                            PrincipalId = roleAssignment.Properties.PrincipalId,
-                            Scope = roleAssignment.Properties.Scope.ToString()
-                        }));
-
-                JsonDocument responseJson = JsonDocument.Parse(createRoleAssignmentResponse.Content.ToMemory());
-
-                return Response.FromValue(new SynapseRoleAssignment(
-                        new Guid(responseJson.RootElement.GetProperty("id").ToString()),
-                        new Guid(responseJson.RootElement.GetProperty("principalId").ToString()),
-                        new Guid(responseJson.RootElement.GetProperty("roleDefinitionId").ToString()),
-                        responseJson.RootElement.GetProperty("scope").ToString(),
-                        responseJson.RootElement.GetProperty("principalType").ToString()),
-                    createRoleAssignmentResponse);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response DeleteRoleAssignment(SynapseRoleScope roleScope, string roleAssignmentName)
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {

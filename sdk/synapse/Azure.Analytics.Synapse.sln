@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Mon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Synapse.Monitoring.Tests", "Azure.Analytics.Synapse.Monitoring\tests\Azure.Analytics.Synapse.Monitoring.Tests.csproj", "{729E92B7-E47B-442C-836F-27B8A7806D2F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{AD109C43-32F7-4FAB-A867-5CEECE4242F9}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Azure.Analytics.Synapse.Shared\tests\Azure.Analytics.Synapse.Shared.Tests.projitems*{1afa2644-a1d9-419f-b87d-9b519b673f24}*SharedItemsImports = 13
@@ -93,6 +95,10 @@ Global
 		{729E92B7-E47B-442C-836F-27B8A7806D2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{729E92B7-E47B-442C-836F-27B8A7806D2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{729E92B7-E47B-442C-836F-27B8A7806D2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD109C43-32F7-4FAB-A867-5CEECE4242F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD109C43-32F7-4FAB-A867-5CEECE4242F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD109C43-32F7-4FAB-A867-5CEECE4242F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD109C43-32F7-4FAB-A867-5CEECE4242F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

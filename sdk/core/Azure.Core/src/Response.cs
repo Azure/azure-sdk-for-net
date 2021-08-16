@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure
 {
@@ -35,6 +36,10 @@ namespace Azure
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
         public abstract string ClientRequestId { get; set; }
+
+        /// <summary>
+        /// </summary>
+        internal abstract ClientDiagnostics ClientDiagnostics { get; set; }
 
         /// <summary>
         /// Get the HTTP response headers.
@@ -130,6 +135,13 @@ namespace Azure
         public override string ToString()
         {
             return $"Status: {Status}, ReasonPhrase: {ReasonPhrase}";
+        }
+
+        /// <summary>
+        /// </summary>
+        public RequestFailedException GetException()
+        {
+            return this.ClientDiagnostics.CreateRequestFailedException(this);
         }
 
         internal void DisposeContentStreamIfNotBuffered()
