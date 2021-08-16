@@ -55,12 +55,27 @@ namespace Azure.Storage.Blobs.Tests
             }
             var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
-            // Act / Assert
-            Assert.DoesNotThrowAsync(async () => await blob.DownloadContentAsync(new BlobBaseDownloadOptions
+            // Act
+            Response<BlobDownloadResult> response = await blob.DownloadContentAsync(new BlobBaseDownloadOptions
             {
                 TransactionalHashingOptions = hashingOptions,
                 Range = range
-            }));
+            });
+
+            // Assert
+            // we didn't throw, so that's good
+            switch (algorithm)
+            {
+                case TransactionalHashAlgorithm.MD5:
+                    Assert.True(response.GetRawResponse().Headers.Contains("Content-MD5"));
+                    break;
+                case TransactionalHashAlgorithm.StorageCrc64:
+                    Assert.True(response.GetRawResponse().Headers.Contains("x-ms-content-crc64"));
+                    break;
+                default:
+                    Assert.Fail("Test can't validate given algorithm type.");
+                    break;
+            }
         }
 
         [Test, Combinatorial]
@@ -150,6 +165,42 @@ namespace Azure.Storage.Blobs.Tests
             Assert.DoesNotThrowAsync(async () => await readStream.CopyToAsync(Stream.Null));
         }
 
-        // TODO test partitioned download
+        [Test, Combinatorial]
+        public async Task PartitionedDownloadSuccessfulHashVerification(
+            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
+            [Values(Constants.KB, 3 * Constants.KB, 5 * Constants.KB)] int chunkSize)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(DefaultDataSize);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+
+            // Act
+            Response<BlobDownloadResult> response = await blob.DownloadContentAsync(new BlobBaseDownloadOptions
+            {
+                TransactionalHashingOptions = hashingOptions
+            });
+
+            // Assert
+            // we didn't throw, so that's good
+            switch (algorithm)
+            {
+                case TransactionalHashAlgorithm.MD5:
+                    Assert.True(response.GetRawResponse().Headers.Contains("Content-MD5"));
+                    break;
+                case TransactionalHashAlgorithm.StorageCrc64:
+                    Assert.True(response.GetRawResponse().Headers.Contains("x-ms-content-crc64"));
+                    break;
+                default:
+                    Assert.Fail("Test can't validate given algorithm type.");
+                    break;
+            }
+        }
     }
 }

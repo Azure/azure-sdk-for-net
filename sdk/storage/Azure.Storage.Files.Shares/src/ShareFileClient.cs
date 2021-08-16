@@ -4456,6 +4456,80 @@ namespace Azure.Storage.Files.Shares
 
         #region Upload
         /// <summary>
+        /// The <see cref="Upload(ShareFileUploadOptions, CancellationToken)"/>
+        /// operation writes <paramref name="options.Stream"/> to a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Upload options.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Response<ShareFileUploadInfo> Upload(
+            ShareFileUploadOptions options,
+            CancellationToken cancellationToken = default) =>
+            UploadInternal(
+                options.Stream,
+                options.ProgressHandler,
+                options.Conditions,
+                options.TransactionalHashingOptions,
+                Constants.File.MaxFileUpdateRange,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="UploadAsync(ShareFileUploadOptions, CancellationToken)"/> operation writes
+        /// <paramref name="options.Stream"/> to a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Upload options.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
+            ShareFileUploadOptions options,
+            CancellationToken cancellationToken = default) =>
+            await UploadInternal(
+                options.Stream,
+                options.ProgressHandler,
+                options.Conditions,
+                options.TransactionalHashingOptions,
+                Constants.File.MaxFileUpdateRange,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
         /// The <see cref="Upload(Stream, IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a file.
         ///
@@ -4487,6 +4561,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileUploadInfo> Upload(
             Stream content,
             IProgress<long> progressHandler = default,
@@ -4496,6 +4571,7 @@ namespace Azure.Storage.Files.Shares
                 content,
                 progressHandler,
                 conditions,
+                hashingOptions: default,
                 Constants.File.MaxFileUpdateRange,
                 async: false,
                 cancellationToken)
@@ -4540,6 +4616,7 @@ namespace Azure.Storage.Files.Shares
                 content,
                 progressHandler,
                 conditions: default,
+                hashingOptions: default,
                 Constants.File.MaxFileUpdateRange,
                 async: false,
                 cancellationToken)
@@ -4577,6 +4654,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
             Stream content,
             IProgress<long> progressHandler = default,
@@ -4586,6 +4664,7 @@ namespace Azure.Storage.Files.Shares
                 content,
                 progressHandler,
                 conditions,
+                hashingOptions: default,
                 Constants.File.MaxFileUpdateRange,
                 async: true,
                 cancellationToken)
@@ -4630,6 +4709,7 @@ namespace Azure.Storage.Files.Shares
                 content,
                 progressHandler,
                 conditions: default,
+                hashingOptions: default,
                 Constants.File.MaxFileUpdateRange,
                 async: true,
                 cancellationToken)
@@ -4654,6 +4734,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
+        /// <param name="hashingOptions">
+        /// Options for transactional hashing.
+        /// </param>
         /// <param name="singleRangeThreshold">
         /// The maximum size stream that we'll upload as a single range.  The
         /// default value is 4MB.
@@ -4677,6 +4760,7 @@ namespace Azure.Storage.Files.Shares
             Stream content,
             IProgress<long> progressHandler,
             ShareFileRequestConditions conditions,
+            UploadTransactionalHashingOptions hashingOptions,
             int singleRangeThreshold,
             bool async,
             CancellationToken cancellationToken)
@@ -4693,7 +4777,7 @@ namespace Azure.Storage.Files.Shares
                     content,
                     new ShareFileUploadRangeOptions
                     {
-                        // TODO support hashing on multipart uploads
+                        TransactionalHashingOptions = hashingOptions,
                         ProgressHandler = progressHandler,
                         Conditions = conditions
                     },
@@ -4705,6 +4789,13 @@ namespace Azure.Storage.Files.Shares
             // Otherwise naively split the file into ranges and upload them individually
             var response = default(Response<ShareFileUploadInfo>);
             var pool = default(MemoryPool<byte>);
+            // erase potential precalculated hash now that we're splitting; we'll have to recalculate.
+            hashingOptions = hashingOptions == default
+                ? default
+                : new UploadTransactionalHashingOptions
+                {
+                    Algorithm = hashingOptions.Algorithm
+                };
 
             long initalPosition = content.Position;
 
@@ -4741,7 +4832,7 @@ namespace Azure.Storage.Files.Shares
                         partition,
                         new ShareFileUploadRangeOptions
                         {
-                            // TODO support hashing on multipart uploads
+                            TransactionalHashingOptions = hashingOptions,
                             ProgressHandler = progressHandler,
                             Conditions = conditions
                         },

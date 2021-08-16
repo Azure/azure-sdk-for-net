@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Models;
 using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
@@ -22,6 +23,7 @@ namespace Azure.Storage.Tests
         private const string s_operationName = "PartitionedUploaderTests.Operation";
         private readonly object s_objectArgs = "an object";
         private readonly IProgress<long> s_progress = new Progress<long>();
+        private readonly UploadTransactionalHashingOptions s_hashingOptions = new UploadTransactionalHashingOptions();
         private readonly CancellationToken s_cancellation = new CancellationToken();
 
         public PartitionedUploaderTests(bool async)
@@ -40,7 +42,7 @@ namespace Azure.Storage.Tests
         private Mock<PartitionedUploader<object, object>.SingleUploadInternal> GetMockSingleUploadInternal(int expectedSize)
         {
             var mock = new Mock<PartitionedUploader<object, object>.SingleUploadInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<Stream>(), s_objectArgs, It.IsAny<IProgress<long>>(), s_operationName, IsAsync, s_cancellation))
+            mock.Setup(del => del(It.IsNotNull<Stream>(), s_objectArgs, It.IsAny<IProgress<long>>(), s_hashingOptions, s_operationName, IsAsync, s_cancellation))
                 .Returns<Stream, object, IProgress<long>, string, bool, CancellationToken>((stream, obj, progress, operation, async, cancellation) =>
                 {
                     if (!stream.CanSeek)
@@ -66,7 +68,7 @@ namespace Azure.Storage.Tests
         private Mock<PartitionedUploader<object, object>.UploadPartitionInternal> GetMockUploadPartitionInternal(int maxSize)
         {
             var mock = new Mock<PartitionedUploader<object, object>.UploadPartitionInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<Stream>(), It.IsAny<long>(), s_objectArgs, It.IsAny<IProgress<long>>(), IsAsync, s_cancellation))
+            mock.Setup(del => del(It.IsNotNull<Stream>(), It.IsAny<long>(), s_objectArgs, It.IsAny<IProgress<long>>(), s_hashingOptions, IsAsync, s_cancellation))
                 .Returns<Stream, long, object, IProgress<long>, bool, CancellationToken>((stream, offset, obj, progress, async, cancellation) =>
                 {
                     if (!stream.CanSeek)
@@ -129,6 +131,7 @@ namespace Azure.Storage.Tests
                     MaximumTransferSize = blockSize,
                     MaximumConcurrency = 1 // sequential upload
                 },
+                s_hashingOptions,
                 operationName: s_operationName);
 
             Response<object> result = await partitionedUploader.UploadInternal(stream.Object, s_objectArgs, s_progress, IsAsync, s_cancellation).ConfigureAwait(false);

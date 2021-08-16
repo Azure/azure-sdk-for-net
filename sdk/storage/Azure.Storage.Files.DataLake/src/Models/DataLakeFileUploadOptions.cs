@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake.Models
@@ -69,5 +70,10 @@ namespace Azure.Storage.Files.DataLake.Models
         /// parallel transfer behavior.
         /// </summary>
         public StorageTransferOptions TransferOptions { get; set; }
+
+        /// <summary>
+        /// Options for hashing upload contents for greater data transit integrity protections.
+        /// </summary>
+        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

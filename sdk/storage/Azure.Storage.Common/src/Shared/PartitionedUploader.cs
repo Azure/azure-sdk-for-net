@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Storage.Models;
 using Azure.Storage.Shared;
 
 namespace Azure.Storage
@@ -32,6 +33,7 @@ namespace Azure.Storage
             Stream contentStream,
             TServiceSpecificArgs args,
             IProgress<long> progressHandler,
+            UploadTransactionalHashingOptions hashingOptions,
             string operationName,
             bool async,
             CancellationToken cancellationToken);
@@ -39,6 +41,7 @@ namespace Azure.Storage
             long offset,
             TServiceSpecificArgs args,
             IProgress<long> progressHandler,
+            UploadTransactionalHashingOptions hashingOptions,
             bool async,
             CancellationToken cancellationToken);
         public delegate Task<Response<TCompleteUploadReturn>> CommitPartitionedUploadInternal(
@@ -88,6 +91,16 @@ namespace Azure.Storage
         private readonly long? _blockSize;
 
         /// <summary>
+        /// Hashing options to use for each upload call.
+        /// </summary>
+        private readonly UploadTransactionalHashingOptions _hashingOptions;
+
+        /// <summary>
+        /// Optionally available precalculated hash for the entire upload contents.
+        /// </summary>
+        private readonly byte[] _precalculatedHash;
+
+        /// <summary>
         /// The name of the calling operaiton.
         /// </summary>
         private readonly string _operationName;
@@ -95,6 +108,7 @@ namespace Azure.Storage
         public PartitionedUploader(
             Behaviors behaviors,
             StorageTransferOptions transferOptions,
+            UploadTransactionalHashingOptions hashingOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
         {
@@ -142,6 +156,13 @@ namespace Azure.Storage
                     transferOptions.MaximumTransferSize.Value);
             }
 
+            // separate potential precalculated hash from hashing options to deal with partitioning
+            _hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = hashingOptions.Algorithm
+            };
+            _precalculatedHash = hashingOptions.PrecalculatedHash;
+
             _operationName = operationName;
         }
 
@@ -179,6 +200,7 @@ namespace Azure.Storage
                     content,
                     args,
                     progressHandler,
+                    _hashingOptions,
                     _operationName,
                     async,
                     cancellationToken)
@@ -443,6 +465,7 @@ namespace Azure.Storage
                     offset,
                     args,
                     progressHandler,
+                    _hashingOptions,
                     async,
                     cancellationToken)
                     .ConfigureAwait(false);

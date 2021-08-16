@@ -529,6 +529,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
+                options?.TransactionalHashingOptions,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return uploader.UploadInternal(
@@ -584,6 +585,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
+                options?.TransactionalHashingOptions,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -790,6 +792,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
+        /// <param name="hashingOptions">
+        /// Options for transactional hashing.
+        /// </param>
         /// <param name="immutabilityPolicy">
         /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
@@ -828,11 +833,11 @@ namespace Azure.Storage.Blobs.Specialized
             BlobImmutabilityPolicy immutabilityPolicy,
             bool? legalHold,
             IProgress<long> progressHandler,
+            UploadTransactionalHashingOptions hashingOptions,
             string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
-            content = content?.WithNoDispose().WithProgress(progressHandler);
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
             // All BlobRequestConditions are valid.
@@ -853,6 +858,16 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
+
+                    // compute hash BEFORE attaching progress handler
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHash(content, hashingOptions);
+                    // CRC not currently in generated code
+                    if (hashResult.StorageCrc64 != default)
+                    {
+                        throw new NotImplementedException("CRC64 support not implemented for PUT Blob.");
+                    }
+
+                    content = content?.WithNoDispose().WithProgress(progressHandler);
 
                     ResponseWithHeaders<BlockBlobUploadHeaders> response;
 
@@ -883,6 +898,8 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
+                            transactionalContentMD5: hashResult.MD5,
+                            // TODO CRC64 not in generated code
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2735,6 +2752,7 @@ namespace Azure.Storage.Blobs.Specialized
                     immutabilityPolicy: default,
                     legalHold: default,
                     progressHandler: default,
+                    hashingOptions: default,
                     operationName: operationName,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -3103,11 +3121,13 @@ namespace Azure.Storage.Blobs.Specialized
         #region PartitionedUploader
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
+            UploadTransactionalHashingOptions hashingOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
             =>  new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
+                hashingOptions,
                 arrayPool,
                 operationName);
 
@@ -3115,7 +3135,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return new PartitionedUploader<BlobUploadOptions, BlobContentInfo>.Behaviors
             {
-                SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken)
+                SingleUpload = async (stream, args, progressHandler, hashingOptions, operationName, async, cancellationToken)
                     => await client.UploadInternal(
                         stream,
                         args?.HttpHeaders,
@@ -3126,10 +3146,11 @@ namespace Azure.Storage.Blobs.Specialized
                         args?.ImmutabilityPolicy,
                         args?.LegalHold,
                         progressHandler,
+                        hashingOptions,
                         operationName,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
+                UploadPartition = async (stream, offset, args, progressHandler, hashingOptions, async, cancellationToken)
                     =>
                 {
                     // Stage Block only accepts LeaseId.
@@ -3146,7 +3167,7 @@ namespace Azure.Storage.Blobs.Specialized
                             stream,
                             new BlockBlobStageBlockOptions()
                             {
-                                // TODO inject SDK-managed transactional hashing // TransactionalHashingOptions = null
+                                TransactionalHashingOptions = hashingOptions,
                                 Conditions = conditions,
                                 ProgressHandler = progressHandler
                             },

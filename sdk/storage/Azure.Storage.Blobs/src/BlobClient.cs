@@ -12,6 +12,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Cryptography;
+using Azure.Storage.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -1631,6 +1632,7 @@ namespace Azure.Storage.Blobs
 
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
+                options?.TransactionalHashingOptions,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -1724,8 +1726,9 @@ namespace Azure.Storage.Blobs
 
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
+            UploadTransactionalHashingOptions hashingOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => BlockBlobClient.GetPartitionedUploader(transferOptions, arrayPool, operationName);
+            => BlockBlobClient.GetPartitionedUploader(transferOptions, hashingOptions, arrayPool, operationName);
     }
 }
