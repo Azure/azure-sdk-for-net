@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,8 +15,10 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    public class GenericResourceContainer : ResourceContainer
+    public class GenericResourceContainer : ArmContainer
     {
+        private ClientDiagnostics _clientDiagnostics;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceContainer"/> class for mocking.
         /// </summary>
@@ -58,6 +61,8 @@ namespace Azure.ResourceManager.Resources
                     BaseUri);
             }
         }
+
+        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary>
         /// Gets details for this resource from the service.
@@ -118,16 +123,16 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<GenericResourceExpanded> GetAll(string filter = null, string expand = null, int ? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAll(string filter = null, string expand = null, int ? top = null, CancellationToken cancellationToken = default)
         {
-            Page<GenericResourceExpanded> FirstPageFunc(int? pageSizeHint)
+            Page<GenericResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
                     var response = RestClient.List(filter, expand, top, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResourceExpanded(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -135,14 +140,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<GenericResourceExpanded> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
                     var response = RestClient.ListNextPage(nextLink, filter, expand, top, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResourceExpanded(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -158,16 +163,16 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<GenericResourceExpanded> GetAllAsync(string filter = null, string expand = null, int ? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsync(string filter = null, string expand = null, int ? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<GenericResourceExpanded>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListAsync(filter, expand, top, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResourceExpanded(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -175,14 +180,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<GenericResourceExpanded>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListNextPageAsync(nextLink, filter, expand, top, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResourceExpanded(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -200,21 +205,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual Pageable<GenericResourceExpanded> GetByResourceGroup(string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetByResourceGroup(string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            Page<GenericResourceExpanded> FirstPageFunc(int? pageSizeHint)
+            Page<GenericResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetByResourceGroup");
                 scope.Start();
                 try
                 {
                     var response = RestClient.ListByResourceGroup(resourceGroupName, filter, expand, top, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResourceExpanded(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -222,14 +227,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<GenericResourceExpanded> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetByResourceGroup");
                 scope.Start();
                 try
                 {
                     var response = RestClient.ListByResourceGroupNextPage(nextLink, resourceGroupName, filter, expand, top, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResourceExpanded(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -247,21 +252,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual AsyncPageable<GenericResourceExpanded> GetByResourceGroupAsync(string resourceGroupName, string filter = null, string expand = null, int ? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetByResourceGroupAsync(string resourceGroupName, string filter = null, string expand = null, int ? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            async Task<Page<GenericResourceExpanded>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetByResourceGroup");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListByResourceGroupAsync(resourceGroupName, filter, expand, top, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResourceExpanded(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -269,14 +274,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<GenericResourceExpanded>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetByResourceGroup");
                 scope.Start();
                 try
                 {
                     var response = await RestClient.ListByResourceGroupNextPageAsync(nextLink, resourceGroupName, filter, expand, top, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResourceExpanded(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

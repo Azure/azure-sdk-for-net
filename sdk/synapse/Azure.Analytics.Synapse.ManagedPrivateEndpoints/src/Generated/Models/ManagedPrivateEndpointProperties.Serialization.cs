@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,6 +16,11 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId");
@@ -30,18 +36,41 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 writer.WritePropertyName("connectionState");
                 writer.WriteObjectValue(ConnectionState);
             }
+            if (Optional.IsCollectionDefined(Fqdns))
+            {
+                writer.WritePropertyName("fqdns");
+                writer.WriteStartArray();
+                foreach (var item in Fqdns)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IsCompliant))
+            {
+                writer.WritePropertyName("isCompliant");
+                writer.WriteBooleanValue(IsCompliant.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static ManagedPrivateEndpointProperties DeserializeManagedPrivateEndpointProperties(JsonElement element)
         {
+            Optional<string> name = default;
             Optional<string> privateLinkResourceId = default;
             Optional<string> groupId = default;
             Optional<string> provisioningState = default;
             Optional<ManagedPrivateEndpointConnectionState> connectionState = default;
             Optional<bool> isReserved = default;
+            Optional<IList<string>> fqdns = default;
+            Optional<bool> isCompliant = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("privateLinkResourceId"))
                 {
                     privateLinkResourceId = property.Value.GetString();
@@ -77,8 +106,33 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     isReserved = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("fqdns"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    fqdns = array;
+                    continue;
+                }
+                if (property.NameEquals("isCompliant"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isCompliant = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new ManagedPrivateEndpointProperties(privateLinkResourceId.Value, groupId.Value, provisioningState.Value, connectionState.Value, Optional.ToNullable(isReserved));
+            return new ManagedPrivateEndpointProperties(name.Value, privateLinkResourceId.Value, groupId.Value, provisioningState.Value, connectionState.Value, Optional.ToNullable(isReserved), Optional.ToList(fqdns), Optional.ToNullable(isCompliant));
         }
     }
 }
