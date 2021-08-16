@@ -193,15 +193,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             Assert.Equal("https://www.wiki.com", url);
         }
 
-        [Fact]
-        public void HttpRequestUrlIsSetUsing_Scheme_Host_Target()
+        [Theory]
+        [InlineData("http", "80")]
+        [InlineData("https", "443")]
+        [InlineData("https", "8888")]
+        [InlineData("http", "8888")]
+        public void HttpRequestUrlIsSetUsing_Scheme_Host_Target(string httpScheme, string port)
         {
             var PartBTags = AzMonList.Initialize();
-            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
-            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "www.httphost.org"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, httpScheme));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, $"www.httphost.org:{port}"));
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
-
-            string expectedUrl = "http://www.httphost.org/path";
+            string expectedUrl;
+            if (port == "80" || port == "443")
+            {
+                expectedUrl = $"{httpScheme}://www.httphost.org/path";
+            }
+            else
+            {
+                expectedUrl = $"{httpScheme}://www.httphost.org:{port}/path";
+            }
             string url = PartBTags.GetRequestUrl();
             Assert.Equal(expectedUrl, url);
         }
@@ -214,17 +225,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public void HttpRequestUrlIsSetUsing_Scheme_ServerName_Port_Target(string port)
         {
             var PartBTags = AzMonList.Initialize();
-            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            string httpScheme;
+            if (port == "80")
+            {
+                httpScheme = "http";
+            }
+            else
+            {
+                httpScheme = "https";
+            }
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, httpScheme));
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpServerName, "servername.com"));
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostPort, port));
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
-            string colon = ":";
+            string expectedUrl;
             if (port == "80" || port == "443")
             {
-                port = "";
-                colon = "";
+                expectedUrl = $"{httpScheme}://servername.com/path";
             }
-            string expectedUrl = $"http://servername.com{colon}{port}/path";
+            else
+            {
+                expectedUrl = $"{httpScheme}://servername.com:{port}/path";
+            }
             string url = PartBTags.GetRequestUrl();
             Assert.Equal(expectedUrl, url);
         }
@@ -237,17 +259,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public void HttpRequestUrlIsSetUsing_Scheme_NetHostName_Port_Target(string port)
         {
             var PartBTags = AzMonList.Initialize();
-            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            string httpScheme;
+            if (port == "80")
+            {
+                httpScheme = "http";
+            }
+            else
+            {
+                httpScheme = "https";
+            }
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, httpScheme));
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostName, "localhost"));
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetHostPort, port));
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
-            string colon = ":";
+            string expectedUrl;
             if (port == "80" || port == "443")
             {
-                port = "";
-                colon = "";
+                expectedUrl = $"{httpScheme}://localhost/path";
             }
-            string expectedUrl = $"http://localhost{colon}{port}/path";
+            else
+            {
+                expectedUrl = $"{httpScheme}://localhost:{port}/path";
+            }
             string url = PartBTags.GetRequestUrl();
             Assert.Equal(expectedUrl, url);
         }
@@ -308,6 +341,174 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             string expectedUrl = "http://localhost:8888/path";
             string url = PartBTags.GetRequestUrl();
             Assert.Equal(expectedUrl, url);
+        }
+
+        [Fact]
+        public void HttpDependencyUrlIsSetUsingHttpUrl()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpUrl, "https://www.wiki.com"));
+
+            string url = PartBTags.GetDependencyUrl();
+            Assert.Equal("https://www.wiki.com", url);
+        }
+
+        [Theory]
+        [InlineData("http", "80")]
+        [InlineData("https", "443")]
+        [InlineData("https", "8888")]
+        [InlineData("http", "8888")]
+        public void HttpDependencyUrlIsSetUsing_Scheme_Host_Target(string httpScheme, string port)
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, httpScheme));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, $"www.httphost.org:{port}"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string expectedUrl;
+            if (port == "80" || port == "443")
+            {
+                expectedUrl = $"{httpScheme}://www.httphost.org/path";
+            }
+            else
+            {
+                expectedUrl = $"{httpScheme}://www.httphost.org:{port}/path";
+            }
+            string url = PartBTags.GetDependencyUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Theory]
+        [InlineData("80")]
+        [InlineData("443")]
+        [InlineData("8888")]
+
+        public void HttpDependencyUrlIsSetUsing_Scheme_PeerName_Port_Target(string port)
+        {
+            var PartBTags = AzMonList.Initialize();
+            string httpScheme;
+            if (port == "80")
+            {
+                httpScheme = "http";
+            }
+            else
+            {
+                httpScheme = "https";
+            }
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, httpScheme));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerName, "servername.com"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, port));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string expectedUrl;
+            if (port == "80" || port == "443")
+            {
+                expectedUrl = $"{httpScheme}://servername.com/path";
+            }
+            else
+            {
+                expectedUrl = $"{httpScheme}://servername.com:{port}/path";
+            }
+            string url = PartBTags.GetDependencyUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Theory]
+        [InlineData("80")]
+        [InlineData("443")]
+        [InlineData("8888")]
+
+        public void HttpDependencyUrlIsSetUsing_Scheme_PeerIp_Port_Target(string port)
+        {
+            var PartBTags = AzMonList.Initialize();
+            string httpScheme;
+            if (port == "80")
+            {
+                httpScheme = "http";
+            }
+            else
+            {
+                httpScheme = "https";
+            }
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, httpScheme));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerIp, "127.0.0.1"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, port));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string expectedUrl;
+            if (port == "80" || port == "443")
+            {
+                expectedUrl = $"{httpScheme}://127.0.0.1/path";
+            }
+            else
+            {
+                expectedUrl = $"{httpScheme}://127.0.0.1:{port}/path";
+            }
+            string url = PartBTags.GetDependencyUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Fact]
+        public void HttpUrlAttributeTakesPrecedenceSettingHttpDependencyUrl()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpUrl, "https://www.wiki.com"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerName, "servername.com"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "www.httphost.org"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerIp, "127.0.0.1"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, "8888"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string expectedUrl = "https://www.wiki.com";
+            string url = PartBTags.GetDependencyUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Fact]
+        public void HttpHostAttributeTakesPrecedenceSettingHttpDependencyUrl()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerName, "servername.com"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "www.httphost.org"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerIp, "127.0.0.1"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, "8888"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string expectedUrl = "http://www.httphost.org/path";
+            string url = PartBTags.GetDependencyUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Fact]
+        public void NetPeerNameAttributeTakesPrecedenceSettingHttpDependencyUrl()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerName, "servername.com"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerIp, "127.0.0.1"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, "8888"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string expectedUrl = "http://servername.com:8888/path";
+            string url = PartBTags.GetDependencyUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Fact]
+        public void NetPeerIpAttributeTakesPrecedenceSettingHttpDependencyUrl()
+        {
+            var PartBTags = AzMonList.Initialize();
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "http"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerIp, "127.0.0.1"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, "8888"));
+            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, "/path"));
+            string expectedUrl = "http://127.0.0.1:8888/path";
+            string url = PartBTags.GetDependencyUrl();
+            Assert.Equal(expectedUrl, url);
+        }
+
+        [Fact]
+        public void HttpUrlIsNullByDefault()
+        {
+            var PartBTags = AzMonList.Initialize();
+            Assert.Null(PartBTags.GetRequestUrl());
+            Assert.Null(PartBTags.GetDependencyUrl());
         }
     }
 }
