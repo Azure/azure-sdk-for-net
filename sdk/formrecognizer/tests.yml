@@ -16,4 +16,3 @@ extends:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
         Location: 'usgovvirginia'
     SupportedClouds: 'Public,Canary,UsGov'
-    Clouds: 'Preview, China'
