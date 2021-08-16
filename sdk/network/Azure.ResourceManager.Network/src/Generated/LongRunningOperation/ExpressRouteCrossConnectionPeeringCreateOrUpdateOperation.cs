@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ExpressRouteCrossConnectionPeering> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ExpressRouteCrossConnectionPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCrossConnectionPeeringCreateOrUpdateOperation");
             _operationBase = operationsBase;

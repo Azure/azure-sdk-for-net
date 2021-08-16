@@ -11,19 +11,18 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of tag and their operations over a scope. </summary>
-    public class TagResourceContainer : ResourceContainer
+    public class TagResourceContainer : ArmContainer
     {
+        private ClientDiagnostics _clientDiagnostics;
+
         /// <summary> Initializes a new instance of the <see cref="TagResourceContainer"/> class for mocking. </summary>
         protected TagResourceContainer()
         {
         }
 
-        internal TagResourceContainer(ResourceOperations operationsBase) : base(operationsBase)
+        internal TagResourceContainer(ArmResource operationsBase) : base(operationsBase)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
-
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         private string _subscriptionId
         {
@@ -37,6 +36,8 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Represents the REST operations. </summary>
         private TagRestOperations RestClient => new TagRestOperations(_clientDiagnostics, Pipeline, _subscriptionId, BaseUri);
+
+        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary> Typed Resource Identifier for the container. </summary>
         public new ResourceIdentifier Id => base.Id as ResourceIdentifier;

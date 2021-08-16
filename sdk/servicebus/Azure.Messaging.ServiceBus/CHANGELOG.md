@@ -1,6 +1,6 @@
 # Release History
 
-## 7.3.0-beta.1 (Unreleased)
+## 7.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,26 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 7.3.0-beta.1 (2021-08-10)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Timothee Lecomte _([GitHub](https://github.com/tlecomte))_
+- Shlomi Assaf _([GitHub](https://github.com/shlomiassaf))_
+
+### Features Added
+- Added the `ReleaseSession` method to `ProcessSessionMessageEventArgs` which allows processing for a session to terminated early.
+- Added protected constructors to `ServiceBusProcessor`, `ServiceBusReceiver`, `ServiceBusSender`, and `ServiceBusSessionProcessor` to allow these types to be extended.
+- Added `UpdateConcurrency` methods to `ServiceBusProcessor` and `ServiceBusSessionProcessor` to allow concurrency to be changed for an already created processor.
+- Allow a TimeSpan of zero to be passed as the `maxWaitTime` for the various receive overloads if Prefetch mode is enabled.
+
+### Bugs Fixed
+- Fixed bug where receiving a message with `AbsoluteExpiryTime` of DateTime.MaxValue would cause an `ArgumentException'. (A community contribution, courtesy of _[tlecomte](https://github.com/tlecomte))_
+
+### Other Changes
+- Fixed reference name conflicts in `ServiceBusModelFactory` ref docs. (A community contribution, courtesy of _[shlomiassaf](https://github.com/shlomiassaf))_
 
 ## 7.2.1 (2021-07-07)
 

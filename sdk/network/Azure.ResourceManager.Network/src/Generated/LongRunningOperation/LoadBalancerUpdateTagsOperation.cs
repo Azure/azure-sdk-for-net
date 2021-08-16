@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal LoadBalancerUpdateTagsOperation(ResourceOperations operationsBase, Response<LoadBalancerData> response)
+        internal LoadBalancerUpdateTagsOperation(ArmResource operationsBase, Response<LoadBalancerData> response)
         {
             _operation = new OperationOrResponseInternals<LoadBalancer>(Response.FromValue(new LoadBalancer(operationsBase, response.Value), response.GetRawResponse()));
         }

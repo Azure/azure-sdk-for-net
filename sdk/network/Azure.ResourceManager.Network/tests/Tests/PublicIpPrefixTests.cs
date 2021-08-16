@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         public async Task<PublicIPPrefixContainer> GetContainer()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("test_public_ip_prefix_"));
-            return resourceGroup.Value.GetPublicIPPrefixes();
+            return resourceGroup.GetPublicIPPrefixes();
         }
 
         [Test]

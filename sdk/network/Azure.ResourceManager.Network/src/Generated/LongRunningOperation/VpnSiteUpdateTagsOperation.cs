@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal VpnSiteUpdateTagsOperation(ResourceOperations operationsBase, Response<VpnSiteData> response)
+        internal VpnSiteUpdateTagsOperation(ArmResource operationsBase, Response<VpnSiteData> response)
         {
             _operation = new OperationOrResponseInternals<VpnSite>(Response.FromValue(new VpnSite(operationsBase, response.Value), response.GetRawResponse()));
         }

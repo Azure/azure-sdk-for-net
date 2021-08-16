@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ApplicationGatewayPrivateEndpointConnection> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionUpdateOperation for mocking. </summary>
         protected ApplicationGatewayPrivateEndpointConnectionUpdateOperation()
         {
         }
 
-        internal ApplicationGatewayPrivateEndpointConnectionUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ApplicationGatewayPrivateEndpointConnectionUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ApplicationGatewayPrivateEndpointConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ApplicationGatewayPrivateEndpointConnectionUpdateOperation");
             _operationBase = operationsBase;

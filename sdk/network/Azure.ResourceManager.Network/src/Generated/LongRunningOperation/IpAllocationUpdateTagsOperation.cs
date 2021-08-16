@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal IpAllocationUpdateTagsOperation(ResourceOperations operationsBase, Response<IpAllocationData> response)
+        internal IpAllocationUpdateTagsOperation(ArmResource operationsBase, Response<IpAllocationData> response)
         {
             _operation = new OperationOrResponseInternals<IpAllocation>(Response.FromValue(new IpAllocation(operationsBase, response.Value), response.GetRawResponse()));
         }

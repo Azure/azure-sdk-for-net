@@ -8,7 +8,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Compute" />
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Azure.Core" VersionOverride="1.18.0-alpha.20210812.1" />
   </ItemGroup>
 </Project>

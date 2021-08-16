@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal VirtualWanUpdateTagsOperation(ResourceOperations operationsBase, Response<VirtualWANData> response)
+        internal VirtualWanUpdateTagsOperation(ArmResource operationsBase, Response<VirtualWANData> response)
         {
             _operation = new OperationOrResponseInternals<VirtualWAN>(Response.FromValue(new VirtualWAN(operationsBase, response.Value), response.GetRawResponse()));
         }

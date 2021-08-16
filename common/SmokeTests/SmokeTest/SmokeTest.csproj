@@ -11,13 +11,13 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Add an OverrideDailyVersion attribute to prevent the Update-Dependencies script from overwriting it with a daily build version -->
-    <PackageReference Include="Azure.Identity" Version="1.5.0-beta.2" />
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.5.0" />
-    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.5.0" />
-    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.2.0" />
+    <PackageReference Include="Azure.Identity" Version="1.5.0-beta.3" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.6.0" />
+    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.6.0" />
+    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.3.0-beta.1" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.9.1" />
-    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.4.13" />
-    <PackageReference Include="Microsoft.Azure.Devices" Version="1.34.0" />
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.5.1" />
+    <PackageReference Include="Microsoft.Azure.Devices" Version="1.35.0" />
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.15.0" />
 
     <!-- This is needed to resolve a build conflict and force the correct version -->

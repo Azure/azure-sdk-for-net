@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         public async Task<ApplicationSecurityGroupContainer> GetContainer()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("test_application_security_group_"));
-            return resourceGroup.Value.GetApplicationSecurityGroups();
+            return resourceGroup.GetApplicationSecurityGroups();
         }
 
         [Test]

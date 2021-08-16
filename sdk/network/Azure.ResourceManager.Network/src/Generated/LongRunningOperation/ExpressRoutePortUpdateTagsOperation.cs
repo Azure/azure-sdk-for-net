@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal ExpressRoutePortUpdateTagsOperation(ResourceOperations operationsBase, Response<ExpressRoutePortData> response)
+        internal ExpressRoutePortUpdateTagsOperation(ArmResource operationsBase, Response<ExpressRoutePortData> response)
         {
             _operation = new OperationOrResponseInternals<ExpressRoutePort>(Response.FromValue(new ExpressRoutePort(operationsBase, response.Value), response.GetRawResponse()));
         }
