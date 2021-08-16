@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class which represents the RestApis for a given azure namespace.
     /// </summary>
-    public partial class RestApiContainer : ResourceContainer
+    public partial class RestApiContainer : ArmContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _nameSpace;

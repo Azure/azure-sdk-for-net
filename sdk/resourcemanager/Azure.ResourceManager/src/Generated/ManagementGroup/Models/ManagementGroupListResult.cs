@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Management.Models
         /// <summary> Initializes a new instance of ManagementGroupListResult. </summary>
         internal ManagementGroupListResult()
         {
-            Value = new ChangeTrackingList<ManagementGroupInfoData>();
+            Value = new ChangeTrackingList<ManagementGroupData>();
         }
 
         /// <summary> Initializes a new instance of ManagementGroupListResult. </summary>
         /// <param name="value"> The list of management groups. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ManagementGroupListResult(IReadOnlyList<ManagementGroupInfoData> value, string nextLink)
+        internal ManagementGroupListResult(IReadOnlyList<ManagementGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of management groups. </summary>
-        public IReadOnlyList<ManagementGroupInfoData> Value { get; }
+        public IReadOnlyList<ManagementGroupData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }
