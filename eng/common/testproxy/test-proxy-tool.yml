@@ -5,9 +5,9 @@ steps:
   - pwsh: |
         . $(Build.SourcesDirectory)/eng/common/scripts/common.ps1
 
-        if ($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn"))
+        if ($TestProxyTrustCertFn -and (Test-Path "Function:$TestProxyTrustCertFn"))
         {
-            &$FindArtifactForApiReviewFn
+            &$TestProxyTrustCertFn
         }
     displayName: 'Language Specific Certificate Trust'
 
