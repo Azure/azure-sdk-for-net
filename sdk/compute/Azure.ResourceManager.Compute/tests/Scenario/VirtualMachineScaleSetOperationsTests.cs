@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute.Tests
         private async Task<VirtualMachineScaleSet> CreateVirtualMachineScaleSetAsync(string vmssName)
         {
             var container = await GetVirtualMachineScaleSetContainerAsync();
-            var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
-            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
+            var subnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
+            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, subnet.Id);
             return await container.CreateOrUpdateAsync(vmssName, input);
         }
 
@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("There is a bug in OperationInternals causing we cannot handle this kind of PATCH LRO right now")]
         public async Task Update()
         {
             var vmssName = Recording.GenerateAssetName("testVMSS-");
