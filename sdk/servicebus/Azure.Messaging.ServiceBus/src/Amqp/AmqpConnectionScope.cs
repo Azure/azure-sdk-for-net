@@ -1046,40 +1046,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string entityPath = default,
             bool isProcessor = default)
         {
-            CancellationTokenRegistration registration;
             try
             {
-                var openObjectCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-                // Only allow cancelling in-flight opens when it is from a processor.
-                // This would occur when the processor is stopped or closed by the user.
-                if (isProcessor)
-                {
-                    // use a static delegate with tuple state to avoid allocating a closure
-                    registration = cancellationToken.Register(static state =>
-                    {
-                        var (tcs, target) = ((TaskCompletionSource<object>, AmqpObject))state;
-                        if (tcs.TrySetCanceled())
-                        {
-                            target.SafeClose();
-                        }
-                    }, (openObjectCompletionSource, target), useSynchronizationContext: false);
-                }
-
-                static async Task Open(AmqpObject target, TimeSpan timeout, TaskCompletionSource<object> openObjectCompletionSource)
-                {
-                    try
-                    {
-                        await target.OpenAsync(timeout).ConfigureAwait(false);
-                        openObjectCompletionSource.TrySetResult(null);
-                    }
-                    catch (Exception ex)
-                    {
-                        openObjectCompletionSource.TrySetException(ex);
-                    }
-                }
-
-                _ = Open(target, timeout, openObjectCompletionSource);
-                await openObjectCompletionSource.Task.ConfigureAwait(false);
+                await target.OpenAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -1108,13 +1077,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     default:
                         throw;
-                }
-            }
-            finally
-            {
-                if (isProcessor)
-                {
-                    registration.Dispose();
                 }
             }
         }
