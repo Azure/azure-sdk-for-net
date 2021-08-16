@@ -39,11 +39,8 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 Statuses = {DocumentTranslationStatus.Succeeded}
             };
-<<<<<<< HEAD
-            var result = operation.GetDocumentStatuses(filter: filter);
-=======
-            var result = operation.GetAllDocumentStatuses(options: options);
->>>>>>> Renamed:
+
+            var result = operation.GetDocumentStatuses(options: options);
 
             // assert.
             Assert.That(result.All(d => d.Status == DocumentTranslationStatus.Succeeded));
@@ -66,11 +63,7 @@ namespace Azure.AI.Translation.Document.Tests
                 Ids = { testIds[0] }
             };
 
-<<<<<<< HEAD
-            var result = operation.GetDocumentStatuses(filter: filter);
-=======
-            var result = operation.GetAllDocumentStatuses(options: options);
->>>>>>> Renamed:
+            var result = operation.GetDocumentStatuses(options: options);
 
             // assert
             Assert.That(result.All(d => testIds.Contains(d.Id)));
@@ -104,11 +97,7 @@ namespace Azure.AI.Translation.Document.Tests
                 OrderBy = { new DocumentFilterOrder(property: DocumentFilterProperty.CreatedOn, asc: false) }
             };
 
-<<<<<<< HEAD
-            var filterResults = operation.GetDocumentStatuses(filter: filter);
-=======
-            var filterResults = operation.GetAllDocumentStatuses(options: options);
->>>>>>> Renamed:
+            var filterResults = operation.GetDocumentStatuses(options: options);
 
             // assert
             var timestamp = Recording.UtcNow;

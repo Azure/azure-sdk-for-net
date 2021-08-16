@@ -64,11 +64,8 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 Statuses = { canceledStatusList[0], canceledStatusList[1] }
             };
-<<<<<<< HEAD
-            var filteredTranslations = await client.GetTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
-=======
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(options: options).ToEnumerableAsync();
->>>>>>> Renamed:
+
+            var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
             var filteredIds = filteredTranslations.Select(t => t.Id).ToList();
 
             // assert
@@ -91,11 +88,7 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 Ids = { targetIds[0] }
             };
-<<<<<<< HEAD
-            var filteredTranslations = await client.GetTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
-=======
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(options: options).ToEnumerableAsync();
->>>>>>> Renamed:
+            var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
 
             // assert
             Assert.That(filteredTranslations.Any(t => targetIds.Contains(t.Id)));
@@ -117,11 +110,7 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 CreatedAfter = timestamp
             };
-<<<<<<< HEAD
-            var filteredTranslations = await client.GetTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
-=======
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(options: options).ToEnumerableAsync();
->>>>>>> Renamed:
+            var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
 
             // assert
             Assert.That(filteredTranslations.Any(t => targetIds.Contains(t.Id)));
@@ -144,11 +133,9 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 CreatedBefore = timestamp
             };
-<<<<<<< HEAD
-            var filteredTranslations = await client.GetTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
-=======
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(options: options).ToEnumerableAsync();
->>>>>>> Renamed:
+
+            var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
+
 
             // assert
             Assert.That(filteredTranslations.Any(t => targetIds.Contains(t.Id)));
@@ -169,11 +156,8 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 OrderBy = { new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, asc: false) }
             };
-<<<<<<< HEAD
-            var filteredTranslations = await client.GetTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
-=======
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(options: options).ToEnumerableAsync();
->>>>>>> Renamed:
+
+            var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
 
             // assert
             var timestamp = Recording.UtcNow;
