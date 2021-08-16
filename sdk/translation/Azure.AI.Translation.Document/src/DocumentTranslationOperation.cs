@@ -66,16 +66,16 @@ namespace Azure.AI.Translation.Document
         public virtual int DocumentsNotStarted => _documentsNotStarted;
 
         /// <summary>
-        /// Number of documents cancelled.
+        /// Number of documents canceled.
         /// </summary>
-        public virtual int DocumentsCancelled => _documentsCancelled;
+        public virtual int DocumentsCanceled => _documentsCanceled;
 
         private int _documentsTotal;
         private int _documentsFailed;
         private int _documentsSucceeded;
         private int _documentsInProgress;
         private int _documentsNotStarted;
-        private int _documentsCancelled;
+        private int _documentsCanceled;
         private DateTimeOffset _createdOn;
         private DateTimeOffset _lastModified;
         private DocumentTranslationStatus _status;
@@ -288,10 +288,10 @@ namespace Azure.AI.Translation.Document
                     _documentsInProgress = update.Value.DocumentsInProgress;
                     _documentsSucceeded = update.Value.DocumentsSucceeded;
                     _documentsNotStarted = update.Value.DocumentsNotStarted;
-                    _documentsCancelled = update.Value.DocumentsCancelled;
+                    _documentsCanceled = update.Value.DocumentsCanceled;
 
                     if (update.Value.Status == DocumentTranslationStatus.Succeeded
-                        || update.Value.Status == DocumentTranslationStatus.Cancelled
+                        || update.Value.Status == DocumentTranslationStatus.Canceled
                         || update.Value.Status == DocumentTranslationStatus.Failed)
                     {
                         _hasCompleted = true;

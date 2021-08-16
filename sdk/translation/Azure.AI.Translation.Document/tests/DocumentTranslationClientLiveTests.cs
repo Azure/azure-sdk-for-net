@@ -90,7 +90,7 @@ namespace Azure.AI.Translation.Document.Tests
             TranslationStatus oneTranslation = translations[0];
             Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.CreatedOn);
             Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.LastModified);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsCancelled, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsCanceled, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsFailed, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsInProgress, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsNotStarted, 0);

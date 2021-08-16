@@ -48,7 +48,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, operation.DocumentsTotal);
             Assert.AreEqual(1, operation.DocumentsSucceeded);
             Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
         }
@@ -81,7 +81,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(3, operation.DocumentsTotal);
             Assert.AreEqual(3, operation.DocumentsSucceeded);
             Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
         }
@@ -116,7 +116,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(2, operation.DocumentsTotal);
             Assert.AreEqual(2, operation.DocumentsSucceeded);
             Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
         }
@@ -150,7 +150,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, operation.DocumentsTotal);
             Assert.AreEqual(1, operation.DocumentsSucceeded);
             Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
         }
@@ -184,7 +184,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, operation.DocumentsTotal);
             Assert.AreEqual(1, operation.DocumentsSucceeded);
             Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
         }
@@ -315,7 +315,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, operation.DocumentsTotal);
             Assert.AreEqual(1, operation.DocumentsSucceeded);
             Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
         }
@@ -345,7 +345,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, operation.DocumentsTotal);
             Assert.AreEqual(0, operation.DocumentsSucceeded);
             Assert.AreEqual(1, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
 
@@ -375,7 +375,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, operation.DocumentsTotal);
             Assert.AreEqual(0, operation.DocumentsSucceeded);
             Assert.AreEqual(1, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
 

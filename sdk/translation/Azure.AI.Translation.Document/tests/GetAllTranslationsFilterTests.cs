@@ -16,9 +16,9 @@ namespace Azure.AI.Translation.Document.Tests
         public async Task<List<string>> CreateTranslationJobsAsync(DocumentTranslationClient client, int jobsCount = 1, int docsPerJob = 1, DocumentTranslationStatus jobTerminalStatus = default)
         {
             // create source container
-            if (jobTerminalStatus == DocumentTranslationStatus.Cancelled)
+            if (jobTerminalStatus == DocumentTranslationStatus.Canceled)
             {
-                docsPerJob = 20; // in order to avoid job completing before cancelling
+                docsPerJob = 20; // in order to avoid job completing before canceling
             }
             var testDocs = CreateDummyTestDocuments(count: docsPerJob);
             var sourceContainer = await CreateSourceContainerAsync(testDocs);
@@ -35,7 +35,7 @@ namespace Azure.AI.Translation.Document.Tests
                 {
                     await translationOp.WaitForCompletionAsync();
                 }
-                else if (jobTerminalStatus == DocumentTranslationStatus.Cancelled)
+                else if (jobTerminalStatus == DocumentTranslationStatus.Canceled)
                 {
                     await translationOp.CancelAsync(default);
                     Thread.Sleep(3000); // wait for cancel status to propagate!
@@ -53,23 +53,23 @@ namespace Azure.AI.Translation.Document.Tests
 
             // create test jobs
             await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
-            var cancelledIds = await CreateTranslationJobsAsync(client, jobsCount: 1, jobTerminalStatus: DocumentTranslationStatus.Cancelled);
+            var canceledIds = await CreateTranslationJobsAsync(client, jobsCount: 1, jobTerminalStatus: DocumentTranslationStatus.Canceled);
 
             // list translations with filter
-            var cancelledStatusList = new List<DocumentTranslationStatus> {
-                    DocumentTranslationStatus.Cancelled,
-                    DocumentTranslationStatus.Cancelling
+            var canceledStatusList = new List<DocumentTranslationStatus> {
+                    DocumentTranslationStatus.Canceled,
+                    DocumentTranslationStatus.Canceling
             };
             var filter = new TranslationFilter
             {
-                Statuses = { cancelledStatusList[0], cancelledStatusList[1] }
+                Statuses = { canceledStatusList[0], canceledStatusList[1] }
             };
             var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
             var filteredIds = filteredTranslations.Select(t => t.Id).ToList();
 
             // assert
-            Assert.That(filteredTranslations.All(t => cancelledStatusList.Contains(t.Status)));
-            Assert.True(cancelledIds.All(cancelledId => filteredIds.Contains(cancelledId)));
+            Assert.That(filteredTranslations.All(t => canceledStatusList.Contains(t.Status)));
+            Assert.True(canceledIds.All(canceledId => filteredIds.Contains(canceledId)));
         }
 
         [RecordedTest]
