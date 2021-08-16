@@ -33,20 +33,19 @@ namespace Azure.Core.Pipeline
         /// <param name="scopes">Scopes to be included in acquired tokens.</param>
         /// <exception cref="ArgumentNullException">When <paramref name="credential"/> or <paramref name="scopes"/> is null.</exception>
         public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
-            : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
+            : this(credential, scopes, TimeSpan.FromSeconds(30))
         { }
 
         internal BearerTokenAuthenticationPolicy(
             TokenCredential credential,
             IEnumerable<string> scopes,
-            TimeSpan tokenRefreshOffset,
             TimeSpan tokenRefreshRetryDelay)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
 
             _scopes = scopes.ToArray();
-            _accessTokenCache = new AccessTokenCache(credential, tokenRefreshOffset, tokenRefreshRetryDelay, scopes.ToArray());
+            _accessTokenCache = new AccessTokenCache(credential, tokenRefreshRetryDelay, scopes.ToArray());
         }
 
         /// <inheritdoc />
@@ -177,17 +176,15 @@ namespace Azure.Core.Pipeline
         {
             private readonly object _syncObj = new object();
             private readonly TokenCredential _credential;
-            private readonly TimeSpan _tokenRefreshOffset;
             private readonly TimeSpan _tokenRefreshRetryDelay;
 
             private TokenRequestContext? _currentContext;
             private TaskCompletionSource<HeaderValueInfo>? _infoTcs;
             private TaskCompletionSource<HeaderValueInfo>? _backgroundUpdateTcs;
 
-            public AccessTokenCache(TokenCredential credential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay, string[] initialScopes)
+            public AccessTokenCache(TokenCredential credential, TimeSpan tokenRefreshRetryDelay, string[] initialScopes)
             {
                 _credential = credential;
-                _tokenRefreshOffset = tokenRefreshOffset;
                 _tokenRefreshRetryDelay = tokenRefreshRetryDelay;
                 _currentContext = new TokenRequestContext(initialScopes);
             }
@@ -200,13 +197,6 @@ namespace Azure.Core.Pipeline
                 int maxCancellationRetries = 3;
                 HeaderValueInfo info;
                 DateTimeOffset now = DateTimeOffset.UtcNow;
-
-                if (_infoTcs != null && _infoTcs.Task.Status == TaskStatus.RanToCompletion &&
-                    _infoTcs.Task.Result.Token.RefreshOn <= now)
-                {
-                    info = await GetHeaderValueFromCredentialAsync(context, async, message.CancellationToken).ConfigureAwait(false);
-                    return info.HeaderValue;
-                }
 
                 while (true)
                 {
@@ -300,7 +290,7 @@ namespace Azure.Core.Pipeline
                 lock (_syncObj)
                 {
                     // Initial state. GetTaskCompletionSources has been called for the first time
-                    if (_infoTcs == null || RequestRequiresNewToken(context))
+                    if (_infoTcs == null || RequestRequiresNewToken(context) || _infoTcs.Task.Status == TaskStatus.RanToCompletion && _infoTcs.Task.Result.Token.RefreshOn == DateTimeOffset.MinValue)
                     {
                         _currentContext = context;
                         _infoTcs = new TaskCompletionSource<HeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -387,8 +377,6 @@ namespace Azure.Core.Pipeline
                     ? await _credential.GetTokenAsync(context, cancellationToken).ConfigureAwait(false)
                     : _credential.GetToken(context, cancellationToken);
 
-                // Set the RefreshOn value only if it is not already set by the credential.
-                token.RefreshOn ??= token.ExpiresOn - _tokenRefreshOffset;
                 return new HeaderValueInfo(token);
             }
 
