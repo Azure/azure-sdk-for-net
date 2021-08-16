@@ -1,6 +1,16 @@
 # Release History
 
-## 1.5.0-beta.3 (Unreleased)
+## 1.5.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.5.0-beta.3 (2021-08-10)
 
 ### Acknowledgments
 
@@ -10,6 +20,10 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 ### Features Added
 
+- A new trace event is now logged when `DefaultAzureCredential` selects a credential during initialization.
+- Added `AzureApplicationCredential`
+- Added `IsPIILoggingEnabled` property to `TokenCredentialOptions`, which controls whether MSAL PII logging is enabled, and other sensitive credential related logging content.
+
 ### Breaking Changes
 
 - Renamed `AZURE_POD_IDENTITY_TOKEN_URL` to `AZURE_POD_IDENTITY_AUTHORITY_HOST`. The value should now be a host, for example "http://169.254.169.254" (the default).
@@ -18,9 +32,9 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 - Stopped loading `$PROFILE` and checking for updates when using `AzurePowerShellCredential`.
 - Fixed unrecognized argument issue in `AzureCliCredential` when specifying the `TenantId` option. [#23158](https://github.com/Azure/azure-sdk-for-net/issues/23158) (A community contribution, courtesy of _[tpajurek-dtml](https://github.com/tpajurek-dtml))_.
-
-
-### Other Changes
+- Handled an additional error scenario for AzureCliCredential that prompts developers to run `az login` when needed. [#21758](https://github.com/Azure/azure-sdk-for-net/issues/21758)
+- Fixed an issue in `EnvironmentCredential` where the supplied `options` were not getting properly applied. [#22787](https://github.com/Azure/azure-sdk-for-net/issues/22787)
+- Fixed DateTime parsing to use the current culture in AzurePowerShellCredential. [#22638](https://github.com/Azure/azure-sdk-for-net/issues/22638)
 
 ## 1.5.0-beta.2 (2021-07-12)
 

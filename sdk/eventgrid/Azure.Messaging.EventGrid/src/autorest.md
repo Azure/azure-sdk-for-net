@@ -4,8 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/7026463801584950d4ccbaa6b05b15d29555dd3a/specification/eventgrid/data-plane/readme.md
-
+require: https://github.com/Azure/azure-rest-api-specs/blob/504bc4ece6c4a1ad983f148237c71a3f72fc977f/specification/eventgrid/data-plane/readme.md
 ```
 
 ## Swagger workarounds
@@ -38,7 +37,7 @@ directive:
     $.ResourceWriteSuccessData["x-ms-client-name"] = "ResourceWriteSuccessEventData";
 ```
 
-### Fix casing
+### Fix casing of Redis events
 
 ``` yaml
 directive:
@@ -47,6 +46,35 @@ directive:
   transform: >
     $.RedisExportRDBCompletedEventData["x-ms-client-name"] = "RedisExportRdbCompletedEventData";
     $.RedisImportRDBCompletedEventData["x-ms-client-name"] = "RedisImportRdbCompletedEventData";
+```
+
+### Fix casing of KeyVault events
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.KeyVaultVaultAccessPolicyChangedEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultVaultAccessPolicyChangedEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultCertificateNewVersionCreatedEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultCertificateNewVersionCreatedEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultCertificateNearExpiryEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultCertificateNearExpiryEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultCertificateExpiredEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultCertificateExpiredEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultKeyNewVersionCreatedEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultKeyNewVersionCreatedEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultKeyNearExpiryEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultKeyNearExpiryEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultKeyExpiredEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultKeyExpiredEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultSecretNewVersionCreatedEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultSecretNewVersionCreatedEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultSecretNearExpiryEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultSecretNearExpiryEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
+    $.KeyVaultSecretExpiredEventData["properties"]["NBF"]["x-ms-client-name"] = "Nbf";
+    $.KeyVaultSecretExpiredEventData["properties"]["EXP"]["x-ms-client-name"] = "Exp";
 ```
 
 ### Apply converters and update namespace for system event data models
