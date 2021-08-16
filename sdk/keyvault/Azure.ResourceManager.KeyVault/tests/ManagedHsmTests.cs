@@ -203,8 +203,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             var managedHsm = await ManagedHsmContainer.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
 
             // Delete
-            ManagedHsmOperations = new ManagedHsmOperations(managedHsm.Value, managedHsm.Value.Id);
-            await ManagedHsmOperations.DeleteAsync();
+            await managedHsm.Value.DeleteAsync();
 
             // Get deleted vault
             Assert.ThrowsAsync<RequestFailedException>(async () =>

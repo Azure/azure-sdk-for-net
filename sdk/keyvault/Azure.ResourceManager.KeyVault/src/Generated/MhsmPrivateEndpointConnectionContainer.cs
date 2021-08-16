@@ -20,8 +20,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing collection of MhsmPrivateEndpointConnection and their operations over a ManagedHsm. </summary>
-    public partial class MhsmPrivateEndpointConnectionContainer : ResourceContainer
+    public partial class MhsmPrivateEndpointConnectionContainer : ArmContainer
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly MhsmPrivateEndpointConnectionsRestOperations _restClient;
+
         /// <summary> Initializes a new instance of the <see cref="MhsmPrivateEndpointConnectionContainer"/> class for mocking. </summary>
         protected MhsmPrivateEndpointConnectionContainer()
         {
@@ -29,18 +32,14 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal MhsmPrivateEndpointConnectionContainer(ResourceOperations parent) : base(parent)
+        internal MhsmPrivateEndpointConnectionContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new MhsmPrivateEndpointConnectionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary> Represents the REST operations. </summary>
-        private MhsmPrivateEndpointConnectionsRestOperations _restClient => new MhsmPrivateEndpointConnectionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ManagedHsmOperations.ResourceType;
+        protected override ResourceType ValidResourceType => ManagedHsm.ResourceType;
 
         // Container level operations.
 
@@ -319,7 +318,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> The List operation gets information about the private endpoint connections associated with the managed HSM Pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MhsmPrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<MhsmPrivateEndpointConnection> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<MhsmPrivateEndpointConnection> GetAll(CancellationToken cancellationToken = default)
         {
             Page<MhsmPrivateEndpointConnection> FirstPageFunc(int? pageSizeHint)
             {
@@ -357,7 +356,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> The List operation gets information about the private endpoint connections associated with the managed HSM Pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MhsmPrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<MhsmPrivateEndpointConnection> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MhsmPrivateEndpointConnection> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MhsmPrivateEndpointConnection>> FirstPageFunc(int? pageSizeHint)
             {
@@ -398,15 +397,15 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(MhsmPrivateEndpointConnectionOperations.ResourceType);
+                var filters = new ResourceFilterCollection(MhsmPrivateEndpointConnection.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -421,15 +420,15 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(MhsmPrivateEndpointConnectionOperations.ResourceType);
+                var filters = new ResourceFilterCollection(MhsmPrivateEndpointConnection.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

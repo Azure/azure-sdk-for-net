@@ -34,11 +34,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public VaultProperties VaultProperties { get; internal set; }
         public ManagedHsmProperties ManagedHsmProperties { get; internal set; }
 
-        public VaultOperations VaultOperations { get; set; }
         public VaultContainer VaultContainer { get; set; }
         public DeletedVaultContainer DeletedVaultContainer { get; set; }
         public ManagedHsmContainer ManagedHsmContainer { get; set; }
-        public ManagedHsmOperations ManagedHsmOperations { get; set; }
         public ResourceGroup ResourceGroup { get; set; }
         public ProvidersOperations ResourceProvidersClient { get; set; }
 
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         protected async Task Initialize()
         {
             Client = GetArmClient();
-            DeletedVaultContainer = Client.DefaultSubscription.GetDeletedVaultContainer();
+            DeletedVaultContainer = Client.DefaultSubscription.GetDeletedVaults();
 
             if (Mode == RecordedTestMode.Playback)
             {

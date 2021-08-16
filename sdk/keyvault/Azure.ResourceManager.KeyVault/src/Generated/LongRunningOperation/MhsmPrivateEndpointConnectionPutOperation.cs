@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
         }
 
-        internal MhsmPrivateEndpointConnectionPutOperation(ResourceOperations operationsBase, Response<MhsmPrivateEndpointConnectionData> response)
+        internal MhsmPrivateEndpointConnectionPutOperation(ArmResource operationsBase, Response<MhsmPrivateEndpointConnectionData> response)
         {
             _operation = new OperationOrResponseInternals<MhsmPrivateEndpointConnection>(Response.FromValue(new MhsmPrivateEndpointConnection(operationsBase, response.Value), response.GetRawResponse()));
         }

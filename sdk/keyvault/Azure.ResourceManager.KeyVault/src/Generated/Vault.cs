@@ -5,27 +5,333 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A Class representing a Vault along with the instance operations that can be performed on it. </summary>
-    public class Vault : VaultOperations
+    public partial class Vault : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref = "Vault"/> class for mocking. </summary>
-        protected Vault() : base()
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly VaultsRestOperations _restClient;
+        private readonly VaultData _data;
+        private PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient { get; }
+
+        /// <summary> Initializes a new instance of the <see cref="Vault"/> class for mocking. </summary>
+        protected Vault()
         {
         }
 
         /// <summary> Initializes a new instance of the <see cref = "Vault"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Vault(ResourceOperations options, VaultData resource) : base(options, resource.Id)
+        internal Vault(ArmResource options, VaultData resource) : base(options, resource.Id)
         {
-            Data = resource;
+            HasData = true;
+            _data = resource;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
-        /// <summary> Gets or sets the VaultData. </summary>
-        public virtual VaultData Data { get; private set; }
+        /// <summary> Initializes a new instance of the <see cref="Vault"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal Vault(ArmResource options, ResourceIdentifier id) : base(options, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new VaultsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+        }
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/vaults";
+
+        /// <summary> Gets the valid resource type for the operations. </summary>
+        protected override ResourceType ValidResourceType => ResourceType;
+
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual VaultData Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
+
+        /// <summary> Gets the specified Azure key vault. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<Vault>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Vault.Get");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                return Response.FromValue(new Vault(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the specified Azure key vault. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Vault> Get(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Vault.Get");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new Vault(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            return ListAvailableLocations(ResourceType, cancellationToken);
+        }
+
+        /// <summary> Deletes the specified Azure key vault. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Vault.Delete");
+            scope.Start();
+            try
+            {
+                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified Azure key vault. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Delete(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Vault.Delete");
+            scope.Start();
+            try
+            {
+                var operation = StartDelete(cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified Azure key vault. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<VaultDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Vault.StartDelete");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new VaultDeleteOperation(response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes the specified Azure key vault. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual VaultDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Vault.StartDelete");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new VaultDeleteOperation(response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary> Update a key vault in the specified subscription. </summary>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<Vault>> UpdateAsync(IDictionary<string, string> tags = null, VaultPatchProperties properties = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Vault.Update");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, tags, properties, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Vault(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a key vault in the specified subscription. </summary>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Vault> Update(IDictionary<string, string> tags = null, VaultPatchProperties properties = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Vault.Update");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, tags, properties, cancellationToken);
+                return Response.FromValue(new Vault(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks that the vault name is valid and is not already in use. </summary>
+        /// <param name="name"> The vault name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Vault.CheckNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.CheckNameAvailabilityAsync(name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks that the vault name is valid and is not already in use. </summary>
+        /// <param name="name"> The vault name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(string name, CancellationToken cancellationToken = default)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("Vault.CheckNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = _restClient.CheckNameAvailability(name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the private link resources supported for the key vault. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<IReadOnlyList<PrivateLinkResource>>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Vault.GetPrivateLinkResources");
+            scope.Start();
+            try
+            {
+                var response = await _privateLinkResourcesRestClient.GetByVaultAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the private link resources supported for the key vault. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<IReadOnlyList<PrivateLinkResource>> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("Vault.GetPrivateLinkResources");
+            scope.Start();
+            try
+            {
+                var response = _privateLinkResourcesRestClient.GetByVault(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a list of PrivateEndpointConnections in the Vault. </summary>
+        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a Vault. </returns>
+        public PrivateEndpointConnectionContainer GetPrivateEndpointConnections()
+        {
+            return new PrivateEndpointConnectionContainer(this);
+        }
     }
 }

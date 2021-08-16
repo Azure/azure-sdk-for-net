@@ -19,8 +19,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing collection of DeletedVault and their operations over a Subscription. </summary>
-    public partial class DeletedVaultContainer : ResourceContainer
+    public partial class DeletedVaultContainer : ArmContainer
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly DeletedVaultsRestOperations _restClient;
+
         /// <summary> Initializes a new instance of the <see cref="DeletedVaultContainer"/> class for mocking. </summary>
         protected DeletedVaultContainer()
         {
@@ -28,18 +31,14 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Initializes a new instance of DeletedVaultContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DeletedVaultContainer(ResourceOperations parent) : base(parent)
+        internal DeletedVaultContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new DeletedVaultsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary> Represents the REST operations. </summary>
-        private DeletedVaultsRestOperations _restClient => new DeletedVaultsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
+        protected override ResourceType ValidResourceType => Subscription.ResourceType;
 
         // Container level operations.
 
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets information about the deleted vaults in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedVault" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<DeletedVault> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<DeletedVault> GetAll(CancellationToken cancellationToken = default)
         {
             Page<DeletedVault> FirstPageFunc(int? pageSizeHint)
             {
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets information about the deleted vaults in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DeletedVault" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<DeletedVault> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DeletedVault> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DeletedVault>> FirstPageFunc(int? pageSizeHint)
             {
@@ -277,15 +276,15 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DeletedVaultContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(DeletedVaultOperations.ResourceType);
+                var filters = new ResourceFilterCollection(DeletedVault.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -300,15 +299,15 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DeletedVaultContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(DeletedVaultOperations.ResourceType);
+                var filters = new ResourceFilterCollection(DeletedVault.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

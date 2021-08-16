@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         private readonly OperationInternals<Vault> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of VaultCreateOrUpdateOperation for mocking. </summary>
         protected VaultCreateOrUpdateOperation()
         {
         }
 
-        internal VaultCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VaultCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<Vault>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VaultCreateOrUpdateOperation");
             _operationBase = operationsBase;

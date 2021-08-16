@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.KeyVault
     {
         #region Vault
         /// <summary> Gets an object representing a VaultContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="VaultContainer" /> object. </returns>
-        public static VaultContainer GetVaults(this ResourceGroupOperations resourceGroup)
+        public static VaultContainer GetVaults(this ResourceGroup resourceGroup)
         {
             return new VaultContainer(resourceGroup);
         }
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.KeyVault
 
         #region ManagedHsm
         /// <summary> Gets an object representing a ManagedHsmContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="ManagedHsmContainer" /> object. </returns>
-        public static ManagedHsmContainer GetManagedHsms(this ResourceGroupOperations resourceGroup)
+        public static ManagedHsmContainer GetManagedHsms(this ResourceGroup resourceGroup)
         {
             return new ManagedHsmContainer(resourceGroup);
         }

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.KeyVault
             return new VaultsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
         }
 
-        /// <summary> Lists the Vaults for this <see cref="SubscriptionOperations" />. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <summary> Lists the Vaults for this <see cref="Subscription" />. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Vault> GetVaultsAsync(this SubscriptionOperations subscription, int? top = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Vault> GetVaultsAsync(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
 
-        /// <summary> Lists the Vaults for this <see cref="SubscriptionOperations" />. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <summary> Lists the Vaults for this <see cref="Subscription" />. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Vault> GetVaults(this SubscriptionOperations subscription, int? top = null, CancellationToken cancellationToken = default)
+        public static Pageable<Vault> GetVaults(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -120,30 +120,30 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
 
-        /// <summary> Filters the list of Vaults for a <see cref="SubscriptionOperations" /> represented as generic resources. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <summary> Filters the list of Vaults for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResourceExpanded> GetVaultByNameAsync(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetVaultByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(VaultOperations.ResourceType);
+            ResourceFilterCollection filters = new(Vault.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of Vaults for a <see cref="SubscriptionOperations" /> represented as generic resources. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <summary> Filters the list of Vaults for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResourceExpanded> GetVaultByName(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetVaultByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(VaultOperations.ResourceType);
+            ResourceFilterCollection filters = new(Vault.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.KeyVault
 
         #region DeletedVault
         /// <summary> Gets an object representing a DeletedVaultContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="DeletedVaultContainer" /> object. </returns>
-        public static DeletedVaultContainer GetDeletedVaultContainer(this SubscriptionOperations subscription)
+        public static DeletedVaultContainer GetDeletedVaults(this Subscription subscription)
         {
             return new DeletedVaultContainer(subscription);
         }
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.KeyVault
             return new ManagedHsmsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
         }
 
-        /// <summary> Lists the ManagedHsms for this <see cref="SubscriptionOperations" />. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <summary> Lists the ManagedHsms for this <see cref="Subscription" />. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedHsm> GetManagedHsmsAsync(this SubscriptionOperations subscription, int? top = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ManagedHsm> GetManagedHsmsAsync(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
 
-        /// <summary> Lists the ManagedHsms for this <see cref="SubscriptionOperations" />. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <summary> Lists the ManagedHsms for this <see cref="Subscription" />. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedHsm> GetManagedHsms(this SubscriptionOperations subscription, int? top = null, CancellationToken cancellationToken = default)
+        public static Pageable<ManagedHsm> GetManagedHsms(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
 
-        /// <summary> Lists the DeletedManagedHsms for this <see cref="SubscriptionOperations" />. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <summary> Lists the DeletedManagedHsms for this <see cref="Subscription" />. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedManagedHsm> GetManagedHsmsAsync(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DeletedManagedHsm> GetManagedHsmsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
 
-        /// <summary> Lists the DeletedManagedHsms for this <see cref="SubscriptionOperations" />. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <summary> Lists the DeletedManagedHsms for this <see cref="Subscription" />. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedManagedHsm> GetManagedHsms(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
+        public static Pageable<DeletedManagedHsm> GetManagedHsms(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -347,30 +347,30 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
 
-        /// <summary> Filters the list of ManagedHsms for a <see cref="SubscriptionOperations" /> represented as generic resources. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <summary> Filters the list of ManagedHsms for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResourceExpanded> GetManagedHsmByNameAsync(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResource> GetManagedHsmByNameAsync(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(ManagedHsmOperations.ResourceType);
+            ResourceFilterCollection filters = new(ManagedHsm.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of ManagedHsms for a <see cref="SubscriptionOperations" /> represented as generic resources. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <summary> Filters the list of ManagedHsms for a <see cref="Subscription" /> represented as generic resources. </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResourceExpanded> GetManagedHsmByName(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResource> GetManagedHsmByName(this Subscription subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
-            ResourceFilterCollection filters = new(ManagedHsmOperations.ResourceType);
+            ResourceFilterCollection filters = new(ManagedHsm.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         private readonly OperationInternals<ManagedHsm> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of ManagedHsmCreateOrUpdateOperation for mocking. </summary>
         protected ManagedHsmCreateOrUpdateOperation()
         {
         }
 
-        internal ManagedHsmCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagedHsmCreateOrUpdateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ManagedHsm>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedHsmCreateOrUpdateOperation");
             _operationBase = operationsBase;

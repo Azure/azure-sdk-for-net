@@ -112,8 +112,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             // Delete
-            VaultOperations = new VaultOperations(rawRetrievedVault.Value, rawRetrievedVault.Value.Id);
-            await VaultOperations.DeleteAsync();
+            await rawRetrievedVault.Value.DeleteAsync();
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
@@ -135,8 +134,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             Assert.False(vaultValue.Data.Properties.EnableSoftDelete);
 
-            VaultOperations = new VaultOperations(vaultValue, vaultValue.Id);
-            await VaultOperations.DeleteAsync();
+            await vaultValue.DeleteAsync();
         }
 
         [Test]
@@ -188,8 +186,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             // Delete
-            VaultOperations = new VaultOperations(retrievedVault.Value, retrievedVault.Value.Id);
-            await VaultOperations.DeleteAsync();
+            await retrievedVault.Value.DeleteAsync();
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
@@ -235,8 +232,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             // Delete
             foreach (var item in vaultList)
             {
-                VaultOperations = new VaultOperations(item, item.Id);
-                await VaultOperations.DeleteAsync();
+                await item.DeleteAsync();
             }
         }
 
@@ -268,8 +264,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             var getResult =  await VaultContainer.GetAsync(VaultName);
 
             // Delete
-            VaultOperations = new VaultOperations(getResult.Value, getResult.Value.Id);
-            await VaultOperations.DeleteAsync();
+            await getResult.Value.DeleteAsync();
 
             VaultProperties.CreateMode = CreateMode.Recover;
             parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
@@ -284,8 +279,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             getResult = await VaultContainer.GetAsync(VaultName);
 
             // Delete
-            VaultOperations = new VaultOperations(getResult.Value, getResult.Value.Id);
-            await VaultOperations.DeleteAsync();
+            await getResult.Value.DeleteAsync();
         }
 
         [Ignore("Add this back when fix get with name/location issue")]
