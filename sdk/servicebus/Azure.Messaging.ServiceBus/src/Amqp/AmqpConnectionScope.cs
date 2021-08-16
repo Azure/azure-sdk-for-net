@@ -146,28 +146,30 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private string _sendViaReceiverEntityPath;
 
         private readonly object _syncLock = new();
+        private readonly TimeSpan _operationTimeout;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
         /// </summary>
-        ///
         /// <param name="serviceEndpoint">Endpoint for the Service Bus service to which the scope is associated.</param>
         /// <param name="credential">The credential to use for authorization with the Service Bus service.</param>
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="useSingleSession">If true, all links will use a single session.</param>
-        ///
+        /// <param name="operationTimeout">The timeout for operations associated with the connection.</param>
         public AmqpConnectionScope(
             Uri serviceEndpoint,
             ServiceBusTokenCredential credential,
             ServiceBusTransportType transport,
             IWebProxy proxy,
-            bool useSingleSession)
+            bool useSingleSession,
+            TimeSpan operationTimeout)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             ValidateTransport(transport);
 
+            _operationTimeout = operationTimeout;
             ServiceEndpoint = serviceEndpoint;
             Transport = transport;
             Proxy = proxy;
@@ -506,6 +508,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var linkSettings = new AmqpLinkSettings();
                 linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
                 linkSettings.AddProperty(AmqpClientConstants.EntityTypeName, AmqpClientConstants.EntityTypeManagement);
+                linkSettings.OperationTimeout = _operationTimeout;
                 entityPath += '/' + AmqpClientConstants.ManagementAddress;
 
                 // Perform the initial authorization for the link.
@@ -639,7 +642,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     AutoSendFlow = prefetchCount > 0,
                     SettleType = (receiveMode == ServiceBusReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
-                    Target = new Target { Address = Guid.NewGuid().ToString() }
+                    Target = new Target { Address = Guid.NewGuid().ToString() },
+                    OperationTimeout = _operationTimeout
                 };
 
                 var link = new ReceivingAmqpLink(linkSettings);
@@ -777,7 +781,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Role = false,
                     InitialDeliveryCount = 0,
                     Source = new Source { Address = Guid.NewGuid().ToString() },
-                    Target = new Target { Address = destinationEndpoint.AbsolutePath }
+                    Target = new Target { Address = destinationEndpoint.AbsolutePath },
+                    OperationTimeout = _operationTimeout
                 };
 
                 linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
