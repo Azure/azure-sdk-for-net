@@ -29,11 +29,5 @@ namespace Azure.Core
         /// <returns>A valid <see cref="AccessToken"/>.</returns>
         /// <remarks>Caching and management of the lifespan for the <see cref="AccessToken"/> is considered the responsibility of the caller: each call should request a fresh token being requested.</remarks>
         public abstract AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Indicates if a <see cref="TokenCredential"/> supports token caching.
-        /// If <c>true</c>, upstream components such as a <see cref="HttpPipelinePolicy"/> should rely on the credential itself to manage any token caching.
-        /// </summary>
-        public virtual bool SupportsCaching => false;
     }
 }

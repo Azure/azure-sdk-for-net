@@ -241,7 +241,6 @@ namespace Azure.Identity
     {
         protected OnBehalfOfCredential() { }
         public OnBehalfOfCredential(string tenantId, string clientId, string clientSecret, Azure.Identity.OnBehalfOfCredentialOptions options = null) { }
-        public override bool SupportsCaching { get { throw null; } }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -384,7 +383,7 @@ namespace Azure.Identity
     public partial class UserAssertionScopeOptions
     {
         public UserAssertionScopeOptions() { }
-        public System.Func<System.Threading.Tasks.Task<Azure.Identity.UserAssertionCacheDetails>> HydrateCache { get { throw null; } set { } }
+        public System.Func<Azure.Identity.TokenCacheNotificationDetails, System.Threading.Tasks.Task<Azure.Identity.UserAssertionCacheDetails>> HydrateCache { get { throw null; } set { } }
         public System.Func<Azure.Identity.UserAssertionCacheDetails, System.Threading.Tasks.Task> PersistCache { get { throw null; } set { } }
     }
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential

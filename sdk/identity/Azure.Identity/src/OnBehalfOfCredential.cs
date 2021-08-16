@@ -11,7 +11,7 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    ///
+    /// Enables authentication to Azure Active Directory using an On-Behalf-Of flow.``
     /// </summary>
     public class OnBehalfOfCredential : TokenCredential
     {
@@ -21,9 +21,6 @@ namespace Azure.Identity
         private readonly bool _allowMultiTenantAuthentication;
         private readonly string _clientId;
         private readonly string _clientSecret;
-
-        /// <inheritdoc />
-        public override bool SupportsCaching => true;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -89,7 +86,7 @@ namespace Azure.Identity
                     .AcquireTokenOnBehalfOf(requestContext.Scopes, tenantId, UserAssertionScope.Current.UserAssertion, async, cancellationToken)
                     .ConfigureAwait(false);
 
-                return new AccessToken(result.AccessToken, result.ExpiresOn);
+                return new AccessToken(result.AccessToken, result.ExpiresOn, DateTimeOffset.UtcNow);
             }
             catch (Exception e)
             {

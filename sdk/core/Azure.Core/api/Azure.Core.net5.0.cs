@@ -228,7 +228,9 @@ namespace Azure.Core
         private object _dummy;
         private int _dummyPrimitive;
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn) { throw null; }
+        public AccessToken(string accessToken, System.DateTimeOffset expiresOn, System.DateTimeOffset refreshOn) { throw null; }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? RefreshOn { get { throw null; } set { } }
         public string Token { get { throw null; } }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -456,7 +458,6 @@ namespace Azure.Core
     public abstract partial class TokenCredential
     {
         protected TokenCredential() { }
-        public virtual bool SupportsCaching { get { throw null; } }
         public abstract Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
     }

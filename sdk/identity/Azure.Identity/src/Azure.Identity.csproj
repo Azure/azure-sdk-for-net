@@ -11,7 +11,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <!-- TODO: Revert after TokenRequestContext changes ship in Azure.Core -->
+    <!-- <PackageReference Include="Azure.Core" /> -->
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <!-- End TODO -->
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
