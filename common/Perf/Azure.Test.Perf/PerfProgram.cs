@@ -303,20 +303,33 @@ namespace Azure.Test.Perf
             using var testCts = new CancellationTokenSource(duration);
             var cancellationToken = testCts.Token;
 
+            var cpuStopwatch = Stopwatch.StartNew();
+            TimeSpan lastCpuElapsed = default;
+            var startCpuTime = Process.GetCurrentProcess().TotalProcessorTime;
+            var lastCpuTime = Process.GetCurrentProcess().TotalProcessorTime;
+
             long lastCompleted = 0;
 
             using var progressStatusCts = new CancellationTokenSource();
             var progressStatusThread = PerfStressUtilities.PrintStatus(
                 $"=== {title} ===" + Environment.NewLine +
-                "Current\t\tTotal\t\tAverage",
+                "Current\t\tTotal\t\tAverage\t\tCPU",
                 () =>
                 {
                     var totalCompleted = CompletedOperations;
                     var currentCompleted = totalCompleted - lastCompleted;
                     var averageCompleted = OperationsPerSecond;
 
+                    var cpuElapsed = cpuStopwatch.Elapsed;
+                    var cpuTime = Process.GetCurrentProcess().TotalProcessorTime;
+                    var currentCpuElapsed = (cpuElapsed - lastCpuElapsed).TotalMilliseconds;
+                    var currentCpuTime = (cpuTime - lastCpuTime).TotalMilliseconds;
+                    var cpuPercentage = (currentCpuTime / currentCpuElapsed) / Environment.ProcessorCount * 100;
+                    lastCpuElapsed = cpuElapsed;
+                    lastCpuTime = cpuTime;
+
                     lastCompleted = totalCompleted;
-                    return $"{currentCompleted:N0}\t\t{totalCompleted:N0}\t\t{averageCompleted:N2}";
+                    return $"{currentCompleted:N0}\t\t{totalCompleted:N0}\t\t{averageCompleted:N2}\t\t{cpuPercentage:N2}%";
                 },
                 newLine: true,
                 progressStatusCts.Token,
@@ -413,8 +426,12 @@ namespace Azure.Test.Perf
             var secondsPerOperation = 1 / operationsPerSecond;
             var weightedAverageSeconds = totalOperations / operationsPerSecond;
 
+            var cpuElapsed = cpuStopwatch.Elapsed.TotalMilliseconds;
+            var cpuTime = (Process.GetCurrentProcess().TotalProcessorTime - startCpuTime).TotalMilliseconds;
+            var cpuPercentage = (cpuTime / cpuElapsed) / Environment.ProcessorCount * 100;
+
             Console.WriteLine($"Completed {totalOperations:N0} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
-                $"({operationsPerSecond:N2} ops/s, {secondsPerOperation:N3} s/op)");
+                $"({operationsPerSecond:N2} ops/s, {secondsPerOperation:N3} s/op, {cpuPercentage:N2}% CPU)");
             Console.WriteLine();
 
             if (latency)
