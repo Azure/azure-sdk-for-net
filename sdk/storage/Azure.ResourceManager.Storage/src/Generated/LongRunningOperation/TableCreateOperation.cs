@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal TableCreateOperation(ResourceOperations operationsBase, Response<TableData> response)
+        internal TableCreateOperation(ArmResource operationsBase, Response<TableData> response)
         {
             _operation = new OperationOrResponseInternals<Table>(Response.FromValue(new Table(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Storage.Models
     {
         private readonly OperationInternals<StorageAccount> _operation;
 
-        private readonly ResourceOperations _operationBase;
+        private readonly ArmResource _operationBase;
 
         /// <summary> Initializes a new instance of StorageAccountCreateOperation for mocking. </summary>
         protected StorageAccountCreateOperation()
         {
         }
 
-        internal StorageAccountCreateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal StorageAccountCreateOperation(ArmResource operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<StorageAccount>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "StorageAccountCreateOperation");
             _operationBase = operationsBase;

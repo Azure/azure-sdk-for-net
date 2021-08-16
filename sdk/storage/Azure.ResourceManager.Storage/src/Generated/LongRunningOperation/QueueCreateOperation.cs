@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal QueueCreateOperation(ResourceOperations operationsBase, Response<StorageQueueData> response)
+        internal QueueCreateOperation(ArmResource operationsBase, Response<StorageQueueData> response)
         {
             _operation = new OperationOrResponseInternals<StorageQueue>(Response.FromValue(new StorageQueue(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal PrivateEndpointConnectionPutOperation(ResourceOperations operationsBase, Response<PrivateEndpointConnectionData> response)
+        internal PrivateEndpointConnectionPutOperation(ArmResource operationsBase, Response<PrivateEndpointConnectionData> response)
         {
             _operation = new OperationOrResponseInternals<PrivateEndpointConnection>(Response.FromValue(new PrivateEndpointConnection(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
     {
         private ResourceGroup curResourceGroup;
         private StorageAccount curStorageAccount;
+        private FileServiceContainer fileServiceContainer;
 
         public FileServiceTests(bool async) : base(async)
         {

@@ -18,8 +18,11 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing collection of StorageQueue and their operations over a QueueService. </summary>
-    public partial class StorageQueueContainer : ResourceContainer
+    public partial class StorageQueueContainer : ArmContainer
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly QueueRestOperations _restClient;
+
         /// <summary> Initializes a new instance of the <see cref="StorageQueueContainer"/> class for mocking. </summary>
         protected StorageQueueContainer()
         {
@@ -27,18 +30,14 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Initializes a new instance of StorageQueueContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal StorageQueueContainer(ResourceOperations parent) : base(parent)
+        internal StorageQueueContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new QueueRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary> Represents the REST operations. </summary>
-        private QueueRestOperations _restClient => new QueueRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => QueueServiceOperations.ResourceType;
+        protected override ResourceType ValidResourceType => QueueService.ResourceType;
 
         // Container level operations.
 
@@ -320,15 +319,15 @@ namespace Azure.ResourceManager.Storage
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("StorageQueueContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(StorageQueueOperations.ResourceType);
+                var filters = new ResourceFilterCollection(StorageQueue.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -343,15 +342,15 @@ namespace Azure.ResourceManager.Storage
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("StorageQueueContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(StorageQueueOperations.ResourceType);
+                var filters = new ResourceFilterCollection(StorageQueue.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

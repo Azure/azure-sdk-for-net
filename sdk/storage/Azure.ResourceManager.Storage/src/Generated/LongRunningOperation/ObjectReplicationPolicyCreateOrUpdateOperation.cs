@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal ObjectReplicationPolicyCreateOrUpdateOperation(ResourceOperations operationsBase, Response<ObjectReplicationPolicyData> response)
+        internal ObjectReplicationPolicyCreateOrUpdateOperation(ArmResource operationsBase, Response<ObjectReplicationPolicyData> response)
         {
             _operation = new OperationOrResponseInternals<ObjectReplicationPolicy>(Response.FromValue(new ObjectReplicationPolicy(operationsBase, response.Value), response.GetRawResponse()));
         }

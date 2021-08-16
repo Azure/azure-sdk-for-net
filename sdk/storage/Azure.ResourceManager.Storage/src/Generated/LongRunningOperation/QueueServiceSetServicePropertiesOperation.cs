@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal QueueServiceSetServicePropertiesOperation(ResourceOperations operationsBase, Response<QueueServiceData> response)
+        internal QueueServiceSetServicePropertiesOperation(ArmResource operationsBase, Response<QueueServiceData> response)
         {
             _operation = new OperationOrResponseInternals<QueueService>(Response.FromValue(new QueueService(operationsBase, response.Value), response.GetRawResponse()));
         }

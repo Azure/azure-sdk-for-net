@@ -18,8 +18,11 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing collection of BlobContainer and their operations over a BlobService. </summary>
-    public partial class BlobContainerContainer : ResourceContainer
+    public partial class BlobContainerContainer : ArmContainer
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly BlobContainersRestOperations _restClient;
+
         /// <summary> Initializes a new instance of the <see cref="BlobContainerContainer"/> class for mocking. </summary>
         protected BlobContainerContainer()
         {
@@ -27,18 +30,14 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Initializes a new instance of BlobContainerContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal BlobContainerContainer(ResourceOperations parent) : base(parent)
+        internal BlobContainerContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new BlobContainersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary> Represents the REST operations. </summary>
-        private BlobContainersRestOperations _restClient => new BlobContainersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => BlobServiceOperations.ResourceType;
+        protected override ResourceType ValidResourceType => BlobService.ResourceType;
 
         // Container level operations.
 
@@ -320,15 +319,15 @@ namespace Azure.ResourceManager.Storage
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BlobContainerContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(BlobContainerOperations.ResourceType);
+                var filters = new ResourceFilterCollection(BlobContainer.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -343,15 +342,15 @@ namespace Azure.ResourceManager.Storage
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BlobContainerContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(BlobContainerOperations.ResourceType);
+                var filters = new ResourceFilterCollection(BlobContainer.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

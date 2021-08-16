@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal BlobServiceSetServicePropertiesOperation(ResourceOperations operationsBase, Response<BlobServiceData> response)
+        internal BlobServiceSetServicePropertiesOperation(ArmResource operationsBase, Response<BlobServiceData> response)
         {
             _operation = new OperationOrResponseInternals<BlobService>(Response.FromValue(new BlobService(operationsBase, response.Value), response.GetRawResponse()));
         }

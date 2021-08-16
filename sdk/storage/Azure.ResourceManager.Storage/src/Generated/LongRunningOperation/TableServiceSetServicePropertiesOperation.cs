@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal TableServiceSetServicePropertiesOperation(ResourceOperations operationsBase, Response<TableServiceData> response)
+        internal TableServiceSetServicePropertiesOperation(ArmResource operationsBase, Response<TableServiceData> response)
         {
             _operation = new OperationOrResponseInternals<TableService>(Response.FromValue(new TableService(operationsBase, response.Value), response.GetRawResponse()));
         }

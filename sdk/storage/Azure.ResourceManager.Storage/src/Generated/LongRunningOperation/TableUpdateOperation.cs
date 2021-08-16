@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal TableUpdateOperation(ResourceOperations operationsBase, Response<TableData> response)
+        internal TableUpdateOperation(ArmResource operationsBase, Response<TableData> response)
         {
             _operation = new OperationOrResponseInternals<Table>(Response.FromValue(new Table(operationsBase, response.Value), response.GetRawResponse()));
         }

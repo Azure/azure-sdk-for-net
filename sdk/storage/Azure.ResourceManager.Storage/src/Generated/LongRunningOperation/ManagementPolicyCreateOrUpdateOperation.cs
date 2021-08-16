@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        internal ManagementPolicyCreateOrUpdateOperation(ResourceOperations operationsBase, Response<ManagementPolicyData> response)
+        internal ManagementPolicyCreateOrUpdateOperation(ArmResource operationsBase, Response<ManagementPolicyData> response)
         {
             _operation = new OperationOrResponseInternals<ManagementPolicy>(Response.FromValue(new ManagementPolicy(operationsBase, response.Value), response.GetRawResponse()));
         }
