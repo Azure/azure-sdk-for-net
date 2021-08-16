@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
     ///
     /// <seealso cref="EventPublishPerfTest" />
     ///
-    public sealed class PublishEventsToPartition : EventPublishPerfTest
+    public sealed class PublishEventsToPartition : EventPublishPerfTest<EventHubsOptions>
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref="PublishEventsToPartition"/> class.
@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        public PublishEventsToPartition(SizeCountOptions options) : base(options)
+        public PublishEventsToPartition(EventHubsOptions options) : base(options)
         {
         }
 

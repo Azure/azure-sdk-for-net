@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Perf
     ///
     /// <seealso cref="EventHubsPerfTest" />
     ///
-    public abstract class EventPublishPerfTest : EventHubsPerfTest
+    public abstract class EventPublishPerfTest<TOptions> : EventHubsPerfTest<TOptions> where TOptions : EventHubsOptions
     {
         /// <summary>The Event Hub to publish events to; shared across all concurrent instances of the scenario.</summary>
         private static EventHubScope s_scope;
@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        public EventPublishPerfTest(SizeCountOptions options) : base(options)
+        public EventPublishPerfTest(TOptions options) : base(options)
         {
         }
 
@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Perf
             s_scope = await EventHubScope.CreateAsync(4).ConfigureAwait(false);
             s_producer = new EventHubProducerClient(TestEnvironment.EventHubsConnectionString, s_scope.EventHubName);
             s_sendOptions = await CreateSendOptions(s_producer).ConfigureAwait(false);
-            s_eventBody = EventGenerator.CreateRandomBody(Options.Size);
+            s_eventBody = EventGenerator.CreateRandomBody(Options.BodySize);
 
             // Publish an empty event to force the connection and link to be established.
 
@@ -86,12 +86,12 @@ namespace Azure.Messaging.EventHubs.Perf
             // of equal size. The events will only differ by the id property that is assigned to them.
 
             await s_producer.SendAsync(
-                EventGenerator.CreateEventsFromBody(Options.Count, s_eventBody),
+                EventGenerator.CreateEventsFromBody(Options.BatchSize, s_eventBody),
                 s_sendOptions,
                 cancellationToken
             ).ConfigureAwait(false);
 
-            return Options.Count;
+            return Options.BatchSize;
         }
 
         /// <summary>

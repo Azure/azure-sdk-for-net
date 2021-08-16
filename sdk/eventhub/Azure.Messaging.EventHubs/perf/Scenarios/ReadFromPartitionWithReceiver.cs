@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
     ///
     /// <seealso cref="ReadPerfTest" />
     ///
-    public sealed class ReadFromPartitionWithReceiver : ReadPerfTest
+    public sealed class ReadFromPartitionWithReceiver : ReadPerfTest<EventHubsOptions>
     {
         /// <summary>The receiver to use for reading from the partition.</summary>
         private PartitionReceiver _receiver;
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        public ReadFromPartitionWithReceiver(SizeCountOptions options) : base(options)
+        public ReadFromPartitionWithReceiver(EventHubsOptions options) : base(options)
         {
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         {
             // Read the requested number of events.
 
-            var remainingEvents = Options.Count;
+            var remainingEvents = Options.BatchSize;
 
             while ((!cancellationToken.IsCancellationRequested) && (remainingEvents > 0))
             {
@@ -98,7 +98,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            return Options.Count;
+            return Options.BatchSize;
         }
     }
 }

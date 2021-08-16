@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{277C1BCF-7EB3-487B-A310-2E92A6F498BD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{C5D54E30-45FD-4DC6-A407-8031EC673513}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{277C1BCF-7EB3-487B-A310-2E92A6F498BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{277C1BCF-7EB3-487B-A310-2E92A6F498BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{277C1BCF-7EB3-487B-A310-2E92A6F498BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5D54E30-45FD-4DC6-A407-8031EC673513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5D54E30-45FD-4DC6-A407-8031EC673513}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5D54E30-45FD-4DC6-A407-8031EC673513}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5D54E30-45FD-4DC6-A407-8031EC673513}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0ACC7C01-8FB1-441A-85E3-41C1C9078043} = {76EAF780-5E6E-408F-AF80-94E5E9A1D7A5}
 		{277C1BCF-7EB3-487B-A310-2E92A6F498BD} = {76EAF780-5E6E-408F-AF80-94E5E9A1D7A5}
+		{C5D54E30-45FD-4DC6-A407-8031EC673513} = {76EAF780-5E6E-408F-AF80-94E5E9A1D7A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0EF42B14-3D19-4BE9-AE4E-B23186F2E985}

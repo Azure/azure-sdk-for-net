@@ -12,9 +12,9 @@ namespace Azure.Messaging.EventHubs.Perf
     ///   A base class for Event Hubs performance test scenarios.
     /// </summary>
     ///
-    /// <seealso cref="Azure.Test.Perf.PerfTest{SizeCountOptions}" />
+    /// <seealso cref="Azure.Test.Perf.PerfTest{EventHubsOptions}" />
     ///
-    public abstract class EventHubsPerfTest : BatchPerfTest<SizeCountOptions>
+    public abstract class EventHubsPerfTest<TOptions> : BatchPerfTest<TOptions> where TOptions : EventHubsOptions
     {
         /// <summary>
         ///   The active <see cref="EventHubsTestEnvironment" /> instance for the
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         /// /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        protected EventHubsPerfTest(SizeCountOptions options) : base(options)
+        protected EventHubsPerfTest(TOptions options) : base(options)
         {
         }
 

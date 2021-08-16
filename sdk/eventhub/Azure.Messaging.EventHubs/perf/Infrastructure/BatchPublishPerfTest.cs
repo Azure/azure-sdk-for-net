@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Perf
     ///
     /// <seealso cref="EventHubsPerfTest" />
     ///
-    public abstract class BatchPublishPerfTest : EventHubsPerfTest
+    public abstract class BatchPublishPerfTest<TOptions> : EventHubsPerfTest<TOptions> where TOptions : EventHubsOptions
     {
         /// <summary>The Event Hub to publish events to; shared across all concurrent instances of the scenario.</summary>
         private static EventHubScope s_scope;
@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         /// <param name="options">The set of options to consider for configuring the scenario.</param>
         ///
-        public BatchPublishPerfTest(SizeCountOptions options) : base(options)
+        public BatchPublishPerfTest(TOptions options) : base(options)
         {
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Perf
             s_scope = await EventHubScope.CreateAsync(4).ConfigureAwait(false);
             s_producer = new EventHubProducerClient(TestEnvironment.EventHubsConnectionString, s_scope.EventHubName);
             s_batchOptions = await CreateBatchOptions(s_producer).ConfigureAwait(false);
-            s_eventBody = EventGenerator.CreateRandomBody(Options.Size);
+            s_eventBody = EventGenerator.CreateRandomBody(Options.BodySize);
 
             // Publish an empty event to force the connection and link to be established.
 
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventHubs.Perf
             // Fill the batch with events using the same body.  This will result in a batch of events of equal size.
             // The events will only differ by the id property that is assigned to them.
 
-            foreach (var eventData in EventGenerator.CreateEventsFromBody(Options.Count, s_eventBody))
+            foreach (var eventData in EventGenerator.CreateEventsFromBody(Options.BatchSize, s_eventBody))
             {
                 if (!batch.TryAdd(eventData))
                 {
@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Perf
 
             await s_producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
 
-            return Options.Count;
+            return Options.BatchSize;
         }
 
         /// <summary>
