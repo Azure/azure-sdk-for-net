@@ -1,9 +1,8 @@
 # Release History
 
-## 1.0.0-preview.new.1 (Unreleased)
+## 1.0.0-preview.3 (Unreleased)
 
-- Accept header added to all requests.
-- Collections are now always initialized and collection properties are readonly by default.
+- New Design
 
 ## 1.0.0-preview.2
 
