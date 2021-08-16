@@ -54,15 +54,7 @@ var identityClient = new ConfidentialLedgerIdentityServiceClient(identityService
 // Get the ledger's  TLS certificate for our ledger.
 string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
 Response response = identityClient.GetLedgerIdentity(ledgerId);
-
-// extract the ECC PEM value from the response.
-var eccPem = JsonDocument.Parse(response.Content)
-    .RootElement
-    .GetProperty("ledgerTlsCertificate")
-    .GetString();
-
-// construct an X509Certificate2 with the ECC PEM value.
-X509Certificate2 ledgerTlsCert = new X509Certificate2(Encoding.UTF8.GetBytes(eccPem));
+X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
 ```
 
 Now we can construct the `ConfidentialLedgerClient` with a transport configuration that trusts the `ledgerTlsCert`.
@@ -77,6 +69,7 @@ certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
 certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
 certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
 
+var f = certificateChain.Build(ledgerTlsCert);
 // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
 bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
 {
