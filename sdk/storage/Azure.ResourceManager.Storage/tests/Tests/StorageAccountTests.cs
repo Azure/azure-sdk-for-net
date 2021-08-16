@@ -26,13 +26,12 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             {
                 StorageAccountContainer storageAccountContainer = curResourceGroup.GetStorageAccounts();
                 List<StorageAccount> storageAccountList = await storageAccountContainer.GetAllAsync().ToEnumerableAsync();
-                Console.WriteLine("current count is: "+storageAccountList.Count());
                 foreach (StorageAccount account in storageAccountList)
                 {
                     await account.DeleteAsync();
                 }
-                storageAccountList = await storageAccountContainer.GetAllAsync().ToEnumerableAsync();
-                Console.WriteLine("current count is: " + storageAccountList.Count());
+                //storageAccountList = await storageAccountContainer.GetAllAsync().ToEnumerableAsync();
+                //Console.WriteLine("current count is: " + storageAccountList.Count());
                 //await curResourceGroup.DeleteAsync();
                 curResourceGroup = null;
             }
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             string accountName = Recording.GenerateAssetName("storage");
             curResourceGroup = await CreateResourceGroupAsync();
             StorageAccountContainer storageAccountContainer = curResourceGroup.GetStorageAccounts();
-            var accountCreateOp = await storageAccountContainer.StartCreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters());
+            StorageAccountCreateOperation accountCreateOp = await storageAccountContainer.StartCreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters());
             StorageAccount account1 = await accountCreateOp.WaitForCompletionAsync();
             Assert.AreEqual(accountName, account1.Id.Name);
             VerifyAccountProperties(account1, true);
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.IsFalse(await storageAccountContainer.CheckIfExistsAsync(accountName + "1"));
 
             //delete storage account
-            var accountDeleteOp = await account1.StartDeleteAsync();
+            StorageAccountDeleteOperation accountDeleteOp = await account1.StartDeleteAsync();
             await accountDeleteOp.WaitForCompletionResponseAsync();
             Assert.IsFalse(await storageAccountContainer.CheckIfExistsAsync(accountName));
 
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
         [Test]
         [RecordedTest]
-        public async Task GetAllStorageAccount()
+        public async Task GetAllStorageAccounts()
         {
             //create two storage accounts
             string accountName1 = Recording.GenerateAssetName("storage1");
@@ -110,11 +109,11 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             StorageAccountContainer storageAccountContainer = curResourceGroup.GetStorageAccounts();
             StorageAccount account1 = await storageAccountContainer.CreateOrUpdateAsync(accountName1, GetDefaultStorageAccountParameters());
             StorageAccount account2 = await storageAccountContainer.CreateOrUpdateAsync(accountName2, GetDefaultStorageAccountParameters());
-            StorageAccount account3 = null;
-            StorageAccount account4 = null;
-            int count = 0;
 
             //validate two storage accounts
+            int count = 0;
+            StorageAccount account3 = null;
+            StorageAccount account4 = null;
             await foreach (StorageAccount account in storageAccountContainer.GetAllAsync())
             {
                 count++;

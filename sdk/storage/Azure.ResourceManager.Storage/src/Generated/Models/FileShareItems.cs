@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of FileShareItems. </summary>
         internal FileShareItems()
         {
-            Value = new ChangeTrackingList<FileShareData>();
+            Value = new ChangeTrackingList<FileShareItem>();
         }
 
         /// <summary> Initializes a new instance of FileShareItems. </summary>
         /// <param name="value"> List of file shares returned. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of shares. Returned when total number of requested shares exceed maximum page size. </param>
-        internal FileShareItems(IReadOnlyList<FileShareData> value, string nextLink)
+        internal FileShareItems(IReadOnlyList<FileShareItem> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of file shares returned. </summary>
-        public IReadOnlyList<FileShareData> Value { get; }
+        public IReadOnlyList<FileShareItem> Value { get; }
         /// <summary> Request URL that can be used to query next page of shares. Returned when total number of requested shares exceed maximum page size. </summary>
         public string NextLink { get; }
     }

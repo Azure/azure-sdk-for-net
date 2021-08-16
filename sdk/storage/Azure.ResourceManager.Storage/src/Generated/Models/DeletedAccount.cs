@@ -8,17 +8,17 @@
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Storage
+namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> A class representing the DeletedAccount data model. </summary>
-    public partial class DeletedAccountData : Resource
+    /// <summary> Deleted storage account. </summary>
+    public partial class DeletedAccount : Resources.Models.Resource
     {
-        /// <summary> Initializes a new instance of DeletedAccountData. </summary>
-        public DeletedAccountData()
+        /// <summary> Initializes a new instance of DeletedAccount. </summary>
+        public DeletedAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedAccountData. </summary>
+        /// <summary> Initializes a new instance of DeletedAccount. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="restoreReference"> Can be used to attempt recovering this deleted account via PutStorageAccount API. </param>
         /// <param name="creationTime"> Creation time of the deleted account. </param>
         /// <param name="deletionTime"> Deletion time of the deleted account. </param>
-        internal DeletedAccountData(ResourceIdentifier id, string name, ResourceType type, string storageAccountResourceId, string location, string restoreReference, string creationTime, string deletionTime) : base(id, name, type)
+        internal DeletedAccount(ResourceIdentifier id, string name, ResourceType type, string storageAccountResourceId, string location, string restoreReference, string creationTime, string deletionTime) : base(id, name, type)
         {
             StorageAccountResourceId = storageAccountResourceId;
             Location = location;

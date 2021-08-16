@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static ListContainerItems DeserializeListContainerItems(JsonElement element)
         {
-            Optional<IReadOnlyList<BlobContainerData>> value = default;
+            Optional<IReadOnlyList<ListContainerItem>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BlobContainerData> array = new List<BlobContainerData>();
+                    List<ListContainerItem> array = new List<ListContainerItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobContainerData.DeserializeBlobContainerData(item));
+                        array.Add(ListContainerItem.DeserializeListContainerItem(item));
                     }
                     value = array;
                     continue;

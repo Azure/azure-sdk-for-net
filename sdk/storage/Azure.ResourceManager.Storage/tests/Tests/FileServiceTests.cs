@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
     {
         private ResourceGroup curResourceGroup;
         private StorageAccount curStorageAccount;
+
         public FileServiceTests(bool async) : base(async)
         {
         }
@@ -23,8 +24,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         public async Task createStorageAccountAsync()
         {
             curResourceGroup = await CreateResourceGroupAsync();
-            string accountName = Recording.GenerateAssetName("teststorage");
-            var storageAccountContainer = curResourceGroup.GetStorageAccounts();
+            string accountName = Recording.GenerateAssetName("storage");
+            StorageAccountContainer storageAccountContainer = curResourceGroup.GetStorageAccounts();
             curStorageAccount = await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters());
         }
         [TearDown]
@@ -44,10 +45,11 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         //[Test]
         //public async Task CreateDeleteFileShare()
         //{
-        //    string fileShareName = Recording.GenerateAssetName("testfileshare");
-        //    FileShareContainer fileShareContainer = curStorageAccount.GetFileShares();
-        //    FileShare fileShare = await fileShareContainer.CreateOrUpdateAsync(fileShareName, new FileShareData());
-        //    Assert.AreEqual(fileShare.Id.Name, fileShareName);
+        //    //string fileShareName = Recording.GenerateAssetName("testfileshare");
+        //    //FileShareServices = curStorageAccount.GetFileServices();
+        //    //;
+        //    //FileShare fileShare = await fileShareContainer.CreateOrUpdateAsync(fileShareName, new FileShareData());
+        //    //Assert.AreEqual(fileShare.Id.Name, fileShareName);
         //}
     }
 }

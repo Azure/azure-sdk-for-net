@@ -44,20 +44,20 @@ namespace Azure.ResourceManager.Storage
         // Container level operations.
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<BlobService> Get(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<BlobService> Get(string blobServicesName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BlobServiceContainer.Get");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (blobServicesName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(blobServicesName));
                 }
 
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, blobServicesName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BlobService(Parent, response.Value), response.GetRawResponse());
@@ -70,20 +70,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<BlobService>> GetAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<BlobService>> GetAsync(string blobServicesName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BlobServiceContainer.Get");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (blobServicesName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(blobServicesName));
                 }
 
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, blobServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new BlobService(Parent, response.Value), response.GetRawResponse());
@@ -96,20 +96,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<BlobService> GetIfExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<BlobService> GetIfExists(string blobServicesName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BlobServiceContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (blobServicesName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(blobServicesName));
                 }
 
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, blobServicesName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<BlobService>(null, response.GetRawResponse())
                     : Response.FromValue(new BlobService(this, response.Value), response.GetRawResponse());
@@ -122,20 +122,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<BlobService>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<BlobService>> GetIfExistsAsync(string blobServicesName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BlobServiceContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (blobServicesName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(blobServicesName));
                 }
 
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, blobServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<BlobService>(null, response.GetRawResponse())
                     : Response.FromValue(new BlobService(this, response.Value), response.GetRawResponse());
@@ -148,20 +148,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string blobServicesName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BlobServiceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (blobServicesName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(blobServicesName));
                 }
 
-                var response = GetIfExists(accountName, cancellationToken: cancellationToken);
+                var response = GetIfExists(blobServicesName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +172,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="blobServicesName"> The name of the blob Service within the specified storage account. Blob Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string blobServicesName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BlobServiceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (blobServicesName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(blobServicesName));
                 }
 
-                var response = await GetIfExistsAsync(accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await GetIfExistsAsync(blobServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

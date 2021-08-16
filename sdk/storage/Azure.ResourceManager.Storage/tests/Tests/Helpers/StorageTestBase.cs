@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
         };
         protected ArmClient Client { get; private set; }
         protected Subscription DefaultSubscription => Client.DefaultSubscription;
-        protected StorageTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        protected StorageTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
         }
         public StorageTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
                         { "test", "env" }
                     }
                 });
+        }
+        public async Task<List<DeletedAccount>> GetDeletedAccount()
+        {
+            return await DefaultSubscription.GetDeletedAccountsAsync().ToEnumerableAsync();
         }
         public async Task<List<ResourceGroup>> getAllResourceGroupAsync()
         {

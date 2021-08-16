@@ -19,16 +19,19 @@ operation-group-to-resource-type:
     DeletedAccounts: Microsoft.Storage/deletedAccounts
     Usages: Microsoft.Storage/locations/usages
     PrivateLinkResources: Microsoft.Storage/storageAccounts/privateLinkResources
+    StorageAccountName: Microsoft.Storage/storageAccountss
 operation-group-to-resource:
     StorageAccounts: StorageAccount
-    DeletedAccounts: DeletedAccount
+    DeletedAccounts: NonResource
     Table: Table
+    StorageAccountName: NonResource
 operation-group-to-parent:
     BlobContainers: Microsoft.Storage/storageAccounts/blobServices
     FileShares: Microsoft.Storage/storageAccounts/fileServices
     Queue: Microsoft.Storage/storageAccounts/queueServices
     Table: Microsoft.Storage/storageAccounts/tableServices
-singleton-resource: BlobService;FileService;QueueService;TableService
+    StorageAccountName: subscriptions
+#singleton-resource: BlobService;FileService;QueueService;TableService
 directive:
   - rename-model:
       from: BlobServiceProperties
@@ -42,10 +45,4 @@ directive:
   - rename-model:
       from: TableServiceProperties
       to: TableService
-  - from: swagger-document
-    where: $.definitions.FileShareItems.properties.value.items["$ref"]
-    transform: return "#/definitions/FileShare"
-  - from: swagger-document
-    where: $.definitions.ListContainerItems.properties.value.items["$ref"]
-    transform: return "#/definitions/BlobContainer"
 ```
