@@ -10,12 +10,12 @@ namespace Azure.AI.Translation.Document
     /// A class which defines filtering and ordering options
     /// for listing all submitted translation operations.
     /// </summary>
-    public class TranslationFilter
+    public class GetTranslationStatusesOptions
     {
         /// <summary>
-        /// Initializes and instance of <see cref="TranslationFilter"/>.
+        /// Initializes and instance of <see cref="GetTranslationStatusesOptions"/>.
         /// </summary>
-        public TranslationFilter()
+        public GetTranslationStatusesOptions()
         {
         }
         /// <summary>
