@@ -38,17 +38,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             ledgerId = ledgerId.Substring(0, ledgerId.IndexOf('.'));
 #endif
             Response response = identityClient.GetLedgerIdentity(ledgerId);
-
-            // extract the ECC PEM value from the response.
-            var eccPem = JsonDocument.Parse(response.Content)
-                .RootElement
-                .GetProperty("ledgerTlsCertificate")
-                .GetString();
-
-            // construct an X509Certificate2 with the ECC PEM value.
-            var span = new ReadOnlySpan<char>(eccPem.ToCharArray());
-            X509Certificate2 ledgerTlsCert = PemReader.LoadCertificate(span, null, PemReader.KeyType.Auto, true);
-
+            X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
             #endregion
 
             #region Snippet:CreateClient
@@ -62,6 +52,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
             certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
 
+            var f = certificateChain.Build(ledgerTlsCert);
             // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
             bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
             {
