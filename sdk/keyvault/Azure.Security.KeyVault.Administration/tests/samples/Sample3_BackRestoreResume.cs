@@ -9,8 +9,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class Sample3_BackRestoreResume : BackupRestoreTestBase
     {
-        public Sample3_BackRestoreResume(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public Sample3_BackRestoreResume(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [Test]

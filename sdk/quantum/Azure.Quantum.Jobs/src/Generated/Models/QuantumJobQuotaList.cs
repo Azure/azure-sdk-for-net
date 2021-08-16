@@ -20,7 +20,7 @@ namespace Azure.Quantum.Jobs.Models
         }
 
         /// <summary> Initializes a new instance of QuantumJobQuotaList. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal QuantumJobQuotaList(IReadOnlyList<QuantumJobQuota> value, string nextLink)
         {

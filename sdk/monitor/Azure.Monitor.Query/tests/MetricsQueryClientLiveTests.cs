@@ -40,9 +40,9 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.GetMetricsAsync(TestEnvironment.MetricsResource, TestEnvironment.MetricsNamespace);
+            var results = await client.GetMetricDefinitionsAsync(TestEnvironment.MetricsResource, TestEnvironment.MetricsNamespace).ToEnumerableAsync();
 
-            CollectionAssert.IsNotEmpty(results.Value);
+            CollectionAssert.IsNotEmpty(results);
         }
 
         [RecordedTest]
@@ -252,14 +252,14 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.GetMetricNamespacesAsync(
-                TestEnvironment.MetricsResource);
+                TestEnvironment.MetricsResource).ToEnumerableAsync();
 
-            Assert.True(results.Value.Any(ns =>
+            Assert.True(results.Any(ns =>
                 ns.Name == "Microsoft.OperationalInsights-workspaces" &&
                 ns.Type == "Microsoft.Insights/metricNamespaces" &&
                 ns.FullyQualifiedName == "Microsoft.OperationalInsights/workspaces"));
 
-            Assert.True(results.Value.Any(ns =>
+            Assert.True(results.Any(ns =>
                 ns.Name == "Cows" &&
                 ns.Type == "Microsoft.Insights/metricNamespaces" &&
                 ns.FullyQualifiedName == "Cows"));

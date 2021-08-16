@@ -23,7 +23,10 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             // Create a new ContainerRegistryClient for anonymous access
-            ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new ContainerRegistryClientOptions()
+            {
+                Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+            });
 
             // Obtain a RegistryArtifact object to get access to image operations
             RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
@@ -51,7 +54,10 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             // Create a new ContainerRegistryClient for anonymous access
-            ContainerRegistryClient client = new ContainerRegistryClient(endpoint);
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new ContainerRegistryClientOptions()
+                {
+                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
+                });
 
             // Obtain a RegistryArtifact object to get access to image operations
             RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");

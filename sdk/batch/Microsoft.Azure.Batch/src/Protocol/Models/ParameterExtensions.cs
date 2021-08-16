@@ -22,6 +22,9 @@
     public partial class ComputeNodeListNextOptions : IOptions { }
     public partial class ComputeNodeRebootOptions : ITimeoutOptions { }
     public partial class ComputeNodeReimageOptions : ITimeoutOptions { }
+    public partial class ComputeNodeExtensionGetOptions : ITimeoutOptions, IODataSelect { }
+    public partial class ComputeNodeExtensionListOptions : ITimeoutOptions, IODataSelect { }
+    public partial class ComputeNodeExtensionListNextOptions : IOptions { }
     public partial class PoolRemoveNodesOptions : ITimeoutOptions { }
     public partial class ComputeNodeUpdateUserOptions : ITimeoutOptions { }
     public partial class ComputeNodeUploadBatchServiceLogsOptions : ITimeoutOptions { }

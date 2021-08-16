@@ -4,6 +4,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: metricsadvisor
+    TimeoutInMinutes: 120
     EnvVars:
       METRICSADVISOR_ACCOUNT_NAME: "js-metrics-advisor"
       METRICSADVISOR_SUBSCRIPTION_KEY: $(metricsadvisor-test-subscription-key)

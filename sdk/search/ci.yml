@@ -29,11 +29,12 @@ extends:
     Artifacts:
     - name: Azure.Search.Documents
       safeName: AzureSearchDocuments
-    - name: Microsoft.Azure.Search
-      safeName: MicrosoftAzureSearch
-    - name: Microsoft.Azure.Search.Common
-      safeName: MicrosoftAzureSearchCommon
-    - name: Microsoft.Azure.Search.Data
-      safeName: MicrosoftAzureSearchData
-    - name: Microsoft.Azure.Search.Service
-      safeName: MicrosoftAzureSearchService
+    # Skip track 1 Microsoft.Azure.* packages for the release jobs
+    # - name: Microsoft.Azure.Search
+    #   safeName: MicrosoftAzureSearch
+    # - name: Microsoft.Azure.Search.Common
+    #   safeName: MicrosoftAzureSearchCommon
+    # - name: Microsoft.Azure.Search.Data
+    #   safeName: MicrosoftAzureSearchData
+    # - name: Microsoft.Azure.Search.Service
+    #   safeName: MicrosoftAzureSearchService

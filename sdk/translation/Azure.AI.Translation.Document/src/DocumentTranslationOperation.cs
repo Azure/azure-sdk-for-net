@@ -145,7 +145,8 @@ namespace Azure.AI.Translation.Document
         /// <param name="client">The client used to check for completion.</param>
         public DocumentTranslationOperation(string translationId, DocumentTranslationClient client)
         {
-            Id = translationId;
+            var parsedTranslationId = ClientCommon.ValidateModelId(translationId, nameof(translationId));
+            Id = parsedTranslationId.ToString();
             _serviceClient = client._serviceRestClient;
             _diagnostics = client._clientDiagnostics;
         }
@@ -298,7 +299,7 @@ namespace Azure.AI.Translation.Document
                     }
                     else if (update.Value.Status == DocumentTranslationStatus.ValidationFailed)
                     {
-                        DocumentTranslationError error = update.Value.Error;
+                        DocumentTranslationError error = (DocumentTranslationError)update.Value.Error;
                         _requestFailedException = _diagnostics.CreateRequestFailedException(_response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         _hasCompleted = true;
                         throw _requestFailedException;
@@ -326,7 +327,8 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                return _serviceClient.GetDocumentStatus(new Guid(Id), new Guid(documentId), cancellationToken);
+                var parsedDocumentId = ClientCommon.ValidateModelId(documentId, nameof(documentId));
+                return _serviceClient.GetDocumentStatus(new Guid(Id), parsedDocumentId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -347,7 +349,8 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                return await _serviceClient.GetDocumentStatusAsync(new Guid(Id), new Guid(documentId), cancellationToken).ConfigureAwait(false);
+                var parsedDocumentId = ClientCommon.ValidateModelId(documentId, nameof(documentId));
+                return await _serviceClient.GetDocumentStatusAsync(new Guid(Id), parsedDocumentId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -359,8 +362,9 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status of all documents in the translation operation.
         /// </summary>
+        /// <param name="filter">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        public virtual Pageable<DocumentStatus> GetAllDocumentStatuses(CancellationToken cancellationToken = default)
+        public virtual Pageable<DocumentStatus> GetAllDocumentStatuses(DocumentFilter filter = default, CancellationToken cancellationToken = default)
         {
             Page<DocumentStatus> FirstPageFunc(int? pageSizeHint)
             {
@@ -369,7 +373,14 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var response = _serviceClient.GetDocumentsStatus(new Guid(Id), cancellationToken: cancellationToken);
+                    var response = _serviceClient.GetDocumentsStatus(
+                        new Guid(Id),
+                        ids: filter?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")),
+                        statuses: filter?.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter?.CreatedAfter,
+                        createdDateTimeUtcEnd: filter?.CreatedBefore,
+                        orderBy: filter?.OrderBy?.Select(order => order.ToGenerated()),
+                        cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -402,8 +413,9 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status of all documents in the translation operation.
         /// </summary>
+        /// <param name="filter">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        public virtual AsyncPageable<DocumentStatus> GetAllDocumentStatusesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DocumentStatus> GetAllDocumentStatusesAsync(DocumentFilter filter = default, CancellationToken cancellationToken = default)
         {
             async Task<Page<DocumentStatus>> FirstPageFunc(int? pageSizeHint)
             {
@@ -412,7 +424,14 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var response = await _serviceClient.GetDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceClient.GetDocumentsStatusAsync(
+                        new Guid(Id),
+                        ids: filter?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")),
+                        statuses: filter?.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter?.CreatedAfter,
+                        createdDateTimeUtcEnd: filter?.CreatedBefore,
+                        orderBy: filter?.OrderBy?.Select(order => order.ToGenerated()),
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -494,7 +513,7 @@ namespace Azure.AI.Translation.Document
         {
             ValidateOperationStatus();
 
-            return GetAllDocumentStatusesAsync(cancellationToken);
+            return GetAllDocumentStatusesAsync(cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -507,7 +526,7 @@ namespace Azure.AI.Translation.Document
         {
             ValidateOperationStatus();
 
-            return GetAllDocumentStatuses(cancellationToken);
+            return GetAllDocumentStatuses(cancellationToken: cancellationToken);
         }
 
         private void ValidateOperationStatus()

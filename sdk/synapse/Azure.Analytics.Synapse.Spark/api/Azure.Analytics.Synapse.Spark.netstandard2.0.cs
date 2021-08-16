@@ -28,10 +28,10 @@ namespace Azure.Analytics.Synapse.Spark
     }
     public partial class SparkClientOptions : Azure.Core.ClientOptions
     {
-        public SparkClientOptions(Azure.Analytics.Synapse.Spark.SparkClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Spark.SparkClientOptions.ServiceVersion.V2019_11_01_preview) { }
+        public SparkClientOptions(Azure.Analytics.Synapse.Spark.SparkClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Spark.SparkClientOptions.ServiceVersion.V2020_12_01) { }
         public enum ServiceVersion
         {
-            V2019_11_01_preview = 1,
+            V2020_12_01 = 1,
         }
     }
     public partial class SparkSessionClient

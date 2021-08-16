@@ -229,6 +229,52 @@ var processor = new EventProcessorClient(
     processorOptions);
 ```
 
+### Influencing SSL certificate validation
+
+For some environments using a proxy or custom gateway for routing traffic to Event Hubs, a certificate not trusted by the root certificate authorities may be issued.  This can often be a self-signed certificate from the gateway or one issued by a company's internal certificate authority.  
+
+By default, these certificates are not trusted by the Event Hubs client library and the connection will be refused.  To enable these scenarios, a [RemoteCertificateValidationCallback](https://docs.microsoft.com/dotnet/api/system.net.security.remotecertificatevalidationcallback) can be registered to provide custom validation logic for remote certificates.  This allows an application to override the default trust decision and assert responsibility for accepting or rejecting the certificate.
+
+```C# Snippet:EventHubs_Processor_Sample02_RemoteCertificateValidationCallback
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+static bool ValidateServerCertificate(
+      object sender,
+      X509Certificate certificate,
+      X509Chain chain,
+      SslPolicyErrors sslPolicyErrors)
+{
+    if ((sslPolicyErrors == SslPolicyErrors.None)
+        || (certificate.Issuer == "My Company CA"))
+    {
+         return true;
+    }
+
+    // Do not allow communication with unauthorized servers.
+
+    return false;
+}
+
+var processorOptions = new EventProcessorClientOptions();
+processorOptions.ConnectionOptions.CertificateValidationCallback = ValidateServerCertificate;
+
+var storageClient = new BlobContainerClient(
+    storageConnectionString,
+    blobContainerName);
+
+var processor = new EventProcessorClient(
+    storageClient,
+    consumerGroup,
+    eventHubsConnectionString,
+    eventHubName,
+    processorOptions);
+```
+
 ### Configuring the client retry thresholds
 
 The built-in retry policy offers an implementation for an exponential back-off strategy by default, as this provides a good balance between making forward progress and allowing for transient issues that may take some time to resolve.  The built-in policy also offers a fixed strategy for those cases where your application requires that you have a deterministic understanding of how long an operation may take.

@@ -9,6 +9,7 @@ using System.Linq;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 
 namespace Azure.Core.TestFramework
 {
@@ -63,9 +64,10 @@ namespace Azure.Core.TestFramework
             Mode = mode ?? TestEnvironment.GlobalTestMode;
         }
 
-        public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
+        public T InstrumentClientOptions<T>(T clientOptions, TestRecording recording = default) where T : ClientOptions
         {
-            clientOptions.Transport = Recording.CreateTransport(clientOptions.Transport);
+            recording ??= Recording;
+            clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
             if (Mode == RecordedTestMode.Playback)
             {
                 // Not making the timeout zero so retry code still goes async
@@ -75,10 +77,9 @@ namespace Azure.Core.TestFramework
             return clientOptions;
         }
 
-        private string GetSessionFilePath()
+        protected string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
-
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
             string additionalParameterName = testAdapter.Properties.ContainsKey(ClientTestFixtureAttribute.RecordingDirectorySuffixKey) ?
                 testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
@@ -152,6 +153,13 @@ namespace Azure.Core.TestFramework
         [TearDown]
         public virtual void StopTestRecording()
         {
+            if (TestEnvironment.GlobalIsRunningInCI)
+            {
+                var tempFileName = Path.GetTempFileName() + ".txt";
+                File.WriteAllText(tempFileName, TestExecutionContext.CurrentContext.CurrentResult.Output);
+                TestContext.AddTestAttachment(tempFileName, "Test Output");
+            }
+
             bool testPassed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
 
             if (ValidateClientInstrumentation && testPassed)
@@ -181,8 +189,19 @@ namespace Azure.Core.TestFramework
         {
             return ProxyGenerator.CreateClassProxyWithTarget(
                 operationType,
-                new[] {typeof(IInstrumented)},
+                new[] { typeof(IInstrumented) },
                 operation,
+                new GetOriginalInterceptor(operation),
+                new OperationInterceptor(Mode == RecordedTestMode.Playback));
+        }
+
+        protected object InstrumentMgmtOperation(Type operationType, object operation, ManagementInterceptor managementInterceptor)
+        {
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                operationType,
+                new[] { typeof(IInstrumented) },
+                operation,
+                managementInterceptor,
                 new GetOriginalInterceptor(operation),
                 new OperationInterceptor(Mode == RecordedTestMode.Playback));
         }

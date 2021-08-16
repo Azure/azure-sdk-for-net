@@ -23,9 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="crossMetricsOperator">
         /// cross metrics operator
         /// 
-        /// 
-        /// 
-        /// should be specified when setting up multiple metric alerting configurations.
+        /// should be specified when setting up multiple metric alerting configurations
         /// </param>
         /// <param name="dimensionsToSplitAlert"> dimensions used to split alert. </param>
         /// <param name="idsOfHooksToAlert"> hook unique ids. </param>

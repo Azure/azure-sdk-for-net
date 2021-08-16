@@ -15,8 +15,8 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
     public static partial class MonitoringModelFactory
     {
         /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>
-        /// <param name="nJobs"> . </param>
-        /// <param name="sparkJobs"> . </param>
+        /// <param name="nJobs"></param>
+        /// <param name="sparkJobs"></param>
         /// <returns> A new <see cref="Models.SparkJobListViewResponse"/> instance for mocking. </returns>
         public static SparkJobListViewResponse SparkJobListViewResponse(int? nJobs = null, IEnumerable<SparkJob> sparkJobs = null)
         {
@@ -26,21 +26,21 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         }
 
         /// <summary> Initializes a new instance of SparkJob. </summary>
-        /// <param name="state"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="submitter"> . </param>
-        /// <param name="compute"> . </param>
-        /// <param name="sparkApplicationId"> . </param>
-        /// <param name="livyId"> . </param>
-        /// <param name="timing"> . </param>
-        /// <param name="sparkJobDefinition"> . </param>
-        /// <param name="pipeline"> . </param>
-        /// <param name="jobType"> . </param>
-        /// <param name="submitTime"> . </param>
-        /// <param name="endTime"> . </param>
-        /// <param name="queuedDuration"> . </param>
-        /// <param name="runningDuration"> . </param>
-        /// <param name="totalDuration"> . </param>
+        /// <param name="state"></param>
+        /// <param name="name"></param>
+        /// <param name="submitter"></param>
+        /// <param name="compute"></param>
+        /// <param name="sparkApplicationId"></param>
+        /// <param name="livyId"></param>
+        /// <param name="timing"></param>
+        /// <param name="sparkJobDefinition"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="jobType"></param>
+        /// <param name="submitTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="queuedDuration"></param>
+        /// <param name="runningDuration"></param>
+        /// <param name="totalDuration"></param>
         /// <returns> A new <see cref="Models.SparkJob"/> instance for mocking. </returns>
         public static SparkJob SparkJob(string state = null, string name = null, string submitter = null, string compute = null, string sparkApplicationId = null, string livyId = null, IEnumerable<string> timing = null, string sparkJobDefinition = null, IEnumerable<SparkJob> pipeline = null, string jobType = null, DateTimeOffset? submitTime = null, DateTimeOffset? endTime = null, string queuedDuration = null, string runningDuration = null, string totalDuration = null)
         {
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         }
 
         /// <summary> Initializes a new instance of SqlQueryStringDataModel. </summary>
-        /// <param name="query"> . </param>
+        /// <param name="query"></param>
         /// <returns> A new <see cref="Models.SqlQueryStringDataModel"/> instance for mocking. </returns>
         public static SqlQueryStringDataModel SqlQueryStringDataModel(string query = null)
         {
