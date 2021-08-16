@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,8 +15,11 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of Tag and its operations.
     /// </summary>
-    public class PredefinedTagContainer : ResourceContainer
+    public class PredefinedTagContainer : ArmContainer
     {
+        private ClientDiagnostics _clientDiagnostics;
+        private TagRestOperations _restClient;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PredefinedTagContainer"/> class for mocking.
         /// </summary>
@@ -31,18 +35,19 @@ namespace Azure.ResourceManager.Resources
         internal PredefinedTagContainer(ClientContext clientContext, ResourceIdentifier parentId)
             : base(clientContext, parentId)
         {
-            RestClient = new TagRestOperations(Diagnostics, Pipeline, parentId.SubscriptionId, BaseUri);
         }
 
         /// <summary>
         /// Gets the valid resource type associated with the container.
         /// </summary>
-        protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
+        protected override ResourceType ValidResourceType => Subscription.ResourceType;
 
         /// <summary>
         /// Gets the operations that can be performed on the container.
         /// </summary>
-        private TagRestOperations RestClient;
+        private TagRestOperations RestClient => _restClient ??= new TagRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+
+        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
