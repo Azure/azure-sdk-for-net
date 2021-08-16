@@ -14,6 +14,9 @@ namespace Azure.Test.Perf
     {
         protected TOptions Options { get; private set; }
 
+        private static int _globalParallelIndex;
+        protected int ParallelIndex { get; }
+
         public abstract long CompletedOperations { get; }
         public TimeSpan LastCompletionTime { get; set; }
 
@@ -25,6 +28,7 @@ namespace Azure.Test.Perf
         public PerfTestBase(TOptions options)
         {
             Options = options;
+            ParallelIndex = Interlocked.Increment(ref _globalParallelIndex) - 1;
         }
 
         public virtual Task GlobalSetupAsync()
