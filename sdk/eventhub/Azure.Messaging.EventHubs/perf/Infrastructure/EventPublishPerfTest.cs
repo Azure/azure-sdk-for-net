@@ -28,8 +28,8 @@ namespace Azure.Messaging.EventHubs.Perf
         /// <summary>The body to use when creating events; shared across all concurrent instances of the scenario.</summary>
         private static ReadOnlyMemory<byte> s_eventBody;
 
-        /// <summary>The set of options to use when publishing events; shared across all concurrent instances of the scenario.</summary>
-        private static SendEventOptions s_sendOptions;
+        /// <summary>The set of options to use when publishing events.</summary>
+        private static SendEventOptions _sendOptions;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventPublishPerfTest"/> class.
@@ -53,12 +53,17 @@ namespace Azure.Messaging.EventHubs.Perf
 
             s_scope = await EventHubScope.CreateAsync(4).ConfigureAwait(false);
             s_producer = new EventHubProducerClient(TestEnvironment.EventHubsConnectionString, s_scope.EventHubName);
-            s_sendOptions = await CreateSendOptions(s_producer).ConfigureAwait(false);
             s_eventBody = EventGenerator.CreateRandomBody(Options.BodySize);
+        }
+
+        public override async Task SetupAsync()
+        {
+            await base.SetupAsync();
+
+            _sendOptions = await CreateSendOptions(s_producer).ConfigureAwait(false);
 
             // Publish an empty event to force the connection and link to be established.
-
-            await s_producer.SendAsync(new[] { new EventData(Array.Empty<byte>()) }, s_sendOptions).ConfigureAwait(false);
+            await s_producer.SendAsync(new[] { new EventData(Array.Empty<byte>()) }, _sendOptions).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -87,7 +92,7 @@ namespace Azure.Messaging.EventHubs.Perf
 
             await s_producer.SendAsync(
                 EventGenerator.CreateEventsFromBody(Options.BatchSize, s_eventBody),
-                s_sendOptions,
+                _sendOptions,
                 cancellationToken
             ).ConfigureAwait(false);
 

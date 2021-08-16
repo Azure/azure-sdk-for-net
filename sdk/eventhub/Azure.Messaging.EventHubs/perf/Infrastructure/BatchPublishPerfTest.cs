@@ -27,8 +27,8 @@ namespace Azure.Messaging.EventHubs.Perf
         /// <summary>The body to use when creating events; shared across all concurrent instances of the scenario.</summary>
         private static ReadOnlyMemory<byte> s_eventBody;
 
-        /// <summary>The set of options to use when creating batches; shared across all concurrent instances of the scenario.</summary>
-        private static CreateBatchOptions s_batchOptions;
+        /// <summary>The set of options to use when creating batches.</summary>
+        private CreateBatchOptions _batchOptions;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BatchPublishPerfTest"/> class.
@@ -52,12 +52,17 @@ namespace Azure.Messaging.EventHubs.Perf
 
             s_scope = await EventHubScope.CreateAsync(4).ConfigureAwait(false);
             s_producer = new EventHubProducerClient(TestEnvironment.EventHubsConnectionString, s_scope.EventHubName);
-            s_batchOptions = await CreateBatchOptions(s_producer).ConfigureAwait(false);
             s_eventBody = EventGenerator.CreateRandomBody(Options.BodySize);
+        }
+
+        public override async Task SetupAsync()
+        {
+            await base.SetupAsync();
+
+            _batchOptions = await CreateBatchOptions(s_producer).ConfigureAwait(false);
 
             // Publish an empty event to force the connection and link to be established.
-
-            using var batch = await s_producer.CreateBatchAsync(s_batchOptions).ConfigureAwait(false);
+            using var batch = await s_producer.CreateBatchAsync(_batchOptions).ConfigureAwait(false);
 
             if (!batch.TryAdd(new EventData(Array.Empty<byte>())))
             {
@@ -88,7 +93,7 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         public async override Task<int> RunBatchAsync(CancellationToken cancellationToken)
         {
-            using var batch = await s_producer.CreateBatchAsync(s_batchOptions, cancellationToken).ConfigureAwait(false);
+            using var batch = await s_producer.CreateBatchAsync(_batchOptions, cancellationToken).ConfigureAwait(false);
 
             // Fill the batch with events using the same body.  This will result in a batch of events of equal size.
             // The events will only differ by the id property that is assigned to them.
