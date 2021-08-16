@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Analytics.Purview.Account.Tests
 {
@@ -18,10 +19,10 @@ namespace Azure.Analytics.Purview.Account.Tests
 
         public AccountsClient GetAccountsClient(PurviewAccountClientOptions options = default)
         {
+            var credential = new DefaultAzureCredential();
             var testEnv = new PurviewAccountTestEnvironment("https://ycllcPurviewAccount.purview.azure.com");
             var endpoint = new Uri(testEnv.Endpoint);
-/*            var endpoint = new Uri(TestEnvironment.Endpoint);*/
-            return new AccountsClient(testEnv.Credential, endpoint, options);
+            return new AccountsClient(credential, endpoint, options);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Analytics.Purview.Account.Tests
 {
@@ -22,10 +23,10 @@ namespace Azure.Analytics.Purview.Account.Tests
 
         public CollectionsClient GetCollectionsClient(PurviewAccountClientOptions options = default)
         {
+            var credential = new DefaultAzureCredential();
             var testEnv = new PurviewAccountTestEnvironment("https://ycllcPurviewAccount.purview.azure.com");
             var endpoint = new Uri(testEnv.Endpoint);
-            /*            var endpoint = new Uri(TestEnvironment.Endpoint);*/
-            return new CollectionsClient(testEnv.Credential, endpoint, options);
+            return new CollectionsClient(credential, endpoint, options);
         }
     }
 }
