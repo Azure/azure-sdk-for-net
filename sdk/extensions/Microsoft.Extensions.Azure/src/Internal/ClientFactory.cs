@@ -229,7 +229,8 @@ namespace Microsoft.Extensions.Azure
                 }
             }
 
-            builder.AppendLine("Unable to find matching constructor. Expected one of the follow sets of configuration parameters:");
+            builder.Append("Unable to find matching constructor while trying to create an instance of ").Append(clientType.Name).AppendLine(".");
+            builder.AppendLine("Expected one of the follow sets of configuration parameters:");
 
             int counter = 1;
 

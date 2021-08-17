@@ -91,7 +91,8 @@ namespace Azure.Core.Extensions.Tests
 
             var clientOptions = new TestClientOptions();
             var exception = Assert.Throws<InvalidOperationException>(() => ClientFactory.CreateClient(typeof(TestClientWithCredentials), typeof(TestClientOptions), clientOptions, configuration, null));
-            Assert.AreEqual("Unable to find matching constructor. Expected one of the follow sets of configuration parameters:" + Environment.NewLine +
+            Assert.AreEqual("Unable to find matching constructor while trying to create an instance of TestClientWithCredentials." + Environment.NewLine +
+                "Expected one of the follow sets of configuration parameters:" + Environment.NewLine +
                 "1. uri" + Environment.NewLine +
                 "2. uri, credential:key" + Environment.NewLine +
                 "3. uri, credential:signature" + Environment.NewLine +
