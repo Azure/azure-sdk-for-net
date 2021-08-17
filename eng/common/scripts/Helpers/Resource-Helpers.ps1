@@ -73,7 +73,7 @@ function Get-PurgeableResources {
   Write-Verbose "Retrieving deleted Key Vaults from subscription $subscriptionId"
 
   # Get deleted Key Vaults for the current subscription.
-  $deletedKeyVaults  = Get-AzKeyVault -InRemovedState `
+  $deletedKeyVaults = Get-AzKeyVault -InRemovedState `
     | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Key Vault' -PassThru `
     | Add-Member -MemberType AliasProperty -Name AzsdkName -Value VaultName -PassThru
 
@@ -115,7 +115,7 @@ filter Remove-PurgeableResources {
           Write-Warning "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
         }
 
-        Wait-PurgeableResource -Resource $r -Timeout:$Timeout -PassThru:$PassThru -ScriptBlock { Remove-AzKeyVault -VaultName $r.VaultName -Location $r.Location -InRemovedState -Force -ErrorAction Continue }
+        Wait-PurgeableResource -Resource $r -Timeout $Timeout -PassThru:$PassThru -ScriptBlock { Remove-AzKeyVault -VaultName $r.VaultName -Location $r.Location -InRemovedState -Force -ErrorAction Continue }
       }
 
       'Managed HSM' {
@@ -124,7 +124,7 @@ filter Remove-PurgeableResources {
           Write-Warning "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
         }
 
-        Wait-PurgeableResource -Resource $r -Timeout:$Timeout -PassThru:$PassThru -ScriptBlock {
+        Wait-PurgeableResource -Resource $r -Timeout $Timeout -PassThru:$PassThru -ScriptBlock {
           $response = Invoke-AzRestMethod -Method POST -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/locations/$($r.Location)/deletedManagedHSMs/$($r.Name)/purge?api-version=2021-04-01-preview" -ErrorAction Ignore
           if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300) {
             Write-Warning "Successfully requested that Managed HSM '$($r.Name)' be purged, but may take a few minutes before it is actually purged."
@@ -152,11 +152,11 @@ function Log($Message) {
 
 function Wait-PurgeableResource {
   param (
-    [Parameter(Mandatory=$true, Position=0)]
+    [Parameter(Mandatory=$true)]
     [scriptblock] $ScriptBlock,
 
-    [Parameter(Mandatory=$true, Position=1)]
-    [object] $Resource,
+    [Parameter(Mandatory=$true)]
+    $Resource,
 
     [Parameter()]
     [ValidateRange(1, [int]::MaxValue)]
@@ -166,13 +166,23 @@ function Wait-PurgeableResource {
     [switch] $PassThru
   )
 
-  $j = Start-ThreadJob -ScriptBlock $ScriptBlock
+  # We build a new AST to pass the `$Resource` as `$r`, which is the `foreach` variable declared in `Remove-PurgeableResources` above.
+  # This is done to make writing a purge script feel natural without having to worry about scope since `[ScriptBlock].GetNewClosure()`
+  # does not capture `$r` appropriately. If the variable name in the `foreach` above is changed, it must be changed here as well.
+  $scriptBlockAst = [System.Management.Automation.Language.Parser]::ParseInput(@"
+  param (`$r)
+  $($ScriptBlock.Ast.EndBlock.ToString())
+"@, [ref] $null, [ref] $null)
+
+  $j = Start-ThreadJob -ScriptBlock $scriptBlockAst.GetScriptBlock() -ArgumentList $Resource
   $null = Wait-Job -Job $j -Timeout $Timeout
 
   if ($j.State -eq 'Running') {
-    Write-Warning "Timed out waiting to purge $($Resource.AzsdkResourceType) '$($Resource.AzsdkName)': {$ScriptBlock}"
+    Write-Warning "Timed out waiting to purge $($Resource.AzsdkResourceType) '$($Resource.AzsdkName)'"
     if ($PassThru) {
       $Resource
     }
+  } elseif ($j.State -eq 'Completed') {
+    Receive-Job -Job $j
   }
 }
