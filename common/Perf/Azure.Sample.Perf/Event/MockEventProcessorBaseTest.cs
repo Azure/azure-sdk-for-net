@@ -26,7 +26,9 @@ namespace Azure.Sample.Perf.Event
         {
             _stopwatch = new Stopwatch();
 
-            _eventProcessor = new MockEventProcessor(options.Partitions, options.MaxEventsPerSecond);
+            _eventProcessor = new MockEventProcessor(options.Partitions, options.MaxEventsPerSecond,
+                options.ErrorAfterSeconds.HasValue ? TimeSpan.FromSeconds(options.ErrorAfterSeconds.Value) : null);
+
             _eventProcessor.ProcessEventAsync += ProcessEventAsync;
 
             _eventsProcessed = new long[options.Partitions];

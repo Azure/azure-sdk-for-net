@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Test.Perf;
+using System;
 using System.Threading.Tasks;
 
 namespace Azure.Sample.Perf.Event
@@ -12,13 +13,22 @@ namespace Azure.Sample.Perf.Event
 
         public MockEventProcessorEventTest(MockEventProcessorOptions options) : base(options)
         {
-            _eventProcessor = new MockEventProcessor(options.Partitions, options.MaxEventsPerSecond);
+            _eventProcessor = new MockEventProcessor(options.Partitions, options.MaxEventsPerSecond,
+                options.ErrorAfterSeconds.HasValue ? TimeSpan.FromSeconds(options.ErrorAfterSeconds.Value) : null);
+
             _eventProcessor.ProcessEventAsync += ProcessEventAsync;
+            _eventProcessor.ProcessErrorAsync += ProcessErrorAsync;
         }
 
         private Task ProcessEventAsync(MockEventArgs arg)
         {
             EventRaised();
+            return Task.CompletedTask;
+        }
+
+        private Task ProcessErrorAsync(MockErrorEventArgs arg)
+        {
+            Console.WriteLine($"Partition: {arg.Partition}, Exception: {arg.Exception.Message}");
             return Task.CompletedTask;
         }
 

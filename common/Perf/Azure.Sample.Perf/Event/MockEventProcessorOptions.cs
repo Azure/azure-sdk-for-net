@@ -8,10 +8,13 @@ namespace Azure.Sample.Perf.Event
 {
     public class MockEventProcessorOptions : PerfOptions
     {
+        [Option("error-after-seconds", HelpText = "Raise error after this number of seconds")]
+        public int? ErrorAfterSeconds { get; set; }
+
+        [Option("max-events-per-second", HelpText = "Maximum events per second across all partitions")]
+        public int? MaxEventsPerSecond { get; set; }
+
         [Option("partitions", Default = 8)]
         public int Partitions { get; set; }
-
-        [Option("max-events-per-second", Default = -1, HelpText = "Maximum events per second across all partitions. -1 means unlimited.")]
-        public int MaxEventsPerSecond { get; set; }
     }
 }
