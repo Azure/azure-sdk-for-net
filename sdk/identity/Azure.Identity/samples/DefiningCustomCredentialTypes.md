@@ -8,9 +8,8 @@ For scenarios where you need to authenticate with a prefetched access token, the
 The following example shows an how an application already using some other mechanism for acquiring tokens (in this case the hypothetical method `AquireTokenForScope`) could use the `StaticTokenCredential` to authenticate a `BlobClient`.
 
 ```C# Snippet:StaticTokenCredentialUsage
-string token = GetTokenForScope("https://storage.azure.com/.default");
-
-var credential = new StaticTokenCredential(token);
+AccessToken token = GetTokenForScope("https://storage.azure.com/.default");
+var credential = TokenCredential.Create((_, _) => token);
 
 var client = new BlobClient(new Uri("https://aka.ms/bloburl"), credential);
 ```
