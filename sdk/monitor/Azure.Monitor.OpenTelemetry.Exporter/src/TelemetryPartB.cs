@@ -24,6 +24,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class TelemetryPartB
     {
         private const int MaxlinksAllowed = 100;
+
+        // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/database.md#connection-level-attributes
+        internal static readonly HashSet<string> SqlDbs = new HashSet<string>() {"mssql"};
+
         internal static RequestData GetRequestData(Activity activity)
         {
             string url = null;
@@ -78,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     var depDataAndType = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
                     dependency.Data = depDataAndType[0]?.ToString();
                     dependency.Target = monitorTags.PartBTags.GetDependencyTarget(PartBType.Db);
-                    dependency.Type = depDataAndType[1]?.ToString();
+                    dependency.Type = SqlDbs.Contains(depDataAndType[1]?.ToString()) ? "SQL" : depDataAndType[1]?.ToString();
                     break;
                 case PartBType.Rpc:
                     var depInfo = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);
