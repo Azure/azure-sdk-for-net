@@ -26,7 +26,6 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: synapse
-    SpellCheckPublicApiSurface: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Analytics.Synapse.Spark
