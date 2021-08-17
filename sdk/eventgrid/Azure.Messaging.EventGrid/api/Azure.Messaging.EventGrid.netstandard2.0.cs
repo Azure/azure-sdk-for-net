@@ -80,6 +80,7 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest ContainerRegistryEventRequest(string id = null, string addr = null, string host = null, string method = null, string useragent = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource ContainerRegistryEventSource(string addr = null, string instanceID = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget ContainerRegistryEventTarget(string mediaType = null, long? size = default(long?), string digest = null, long? length = default(long?), string repository = null, string url = null, string tag = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNewKubernetesVersionAvailableEventData ContainerServiceNewKubernetesVersionAvailableEventData(string latestSupportedKubernetesVersion = null, string latestStableKubernetesVersion = null, string lowestMinorKubernetesVersion = null, string latestPreviewKubernetesVersion = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventInfo DeviceConnectionStateEventInfo(string sequenceNumber = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventProperties DeviceConnectionStateEventProperties(string deviceId = null, string moduleId = null, string hubName = null, Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventInfo deviceConnectionStateEventInfo = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceLifeCycleEventProperties DeviceLifeCycleEventProperties(string deviceId = null, string hubName = null, Azure.Messaging.EventGrid.SystemEvents.DeviceTwinInfo twin = null) { throw null; }
@@ -257,6 +258,7 @@ namespace Azure.Messaging.EventGrid
         public const string ContainerRegistryChartPushed = "Microsoft.ContainerRegistry.ChartPushed";
         public const string ContainerRegistryImageDeleted = "Microsoft.ContainerRegistry.ImageDeleted";
         public const string ContainerRegistryImagePushed = "Microsoft.ContainerRegistry.ImagePushed";
+        public const string ContainerServiceNewKubernetesVersionAvailable = "Microsoft.ContainerService.NewKubernetesVersionAvailable";
         public const string EventGridSubscriptionDeleted = "Microsoft.EventGrid.SubscriptionDeletedEvent";
         public const string EventGridSubscriptionValidation = "Microsoft.EventGrid.SubscriptionValidationEvent";
         public const string EventHubCaptureFileCreated = "Microsoft.EventHub.CaptureFileCreated";
@@ -758,6 +760,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ContainerRegistryImagePushedEventData : Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventData
     {
         internal ContainerRegistryImagePushedEventData() { }
+    }
+    public partial class ContainerServiceNewKubernetesVersionAvailableEventData
+    {
+        internal ContainerServiceNewKubernetesVersionAvailableEventData() { }
+        public string LatestPreviewKubernetesVersion { get { throw null; } }
+        public string LatestStableKubernetesVersion { get { throw null; } }
+        public string LatestSupportedKubernetesVersion { get { throw null; } }
+        public string LowestMinorKubernetesVersion { get { throw null; } }
     }
     public partial class DeviceConnectionStateEventInfo
     {

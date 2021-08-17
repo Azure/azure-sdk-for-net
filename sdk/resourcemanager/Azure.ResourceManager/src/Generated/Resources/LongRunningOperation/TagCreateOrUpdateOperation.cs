@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationOrResponseInternals<TagResource> _operation;
 
-        /// <summary> Initializes a new instance of ResourcesCreateOrUpdateByIdOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of TagCreateOrUpdateOperation for mocking. </summary>
         protected TagCreateOrUpdateOperation()
         {
         }
 
-        internal TagCreateOrUpdateOperation(ResourceOperations parentOperation, Response<TagResourceData> response)
+        internal TagCreateOrUpdateOperation(ArmResource parentOperation, Response<TagResourceData> response)
         {
             _operation = new OperationOrResponseInternals<TagResource>(Response.FromValue(new TagResource(parentOperation, response.Value), response.GetRawResponse()));
         }

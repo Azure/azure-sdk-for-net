@@ -105,6 +105,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("encryptionKey");
                 }
             }
+            if (Optional.IsDefined(Cache))
+            {
+                if (Cache != null)
+                {
+                    writer.WritePropertyName("cache");
+                    writer.WriteObjectValue(Cache);
+                }
+                else
+                {
+                    writer.WriteNull("cache");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -122,6 +134,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<bool?> disabled = default;
             Optional<string> odataEtag = default;
             Optional<SearchResourceEncryptionKey> encryptionKey = default;
+            Optional<SearchIndexerCache> cache = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -224,8 +237,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
                     continue;
                 }
+                if (property.NameEquals("cache"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        cache = null;
+                        continue;
+                    }
+                    cache = SearchIndexerCache.DeserializeSearchIndexerCache(property.Value);
+                    continue;
+                }
             }
-            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), odataEtag.Value, encryptionKey.Value);
+            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), odataEtag.Value, encryptionKey.Value, cache.Value);
         }
     }
 }
