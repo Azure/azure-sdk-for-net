@@ -22,6 +22,9 @@ namespace Azure.Test.Perf
         public sealed override IList<TimeSpan> CorrectedLatencies =>
             throw new InvalidOperationException("EventPerfTest does not support CorrectedLatencies");
 
+        private Exception _error;
+        private readonly CancellationTokenSource _errorCancellationTokenSource = new CancellationTokenSource();
+
         public EventPerfTest(TOptions options) : base(options)
         {
             if (options.Latency)
@@ -41,6 +44,12 @@ namespace Azure.Test.Perf
             LastCompletionTime = _stopwatch.Elapsed;
         }
 
+        protected void ErrorRaised(Exception e)
+        {
+            _error = e;
+            _errorCancellationTokenSource.Cancel();
+        }
+
         public sealed override Task PostSetupAsync()
         {
             return Task.CompletedTask;
@@ -48,18 +57,10 @@ namespace Azure.Test.Perf
 
         public sealed override void RunAll(CancellationToken cancellationToken)
         {
-            // Must restart stopwatch before resetting LastCompletionTime, to avoid a race condition where an
-            // event would use the stopwatch from Warmup at the start of Run.  The results of Warmup have already
-            // been printed, so the reverse race condition is not a problem.
-            _stopwatch.Restart();
-
-            Interlocked.Exchange(ref _completedOperations, 0);
-            LastCompletionTime = default;
-
-            Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken).Wait();
+            RunAllAsync(cancellationToken).Wait();
         }
 
-        public sealed override Task RunAllAsync(CancellationToken cancellationToken)
+        public sealed override async Task RunAllAsync(CancellationToken cancellationToken)
         {
             // Must restart stopwatch before resetting LastCompletionTime, to avoid a race condition where an
             // event would use the stopwatch from Warmup at the start of Run.  The results of Warmup have already
@@ -69,7 +70,21 @@ namespace Azure.Test.Perf
             Interlocked.Exchange(ref _completedOperations, 0);
             LastCompletionTime = default;
 
-            return Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
+            // Cancel when requested by perf framework or when ErrorRaised() is called
+            using (var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _errorCancellationTokenSource.Token))
+            {
+                try
+                {
+                    await Task.Delay(Timeout.InfiniteTimeSpan, cts.Token);
+                }
+                catch (TaskCanceledException)
+                {
+                    if (_error != null)
+                    {
+                        throw _error;
+                    }
+                }
+            }
         }
 
         public sealed override Task PreCleanupAsync()

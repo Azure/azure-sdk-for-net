@@ -28,7 +28,7 @@ namespace Azure.Sample.Perf.Event
 
         private Task ProcessErrorAsync(MockErrorEventArgs arg)
         {
-            Console.WriteLine($"Partition: {arg.Partition}, Exception: {arg.Exception.Message}");
+            ErrorRaised(arg.Exception);
             return Task.CompletedTask;
         }
 
