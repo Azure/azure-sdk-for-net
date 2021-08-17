@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor.Perf.Infrastructure;
 
@@ -16,7 +17,15 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
 
         private Task ProcessEventAsync(ProcessEventArgs arg)
         {
-            EventRaised();
+            try
+            {
+                EventRaised();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Environment.Exit(1);
+            }
             return Task.CompletedTask;
         }
 
