@@ -183,6 +183,6 @@ function Wait-PurgeableResource {
       $Resource
     }
   } elseif ($j.State -eq 'Completed') {
-    Receive-Job -Job $j
+    Receive-Job -Job $j -ErrorAction Continue
   }
 }
