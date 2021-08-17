@@ -87,16 +87,26 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         public async override Task<int> RunBatchAsync(CancellationToken cancellationToken)
         {
-            // Generate a set of events using the same body.  This will result in publishing a set of events
-            // of equal size. The events will only differ by the id property that is assigned to them.
+            try
+            {
+                // Generate a set of events using the same body.  This will result in publishing a set of events
+                // of equal size. The events will only differ by the id property that is assigned to them.
 
-            await s_producer.SendAsync(
-                EventGenerator.CreateEventsFromBody(Options.BatchSize, s_eventBody),
-                _sendOptions,
-                cancellationToken
-            ).ConfigureAwait(false);
+                await s_producer.SendAsync(
+                    EventGenerator.CreateEventsFromBody(Options.BatchSize, s_eventBody),
+                    _sendOptions,
+                    cancellationToken
+                ).ConfigureAwait(false);
 
-            return Options.BatchSize;
+                return Options.BatchSize;
+            }
+            catch (EventHubsException e) when (cancellationToken.IsCancellationRequested && e.IsTransient)
+            {
+                // If SendAsync() is cancelled during a retry loop, the most recent exception is thrown.
+                // If the exception is transient, it should be wrapped in an OperationCancelledException
+                // which is ignored by the perf framework.
+                throw new OperationCanceledException("EventHubsException thrown during cancellation", e);
+            }
         }
 
         /// <summary>
