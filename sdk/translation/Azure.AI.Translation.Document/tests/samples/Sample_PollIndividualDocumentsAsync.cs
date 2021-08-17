@@ -37,7 +37,7 @@ namespace Azure.AI.Translation.Document.Samples
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.TranslationAsync(input, waitForCompletion: false);
 
             TimeSpan pollingInterval = new(1000);
 

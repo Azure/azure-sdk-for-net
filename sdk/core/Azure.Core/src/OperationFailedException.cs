@@ -29,9 +29,9 @@ namespace Azure
         /// <summary>
         /// <summary>Initializes a new instance of the <see cref="OperationFailedException"></see> class with a specified error message, operation id, and inner exception.</summary>
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="operationId"></param>
-        /// <param name="innerException"></param>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="operationId">The Id of the <see cref="Operation{T}"/> related to this exception.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
         public OperationFailedException(string message, string operationId, Exception? innerException) : base(message, innerException)
         {
             OperationId = operationId;

@@ -40,7 +40,7 @@ namespace Azure.Security.ConfidentialLedger
                 new ResponseClassifier());
             this.ledgerUri = ledgerUri;
             apiVersion = options.Version;
-            DefaultPollingInterval = options.WaitForCompletionDefaultPollingInterval;
+            DefaultPollingInterval = options.OperationPollingInterval;
         }
 
         /// <summary> Posts a new entry to the ledger. A sub-ledger id may optionally be specified. </summary>

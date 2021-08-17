@@ -43,7 +43,7 @@ namespace Azure
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
         /// <returns>The HTTP response received from the server.</returns>
         /// <remarks>
-        /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
+        /// This operation will update the value returned from GetRawResponse and might update HasCompleted.
         /// </remarks>
         public abstract ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default);
 
@@ -53,7 +53,7 @@ namespace Azure
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
         /// <returns>The HTTP response received from the server.</returns>
         /// <remarks>
-        /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
+        /// This operation will update the value returned from GetRawResponse and might update HasCompleted.
         /// </remarks>
         public abstract Response UpdateStatus(CancellationToken cancellationToken = default);
 

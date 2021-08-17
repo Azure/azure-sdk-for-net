@@ -33,7 +33,7 @@ namespace Azure.Security.ConfidentialLedger
     public partial class ConfidentialLedgerClientOptions : Azure.Core.ClientOptions
     {
         public ConfidentialLedgerClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.V0_1_preview) { }
-        public System.TimeSpan WaitForCompletionDefaultPollingInterval { get { throw null; } set { } }
+        public System.TimeSpan OperationPollingInterval { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V0_1_preview = 1,

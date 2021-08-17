@@ -6,7 +6,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Security.ConfidentialLedger
 {
@@ -14,12 +13,10 @@ namespace Azure.Security.ConfidentialLedger
     /// Tracks the status of a call to <see cref="ConfidentialLedgerClient.PostLedgerEntry(Azure.Core.RequestContent,string,bool,Azure.RequestOptions)"/> and <see cref="ConfidentialLedgerClient.PostLedgerEntryAsync(Azure.Core.RequestContent,string,bool,Azure.RequestOptions)"/>
     /// until completion.
     /// </summary>
-    public class PostLedgerEntryOperation : Operation
+    public class PostLedgerEntryOperation : Operation, IOperation
     {
         private readonly ConfidentialLedgerClient _client;
-        private Response _response;
-        private bool _hasCompleted;
-        private OperationFailedException _exception;
+        private OperationInternal _operationInternal;
 
         /// <summary>
         /// Initializes a previously run operation with the given <paramref name="transactionId"/>.
@@ -31,6 +28,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             _client = client;
             Id = transactionId;
+            _operationInternal = new(_client.clientDiagnostics, this, rawResponse: null, nameof(PostLedgerEntryOperation));
         }
 
         /// <summary>
@@ -40,65 +38,15 @@ namespace Azure.Security.ConfidentialLedger
         { }
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _response;
+        public override Response GetRawResponse() => _operationInternal.RawResponse;
 
         /// <inheritdoc />
-        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _client.clientDiagnostics.CreateScope($"{nameof(PostLedgerEntryOperation)}.{nameof(UpdateStatus)}");
-            scope.Start();
-
-            try
-            {
-                var statusResponse = await _client.GetTransactionStatusAsync(Id, new RequestOptions { CancellationToken = cancellationToken }).ConfigureAwait(false);
-                string status = JsonDocument.Parse(statusResponse.Content)
-                    .RootElement
-                    .GetProperty("state")
-                    .GetString();
-                if (status != "Pending")
-                {
-                    _response = statusResponse;
-                    _hasCompleted = true;
-                }
-            }
-            catch (Exception e)
-            {
-                _exception = new OperationFailedException(e.Message, Id, e);
-                scope.Failed(_exception);
-                throw _exception;
-            }
-
-            return GetRawResponse();
-        }
+        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
+            _operationInternal.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override Response UpdateStatus(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _client.clientDiagnostics.CreateScope($"{nameof(PostLedgerEntryOperation)}.{nameof(UpdateStatus)}");
-            scope.Start();
-
-            try
-            {
-                var statusResponse = _client.GetTransactionStatus(Id, new RequestOptions { CancellationToken = cancellationToken });
-                string status = JsonDocument.Parse(statusResponse.Content)
-                    .RootElement
-                    .GetProperty("state")
-                    .GetString();
-                if (status != "Pending")
-                {
-                    _response = statusResponse;
-                    _hasCompleted = true;
-                }
-            }
-            catch (Exception e)
-            {
-                _exception = new OperationFailedException(e.Message, Id, e);
-                scope.Failed(_exception);
-                throw _exception;
-            }
-
-            return GetRawResponse();
-        }
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
+            _operationInternal.UpdateStatus(cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) =>
@@ -108,12 +56,37 @@ namespace Azure.Security.ConfidentialLedger
         public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionResponseAsync(pollingInterval, cancellationToken);
 
+        async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var statusResponse = async ?
+                    await _client.GetTransactionStatusAsync(Id, new RequestOptions { CancellationToken = cancellationToken }).ConfigureAwait(false) :
+                    _client.GetTransactionStatus(Id, new RequestOptions { CancellationToken = cancellationToken });
+
+                string status = JsonDocument.Parse(statusResponse.Content)
+                    .RootElement
+                    .GetProperty("state")
+                    .GetString();
+                if (status != "Pending")
+                {
+                    return OperationState.Success(statusResponse);
+                }
+                return OperationState.Pending(statusResponse);
+            }
+            catch (Exception e)
+            {
+                var exception = new OperationFailedException(e.Message, Id, e);
+                return OperationState.Failure(null, exception);
+            }
+        }
+
         /// <summary>
         /// The transactionId of the posted ledger entry.
         /// </summary>
         public override string Id { get; }
 
         /// <inheritdoc />
-        public override bool HasCompleted => _hasCompleted;
+        public override bool HasCompleted => _operationInternal.HasCompleted;
     }
 }
