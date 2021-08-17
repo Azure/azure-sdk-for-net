@@ -132,7 +132,7 @@ namespace Azure
             return $"Status: {Status}, ReasonPhrase: {ReasonPhrase}";
         }
 
-        internal static void DisposeStreamIfNotBuffered(Stream? stream)
+        internal static void DisposeStreamIfNotBuffered(ref Stream? stream)
         {
             // We want to keep the ContentStream readable
             // even after the response is disposed but only if it's a
@@ -141,6 +141,7 @@ namespace Azure
             if (stream is not MemoryStream)
             {
                 stream?.Dispose();
+                stream = null;
             }
         }
     }
