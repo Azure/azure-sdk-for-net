@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
         }
         [TearDown]
-        public async Task ClearStorageAccountAsync()
+        public async Task ClearStorageAccount()
         {
             //remove all storage accounts under current resource group
             if (curResourceGroup != null)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             VerifyAccountProperties(account1, true);
             AssertStorageAccountEqual(account1, await account1.GetAsync());
 
-            //validate
+            //validate if created successfully
             StorageAccount account2 = await storageAccountContainer.GetAsync(accountName);
             VerifyAccountProperties(account2, true);
             AssertStorageAccountEqual(account1, account2);
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             //delete storage account
             await account1.DeleteAsync();
-            Assert.IsFalse(await storageAccountContainer.CheckIfExistsAsync(accountName));
 
-            //validate
+            //validate if deleted successfully
+            Assert.IsFalse(await storageAccountContainer.CheckIfExistsAsync(accountName));
             StorageAccount account4 = await storageAccountContainer.GetIfExistsAsync(accountName);
             Assert.IsNull(account4);
         }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         [RecordedTest]
         public async Task StartCreateDeleteStorageAccount()
         {
-            //create storage account
+            //start create storage account and wait for complete
             string accountName = Recording.GenerateAssetName("storage");
             curResourceGroup = await CreateResourceGroupAsync();
             StorageAccountContainer storageAccountContainer = curResourceGroup.GetStorageAccounts();
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.IsTrue(await storageAccountContainer.CheckIfExistsAsync(accountName));
             Assert.IsFalse(await storageAccountContainer.CheckIfExistsAsync(accountName + "1"));
 
-            //delete storage account
+            //start delete storage account and wait for complete
             StorageAccountDeleteOperation accountDeleteOp = await account1.StartDeleteAsync();
             await accountDeleteOp.WaitForCompletionResponseAsync();
-            Assert.IsFalse(await storageAccountContainer.CheckIfExistsAsync(accountName));
 
             //validate
+            Assert.IsFalse(await storageAccountContainer.CheckIfExistsAsync(accountName));
             StorageAccount account4 = await storageAccountContainer.GetIfExistsAsync(accountName);
             Assert.IsNull(account4);
         }

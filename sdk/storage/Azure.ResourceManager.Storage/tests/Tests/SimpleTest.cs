@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Storage.Tests
         [Test]
         public async Task simpletest(){
             StorageAccountCheckNameAvailabilityParameters parameters = new StorageAccountCheckNameAvailabilityParameters("storage2969");
-            CheckNameAvailabilityResult res = await DefaultSubscription.CheckStorageAccountNameNameAvailabilityAsync(parameters);
+            CheckNameAvailabilityResult res = await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameters);
             Console.WriteLine(res.NameAvailable);
         }
 
-        [Test]
-        public async Task DeletedAccountList()
-        {
-            List<DeletedAccount> list = await GetDeletedAccount();
-            foreach (DeletedAccount account in list)
-            {
-                Console.WriteLine(account.Name);
-            }
-        }
+        //[Test]
+        //public async Task DeletedAccountList()
+        //{
+        //    List<DeletedAccount> list = await GetDeletedAccount();
+        //    foreach (DeletedAccount account in list)
+        //    {
+        //        Console.WriteLine(account.Name);
+        //    }
+        //}
 
         [Test]
         public async Task ClearLegalHold()

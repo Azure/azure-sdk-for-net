@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
         }
         [SetUp]
-        public async Task createStorageAccountAndGetBlobContainersAsync()
+        public async Task createStorageAccountAndGetBlobService()
         {
             curResourceGroup = await CreateResourceGroupAsync();
             string accountName = Recording.GenerateAssetName("storage");
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             blobContainerContainer = blobService.GetBlobContainers();
         }
         [TearDown]
-        public async Task clearStorageAccountAsync()
+        public async Task ClearStorageAccount()
         {
             if (curResourceGroup != null)
             {
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.IsNotNull(container1);
             Assert.AreEqual(container1.Id.Name, containerName);
 
-            //validate
+            //validate if created successfully
             BlobContainer container2 = await blobContainerContainer.GetAsync(containerName);
-            BlobHelper.AssertBlobContainer(container1, container2);
+            AssertBlobContainerEqual(container1, container2);
             Assert.IsTrue(await blobContainerContainer.CheckIfExistsAsync(containerName));
             Assert.IsFalse(await blobContainerContainer.CheckIfExistsAsync(containerName + "1"));
             BlobContainerData containerData = container1.Data;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         [RecordedTest]
         public async Task StartCreateDeleteBlobContainer()
         {
-            //start create blob container
+            //start create blob container and wait for complete
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerCreateOperation containerCreateOp=await blobContainerContainer.StartCreateOrUpdateAsync(containerName, new BlobContainerData());
             BlobContainer container1 = await containerCreateOp.WaitForCompletionAsync();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             //validate
             BlobContainer container2 = await blobContainerContainer.GetAsync(containerName);
-            BlobHelper.AssertBlobContainer(container1, container2);
+            AssertBlobContainerEqual(container1, container2);
             Assert.IsTrue(await blobContainerContainer.CheckIfExistsAsync(containerName));
             Assert.IsFalse(await blobContainerContainer.CheckIfExistsAsync(containerName + "1"));
             BlobContainerData containerData = container1.Data;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.False(containerData.HasImmutabilityPolicy);
             Assert.False(containerData.HasLegalHold);
 
-            //delete blob container
+            //delete blob container and wait for complete
             BlobContainerDeleteOperation containerDeleteOp = await container1.StartDeleteAsync();
             await containerDeleteOp.WaitForCompletionResponseAsync();
 
@@ -258,6 +258,28 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //validate
             Assert.False(legalHold.HasLegalHold);
             Assert.AreEqual(0, legalHold.Tags.Count);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task UpdateBlobService()
+        {
+            //validate current file service properties
+            BlobService service1 = blobService;
+            Assert.False(blobService.Data.DeleteRetentionPolicy.Enabled);
+            Assert.Null(blobService.Data.DeleteRetentionPolicy.Days);
+
+            //update delete retention policy
+            BlobServiceData serviceData = blobService.Data;
+            serviceData.DeleteRetentionPolicy = new DeleteRetentionPolicy
+            {
+                Enabled = true,
+                Days = 100
+            };
+            BlobService service = await blobService.SetServicePropertiesAsync(serviceData);
+
+            //validate update
+            Assert.True(service.Data.DeleteRetentionPolicy.Enabled);
+            Assert.AreEqual(service.Data.DeleteRetentionPolicy.Days, 100);
         }
     }
 }

@@ -43,20 +43,20 @@ namespace Azure.ResourceManager.Storage
         // Container level operations.
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<QueueService> Get(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<QueueService> Get(string queueServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("QueueServiceContainer.Get");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (queueServiceName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(queueServiceName));
                 }
 
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, queueServiceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new QueueService(Parent, response.Value), response.GetRawResponse());
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<QueueService>> GetAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<QueueService>> GetAsync(string queueServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("QueueServiceContainer.Get");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (queueServiceName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(queueServiceName));
                 }
 
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, queueServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new QueueService(Parent, response.Value), response.GetRawResponse());
@@ -95,20 +95,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<QueueService> GetIfExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<QueueService> GetIfExists(string queueServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("QueueServiceContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (queueServiceName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(queueServiceName));
                 }
 
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, queueServiceName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<QueueService>(null, response.GetRawResponse())
                     : Response.FromValue(new QueueService(this, response.Value), response.GetRawResponse());
@@ -121,20 +121,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<QueueService>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<QueueService>> GetIfExistsAsync(string queueServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("QueueServiceContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (queueServiceName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(queueServiceName));
                 }
 
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, queueServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<QueueService>(null, response.GetRawResponse())
                     : Response.FromValue(new QueueService(this, response.Value), response.GetRawResponse());
@@ -147,20 +147,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string queueServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("QueueServiceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (queueServiceName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(queueServiceName));
                 }
 
-                var response = GetIfExists(accountName, cancellationToken: cancellationToken);
+                var response = GetIfExists(queueServiceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +171,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="queueServiceName"> The name of the Queue Service within the specified storage account. Queue Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string queueServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("QueueServiceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (queueServiceName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(queueServiceName));
                 }
 
-                var response = await GetIfExistsAsync(accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await GetIfExistsAsync(queueServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

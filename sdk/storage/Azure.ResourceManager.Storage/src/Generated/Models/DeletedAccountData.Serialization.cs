@@ -9,9 +9,9 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Storage.Models
+namespace Azure.ResourceManager.Storage
 {
-    public partial class DeletedAccount : IUtf8JsonSerializable
+    public partial class DeletedAccountData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static DeletedAccount DeserializeDeletedAccount(JsonElement element)
+        internal static DeletedAccountData DeserializeDeletedAccountData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new DeletedAccount(id, name, type, storageAccountResourceId.Value, location.Value, restoreReference.Value, creationTime.Value, deletionTime.Value);
+            return new DeletedAccountData(id, name, type, storageAccountResourceId.Value, location.Value, restoreReference.Value, creationTime.Value, deletionTime.Value);
         }
     }
 }

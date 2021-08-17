@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
         }
         [SetUp]
-        public async Task createStorageAccountAsync()
+        public async Task CreateStorageAccountAndGetFileService()
         {
             curResourceGroup = await CreateResourceGroupAsync();
             string accountName = Recording.GenerateAssetName("storage");
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             fileShareContainer = fileService.GetFileShares();
         }
         [TearDown]
-        public async Task clearStorageAccountAsync()
+        public async Task ClearStorageAccount()
         {
             if (curResourceGroup != null)
             {
@@ -58,15 +58,15 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             FileShare share1 = await fileShareContainer.CreateOrUpdateAsync(fileShareName, new FileShareData());
             Assert.AreEqual(share1.Id.Name, fileShareName);
 
-            //validate
+            //validate if created successfully
             FileShareData shareData = share1.Data;
             Assert.IsEmpty(shareData.Metadata);
             FileShare share2 = await fileShareContainer.GetAsync(fileShareName);
-            FileHelper.AssertFileShare(share1, share2);
+            AssertFileShareEqual(share1, share2);
             Assert.IsTrue(await fileShareContainer.CheckIfExistsAsync(fileShareName));
             Assert.IsFalse(await fileShareContainer.CheckIfExistsAsync(fileShareName+"1"));
 
-            //delete blob container
+            //delete file share
             await share1.DeleteAsync();
 
             //validate if deleted successfully
@@ -78,21 +78,21 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         [RecordedTest]
         public async Task StartCreateDeleteFileShare()
         {
-            //start create file share
+            //start create file share and wait for complete
             string fileShareName = Recording.GenerateAssetName("testfileshare");
             FileShareCreateOperation shareCreateOp = await fileShareContainer.StartCreateOrUpdateAsync(fileShareName, new FileShareData());
             FileShare share1 = await shareCreateOp.WaitForCompletionAsync();
             Assert.AreEqual(share1.Id.Name, fileShareName);
 
-            //validate
+            //validate if created successfully
             FileShareData shareData = share1.Data;
             Assert.IsEmpty(shareData.Metadata);
             FileShare share2 = await fileShareContainer.GetAsync(fileShareName);
-            FileHelper.AssertFileShare(share1, share2);
+            AssertFileShareEqual(share1, share2);
             Assert.IsTrue(await fileShareContainer.CheckIfExistsAsync(fileShareName));
             Assert.IsFalse(await fileShareContainer.CheckIfExistsAsync(fileShareName + "1"));
 
-            //start delete blob container
+            //start delete file share and wait for complete
             FileShareDeleteOperation shareDeleteOp = await share1.StartDeleteAsync();
             await shareDeleteOp.WaitForCompletionResponseAsync();
 
@@ -100,6 +100,32 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             FileShare fileShare3 = await fileShareContainer.GetIfExistsAsync(fileShareName);
             Assert.IsNull(fileShare3);
             Assert.IsFalse(await fileShareContainer.CheckIfExistsAsync(fileShareName));
+        }
+        [Test]
+        [RecordedTest]
+        public async Task GetAllFileShares()
+        {
+            //create two file shares
+            string fileShareName1 = Recording.GenerateAssetName("testfileshare1");
+            string fileShareName2 = Recording.GenerateAssetName("testfileshare2");
+            FileShare share1 = await fileShareContainer.CreateOrUpdateAsync(fileShareName1, new FileShareData());
+            FileShare share2 = await fileShareContainer.CreateOrUpdateAsync(fileShareName2, new FileShareData());
+
+            //validate if there are two file shares
+            FileShare share3 = null;
+            FileShare share4 = null;
+            int count = 0;
+            await foreach (FileShare share in fileShareContainer.GetAllAsync())
+            {
+                count++;
+                if (share.Id.Name == fileShareName1)
+                    share3 = share;
+                if (share.Id.Name == fileShareName2)
+                    share4 = share;
+            }
+            Assert.AreEqual(count, 2);
+            Assert.IsNotNull(share3);
+            Assert.IsNotNull(share4);
         }
 
         [Test]
@@ -127,5 +153,27 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(share3.Data.ShareQuota, shareData.ShareQuota);
             Assert.AreEqual(share3.Data.Metadata, shareData.Metadata);
         }
+
+        //[Test]
+        //[RecordedTest]
+        //public async Task UpdateFileService()
+        //{
+        //    //validate current file service properties
+        //    Assert.True(fileService.Data.DeleteRetentionPolicy.Enabled);
+        //    Assert.AreEqual(fileService.Data.ShareDeleteRetentionPolicy.Days,7);
+        //    FileService service1 = fileService;
+        //    //update delete retention policy
+        //    FileServiceData serviceData = fileService.Data;
+        //    serviceData.ShareDeleteRetentionPolicy = new DeleteRetentionPolicy
+        //    {
+        //        Enabled = true,
+        //        Days = 100
+        //    };
+        //    FileService service=await fileService.SetServicePropertiesAsync(serviceData);
+
+        //    //validate update
+        //    Assert.True(service.Data.ShareDeleteRetentionPolicy.Enabled);
+        //    Assert.AreEqual(service.Data.ShareDeleteRetentionPolicy.Days,100);
+        //}
     }
 }

@@ -43,20 +43,20 @@ namespace Azure.ResourceManager.Storage
         // Container level operations.
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<TableService> Get(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<TableService> Get(string tableServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TableServiceContainer.Get");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (tableServiceName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(tableServiceName));
                 }
 
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, tableServiceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TableService(Parent, response.Value), response.GetRawResponse());
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<TableService>> GetAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<TableService>> GetAsync(string tableServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TableServiceContainer.Get");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (tableServiceName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(tableServiceName));
                 }
 
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, tableServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new TableService(Parent, response.Value), response.GetRawResponse());
@@ -95,20 +95,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<TableService> GetIfExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<TableService> GetIfExists(string tableServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TableServiceContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (tableServiceName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(tableServiceName));
                 }
 
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, tableServiceName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<TableService>(null, response.GetRawResponse())
                     : Response.FromValue(new TableService(this, response.Value), response.GetRawResponse());
@@ -121,20 +121,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<TableService>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<TableService>> GetIfExistsAsync(string tableServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TableServiceContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (tableServiceName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(tableServiceName));
                 }
 
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, tableServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<TableService>(null, response.GetRawResponse())
                     : Response.FromValue(new TableService(this, response.Value), response.GetRawResponse());
@@ -147,20 +147,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string tableServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TableServiceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (tableServiceName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(tableServiceName));
                 }
 
-                var response = GetIfExists(accountName, cancellationToken: cancellationToken);
+                var response = GetIfExists(tableServiceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +171,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string tableServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TableServiceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (tableServiceName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(tableServiceName));
                 }
 
-                var response = await GetIfExistsAsync(accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await GetIfExistsAsync(tableServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/queueServices/default/queues";
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/queueServices/queues";
 
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return new QueueDeleteOperation(response);
             }
             catch (Exception e)
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return new QueueDeleteOperation(response);
             }
             catch (Exception e)
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, queue, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, queue, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, queue, cancellationToken);
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, queue, cancellationToken);
                 return Response.FromValue(new StorageQueue(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,86 +246,6 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a list of all the queues under the specified storage account. </summary>
-        /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
-        /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ListQueue" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ListQueue> GetAll(string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Page<ListQueue> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("StorageQueue.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, maxpagesize, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ListQueue> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("StorageQueue.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, maxpagesize, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets a list of all the queues under the specified storage account. </summary>
-        /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
-        /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ListQueue" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ListQueue> GetAllAsync(string maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ListQueue>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("StorageQueue.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, maxpagesize, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ListQueue>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("StorageQueue.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, maxpagesize, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string accountName, string tableName)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string accountName, string tableServiceName, string tableName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,7 +53,9 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/tableServices/default/tables/", false);
+            uri.AppendPath("/tableServices/", false);
+            uri.AppendPath(tableServiceName, true);
+            uri.AppendPath("/tables/", false);
             uri.AppendPath(tableName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -64,10 +66,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Creates a new table with the specified table name, under the specified account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableName"/> is null. </exception>
-        public async Task<Response<TableData>> CreateAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableServiceName"/>, or <paramref name="tableName"/> is null. </exception>
+        public async Task<Response<TableData>> CreateAsync(string resourceGroupName, string accountName, string tableServiceName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -77,12 +80,16 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
             if (tableName == null)
             {
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, accountName, tableName);
+            using var message = CreateCreateRequest(resourceGroupName, accountName, tableServiceName, tableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -101,10 +108,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Creates a new table with the specified table name, under the specified account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableName"/> is null. </exception>
-        public Response<TableData> Create(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableServiceName"/>, or <paramref name="tableName"/> is null. </exception>
+        public Response<TableData> Create(string resourceGroupName, string accountName, string tableServiceName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -114,12 +122,16 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
             if (tableName == null)
             {
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var message = CreateCreateRequest(resourceGroupName, accountName, tableName);
+            using var message = CreateCreateRequest(resourceGroupName, accountName, tableServiceName, tableName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -135,7 +147,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string accountName, string tableName)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string accountName, string tableServiceName, string tableName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -148,7 +160,9 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/tableServices/default/tables/", false);
+            uri.AppendPath("/tableServices/", false);
+            uri.AppendPath(tableServiceName, true);
+            uri.AppendPath("/tables/", false);
             uri.AppendPath(tableName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -159,10 +173,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Creates a new table with the specified table name, under the specified account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableName"/> is null. </exception>
-        public async Task<Response<TableData>> UpdateAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableServiceName"/>, or <paramref name="tableName"/> is null. </exception>
+        public async Task<Response<TableData>> UpdateAsync(string resourceGroupName, string accountName, string tableServiceName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -172,12 +187,16 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
             if (tableName == null)
             {
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, accountName, tableName);
+            using var message = CreateUpdateRequest(resourceGroupName, accountName, tableServiceName, tableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -196,10 +215,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Creates a new table with the specified table name, under the specified account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableName"/> is null. </exception>
-        public Response<TableData> Update(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableServiceName"/>, or <paramref name="tableName"/> is null. </exception>
+        public Response<TableData> Update(string resourceGroupName, string accountName, string tableServiceName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -209,12 +229,16 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
             if (tableName == null)
             {
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var message = CreateUpdateRequest(resourceGroupName, accountName, tableName);
+            using var message = CreateUpdateRequest(resourceGroupName, accountName, tableServiceName, tableName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -230,7 +254,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string accountName, string tableName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string accountName, string tableServiceName, string tableName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -243,7 +267,9 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/tableServices/default/tables/", false);
+            uri.AppendPath("/tableServices/", false);
+            uri.AppendPath(tableServiceName, true);
+            uri.AppendPath("/tables/", false);
             uri.AppendPath(tableName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -254,10 +280,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets the table with the specified table name, under the specified account if it exists. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableName"/> is null. </exception>
-        public async Task<Response<TableData>> GetAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableServiceName"/>, or <paramref name="tableName"/> is null. </exception>
+        public async Task<Response<TableData>> GetAsync(string resourceGroupName, string accountName, string tableServiceName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -267,12 +294,16 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
             if (tableName == null)
             {
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, accountName, tableName);
+            using var message = CreateGetRequest(resourceGroupName, accountName, tableServiceName, tableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -293,10 +324,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets the table with the specified table name, under the specified account if it exists. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableName"/> is null. </exception>
-        public Response<TableData> Get(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableServiceName"/>, or <paramref name="tableName"/> is null. </exception>
+        public Response<TableData> Get(string resourceGroupName, string accountName, string tableServiceName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -306,12 +338,16 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
             if (tableName == null)
             {
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, accountName, tableName);
+            using var message = CreateGetRequest(resourceGroupName, accountName, tableServiceName, tableName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -329,7 +365,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string accountName, string tableName)
+        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string accountName, string tableServiceName, string tableName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -342,7 +378,9 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/tableServices/default/tables/", false);
+            uri.AppendPath("/tableServices/", false);
+            uri.AppendPath(tableServiceName, true);
+            uri.AppendPath("/tables/", false);
             uri.AppendPath(tableName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -353,10 +391,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Deletes the table with the specified table name, under the specified account if it exists. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableServiceName"/>, or <paramref name="tableName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string resourceGroupName, string accountName, string tableServiceName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -366,12 +405,16 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
             if (tableName == null)
             {
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, accountName, tableName);
+            using var message = CreateDeleteRequest(resourceGroupName, accountName, tableServiceName, tableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -385,10 +428,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Deletes the table with the specified table name, under the specified account if it exists. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="tableName"> A table name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of only alphanumeric characters and it cannot begin with a numeric character. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="tableServiceName"/>, or <paramref name="tableName"/> is null. </exception>
+        public Response Delete(string resourceGroupName, string accountName, string tableServiceName, string tableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -398,12 +442,16 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
             if (tableName == null)
             {
                 throw new ArgumentNullException(nameof(tableName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, accountName, tableName);
+            using var message = CreateDeleteRequest(resourceGroupName, accountName, tableServiceName, tableName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -414,7 +462,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string accountName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string accountName, string tableServiceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -427,7 +475,9 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/tableServices/default/tables", false);
+            uri.AppendPath("/tableServices/", false);
+            uri.AppendPath(tableServiceName, true);
+            uri.AppendPath("/tables", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -437,9 +487,10 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets a list of all the tables under the specified storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<ListTableResource>> GetAllAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableServiceName"/> is null. </exception>
+        public async Task<Response<ListTableResource>> GetAllAsync(string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -449,8 +500,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
 
-            using var message = CreateGetAllRequest(resourceGroupName, accountName);
+            using var message = CreateGetAllRequest(resourceGroupName, accountName, tableServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -469,9 +524,10 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets a list of all the tables under the specified storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        public Response<ListTableResource> GetAll(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableServiceName"/> is null. </exception>
+        public Response<ListTableResource> GetAll(string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -481,8 +537,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
 
-            using var message = CreateGetAllRequest(resourceGroupName, accountName);
+            using var message = CreateGetAllRequest(resourceGroupName, accountName, tableServiceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -498,7 +558,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string accountName)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string accountName, string tableServiceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -515,9 +575,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<ListTableResource>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableServiceName"/> is null. </exception>
+        public async Task<Response<ListTableResource>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -531,8 +592,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, accountName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, accountName, tableServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -552,9 +617,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="tableServiceName"> The name of the Table Service within the specified storage account. Table Service Name must be &apos;default&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
-        public Response<ListTableResource> GetAllNextPage(string nextLink, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="tableServiceName"/> is null. </exception>
+        public Response<ListTableResource> GetAllNextPage(string nextLink, string resourceGroupName, string accountName, string tableServiceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -568,8 +634,12 @@ namespace Azure.ResourceManager.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
+            if (tableServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(tableServiceName));
+            }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, accountName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, accountName, tableServiceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

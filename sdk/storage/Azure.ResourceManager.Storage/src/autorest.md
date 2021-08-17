@@ -9,7 +9,7 @@ namespace: Azure.ResourceManager.Storage
 tag: package-2021-04
 #require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/storage/resource-manager/readme.md
 require: D:\yukun\projects\azure-rest-api-specs\specification\storage\resource-manager\readme.md
-use: https://github.com/Azure/autorest.csharp/releases/download/v3.0.0-beta.20210816.2/autorest-csharp-3.0.0-beta.20210816.2.tgz
+#use: https://github.com/Azure/autorest.csharp/releases/download/v3.0.0-beta.20210816.2/autorest-csharp-3.0.0-beta.20210816.2.tgz
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -51,7 +51,7 @@ directive:
   - from: swagger-document
     where: $.definitions.ListContainerItems.properties.value.items["$ref"]
     transform: return "#/definitions/BlobContainer"
-  - from swagger-document
+  - from: swagger-document
     where: $.definitions.ListQueueResource.properties.value.items["$ref"]
     transform: return "#/definitions/StorageQueue"
 ```

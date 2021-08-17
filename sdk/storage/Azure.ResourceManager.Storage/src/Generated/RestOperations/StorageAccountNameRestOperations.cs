@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(StorageAccountCheckNameAvailabilityParameters accountName)
+        internal HttpMessage CreateCheckAvailabilityRequest(StorageAccountCheckNameAvailabilityParameters accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityResult>> CheckAvailabilityAsync(StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
         {
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateCheckNameAvailabilityRequest(accountName);
+            using var message = CreateCheckAvailabilityRequest(accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
+        public Response<CheckNameAvailabilityResult> CheckAvailability(StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
         {
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
 
-            using var message = CreateCheckNameAvailabilityRequest(accountName);
+            using var message = CreateCheckAvailabilityRequest(accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

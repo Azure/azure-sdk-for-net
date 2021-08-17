@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
         }
         [SetUp]
-        public async Task createStorageAccountAndGetTableContainer()
+        public async Task CreateStorageAccountAndGetTableService()
         {
             curResourceGroup = await CreateResourceGroupAsync();
             string accountName = Recording.GenerateAssetName("storage");
@@ -33,6 +33,100 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             tableServiceContainer = curStorageAccount.GetTableServices();
             tableService = await tableServiceContainer.GetAsync("default");
             tableContainer = tableService.GetTables();
+        }
+        [TearDown]
+        public async Task ClearStorageAccount()
+        {
+            if (curResourceGroup != null)
+            {
+                var storageAccountContainer = curResourceGroup.GetStorageAccounts();
+                await foreach (StorageAccount account in storageAccountContainer.GetAllAsync())
+                {
+                    await account.DeleteAsync();
+                }
+                curResourceGroup = null;
+                curStorageAccount = null;
+            }
+        }
+        [Test]
+        [RecordedTest]
+        public async Task CreateDeleteTable()
+        {
+            //create table
+            string tableName = Recording.GenerateAssetName("testtable");
+            Table table1 = await tableContainer.CreateOrUpdateAsync(tableName);
+            Assert.IsNotNull(table1);
+            Assert.AreEqual(table1.Id.Name, tableName);
+
+            //validate if created successfully
+            Table table2 = await tableContainer.GetAsync(tableName);
+            AssertTableEqual(table1, table2);
+            Assert.IsTrue(await tableContainer.CheckIfExistsAsync(tableName));
+            Assert.IsFalse(await tableContainer.CheckIfExistsAsync(tableName+ "1"));
+
+            //delete table
+            await table1.DeleteAsync();
+
+            //validate if deleted successfully
+            Assert.IsFalse(await tableContainer.CheckIfExistsAsync(tableName));
+            Table table3 = await tableContainer.GetIfExistsAsync(tableName);
+            Assert.IsNull(table3);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task StartCreateDeleteTable()
+        {
+            //start create table and wait for complete
+            string tableName = Recording.GenerateAssetName("testtable");
+            TableCreateOperation tableCreateOp = await tableContainer.StartCreateOrUpdateAsync(tableName);
+            Table table1 = await tableCreateOp.WaitForCompletionAsync();
+            Assert.IsNotNull(table1);
+            Assert.AreEqual(table1.Id.Name, tableName);
+
+            //validate if created successfully
+            Table table2 = await tableContainer.GetAsync(tableName);
+            AssertTableEqual(table1, table2);
+            Assert.IsTrue(await tableContainer.CheckIfExistsAsync(tableName));
+            Assert.IsFalse(await tableContainer.CheckIfExistsAsync(tableName + "1"));
+
+            //start delete table and wait for complete
+            TableDeleteOperation tableDeleteOp = await table1.StartDeleteAsync();
+            await tableDeleteOp.WaitForCompletionResponseAsync();
+
+            //validate if deleted successfully
+            Assert.IsFalse(await tableContainer.CheckIfExistsAsync(tableName));
+            Table table3 = await tableContainer.GetIfExistsAsync(tableName);
+            Assert.IsNull(table3);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task GetAllTables()
+        {
+            //create two tables
+            string tableName1 = Recording.GenerateAssetName("testtable1");
+            string tableName2 = Recording.GenerateAssetName("testtable2");
+            Table table1 = await tableContainer.CreateOrUpdateAsync(tableName1);
+            Table table2 = await tableContainer.CreateOrUpdateAsync(tableName2);
+
+            //validate two tables
+            Table table3 = null;
+            Table table4 = null;
+            int count = 0;
+            await foreach (Table table in tableContainer.GetAllAsync())
+            {
+                count++;
+                if (table.Id.Name == tableName1)
+                {
+                    table3 = table;
+                }
+                if (table.Id.Name == tableName2)
+                {
+                    table4 = table;
+                }
+            }
+            Assert.AreEqual(count, 2);
+            Assert.IsNotNull(table3);
+            Assert.IsNotNull(table4);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
         };
         protected ArmClient Client { get; private set; }
         protected Subscription DefaultSubscription => Client.DefaultSubscription;
-        protected StorageTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        protected StorageTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
         }
         public StorageTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
                     }
                 });
         }
-        public async Task<List<DeletedAccount>> GetDeletedAccount()
-        {
-            return await DefaultSubscription.GetDeletedAccountsAsync().ToEnumerableAsync();
-        }
+        //public async Task<List<DeletedAccount>> GetDeletedAccount()
+        //{
+        //    return await DefaultSubscription.GetDeletedAccountsAsync().ToEnumerableAsync();
+        //}
         public async Task<List<ResourceGroup>> getAllResourceGroupAsync()
         {
             AsyncPageable<ResourceGroup> resourceGroups= DefaultSubscription.GetResourceGroups().GetAllAsync();
@@ -100,10 +100,35 @@ namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
                 Assert.AreEqual("value2", account.Data.Tags["key2"]);
             }
         }
+
+        //verify if two storage accounts are equal
         public static void AssertStorageAccountEqual(StorageAccount account1, StorageAccount account2)
         {
             Assert.AreEqual(account1.Id.Name, account2.Id.Name);
             Assert.AreEqual(account1.Id.Location, account2.Id.Location);
+        }
+        //verify if two blob containers are equal
+        public static void AssertBlobContainerEqual(BlobContainer blobContainer1, BlobContainer blobContainer2)
+        {
+            Assert.AreEqual(blobContainer1.Id.Name, blobContainer2.Id.Name);
+            Assert.AreEqual(blobContainer1.Id.Location, blobContainer2.Id.Location);
+        }
+        //verify if two file shares are equal
+        public static void AssertFileShareEqual(FileShare fileShare1, FileShare fileShare2)
+        {
+            Assert.AreEqual(fileShare1.Id.Name, fileShare2.Id.Name);
+            Assert.AreEqual(fileShare1.Id.Location, fileShare2.Id.Location);
+        }
+        //verify if two storage queues are equal
+        public static void AssertStorageQueueEqual(StorageQueue storageQueue1, StorageQueue storageQueue2)
+        {
+            Assert.AreEqual(storageQueue1.Id.Name, storageQueue2.Id.Name);
+            Assert.AreEqual(storageQueue1.Id.Location, storageQueue2.Id.Location);
+        }
+        public static void AssertTableEqual(Table table1, Table table2)
+        {
+            Assert.AreEqual(table1.Id.Name, table2.Id.Name);
+            Assert.AreEqual(table1.Id.Location, table2.Id.Location);
         }
     }
 }
