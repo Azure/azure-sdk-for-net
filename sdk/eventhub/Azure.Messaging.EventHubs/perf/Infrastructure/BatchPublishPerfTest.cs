@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
@@ -106,18 +107,38 @@ namespace Azure.Messaging.EventHubs.Perf
                 }
             }
 
-            try
+            while (true)
             {
-                await s_producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (EventHubsException e)
-            {
-                Console.WriteLine($"IsTransient: {e.IsTransient}, FailureReason: {e.Reason}");
-                Console.WriteLine(e);
-                throw;
-            }
+                try
+                {
+                    await s_producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
+                    return Options.BatchSize;
+                }
+                catch (EventHubsException e)
+                {
+                    if (e.IsTransient)
+                    {
+                        // Azure.Messaging.EventHubs.EventHubsException(ServiceBusy): The request was terminated because the entity
+                        // is being throttled. Error code : 50002. Sub error : 102. Please wait 4 seconds and try again.
+                        var match = Regex.Match(e.Message, @"Please wait (\d+) seconds and try again", RegexOptions.IgnoreCase);
 
-            return Options.BatchSize;
+                        // Default to 1 second if we cannot find suggestion in exception message
+                        var retryDelay = TimeSpan.FromSeconds(1);
+                        if (match.Success)
+                        {
+                            retryDelay = TimeSpan.FromSeconds(int.Parse(match.Groups[1].Value));
+                        }
+
+                        Console.WriteLine($"IsTransient: {e.IsTransient}, FailureReason: {e.Reason}, RetryDelay: {retryDelay}");
+
+                        await Task.Delay(retryDelay, cancellationToken);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
         }
 
         /// <summary>
