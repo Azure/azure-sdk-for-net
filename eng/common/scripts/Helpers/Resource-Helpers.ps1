@@ -115,7 +115,8 @@ filter Remove-PurgeableResources {
           Write-Warning "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
         }
 
-        Wait-PurgeableResource -Resource $r -Timeout $Timeout -PassThru:$PassThru -ScriptBlock { Remove-AzKeyVault -VaultName $r.VaultName -Location $r.Location -InRemovedState -Force -ErrorAction Continue }
+        # Using `$($using:r)` in the `-ScriptBlock` to make sure `$r` is captured for jobs.
+        Wait-PurgeableResource -Resource $r -Timeout $Timeout -PassThru:$PassThru -ScriptBlock { Remove-AzKeyVault -VaultName $($using:r).VaultName -Location $($using:r).Location -InRemovedState -Force -ErrorAction Continue }
       }
 
       'Managed HSM' {
@@ -124,15 +125,16 @@ filter Remove-PurgeableResources {
           Write-Warning "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
         }
 
+        # Using `$($using:r)` in the `-ScriptBlock` to make sure `$r` is captured for jobs.
         Wait-PurgeableResource -Resource $r -Timeout $Timeout -PassThru:$PassThru -ScriptBlock {
-          $response = Invoke-AzRestMethod -Method POST -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/locations/$($r.Location)/deletedManagedHSMs/$($r.Name)/purge?api-version=2021-04-01-preview" -ErrorAction Ignore
+          $response = Invoke-AzRestMethod -Method POST -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/locations/$($($using:r).Location)/deletedManagedHSMs/$($($using:r).Name)/purge?api-version=2021-04-01-preview" -ErrorAction Ignore
           if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300) {
-            Write-Warning "Successfully requested that Managed HSM '$($r.Name)' be purged, but may take a few minutes before it is actually purged."
+            Write-Warning "Successfully requested that Managed HSM '$($($using:r).Name)' be purged, but may take a few minutes before it is actually purged."
           } elseif ($response.Content) {
             $content = $response.Content | ConvertFrom-Json
             if ($content.error) {
               $err = $content.error
-              Write-Warning "Failed to deleted Managed HSM '$($r.Name)': ($($err.code)) $($err.message)"
+              Write-Warning "Failed to deleted Managed HSM '$($($using:r).Name)': ($($err.code)) $($err.message)"
             }
           }
         }
@@ -166,15 +168,10 @@ function Wait-PurgeableResource {
     [switch] $PassThru
   )
 
-  # We build a new AST to pass the `$Resource` as `$r`, which is the `foreach` variable declared in `Remove-PurgeableResources` above.
-  # This is done to make writing a purge script feel natural without having to worry about scope since `[ScriptBlock].GetNewClosure()`
-  # does not capture `$r` appropriately. If the variable name in the `foreach` above is changed, it must be changed here as well.
-  $scriptBlockAst = [System.Management.Automation.Language.Parser]::ParseInput(@"
-  param (`$r)
-  $($ScriptBlock.Ast.EndBlock.ToString())
-"@, [ref] $null, [ref] $null)
-
-  $j = Start-ThreadJob -ScriptBlock $scriptBlockAst.GetScriptBlock() -ArgumentList $Resource
+  # ScriptBlocks need to use `$($using:r)` to capture the `$r` value in the `foreach` loop
+  # or they will not resolved when invoked as a job. See
+  # https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_remote_variables
+  $j = Start-ThreadJob -ScriptBlock $ScriptBlock
   $null = Wait-Job -Job $j -Timeout $Timeout
 
   if ($j.State -eq 'Running') {
