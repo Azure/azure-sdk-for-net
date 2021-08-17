@@ -17,21 +17,23 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
 
         private Task ProcessEventAsync(ProcessEventArgs arg)
         {
+            // EventPerfTest.EventRaised() should never throw either, but add a guard in case this changes
             try
             {
                 EventRaised();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                Environment.Exit(1);
+                ErrorRaised(e);
             }
+
             return Task.CompletedTask;
         }
 
         private Task ProcessErrorAsync(ProcessErrorEventArgs arg)
         {
-            throw arg.Exception;
+            ErrorRaised(arg.Exception);
+            return Task.CompletedTask;
         }
 
         public override async Task SetupAsync()
