@@ -313,7 +313,7 @@ namespace Azure.Test.Perf
             using var progressStatusCts = new CancellationTokenSource();
             var progressStatusThread = PerfStressUtilities.PrintStatus(
                 $"=== {title} ===" + Environment.NewLine +
-                $"{"Current",11}   {"Total",15}   {"Average",14}   {"CPU",7}",
+                $"{"Current",11}   {"Total",15}   {"Average",14}   {"CPU",8}",
                 () =>
                 {
                     var totalCompleted = CompletedOperations;
@@ -334,8 +334,8 @@ namespace Azure.Test.Perf
                     // Current: NNN,NNN,NNN (11)
                     // Total: NNN,NNN,NNN,NNN (15)
                     // Average: NNN,NNN,NNN.NN (14)
-                    // CPU: NNN.NN% (7)
-                    return $"{currentCompleted,11:N0}   {totalCompleted,15:N0}   {averageCompleted,14:N2}   {cpuPercentage,7:P}";
+                    // CPU: NNN.NN % (8)
+                    return $"{currentCompleted,11:N0}   {totalCompleted,15:N0}   {averageCompleted,14:N2}   {cpuPercentage,8:P}";
                 },
                 newLine: true,
                 progressStatusCts.Token,
