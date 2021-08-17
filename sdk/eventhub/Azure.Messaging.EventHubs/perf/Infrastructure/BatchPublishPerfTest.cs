@@ -113,6 +113,7 @@ namespace Azure.Messaging.EventHubs.Perf
             catch (EventHubsException e)
             {
                 Console.WriteLine($"IsTransient: {e.IsTransient}, FailureReason: {e.Reason}");
+                Console.WriteLine(e);
                 throw;
             }
 
