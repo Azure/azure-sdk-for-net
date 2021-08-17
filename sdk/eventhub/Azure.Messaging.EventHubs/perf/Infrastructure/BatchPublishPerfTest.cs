@@ -106,7 +106,15 @@ namespace Azure.Messaging.EventHubs.Perf
                 }
             }
 
-            await s_producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
+            try
+            {
+                await s_producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (EventHubsException e)
+            {
+                Console.WriteLine($"IsTransient: {e.IsTransient}, FailureReason: {e.Reason}");
+                throw;
+            }
 
             return Options.BatchSize;
         }
