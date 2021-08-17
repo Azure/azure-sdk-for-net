@@ -6,35 +6,41 @@ This script will read data speciefied in one or more PoliCheckAllowList.yml file
 It then reamoves all allwed entries from the PoliCheckResult 
 .PARAMETER PoliCheckResultFilePath
 The Path to the PoliCheck Result. Usually named PoliCheck.sarif
-.PARAMETER ServiceDirtectory
+.PARAMETER ServiceDirectory
 If the PoliCheck scan is scoped to a particular service provide the ServiceDirectory
+.PARAMETER AllowListLocation
+A path to a folder containing yml defined policheck allowlist
 .EXAMPLE
-PS> ./FilterPoliCheckResults.ps1 -PoliCheckResultFilePath .\PoliCheck.sarif
+PS> ./FilterPoliCheckResults.ps1 -PoliCheckResultFilePath .\PoliCheck.sarif -ServiceDirectory <servicedirname> -AllowListLocation <location>
 #>
 [CmdletBinding()]
 param(
   [Parameter(Mandatory=$true)]
   [String] $PoliCheckResultFilePath,
-  [String] $ServiceDirtectory
+  [Parameter(Mandatory=$true)]
+  [String] $ServiceDirectory,
+  [Parameter(Mandatory=$true)]
+  [String] $AllowListLocation,
+  [String] $ToolsFeedUri="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2"
 )
 
-. "${PSScriptRoot}\logging.ps1"
+. (Join-path ${PSScriptRoot} logging.ps1)
+. (Join-Path ${PSScriptRoot} Helpers PSModule-Helpers.ps1)
 
-$RepoRoot = Resolve-Path -Path "${PSScriptRoot}\..\..\..\"
-$PathToAllowListFiles = Join-Path $RepoRoot $ServiceDirtectory
-$PolicCheckAllowListFiles = Get-ChildItem -Path $PathToAllowListFiles -Recurse -File -Include "PoliCheckAllowList.yml"
+Install-ModuleIfNotInstalled -moduleName "powershell-yaml" `
+-version 0.4.2 -repositoryUrl $ToolsFeedUri
+
+$allowListFilePath = Join-Path $AllowListLocation "${ServiceDirectory}.yml"
 $allowListData = @{}
 
-# Combine all AllowLists Found
-foreach ($file in $PolicCheckAllowListFiles)
+if (Test-Path -Path $allowListFilePath)
 {
-    $allowListDataInFile = ConvertFrom-Yaml (Get-Content $file.FullName -Raw)
-    $allowListData["PC1001"] += $allowListDataInFile["PC1001"]
-    $allowListData["PC1002"] += $allowListDataInFile["PC1002"]
-    $allowListData["PC1003"] += $allowListDataInFile["PC1003"]
-    $allowListData["PC1004"] += $allowListDataInFile["PC1004"]
-    $allowListData["PC1005"] += $allowListDataInFile["PC1005"]
-    $allowListData["PC1006"] += $allowListDataInFile["PC1006"]
+    $allowListData = ConvertFrom-Yaml (Get-Content $allowListFilePath -Raw)
+}
+else
+{
+    LogError "Allow list path $allowListFilePath does not exist."
+    exit 1
 }
 
 $poliCheckData = Get-Content $PoliCheckResultFilePath | ConvertFrom-Json
@@ -50,16 +56,22 @@ foreach ($run in $poliCheckData.runs)
     {
         $ruleId = $result.ruleId
         $allowedEntries = $allowListData[$ruleId]
-        if ($allowedEntries)
+
+        $updatedLocations = @()
+
+        foreach ($location in $result.locations)
         {
-            $updatedLocations = @()
+            $filePath = $location.physicalLocation.artifactLocation.uri
+            $text = $location.physicalLocation.region.snippet.text
+            $contextRegion = $location.physicalLocation.contextRegion.snippet.text
 
-            foreach ($location in $result.locations)
+            if ($filePath.EndsWith("PoliCheckAllowList.yml"))
             {
-                $filePath = $location.physicalLocation.artifactLocation.uri
-                $text = $location.physicalLocation.region.snippet.text
-                $contextRegion = $location.physicalLocation.contextRegion.snippet.text
+                continue
+            }
 
+            if ($allowedEntries)
+            {
                 $allowedEntry = $allowedEntries[0] | Where-Object { $_.FilePath -eq $filePath }
 
                 if ($allowedEntry.Count -gt 0)
@@ -78,12 +90,12 @@ foreach ($run in $poliCheckData.runs)
                         continue
                     }
                 }
-
-                $updatedLocations += $location
             }
 
-            $result.locations = $updatedLocations
+            $updatedLocations += $location
         }
+
+        $result.locations = $updatedLocations
 
         if ($result.locations.Count -gt 0)
         {
