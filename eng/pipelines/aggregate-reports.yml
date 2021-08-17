@@ -41,9 +41,6 @@ jobs:
         # Spelling errors in public api surface are not blockers yet but will 
         # become blockers when this is rolled out to all services. For now, turn
         # the pipeline yellow if spelling errors are detected but do not block.
-        # Individual services can be blocked on spelling errors using: 
-        # `SpellCheckPublicApiSurface: true` 
-        # in the archetype-sdk-client.yml template invocation
         continueOnError: true
 
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
