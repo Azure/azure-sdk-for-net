@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Models;
 using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;

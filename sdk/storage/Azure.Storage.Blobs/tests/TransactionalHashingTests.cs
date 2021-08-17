@@ -7,7 +7,6 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Models;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 

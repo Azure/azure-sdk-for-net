@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Shared;
-using Azure.Storage.Models;
 
 namespace Azure.Storage
 {

@@ -17,7 +17,6 @@ using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using System.Net.Http.Headers;
-using Azure.Storage.Models;
 using System.Linq;
 
 namespace Azure.Storage.Files.Shares

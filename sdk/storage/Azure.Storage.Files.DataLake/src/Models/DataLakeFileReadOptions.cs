@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.Models;
-
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>

@@ -4,7 +4,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace Azure.Storage.Models
+namespace Azure.Storage
 {
     /// <summary>
     /// Azure Storage CRC-64 implementation.

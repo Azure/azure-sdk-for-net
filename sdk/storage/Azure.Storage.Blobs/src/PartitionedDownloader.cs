@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Models;
 
 namespace Azure.Storage.Blobs
 {

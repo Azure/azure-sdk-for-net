@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.Models
+namespace Azure.Storage
 {
     /// <summary>
     /// Hashing options for validating upload content.

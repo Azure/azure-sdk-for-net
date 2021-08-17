@@ -17,7 +17,6 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
-using Azure.Storage.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;

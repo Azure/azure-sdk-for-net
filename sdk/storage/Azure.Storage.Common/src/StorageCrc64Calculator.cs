@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Azure.Storage.Models
+namespace Azure.Storage
 {
     /// <summary>
     /// Port of https://github.com/Azure/azure-storage-net/blob/master/Lib/Common/Core/Util/Crc64.cs

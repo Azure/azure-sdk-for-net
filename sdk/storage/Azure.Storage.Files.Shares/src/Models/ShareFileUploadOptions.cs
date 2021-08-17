@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using Azure.Storage.Models;
 
 namespace Azure.Storage.Files.Shares.Models
 {

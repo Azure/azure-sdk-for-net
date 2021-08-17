@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Files.Shares.Models;
-using Azure.Storage.Models;
 using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares

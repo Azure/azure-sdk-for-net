@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Storage.Models;
 
 namespace Azure.Storage.Files.DataLake.Models
 {

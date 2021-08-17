@@ -9,7 +9,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Storage.Models;
 using Azure.Storage.Shared;
 
 namespace Azure.Storage

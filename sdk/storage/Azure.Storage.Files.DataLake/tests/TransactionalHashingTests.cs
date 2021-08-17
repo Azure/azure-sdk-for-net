@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Files.DataLake.Models;
-using Azure.Storage.Models;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
