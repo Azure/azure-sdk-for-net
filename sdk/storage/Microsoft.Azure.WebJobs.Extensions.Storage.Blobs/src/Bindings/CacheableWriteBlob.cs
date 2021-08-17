@@ -38,10 +38,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
         /// <param name="functionDataCache">Cache in which to put this object when required.</param>
         public CacheableWriteBlob(BlobWithContainer<BlobBaseClient> blob, SharedMemoryMetadata cacheObject, Stream blobStream, IFunctionDataCache functionDataCache)
         {
+            BlobStream = blobStream;
             _cacheObject = cacheObject;
             _functionDataCache = functionDataCache;
             _blob = blob;
-            BlobStream = blobStream;
         }
 
         /// <summary>
@@ -62,9 +62,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
                 return false;
             }
 
-            // TODO this could have a race condition - we may have called Dispose on BlobStream earlier which may have
-            // generated an eTag but another operation on the blob may have modified that eTag between the Dispose call
-            // and this call. How do we ensure we have the final eTag when the BlobStream was disposed/closed?
             BlobProperties properties = await _blob.BlobClient.FetchPropertiesOrNullIfNotExistAsync().ConfigureAwait(false);
             if (properties == null)
             {

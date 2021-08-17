@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Moq;
 using NUnit.Framework;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 {
@@ -22,10 +23,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         private const string TestArtifactPrefix = "e2etestcache";
         private const string ContainerName = TestArtifactPrefix + "-%rnd%";
         private const string OutputContainerName = TestArtifactPrefix + "-out%rnd%";
+        private const string InputBlobName = "inputblob1";
+        private const string OutputBlobName = "outputblob1";
         private const string TestData = "TestData";
         private static TestFixture _fixture;
         private static int _numCacheHits;
         private static int _numCacheMisses;
+        private static FunctionDataCacheKey _expectedBlobCacheKey;
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
@@ -112,15 +116,44 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         }
 
         [Test]
-        public void BindCacheableWriteBlob_VerifyPutToCache()
+        public async Task BindToCacheableWriteBlob_VerifyBlobStream()
         {
-            // TODO
+            // Invoke the function which will verify that the input object has a BlobStream bound to it
+            await _fixture.JobHost.CallAsync(typeof(CacheableBlobsEndToEndTests).GetMethod("ByteArrayBindingWriteToCacheAsync"));
         }
 
         [Test]
-        public void BindCacheableReadBlob_VerifyFunctionDataCacheKey()
+        public async Task BindToCacheableReadBlob_VerifyFunctionDataCacheKey()
         {
-            // TODO
+            bool isIncrementActiveReference = true;
+
+            // Enable the cache
+            _fixture.CacheMock
+                .Setup(c => c.IsEnabled)
+                .Returns(true);
+
+            // Mock the cache hit scenario
+            Mock<SharedMemoryMetadata> cacheObjMock = CreateMockSharedMemoryMetadata();
+            SharedMemoryMetadata cacheObj = cacheObjMock.Object;
+
+            // This access to the cache should be a cache hit (mocking the case where the first access would
+            // have inserted the object into the cache)
+            _fixture.CacheMock
+                .Setup(c => c.TryGet(_expectedBlobCacheKey, isIncrementActiveReference, out cacheObj))
+                .Returns(true)
+                .Verifiable();
+            _fixture.CacheMock
+                .Setup(c => c.DecrementActiveReference(_expectedBlobCacheKey))
+                .Verifiable();
+
+            // Invoke the function which will verify that it was a cache hit
+            await _fixture.JobHost.CallAsync(typeof(CacheableBlobsEndToEndTests).GetMethod("ByteArrayBindingCacheHitVerifyFunctionDataCacheKey"));
+
+            // Verify that TryGet was called on the cache
+            _fixture.CacheMock.Verify();
+
+            // The function call would raise an exception if the FunctionDataCacheKey does not match
+            // match the key generated for the blob.
         }
 
         /// <summary>
@@ -129,7 +162,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         /// </summary>
         [NoAutomaticTrigger]
         public static async Task ByteArrayBindingCacheMissAsync(
-            [Blob(ContainerName + "/blob1", FileAccess.Read)] ICacheAwareReadObject blob)
+            [Blob(ContainerName + "/" + InputBlobName, FileAccess.Read)] ICacheAwareReadObject blob)
         {
             Assert.IsFalse(blob.IsCacheHit);
 
@@ -143,6 +176,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         }
 
         /// <summary>
+        /// This is mocking the case where the function produces an output blob that is stored in the cache.
+        /// We verify if the output object has a valid <see cref="BlobStream"/>.
+        /// </summary>
+        [NoAutomaticTrigger]
+        public static void ByteArrayBindingWriteToCacheAsync(
+            [Blob(ContainerName + "/" + OutputBlobName, FileAccess.Write)] ICacheAwareWriteObject blob)
+        {
+            Assert.NotNull(blob.BlobStream);
+        }
+
+        /// <summary>
         /// This is mocking the case where there was a cache hit.
         /// Note: Here the actual input is not read from the shared memory region
         /// as no implementation of that is available in this package.
@@ -151,7 +195,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         /// </summary>
         [NoAutomaticTrigger]
         public static void ByteArrayBindingCacheHit(
-            [Blob(ContainerName + "/blob1", FileAccess.Read)] ICacheAwareReadObject blob)
+            [Blob(ContainerName + "/" + InputBlobName, FileAccess.Read)] ICacheAwareReadObject blob)
         {
             Assert.IsTrue(blob.IsCacheHit);
 
@@ -159,6 +203,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.NotNull(cacheObj);
 
             _numCacheHits = 1;
+        }
+
+        /// <summary>
+        /// This is mocking the case where there was a cache hit.
+        /// Note: Here the actual input is not read from the shared memory region
+        /// as no implementation of that is available in this package.
+        /// We just verify if the <see cref="FunctionDataCacheKey"/> in the <see cref="ICacheAwareReadObject"/>
+        /// matches the <see cref="_expectedBlobCacheKey"/> that was generated for the blob when it was written.
+        /// </summary>
+        [NoAutomaticTrigger]
+        public static void ByteArrayBindingCacheHitVerifyFunctionDataCacheKey(
+            [Blob(ContainerName + "/" + InputBlobName, FileAccess.Read)] ICacheAwareReadObject blob)
+        {
+            Assert.AreEqual(_expectedBlobCacheKey, blob.CacheKey);
         }
 
         public class TestFixture
@@ -198,9 +256,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
                 await Host.StartAsync();
 
-                // upload some test blobs
-                BlockBlobClient blob = BlobContainer.GetBlockBlobClient("blob1");
+                // Upload some test blobs
+                BlockBlobClient blob = BlobContainer.GetBlockBlobClient(InputBlobName);
                 await blob.UploadTextAsync(TestData);
+
+                // Get information about the uplodaded blob
+                BlobProperties blobProperties = await blob.GetPropertiesAsync();
+                string blobId = blob.Uri.ToString();
+                string blobVersion = blobProperties.ETag.ToString();
+                _expectedBlobCacheKey = new FunctionDataCacheKey(blobId, blobVersion);
             }
 
             public IHost Host
