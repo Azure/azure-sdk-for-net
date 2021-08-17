@@ -1835,30 +1835,30 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         await args.AbandonMessageAsync(args.Message);
                     }
 
-                    var ct = Interlocked.Increment(ref receivedCount);
-                    if (ct == messageCount)
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == messageCount)
                     {
                         tcs.SetResult(true);
                     }
 
-                    if (ct == 5)
+                    if (count == 5)
                     {
                         processor.UpdateConcurrency(20, 2);
                         Assert.AreEqual(20, processor.MaxConcurrentSessions);
                         Assert.AreEqual(2, processor.MaxConcurrentCallsPerSession);
                     }
 
-                    if (ct == 50)
+                    if (count == 50)
                     {
                         Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 20);
                     }
-                    if (ct == 75)
+                    if (count == 75)
                     {
                         processor.UpdateConcurrency(1, 1);
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
                         Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
                     }
-                    if (ct == 95)
+                    if (count == 95)
                     {
                         Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
@@ -1899,19 +1899,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         await args.AbandonMessageAsync(args.Message);
                     }
 
-                    var ct = Interlocked.Increment(ref receivedCount);
-                    if (ct == messageCount)
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == messageCount)
                     {
                         tcs.SetResult(true);
                     }
 
-                    if (ct == 5)
+                    if (count == 5)
                     {
                         processor.UpdateConcurrency(5, 20);
                         Assert.AreEqual(5, processor.MaxConcurrentSessions);
                         Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
                     }
-                    if (ct == 50)
+                    if (count == 50)
                     {
                         // tasks will generally be 100 here, but allow some forgiveness as this is not deterministic
                         Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 50);
@@ -1919,7 +1919,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
                         Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
                     }
-                    if (ct == 95)
+                    if (count == 95)
                     {
                         Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }

@@ -186,6 +186,7 @@ namespace Azure.Messaging.ServiceBus
         internal readonly List<(Task Task, CancellationTokenSource Cts, ReceiverManager ReceiverManager)> _tasks = new();
         private readonly List<ReceiverManager> _orphanedReceiverManagers = new();
         private CancellationTokenSource _handlerCts = new();
+        private readonly int _processorCount = Environment.ProcessorCount;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
@@ -1030,7 +1031,7 @@ namespace Azure.Messaging.ServiceBus
 
             if (IsSessionProcessor)
             {
-                int maxAcceptSessions = Math.Min(maxConcurrentCalls, 2 * Environment.ProcessorCount);
+                int maxAcceptSessions = Math.Min(maxConcurrentCalls, 2 * _processorCount);
                 int diffAcceptSessions = maxAcceptSessions - _currentAcceptSessions;
                 if (diffAcceptSessions > 0)
                 {
