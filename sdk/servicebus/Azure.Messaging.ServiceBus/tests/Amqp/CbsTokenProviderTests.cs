@@ -7,13 +7,13 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Amqp;
-using Azure.Messaging.EventHubs.Authorization;
+using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus.Authorization;
 using Microsoft.Azure.Amqp;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.ServiceBus.Tests
 {
     /// <summary>
     ///   The suite of tests for the <see cref="CbsTokenProvider" />
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesExpirationBuffer()
         {
             var mockCredential = new Mock<TokenCredential>();
-            var credential = new EventHubTokenCredential(mockCredential.Object);
+            var credential = new ServiceBusTokenCredential(mockCredential.Object);
             Assert.That(() => new CbsTokenProvider(credential, TimeSpan.FromMilliseconds(-1), CancellationToken.None), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var tokenValue = "ValuE_oF_tHE_tokEn";
             var expires = DateTimeOffset.Parse("2015-10-27T00:00:00Z");
             var mockCredential = new Mock<TokenCredential>();
-            var credential = new EventHubTokenCredential(mockCredential.Object);
+            var credential = new ServiceBusTokenCredential(mockCredential.Object);
 
             using var provider = new CbsTokenProvider(credential, TimeSpan.Zero, default);
 
@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var value = "TOkEn!";
             var signature = new SharedAccessSignature("hub", "keyName", "key", value, DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
             var sasCredential = new SharedAccessCredential(signature);
-            var credential = new EventHubTokenCredential(sasCredential);
+            var credential = new ServiceBusTokenCredential(sasCredential);
 
             using var provider = new CbsTokenProvider(credential, TimeSpan.Zero, default);
 
@@ -103,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var tokenValue = "ValuE_oF_tHE_tokEn";
             var expires = DateTimeOffset.Parse("2015-10-27T00:00:00Z");
             var mockCredential = new Mock<TokenCredential>();
-            var credential = new EventHubTokenCredential(mockCredential.Object);
+            var credential = new ServiceBusTokenCredential(mockCredential.Object);
 
             using var provider = new CbsTokenProvider(credential, TimeSpan.Zero, default);
 
@@ -128,7 +128,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var tokenValue = "ValuE_oF_tHE_tokEn";
             var expires = DateTimeOffset.UtcNow.AddDays(1);
             var mockCredential = new Mock<TokenCredential>();
-            var credential = new EventHubTokenCredential(mockCredential.Object);
+            var credential = new ServiceBusTokenCredential(mockCredential.Object);
 
             using var provider = new CbsTokenProvider(credential, TimeSpan.Zero, default);
 
@@ -162,7 +162,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var buffer = TimeSpan.FromMinutes(5);
             var expires = DateTimeOffset.UtcNow.Subtract(buffer).AddSeconds(-10);
             var mockCredential = new Mock<TokenCredential>();
-            var credential = new EventHubTokenCredential(mockCredential.Object);
+            var credential = new ServiceBusTokenCredential(mockCredential.Object);
 
             using var provider = new CbsTokenProvider(credential, TimeSpan.Zero, default);
 
@@ -195,7 +195,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var value = "TOkEn!";
             var signature = new SharedAccessSignature("hub-name", "keyName", "key", value, DateTimeOffset.UtcNow.AddHours(4));
             var mockCredential = new Mock<SharedAccessCredential>(signature) { CallBase = true };
-            var credential = new EventHubTokenCredential(mockCredential.Object);
+            var credential = new ServiceBusTokenCredential(mockCredential.Object);
 
             using var provider = new CbsTokenProvider(credential, TimeSpan.Zero, default);
 
@@ -225,7 +225,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var buffer = TimeSpan.FromMinutes(5);
             var expires = DateTimeOffset.UtcNow.Subtract(buffer).AddSeconds(-10);
             var mockCredential = new Mock<TokenCredential>();
-            var credential = new EventHubTokenCredential(mockCredential.Object);
+            var credential = new ServiceBusTokenCredential(mockCredential.Object);
 
             using var provider = new CbsTokenProvider(credential, TimeSpan.Zero, default);
 
