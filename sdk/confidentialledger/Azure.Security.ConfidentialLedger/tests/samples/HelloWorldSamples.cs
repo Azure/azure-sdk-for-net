@@ -150,19 +150,6 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 #endif
             string subLedgerId = "subledger:0";
 
-            // Wait for the entry to be available.
-            status = "Pending";
-            while (status == "Pending")
-            {
-                statusResponse = ledgerClient.GetTransactionStatus(transactionId);
-                status = JsonDocument.Parse(statusResponse.Content)
-                    .RootElement
-                    .GetProperty("state")
-                    .GetString();
-            }
-
-            Console.WriteLine($"Transaction status: {status}");
-
             // Provide both the transactionId and subLedgerId.
             Response getBySubledgerResponse = ledgerClient.GetLedgerEntry(transactionId, subLedgerId);
 
@@ -218,17 +205,6 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 #else
             transactionId = firstPostOperation.Id;
 #endif
-
-            // Wait for the entry to be committed
-            status = "Pending";
-            while (status == "Pending")
-            {
-                statusResponse = ledgerClient.GetTransactionStatus(transactionId);
-                status = JsonDocument.Parse(statusResponse.Content)
-                    .RootElement
-                    .GetProperty("state")
-                    .GetString();
-            }
 
             // The ledger entry written at the transactionId in firstResponse is retrieved from the default sub-ledger.
             Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
@@ -286,17 +262,6 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             // The ledger entry written at subLedgerTransactionId is retrieved from the sub-ledger 'sub-ledger'.
             string subLedgerTransactionId = subLedgerPostOperation.Id;
-
-            // Wait for the entry to be committed
-            status = "Pending";
-            while (status == "Pending")
-            {
-                statusResponse = ledgerClient.GetTransactionStatus(subLedgerTransactionId);
-                status = JsonDocument.Parse(statusResponse.Content)
-                    .RootElement
-                    .GetProperty("state")
-                    .GetString();
-            }
 
             getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
             // Try until the entry is available.
