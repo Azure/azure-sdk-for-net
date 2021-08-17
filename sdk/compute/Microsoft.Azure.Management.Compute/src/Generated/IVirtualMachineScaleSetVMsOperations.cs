@@ -155,6 +155,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='instanceId'>
         /// The instance ID of the virtual machine.
         /// </param>
+        /// <param name='forceDeletion'>
+        /// Optional parameter to force delete a virtual machine from a VM
+        /// scale set. (Feature in Preview)
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -167,7 +171,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, bool? forceDeletion = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a virtual machine from a VM scale set.
         /// </summary>
@@ -181,8 +185,10 @@ namespace Microsoft.Azure.Management.Compute
         /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation. Possible values
-        /// include: 'instanceView'
+        /// The expand expression to apply on the operation. 'InstanceView'
+        /// will retrieve the instance view of the virtual machine. 'UserData'
+        /// will retrieve the UserData of the virtual machine. Possible values
+        /// include: 'instanceView', 'userData'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -617,6 +623,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='instanceId'>
         /// The instance ID of the virtual machine.
         /// </param>
+        /// <param name='forceDeletion'>
+        /// Optional parameter to force delete a virtual machine from a VM
+        /// scale set. (Feature in Preview)
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -629,7 +639,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, bool? forceDeletion = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Power off (stop) a virtual machine in a VM scale set. Note that
         /// resources are still attached and you are getting charged for the

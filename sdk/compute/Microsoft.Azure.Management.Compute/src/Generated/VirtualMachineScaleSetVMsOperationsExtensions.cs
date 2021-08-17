@@ -240,9 +240,13 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
-            public static void Delete(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId)
+            /// <param name='forceDeletion'>
+            /// Optional parameter to force delete a virtual machine from a VM scale set.
+            /// (Feature in Preview)
+            /// </param>
+            public static void Delete(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? forceDeletion = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, vmScaleSetName, instanceId).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, vmScaleSetName, instanceId, forceDeletion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -260,12 +264,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
+            /// <param name='forceDeletion'>
+            /// Optional parameter to force delete a virtual machine from a VM scale set.
+            /// (Feature in Preview)
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? forceDeletion = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, forceDeletion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -284,8 +292,10 @@ namespace Microsoft.Azure.Management.Compute
             /// The instance ID of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView'
+            /// The expand expression to apply on the operation. 'InstanceView' will
+            /// retrieve the instance view of the virtual machine. 'UserData' will retrieve
+            /// the UserData of the virtual machine. Possible values include:
+            /// 'instanceView', 'userData'
             /// </param>
             public static VirtualMachineScaleSetVM Get(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
@@ -308,8 +318,10 @@ namespace Microsoft.Azure.Management.Compute
             /// The instance ID of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView'
+            /// The expand expression to apply on the operation. 'InstanceView' will
+            /// retrieve the instance view of the virtual machine. 'UserData' will retrieve
+            /// the UserData of the virtual machine. Possible values include:
+            /// 'instanceView', 'userData'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1026,9 +1038,13 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
-            public static void BeginDelete(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId)
+            /// <param name='forceDeletion'>
+            /// Optional parameter to force delete a virtual machine from a VM scale set.
+            /// (Feature in Preview)
+            /// </param>
+            public static void BeginDelete(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? forceDeletion = default(bool?))
             {
-                operations.BeginDeleteAsync(resourceGroupName, vmScaleSetName, instanceId).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, vmScaleSetName, instanceId, forceDeletion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1046,12 +1062,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
+            /// <param name='forceDeletion'>
+            /// Optional parameter to force delete a virtual machine from a VM scale set.
+            /// (Feature in Preview)
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? forceDeletion = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, forceDeletion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

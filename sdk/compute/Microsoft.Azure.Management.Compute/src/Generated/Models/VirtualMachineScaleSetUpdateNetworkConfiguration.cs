@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// machine.</param>
         /// <param name="enableAcceleratedNetworking">Specifies whether the
         /// network interface is accelerated networking-enabled.</param>
+        /// <param name="enableFpga">Specifies whether the network interface is
+        /// FPGA networking-enabled.</param>
         /// <param name="networkSecurityGroup">The network security
         /// group.</param>
         /// <param name="dnsSettings">The dns settings to be applied on the
@@ -51,16 +53,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Configuration.</param>
         /// <param name="enableIPForwarding">Whether IP forwarding enabled on
         /// this NIC.</param>
-        public VirtualMachineScaleSetUpdateNetworkConfiguration(string id = default(string), string name = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default(IList<VirtualMachineScaleSetUpdateIPConfiguration>), bool? enableIPForwarding = default(bool?))
+        /// <param name="deleteOption">Specify what happens to the network
+        /// interface when the VM is deleted. Possible values include:
+        /// 'Delete', 'Detach'</param>
+        public VirtualMachineScaleSetUpdateNetworkConfiguration(string id = default(string), string name = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableFpga = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default(IList<VirtualMachineScaleSetUpdateIPConfiguration>), bool? enableIPForwarding = default(bool?), string deleteOption = default(string))
             : base(id)
         {
             Name = name;
             Primary = primary;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
+            EnableFpga = enableFpga;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
             IpConfigurations = ipConfigurations;
             EnableIPForwarding = enableIPForwarding;
+            DeleteOption = deleteOption;
             CustomInit();
         }
 
@@ -89,6 +96,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? EnableAcceleratedNetworking { get; set; }
 
         /// <summary>
+        /// Gets or sets specifies whether the network interface is FPGA
+        /// networking-enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableFpga")]
+        public bool? EnableFpga { get; set; }
+
+        /// <summary>
         /// Gets or sets the network security group.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
@@ -112,6 +126,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableIPForwarding")]
         public bool? EnableIPForwarding { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify what happens to the network interface when the
+        /// VM is deleted. Possible values include: 'Delete', 'Detach'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deleteOption")]
+        public string DeleteOption { get; set; }
 
     }
 }

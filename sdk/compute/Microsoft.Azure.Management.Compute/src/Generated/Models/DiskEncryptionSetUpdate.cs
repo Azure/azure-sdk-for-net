@@ -37,12 +37,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="encryptionType">Possible values include:
         /// 'EncryptionAtRestWithCustomerKey',
         /// 'EncryptionAtRestWithPlatformAndCustomerKeys'</param>
+        /// <param name="rotationToLatestKeyVersionEnabled">Set this flag to
+        /// true to enable auto-updating of this disk encryption set to the
+        /// latest key version.</param>
         /// <param name="tags">Resource tags</param>
-        public DiskEncryptionSetUpdate(string encryptionType = default(string), KeyVaultAndKeyReference activeKey = default(KeyVaultAndKeyReference), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public DiskEncryptionSetUpdate(string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet), bool? rotationToLatestKeyVersionEnabled = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionSetIdentity identity = default(EncryptionSetIdentity))
         {
             EncryptionType = encryptionType;
             ActiveKey = activeKey;
+            RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;
             Tags = tags;
+            Identity = identity;
             CustomInit();
         }
 
@@ -62,13 +67,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.activeKey")]
-        public KeyVaultAndKeyReference ActiveKey { get; set; }
+        public KeyForDiskEncryptionSet ActiveKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets set this flag to true to enable auto-updating of this
+        /// disk encryption set to the latest key version.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.rotationToLatestKeyVersionEnabled")]
+        public bool? RotationToLatestKeyVersionEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public EncryptionSetIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

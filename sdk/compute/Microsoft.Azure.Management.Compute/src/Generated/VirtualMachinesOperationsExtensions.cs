@@ -213,9 +213,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void Delete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            /// <param name='forceDeletion'>
+            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// </param>
+            public static void Delete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? forceDeletion = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, vmName, forceDeletion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -230,12 +233,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
+            /// <param name='forceDeletion'>
+            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? forceDeletion = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmName, forceDeletion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -252,8 +258,12 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView'
+            /// The expand expression to apply on the operation. 'InstanceView' retrieves a
+            /// snapshot of the runtime properties of the virtual machine that is managed
+            /// by the platform and can change outside of control plane operations.
+            /// 'UserData' retrieves the UserData property as part of the VM model view
+            /// that was provided by the user during the VM Create/Update operation.
+            /// Possible values include: 'instanceView', 'userData'
             /// </param>
             public static VirtualMachine Get(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
@@ -274,8 +284,12 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView'
+            /// The expand expression to apply on the operation. 'InstanceView' retrieves a
+            /// snapshot of the runtime properties of the virtual machine that is managed
+            /// by the platform and can change outside of control plane operations.
+            /// 'UserData' retrieves the UserData property as part of the VM model view
+            /// that was provided by the user during the VM Create/Update operation.
+            /// Possible values include: 'instanceView', 'userData'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -411,9 +425,9 @@ namespace Microsoft.Azure.Management.Compute
             /// to sysprep the virtual machine before performing this operation.
             /// &lt;br&gt;For Windows, please refer to [Create a managed image of a
             /// generalized VM in
-            /// Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For
+            /// Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For
             /// Linux, please refer to [How to create an image of a virtual machine or
-            /// VHD](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image).
+            /// VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -434,9 +448,9 @@ namespace Microsoft.Azure.Management.Compute
             /// to sysprep the virtual machine before performing this operation.
             /// &lt;br&gt;For Windows, please refer to [Create a managed image of a
             /// generalized VM in
-            /// Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For
+            /// Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For
             /// Linux, please refer to [How to create an image of a virtual machine or
-            /// VHD](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image).
+            /// VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -988,6 +1002,52 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Installs patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='installPatchesInput'>
+            /// Input for InstallPatches as directly received by the API
+            /// </param>
+            public static VirtualMachineInstallPatchesResult InstallPatches(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput)
+            {
+                return operations.InstallPatchesAsync(resourceGroupName, vmName, installPatchesInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Installs patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='installPatchesInput'>
+            /// Input for InstallPatches as directly received by the API
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineInstallPatchesResult> InstallPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.InstallPatchesWithHttpMessagesAsync(resourceGroupName, vmName, installPatchesInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Run command on the VM.
             /// </summary>
             /// <param name='operations'>
@@ -1187,9 +1247,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            public static void BeginDelete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            /// <param name='forceDeletion'>
+            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// </param>
+            public static void BeginDelete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? forceDeletion = default(bool?))
             {
-                operations.BeginDeleteAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, vmName, forceDeletion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1204,12 +1267,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
+            /// <param name='forceDeletion'>
+            /// Optional parameter to force delete virtual machines.(Feature in Preview)
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? forceDeletion = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, forceDeletion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1612,6 +1678,52 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task<VirtualMachineAssessPatchesResult> BeginAssessPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginAssessPatchesWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Installs patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='installPatchesInput'>
+            /// Input for InstallPatches as directly received by the API
+            /// </param>
+            public static VirtualMachineInstallPatchesResult BeginInstallPatches(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput)
+            {
+                return operations.BeginInstallPatchesAsync(resourceGroupName, vmName, installPatchesInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Installs patches on the VM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='installPatchesInput'>
+            /// Input for InstallPatches as directly received by the API
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineInstallPatchesResult> BeginInstallPatchesAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginInstallPatchesWithHttpMessagesAsync(resourceGroupName, vmName, installPatchesInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

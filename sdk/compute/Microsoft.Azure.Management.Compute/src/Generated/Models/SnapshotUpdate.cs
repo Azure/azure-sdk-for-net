@@ -52,8 +52,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
         /// <param name="diskAccessId">ARM id of the DiskAccess resource for
         /// using private endpoints on disks.</param>
+        /// <param name="supportsHibernation">Indicates the OS on a snapshot
+        /// supports hibernation.</param>
+        /// <param name="publicNetworkAccess">Possible values include:
+        /// 'Enabled', 'Disabled'</param>
         /// <param name="tags">Resource tags</param>
-        public SnapshotUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SnapshotSku sku = default(SnapshotSku))
+        public SnapshotUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), bool? supportsHibernation = default(bool?), string publicNetworkAccess = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SnapshotSku sku = default(SnapshotSku))
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
@@ -61,6 +65,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             Encryption = encryption;
             NetworkAccessPolicy = networkAccessPolicy;
             DiskAccessId = diskAccessId;
+            SupportsHibernation = supportsHibernation;
+            PublicNetworkAccess = publicNetworkAccess;
             Tags = tags;
             Sku = sku;
             CustomInit();
@@ -116,6 +122,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskAccessId")]
         public string DiskAccessId { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the OS on a snapshot supports hibernation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportsHibernation")]
+        public bool? SupportsHibernation { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags

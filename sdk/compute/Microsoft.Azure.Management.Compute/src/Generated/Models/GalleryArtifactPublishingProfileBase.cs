@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// deployed from the latest version of the Image Definition won't use
         /// this Image Version.</param>
         /// <param name="publishedDate">The timestamp for when the gallery
-        /// Image Version is published.</param>
+        /// image version is published.</param>
         /// <param name="endOfLifeDate">The end of life date of the gallery
-        /// Image Version. This property can be used for decommissioning
+        /// image version. This property can be used for decommissioning
         /// purposes. This property is updatable.</param>
         /// <param name="storageAccountType">Specifies the storage account type
         /// to be used to store the image. This property is not updatable.
@@ -93,13 +93,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? ExcludeFromLatest { get; set; }
 
         /// <summary>
-        /// Gets the timestamp for when the gallery Image Version is published.
+        /// Gets the timestamp for when the gallery image version is published.
         /// </summary>
         [JsonProperty(PropertyName = "publishedDate")]
         public System.DateTime? PublishedDate { get; private set; }
 
         /// <summary>
-        /// Gets or sets the end of life date of the gallery Image Version.
+        /// Gets or sets the end of life date of the gallery image version.
         /// This property can be used for decommissioning purposes. This
         /// property is updatable.
         /// </summary>
