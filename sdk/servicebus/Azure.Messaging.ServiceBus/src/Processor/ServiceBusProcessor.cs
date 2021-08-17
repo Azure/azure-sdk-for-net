@@ -46,10 +46,10 @@ namespace Azure.Messaging.ServiceBus
         /// The primitive for ensuring that the service is not overloaded with
         /// accept session requests.
         /// </summary>
-        private SemaphoreSlim MaxConcurrentAcceptSessionsSemaphore { get; }
+        private readonly SemaphoreSlim _maxConcurrentAcceptSessionsSemaphore = new(0, int.MaxValue);
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
-        private readonly SemaphoreSlim _processingStartStopSemaphore = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _processingStartStopSemaphore = new(1, 1);
 
         private CancellationTokenSource RunningTaskTokenSource { get; set; }
 
@@ -122,6 +122,8 @@ namespace Azure.Messaging.ServiceBus
 
         internal int MaxConcurrentCallsPerSession => _maxConcurrentCallsPerSession;
         private volatile int _maxConcurrentCallsPerSession;
+
+        private int _currentAcceptSessions;
 
         internal TimeSpan? MaxReceiveWaitTime { get; }
 
@@ -236,11 +238,6 @@ namespace Azure.Messaging.ServiceBus
                     ? Math.Min(_sessionIds.Length, _maxConcurrentSessions)
                     : _maxConcurrentSessions * _maxConcurrentCallsPerSession;
             }
-
-            var maxAcceptSessions = Math.Min(_maxConcurrentCalls, 2 * Environment.ProcessorCount);
-            MaxConcurrentAcceptSessionsSemaphore = new SemaphoreSlim(
-                maxAcceptSessions,
-                maxAcceptSessions);
 
             AutoCompleteMessages = Options.AutoCompleteMessages;
 
@@ -607,7 +604,7 @@ namespace Azure.Messaging.ServiceBus
                             new SessionReceiverManager(
                                 _sessionProcessor,
                                 sessionId,
-                                MaxConcurrentAcceptSessionsSemaphore,
+                                _maxConcurrentAcceptSessionsSemaphore,
                                 _scopeFactory,
                                 KeepOpenOnReceiveTimeout));
                     }
@@ -634,7 +631,7 @@ namespace Azure.Messaging.ServiceBus
                                 new SessionReceiverManager(
                                     _sessionProcessor,
                                     null,
-                                    MaxConcurrentAcceptSessionsSemaphore,
+                                    _maxConcurrentAcceptSessionsSemaphore,
                                     _scopeFactory,
                                     KeepOpenOnReceiveTimeout));
                         }
@@ -1029,6 +1026,25 @@ namespace Azure.Messaging.ServiceBus
                 {
                     await _messageHandlerSemaphore.WaitAsync().ConfigureAwait(false);
                 }
+            }
+
+            if (IsSessionProcessor)
+            {
+                int maxAcceptSessions = Math.Min(maxConcurrentCalls, 2 * Environment.ProcessorCount);
+                int diffAcceptSessions = maxAcceptSessions - _currentAcceptSessions;
+                if (diffAcceptSessions > 0)
+                {
+                    _maxConcurrentAcceptSessionsSemaphore.Release(diffAcceptSessions);
+                }
+                else
+                {
+                    int diffAcceptLimit = Math.Abs(diffAcceptSessions);
+                    for (int i = 0; i < diffAcceptLimit; i++)
+                    {
+                        await _maxConcurrentAcceptSessionsSemaphore.WaitAsync().ConfigureAwait(false);
+                    }
+                }
+                _currentAcceptSessions = maxAcceptSessions;
             }
 
             ReconcileReceiverManagers(maxConcurrentSessions);

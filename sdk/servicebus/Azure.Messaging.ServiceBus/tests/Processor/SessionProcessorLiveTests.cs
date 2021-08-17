@@ -1822,17 +1822,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     MaxConcurrentSessions = 1,
                     MaxConcurrentCallsPerSession = 1,
-                    SessionIdleTimeout = TimeSpan.FromSeconds(5)
+                    SessionIdleTimeout = TimeSpan.FromSeconds(3)
                 });
 
                 int receivedCount = 0;
                 var tcs = new TaskCompletionSource<bool>();
 
-                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
                     if (args.CancellationToken.IsCancellationRequested)
                     {
-                        return Task.CompletedTask;
+                        await args.AbandonMessageAsync(args.Message);
                     }
 
                     var ct = Interlocked.Increment(ref receivedCount);
@@ -1852,7 +1852,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 20);
                     }
-                    if (ct == 90)
+                    if (ct == 75)
                     {
                         processor.UpdateConcurrency(1, 1);
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
@@ -1862,7 +1862,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
-                    return Task.CompletedTask;
                 }
 
                 processor.ProcessMessageAsync += ProcessMessage;
@@ -1944,7 +1943,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             // that the message will be completed eventually.
             if (args.Exception is not ServiceBusException { Reason: ServiceBusFailureReason.SessionLockLost })
             {
-                Assert.Fail(args.Exception.ToString());
+                Assert.Fail($"Error source: {args.ErrorSource}, Exception: {args.Exception}");
             }
             return Task.CompletedTask;
         }
