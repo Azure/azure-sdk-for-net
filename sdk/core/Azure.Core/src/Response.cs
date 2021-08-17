@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure
 {
@@ -110,6 +112,28 @@ namespace Azure
         /// </summary>
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
+
+        internal abstract ResponseExceptionFactory ExceptionFactory { get; }
+
+        internal abstract ResponseClassifier ResponseClassifier { get; }
+
+        /// <summary>
+        /// Throw a RequestFailedException appropriate to the Response.
+        /// </summary>
+        public void Throw()
+        {
+            throw this.ExceptionFactory.CreateRequestFailedException(this);
+            //throw new RequestFailedException("<error message>");
+        }
+
+        /// <summary>
+        /// Throw a RequestFailedException appropriate to the Response.
+        /// </summary>
+        public async Task ThrowAsync()
+        {
+             throw await this.ExceptionFactory.CreateRequestFailedExceptionAsync(this).ConfigureAwait(false);
+            //throw new RequestFailedException("<error message>");
+        }
 
         /// <summary>
         /// Creates a new instance of <see cref="Response{T}"/> with the provided value and HTTP response.

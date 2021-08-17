@@ -41,5 +41,27 @@ namespace Azure.Analytics.Synapse.AccessControl
                 Id = value.Id,
                 Properties = value.Properties
             });
+
+        public static implicit operator SynapseRoleAssignment(Response response)
+        {
+            switch (response.Status)
+            {
+                case 200:
+                    return DeserializeResponse(response);
+                default:
+
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new NotImplementedException();
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+
+                    //response.Throw();
+                    //break;
+            }
+        }
+
+        private static SynapseRoleAssignment DeserializeResponse(Response response)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

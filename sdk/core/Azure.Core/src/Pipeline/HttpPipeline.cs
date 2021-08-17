@@ -33,6 +33,7 @@ namespace Azure.Core.Pipeline
             policies = policies ?? Array.Empty<HttpPipelinePolicy>();
 
             var all = new HttpPipelinePolicy[policies.Length + 1];
+            _transport.ResponseClassifier = ResponseClassifier;
             all[policies.Length] = new HttpPipelineTransportPolicy(_transport);
             policies.CopyTo(all, 0);
 
