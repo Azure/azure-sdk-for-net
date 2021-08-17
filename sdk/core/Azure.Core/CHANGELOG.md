@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `HttpAuthorization` to represent authentication information in Authorization, ProxyAuthorization, WWW-Authenticate, and Proxy-Authenticate header values.
+
 ### Breaking Changes
 
 ### Bugs Fixed
