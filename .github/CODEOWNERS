@@ -549,7 +549,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric/           @QingChenmsft @vaishnavk @juhacket
 
 # PRLabel: %Schema Registry
-/sdk/schemaregistry/            @jsquire @AlexGhiondea
+/sdk/schemaregistry/            @jsquire @AlexGhiondea @JoshLove-msft
 
 # ServiceLabel: %Schema Registry %Service Attention
 /sdk/schemaregistry/            @arerlend
