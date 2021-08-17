@@ -79,10 +79,11 @@ namespace Azure.Communication.CallingServer
     }
     public partial class CallingServerClientOptions : Azure.Core.ClientOptions
     {
-        public CallingServerClientOptions(Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion version = Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion.V2021_06_15_Preview) { }
+        public CallingServerClientOptions(Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion version = Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion.V2021_08_30_Preview) { }
         public enum ServiceVersion
         {
             V2021_06_15_Preview = 1,
+            V2021_08_30_Preview = 2,
         }
     }
     public abstract partial class CallingServerEventBase
@@ -293,6 +294,61 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.ResultInfo ResultInfo { get { throw null; } }
         public Azure.Communication.CallingServer.OperationStatus Status { get { throw null; } }
         public static Azure.Communication.CallingServer.PlayAudioResultEvent Deserialize(string content) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecordingChannelType : System.IEquatable<Azure.Communication.CallingServer.RecordingChannelType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecordingChannelType(string value) { throw null; }
+        public static Azure.Communication.CallingServer.RecordingChannelType Mixed { get { throw null; } }
+        public static Azure.Communication.CallingServer.RecordingChannelType Unmixed { get { throw null; } }
+        public bool Equals(Azure.Communication.CallingServer.RecordingChannelType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallingServer.RecordingChannelType left, Azure.Communication.CallingServer.RecordingChannelType right) { throw null; }
+        public static implicit operator Azure.Communication.CallingServer.RecordingChannelType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallingServer.RecordingChannelType left, Azure.Communication.CallingServer.RecordingChannelType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecordingContentType : System.IEquatable<Azure.Communication.CallingServer.RecordingContentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecordingContentType(string value) { throw null; }
+        public static Azure.Communication.CallingServer.RecordingContentType Audio { get { throw null; } }
+        public static Azure.Communication.CallingServer.RecordingContentType AudioVideo { get { throw null; } }
+        public bool Equals(Azure.Communication.CallingServer.RecordingContentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallingServer.RecordingContentType left, Azure.Communication.CallingServer.RecordingContentType right) { throw null; }
+        public static implicit operator Azure.Communication.CallingServer.RecordingContentType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallingServer.RecordingContentType left, Azure.Communication.CallingServer.RecordingContentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecordingFormatType : System.IEquatable<Azure.Communication.CallingServer.RecordingFormatType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecordingFormatType(string value) { throw null; }
+        public static Azure.Communication.CallingServer.RecordingFormatType Mp3 { get { throw null; } }
+        public static Azure.Communication.CallingServer.RecordingFormatType Mp4 { get { throw null; } }
+        public static Azure.Communication.CallingServer.RecordingFormatType Wav { get { throw null; } }
+        public bool Equals(Azure.Communication.CallingServer.RecordingFormatType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallingServer.RecordingFormatType left, Azure.Communication.CallingServer.RecordingFormatType right) { throw null; }
+        public static implicit operator Azure.Communication.CallingServer.RecordingFormatType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallingServer.RecordingFormatType left, Azure.Communication.CallingServer.RecordingFormatType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ResultInfo
     {
