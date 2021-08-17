@@ -129,7 +129,7 @@ namespace Azure.Core.Pipeline
                 throw new RequestFailedException(e.Message, e);
             }
 
-            message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
+            message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream, this.ClientDiagnostics!);
         }
 
         private static HttpClient CreateDefaultClient()
@@ -526,8 +526,6 @@ namespace Azure.Core.Pipeline
             }
 
             public override string ClientRequestId { get; set; }
-
-            internal override ClientDiagnostics ClientDiagnostics { get; set; }
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseContent, name, out value);
 

@@ -99,6 +99,8 @@ namespace Azure.Core
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
+        internal ClientDiagnostics? ClientDiagnostics { get; set; }
+
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object? obj) => base.Equals(obj);

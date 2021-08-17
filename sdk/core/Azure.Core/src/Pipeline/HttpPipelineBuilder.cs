@@ -104,6 +104,7 @@ namespace Azure.Core.Pipeline
 
             policies.RemoveAll(static policy => policy == null);
 
+            options.Transport.ClientDiagnostics = options.ClientDiagnostics;
             return new HttpPipeline(options.Transport,
                 policies.ToArray(),
                 responseClassifier);

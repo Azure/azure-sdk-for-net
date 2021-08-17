@@ -90,7 +90,7 @@ namespace Azure.Core.Pipeline
                     webResponse = exception.Response;
                 }
 
-                message.Response = new HttpWebResponseImplementation(message.Request.ClientRequestId, (HttpWebResponse)webResponse);
+                message.Response = new HttpWebResponseImplementation(message.Request.ClientRequestId, (HttpWebResponse)webResponse, this.ClientDiagnostics!);
             }
             // ObjectDisposedException might be thrown if the request is aborted during the content upload via SSL
             catch (ObjectDisposedException) when (message.CancellationToken.IsCancellationRequested)
@@ -245,12 +245,13 @@ namespace Azure.Core.Pipeline
             private Stream? _contentStream;
             private Stream? _originalContentStream;
 
-            public HttpWebResponseImplementation(string clientRequestId, HttpWebResponse webResponse)
+            public HttpWebResponseImplementation(string clientRequestId, HttpWebResponse webResponse, ClientDiagnostics clientDiagnostics)
             {
                 _webResponse = webResponse;
                 _originalContentStream = _webResponse.GetResponseStream();
                 _contentStream = _originalContentStream;
                 ClientRequestId = clientRequestId;
+                ClientDiagnostics = clientDiagnostics;
             }
 
             public override int Status => (int)_webResponse.StatusCode;

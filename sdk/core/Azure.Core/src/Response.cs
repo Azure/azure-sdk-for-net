@@ -37,9 +37,7 @@ namespace Azure
         /// </summary>
         public abstract string ClientRequestId { get; set; }
 
-        /// <summary>
-        /// </summary>
-        internal abstract ClientDiagnostics ClientDiagnostics { get; set; }
+        internal ClientDiagnostics? ClientDiagnostics { get; set; }
 
         /// <summary>
         /// Get the HTTP response headers.
@@ -141,7 +139,8 @@ namespace Azure
         /// </summary>
         public RequestFailedException GetRequestFailedException()
         {
-            return this.ClientDiagnostics.CreateRequestFailedException(this);
+            throw new NotImplementedException();
+            //return this.ClientDiagnostics?.CreateRequestFailedException(this);
         }
 
         internal void DisposeContentStreamIfNotBuffered()

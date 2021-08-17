@@ -31,6 +31,8 @@ namespace Azure.Core.Pipeline
             _sanitizer = new HttpMessageSanitizer(
                 options.Diagnostics.LoggedQueryParameters.ToArray(),
                 options.Diagnostics.LoggedHeaderNames.ToArray());
+
+            options.ClientDiagnostics = this;
         }
 
         /// <summary>

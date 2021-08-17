@@ -28,5 +28,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns></returns>
         public abstract Request CreateRequest();
+
+        internal ClientDiagnostics? ClientDiagnostics { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.Core
         public DefaultClientOptions(): base(null)
         {
             Transport = GetDefaultTransport();
+            Transport.ClientDiagnostics = base.ClientDiagnostics;
             Diagnostics.IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             Diagnostics.IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
         }
