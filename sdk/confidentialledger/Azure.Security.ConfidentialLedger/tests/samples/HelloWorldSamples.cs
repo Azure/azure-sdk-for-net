@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Security;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
@@ -39,6 +40,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 #endif
             Response response = identityClient.GetLedgerIdentity(ledgerId);
             X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
+
             #endregion
 
             #region Snippet:CreateClient
@@ -53,6 +55,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
 
             var f = certificateChain.Build(ledgerTlsCert);
+
             // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
             bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
             {
@@ -75,16 +78,59 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 #else
             var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, TestEnvironment.Credential, options);
 #endif
+
             #endregion
 
             #region Snippet:AppendToLedger
 
             PostLedgerEntryOperation postOperation = ledgerClient.PostLedgerEntry(
                 RequestContent.Create(
-                    new { contents = "Hello world!" }), waitForCompletion: true);
+                    new { contents = "Hello world!" }),
+                waitForCompletion: true);
 
             string transactionId = postOperation.Id;
             Console.WriteLine($"Appended transaction with Id: {transactionId}");
+
+            #endregion
+
+            #region Snippet:AppendToLedgerNoWaitForCompletion
+
+            PostLedgerEntryOperation postOperationWithWait = ledgerClient.PostLedgerEntry(
+                RequestContent.Create(
+                    new { contents = "Hello world!" }),
+                waitForCompletion: false);
+
+            string waitingTransactionId = postOperationWithWait.Id;
+            Console.WriteLine($"Started transaction with Id: {transactionId}");
+
+            var rawResponse = postOperationWithWait.WaitForCompletionResponse();
+            Console.WriteLine($"Completed Post operations with transaction Id: {transactionId}");
+
+            #endregion
+
+            #region Snippet:AppendToLedgerFailure
+
+            try
+            {
+                PostLedgerEntryOperation failingPostOperation = ledgerClient.PostLedgerEntry(
+                    RequestContent.Create(
+                        new { contents = "Hello world!" }),
+                    waitForCompletion: true);
+            }
+            catch (OperationFailedException ex)
+            {
+                Console.WriteLine($"Appended transaction failed with Id: {ex.OperationId}");
+
+                // Check the status of the transaction.
+                Response failedStatusResponse = ledgerClient.GetTransactionStatus(ex.OperationId);
+
+                string failedStatus = JsonDocument.Parse(failedStatusResponse.Content)
+                    .RootElement
+                    .GetProperty("state")
+                    .GetString();
+
+                Console.WriteLine($"Transaction status: {failedStatus}");
+            }
 
             #endregion
 
@@ -126,11 +172,13 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             ledgerClient.PostLedgerEntry(
                 RequestContent.Create(
-                    new { contents = "Hello from Chris!", subLedgerId = "Chris' messages" }), waitForCompletion: true);
+                    new { contents = "Hello from Chris!", subLedgerId = "Chris' messages" }),
+                waitForCompletion: true);
 
             ledgerClient.PostLedgerEntry(
                 RequestContent.Create(
-                    new { contents = "Hello from Allison!", subLedgerId = "Allison's messages" }), waitForCompletion: true);
+                    new { contents = "Hello from Allison!", subLedgerId = "Allison's messages" }),
+                waitForCompletion: true);
 
             #endregion
 
@@ -142,7 +190,8 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             postOperation = ledgerClient.PostLedgerEntry(
 #endif
                 RequestContent.Create(
-                    new { contents = "Hello world!" }), waitForCompletion: true);
+                    new { contents = "Hello world!" }),
+                waitForCompletion: true);
 #if SNIPPET
             string transactionId = postOperation.Id;
 #else
@@ -190,15 +239,19 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             #region Snippet:GetEnteryWithNoTransactionId
 
             PostLedgerEntryOperation firstPostOperation = ledgerClient.PostLedgerEntry(
-                RequestContent.Create(new { contents = "Hello world 0" }), waitForCompletion: true);
+                RequestContent.Create(new { contents = "Hello world 0" }),
+                waitForCompletion: true);
             ledgerClient.PostLedgerEntry(
-                RequestContent.Create(new { contents = "Hello world 1" }), waitForCompletion: true);
+                RequestContent.Create(new { contents = "Hello world 1" }),
+                waitForCompletion: true);
             PostLedgerEntryOperation subLedgerPostOperation = ledgerClient.PostLedgerEntry(
                 RequestContent.Create(new { contents = "Hello world sub-ledger 0" }),
-                "my sub-ledger", waitForCompletion: true);
+                "my sub-ledger",
+                waitForCompletion: true);
             ledgerClient.PostLedgerEntry(
                 RequestContent.Create(new { contents = "Hello world sub-ledger 1" }),
-                "my sub-ledger", waitForCompletion: true);
+                "my sub-ledger",
+                waitForCompletion: true);
 
 #if SNIPPET
             string transactionId = firstPostOperation.Id;
@@ -303,6 +356,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             #endregion
 
             #region Snippet:NewUser
+
 #if SNIPPET
             string newUserAadObjectId = "<some AAD user or service princpal object Id>";
 #else

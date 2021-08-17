@@ -105,7 +105,7 @@ string transactionId = postOperation.Id;
 Console.WriteLine($"Appended transaction with Id: {transactionId}");
 ```
 
-Since Confidential Ledger is a distributed system, rare transient failures may cause writes to be lost. For entries that must be preserved, it is advisable to verify that the write became durable. Note: It may be necessary to call `GetTransactionStatus` multiple times until it returns a "Committed" status.
+Since Confidential Ledger is a distributed system, rare transient failures may cause writes to be lost. For entries that must be preserved, it is advisable to verify that the write became durable. Note: It may be necessary to call `GetTransactionStatus` multiple times until it returns a "Committed" status. However, when calling `PostLedgerEntry`, a successful result indicates that the status is "Committed".
 
 ```C# Snippet:GetStatus
 Response statusResponse = ledgerClient.GetTransactionStatus(transactionId);
