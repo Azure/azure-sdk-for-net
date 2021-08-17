@@ -115,7 +115,7 @@ filter Remove-PurgeableResources {
           Write-Warning "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
         }
 
-        Wait-PurgeableResource { Remove-AzKeyVault -VaultName $r.VaultName -Location $r.Location -InRemovedState -Force -ErrorAction Continue } -Timeout:$Timeout -PassThru:$PassThru
+        Wait-PurgeableResource -Resource $r -Timeout:$Timeout -PassThru:$PassThru -ScriptBlock { Remove-AzKeyVault -VaultName $r.VaultName -Location $r.Location -InRemovedState -Force -ErrorAction Continue }
       }
 
       'Managed HSM' {
@@ -124,7 +124,7 @@ filter Remove-PurgeableResources {
           Write-Warning "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
         }
 
-        Wait-PurgeableResource -Timeout:$Timeout -PassThru:$PassThru -ScriptBlock {
+        Wait-PurgeableResource -Resource $r -Timeout:$Timeout -PassThru:$PassThru -ScriptBlock {
           $response = Invoke-AzRestMethod -Method POST -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/locations/$($r.Location)/deletedManagedHSMs/$($r.Name)/purge?api-version=2021-04-01-preview" -ErrorAction Ignore
           if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300) {
             Write-Warning "Successfully requested that Managed HSM '$($r.Name)' be purged, but may take a few minutes before it is actually purged."
