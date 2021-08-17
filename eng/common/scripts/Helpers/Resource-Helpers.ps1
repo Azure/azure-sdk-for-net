@@ -170,7 +170,7 @@ function Wait-PurgeableResource {
   $null = Wait-Job -Job $j -Timeout $Timeout
 
   if ($j.State -eq 'Running') {
-    Write-Warning "Timed out waiting to purge $($Resource.AzsdkResourceType) '$(Resource.AzsdkName)': {$ScriptBlock}"
+    Write-Warning "Timed out waiting to purge $($Resource.AzsdkResourceType) '$($Resource.AzsdkName)': {$ScriptBlock}"
     if ($PassThru) {
       $Resource
     }
