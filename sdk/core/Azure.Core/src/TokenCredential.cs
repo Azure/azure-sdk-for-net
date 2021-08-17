@@ -94,7 +94,10 @@ namespace Azure.Core
             internal StaticTokenCredential(
                 Func<TokenRequestContext, CancellationToken, ValueTask<AccessToken>> getTokenAsync)
             {
-                _getToken = (context, token) => getTokenAsync(context, token).EnsureCompleted();
+                _getToken = (context, token) => getTokenAsync(context, token)
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                        .GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                 _getTokenAsync = getTokenAsync;
             }
 
