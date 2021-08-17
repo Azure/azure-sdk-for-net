@@ -27,8 +27,6 @@
                 "NewPassword1!",
                 "Password*",
                 "123",
-                "http://foo:bar@1.1.1.1:3000",
-                "http://foo1:bar1@1.1.1.1:3000",
                 "new_secret",
                 "test_secret",
                 "sskdjfsdasdjsd",
