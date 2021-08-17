@@ -67,6 +67,8 @@ namespace Azure.Core.TestFramework
 
         public virtual string SanitizeTextBody(string contentType, string body)
         {
+            Boolean modified = false;
+
             if (String.IsNullOrWhiteSpace(body))
                 return body;
 
@@ -91,9 +93,14 @@ namespace Azure.Core.TestFramework
                     foreach (JToken token in jsonO.SelectTokens(jsonPath))
                     {
                         token.Replace(sanitizer(token));
+                        modified = true;
                     }
                 }
-                return JsonConvert.SerializeObject(jsonO, SerializerSettings);
+
+                if (modified)
+                    return JsonConvert.SerializeObject(jsonO, SerializerSettings);
+                else
+                    return body;
             }
             catch
             {
