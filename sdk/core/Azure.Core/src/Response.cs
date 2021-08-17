@@ -139,7 +139,7 @@ namespace Azure
 
         /// <summary>
         /// </summary>
-        public RequestFailedException GetException()
+        public RequestFailedException GetRequestFailedException()
         {
             return this.ClientDiagnostics.CreateRequestFailedException(this);
         }

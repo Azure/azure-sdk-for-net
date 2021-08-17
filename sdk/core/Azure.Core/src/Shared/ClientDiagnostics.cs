@@ -96,7 +96,7 @@ namespace Azure.Core.Pipeline
             return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
         }
 
-        public static RequestFailedException CreateRequestFailedExceptionWithContent(
+        public RequestFailedException CreateRequestFailedExceptionWithContent(
             Response response,
             string? message = null,
             string? content = null,
