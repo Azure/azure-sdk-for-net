@@ -3,8 +3,10 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Models;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -194,6 +196,234 @@ namespace Azure.Storage.Blobs.Tests
             // Assert
             // we didn't throw, so that's good
             // TODO intercept responses in pipeline to check for hash responses
+        }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        public async Task BlobClientUploadSuccessfulHashVerification(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(DefaultDataSize);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            var hashingOptions = new UploadTransactionalHashingOptions { Algorithm = algorithm };
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream, new BlobUploadOptions
+                {
+                    TransactionalHashingOptions = hashingOptions
+                });
+            }
+
+            // Assert
+            // we didn't throw, so that's good
+            // TODO intercept requests in pipeline to check for hash values
+        }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        public async Task BlobClientUploadUsePrecalculatedOnOneshot(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB); // well below partition size
+
+            // create an incorrect hash to check on request pipeline, guaranteeing we didn't autocalculate
+            var precalculatedHash = GetRandomBuffer(16);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm,
+                PrecalculatedHash = precalculatedHash
+            };
+
+            // Act / Assert
+
+            // TODO mock this instead of bad request
+            using (var stream = new MemoryStream(data))
+            {
+                // we sent a bad hash; this request will fail
+                Assert.ThrowsAsync(typeof(RequestFailedException), async () => await blob.UploadAsync(stream, new BlobUploadOptions
+                {
+                    TransactionalHashingOptions = hashingOptions,
+                }));
+            }
+
+            // TODO intercept requests in pipeline to check for hash values
+        }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        public async Task BlobClientUploadIgnorePrecalculatedOnSplit(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            const int blockSize = Constants.KB;
+            var data = GetRandomBuffer(2 * blockSize);
+
+            // create bad hash for to ignore
+            var precalculatedHash = GetRandomBuffer(16);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm,
+                PrecalculatedHash = precalculatedHash
+            };
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream, new BlobUploadOptions
+                {
+                    TransactionalHashingOptions = hashingOptions,
+                    TransferOptions = new StorageTransferOptions
+                    {
+                        InitialTransferSize = blockSize,
+                        MaximumTransferSize = blockSize
+                    }
+                });
+            }
+
+            // Assert
+            // we didn't throw, so we didn't send the bad hash anywhere
+            // TODO intercept requests in pipeline to check for hash values
+        }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        public async Task BlockBlobClientUploadUsePrecalculatedOnOneshot(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB); // well below partition size
+
+            // create an incorrect hash to check on request pipeline, guaranteeing we didn't autocalculate
+            var precalculatedHash = GetRandomBuffer(16);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm,
+                PrecalculatedHash = precalculatedHash
+            };
+
+            // Act / Assert
+
+            // TODO mock this instead of bad request
+            using (var stream = new MemoryStream(data))
+            {
+                // we sent a bad hash; this request will fail
+                Assert.ThrowsAsync(typeof(RequestFailedException), async () => await blob.UploadAsync(stream, new BlobUploadOptions
+                {
+                    TransactionalHashingOptions = hashingOptions,
+                }));
+            }
+
+            // TODO intercept requests in pipeline to check for hash values
+        }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        public async Task BlockBlobClientUploadIgnorePrecalculatedOnSplit(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            const int blockSize = Constants.KB;
+            var data = GetRandomBuffer(2 * blockSize);
+
+            // create bad hash for to ignore
+            var precalculatedHash = GetRandomBuffer(16);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm,
+                PrecalculatedHash = precalculatedHash
+            };
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream, new BlobUploadOptions
+                {
+                    TransactionalHashingOptions = hashingOptions,
+                    TransferOptions = new StorageTransferOptions
+                    {
+                        InitialTransferSize = blockSize,
+                        MaximumTransferSize = blockSize
+                    }
+                });
+            }
+
+            // Assert
+            // we didn't throw, so we didn't send the bad hash anywhere
+            // TODO intercept requests in pipeline to check for hash values
+        }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        public async Task StageBlockSuccessfulHashComputation(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            const int blockSize = Constants.KB;
+            var data = GetRandomBuffer(2 * blockSize);
+            // create bad hash for to ignore
+            var precalculatedHash = GetRandomBuffer(16);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm,
+                PrecalculatedHash = precalculatedHash
+            };
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync("blockId", stream, new BlockBlobStageBlockOptions
+                {
+                    TransactionalHashingOptions = hashingOptions,
+                });
+            }
+
+            // Assert
+            // we didn't throw, so we didn't send the bad hash anywhere
+            // TODO intercept requests in pipeline to check for hash values
+        }
+
+        [TestCase(TransactionalHashAlgorithm.MD5)]
+        [TestCase(TransactionalHashAlgorithm.StorageCrc64)]
+        public async Task StageBlockUsePrecalculatedHash(TransactionalHashAlgorithm algorithm)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            const int blockSize = Constants.KB;
+            var data = GetRandomBuffer(2 * blockSize);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var hashingOptions = new UploadTransactionalHashingOptions
+            {
+                Algorithm = algorithm,
+            };
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                // we sent a bad hash; this request will fail
+                Assert.ThrowsAsync(typeof(RequestFailedException), async () => await blob.StageBlockAsync("blockId", stream, new BlockBlobStageBlockOptions
+                {
+                    TransactionalHashingOptions = hashingOptions,
+                }));
+            }
+
+            // Assert
+            // TODO intercept request in pipeline to check for hash value
         }
     }
 }

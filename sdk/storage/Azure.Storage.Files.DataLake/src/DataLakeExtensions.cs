@@ -536,7 +536,7 @@ namespace Azure.Storage.Files.DataLake
                 {
                     Conditions = options.Conditions.ToBlobRequestConditions(),
                     TransferOptions = options.TransferOptions,
-                    TransactionalHashingOptions = options.HashingOptions
+                    TransactionalHashingOptions = options.TransactionalHashingOptions
                 };
             }
             else if (options.Path != default)
@@ -545,7 +545,7 @@ namespace Azure.Storage.Files.DataLake
                 {
                     Conditions = options.Conditions.ToBlobRequestConditions(),
                     TransferOptions = options.TransferOptions,
-                    TransactionalHashingOptions = options.HashingOptions
+                    TransactionalHashingOptions = options.TransactionalHashingOptions
                 };
             }
             else

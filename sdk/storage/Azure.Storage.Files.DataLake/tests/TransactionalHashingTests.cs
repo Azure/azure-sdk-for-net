@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Models;
@@ -126,6 +123,33 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.DoesNotThrowAsync(async () => await readStream.CopyToAsync(Stream.Null));
+        }
+
+        [Test, Combinatorial]
+        public async Task PartitionedDownloadSuccessfulHashVerification(
+            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
+            [Values(Constants.KB, 3 * Constants.KB, 5 * Constants.KB)] int chunkSize)
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            var data = GetRandomBuffer(DefaultDataSize);
+            DataLakeFileClient blob = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            var hashingOptions = new DownloadTransactionalHashingOptions { Algorithm = algorithm };
+
+            // Act
+            await blob.ReadToAsync(new DataLakeFileReadToOptions(Stream.Null)
+            {
+                TransactionalHashingOptions = hashingOptions
+            });
+
+            // Assert
+            // we didn't throw, so that's good
+            // TODO intercept responses in pipeline to check for hash responses
         }
     }
 }

@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Models;
@@ -42,7 +39,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test, Combinatorial]
-        public async Task ReadSuccessfulHashVerification(
+        public async Task DownloadSuccessfulHashVerification(
             [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
             [ValueSource("DefaultDataHttpRanges")] HttpRange range)
         {
@@ -70,7 +67,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase(TransactionalHashAlgorithm.StorageCrc64, true)]
         // no hashing, so we save users a buffer
         [TestCase(TransactionalHashAlgorithm.None, false)]
-        public async Task ExpectedReadStreamTypeReturned(TransactionalHashAlgorithm algorithm, bool isBuffered)
+        public async Task ExpectedDownloadStreamTypeReturned(TransactionalHashAlgorithm algorithm, bool isBuffered)
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
 
