@@ -1,6 +1,26 @@
 # Release History
 
-## 5.5.0-beta.2 (Unreleased)
+## 5.7.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.6.0 (2021-08-10)
+
+### Features Added
+
+- Each Event Hubs client type now offers an option to set an Identifier. The identifier is informational and is associated with the AMQP links used, allowing the service to provide additional context in error messages and the SDK logs to provide an additional point of correlation.
+
+### Other Changes
+
+- Added the ability to adjust the connection idle timeout using the `EventHubConnectionOptions` available within the options for each client type.
+
+## 5.5.0 (2021-07-07)
 
 ### Acknowledgments
 

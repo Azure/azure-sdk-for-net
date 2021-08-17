@@ -9,14 +9,19 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
+    public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
-        [Ignore("Samples not working yet")]
+        [AsyncOnly]
         public async Task OperationsHistoryAsync()
         {
+#if SNIPPET
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+#endif
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -30,8 +35,8 @@ namespace Azure.AI.Translation.Document.Samples
 
             await foreach (TranslationStatus translationStatus in client.GetAllTranslationStatusesAsync())
             {
-                if (translationStatus.Status != DocumentTranslationStatus.Failed &&
-                      translationStatus.Status != DocumentTranslationStatus.Succeeded)
+                if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
+                    translationStatus.Status == DocumentTranslationStatus.Running)
                 {
                     DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
                     await operation.WaitForCompletionAsync();

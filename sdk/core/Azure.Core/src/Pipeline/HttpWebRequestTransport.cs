@@ -113,6 +113,9 @@ namespace Azure.Core.Pipeline
             request.Timeout = Timeout.Infinite;
             request.ReadWriteTimeout = Timeout.Infinite;
 
+            // Redirect is handled by the pipeline
+            request.AllowAutoRedirect = false;
+
             // Don't disable the default proxy when there is no environment proxy configured
             if (_environmentProxy != null)
             {
@@ -270,7 +273,9 @@ namespace Azure.Core.Pipeline
 
             public override void Dispose()
             {
-                _originalContentStream?.Dispose();
+                // TODO: https://github.com/Azure/azure-sdk-for-net/issues/23251
+                if (_originalContentStream is not MemoryStream)
+                    _originalContentStream?.Dispose();
                 DisposeContentStreamIfNotBuffered();
             }
 

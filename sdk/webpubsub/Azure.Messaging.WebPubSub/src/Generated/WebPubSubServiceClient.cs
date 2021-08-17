@@ -251,16 +251,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CloseClientConnectionAsync(string connectionId, string reason = null, RequestOptions options = null)
+        public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCloseClientConnectionRequest(connectionId, reason, options);
+            HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseClientConnection");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
             try
             {
@@ -292,16 +292,16 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CloseClientConnection(string connectionId, string reason = null, RequestOptions options = null)
+        public virtual Response CloseConnection(string connectionId, string reason = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCloseClientConnectionRequest(connectionId, reason, options);
+            HttpMessage message = CreateCloseConnectionRequest(connectionId, reason, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseClientConnection");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
             try
             {
@@ -328,11 +328,11 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        /// <summary> Create Request for <see cref="CloseClientConnection"/> and <see cref="CloseClientConnectionAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="CloseConnection"/> and <see cref="CloseConnectionAsync"/> operations. </summary>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCloseClientConnectionRequest(string connectionId, string reason = null, RequestOptions options = null)
+        private HttpMessage CreateCloseConnectionRequest(string connectionId, string reason = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

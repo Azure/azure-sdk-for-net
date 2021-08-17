@@ -248,6 +248,7 @@ namespace Azure.Core
     public abstract partial class ClientOptions
     {
         protected ClientOptions() { }
+        public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
@@ -323,7 +324,7 @@ namespace Azure.Core
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
-        public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
+        public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
         public void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
@@ -333,6 +334,7 @@ namespace Azure.Core
     {
         PerCall = 0,
         PerRetry = 1,
+        BeforeTransport = 2,
     }
     public abstract partial class Request : System.IDisposable
     {

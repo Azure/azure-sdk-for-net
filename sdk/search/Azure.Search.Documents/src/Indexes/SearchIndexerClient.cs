@@ -9,6 +9,7 @@ using Azure.Core.Pipeline;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Search.Documents.Indexes.Models;
+using System.ComponentModel;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -53,6 +54,21 @@ namespace Azure.Search.Documents.Indexes
         /// Initializes a new instance of the <see cref="SearchIndexerClient"/> class.
         /// </summary>
         /// <param name="endpoint">Required. The URI endpoint of the Search service. This is likely to be similar to "https://{search_service}.search.windows.net". The URI must use HTTPS.</param>
+        /// <param name="tokenCredential">
+        /// Required.The token credential used to authenticate requests against the Search service.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-rbac">Use role-based authorization in Azure Cognitive Search</see> for more information about role-based authorization in Azure Cognitive Search.
+        /// </param>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
+        public SearchIndexerClient(Uri endpoint, TokenCredential tokenCredential) :
+            this(endpoint, tokenCredential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchIndexerClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">Required. The URI endpoint of the Search service. This is likely to be similar to "https://{search_service}.search.windows.net". The URI must use HTTPS.</param>
         /// <param name="credential">
         /// Required. The API key credential used to authenticate requests against the Search service.
         /// You need to use an admin key to perform any operations on the SearchIndexerClient.
@@ -78,6 +94,34 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="SearchIndexerClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">Required. The URI endpoint of the Search service. This is likely to be similar to "https://{search_service}.search.windows.net". The URI must use HTTPS.</param>
+        /// <param name="tokenCredential">
+        /// Required. The token credential used to authenticate requests against the Search service.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-rbac">Use role-based authorization in Azure Cognitive Search</see> for more information about role-based authorization in Azure Cognitive Search.
+        /// </param>
+        /// <param name="options">Client configuration options for connecting to Azure Cognitive Search.</param>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0006:DO provide constructor overloads that allow specifying additional options.", Justification = "Avoid ambiguous method definition")]
+        public SearchIndexerClient(
+            Uri endpoint,
+            TokenCredential tokenCredential,
+            SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            endpoint.AssertHttpsScheme(nameof(endpoint));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+
+            options ??= new SearchClientOptions();
+            Endpoint = endpoint;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = options.Build(tokenCredential);
+            _version = options.Version;
+        }
+
+        /// <summary>
         /// Gets the URI endpoint of the Search service.  This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
         /// </summary>
@@ -95,7 +139,7 @@ namespace Azure.Search.Documents.Indexes
         private DataSourcesRestClient DataSourcesClient => LazyInitializer.EnsureInitialized(ref _dataSourcesClient, () => new DataSourcesRestClient(
             _clientDiagnostics,
             _pipeline,
-            Endpoint.ToString(),
+            Endpoint.AbsoluteUri,
             null,
             _version.ToVersionString())
         );
@@ -106,7 +150,7 @@ namespace Azure.Search.Documents.Indexes
         private IndexersRestClient IndexersClient => LazyInitializer.EnsureInitialized(ref _indexersClient, () => new IndexersRestClient(
             _clientDiagnostics,
             _pipeline,
-            Endpoint.ToString(),
+            Endpoint.AbsoluteUri,
             null,
             _version.ToVersionString())
         );
@@ -117,7 +161,7 @@ namespace Azure.Search.Documents.Indexes
         private SkillsetsRestClient SkillsetsClient => LazyInitializer.EnsureInitialized(ref _skillsetsClient, () => new SkillsetsRestClient(
             _clientDiagnostics,
             _pipeline,
-            Endpoint.ToString(),
+            Endpoint.AbsoluteUri,
             null,
             _version.ToVersionString())
         );
@@ -205,9 +249,38 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexerDataSourceConnection dataSourceConnection,
+            bool onlyIfUnchanged,
+            CancellationToken cancellationToken) => CreateOrUpdateDataSourceConnection(
+                dataSourceConnection,
+                onlyIfUnchanged,
+                ignoreCacheResetRequirements: null,
+                cancellationToken);
+
+        /// <summary>
+        /// Creates a new data source or updates an existing data source connection.
+        /// </summary>
+        /// <param name="dataSourceConnection">Required. The <see cref="SearchIndexerDataSourceConnection"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="ignoreCacheResetRequirements"><c>True</c> if the cache reset requirements should be ignored.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
+        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexerDataSourceConnection> CreateOrUpdateDataSourceConnection(
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
+            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -222,6 +295,7 @@ namespace Azure.Search.Documents.Indexes
                     dataSourceConnection,
                     onlyIfUnchanged ? dataSourceConnection?.ETag?.ToString() : null,
                     null,
+                    ignoreCacheResetRequirements,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -246,9 +320,39 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexerDataSourceConnection dataSourceConnection,
+            bool onlyIfUnchanged,
+            CancellationToken cancellationToken) => await CreateOrUpdateDataSourceConnectionAsync(
+                dataSourceConnection,
+                onlyIfUnchanged,
+                ignoreCacheResetRequirements: null,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a new data source or updates an existing data source connection.
+        /// </summary>
+        /// <param name="dataSourceConnection">Required. The <see cref="SearchIndexerDataSourceConnection"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="ignoreCacheResetRequirements"><c>True</c> if the cache reset requirements should be ignored.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
+        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnection"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexerDataSourceConnection>> CreateOrUpdateDataSourceConnectionAsync(
             SearchIndexerDataSourceConnection dataSourceConnection,
             bool onlyIfUnchanged = false,
+            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -263,6 +367,7 @@ namespace Azure.Search.Documents.Indexes
                     dataSourceConnection,
                     onlyIfUnchanged ? dataSourceConnection?.ETag?.ToString() : null,
                     null,
+                    ignoreCacheResetRequirements,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -667,9 +772,41 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexer indexer,
+            bool onlyIfUnchanged,
+            CancellationToken cancellationToken) => CreateOrUpdateIndexer(
+                indexer,
+                onlyIfUnchanged,
+                disableCacheReprocessingChangeDetection: null,
+                ignoreCacheResetRequirements: null,
+                cancellationToken);
+
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
+            bool? disableCacheReprocessingChangeDetection = null,
+            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -684,6 +821,8 @@ namespace Azure.Search.Documents.Indexes
                     indexer,
                     onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
                     null,
+                    disableCacheReprocessingChangeDetection,
+                    ignoreCacheResetRequirements,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -708,9 +847,42 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexer indexer,
+            bool onlyIfUnchanged,
+            CancellationToken cancellationToken) => await CreateOrUpdateIndexerAsync(
+                indexer,
+                onlyIfUnchanged,
+                disableCacheReprocessingChangeDetection: null,
+                ignoreCacheResetRequirements: null,
+                cancellationToken).
+                ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
+            bool? disableCacheReprocessingChangeDetection = null,
+            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -725,6 +897,8 @@ namespace Azure.Search.Documents.Indexes
                     indexer,
                     onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
                     null,
+                    disableCacheReprocessingChangeDetection,
+                    ignoreCacheResetRequirements,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1288,9 +1462,41 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexerSkillset skillset,
+            bool onlyIfUnchanged,
+            CancellationToken cancellationToken) => CreateOrUpdateSkillset(
+                skillset,
+                onlyIfUnchanged,
+                disableCacheReprocessingChangeDetection: null,
+                ignoreCacheResetRequirements: null,
+                cancellationToken);
+
+        /// <summary>
+        /// Creates a new skillset or updates an existing skillset.
+        /// </summary>
+        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
+        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
+            bool? disableCacheReprocessingChangeDetection = null,
+            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -1305,6 +1511,8 @@ namespace Azure.Search.Documents.Indexes
                     skillset,
                     onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
                     null,
+                    disableCacheReprocessingChangeDetection,
+                    ignoreCacheResetRequirements,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1329,9 +1537,42 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexerSkillset skillset,
+            bool onlyIfUnchanged,
+            CancellationToken cancellationToken) => await CreateOrUpdateSkillsetAsync(
+                skillset,
+                onlyIfUnchanged,
+                disableCacheReprocessingChangeDetection: null,
+                ignoreCacheResetRequirements: null,
+                cancellationToken).
+                ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a new skillset or updates an existing skillset.
+        /// </summary>
+        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
+        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(
             SearchIndexerSkillset skillset,
             bool onlyIfUnchanged = false,
+            bool? disableCacheReprocessingChangeDetection = null,
+            bool? ignoreCacheResetRequirements = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -1346,6 +1587,8 @@ namespace Azure.Search.Documents.Indexes
                     skillset,
                     onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
                     null,
+                    disableCacheReprocessingChangeDetection,
+                    ignoreCacheResetRequirements,
                     cancellationToken)
                     .ConfigureAwait(false);
             }

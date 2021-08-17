@@ -46,6 +46,12 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The string formatting mask to apply to the service endpoint to publish events for a given partition.</summary>
         private const string PartitionProducerPathSuffixMask = "{0}/Partitions/{1}";
 
+        /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
+        private static int s_randomSeed = Environment.TickCount;
+
+        /// <summary>The random number generator to use for a specific thread.</summary>
+        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+
         /// <summary>Indicates whether or not this instance has been disposed.</summary>
         private volatile bool _disposed;
 
@@ -56,26 +62,27 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static Version AmqpVersion { get; } = new Version(1, 0, 0, 0);
 
         /// <summary>
-        ///   The amount of time to allow an AMQP connection to be idle before considering
-        ///   it to be timed out.
-        /// </summary>
-        ///
-        private static TimeSpan ConnectionIdleTimeout { get; } = TimeSpan.FromMinutes(1);
-
-        /// <summary>
         ///   The amount of buffer to apply to account for clock skew when
         ///   refreshing authorization.  Authorization will be refreshed earlier
         ///   than the expected expiration by this amount.
         /// </summary>
         ///
-        private static TimeSpan AuthorizationRefreshBuffer { get; } = TimeSpan.FromMinutes(10);
+        private static TimeSpan AuthorizationRefreshBuffer { get; } = TimeSpan.FromMinutes(7);
+
+        /// <summary>
+        ///   The amount of seconds to use as the basis for calculating a random jitter amount
+        ///   when refreshing token authorization.  This is intended to ensure that multiple
+        ///   resources using the authorization do not all attempt to refresh at the same moment.
+        /// </summary>
+        ///
+        private static int AuthorizationBaseJitterSeconds { get; } = 30;
 
         /// <summary>
         ///   The minimum amount of time for authorization to be refreshed; any calculations that
         ///   call for refreshing more frequently will be substituted with this value.
         /// </summary>
         ///
-        private static TimeSpan MinimumAuthorizationRefresh { get; } = TimeSpan.FromMinutes(2);
+        private static TimeSpan MinimumAuthorizationRefresh { get; } = TimeSpan.FromMinutes(3);
 
         /// <summary>
         ///   The maximum amount of time to allow before authorization is refreshed; any calculations
@@ -96,11 +103,25 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static TimeSpan AuthorizationRefreshTimeout { get; } = TimeSpan.FromMinutes(3);
 
         /// <summary>
+        ///   The amount of buffer to apply when considering an authorization token
+        ///   to be expired.  The token's actual expiration will be decreased by this
+        ///   amount, ensuring that it is renewed before it has expired.
+        /// </summary>
+        ///
+        private static TimeSpan AuthorizationTokenExpirationBuffer { get; } = AuthorizationRefreshBuffer.Add(TimeSpan.FromMinutes(2));
+
+        /// <summary>
         ///   The recommended timeout to associate with an AMQP session.  It is recommended that this
         ///   interval be used when creating or opening AMQP links and related constructs.
         /// </summary>
         ///
         public TimeSpan SessionTimeout { get; } = TimeSpan.FromSeconds(30);
+
+        /// <summary>
+        ///   The amount of time to allow a connection to have no observed traffic before considering it idle.
+        /// </summary>
+        ///
+        public uint ConnectionIdleTimeoutMilliseconds { get; }
 
         /// <summary>
         ///   Indicates whether this <see cref="AmqpConnectionScope"/> has been disposed.
@@ -204,6 +225,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="credential">The credential to use for authorization with the Event Hubs service.</param>
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
+        /// <param name="idleTimeout">The amount of time to allow a connection to have no observed traffic before considering it idle.</param>
         /// <param name="identifier">The identifier to assign this scope; if not provided, one will be generated.</param>
         /// <param name="sendBufferSizeBytes">The size, in bytes, of the buffer to use for sending via the transport.</param>
         /// <param name="receiveBufferSizeBytes">The size, in bytes, of the buffer to use for receiving from the transport.</param>
@@ -215,6 +237,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                    EventHubTokenCredential credential,
                                    EventHubsTransportType transport,
                                    IWebProxy proxy,
+                                   TimeSpan idleTimeout,
                                    string identifier = default,
                                    int sendBufferSizeBytes = AmqpConstants.TransportBufferSize,
                                    int receiveBufferSizeBytes = AmqpConstants.TransportBufferSize,
@@ -224,6 +247,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotNull(connectionEndpoint, nameof(connectionEndpoint));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNegative(idleTimeout, nameof(idleTimeout));
             ValidateTransport(transport);
 
             ServiceEndpoint = serviceEndpoint;
@@ -231,11 +255,12 @@ namespace Azure.Messaging.EventHubs.Amqp
             EventHubName = eventHubName;
             Transport = transport;
             Proxy = proxy;
+            ConnectionIdleTimeoutMilliseconds = (uint)idleTimeout.TotalMilliseconds;
             SendBufferSizeInBytes = sendBufferSizeBytes;
             ReceiveBufferSizeInBytes = receiveBufferSizeBytes;
             CertificateValidationCallback = certificateValidationCallback;
-            TokenProvider = new CbsTokenProvider(new EventHubTokenCredential(credential), OperationCancellationSource.Token);
             Id = identifier ?? $"{ eventHubName }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
+            TokenProvider = new CbsTokenProvider(new EventHubTokenCredential(credential), AuthorizationTokenExpirationBuffer, OperationCancellationSource.Token);
 
             Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, ConnectionEndpoint, Transport, Proxy, SendBufferSizeInBytes, ReceiveBufferSizeInBytes, CertificateValidationCallback, Id, timeout);
             ActiveConnection = new FaultTolerantAmqpObject<AmqpConnection>(connectionFactory, CloseConnection);
@@ -308,6 +333,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="linkIdentifier">The identifier to assign to the link; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use with consumer operations.</returns>
@@ -320,6 +346,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                            long? prefetchSizeInBytes,
                                                                            long? ownerLevel,
                                                                            bool trackLastEnqueuedEventProperties,
+                                                                           string linkIdentifier,
                                                                            CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
@@ -341,6 +368,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
+                if (string.IsNullOrEmpty(linkIdentifier))
+                {
+                    linkIdentifier = Guid.NewGuid().ToString();
+                }
+
                 var link = await CreateReceivingLinkAsync(
                     connection,
                     consumerEndpoint,
@@ -350,6 +382,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     prefetchSizeInBytes,
                     ownerLevel,
                     trackLastEnqueuedEventProperties,
+                    linkIdentifier,
                     cancellationToken
                 ).ConfigureAwait(false);
 
@@ -379,6 +412,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="features">The set of features which are active for the producer requesting the link.</param>
         /// <param name="options">The set of options to consider when creating the link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="linkIdentifier">The identifier to assign to the link; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use with producer operations.</returns>
@@ -387,6 +421,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                          TransportProducerFeatures features,
                                                                          PartitionPublishingOptions options,
                                                                          TimeSpan timeout,
+                                                                         string linkIdentifier,
                                                                          CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
@@ -405,7 +440,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                var link = await CreateSendingLinkAsync(connection, producerEndpoint, features, options, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
+                if (string.IsNullOrEmpty(linkIdentifier))
+                {
+                    linkIdentifier = Guid.NewGuid().ToString();
+                }
+
+                var link = await CreateSendingLinkAsync(connection, producerEndpoint, features, options, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), linkIdentifier, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
@@ -479,7 +519,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             try
             {
                 var amqpSettings = CreateAmpqSettings(AmqpVersion);
-                var connectionSetings = CreateAmqpConnectionSettings(serviceEndpoint.Host, scopeIdentifier);
+                var connectionSetings = CreateAmqpConnectionSettings(serviceEndpoint.Host, scopeIdentifier, ConnectionIdleTimeoutMilliseconds);
 
                 var transportSettings = transportType.IsWebSocketTransport()
                     ? CreateTransportSettingsForWebSockets(connectionEndpoint.Host, proxy, sendBufferSizeBytes, receiveBufferSizeBytes)
@@ -587,12 +627,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
+        /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="eventPosition">The position of the event in the partition where the link should be filtered to.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
-        /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="linkIdentifier">The identifier to assign to the link; this is assumed to be a non-null value.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use for operations related to receiving events.</returns>
@@ -605,6 +646,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                                  long? prefetchSizeInBytes,
                                                                                  long? ownerLevel,
                                                                                  bool trackLastEnqueuedEventProperties,
+                                                                                 string linkIdentifier,
                                                                                  CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
@@ -641,7 +683,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     AutoSendFlow = prefetchCount > 0,
                     SettleType = SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
-                    Target = new Target { Address = Guid.NewGuid().ToString() },
+                    Target = new Target { Address = linkIdentifier },
                     TotalCacheSizeInBytes = prefetchSizeInBytes
                 };
 
@@ -650,6 +692,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                 if (ownerLevel.HasValue)
                 {
                     linkSettings.AddProperty(AmqpProperty.ConsumerOwnerLevel, ownerLevel.Value);
+                }
+
+                if (linkIdentifier != null)
+                {
+                    linkSettings.AddProperty(AmqpProperty.ConsumerIdentifier, linkIdentifier);
                 }
 
                 if (trackLastEnqueuedEventProperties)
@@ -705,6 +752,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="features">The set of features which are active for the producer for which the link is being created.</param>
         /// <param name="options">The set of options to consider when creating the link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="linkIdentifier">The identifier to assign to the link; this is assumed to be a non-null value.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use for operations related to receiving events.</returns>
@@ -714,6 +762,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                              TransportProducerFeatures features,
                                                                              PartitionPublishingOptions options,
                                                                              TimeSpan timeout,
+                                                                             string linkIdentifier,
                                                                              CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
@@ -744,7 +793,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     Role = false,
                     InitialDeliveryCount = 0,
-                    Source = new Source { Address = Guid.NewGuid().ToString() },
+                    Source = new Source { Address = linkIdentifier },
                     Target = new Target { Address = endpoint.AbsolutePath }
                 };
 
@@ -875,7 +924,15 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             currentTimeUtc ??= DateTime.UtcNow;
 
-            var refreshDueInterval = (expirationTimeUtc.Subtract(AuthorizationRefreshBuffer)).Subtract(currentTimeUtc.Value);
+            // Calculate the interval for when refreshing authorization should take place;
+            // the refresh is based on the time that the credential expires, less a buffer to
+            // allow for clock skew.  A random number of seconds is added as jitter, to prevent
+            // multiple resources using the same token from all requesting a refresh at the same moment.
+
+            var refreshDueInterval = expirationTimeUtc
+                .Subtract(AuthorizationRefreshBuffer)
+                .Subtract(currentTimeUtc.Value)
+                .Subtract(TimeSpan.FromSeconds(RandomNumberGenerator.Value.NextDouble() * AuthorizationBaseJitterSeconds));
 
             return refreshDueInterval switch
             {
@@ -1162,15 +1219,17 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="hostName">The host name of the Event Hubs service endpoint.</param>
         /// <param name="identifier">unique identifier of the current Event Hubs scope.</param>
+        /// <param name="idleTimeoutMilliseconds">The amount of time, in milliseconds, to allow a connection to have no observed traffic before considering it idle.</param>
         ///
         /// <returns>The settings to apply to the connection.</returns>
         ///
         private static AmqpConnectionSettings CreateAmqpConnectionSettings(string hostName,
-                                                                           string identifier)
+                                                                           string identifier,
+                                                                           uint idleTimeoutMilliseconds)
         {
             var connectionSettings = new AmqpConnectionSettings
             {
-                IdleTimeOut = (uint)ConnectionIdleTimeout.TotalMilliseconds,
+                IdleTimeOut = idleTimeoutMilliseconds,
                 MaxFrameSize = AmqpConstants.DefaultMaxFrameSize,
                 ContainerId = identifier,
                 HostName = hostName

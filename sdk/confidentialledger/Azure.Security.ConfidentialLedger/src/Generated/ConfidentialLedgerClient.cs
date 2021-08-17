@@ -1040,13 +1040,13 @@ namespace Azure.Security.ConfidentialLedger
         ///     <term>assignedRole</term>
         ///     <term>&quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;</term>
         ///     <term>Yes</term>
-        ///     <term> Represents an assignable role. </term>
+        ///     <term>Represents an assignable role.</term>
         ///   </item>
         ///   <item>
         ///     <term>userId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Identifier for the user. This must either be an AAD object id or a certificate fingerprint. </term>
+        ///     <term>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -1104,13 +1104,13 @@ namespace Azure.Security.ConfidentialLedger
         ///     <term>assignedRole</term>
         ///     <term>&quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;</term>
         ///     <term>Yes</term>
-        ///     <term> Represents an assignable role. </term>
+        ///     <term>Represents an assignable role.</term>
         ///   </item>
         ///   <item>
         ///     <term>userId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Identifier for the user. This must either be an AAD object id or a certificate fingerprint. </term>
+        ///     <term>Identifier for the user. This must either be an AAD object id or a certificate fingerprint.</term>
         ///   </item>
         /// </list>
         /// </remarks>

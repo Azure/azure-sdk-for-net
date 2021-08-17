@@ -119,6 +119,26 @@ function MergeHashes([hashtable] $source, [psvariable] $dest) {
     }
 }
 
+function BuildBicepFile([System.IO.FileSystemInfo] $file) {
+    if (!(Get-Command bicep -ErrorAction Ignore)) {
+        Write-Error "A bicep file was found at '$($file.FullName)' but the Azure Bicep CLI is not installed. See https://aka.ms/install-bicep-pwsh"
+        throw
+    }
+
+    $tmp = $env:TEMP ? $env:TEMP : [System.IO.Path]::GetTempPath()
+    $templateFilePath = Join-Path $tmp "test-resources.$(New-Guid).compiled.json"
+
+    # Az can deploy bicep files natively, but by compiling here it becomes easier to parse the
+    # outputted json for mismatched parameter declarations.
+    bicep build $file.FullName --outfile $templateFilePath
+    if ($LASTEXITCODE) {
+        Write-Error "Failure building bicep file '$($file.FullName)'"
+        throw
+    }
+
+    return $templateFilePath
+}
+
 # Support actions to invoke on exit.
 $exitActions = @({
     if ($exitActions.Count -gt 1) {
@@ -140,15 +160,20 @@ try {
     # Enumerate test resources to deploy. Fail if none found.
     $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
     $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
-    $templateFileName = 'test-resources.json'
     $templateFiles = @()
 
-    Write-Verbose "Checking for '$templateFileName' files under '$root'"
-    Get-ChildItem -Path $root -Filter $templateFileName -Recurse | ForEach-Object {
-        $templateFile = $_.FullName
-
-        Write-Verbose "Found template '$templateFile'"
-        $templateFiles += $templateFile
+    'test-resources.json', 'test-resources.bicep' | ForEach-Object {
+        Write-Verbose "Checking for '$_' files under '$root'"
+        Get-ChildItem -Path $root -Filter "$_" -Recurse | ForEach-Object {
+            Write-Verbose "Found template '$($_.FullName)'"
+            if ($_.Extension -eq '.bicep') {
+                $templateFile = @{originalFilePath = $_.FullName; jsonFilePath = (BuildBicepFile $_)}
+                $templateFiles += $templateFile
+            } else {
+                $templateFile = @{originalFilePath = $_.FullName; jsonFilePath = $_.FullName}
+                $templateFiles += $templateFile
+            }
+        }
     }
 
     if (!$templateFiles) {
@@ -434,8 +459,8 @@ try {
     # Deploy the templates
     foreach ($templateFile in $templateFiles) {
         # Deployment fails if we pass in more parameters than are defined.
-        Write-Verbose "Removing unnecessary parameters from template '$templateFile'"
-        $templateJson = Get-Content -LiteralPath $templateFile | ConvertFrom-Json
+        Write-Verbose "Removing unnecessary parameters from template '$($templateFile.jsonFilePath)'"
+        $templateJson = Get-Content -LiteralPath $templateFile.jsonFilePath | ConvertFrom-Json
         $templateParameterNames = $templateJson.parameters.PSObject.Properties.Name
 
         $templateFileParameters = $templateParameters.Clone()
@@ -446,20 +471,20 @@ try {
             }
         }
 
-        $preDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-pre.ps1'
+        $preDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath 'test-resources-pre.ps1'
         if (Test-Path $preDeploymentScript) {
             Log "Invoking pre-deployment script '$preDeploymentScript'"
             &$preDeploymentScript -ResourceGroupName $ResourceGroupName @PSBoundParameters
         }
 
-        Log "Deploying template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"
+        Log "Deploying template '$($templateFile.originalFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
         $deployment = Retry {
             $lastDebugPreference = $DebugPreference
             try {
                 if ($CI) {
                     $DebugPreference = 'Continue'
                 }
-                New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters -Force:$Force
+                New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile.jsonFilePath -TemplateParameterObject $templateFileParameters -Force:$Force
             } catch {
                 Write-Output @'
 #####################################################
@@ -475,7 +500,7 @@ try {
 
         if ($deployment.ProvisioningState -eq 'Succeeded') {
             # New-AzResourceGroupDeployment would've written an error and stopped the pipeline by default anyway.
-            Write-Verbose "Successfully deployed template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"
+            Write-Verbose "Successfully deployed template '$($templateFile.jsonFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
         }
 
         $serviceDirectoryPrefix = $serviceName.ToUpperInvariant() + "_"
@@ -513,7 +538,7 @@ try {
                 Write-Host 'File option is supported only on Windows'
             }
 
-            $outputFile = "$templateFile.env"
+            $outputFile = "$($templateFile.jsonFilePath).env"
 
             $environmentText = $deploymentOutputs | ConvertTo-Json;
             $bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
@@ -551,10 +576,15 @@ try {
             }
         }
 
-        $postDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-post.ps1'
+        $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath 'test-resources-post.ps1'
         if (Test-Path $postDeploymentScript) {
             Log "Invoking post-deployment script '$postDeploymentScript'"
             &$postDeploymentScript -ResourceGroupName $ResourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
+        }
+
+        if ($templateFile.jsonFilePath.EndsWith('.compiled.json')) {
+            Write-Verbose "Removing compiled bicep file $($templateFile.jsonFilePath)"
+            Remove-Item $templateFile.jsonFilePath
         }
     }
 

@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Quantum.Jobs.Models;
 
-namespace Azure.Quantum.Jobs
+namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class QuantumModelFactory

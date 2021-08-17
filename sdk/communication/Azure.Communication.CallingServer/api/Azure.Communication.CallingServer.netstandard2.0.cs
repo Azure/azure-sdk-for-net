@@ -110,6 +110,21 @@ namespace Azure.Communication.CallingServer
         public static bool operator !=(Azure.Communication.CallingServer.CallingServerEventType left, Azure.Communication.CallingServer.CallingServerEventType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class CallingServerModelFactory
+    {
+        public static Azure.Communication.CallingServer.AddParticipantResult AddParticipantResult(string participantId = null) { throw null; }
+        public static Azure.Communication.CallingServer.AddParticipantResultEvent AddParticipantResultEvent(Azure.Communication.CallingServer.ResultInfo resultInfo = null, string operationContext = null, Azure.Communication.CallingServer.OperationStatus status = default(Azure.Communication.CallingServer.OperationStatus)) { throw null; }
+        public static Azure.Communication.CallingServer.CallConnectionStateChangedEvent CallConnectionStateChangedEvent(string serverCallId = null, string callConnectionId = null, Azure.Communication.CallingServer.CallConnectionState callConnectionState = default(Azure.Communication.CallingServer.CallConnectionState)) { throw null; }
+        public static Azure.Communication.CallingServer.CallRecordingProperties CallRecordingProperties(Azure.Communication.CallingServer.CallRecordingState recordingState = default(Azure.Communication.CallingServer.CallRecordingState)) { throw null; }
+        public static Azure.Communication.CallingServer.CallRecordingStateChangeEvent CallRecordingStateChangeEvent(string recordingId = null, Azure.Communication.CallingServer.CallRecordingState state = default(Azure.Communication.CallingServer.CallRecordingState), System.DateTimeOffset startDateTime = default(System.DateTimeOffset), string serverCallId = null) { throw null; }
+        public static Azure.Communication.CallingServer.CancelAllMediaOperationsResult CancelAllMediaOperationsResult(string operationId = null, Azure.Communication.CallingServer.OperationStatus status = default(Azure.Communication.CallingServer.OperationStatus), string operationContext = null, Azure.Communication.CallingServer.ResultInfo resultInfo = null) { throw null; }
+        public static Azure.Communication.CallingServer.PlayAudioResult PlayAudioResult(string operationId = null, Azure.Communication.CallingServer.OperationStatus status = default(Azure.Communication.CallingServer.OperationStatus), string operationContext = null, Azure.Communication.CallingServer.ResultInfo resultInfo = null) { throw null; }
+        public static Azure.Communication.CallingServer.PlayAudioResultEvent PlayAudioResultEvent(Azure.Communication.CallingServer.ResultInfo resultInfo = null, string operationContext = null, Azure.Communication.CallingServer.OperationStatus status = default(Azure.Communication.CallingServer.OperationStatus)) { throw null; }
+        public static Azure.Communication.CallingServer.ResultInfo ResultInfo(int code = 0, int subcode = 0, string message = null) { throw null; }
+        public static Azure.Communication.CallingServer.StartCallRecordingResult StartCallRecordingResult(string recordingId = null) { throw null; }
+        public static Azure.Communication.CallingServer.ToneInfo ToneInfo(int sequenceId = 0, Azure.Communication.CallingServer.ToneValue tone = default(Azure.Communication.CallingServer.ToneValue)) { throw null; }
+        public static Azure.Communication.CallingServer.ToneReceivedEvent ToneReceivedEvent(Azure.Communication.CallingServer.ToneInfo toneInfo = null, string callConnectionId = null) { throw null; }
+    }
     public partial class CallParticipant
     {
         internal CallParticipant() { }
@@ -356,23 +371,5 @@ namespace Azure.Communication.CallingServer
         public static implicit operator Azure.Communication.CallingServer.ToneValue (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallingServer.ToneValue left, Azure.Communication.CallingServer.ToneValue right) { throw null; }
         public override string ToString() { throw null; }
-    }
-}
-namespace Azure.Communication.CallingServer.Models
-{
-    public static partial class CallingServerModelFactory
-    {
-        public static Azure.Communication.CallingServer.AddParticipantResult AddParticipantResult(string participantId = null) { throw null; }
-        public static Azure.Communication.CallingServer.AddParticipantResultEvent AddParticipantResultEvent(Azure.Communication.CallingServer.ResultInfo resultInfo = null, string operationContext = null, Azure.Communication.CallingServer.OperationStatus status = default(Azure.Communication.CallingServer.OperationStatus)) { throw null; }
-        public static Azure.Communication.CallingServer.CallConnectionStateChangedEvent CallConnectionStateChangedEvent(string serverCallId = null, string callConnectionId = null, Azure.Communication.CallingServer.CallConnectionState callConnectionState = default(Azure.Communication.CallingServer.CallConnectionState)) { throw null; }
-        public static Azure.Communication.CallingServer.CallRecordingProperties CallRecordingProperties(Azure.Communication.CallingServer.CallRecordingState recordingState = default(Azure.Communication.CallingServer.CallRecordingState)) { throw null; }
-        public static Azure.Communication.CallingServer.CallRecordingStateChangeEvent CallRecordingStateChangeEvent(string recordingId = null, Azure.Communication.CallingServer.CallRecordingState state = default(Azure.Communication.CallingServer.CallRecordingState), System.DateTimeOffset startDateTime = default(System.DateTimeOffset), string serverCallId = null) { throw null; }
-        public static Azure.Communication.CallingServer.CancelAllMediaOperationsResult CancelAllMediaOperationsResult(string operationId = null, Azure.Communication.CallingServer.OperationStatus status = default(Azure.Communication.CallingServer.OperationStatus), string operationContext = null, Azure.Communication.CallingServer.ResultInfo resultInfo = null) { throw null; }
-        public static Azure.Communication.CallingServer.PlayAudioResult PlayAudioResult(string operationId = null, Azure.Communication.CallingServer.OperationStatus status = default(Azure.Communication.CallingServer.OperationStatus), string operationContext = null, Azure.Communication.CallingServer.ResultInfo resultInfo = null) { throw null; }
-        public static Azure.Communication.CallingServer.PlayAudioResultEvent PlayAudioResultEvent(Azure.Communication.CallingServer.ResultInfo resultInfo = null, string operationContext = null, Azure.Communication.CallingServer.OperationStatus status = default(Azure.Communication.CallingServer.OperationStatus)) { throw null; }
-        public static Azure.Communication.CallingServer.ResultInfo ResultInfo(int code = 0, int subcode = 0, string message = null) { throw null; }
-        public static Azure.Communication.CallingServer.StartCallRecordingResult StartCallRecordingResult(string recordingId = null) { throw null; }
-        public static Azure.Communication.CallingServer.ToneInfo ToneInfo(int sequenceId = 0, Azure.Communication.CallingServer.ToneValue tone = default(Azure.Communication.CallingServer.ToneValue)) { throw null; }
-        public static Azure.Communication.CallingServer.ToneReceivedEvent ToneReceivedEvent(Azure.Communication.CallingServer.ToneInfo toneInfo = null, string callConnectionId = null) { throw null; }
     }
 }

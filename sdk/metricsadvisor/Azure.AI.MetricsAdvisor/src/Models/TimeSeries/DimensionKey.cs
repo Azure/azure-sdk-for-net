@@ -10,9 +10,9 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Maps dimension column names of a <see cref="DataFeed"/> to values. If values are assigned
-    /// to all possible column names, this <see cref="DimensionKey"/> uniquely identifies a time
-    /// series within a metric. However, if only a subset of column names is assigned, this instance
+    /// Maps dimension names of a <see cref="DataFeed"/> to values. If values are assigned
+    /// to all possible dimension names, this <see cref="DimensionKey"/> uniquely identifies a time
+    /// series within a metric. However, if only a subset of dimension names is assigned, this instance
     /// uniquely identifies a group of time series instead.
     /// </summary>
     [CodeGenModel("DimensionGroupIdentity")]
@@ -22,55 +22,55 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DimensionKey"/> class.
         /// </summary>
-        /// <param name="dimension">The dimension columns to initialize this dimension key with.</param>
-        public DimensionKey(IEnumerable<KeyValuePair<string, string>> dimension)
+        /// <param name="dimensions">The dimensions to initialize this dimension key with.</param>
+        public DimensionKey(IEnumerable<KeyValuePair<string, string>> dimensions)
         {
-            Argument.AssertNotNull(dimension, nameof(dimension));
+            Argument.AssertNotNull(dimensions, nameof(dimensions));
 
-            Dimension = dimension.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            Dimension = dimensions.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
         internal IDictionary<string, string> Dimension { get; }
 
         /// <summary>
-        /// Gets the value associated with the specified dimension column.
+        /// Gets the value associated with the specified dimension.
         /// </summary>
-        /// <param name="columnName">The name of the dimension column whose value to get.</param>
-        /// <param name="value">When this method returns, the value associated with the specified dimension column, if it's found. Otherwise, <c>null</c>.</param>
-        /// <returns><c>true</c> if this dimension key contains the specified column. Otherwise, <c>false</c>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="columnName"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentException"><paramref name="columnName"/> is empty.</exception>
-        public bool TryGetValue(string columnName, out string value)
+        /// <param name="dimensionName">The name of the dimension whose value to get.</param>
+        /// <param name="value">When this method returns, the value associated with the specified dimension, if it's found. Otherwise, <c>null</c>.</param>
+        /// <returns><c>true</c> if this dimension key contains the specified dimension. Otherwise, <c>false</c>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dimensionName"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dimensionName"/> is empty.</exception>
+        public bool TryGetValue(string dimensionName, out string value)
         {
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
 
-            return Dimension.TryGetValue(columnName, out value);
+            return Dimension.TryGetValue(dimensionName, out value);
         }
 
         /// <summary>
-        /// Determines whether this dimension key contains a dimension column with the specified name.
+        /// Determines whether this dimension key contains a dimension with the specified name.
         /// </summary>
-        /// <param name="columnName">The name of the dimension column to locate in this key.</param>
-        /// <returns><c>true</c> if this dimension key contains a column with the specified name. Otherwise, <c>false</c>.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="columnName"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentException"><paramref name="columnName"/> is empty.</exception>
-        public bool Contains(string columnName)
+        /// <param name="dimensionName">The name of the dimension to locate in this key.</param>
+        /// <returns><c>true</c> if this dimension key contains a dimension with the specified name. Otherwise, <c>false</c>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dimensionName"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dimensionName"/> is empty.</exception>
+        public bool Contains(string dimensionName)
         {
-            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+            Argument.AssertNotNullOrEmpty(dimensionName, nameof(dimensionName));
 
-            return Dimension.ContainsKey(columnName);
+            return Dimension.ContainsKey(dimensionName);
         }
 
         /// <summary>
-        /// Returns an enumerator that iterates through the columns of this dimension key.
+        /// Returns an enumerator that iterates through the dimensions of this dimension key.
         /// </summary>
-        /// <returns>An enumerator that can be used to iterate through the columns of this dimension key.</returns>
+        /// <returns>An enumerator that can be used to iterate through the dimensions of this dimension key.</returns>
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator() => Dimension.GetEnumerator();
 
         /// <summary>
-        /// Returns an enumerator that iterates through the columns of this dimension key.
+        /// Returns an enumerator that iterates through the dimensions of this dimension key.
         /// </summary>
-        /// <returns>An enumerator that can be used to iterate through the columns of this dimension key.</returns>
+        /// <returns>An enumerator that can be used to iterate through the dimensions of this dimension key.</returns>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         internal DimensionKey Clone() => new DimensionKey(Dimension);

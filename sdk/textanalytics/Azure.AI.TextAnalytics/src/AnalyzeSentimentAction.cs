@@ -60,7 +60,6 @@ namespace Azure.AI.TextAnalytics
         /// targets of a product or service (also known as Aspect-Based sentiment analysis).
         /// If set to true, the returned <see cref="SentenceSentiment.Opinions"/>
         /// will contain the result of this analysis.
-        /// <para>Only available for service version v3.1-preview and up.</para>
         /// </summary>
         /// <remarks>
         /// This property only has value for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.

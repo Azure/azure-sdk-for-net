@@ -8,8 +8,8 @@ To create a new `DocumentTranslationClient` to run a translation operation for d
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentTranslationClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
+string endpoint = "<Document Translator Resource Endpoint>";
+string apiKey = "<Document Translator Resource API Key>";
 var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
@@ -28,8 +28,8 @@ int docsFailed = 0;
 
 await foreach (TranslationStatus translationStatus in client.GetAllTranslationStatusesAsync())
 {
-    if (translationStatus.Status != DocumentTranslationStatus.Failed &&
-          translationStatus.Status != DocumentTranslationStatus.Succeeded)
+    if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
+        translationStatus.Status == DocumentTranslationStatus.Running)
     {
         DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
         await operation.WaitForCompletionAsync();

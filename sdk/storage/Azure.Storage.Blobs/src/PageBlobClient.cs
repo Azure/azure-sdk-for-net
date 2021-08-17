@@ -1983,7 +1983,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await PageBlobRestClient.GetPageRangesDiffAsync(
                             snapshot: snapshot,
                             prevsnapshot: previousSnapshot,
-                            prevSnapshotUrl: previousSnapshotUri?.ToString(),
+                            prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -1999,7 +1999,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = PageBlobRestClient.GetPageRangesDiff(
                             snapshot: snapshot,
                             prevsnapshot: previousSnapshot,
-                            prevSnapshotUrl: previousSnapshotUri?.ToString(),
+                            prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
