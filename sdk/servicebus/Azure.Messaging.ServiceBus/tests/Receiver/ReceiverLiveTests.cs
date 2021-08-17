@@ -57,6 +57,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var receiverWithPrefetch = client.CreateReceiver(scope.QueueName,
                     options: new ServiceBusReceiverOptions() {PrefetchCount = 10});
 
+                // establish the receive link up front before measuring elapsed time
+                await receiverWithPrefetch.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
                 await receiverWithPrefetch.ReceiveMessagesAsync(10, TimeSpan.Zero).ConfigureAwait(false);
