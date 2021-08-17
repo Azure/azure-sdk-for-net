@@ -12,7 +12,8 @@ function Get-PurgeableGroupResources {
 
   # Get any Managed HSMs in the resource group, for which soft delete cannot be disabled.
   $deletedHsms = Get-AzKeyVaultManagedHsm -ResourceGroupName $ResourceGroupName -ErrorAction Ignore `
-    | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Managed HSM' -PassThru
+    | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Managed HSM' -PassThru `
+    | Add-Member -MemberType AliasProperty -Name AzsdkName -Value VaultName -PassThru
 
   if ($deletedHsms) {
     Write-Verbose "Found $($deletedHsms.Count) deleted Managed HSMs to potentially purge."
@@ -25,8 +26,9 @@ function Get-PurgeableGroupResources {
   $deletedKeyVaults = Get-AzKeyVault -ResourceGroupName $ResourceGroupName -ErrorAction Ignore | ForEach-Object {
     # Enumerating vaults from a resource group does not return all properties we required.
     Get-AzKeyVault -VaultName $_.VaultName -ErrorAction Ignore | Where-Object { $_.EnableSoftDelete } `
-      | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Key Vault' -PassThru
-  }
+      | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Key Vault' -PassThru `
+      | Add-Member -MemberType AliasProperty -Name AzsdkName -Value VaultName -PassThru
+    }
 
   if ($deletedKeyVaults) {
     Write-Verbose "Found $($deletedKeyVaults.Count) deleted Key Vaults to potentially purge."
@@ -35,6 +37,7 @@ function Get-PurgeableGroupResources {
 
   return $purgeableResources
 }
+
 function Get-PurgeableResources {
   $purgeableResources = @()
   $subscriptionId = (Get-AzContext).Subscription.Id
@@ -51,6 +54,7 @@ function Get-PurgeableResources {
     foreach ($r in $content.value) {
       $deletedHsms += [pscustomobject] @{
         AzsdkResourceType = 'Managed HSM'
+        AzsdkName = $r.name
         Id = $r.id
         Name = $r.name
         Location = $r.properties.location
@@ -70,7 +74,8 @@ function Get-PurgeableResources {
 
   # Get deleted Key Vaults for the current subscription.
   $deletedKeyVaults  = Get-AzKeyVault -InRemovedState `
-    | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Key Vault' -PassThru
+    | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Key Vault' -PassThru `
+    | Add-Member -MemberType AliasProperty -Name AzsdkName -Value VaultName -PassThru
 
   if ($deletedKeyVaults) {
     Write-Verbose "Found $($deletedKeyVaults.Count) deleted Key Vaults to potentially purge."
@@ -85,7 +90,14 @@ function Get-PurgeableResources {
 filter Remove-PurgeableResources {
   param (
     [Parameter(Position=0, ValueFromPipeline=$true)]
-    [object[]] $Resource
+    [object[]] $Resource,
+
+    [Parameter()]
+    [ValidateRange(1, [int]::MaxValue)]
+    [int] $Timeout = 30,
+
+    [Parameter()]
+    [switch] $PassThru
   )
 
   if (!$Resource) {
@@ -95,38 +107,39 @@ filter Remove-PurgeableResources {
   $subscriptionId = (Get-AzContext).Subscription.Id
 
   foreach ($r in $Resource) {
+    Log "Attempting to purge $($r.AzsdkResourceType) '$($r.AzsdkName)'"
     switch ($r.AzsdkResourceType) {
       'Key Vault' {
-        Log "Attempting to purge $($r.AzsdkResourceType) '$($r.VaultName)'"
         if ($r.EnablePurgeProtection) {
           # We will try anyway but will ignore errors
           Write-Warning "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
         }
 
-        Remove-AzKeyVault -VaultName $r.VaultName -Location $r.Location -InRemovedState -Force -ErrorAction Continue
+        Wait-PurgeableResource { Remove-AzKeyVault -VaultName $r.VaultName -Location $r.Location -InRemovedState -Force -ErrorAction Continue } -Timeout:$Timeout -PassThru:$PassThru
       }
 
       'Managed HSM' {
-        Log "Attempting to purge $($r.AzsdkResourceType) '$($r.Name)'"
         if ($r.EnablePurgeProtection) {
           # We will try anyway but will ignore errors
           Write-Warning "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
         }
 
-        $response = Invoke-AzRestMethod -Method POST -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/locations/$($r.Location)/deletedManagedHSMs/$($r.Name)/purge?api-version=2021-04-01-preview" -ErrorAction Ignore
-        if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300) {
-          Write-Warning "Successfully requested that Managed HSM '$($r.Name)' be purged, but may take a few minutes before it is actually purged."
-        } elseif ($response.Content) {
-          $content = $response.Content | ConvertFrom-Json
-          if ($content.error) {
-            $err = $content.error
-            Write-Warning "Failed to deleted Managed HSM '$($r.Name)': ($($err.code)) $($err.message)"
+        Wait-PurgeableResource -Timeout:$Timeout -PassThru:$PassThru -ScriptBlock {
+          $response = Invoke-AzRestMethod -Method POST -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/locations/$($r.Location)/deletedManagedHSMs/$($r.Name)/purge?api-version=2021-04-01-preview" -ErrorAction Ignore
+          if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300) {
+            Write-Warning "Successfully requested that Managed HSM '$($r.Name)' be purged, but may take a few minutes before it is actually purged."
+          } elseif ($response.Content) {
+            $content = $response.Content | ConvertFrom-Json
+            if ($content.error) {
+              $err = $content.error
+              Write-Warning "Failed to deleted Managed HSM '$($r.Name)': ($($err.code)) $($err.message)"
+            }
           }
         }
       }
 
       default {
-        Write-Warning "Cannot purge resource type $($r.AzsdkResourceType). Add support to https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/scripts/Helpers/Resource-Helpers.ps1."
+        Write-Warning "Cannot purge $($r.AzsdkResourceType) '$($r.AzsdkName)'. Add support to https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/scripts/Helpers/Resource-Helpers.ps1."
       }
     }
   }
@@ -135,4 +148,31 @@ filter Remove-PurgeableResources {
 # The Log function can be overridden by the sourcing script.
 function Log($Message) {
   Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
+}
+
+function Wait-PurgeableResource {
+  param (
+    [Parameter(Mandatory=$true, Position=0)]
+    [scriptblock] $ScriptBlock,
+
+    [Parameter(Mandatory=$true, Position=1)]
+    [object] $Resource,
+
+    [Parameter()]
+    [ValidateRange(1, [int]::MaxValue)]
+    [int] $Timeout = 30,
+
+    [Parameter()]
+    [switch] $PassThru
+  )
+
+  $j = Start-ThreadJob -ScriptBlock $ScriptBlock
+  $null = Wait-Job -Job $j -Timeout $Timeout
+
+  if ($j.State -eq 'Running') {
+    Write-Warning "Timed out waiting to purge $($Resource.AzsdkResourceType) '$(Resource.AzsdkName)': {$ScriptBlock}"
+    if ($PassThru) {
+      $Resource
+    }
+  }
 }
