@@ -116,7 +116,9 @@ filter Remove-PurgeableResources {
         }
 
         # Using `$($using:r)` in the `-ScriptBlock` to make sure `$r` is captured for jobs.
-        Wait-PurgeableResource -Resource $r -Timeout $Timeout -PassThru:$PassThru -ScriptBlock { Remove-AzKeyVault -VaultName $($using:r).VaultName -Location $($using:r).Location -InRemovedState -Force -ErrorAction Continue }
+        Wait-PurgeableResource -Resource $r -Timeout $Timeout -PassThru:$PassThru -ScriptBlock {
+          Remove-AzKeyVault -VaultName $($using:r).VaultName -Location $($using:r).Location -InRemovedState -Force -ErrorAction Continue
+        }
       }
 
       'Managed HSM' {
