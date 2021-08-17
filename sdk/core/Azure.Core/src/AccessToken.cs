@@ -19,7 +19,14 @@ namespace Azure.Core
         {
             Token = accessToken;
             ExpiresOn = expiresOn;
-            RefreshOn = expiresOn.AddMinutes(-5);
+            if (expiresOn >= DateTimeOffset.MinValue.AddMinutes(5))
+            {
+                RefreshOn = expiresOn.AddMinutes(-5);
+            }
+            else
+            {
+                RefreshOn = expiresOn;
+            }
         }
 
         /// <summary>
