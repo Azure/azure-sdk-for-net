@@ -1091,7 +1091,7 @@ namespace Azure.Storage.Blobs.Test
                     ToBase64(secondBlockName)
             };
 
-            await blob.CommitBlockListAsync(commitList);
+            Response<BlobContentInfo> response = await blob.CommitBlockListAsync(commitList);
 
             // Stage 3rd Block
             using (var stream = new MemoryStream(data))
@@ -1100,6 +1100,8 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListTypes.All);
             Assert.AreEqual(2, blobList.Value.CommittedBlocks.Count());
             Assert.AreEqual(ToBase64(firstBlockName), blobList.Value.CommittedBlocks.First().Name);
@@ -1718,6 +1720,8 @@ namespace Azure.Storage.Blobs.Test
             Response<BlockList> response = await blob.GetBlockListAsync();
 
             // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             Assert.AreEqual(1, response.Value.CommittedBlocks.Count());
             Assert.AreEqual(blockId0, response.Value.CommittedBlocks.First().Name);
             Assert.AreEqual(1, response.Value.UncommittedBlocks.Count());
@@ -1967,13 +1971,16 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(Size);
 
             // Act
+            Response<BlobContentInfo> response;
             using (var stream = new MemoryStream(data))
             {
-                await blob.UploadAsync(
+                response = await blob.UploadAsync(
                     content: stream);
             }
 
             // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
             Assert.AreEqual(1, blobs.Count);
             Assert.AreEqual(blockBlobName, blobs.First().Name);
@@ -3132,6 +3139,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreNotEqual(default(ETag), uploadResponse.Value.ETag);
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(uploadResponse.Value.ETag.ToString(), $"\"{uploadResponse.GetRawResponse().Headers.ETag.ToString()}\"");
             Assert.AreNotEqual(DateTimeOffset.MinValue, uploadResponse.Value.LastModified);
 
             // Validate source and destination blob content matches

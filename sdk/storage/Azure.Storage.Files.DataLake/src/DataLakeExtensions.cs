@@ -547,7 +547,7 @@ namespace Azure.Storage.Files.DataLake
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
 
@@ -563,21 +563,21 @@ namespace Azure.Storage.Files.DataLake
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetAccessControlHeaders> response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
 
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathFlushDataHeaders> response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
 
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetExpiryHeaders> response)
             => new PathInfo
             {
-                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault()
             };
 
