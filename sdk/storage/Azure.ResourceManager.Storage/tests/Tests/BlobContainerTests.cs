@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             //validate
             BlobContainer container2 = await blobContainerContainer.GetAsync(containerName);
-            BlobHelper.AssertBlob(container1, container2);
+            BlobHelper.AssertBlobContainer(container1, container2);
             Assert.IsTrue(await blobContainerContainer.CheckIfExistsAsync(containerName));
             Assert.IsFalse(await blobContainerContainer.CheckIfExistsAsync(containerName + "1"));
             BlobContainerData containerData = container1.Data;
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
             //start create blob container
             string containerName = Recording.GenerateAssetName("testblob");
-            BlobContainerCreateOperation blobContainerOp=await blobContainerContainer.StartCreateOrUpdateAsync(containerName, new BlobContainerData());
-            BlobContainer container1 = await blobContainerOp.WaitForCompletionAsync();
+            BlobContainerCreateOperation containerCreateOp=await blobContainerContainer.StartCreateOrUpdateAsync(containerName, new BlobContainerData());
+            BlobContainer container1 = await containerCreateOp.WaitForCompletionAsync();
             Assert.IsNotNull(container1);
             Assert.AreEqual(container1.Id.Name, containerName);
 
             //validate
             BlobContainer container2 = await blobContainerContainer.GetAsync(containerName);
-            BlobHelper.AssertBlob(container1, container2);
+            BlobHelper.AssertBlobContainer(container1, container2);
             Assert.IsTrue(await blobContainerContainer.CheckIfExistsAsync(containerName));
             Assert.IsFalse(await blobContainerContainer.CheckIfExistsAsync(containerName + "1"));
             BlobContainerData containerData = container1.Data;
@@ -109,32 +109,32 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.IsFalse(await blobContainerContainer.CheckIfExistsAsync(containerName));
         }
 
-        //[Test]
-        //[RecordedTest]
-        //public async Task GetAllBlobContainers()
-        //{
-        //    //create two blob containers
-        //    string containerName1 = Recording.GenerateAssetName("testblob1");
-        //    string containerName2 = Recording.GenerateAssetName("testblob2");
-        //    BlobContainer container1 = await blobContainerContainer.CreateOrUpdateAsync(containerName1, new BlobContainerData());
-        //    BlobContainer container2 = await blobContainerContainer.CreateOrUpdateAsync(containerName2, new BlobContainerData());
+        [Test]
+        [RecordedTest]
+        public async Task GetAllBlobContainers()
+        {
+            //create two blob containers
+            string containerName1 = Recording.GenerateAssetName("testblob1");
+            string containerName2 = Recording.GenerateAssetName("testblob2");
+            BlobContainer container1 = await blobContainerContainer.CreateOrUpdateAsync(containerName1, new BlobContainerData());
+            BlobContainer container2 = await blobContainerContainer.CreateOrUpdateAsync(containerName2, new BlobContainerData());
 
-        //    //validate if there are two containers
-        //    BlobContainer container3 = null;
-        //    BlobContainer container4 = null;
-        //    int count = 0;
-        //    await foreach (BlobContainer container in blobContainerContainer.GetAllAsync())
-        //    {
-        //        count++;
-        //        if (container.Id.Name == containerName1)
-        //            container3 = container;
-        //        if (container.Id.Name == containerName2)
-        //            container4 = container;
-        //    }
-        //    Assert.AreEqual(count, 2);
-        //    Assert.IsNotNull(container3);
-        //    Assert.IsNotNull(container4);
-        //}
+            //validate if there are two containers
+            BlobContainer container3 = null;
+            BlobContainer container4 = null;
+            int count = 0;
+            await foreach (BlobContainer container in blobContainerContainer.GetAllAsync())
+            {
+                count++;
+                if (container.Id.Name == containerName1)
+                    container3 = container;
+                if (container.Id.Name == containerName2)
+                    container4 = container;
+            }
+            Assert.AreEqual(count, 2);
+            Assert.IsNotNull(container3);
+            Assert.IsNotNull(container4);
+        }
         [Test]
         [RecordedTest]
         public async Task UpdataBlobContainer()

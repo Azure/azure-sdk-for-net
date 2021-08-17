@@ -197,5 +197,123 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             account2 = await storageAccountContainer.GetAsync(accountName);
             Assert.AreEqual(account2.Data.EnableHttpsTrafficOnly, true);
         }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateLargeFileShareOnStorageAccount()
+        {
+            //create storage account and enable large share
+            string accountName = Recording.GenerateAssetName("storage");
+            curResourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = curResourceGroup.GetStorageAccounts();
+            Sku sku = new Sku(SkuName.StandardLRS);
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: sku,kind:Kind.StorageV2);
+            parameters.LargeFileSharesState = LargeFileSharesState.Enabled;
+            StorageAccount account1 = await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters);
+            VerifyAccountProperties(account1, false);
+
+            //create file share with share quota 5200, which is allowed in large file shares
+            string fileShareName = Recording.GenerateAssetName("testfileshare");
+            FileService fileService = await account1.GetFileServices().GetAsync("default");
+            FileShareContainer shareContainer = fileService.GetFileShares();
+            FileShareData shareData = new FileShareData();
+            shareData.ShareQuota = 5200;
+            FileShare share = await shareContainer.CreateOrUpdateAsync(fileShareName, shareData);
+            Assert.AreEqual(share.Data.ShareQuota, shareData.ShareQuota);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountRegenerateKey()
+        {
+            //create storage account and get keys
+            string accountName = Recording.GenerateAssetName("storage");
+            curResourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = curResourceGroup.GetStorageAccounts();
+            StorageAccount account1 = await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters());
+            VerifyAccountProperties(account1, true);
+            StorageAccountListKeysResult keys = await account1.GetKeysAsync();
+            Assert.NotNull(keys);
+            StorageAccountKey key2 = keys.Keys.First(
+                t => StringComparer.OrdinalIgnoreCase.Equals(t.KeyName, "key2"));
+            Assert.NotNull(key2);
+
+            //regenerate key and verify the key's change
+            StorageAccountRegenerateKeyParameters keyParameters = new StorageAccountRegenerateKeyParameters("key2");
+            StorageAccountListKeysResult regenKeys = await account1.RegenerateKeyAsync(keyParameters);
+            StorageAccountKey regenKey2 = regenKeys.Keys.First(
+                t => StringComparer.OrdinalIgnoreCase.Equals(t.KeyName, "key2"));
+            Assert.NotNull(regenKey2);
+
+            //validate the key is different from origin one
+            Assert.AreNotEqual(key2.Value, regenKey2.Value);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task CreateUpdataNetworkRule()
+        {
+            //create storage account with network rule
+            string accountName = Recording.GenerateAssetName("storage");
+            curResourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = curResourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
+            parameters.NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Deny)
+            {
+                Bypass = @"Logging, AzureServices",
+                IpRules = { new IPRule(iPAddressOrRange: "23.45.67.89") }
+            };
+            StorageAccount account1 = await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters);
+            VerifyAccountProperties(account1, false);
+
+            //verify network rule
+            StorageAccountData accountData = account1.Data;
+            Assert.NotNull(accountData.NetworkRuleSet);
+            Assert.AreEqual(@"Logging, AzureServices", accountData.NetworkRuleSet.Bypass.ToString());
+            Assert.AreEqual(DefaultAction.Deny, accountData.NetworkRuleSet.DefaultAction);
+            Assert.IsEmpty(accountData.NetworkRuleSet.VirtualNetworkRules);
+            Assert.NotNull(accountData.NetworkRuleSet.IpRules);
+            Assert.IsNotEmpty(accountData.NetworkRuleSet.IpRules);
+            Assert.AreEqual("23.45.67.89", accountData.NetworkRuleSet.IpRules[0].IPAddressOrRange);
+            Assert.AreEqual(DefaultAction.Allow.ToString(), accountData.NetworkRuleSet.IpRules[0].Action);
+
+            //update network rule
+            StorageAccountUpdateParameters updateParameters = new StorageAccountUpdateParameters()
+            {
+                NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Deny)
+                {
+                    Bypass = @"Logging, Metrics",
+                    IpRules = { new IPRule(iPAddressOrRange: "23.45.67.90"),
+                        new IPRule(iPAddressOrRange: "23.45.67.91")
+                    }
+                }
+            };
+            StorageAccount account2 = await account1.UpdateAsync(updateParameters);
+
+            //verify updated network rule
+            accountData = account2.Data;
+            Assert.NotNull(accountData.NetworkRuleSet);
+            Assert.AreEqual(@"Logging, Metrics", accountData.NetworkRuleSet.Bypass.ToString());
+            Assert.AreEqual(DefaultAction.Deny, accountData.NetworkRuleSet.DefaultAction);
+            Assert.IsEmpty(accountData.NetworkRuleSet.VirtualNetworkRules);
+            Assert.NotNull(accountData.NetworkRuleSet.IpRules);
+            Assert.IsNotEmpty(accountData.NetworkRuleSet.IpRules);
+            Assert.AreEqual("23.45.67.90", accountData.NetworkRuleSet.IpRules[0].IPAddressOrRange);
+            Assert.AreEqual(DefaultAction.Allow.ToString(), accountData.NetworkRuleSet.IpRules[0].Action);
+            Assert.AreEqual("23.45.67.91", accountData.NetworkRuleSet.IpRules[1].IPAddressOrRange);
+            Assert.AreEqual(DefaultAction.Allow.ToString(), accountData.NetworkRuleSet.IpRules[1].Action);
+
+            //update network rule to allow
+            updateParameters = new StorageAccountUpdateParameters()
+            {
+                NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Allow)
+            };
+            StorageAccount account3 = await account2.UpdateAsync(updateParameters);
+
+            //verify updated network rule
+            accountData = account3.Data;
+            Assert.NotNull(accountData.NetworkRuleSet);
+            Assert.AreEqual(@"Logging, Metrics", accountData.NetworkRuleSet.Bypass.ToString());
+            Assert.AreEqual(DefaultAction.Allow, accountData.NetworkRuleSet.DefaultAction);
+        }
     }
 }

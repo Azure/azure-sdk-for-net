@@ -43,20 +43,20 @@ namespace Azure.ResourceManager.Storage
         // Container level operations.
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<FileService> Get(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<FileService> Get(string fileServicesName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FileServiceContainer.Get");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (fileServicesName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(fileServicesName));
                 }
 
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, fileServicesName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FileService(Parent, response.Value), response.GetRawResponse());
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<FileService>> GetAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<FileService>> GetAsync(string fileServicesName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FileServiceContainer.Get");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (fileServicesName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(fileServicesName));
                 }
 
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, fileServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new FileService(Parent, response.Value), response.GetRawResponse());
@@ -95,20 +95,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<FileService> GetIfExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<FileService> GetIfExists(string fileServicesName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FileServiceContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (fileServicesName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(fileServicesName));
                 }
 
-                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
+                var response = _restClient.GetServiceProperties(Id.ResourceGroupName, Id.Name, fileServicesName, cancellationToken: cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<FileService>(null, response.GetRawResponse())
                     : Response.FromValue(new FileService(this, response.Value), response.GetRawResponse());
@@ -121,20 +121,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<FileService>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<FileService>> GetIfExistsAsync(string fileServicesName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FileServiceContainer.GetIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (fileServicesName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(fileServicesName));
                 }
 
-                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetServicePropertiesAsync(Id.ResourceGroupName, Id.Name, fileServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<FileService>(null, response.GetRawResponse())
                     : Response.FromValue(new FileService(this, response.Value), response.GetRawResponse());
@@ -147,20 +147,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<bool> CheckIfExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string fileServicesName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FileServiceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (fileServicesName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(fileServicesName));
                 }
 
-                var response = GetIfExists(accountName, cancellationToken: cancellationToken);
+                var response = GetIfExists(fileServicesName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +171,20 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="fileServicesName"> The name of the file Service within the specified storage account. File Service Name must be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<bool>> CheckIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string fileServicesName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FileServiceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (accountName == null)
+                if (fileServicesName == null)
                 {
-                    throw new ArgumentNullException(nameof(accountName));
+                    throw new ArgumentNullException(nameof(fileServicesName));
                 }
 
-                var response = await GetIfExistsAsync(accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await GetIfExistsAsync(fileServicesName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FileServiceContainer.GetAllAsGenericResources");
             scope.Start();
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FileServiceContainer.GetAllAsGenericResources");
             scope.Start();

@@ -9,12 +9,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
 {
-    public class BlobHelper
+    public class FileHelper
     {
-        public static void AssertBlobContainer(BlobContainer blobContainer1,BlobContainer blobContainer2)
+        public static void AssertFileShare(FileShare fileShare1, FileShare fileShare2)
         {
-            Assert.AreEqual(blobContainer1.Id.Name, blobContainer2.Id.Name);
-            Assert.AreEqual(blobContainer1.Id.Location, blobContainer2.Id.Location);
+            Assert.AreEqual(fileShare1.Id.Name, fileShare2.Id.Name);
+            Assert.AreEqual(fileShare1.Id.Location, fileShare2.Id.Location);
         }
     }
 }

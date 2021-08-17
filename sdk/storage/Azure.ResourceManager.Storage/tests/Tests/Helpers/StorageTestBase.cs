@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
         };
         protected ArmClient Client { get; private set; }
         protected Subscription DefaultSubscription => Client.DefaultSubscription;
-        protected StorageTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        protected StorageTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
         public StorageTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)

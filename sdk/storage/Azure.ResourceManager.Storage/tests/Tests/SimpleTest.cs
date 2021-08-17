@@ -21,14 +21,9 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         public async Task simpletest(){
-            int a = 0;
-            var b=TestEnvironment;
-            List<StorageAccount> accounts =await DefaultSubscription.GetStorageAccountsAsync().ToEnumerableAsync();
-            foreach (StorageAccount account in accounts)
-            {
-                Console.WriteLine(account.Id.Name);
-            }
-            a++;
+            StorageAccountCheckNameAvailabilityParameters parameters = new StorageAccountCheckNameAvailabilityParameters("storage2969");
+            CheckNameAvailabilityResult res = await DefaultSubscription.CheckStorageAccountNameNameAvailabilityAsync(parameters);
+            Console.WriteLine(res.NameAvailable);
         }
 
         [Test]
