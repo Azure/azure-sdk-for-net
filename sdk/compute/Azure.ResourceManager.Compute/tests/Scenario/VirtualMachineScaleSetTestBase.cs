@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
@@ -19,14 +19,15 @@ namespace Azure.ResourceManager.Compute.Tests
 
         protected async Task<VirtualMachineScaleSetContainer> GetVirtualMachineScaleSetContainerAsync()
         {
+            _genericResourceContainer = DefaultSubscription.GetGenericResources();
             _resourceGroup = await CreateResourceGroupAsync();
             return _resourceGroup.GetVirtualMachineScaleSets();
         }
 
-        protected async Task<Subnet> CreateBasicDependenciesOfVirtualMachineScaleSetAsync()
+        protected async Task<GenericResource> CreateBasicDependenciesOfVirtualMachineScaleSetAsync()
         {
-            await CreateVirtualNetworkAsync();
-            return await CreateSubnetAsync();
+            var vnet = await CreateVirtualNetwork();
+            return vnet;
         }
     }
 }

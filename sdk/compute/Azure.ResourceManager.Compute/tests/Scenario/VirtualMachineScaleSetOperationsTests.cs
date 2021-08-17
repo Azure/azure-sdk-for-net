@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute.Tests
         private async Task<VirtualMachineScaleSet> CreateVirtualMachineScaleSetAsync(string vmssName)
         {
             var container = await GetVirtualMachineScaleSetContainerAsync();
-            var subnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
-            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, subnet.Id);
+            var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
+            var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             return await container.CreateOrUpdateAsync(vmssName, input);
         }
 

@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -11,9 +12,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class VirtualMachineTestBase : ComputeTestBase
     {
         protected ResourceGroup _resourceGroup;
-        protected VirtualNetwork _virtualNetwork;
-        protected Subnet _subnet;
-        protected NetworkInterface _networkInterface;
+        protected GenericResourceContainer _genericResourceContainer;
 
         public VirtualMachineTestBase(bool isAsync) : base(isAsync)
         {
@@ -25,66 +24,99 @@ namespace Azure.ResourceManager.Compute.Tests
 
         protected async Task<VirtualMachineContainer> GetVirtualMachineContainerAsync()
         {
+            _genericResourceContainer = DefaultSubscription.GetGenericResources();
             _resourceGroup = await CreateResourceGroupAsync();
             return _resourceGroup.GetVirtualMachines();
         }
 
-        protected async Task<VirtualNetwork> CreateVirtualNetworkAsync()
+        protected async Task<GenericResource> CreateVirtualNetwork()
         {
             var vnetName = Recording.GenerateAssetName("testVNet-");
-            var input = new VirtualNetworkData()
+            var subnetName = Recording.GenerateAssetName("testSubnet-");
+            ResourceIdentifier vnetId = $"{_resourceGroup.Id}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
+            var addressSpaces = new Dictionary<string, object>()
+            {
+                { "addressPrefixes", new List<string>() { "10.0.0.0/16" } }
+            };
+            var subnet = new Dictionary<string, object>()
+            {
+                { "name", subnetName },
+                { "properties", new Dictionary<string, object>()
+                {
+                    { "addressPrefix", "10.0.2.0/24" }
+                } }
+            };
+            var subnets = new List<object>() { subnet };
+            var input = new GenericResourceData()
             {
                 Location = DefaultLocation,
-                AddressSpace = new Network.Models.AddressSpace()
+                Properties = new Dictionary<string, object>()
                 {
-                    AddressPrefixes =
-                    {
-                        "10.0.0.0/16"
-                    }
+                    { "addressSpace", addressSpaces },
+                    { "subnets", subnets }
                 }
             };
-            _virtualNetwork = await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, input);
-            return _virtualNetwork;
+            return await _genericResourceContainer.CreateOrUpdateAsync(vnetId, input);
         }
 
-        protected async Task<Subnet> CreateSubnetAsync()
+        protected ResourceIdentifier GetSubnetId(GenericResource vnet)
+        {
+            var properties = vnet.Data.Properties as IDictionary<string, object>;
+            var subnets = properties["subnets"] as IEnumerable<object>;
+            var subnet = subnets.First() as IDictionary<string, object>;
+            return subnet["id"] as string;
+        }
+
+        // WEIRD: second level resources cannot use GenericResourceContainer to create.
+        // Exception thrown: System.InvalidOperationException : An invalid resouce id was given /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-4544/providers/Microsoft.Network/virtualNetworks/testVNet-9796/subnets/testSubnet-1786
+        private async Task<GenericResource> CreateSubnet(ResourceIdentifier vnetId)
         {
             var subnetName = Recording.GenerateAssetName("testSubnet-");
-            var input = new SubnetData()
-            {
-                AddressPrefix = "10.0.2.0/24"
-            };
-            _subnet = await _virtualNetwork.GetSubnets().CreateOrUpdateAsync(subnetName, input);
-            return _subnet;
-        }
-
-        protected async Task<NetworkInterface> CreateNetworkInterfaceAsync()
-        {
-            var nicName = Recording.GenerateAssetName("testNic-");
-            var input = new NetworkInterfaceData()
+            ResourceIdentifier subnetId = $"{vnetId}/subnets/{subnetName}";
+            var input = new GenericResourceData()
             {
                 Location = DefaultLocation,
-                IpConfigurations =
+                Properties = new Dictionary<string, object>()
                 {
-                    new Network.Models.NetworkInterfaceIPConfiguration()
-                    {
-                        Name = "internal",
-                        Subnet = new SubnetData()
+                    { "addressPrefixes", new List<string>() { "10.0.2.0/24" } }
+                }
+            };
+            return await _genericResourceContainer.CreateOrUpdateAsync(subnetId, input);
+        }
+
+        private async Task<GenericResource> CreateNetworkInterface(ResourceIdentifier subnetId)
+        {
+            var nicName = Recording.GenerateAssetName("testNic-");
+            ResourceIdentifier nicId = $"{_resourceGroup.Id}/providers/Microsoft.Network/networkInterfaces/{nicName}";
+            var input = new GenericResourceData()
+            {
+                Location = DefaultLocation,
+                Properties = new Dictionary<string, object>()
+                {
+                    { "ipConfigurations", new List<object>()
                         {
-                            Id = _subnet.Id
+                            new Dictionary<string, object>()
+                            {
+                                { "name", "internal" },
+                                { "properties", new Dictionary<string, object>()
+                                    {
+                                        { "subnet", new Dictionary<string, object>() { { "id", subnetId.ToString() } } }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             };
-            _networkInterface = await _resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(nicName, input);
-            return _networkInterface;
+            return await _genericResourceContainer.CreateOrUpdateAsync(nicId, input);
         }
 
-        protected async Task<NetworkInterface> CreateBasicDependenciesOfVirtualMachineAsync()
+        protected async Task<GenericResource> CreateBasicDependenciesOfVirtualMachineAsync()
         {
-            await CreateVirtualNetworkAsync();
-            await CreateSubnetAsync();
-            return await CreateNetworkInterfaceAsync();
+            var vnet = await CreateVirtualNetwork();
+            //var subnet = await CreateSubnet(vnet.Id as ResourceGroupResourceIdentifier);
+            var nic = await CreateNetworkInterface(GetSubnetId(vnet));
+            return nic;
         }
     }
 }

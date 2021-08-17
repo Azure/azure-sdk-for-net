@@ -4,15 +4,9 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Compute.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="Azure.ResourceManager.Network" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="Azure.Core" VersionOverride="1.18.0-alpha.20210812.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="Azure.ResourceManager.Network" VersionOverride="1.0.0-alpha.20210813.3" />
   </ItemGroup>
 </Project>
