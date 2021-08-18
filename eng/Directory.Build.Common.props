@@ -51,11 +51,11 @@
       CA2012; <!-- ValueTask should only be awaited once - conflicts with EnsureCompleted check -->
     </NoWarn>
     <!--
-      
+      Disable some MSBuild warnings
     -->
     <NoWarn>
       $(NoWarn);
-      MSB3245;
+      MSB3245; <!-- Do not warn if a package reference is unavailable -->
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
