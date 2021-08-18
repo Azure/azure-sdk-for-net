@@ -27,10 +27,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSendsPerPartition = 80 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             Assert.Throws<ArgumentOutOfRangeException>(() => { options.MaximumConcurrentSendsPerPartition = 800; });
 =======
             Assert.Throws<ArgumentException>(() => { options.MaximumConcurrentSendsPerPartition = 800; });
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+            Assert.Throws<ArgumentOutOfRangeException>(() => { options.MaximumConcurrentSendsPerPartition = 800; });
+>>>>>>> 4a59397f3f (test typo)
         }
 
         /// <summary>
@@ -43,10 +47,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSendsPerPartition = 80 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             Assert.Throws<ArgumentOutOfRangeException>(() => { options.MaximumConcurrentSendsPerPartition = 0; });
 =======
             Assert.Throws<ArgumentException>(() => { options.MaximumConcurrentSendsPerPartition = 0; });
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+            Assert.Throws<ArgumentOutOfRangeException>(() => { options.MaximumConcurrentSendsPerPartition = 0; });
+>>>>>>> 4a59397f3f (test typo)
         }
 
         /// <summary>
