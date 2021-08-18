@@ -27,6 +27,7 @@ namespace Azure.Communication.CallingServer
         {
             ApiVersion = version switch
             {
+                ServiceVersion.V2021_06_15_Preview => "2021-06-15-preview",
                 ServiceVersion.V2021_08_30_Preview => "2021-08-30-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
