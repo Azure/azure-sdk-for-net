@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         [RecordedTest]
         public async Task UpdateQuotas()
         {
-            var updatedQuotas = (await Client.DefaultSubscription.GetQuotaateAsync(
+            var updatedQuotas = (await Client.DefaultSubscription.UpdateQuotasAsync(
                 DefaultLocation,
                 new List<QuotaBaseProperties>
                 {

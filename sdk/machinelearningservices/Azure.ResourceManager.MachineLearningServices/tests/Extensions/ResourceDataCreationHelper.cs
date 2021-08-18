@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using ResourceIdentityType = Azure.ResourceManager.Resources.Models.ResourceIdentityType;
 
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
 
         public ComputeResourceData GenerateComputeResourceData()
         {
+            // TODO: Take input to create different compute resource
             return new ComputeResourceData
             {
                 Location = Location.WestUS2,
@@ -162,16 +164,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
             throw new NotImplementedException();
         }
 
-        public OnlineEndpointTrackedResourceData GenerateOnlineEndpointTrackedResourceData(ComputeResource compute)
+        public OnlineEndpointTrackedResourceData GenerateOnlineEndpointTrackedResourceData(GenericResource resource = default)
         {
-            OnlineEndpoint properties = new OnlineEndpoint(EndpointAuthMode.Key)
+            OnlineEndpoint properties = new OnlineEndpoint(EndpointAuthMode.AMLToken)
             {
-                Keys = new EndpointAuthKeys() { PrimaryKey = "SimpleTestKeys1", SecondaryKey = "SimpleTestKeys2" },
-                Target = compute.Data.Id.ToString(),
-                Traffic = { { "myDeployment1", 0 }, { "myDeployment2", 100 } },
-                Description = "Description"
+                Traffic = { { "deployment1", 100 } },
+                Description = "this is a test endpoint"
             };
-            return new OnlineEndpointTrackedResourceData(Location.WestUS2, properties) { Kind = "string"};
+
+            var identity = new Models.ResourceIdentity()
+            {
+                Type = ResourceIdentityAssignment.UserAssigned,
+                UserAssignedIdentities = { {
+                        resource.Id,
+                        new UserAssignedIdentityMeta()
+                    } }
+            };
+            return new OnlineEndpointTrackedResourceData(Location.WestUS2, properties) { Kind = "SampleKind", Identity = identity };
         }
 
         public PrivateEndpointConnectionData GeneratePrivateEndpointConnectionData()

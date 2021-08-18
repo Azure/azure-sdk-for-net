@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> Batch inference deployment definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="body"/> is null. </exception>
-        public virtual BatchDeploymentsCreateOrUpdateOperation StartCreateOrUpdate(string deploymentName, BatchDeploymentTrackedResourceData body, CancellationToken cancellationToken = default)
+        public virtual BatchDeploymentCreateOrUpdateOperation StartCreateOrUpdate(string deploymentName, BatchDeploymentTrackedResourceData body, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken);
-                return new BatchDeploymentsCreateOrUpdateOperation(Parent, response);
+                return new BatchDeploymentCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> Batch inference deployment definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="body"/> is null. </exception>
-        public async virtual Task<BatchDeploymentsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string deploymentName, BatchDeploymentTrackedResourceData body, CancellationToken cancellationToken = default)
+        public async virtual Task<BatchDeploymentCreateOrUpdateOperation> StartCreateOrUpdateAsync(string deploymentName, BatchDeploymentTrackedResourceData body, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken).ConfigureAwait(false);
-                return new BatchDeploymentsCreateOrUpdateOperation(Parent, response);
+                return new BatchDeploymentCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
             {
@@ -404,9 +404,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -427,9 +427,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("BatchDeploymentTrackedResourceContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

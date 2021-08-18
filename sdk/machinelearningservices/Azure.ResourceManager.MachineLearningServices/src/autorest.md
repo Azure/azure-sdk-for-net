@@ -81,6 +81,10 @@ directive:
     where: $.definitions.DatastoreProperties.properties.properties
     transform: >
         $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.ComputeInstance.allOf[?(@.type=="object")].properties.properties.properties.setupScripts
+    transform: >
+        $["x-nullable"] = true;
 # TEMP Disable XXContainer's CUD
   - from: swagger-document
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}"].delete

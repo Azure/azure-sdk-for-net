@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 
             _ = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _parentPrefix,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData(compute));
+                DataHelper.GenerateOnlineEndpointTrackedResourceData());
             StopSessionRecording();
         }
 

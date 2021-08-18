@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="parameters"> The parameters for creating or updating a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WorkspacesCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, WorkspaceData parameters, CancellationToken cancellationToken = default)
+        public virtual WorkspaceCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, WorkspaceData parameters, CancellationToken cancellationToken = default)
         {
             if (workspaceName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, workspaceName, parameters, cancellationToken);
-                return new WorkspacesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, workspaceName, parameters).Request, response);
+                return new WorkspaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, workspaceName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="parameters"> The parameters for creating or updating a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WorkspacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, WorkspaceData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<WorkspaceCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, WorkspaceData parameters, CancellationToken cancellationToken = default)
         {
             if (workspaceName == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, workspaceName, parameters, cancellationToken).ConfigureAwait(false);
-                return new WorkspacesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, workspaceName, parameters).Request, response);
+                return new WorkspaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, workspaceName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -400,9 +400,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -423,9 +423,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

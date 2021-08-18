@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete container. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Task<DataContainersDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        internal virtual Task<DataContainerDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <summary> Delete container. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual DataContainersDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        internal virtual DataContainerDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

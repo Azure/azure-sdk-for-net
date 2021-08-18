@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete Online Endpoint (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<OnlineEndpointsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<OnlineEndpointDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new OnlineEndpointsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new OnlineEndpointDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete Online Endpoint (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual OnlineEndpointsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual OnlineEndpointDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new OnlineEndpointsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new OnlineEndpointDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> Online Endpoint entity to apply during operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async virtual Task<OnlineEndpointsUpdateOperation> StartUpdateAsync(PartialOnlineEndpointPartialTrackedResource body, CancellationToken cancellationToken = default)
+        public async virtual Task<OnlineEndpointUpdateOperation> StartUpdateAsync(PartialOnlineEndpointPartialTrackedResource body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                return new OnlineEndpointsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
+                return new OnlineEndpointUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
             }
             catch (Exception e)
             {
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> Online Endpoint entity to apply during operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual OnlineEndpointsUpdateOperation StartUpdate(PartialOnlineEndpointPartialTrackedResource body, CancellationToken cancellationToken = default)
+        public virtual OnlineEndpointUpdateOperation StartUpdate(PartialOnlineEndpointPartialTrackedResource body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                return new OnlineEndpointsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
+                return new OnlineEndpointUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
             }
             catch (Exception e)
             {
@@ -558,14 +558,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="keyType"> Specification for which type of key to generate. Primary or Secondary. </param>
         /// <param name="keyValue"> The value the key is set to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<OnlineEndpointsRegenerateKeysOperation> StartRegenerateKeysAsync(KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
+        public async virtual Task<OnlineEndpointRegenerateKeysOperation> StartRegenerateKeysAsync(KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartRegenerateKeys");
             scope.Start();
             try
             {
                 var response = await _restClient.RegenerateKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue, cancellationToken).ConfigureAwait(false);
-                return new OnlineEndpointsRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response);
+                return new OnlineEndpointRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response);
             }
             catch (Exception e)
             {
@@ -578,14 +578,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="keyType"> Specification for which type of key to generate. Primary or Secondary. </param>
         /// <param name="keyValue"> The value the key is set to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual OnlineEndpointsRegenerateKeysOperation StartRegenerateKeys(KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
+        public virtual OnlineEndpointRegenerateKeysOperation StartRegenerateKeys(KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartRegenerateKeys");
             scope.Start();
             try
             {
                 var response = _restClient.RegenerateKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue, cancellationToken);
-                return new OnlineEndpointsRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response);
+                return new OnlineEndpointRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response);
             }
             catch (Exception e)
             {

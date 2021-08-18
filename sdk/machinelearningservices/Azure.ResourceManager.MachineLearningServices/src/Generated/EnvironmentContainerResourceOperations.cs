@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete container. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<EnvironmentContainersDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<EnvironmentContainerDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("EnvironmentContainerResourceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new EnvironmentContainersDeleteOperation(response);
+                return new EnvironmentContainerDeleteOperation(response);
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete container. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual EnvironmentContainersDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual EnvironmentContainerDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("EnvironmentContainerResourceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new EnvironmentContainersDeleteOperation(response);
+                return new EnvironmentContainerDeleteOperation(response);
             }
             catch (Exception e)
             {

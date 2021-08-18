@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<IReadOnlyList<UpdateWorkspaceQuotas>>> GetQuotaateAsync(this SubscriptionOperations subscription, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<UpdateWorkspaceQuotas>>> UpdateQuotasAsync(this SubscriptionOperations subscription, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetQuotasRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetQuotaate");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.UpdateQuotas");
                 scope.Start();
                 try
                 {
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<IReadOnlyList<UpdateWorkspaceQuotas>> GetQuotaate(this SubscriptionOperations subscription, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<UpdateWorkspaceQuotas>> UpdateQuotas(this SubscriptionOperations subscription, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetQuotasRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetQuotaate");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.UpdateQuotas");
                 scope.Start();
                 try
                 {

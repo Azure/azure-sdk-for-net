@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete a labeling job. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<LabelingJobsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<LabelingJobDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new LabelingJobsDeleteOperation(response);
+                return new LabelingJobDeleteOperation(response);
             }
             catch (Exception e)
             {
@@ -159,14 +159,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete a labeling job. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual LabelingJobsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual LabelingJobDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new LabelingJobsDeleteOperation(response);
+                return new LabelingJobDeleteOperation(response);
             }
             catch (Exception e)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> The export summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async virtual Task<LabelingJobsExportLabelsOperation> StartExportLabelsAsync(ExportSummary body, CancellationToken cancellationToken = default)
+        public async virtual Task<LabelingJobExportLabelsOperation> StartExportLabelsAsync(ExportSummary body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _restClient.ExportLabelsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                return new LabelingJobsExportLabelsOperation(_clientDiagnostics, Pipeline, _restClient.CreateExportLabelsRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
+                return new LabelingJobExportLabelsOperation(_clientDiagnostics, Pipeline, _restClient.CreateExportLabelsRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
             }
             catch (Exception e)
             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> The export summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual LabelingJobsExportLabelsOperation StartExportLabels(ExportSummary body, CancellationToken cancellationToken = default)
+        public virtual LabelingJobExportLabelsOperation StartExportLabels(ExportSummary body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _restClient.ExportLabels(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                return new LabelingJobsExportLabelsOperation(_clientDiagnostics, Pipeline, _restClient.CreateExportLabelsRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
+                return new LabelingJobExportLabelsOperation(_clientDiagnostics, Pipeline, _restClient.CreateExportLabelsRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
             }
             catch (Exception e)
             {
@@ -348,14 +348,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Resume a labeling job (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<LabelingJobsResumeOperation> StartResumeAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<LabelingJobResumeOperation> StartResumeAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.StartResume");
             scope.Start();
             try
             {
                 var response = await _restClient.ResumeAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new LabelingJobsResumeOperation(_clientDiagnostics, Pipeline, _restClient.CreateResumeRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new LabelingJobResumeOperation(_clientDiagnostics, Pipeline, _restClient.CreateResumeRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -366,14 +366,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Resume a labeling job (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual LabelingJobsResumeOperation StartResume(CancellationToken cancellationToken = default)
+        public virtual LabelingJobResumeOperation StartResume(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.StartResume");
             scope.Start();
             try
             {
                 var response = _restClient.Resume(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new LabelingJobsResumeOperation(_clientDiagnostics, Pipeline, _restClient.CreateResumeRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                return new LabelingJobResumeOperation(_clientDiagnostics, Pipeline, _restClient.CreateResumeRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 {
     public class OnlineEndpointTrackedResourceOperationsTests : MachineLearningServicesManagerTestBase
     {
-        private const string ResourceGroupNamePrefix = "test-OnlineEndpointTrackedResourceOperations";
+        private const string ResourceGroupNamePrefix = "test-mlrg";
         private const string WorkspacePrefix = "test-workspace";
         private const string ResourceNamePrefix = "test-resource";
         private const string ComputeNamePrefix = "test-compute";
@@ -42,30 +42,40 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await GlobalClient.DefaultSubscription.GetResourceGroups()
                 .CreateOrUpdateAsync(_resourceGroupName, new ResourceGroupData(_defaultLocation));
 
+            //Create VNet & Subnet
+            //var vnetId = $"/subscriptions/{SessionEnvironment.SubscriptionId}/resourceGroups/{rg.Data.Name}/providers/Microsoft.Network/virtualNetworks/testvnet";
+            //var vnet = new GenericResourceData()
+            //{
+            //    Location = Location.WestUS2,
+            //    Properties = new Dictionary<string, object>
+            //    {
+            //        { "addressSpace", new Dictionary<string, object> { {"addressPrefixes",  new string[] { "10.0.0.0/16" } } } },
+            //        { "subnets", new Dictionary<string, object>[]{
+            //            new Dictionary<string, object> {
+            //                {"name", "testvnet"},
+            //                { "properties", new Dictionary<string, object> { { "addressPrefix", "10.0.0.0/24"} } }
+            //            }}
+            //        }
+            //    },
+            //};
+            //_ = GlobalClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnetId, vnet)
+            //    .ConfigureAwait(false).GetAwaiter().GetResult();
+
+            var id = $"/subscriptions/{SessionEnvironment.SubscriptionId}/resourceGroups/test-ml-common/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mltestid";
+            var result = GlobalClient.DefaultSubscription.GetGenericResources().GetAsync(id)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+
             Workspace ws = await rg.GetWorkspaces().CreateOrUpdateAsync(
                 _workspaceName,
                 DataHelper.GenerateWorkspaceData());
 
-            var vnetId = $"/subscriptions/{GlobalClient.DefaultSubscription.Id.SubscriptionId}/resourceGroups/{rg.Data.Name}/providers/Microsoft.Network/virtualNetworks";
-            var vnet = new GenericResourceData()
-            {
-                Location = Location.WestUS2,
-                Properties = new Dictionary<string, object>
-                {
-                    { "addressSpace", new Dictionary<string, string> { {"addressPrefixes",  "10.0.0.0/16"} } }
-                },
-            };
-
-            _ = GlobalClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnetId, vnet)
-                .ConfigureAwait(false).GetAwaiter().GetResult();
-
-            ComputeResource compute = await ws.GetComputeResources().CreateOrUpdateAsync(
-                _computeName,
-                GenerateComputeResourceData(""));
+            //ComputeResource compute = await ws.GetComputeResources().CreateOrUpdateAsync(
+            //    _computeName,
+            //    GenerateComputeResourceData(rg.Id.ToString()));
 
             _ = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData(compute));
+                DataHelper.GenerateOnlineEndpointTrackedResourceData(result));
             StopSessionRecording();
         }
 
@@ -81,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             OnlineEndpointTrackedResource res = null;
             Assert.DoesNotThrowAsync(async () => res = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 deleteResourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData(compute)));
+                DataHelper.GenerateOnlineEndpointTrackedResourceData()));
             Assert.DoesNotThrowAsync(async () => _ = await res.DeleteAsync());
         }
 
@@ -105,12 +115,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
 
             OnlineEndpointTrackedResource resource = await ws.GetOnlineEndpointTrackedResources().GetAsync(_resourceName);
-            var update = new PartialOnlineEndpointPartialTrackedResource();
+            var update = new PartialOnlineEndpointPartialTrackedResource() { Properties = new PartialOnlineEndpoint() { Traffic = { { "deployment1", 0 } } } };
             OnlineEndpointTrackedResource updatedResource = await resource.UpdateAsync(update);
-            Assert.AreEqual("Updated", updatedResource.Data.Properties.Description);
+            Assert.AreEqual(0, updatedResource.Data.Properties.Traffic["deployment1"]);
         }
 
-        private ComputeResourceData GenerateComputeResourceData(string subnetId)
+        private ComputeResourceData GenerateComputeResourceData(string rgId)
         {
             return new ComputeResourceData
             {
@@ -123,8 +133,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                         ApplicationSharingPolicy = ApplicationSharingPolicy.Personal,
                         SshSettings = new ComputeInstanceSshSettings() { SshPublicAccess = SshPublicAccess.Disabled },
                         ComputeInstanceAuthorizationType = ComputeInstanceAuthorizationType.Personal,
-                        PersonalComputeInstanceSettings = new PersonalComputeInstanceSettings(new AssignedUser(Environment.GetEnvironmentVariable("OBJECT_ID"), Environment.GetEnvironmentVariable("TENANT_ID"))),
-                        Subnet = new ResourceId(subnetId)
+                        PersonalComputeInstanceSettings = new PersonalComputeInstanceSettings(new AssignedUser(Environment.GetEnvironmentVariable("OBJECT_ID"), SessionEnvironment.TenantId)),
+                        Subnet = new ResourceId(rgId + "/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/testvnet")
                     }
                 }
             };

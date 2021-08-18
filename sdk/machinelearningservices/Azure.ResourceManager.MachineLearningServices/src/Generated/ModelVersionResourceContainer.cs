@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="properties"/> is null. </exception>
-        public virtual ModelVersionsCreateOrUpdateOperation StartCreateOrUpdate(string version, ModelVersion properties, CancellationToken cancellationToken = default)
+        public virtual ModelVersionCreateOrUpdateOperation StartCreateOrUpdate(string version, ModelVersion properties, CancellationToken cancellationToken = default)
         {
             if (version == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, properties, cancellationToken);
-                return new ModelVersionsCreateOrUpdateOperation(Parent, response);
+                return new ModelVersionCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<ModelVersionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string version, ModelVersion properties, CancellationToken cancellationToken = default)
+        public async virtual Task<ModelVersionCreateOrUpdateOperation> StartCreateOrUpdateAsync(string version, ModelVersion properties, CancellationToken cancellationToken = default)
         {
             if (version == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, properties, cancellationToken).ConfigureAwait(false);
-                return new ModelVersionsCreateOrUpdateOperation(Parent, response);
+                return new ModelVersionCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
             {
@@ -414,9 +414,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ModelVersionResourceContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ModelVersionResourceContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -437,9 +437,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ModelVersionResourceContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("ModelVersionResourceContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {

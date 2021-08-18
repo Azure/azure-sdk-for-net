@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete datastore. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DatastoresDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<DatastoreDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new DatastoresDeleteOperation(response);
+                return new DatastoreDeleteOperation(response);
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete datastore. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DatastoresDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual DatastoreDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new DatastoresDeleteOperation(response);
+                return new DatastoreDeleteOperation(response);
             }
             catch (Exception e)
             {

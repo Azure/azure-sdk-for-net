@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        internal virtual ModelContainersCreateOrUpdateOperation StartCreateOrUpdate(string name, ModelContainer properties, CancellationToken cancellationToken = default)
+        internal virtual ModelContainerCreateOrUpdateOperation StartCreateOrUpdate(string name, ModelContainer properties, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        internal virtual Task<ModelContainersCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, ModelContainer properties, CancellationToken cancellationToken = default)
+        internal virtual Task<ModelContainerCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, ModelContainer properties, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

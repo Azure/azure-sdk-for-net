@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 
             Assert.DoesNotThrowAsync(async () => _ = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData(compute)));
+                DataHelper.GenerateOnlineEndpointTrackedResourceData()));
 
             var count = (await ws.GetOnlineEndpointTrackedResources().GetAllAsync().ToEnumerableAsync()).Count;
             Assert.AreEqual(count, 1);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 
             Assert.DoesNotThrowAsync(async () => _ = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData(compute)));
+                DataHelper.GenerateOnlineEndpointTrackedResourceData()));
 
             Assert.DoesNotThrowAsync(async () => await ws.GetOnlineEndpointTrackedResources().GetAsync(_resourceName));
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await ws.GetOnlineEndpointTrackedResources().GetAsync("NonExistant"));
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             OnlineEndpointTrackedResource resource = null;
             Assert.DoesNotThrowAsync(async () => resource = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData(compute)));
+                DataHelper.GenerateOnlineEndpointTrackedResourceData()));
 
             resource.Data.Properties.Description = "Updated";
             Assert.DoesNotThrowAsync(async () => resource = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             OnlineEndpointTrackedResource resource = null;
             Assert.DoesNotThrowAsync(async () => resource = await (await ws.GetOnlineEndpointTrackedResources().StartCreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData(compute))).WaitForCompletionAsync());
+                DataHelper.GenerateOnlineEndpointTrackedResourceData())).WaitForCompletionAsync());
 
             resource.Data.Properties.Description = "Updated";
             Assert.DoesNotThrowAsync(async () => resource = await (await ws.GetOnlineEndpointTrackedResources().StartCreateOrUpdateAsync(
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 
             Assert.DoesNotThrowAsync(async () => _ = await (await ws.GetOnlineEndpointTrackedResources().StartCreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData(compute))).WaitForCompletionAsync());
+                DataHelper.GenerateOnlineEndpointTrackedResourceData())).WaitForCompletionAsync());
 
             Assert.IsTrue(await ws.GetOnlineEndpointTrackedResources().CheckIfExistsAsync(_resourceName));
             Assert.IsFalse(await ws.GetOnlineEndpointTrackedResources().CheckIfExistsAsync(_resourceName + "xyz"));

@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete version. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ModelVersionsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ModelVersionDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ModelVersionResourceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ModelVersionsDeleteOperation(response);
+                return new ModelVersionDeleteOperation(response);
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete version. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ModelVersionsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual ModelVersionDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ModelVersionResourceOperations.StartDelete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ModelVersionsDeleteOperation(response);
+                return new ModelVersionDeleteOperation(response);
             }
             catch (Exception e)
             {

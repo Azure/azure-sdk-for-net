@@ -48,8 +48,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             if (Optional.IsDefined(SetupScripts))
             {
-                writer.WritePropertyName("setupScripts");
-                writer.WriteObjectValue(SetupScripts);
+                if (SetupScripts != null)
+                {
+                    writer.WritePropertyName("setupScripts");
+                    writer.WriteObjectValue(SetupScripts);
+                }
+                else
+                {
+                    writer.WriteNull("setupScripts");
+                }
             }
             if (Optional.IsDefined(Schedules))
             {
@@ -196,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        setupScripts = null;
                         continue;
                     }
                     setupScripts = SetupScripts.DeserializeSetupScripts(property.Value);

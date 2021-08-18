@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> Inference Endpoint entity to apply during operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="body"/> is null. </exception>
-        public virtual OnlineDeploymentsCreateOrUpdateOperation StartCreateOrUpdate(string deploymentName, OnlineDeploymentTrackedResourceData body, CancellationToken cancellationToken = default)
+        public virtual OnlineDeploymentCreateOrUpdateOperation StartCreateOrUpdate(string deploymentName, OnlineDeploymentTrackedResourceData body, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken);
-                return new OnlineDeploymentsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response);
+                return new OnlineDeploymentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response);
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> Inference Endpoint entity to apply during operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="body"/> is null. </exception>
-        public async virtual Task<OnlineDeploymentsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string deploymentName, OnlineDeploymentTrackedResourceData body, CancellationToken cancellationToken = default)
+        public async virtual Task<OnlineDeploymentCreateOrUpdateOperation> StartCreateOrUpdateAsync(string deploymentName, OnlineDeploymentTrackedResourceData body, CancellationToken cancellationToken = default)
         {
             if (deploymentName == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body, cancellationToken).ConfigureAwait(false);
-                return new OnlineDeploymentsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response);
+                return new OnlineDeploymentCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, body).Request, response);
             }
             catch (Exception e)
             {
@@ -404,9 +404,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
@@ -427,9 +427,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
