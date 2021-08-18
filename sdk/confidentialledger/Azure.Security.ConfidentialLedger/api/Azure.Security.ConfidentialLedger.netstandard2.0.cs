@@ -49,5 +49,6 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetLedgerIdentity(string ledgerId, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerIdentityAsync(string ledgerId, Azure.RequestOptions options = null) { throw null; }
+        public static System.Security.Cryptography.X509Certificates.X509Certificate2 ParseCertificate(Azure.Response getIdentityResponse) { throw null; }
     }
 }

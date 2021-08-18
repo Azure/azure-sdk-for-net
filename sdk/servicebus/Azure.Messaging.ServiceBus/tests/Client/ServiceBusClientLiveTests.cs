@@ -198,7 +198,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         }
 
         [Test]
-        [Ignore("reverted cancellation support outside of processor")]
         public async Task AcceptNextSessionRespectsCancellation()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))

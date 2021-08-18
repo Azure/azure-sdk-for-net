@@ -101,7 +101,7 @@ namespace Azure.Identity.Tests
         [TestCase("mock-client-id")]
         public async Task VerifyIMDSRequestWithPodIdentityEnvVarMockAsync(string clientId)
         {
-            using (new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "AZURE_POD_IDENTITY_TOKEN_URL", "https://mock.podid.endpoint/oauth2/token" } }))
+            using (new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "https://mock.podid.endpoint/" } }))
             {
                 var response = CreateMockResponse(200, ExpectedToken);
                 var mockTransport = new MockTransport(response);
@@ -118,7 +118,7 @@ namespace Azure.Identity.Tests
 
                 MockRequest request = mockTransport.SingleRequest;
 
-                Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.podid.endpoint/oauth2/token"));
+                Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.podid.endpoint" + ImdsManagedIdentitySource.imddsTokenPath));
 
                 string query = request.Uri.Query;
 

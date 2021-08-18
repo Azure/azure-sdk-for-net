@@ -37,6 +37,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The URI scheme to apply when using web sockets for service communication.</summary>
         private const string WebSocketsUriScheme = "wss";
 
+        /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
+        private static int s_randomSeed = Environment.TickCount;
+
+        /// <summary>The random number generator to use for a specific thread.</summary>
+        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+
         /// <summary>Indicates whether or not this instance has been disposed.</summary>
         private volatile bool _disposed;
 
@@ -56,13 +62,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   refreshing authorization.  Authorization will be refreshed earlier
         ///   than the expected expiration by this amount.
         /// </summary>
-        private static TimeSpan AuthorizationRefreshBuffer { get; } = TimeSpan.FromMinutes(10);
+        private static TimeSpan AuthorizationRefreshBuffer { get; } = TimeSpan.FromMinutes(7);
+
+        /// <summary>
+        ///   The amount of seconds to use as the basis for calculating a random jitter amount
+        ///   when refreshing token authorization.  This is intended to ensure that multiple
+        ///   resources using the authorization do not all attempt to refresh at the same moment.
+        /// </summary>
+        private static int AuthorizationBaseJitterSeconds { get; } = 30;
 
         /// <summary>
         ///   The minimum amount of time for authorization to be refreshed; any calculations that
         ///   call for refreshing more frequently will be substituted with this value.
         /// </summary>
-        private static TimeSpan MinimumAuthorizationRefresh { get; } = TimeSpan.FromMinutes(2);
+        private static TimeSpan MinimumAuthorizationRefresh { get; } = TimeSpan.FromMinutes(3);
 
         /// <summary>
         ///   The maximum amount of time to allow before authorization is refreshed; any calculations
@@ -80,6 +93,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   The amount time to allow to refresh authorization of an AMQP link.
         /// </summary>
         private static TimeSpan AuthorizationRefreshTimeout { get; } = TimeSpan.FromMinutes(3);
+
+        /// <summary>
+        ///   The amount of buffer to apply when considering an authorization token
+        ///   to be expired.  The token's actual expiration will be decreased by this
+        ///   amount, ensuring that it is renewed before it has expired.
+        /// </summary>
+        ///
+        private static TimeSpan AuthorizationTokenExpirationBuffer { get; } = AuthorizationRefreshBuffer.Add(TimeSpan.FromMinutes(2));
 
         /// <summary>
         ///   Indicates whether this <see cref="AmqpConnectionScope"/> has been disposed.
@@ -146,33 +167,35 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private string _sendViaReceiverEntityPath;
 
         private readonly object _syncLock = new();
+        private readonly TimeSpan _operationTimeout;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
         /// </summary>
-        ///
         /// <param name="serviceEndpoint">Endpoint for the Service Bus service to which the scope is associated.</param>
         /// <param name="credential">The credential to use for authorization with the Service Bus service.</param>
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="useSingleSession">If true, all links will use a single session.</param>
-        ///
+        /// <param name="operationTimeout">The timeout for operations associated with the connection.</param>
         public AmqpConnectionScope(
             Uri serviceEndpoint,
             ServiceBusTokenCredential credential,
             ServiceBusTransportType transport,
             IWebProxy proxy,
-            bool useSingleSession)
+            bool useSingleSession,
+            TimeSpan operationTimeout)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             ValidateTransport(transport);
 
+            _operationTimeout = operationTimeout;
             ServiceEndpoint = serviceEndpoint;
             Transport = transport;
             Proxy = proxy;
-            TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential), OperationCancellationSource.Token);
             Id = $"{ ServiceEndpoint }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
+            TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential), AuthorizationTokenExpirationBuffer, OperationCancellationSource.Token);
             _useSingleSession = useSingleSession;
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, Transport, Proxy, Id, timeout);
@@ -400,6 +423,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _singletonSession?.Dispose();
             TransactionController?.Dispose();
+            TokenProvider.Dispose();
 
             IsDisposed = true;
         }
@@ -506,6 +530,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var linkSettings = new AmqpLinkSettings();
                 linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
                 linkSettings.AddProperty(AmqpClientConstants.EntityTypeName, AmqpClientConstants.EntityTypeManagement);
+                linkSettings.OperationTimeout = _operationTimeout;
                 entityPath += '/' + AmqpClientConstants.ManagementAddress;
 
                 // Perform the initial authorization for the link.
@@ -639,7 +664,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     AutoSendFlow = prefetchCount > 0,
                     SettleType = (receiveMode == ServiceBusReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
-                    Target = new Target { Address = Guid.NewGuid().ToString() }
+                    Target = new Target { Address = Guid.NewGuid().ToString() },
+                    OperationTimeout = _operationTimeout
                 };
 
                 var link = new ReceivingAmqpLink(linkSettings);
@@ -777,7 +803,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Role = false,
                     InitialDeliveryCount = 0,
                     Source = new Source { Address = Guid.NewGuid().ToString() },
-                    Target = new Target { Address = destinationEndpoint.AbsolutePath }
+                    Target = new Target { Address = destinationEndpoint.AbsolutePath },
+                    OperationTimeout = _operationTimeout
                 };
 
                 linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
@@ -937,7 +964,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             currentTimeUtc ??= DateTime.UtcNow;
 
-            var refreshDueInterval = (expirationTimeUtc.Subtract(AuthorizationRefreshBuffer)).Subtract(currentTimeUtc.Value);
+            // Calculate the interval for when refreshing authorization should take place;
+            // the refresh is based on the time that the credential expires, less a buffer to
+            // allow for clock skew.  A random number of seconds is added as jitter, to prevent
+            // multiple resources using the same token from all requesting a refresh at the same moment.
+
+            var refreshDueInterval = expirationTimeUtc
+                .Subtract(AuthorizationRefreshBuffer)
+                .Subtract(currentTimeUtc.Value)
+                .Subtract(TimeSpan.FromSeconds(RandomNumberGenerator.Value.NextDouble() * AuthorizationBaseJitterSeconds));
 
             return refreshDueInterval switch
             {
@@ -1046,40 +1081,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string entityPath = default,
             bool isProcessor = default)
         {
-            CancellationTokenRegistration registration;
             try
             {
-                var openObjectCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-                // Only allow cancelling in-flight opens when it is from a processor.
-                // This would occur when the processor is stopped or closed by the user.
-                if (isProcessor)
-                {
-                    // use a static delegate with tuple state to avoid allocating a closure
-                    registration = cancellationToken.Register(static state =>
-                    {
-                        var (tcs, target) = ((TaskCompletionSource<object>, AmqpObject))state;
-                        if (tcs.TrySetCanceled())
-                        {
-                            target.SafeClose();
-                        }
-                    }, (openObjectCompletionSource, target), useSynchronizationContext: false);
-                }
-
-                static async Task Open(AmqpObject target, TimeSpan timeout, TaskCompletionSource<object> openObjectCompletionSource)
-                {
-                    try
-                    {
-                        await target.OpenAsync(timeout).ConfigureAwait(false);
-                        openObjectCompletionSource.TrySetResult(null);
-                    }
-                    catch (Exception ex)
-                    {
-                        openObjectCompletionSource.TrySetException(ex);
-                    }
-                }
-
-                _ = Open(target, timeout, openObjectCompletionSource);
-                await openObjectCompletionSource.Task.ConfigureAwait(false);
+                await target.OpenAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -1108,13 +1112,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     default:
                         throw;
-                }
-            }
-            finally
-            {
-                if (isProcessor)
-                {
-                    registration.Dispose();
                 }
             }
         }

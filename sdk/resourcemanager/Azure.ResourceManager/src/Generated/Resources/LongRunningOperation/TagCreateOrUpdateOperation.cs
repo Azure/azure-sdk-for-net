@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
-        internal TagCreateOrUpdateOperation(ResourceOperations parentOperation, Response<TagResourceData> response)
+        internal TagCreateOrUpdateOperation(ArmResource parentOperation, Response<TagResourceData> response)
         {
             _operation = new OperationOrResponseInternals<TagResource>(Response.FromValue(new TagResource(parentOperation, response.Value), response.GetRawResponse()));
         }

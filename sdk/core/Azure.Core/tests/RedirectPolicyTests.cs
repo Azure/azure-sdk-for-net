@@ -47,6 +47,21 @@ namespace Azure.Core.Tests
             Assert.AreEqual(code, e.GetProperty<int>("status"));
         }
 
+        [TestCaseSource(nameof(RedirectStatusCodes))]
+        public async Task UsesRelativeLocationResponseHeaderAsNewRequestUri(int code)
+        {
+            var fistResponse = new MockResponse(code).AddHeader("Location", "/uploads/");
+            var mockTransport = new MockTransport(
+                fistResponse,
+                new MockResponse(200));
+
+            var response = await SendGetRequest(mockTransport, RedirectPolicy.Shared);
+
+            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.AreEqual("http://example.com/uploads/", mockTransport.Requests[1].Uri.ToString());
+        }
+
         [TestCaseSource(nameof(RedirectStatusCodesOldMethodsNewMethods))]
         public async Task ChangesMethodWhenRequired(int code, string oldMethod, string newMethod)
         {
