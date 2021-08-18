@@ -37,6 +37,7 @@ namespace Azure.ResourceManager
         /// <param name="parent"> The parent resource for this resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="name"> The name of the resource. </param>
+        [SerializationConstructor]
         internal ResourceIdentifier(ResourceIdentifier parent, ResourceType resourceType, string name)
         {
             Init(parent, resourceType, name, true);
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager
         /// Initializes a new instance of the <see cref="ResourceIdentifier"/> class.
         /// </summary>
         /// <param name="resourceId"> The id string to create the ResourceIdentifier from. </param>
+        [InitializationConstructor]
         public ResourceIdentifier(string resourceId)
         {
             var id = Create(resourceId);

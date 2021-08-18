@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary>
     /// Represents an Azure geography region where supported resource providers live.
     /// </summary>
-    [PropertyReferenceType]
     public partial class Location : IEquatable<Location>, IComparable<Location>
     {
         #region Public Cloud Locations
@@ -269,7 +268,10 @@ namespace Azure.ResourceManager.Resources.Models
         private const string RegexDash = @"-";
         private const string RegexWhitespace = @" ";
 
-        private Location(string location)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Location"/> class.
+        /// </summary>
+        public Location(string location)
         {
             switch (DetectNameType(location))
             {

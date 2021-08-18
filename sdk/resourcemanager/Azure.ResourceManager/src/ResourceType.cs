@@ -25,6 +25,7 @@ namespace Azure.ResourceManager
         /// Initializes a new instance of the <see cref="ResourceType"/> class.
         /// </summary>
         /// <param name="resourceIdOrType"> Option to provide the Resource Type directly, or a Resource ID from which the type is going to be obtained. </param>
+        [InitializationConstructor]
         public ResourceType(string resourceIdOrType)
         {
             if (string.IsNullOrWhiteSpace(resourceIdOrType))
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="providerNamespace"></param>
         /// <param name="name"></param>
+        [SerializationConstructor]
         internal ResourceType(string providerNamespace, string name)
         {
             Namespace = providerNamespace;
