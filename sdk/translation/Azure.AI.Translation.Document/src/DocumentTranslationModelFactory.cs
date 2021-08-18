@@ -41,7 +41,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdOn">Sets the <see cref="DocumentStatusResult.CreatedOn"/> property.</param>
         /// <param name="lastModified">Sets the <see cref="DocumentStatusResult.LastModified"/> property.</param>
         /// <param name="status">Sets the <see cref="DocumentStatusResult.Status"/> property.</param>
-        /// <param name="translatedTo">Sets the <see cref="DocumentStatusResult.TranslatedTo"/> property.</param>
+        /// <param name="translatedTo">Sets the <see cref="DocumentStatusResult.TranslatedToLanguageCode"/> property.</param>
         /// <param name="progress">Sets the <see cref="DocumentStatusResult.Progress"/> property.</param>
         /// <param name="charactersCharged">Sets the <see cref="DocumentStatusResult.CharactersCharged"/> property.</param>
         /// <returns>A new instance of <see cref="Document.DocumentStatusResult"/> for mocking purposes.</returns>
@@ -69,7 +69,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdOn">Sets the <see cref="DocumentStatusResult.CreatedOn"/> property.</param>
         /// <param name="lastModified">Sets the <see cref="DocumentStatusResult.LastModified"/> property.</param>
         /// <param name="status">Sets the <see cref="DocumentStatusResult.Status"/> property.</param>
-        /// <param name="translatedTo">Sets the <see cref="DocumentStatusResult.TranslatedTo"/> property.</param>
+        /// <param name="translatedTo">Sets the <see cref="DocumentStatusResult.TranslatedToLanguageCode"/> property.</param>
         /// <param name="progress">Sets the <see cref="DocumentStatusResult.Progress"/> property.</param>
         /// <param name="charactersCharged">Sets the <see cref="DocumentStatusResult.CharactersCharged"/> property.</param>
         /// <returns>A new instance of <see cref="Document.DocumentStatusResult"/> for mocking purposes.</returns>

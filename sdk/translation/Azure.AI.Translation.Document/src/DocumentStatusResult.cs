@@ -35,7 +35,7 @@ namespace Azure.AI.Translation.Document
         /// This property will have a value only when the document was successfully processed.
         /// </summary>
         [CodeGenMember("To")]
-        public string TranslatedTo { get; }
+        public string TranslatedToLanguageCode { get; }
 
         /// <summary>
         /// The date time when the document was created.
