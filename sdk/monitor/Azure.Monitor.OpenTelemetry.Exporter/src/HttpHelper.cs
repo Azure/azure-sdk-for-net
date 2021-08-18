@@ -115,7 +115,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var httpScheme = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpScheme)?.ToString();
             if (!string.IsNullOrWhiteSpace(httpScheme))
             {
-                string defaultPort = GetDefaultHttpPort(httpScheme);
                 var httpTarget = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpTarget)?.ToString();
                 // http.target is required in other three possible combinations
                 // If not available then do not proceed.
@@ -124,6 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     return null;
                 }
 
+                string defaultPort = GetDefaultHttpPort(httpScheme);
                 url = tagObjects.GetUrlUsingHttpHost(httpScheme, defaultPort, httpTarget);
                 if (url != null)
                 {
@@ -159,7 +159,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         ///</summary>
         internal static string GetDependencyUrl(this AzMonList tagObjects)
         {
-            // From spec: one of the following combinations is required in case of server spans:
+            // From spec: one of the following combinations is required in case of client spans:
             // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/http.md#http-client
             // http.url
             // http.scheme, http.host, http.target
@@ -175,7 +175,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var httpScheme = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpScheme)?.ToString();
             if (!string.IsNullOrWhiteSpace(httpScheme))
             {
-                string defaultPort = GetDefaultHttpPort(httpScheme);
                 var httpTarget = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpTarget)?.ToString();
                 // http.target is required in other three possible combinations
                 // If not available then do not proceed.
@@ -184,6 +183,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     return null;
                 }
 
+                string defaultPort = GetDefaultHttpPort(httpScheme);
                 url = tagObjects.GetUrlUsingHttpHost(httpScheme, defaultPort, httpTarget);
                 if (url != null)
                 {
@@ -304,6 +304,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return host;
         }
 
+        ///<summary>
+        /// Gets http dependency target from activity tag objects.
+        ///</summary>
         internal static string GetDependencyTarget(this AzMonList tagObjects, PartBType type)
         {
             string target;
