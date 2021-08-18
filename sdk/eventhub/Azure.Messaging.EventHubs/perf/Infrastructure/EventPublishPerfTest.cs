@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Perf
         private static ReadOnlyMemory<byte> s_eventBody;
 
         /// <summary>The set of options to use when publishing events.</summary>
-        private static SendEventOptions _sendOptions;
+        private SendEventOptions _sendOptions;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventPublishPerfTest"/> class.
