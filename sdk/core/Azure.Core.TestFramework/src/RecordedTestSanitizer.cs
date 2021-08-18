@@ -95,7 +95,7 @@ namespace Azure.Core.TestFramework
                     }
                 }
 
-                if (modified)
+                if (modified || LegacyConvertJsonDateTokens)
                     return JsonConvert.SerializeObject(jsonO, SerializerSettings);
                 else
                     return body;
