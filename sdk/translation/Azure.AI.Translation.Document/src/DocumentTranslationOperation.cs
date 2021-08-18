@@ -360,7 +360,7 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// Get the status of all documents in the translation operation.
+        /// Get the status of documents in the translation operation.
         /// </summary>
         /// <param name="filter">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
@@ -411,7 +411,7 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// Get the status of all documents in the translation operation.
+        /// Get the status of documents in the translation operation.
         /// </summary>
         /// <param name="filter">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>

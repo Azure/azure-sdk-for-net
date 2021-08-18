@@ -215,7 +215,7 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// Get the status results for all submitted translation operations.
+        /// Get the status results for submitted translation operations.
         /// </summary>
         /// <param name="filter">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -265,7 +265,7 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// Get the status results for all submitted translation operations.
+        /// Get the status results for submitted translation operations.
         /// </summary>
         /// <param name="filter">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
