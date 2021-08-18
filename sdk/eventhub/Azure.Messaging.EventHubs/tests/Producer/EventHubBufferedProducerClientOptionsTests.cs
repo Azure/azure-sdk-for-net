@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSendsPerPartition = 80 };
 
-            Assert.Throws<ArgumentException>(() => { options.MaximumConcurrentSendsPerPartition = 800; });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { options.MaximumConcurrentSendsPerPartition = 800; });
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSendsPerPartition = 80 };
 
-            Assert.Throws<ArgumentException>(() => { options.MaximumConcurrentSendsPerPartition = 0; });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { options.MaximumConcurrentSendsPerPartition = 0; });
         }
 
         /// <summary>
