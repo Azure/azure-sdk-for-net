@@ -41,7 +41,7 @@ computeClient.SubscriptionId = subscriptionId;
 
 var location = "westus";
 // Create Resource Group
-await resourceClient.ResourceGroups.CreateOrUpdateAsync(resourceGroup, new ResourceGroup(location));
+await resourceClient.ResourceGroups.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
 
 // Create Availability Set
 var availabilitySet = new AvailabilitySet(location)
@@ -52,7 +52,7 @@ var availabilitySet = new AvailabilitySet(location)
 };
 
 availabilitySet = await computeClient.AvailabilitySets
-    .CreateOrUpdateAsync(resourceGroup, vmName + "_aSet", availabilitySet);
+    .CreateOrUpdateAsync(resourceGroupName, vmName + "_aSet", availabilitySet);
 
 // Create IP Address
 var ipAddress = new PublicIPAddress()
@@ -63,7 +63,7 @@ var ipAddress = new PublicIPAddress()
 };
 
 ipAddress = await networkClient
-    .PublicIPAddresses.BeginCreateOrUpdateAsync(resourceGroup, vmName + "_ip", ipAddress);
+    .PublicIPAddresses.BeginCreateOrUpdateAsync(resourceGroupName, vmName + "_ip", ipAddress);
 
 // Create VNet
 var vnet = new VirtualNetwork()
@@ -81,7 +81,7 @@ var vnet = new VirtualNetwork()
 };
 
 vnet = await networkClient.VirtualNetworks
-    .BeginCreateOrUpdateAsync(resourceGroup, vmName + "_vent", vnet);
+    .BeginCreateOrUpdateAsync(resourceGroupName, vmName + "_vent", vnet);
 
 // Create Network interface
 var nic = new NetworkInterface()
@@ -101,7 +101,7 @@ var nic = new NetworkInterface()
 };
 
 nic = await networkClient.NetworkInterfaces
-    .BeginCreateOrUpdateAsync(resourceGroup, vmName + "_nic", nic);
+    .BeginCreateOrUpdateAsync(resourceGroupName, vmName + "_nic", nic);
 
 var vm = new VirtualMachine(location)
 {
@@ -128,7 +128,7 @@ var vm = new VirtualMachine(location)
     HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1ms },
 };
 
-await computeClient.VirtualMachines.BeginCreateOrUpdateAsync(resourceGroup, vmName, vm);
+await computeClient.VirtualMachines.BeginCreateOrUpdateAsync(resourceGroupName, vmName, vm);
 
 ```
 
@@ -139,72 +139,65 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Identity;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
+var armClient = new ArmClient(new DefaultAzureCredential());
 
-var computeClient = new ComputeManagementClient(subscriptionId, new DefaultAzureCredential());
-var networkClient = new NetworkManagementClient(subscriptionId, new DefaultAzureCredential());
+var location = Location.WestUS;
+// Create ResourceGroup
+ResourceGroup resourceGroup = await armClient.GetResourceGroups().CreateOrUpdateAsync(resourceGroupName, new ResourceGroupData(location));
 
-var availabilitySetsClient = computeClient.AvailabilitySets;
-var virtualNetworksClient = networkClient.VirtualNetworks;
-var networkInterfaceClient = networkClient.NetworkInterfaces;
-var virtualMachinesClient = computeClient.VirtualMachines;
-
-var location = "westus";
 // Create AvailabilitySet
-var availabilitySet = new AvailabilitySet(location)
+var availabilitySetData = new AvailabilitySetData(location)
 {
     PlatformUpdateDomainCount = 5,
     PlatformFaultDomainCount = 2,
-    Sku = new Sku() { Name = "Aligned" }  // TODO. Verify new codegen on AvailabilitySetSkuTypes.Aligned
+    Sku = new Compute.Models.Sku() { Name = "Aligned" }
 };
-
-availabilitySet = await availabilitySetsClient.CreateOrUpdateAsync(resourceGroup, vmName + "_aSet", availabilitySet);
+AvailabilitySet availabilitySet = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", availabilitySetData);
 
 // Create VNet
-var vnet = new VirtualNetwork()
+var vnetData = new VirtualNetworkData()
 {
     Location = location,
-    AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16" } },
-    Subnets = new List<Subnet>()
+    AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16" } },
+    Subnets =
     {
-        new Subnet()
+        new SubnetData()
         {
             Name = "mySubnet",
             AddressPrefix = "10.0.0.0/24",
         }
     },
 };
-
-vnet = await virtualNetworksClient
-    .StartCreateOrUpdate(resourceGroup, vmName + "_vent", vnet)
-    .WaitForCompletionAsync();
+VirtualNetwork vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vmName + "_vent", vnetData);
 
 // Create Network interface
-var nic = new NetworkInterface()
+var nicData = new NetworkInterfaceData()
 {
     Location = location,
-    IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+    IpConfigurations =
     {
         new NetworkInterfaceIPConfiguration()
         {
             Name = "Primary",
             Primary = true,
-            Subnet = new Subnet() { Id = vnet.Subnets.First().Id },
+            Subnet = new SubnetData() { Id = vnet.Data.Subnets.First().Id },
             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
         }
     }
 };
+NetworkInterface nic = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(vmName + "_nic", nicData);
 
-nic = await networkInterfaceClient
-    .StartCreateOrUpdate(resourceGroup, vmName + "_nic", nic)
-    .WaitForCompletionAsync();
-
-var vm = new VirtualMachine(location)
+var vmData = new VirtualMachineData(location)
 {
-    NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = new[] { new NetworkInterfaceReference() { Id = nic.Id } } },
+    AvailabilitySet = new Compute.Models.SubResource() { Id = availabilitySet.Id },
+    NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
     OsProfile = new OSProfile
     {
         ComputerName = "testVM",
@@ -220,16 +213,11 @@ var vm = new VirtualMachine(location)
             Publisher = "Canonical",
             Sku = "18.04-LTS",
             Version = "latest"
-        },
-        DataDisks = new List<DataDisk>()
+        }
     },
     HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
 };
-vm.AvailabilitySet.Id = availabilitySet.Id;
-
-var operaiontion = await virtualMachinesClient.StartCreateOrUpdateAsync(resourceGroup, vmName, vm);
-await operaiontion.WaitForCompletionAsync();
-
+VirtualMachine vm = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, vmData);
 ```
 
 #### Object Model Changes
@@ -256,14 +244,15 @@ var vmExtension = new VirtualMachineExtension
 
 After upgrade:
 ```csharp
-var vmExtension = new VirtualMachineExtension(
-                null,
-                "vmext01",
-                "Microsoft.Compute/virtualMachines/extensions",
-                "westus",
-                new Dictionary<string, string>() { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
-                "RerunExtension",
-                "Microsoft.Compute",
-                "VMAccessAgent", "2.0", true, "{}", "{}", null, null
-                );
+var vmExtension = new VirtualMachineExtensionData(Location.WestUS)
+{
+    Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
+    Publisher = "Microsoft.Compute",
+    VirtualMachineExtensionType = "VMAccessAgent",
+    TypeHandlerVersion = "2.0",
+    AutoUpgradeMinorVersion = true,
+    ForceUpdateTag = "RerunExtension",
+    Settings = "{}",
+    ProtectedSettings = "{}"
+};
 ```
