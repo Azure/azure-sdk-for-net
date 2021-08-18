@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetByGalleryImageRequest(string resourceGroupName, string galleryName, string galleryImageName)
+        internal HttpMessage CreateGetAllByGalleryImageRequest(string resourceGroupName, string galleryName, string galleryImageName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public async Task<Response<GalleryImageVersionList>> GetByGalleryImageAsync(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryImageVersionList>> GetAllByGalleryImageAsync(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var message = CreateGetByGalleryImageRequest(resourceGroupName, galleryName, galleryImageName);
+            using var message = CreateGetAllByGalleryImageRequest(resourceGroupName, galleryName, galleryImageName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public Response<GalleryImageVersionList> GetByGalleryImage(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public Response<GalleryImageVersionList> GetAllByGalleryImage(string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var message = CreateGetByGalleryImageRequest(resourceGroupName, galleryName, galleryImageName);
+            using var message = CreateGetAllByGalleryImageRequest(resourceGroupName, galleryName, galleryImageName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetByGalleryImageNextPageRequest(string nextLink, string resourceGroupName, string galleryName, string galleryImageName)
+        internal HttpMessage CreateGetAllByGalleryImageNextPageRequest(string nextLink, string resourceGroupName, string galleryName, string galleryImageName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public async Task<Response<GalleryImageVersionList>> GetByGalleryImageNextPageAsync(string nextLink, string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryImageVersionList>> GetAllByGalleryImageNextPageAsync(string nextLink, string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var message = CreateGetByGalleryImageNextPageRequest(nextLink, resourceGroupName, galleryName, galleryImageName);
+            using var message = CreateGetAllByGalleryImageNextPageRequest(nextLink, resourceGroupName, galleryName, galleryImageName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryImageName"/> is null. </exception>
-        public Response<GalleryImageVersionList> GetByGalleryImageNextPage(string nextLink, string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public Response<GalleryImageVersionList> GetAllByGalleryImageNextPage(string nextLink, string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryImageName));
             }
 
-            using var message = CreateGetByGalleryImageNextPageRequest(nextLink, resourceGroupName, galleryName, galleryImageName);
+            using var message = CreateGetAllByGalleryImageNextPageRequest(nextLink, resourceGroupName, galleryName, galleryImageName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

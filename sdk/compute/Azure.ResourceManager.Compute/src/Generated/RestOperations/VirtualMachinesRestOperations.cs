@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetByLocationRequest(string location)
+        internal HttpMessage CreateGetAllByLocationRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<VirtualMachineListResult>> GetByLocationAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineListResult>> GetAllByLocationAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetByLocationRequest(location);
+            using var message = CreateGetAllByLocationRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -86,14 +86,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<VirtualMachineListResult> GetByLocation(string location, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineListResult> GetAllByLocation(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetByLocationRequest(location);
+            using var message = CreateGetAllByLocationRequest(location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2035,7 +2035,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetByLocationNextPageRequest(string nextLink, string location)
+        internal HttpMessage CreateGetAllByLocationNextPageRequest(string nextLink, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2053,7 +2053,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<VirtualMachineListResult>> GetByLocationNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineListResult>> GetAllByLocationNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -2064,7 +2064,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetByLocationNextPageRequest(nextLink, location);
+            using var message = CreateGetAllByLocationNextPageRequest(nextLink, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2085,7 +2085,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<VirtualMachineListResult> GetByLocationNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineListResult> GetAllByLocationNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -2096,7 +2096,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetByLocationNextPageRequest(nextLink, location);
+            using var message = CreateGetAllByLocationNextPageRequest(nextLink, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

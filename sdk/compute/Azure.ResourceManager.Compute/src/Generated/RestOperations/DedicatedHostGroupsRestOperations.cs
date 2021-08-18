@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetByResourceGroupRequest(string resourceGroupName)
+        internal HttpMessage CreateGetAllByResourceGroupRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -422,14 +422,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<DedicatedHostGroupListResult>> GetByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<DedicatedHostGroupListResult>> GetAllByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetByResourceGroupRequest(resourceGroupName);
+            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -449,14 +449,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<DedicatedHostGroupListResult> GetByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<DedicatedHostGroupListResult> GetAllByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetByResourceGroupRequest(resourceGroupName);
+            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetBySubscriptionRequest()
+        internal HttpMessage CreateGetAllBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -490,9 +490,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated host groups. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DedicatedHostGroupListResult>> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DedicatedHostGroupListResult>> GetAllBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBySubscriptionRequest();
+            using var message = CreateGetAllBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -510,9 +510,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated host groups. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DedicatedHostGroupListResult> GetBySubscription(CancellationToken cancellationToken = default)
+        public Response<DedicatedHostGroupListResult> GetAllBySubscription(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBySubscriptionRequest();
+            using var message = CreateGetAllBySubscriptionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateGetAllByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<DedicatedHostGroupListResult>> GetByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<DedicatedHostGroupListResult>> GetAllByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<DedicatedHostGroupListResult> GetByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<DedicatedHostGroupListResult> GetAllByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetBySubscriptionNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetAllBySubscriptionNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -622,14 +622,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DedicatedHostGroupListResult>> GetBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DedicatedHostGroupListResult>> GetAllBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -649,14 +649,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DedicatedHostGroupListResult> GetBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<DedicatedHostGroupListResult> GetAllBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
