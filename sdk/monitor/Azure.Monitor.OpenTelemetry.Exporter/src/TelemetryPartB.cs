@@ -24,6 +24,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class TelemetryPartB
     {
         private const int MaxlinksAllowed = 100;
+
+        // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/database.md#connection-level-attributes
+        internal static readonly HashSet<string> SqlDbs = new HashSet<string>() {"mssql"};
+
         internal static RequestData GetRequestData(Activity activity)
         {
             string url = null;
@@ -69,16 +73,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             switch (monitorTags.activityType)
             {
                 case PartBType.Http:
-                    monitorTags.PartBTags.GenerateUrlAndAuthority(out var url, out var urlAuthority);
                     dependency.Data = monitorTags.PartBTags.GetDependencyUrl();
-                    dependency.Target = urlAuthority;
+                    dependency.Target = monitorTags.PartBTags.GetDependencyTarget(PartBType.Http);
                     dependency.Type = "Http";
                     dependency.ResultCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
                     break;
                 case PartBType.Db:
                     var depDataAndType = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
                     dependency.Data = depDataAndType[0]?.ToString();
-                    dependency.Type = depDataAndType[1]?.ToString();
+                    dependency.Target = monitorTags.PartBTags.GetDependencyTarget(PartBType.Db);
+                    dependency.Type = SqlDbs.Contains(depDataAndType[1]?.ToString()) ? "SQL" : depDataAndType[1]?.ToString();
                     break;
                 case PartBType.Rpc:
                     var depInfo = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);
