@@ -55,7 +55,7 @@ namespace Azure.Core
         /// <summary>
         /// Indicates when the <see cref="AccessToken"/> should be refreshed, when set.
         /// This value should also be used as an indication of when the <see cref="AccessToken"/> can be cached.
-        /// For example, if the value is less than or equal to DateTimeOffset.Now,
+        /// For example, if the value is <see cref="DateTimeOffset.MinValue"/>,
         /// <see cref="TokenCredential.GetToken(TokenRequestContext, System.Threading.CancellationToken)"/> or
         /// <see cref="TokenCredential.GetTokenAsync(TokenRequestContext, System.Threading.CancellationToken)"/>
         /// should always be called rather than caching the token in your own code.
