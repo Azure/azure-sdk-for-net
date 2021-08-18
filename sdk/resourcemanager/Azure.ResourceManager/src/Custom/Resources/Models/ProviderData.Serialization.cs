@@ -19,14 +19,19 @@ namespace Azure.ResourceManager.Resources
     {
         internal static ProviderData DeserializeProvider(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<string> @namespace = default;
             Optional<string> registrationState = default;
             Optional<string> registrationPolicy = default;
             Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
             Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
-            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("namespace"))
                 {
                     @namespace = property.Value.GetString();
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.Resources
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ProviderResourceType>(item.ToString()));
+                        array.Add(ProviderResourceType.DeserializeProviderResourceType(item));
                     }
                     resourceTypes = array;
                     continue;
@@ -65,11 +70,6 @@ namespace Azure.ResourceManager.Resources
                         continue;
                     }
                     providerAuthorizationConsentState = new ProviderAuthorizationConsentState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
                     continue;
                 }
             }
