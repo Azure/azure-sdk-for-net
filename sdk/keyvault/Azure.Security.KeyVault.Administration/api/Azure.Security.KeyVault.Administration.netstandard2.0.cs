@@ -110,11 +110,13 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction DeleteRoleAssignment { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction DeleteRoleDefinition { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction DownloadHsmSecurityDomain { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultDataAction DownloadHsmSecurityDomainStatus { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction EncryptHsmKey { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction ExportHsmKey { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction GetRoleAssignment { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction ImportHsmKey { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction PurgeDeletedHsmKey { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultDataAction RandomNumbersGenerate { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction ReadDeletedHsmKey { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction ReadHsmBackupStatus { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction ReadHsmKey { get { throw null; } }
@@ -123,6 +125,7 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction ReadHsmSecurityDomainTransferKey { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction ReadRoleDefinition { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction RecoverDeletedHsmKey { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultDataAction ReleaseKey { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction RestoreHsmKeys { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction SignHsmKey { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction StartHsmBackup { get { throw null; } }
