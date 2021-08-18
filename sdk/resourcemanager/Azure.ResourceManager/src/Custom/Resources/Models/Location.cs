@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -268,10 +267,7 @@ namespace Azure.ResourceManager.Resources.Models
         private const string RegexDash = @"-";
         private const string RegexWhitespace = @" ";
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Location"/> class.
-        /// </summary>
-        public Location(string location)
+        private Location(string location)
         {
             switch (DetectNameType(location))
             {
