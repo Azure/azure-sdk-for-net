@@ -20,10 +20,8 @@ $ErrorActionPreference = 'Stop'
 . $PSScriptRoot/find-all-stress-packages.ps1
 $FailedCommands = New-Object Collections.Generic.List[hashtable]
 
-if (!(Get-Module -ListAvailable powershell-yaml)) {
-    Write-Host "Installing powershell-yaml module..."
-    Install-Module -Name powershell-yaml -RequiredVersion 0.4.1 -Force -Scope CurrentUser
-}
+. (Join-Path $PSScriptRoot "../Helpers" PSModule-Helpers.ps1)
+Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 
 # Powershell does not (at time of writing) treat exit codes from external binaries
 # as cause for stopping execution, so do this via a wrapper function.
