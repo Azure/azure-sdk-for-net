@@ -1,14 +1,7 @@
 # Release History
 
 ## 12.8.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Fixed bug / regression where the ETag values that had quotation marks surrounding it were being removed in versions 12.7.0, 12.8.0-beta.1 and 12.8.0-beta.2.
 
 ## 12.8.0-beta.2 (2021-07-23)
 - This release contains bug fixes to improve quality.
