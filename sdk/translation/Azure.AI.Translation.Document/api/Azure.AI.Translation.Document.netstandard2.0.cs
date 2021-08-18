@@ -111,14 +111,14 @@ namespace Azure.AI.Translation.Document
         public static Azure.AI.Translation.Document.DocumentStatus DocumentStatus(string id, System.Uri sourceDocumentUri, System.Uri translatedDocumentUri, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, string translatedTo, float progress, long charactersCharged) { throw null; }
         public static Azure.AI.Translation.Document.DocumentTranslationError DocumentTranslationError(Azure.AI.Translation.Document.DocumentTranslationErrorCode errorCode, string message, string target) { throw null; }
         public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IEnumerable<string> fileExtensions = null, System.Collections.Generic.IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IEnumerable<string> formatVersions = null) { throw null; }
-        public static Azure.AI.Translation.Document.TranslationStatus TranslationStatus(string id, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, Azure.AI.Translation.Document.DocumentTranslationError error, int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, long totalCharacterCharged) { throw null; }
+        public static Azure.AI.Translation.Document.TranslationStatus TranslationStatus(string id, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, Azure.AI.Translation.Document.DocumentTranslationError error, int total, int failed, int success, int inProgress, int notYetStarted, int canceled, long totalCharacterCharged) { throw null; }
     }
     public partial class DocumentTranslationOperation : Azure.PageableOperation<Azure.AI.Translation.Document.DocumentStatus>
     {
         protected DocumentTranslationOperation() { }
         public DocumentTranslationOperation(string translationId, Azure.AI.Translation.Document.DocumentTranslationClient client) { }
         public virtual System.DateTimeOffset CreatedOn { get { throw null; } }
-        public virtual int DocumentsCancelled { get { throw null; } }
+        public virtual int DocumentsCanceled { get { throw null; } }
         public virtual int DocumentsFailed { get { throw null; } }
         public virtual int DocumentsInProgress { get { throw null; } }
         public virtual int DocumentsNotStarted { get { throw null; } }
@@ -151,8 +151,8 @@ namespace Azure.AI.Translation.Document
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DocumentTranslationStatus(string value) { throw null; }
-        public static Azure.AI.Translation.Document.DocumentTranslationStatus Cancelled { get { throw null; } }
-        public static Azure.AI.Translation.Document.DocumentTranslationStatus Cancelling { get { throw null; } }
+        public static Azure.AI.Translation.Document.DocumentTranslationStatus Canceled { get { throw null; } }
+        public static Azure.AI.Translation.Document.DocumentTranslationStatus Canceling { get { throw null; } }
         public static Azure.AI.Translation.Document.DocumentTranslationStatus Failed { get { throw null; } }
         public static Azure.AI.Translation.Document.DocumentTranslationStatus NotStarted { get { throw null; } }
         public static Azure.AI.Translation.Document.DocumentTranslationStatus Running { get { throw null; } }
@@ -219,7 +219,7 @@ namespace Azure.AI.Translation.Document
     {
         internal TranslationStatus() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public int DocumentsCancelled { get { throw null; } }
+        public int DocumentsCanceled { get { throw null; } }
         public int DocumentsFailed { get { throw null; } }
         public int DocumentsInProgress { get { throw null; } }
         public int DocumentsNotStarted { get { throw null; } }
