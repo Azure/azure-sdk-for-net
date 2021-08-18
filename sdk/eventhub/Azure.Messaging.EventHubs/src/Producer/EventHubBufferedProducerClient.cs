@@ -37,6 +37,7 @@ namespace Azure.Messaging.EventHubs.Producer
     /// <seealso cref="EventHubProducerClient" />
     ///
 <<<<<<< HEAD
+<<<<<<< HEAD
     internal class EventHubBufferedProducerClient : IAsyncDisposable
     {
         /// <summary>
@@ -45,6 +46,9 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
 =======
     public class EventHubBufferedProducerClient : IAsyncDisposable
+=======
+    internal class EventHubBufferedProducerClient : IAsyncDisposable
+>>>>>>> c7457cff4d (updated to internal classes)
     {
 >>>>>>> 88750fe801 (Adding skeleton files)
         private static EventHubBufferedProducerClientOptions DefaultOptions { get; } = new EventHubBufferedProducerClientOptions

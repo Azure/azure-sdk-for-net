@@ -17,10 +17,14 @@ namespace Azure.Messaging.EventHubs.Producer
     /// </summary>
     ///
 <<<<<<< HEAD
+<<<<<<< HEAD
     internal class SendEventBatchFailedEventArgs : EventArgs
 =======
     public class SendEventBatchFailedEventArgs : EventArgs
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+    internal class SendEventBatchFailedEventArgs : EventArgs
+>>>>>>> c7457cff4d (updated to internal classes)
     {
         /// <summary>
         ///   The set of events that were in the batch that failed to publish.

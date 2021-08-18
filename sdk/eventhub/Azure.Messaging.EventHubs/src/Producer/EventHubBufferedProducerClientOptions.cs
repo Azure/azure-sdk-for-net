@@ -20,6 +20,7 @@ namespace Azure.Messaging.EventHubs.Producer
     /// </summary>
     ///
 <<<<<<< HEAD
+<<<<<<< HEAD
     internal class EventHubBufferedProducerClientOptions
     {
         /// <summary> The number of batches that may be sent concurrently to each partition. </summary>
@@ -33,6 +34,9 @@ namespace Azure.Messaging.EventHubs.Producer
 
 =======
     public class EventHubBufferedProducerClientOptions : EventHubProducerClientOptions
+=======
+    internal class EventHubBufferedProducerClientOptions : EventHubProducerClientOptions
+>>>>>>> c7457cff4d (updated to internal classes)
     {
 >>>>>>> 88750fe801 (Adding skeleton files)
         /// <summary>

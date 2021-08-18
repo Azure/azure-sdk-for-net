@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    public class EventHubBufferedProducerClientOptionsTests
+    internal class EventHubBufferedProducerClientOptionsTests
     {
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubBufferedProducerClientOptions.MaximumConcurrentSendsPerPartition"/>
