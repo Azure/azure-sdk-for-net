@@ -1405,6 +1405,10 @@ namespace Azure.Data.Tables
         public virtual Uri GenerateSasUri(
             TableSasBuilder builder)
         {
+            if (SharedKeyCredential == null)
+            {
+                throw new InvalidOperationException($"{nameof(GenerateSasUri)} requires a credential other than {nameof(TokenCredential)} in order to sign the SAS token.");
+            }
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
             if (!builder.TableName.Equals(Name, StringComparison.InvariantCulture))
             {
