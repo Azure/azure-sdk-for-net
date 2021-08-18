@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///
     /// <seealso cref="EventHubProducerClient" />
     ///
-    public class EventHubBufferedProducerClient : IAsyncDisposable
+    internal class EventHubBufferedProducerClient : IAsyncDisposable
     {
         private static EventHubBufferedProducerClientOptions DefaultOptions { get; } = new EventHubBufferedProducerClientOptions
         {

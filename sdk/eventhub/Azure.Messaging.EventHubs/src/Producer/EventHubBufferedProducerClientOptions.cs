@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   to configure its behavior.
     /// </summary>
     ///
-    public class EventHubBufferedProducerClientOptions : EventHubProducerClientOptions
+    internal class EventHubBufferedProducerClientOptions : EventHubProducerClientOptions
     {
         /// <summary>
         ///   The amount of time to wait for a new event to be added to the buffer before sending a partially

@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    public class EventHubBufferedProducerClientTests
+    internal class EventHubBufferedProducerClientTests
     {
     }
 }
