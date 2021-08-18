@@ -13,7 +13,7 @@ Azure Purview Account is a fully managed cloud service.
 Install the Azure Purview Account client library for .NET with [NuGet][client_nuget_package]:
 
 ```
-dotnet add package Azure.Analysis.Purview.Account --prerelease
+dotnet add package Azure.Analysis.Purview.Account
 ```
 
 ### Prerequisites
