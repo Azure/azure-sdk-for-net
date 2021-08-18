@@ -115,7 +115,7 @@ namespace Azure
 
         internal abstract ResponseExceptionFactory ExceptionFactory { get; }
 
-        internal abstract ResponseClassifier ResponseClassifier { get; }
+        internal abstract ResponseClassifier ResponseClassifier { get; set; }
 
         /// <summary>
         /// Throw a RequestFailedException appropriate to the Response.

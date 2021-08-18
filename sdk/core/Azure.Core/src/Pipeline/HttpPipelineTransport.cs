@@ -29,10 +29,8 @@ namespace Azure.Core.Pipeline
         /// <returns></returns>
         public abstract Request CreateRequest();
 
+        //internal ClientOptions? ClientOptions { get; set; }
 
-        internal ClientOptions? ClientOptions { get; set; }
-
-        internal ResponseClassifier? ResponseClassifier { get; set; }
-
+        //internal ResponseClassifier? ResponseClassifier { get; set; }
     }
 }

@@ -33,7 +33,6 @@ namespace Azure.Core.Pipeline
             policies = policies ?? Array.Empty<HttpPipelinePolicy>();
 
             var all = new HttpPipelinePolicy[policies.Length + 1];
-            _transport.ResponseClassifier = ResponseClassifier;
             all[policies.Length] = new HttpPipelineTransportPolicy(_transport);
             policies.CopyTo(all, 0);
 
@@ -71,7 +70,9 @@ namespace Azure.Core.Pipeline
         {
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
-            return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
+            var value = _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
+            message.Response.ResponseClassifier = this.ResponseClassifier;
+            return value;
         }
 
         /// <summary>
