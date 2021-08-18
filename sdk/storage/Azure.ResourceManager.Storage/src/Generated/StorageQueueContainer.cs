@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queue"/> is null. </exception>
-        public virtual Response<StorageQueue> CreateOrUpdate(string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
+        public virtual QueueCreateOperation CreateOrUpdate(string queueName, StorageQueueData queue, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Storage
             }
 
             using var scope = _clientDiagnostics.CreateScope("StorageQueueContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(queueName, queue, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
-        /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
-        /// <param name="queue"> Queue properties and metadata to be created with. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queue"/> is null. </exception>
-        public async virtual Task<Response<StorageQueue>> CreateOrUpdateAsync(string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
-        {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("StorageQueueContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(queueName, queue, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
-        /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
-        /// <param name="queue"> Queue properties and metadata to be created with. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queue"/> is null. </exception>
-        public virtual QueueCreateOperation StartCreateOrUpdate(string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
-        {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException(nameof(queueName));
-            }
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("StorageQueueContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.Create(Id.ResourceGroupName, Id.Parent.Name, Id.Name, queueName, queue, cancellationToken);
-                return new QueueCreateOperation(Parent, response);
+                var operation = new QueueCreateOperation(Parent, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Creates a new queue with the specified queue name, under the specified account. </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="queue"> Queue properties and metadata to be created with. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="queue"/> is null. </exception>
-        public async virtual Task<QueueCreateOperation> StartCreateOrUpdateAsync(string queueName, StorageQueueData queue, CancellationToken cancellationToken = default)
+        public async virtual Task<QueueCreateOperation> CreateOrUpdateAsync(string queueName, StorageQueueData queue, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (queueName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentNullException(nameof(queue));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StorageQueueContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("StorageQueueContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, queueName, queue, cancellationToken).ConfigureAwait(false);
-                return new QueueCreateOperation(Parent, response);
+                var operation = new QueueCreateOperation(Parent, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {

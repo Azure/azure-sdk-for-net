@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
     [ClientTestFixture]
     public class StorageTestBase:ManagementRecordedTestBase<StorageManagementTestEnvironment>
     {
-        protected static Location DefaultLocation => Location.EastUS2;
+        public static Location DefaultLocation => Location.EastUS2;
         public static string DefaultLocationString= "eastus2";
         public static bool IsTestTenant = false;
         // These are used to create default accounts
@@ -28,21 +28,19 @@ namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
         };
         protected ArmClient Client { get; private set; }
         protected Subscription DefaultSubscription => Client.DefaultSubscription;
-        protected StorageTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        protected StorageTestBase(bool isAsync) : base(isAsync)
         {
         }
         public StorageTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
-        protected static StorageAccountCreateParameters GetDefaultStorageAccountParameters(Sku sku = null, Kind? kind = null, string location = null)
+        public static StorageAccountCreateParameters GetDefaultStorageAccountParameters(Sku sku = null, Kind? kind = null, string location = null)
         {
             Sku skuParameters = sku ?? DefaultSkuNameStandardGRS;
             Kind kindParameters = kind ?? DefaultKindStorage;
             string locationParameters = location ?? DefaultLocationString;
-
             StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(skuParameters, kindParameters, locationParameters);
             parameters.Tags.InitializeFrom(DefaultTags);
-
             return parameters;
         }
         [SetUp]
@@ -51,9 +49,9 @@ namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroup> CreateResourceGroupAsync()
+        public async Task<ResourceGroup> CreateResourceGroupAsync()
         {
-            var resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
+            string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
             return await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
@@ -63,16 +61,6 @@ namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
                         { "test", "env" }
                     }
                 });
-        }
-        //public async Task<List<DeletedAccount>> GetDeletedAccount()
-        //{
-        //    return await DefaultSubscription.GetDeletedAccountsAsync().ToEnumerableAsync();
-        //}
-        public async Task<List<ResourceGroup>> getAllResourceGroupAsync()
-        {
-            AsyncPageable<ResourceGroup> resourceGroups= DefaultSubscription.GetResourceGroups().GetAllAsync();
-            List<ResourceGroup> resourceGroupsList =await resourceGroups.ToEnumerableAsync();
-            return resourceGroupsList;
         }
         public static void VerifyAccountProperties(StorageAccount account,bool useDefaults)
         {
@@ -101,25 +89,21 @@ namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
             }
         }
 
-        //verify if two storage accounts are equal
         public static void AssertStorageAccountEqual(StorageAccount account1, StorageAccount account2)
         {
             Assert.AreEqual(account1.Id.Name, account2.Id.Name);
             Assert.AreEqual(account1.Id.Location, account2.Id.Location);
         }
-        //verify if two blob containers are equal
         public static void AssertBlobContainerEqual(BlobContainer blobContainer1, BlobContainer blobContainer2)
         {
             Assert.AreEqual(blobContainer1.Id.Name, blobContainer2.Id.Name);
             Assert.AreEqual(blobContainer1.Id.Location, blobContainer2.Id.Location);
         }
-        //verify if two file shares are equal
         public static void AssertFileShareEqual(FileShare fileShare1, FileShare fileShare2)
         {
             Assert.AreEqual(fileShare1.Id.Name, fileShare2.Id.Name);
             Assert.AreEqual(fileShare1.Id.Location, fileShare2.Id.Location);
         }
-        //verify if two storage queues are equal
         public static void AssertStorageQueueEqual(StorageQueue storageQueue1, StorageQueue storageQueue2)
         {
             Assert.AreEqual(storageQueue1.Id.Name, storageQueue2.Id.Name);

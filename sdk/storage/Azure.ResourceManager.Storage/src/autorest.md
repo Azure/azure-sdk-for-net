@@ -7,9 +7,7 @@ azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
 tag: package-2021-04
-#require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/storage/resource-manager/readme.md
-require: D:\yukun\projects\azure-rest-api-specs\specification\storage\resource-manager\readme.md
-#use: https://github.com/Azure/autorest.csharp/releases/download/v3.0.0-beta.20210816.2/autorest-csharp-3.0.0-beta.20210816.2.tgz
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/storage/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -31,7 +29,6 @@ operation-group-to-parent:
     Queue: Microsoft.Storage/storageAccounts/queueServices
     Table: Microsoft.Storage/storageAccounts/tableServices
     StorageAccountName: subscriptions
-#singleton-resource: BlobService;FileService;QueueService;TableService
 directive:
   - rename-model:
       from: BlobServiceProperties
@@ -54,4 +51,74 @@ directive:
   - from: swagger-document
     where: $.definitions.ListQueueResource.properties.value.items["$ref"]
     transform: return "#/definitions/StorageQueue"
+# change default to service name and add to parameter
+  - from: swagger-document
+    where: $.paths
+    transform: >
+      for (var key in $) {
+          var newKey=key.replace('fileServices/default','fileServices/{FileServicesName}');
+          if (newKey !== key){
+              $[newKey] = $[key];
+              for (var key1 in $[newKey]){
+                $[newKey][key1]['parameters'].push(
+                  {
+                    "$ref": "#/parameters/FileServicesName"
+                  }
+                );
+              }
+              delete $[key];
+              continue;
+            }
+            newKey=key.replace('blobServices/default','blobServices/{BlobServicesName}');
+          if (newKey !== key){
+              $[newKey] = $[key];
+              for (var key1 in $[newKey]){
+                $[newKey][key1]['parameters'].push(
+                  {
+                    "$ref": "#/parameters/BlobServicesName"
+                  }
+                );
+              }
+              delete $[key];
+              continue;
+            }
+          newKey=key.replace('queueServices/default','queueServices/{queueServiceName}');
+           if (newKey !== key){
+              $[newKey] = $[key];
+              for (var key1 in $[newKey]){
+                $[newKey][key1]['parameters'].push(
+                  {
+                    "$ref": "#/parameters/QueueServiceName"
+                  }
+                );
+              }
+              delete $[key];
+              continue;
+            }
+          newKey=key.replace('tableServices/default','tableServices/{tableServiceName}');
+          if (newKey !== key){
+              $[newKey] = $[key]
+              for (var key1 in $[newKey]){
+                $[newKey][key1]['parameters'].push(
+                  {
+                    "$ref": "#/parameters/TableServiceName"
+                  }
+                );
+              }
+              delete $[key];
+            }
+      }
+# delete enum property
+  - from: swagger-document
+    where: $.parameters
+    transform: >
+      for (var key in $) {
+          if (key === 'BlobServicesName'||key === 'FileServicesName'||key === 'QueueServiceName'||key === 'TableServiceName'){
+              delete $[key]['enum']
+          }
+      }
+# change checkname availability operation id
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Storage/checkNameAvailability'].post.operationId
+    transform: return 'StorageAccountName_CheckAvailability'
 ```

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -13,8 +12,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 {
     public class BlobContainerTests: StorageTestBase
     {
-        private ResourceGroup curResourceGroup;
-        private StorageAccount curStorageAccount;
+        private ResourceGroup resourceGroup;
+        private StorageAccount storageAccount;
         private BlobServiceContainer blobServiceContainer;
         private BlobService blobService;
         private BlobContainerContainer blobContainerContainer;
@@ -22,28 +21,29 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
         }
         [SetUp]
-        public async Task createStorageAccountAndGetBlobService()
+        public async Task createStorageAccountAndGetBlobContainerContainer()
         {
-            curResourceGroup = await CreateResourceGroupAsync();
+            resourceGroup = await CreateResourceGroupAsync();
             string accountName = Recording.GenerateAssetName("storage");
-            StorageAccountContainer storageAccountContainer = curResourceGroup.GetStorageAccounts();
-            curStorageAccount = await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters());
-            blobServiceContainer = curStorageAccount.GetBlobServices();
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            StorageAccountCreateOperation accountCreateOperation = await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters());
+            storageAccount = await accountCreateOperation.WaitForCompletionAsync();
+            blobServiceContainer = storageAccount.GetBlobServices();
             blobService = await blobServiceContainer.GetAsync("default");
             blobContainerContainer = blobService.GetBlobContainers();
         }
         [TearDown]
         public async Task ClearStorageAccount()
         {
-            if (curResourceGroup != null)
+            if (resourceGroup != null)
             {
-                StorageAccountContainer storageAccountContainer = curResourceGroup.GetStorageAccounts();
+                StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
                 await foreach (StorageAccount account in storageAccountContainer.GetAllAsync())
                 {
                     await account.DeleteAsync();
                 }
-                curResourceGroup = null;
-                curStorageAccount = null;
+                resourceGroup = null;
+                storageAccount = null;
             }
         }
         [Test]
@@ -52,7 +52,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
             //create blob container
             string containerName = Recording.GenerateAssetName("testblob");
-            BlobContainer container1 = await blobContainerContainer.CreateOrUpdateAsync(containerName, new BlobContainerData());
+            BlobContainerCreateOperation blobContainerCreateOperation=await blobContainerContainer.CreateOrUpdateAsync(containerName, new BlobContainerData());
+            BlobContainer container1 = await blobContainerCreateOperation.WaitForCompletionAsync();
             Assert.IsNotNull(container1);
             Assert.AreEqual(container1.Id.Name, containerName);
 
@@ -68,40 +69,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.False(containerData.HasImmutabilityPolicy);
 
             //delete blob container
-            await container1.DeleteAsync();
-
-            //validate if deleted successfully
-            BlobContainer blobContainer3 = await blobContainerContainer.GetIfExistsAsync(containerName);
-            Assert.IsNull(blobContainer3);
-            Assert.IsFalse(await blobContainerContainer.CheckIfExistsAsync(containerName));
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task StartCreateDeleteBlobContainer()
-        {
-            //start create blob container and wait for complete
-            string containerName = Recording.GenerateAssetName("testblob");
-            BlobContainerCreateOperation containerCreateOp=await blobContainerContainer.StartCreateOrUpdateAsync(containerName, new BlobContainerData());
-            BlobContainer container1 = await containerCreateOp.WaitForCompletionAsync();
-            Assert.IsNotNull(container1);
-            Assert.AreEqual(container1.Id.Name, containerName);
-
-            //validate
-            BlobContainer container2 = await blobContainerContainer.GetAsync(containerName);
-            AssertBlobContainerEqual(container1, container2);
-            Assert.IsTrue(await blobContainerContainer.CheckIfExistsAsync(containerName));
-            Assert.IsFalse(await blobContainerContainer.CheckIfExistsAsync(containerName + "1"));
-            BlobContainerData containerData = container1.Data;
-            Assert.IsEmpty(containerData.Metadata);
-            Assert.IsFalse(containerData.HasLegalHold);
-            Assert.IsNull(containerData.PublicAccess);
-            Assert.False(containerData.HasImmutabilityPolicy);
-            Assert.False(containerData.HasLegalHold);
-
-            //delete blob container and wait for complete
-            BlobContainerDeleteOperation containerDeleteOp = await container1.StartDeleteAsync();
-            await containerDeleteOp.WaitForCompletionResponseAsync();
+            BlobContainerDeleteOperation blobContainerDeleteOperation = await container1.DeleteAsync();
+            await blobContainerDeleteOperation.WaitForCompletionResponseAsync();
 
             //validate if deleted successfully
             BlobContainer blobContainer3 = await blobContainerContainer.GetIfExistsAsync(containerName);
@@ -116,8 +85,10 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create two blob containers
             string containerName1 = Recording.GenerateAssetName("testblob1");
             string containerName2 = Recording.GenerateAssetName("testblob2");
-            BlobContainer container1 = await blobContainerContainer.CreateOrUpdateAsync(containerName1, new BlobContainerData());
-            BlobContainer container2 = await blobContainerContainer.CreateOrUpdateAsync(containerName2, new BlobContainerData());
+            BlobContainerCreateOperation blobContainerCreateOperation1 = await blobContainerContainer.CreateOrUpdateAsync(containerName1, new BlobContainerData());
+            BlobContainer container1 = await blobContainerCreateOperation1.WaitForCompletionAsync();
+            BlobContainerCreateOperation blobContainerCreateOperation2 = await blobContainerContainer.CreateOrUpdateAsync(containerName2, new BlobContainerData());
+            BlobContainer container2 = await blobContainerCreateOperation2.WaitForCompletionAsync();
 
             //validate if there are two containers
             BlobContainer container3 = null;
@@ -142,7 +113,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerData data = new BlobContainerData();
-            BlobContainer container =await blobContainerContainer.CreateOrUpdateAsync(containerName, data);
+            BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerContainer.CreateOrUpdateAsync(containerName, new BlobContainerData());
+            BlobContainer container = await blobContainerCreateOperation.WaitForCompletionAsync();
 
             //update metadata, public access
             BlobContainerData containerData = container.Data;
@@ -159,52 +131,6 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.False(container1.Data.HasImmutabilityPolicy);
         }
 
-        //[Test]
-        //[RecordedTest]
-        //public async Task CreateUpdateImmutabilityPolicy()
-        //{
-        //    // create a blob container
-        //    string containerName = Recording.GenerateAssetName("testblob");
-        //    BlobContainerData data = new BlobContainerData();
-        //    BlobContainer container = await blobContainerContainer.CreateOrUpdateAsync(containerName, data);
-
-        //    //create immutability policy
-        //    ImmutabilityPolicy immutabilityPolicyModel = new ImmutabilityPolicy() { ImmutabilityPeriodSinceCreationInDays = 3 };
-        //    ImmutabilityPolicy immutabilityPolicy = await container.CreateOrUpdateImmutabilityPolicyAsync(parameters: immutabilityPolicyModel);
-
-        //    //validate
-        //    Assert.NotNull(immutabilityPolicy.Id);
-        //    Assert.NotNull(immutabilityPolicy.Type);
-        //    Assert.NotNull(immutabilityPolicy.Name);
-        //    Assert.AreEqual(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
-        //    Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
-
-        //    //lock immutability policy
-        //    immutabilityPolicy = await container.LockImmutabilityPolicyAsync(ifMatch: immutabilityPolicy.Etag);
-
-        //    //validate
-        //    Assert.NotNull(immutabilityPolicy.Id);
-        //    Assert.NotNull(immutabilityPolicy.Type);
-        //    Assert.NotNull(immutabilityPolicy.Name);
-        //    Assert.AreEqual(3, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
-        //    Assert.AreEqual(ImmutabilityPolicyState.Locked, immutabilityPolicy.State);
-
-        //    //extend immutability policy
-        //    immutabilityPolicyModel.ImmutabilityPeriodSinceCreationInDays = 10;
-        //    immutabilityPolicy = await container.ExtendImmutabilityPolicyAsync(immutabilityPolicy.Etag, parameters: immutabilityPolicyModel);
-
-        //    //validate
-        //    Assert.NotNull(immutabilityPolicy.Id);
-        //    Assert.NotNull(immutabilityPolicy.Type);
-        //    Assert.NotNull(immutabilityPolicy.Name);
-        //    Assert.AreEqual(10, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
-        //    Assert.AreEqual(ImmutabilityPolicyState.Locked, immutabilityPolicy.State);
-        //    BlobContainer container1 =await blobContainerContainer.GetAsync(containerName);
-        //    Assert.AreEqual(container1.Data.ImmutabilityPolicy.UpdateHistory.Count,3);
-        //    Assert.AreEqual(ImmutabilityPolicyUpdateType.Put, container1.Data.ImmutabilityPolicy.UpdateHistory[0].Update);
-        //    Assert.AreEqual(ImmutabilityPolicyUpdateType.Lock, container1.Data.ImmutabilityPolicy.UpdateHistory[1].Update);
-        //    Assert.AreEqual(ImmutabilityPolicyUpdateType.Extend, container1.Data.ImmutabilityPolicy.UpdateHistory[2].Update);
-        //}
         [Test]
         [RecordedTest]
         public async Task CreateDeleteImmutabilityPolicy()
@@ -212,7 +138,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             // create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerData data = new BlobContainerData();
-            BlobContainer container = await blobContainerContainer.CreateOrUpdateAsync(containerName, data);
+            BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerContainer.CreateOrUpdateAsync(containerName, new BlobContainerData());
+            BlobContainer container = await blobContainerCreateOperation.WaitForCompletionAsync();
 
             //create immutability policy
             ImmutabilityPolicy immutabilityPolicyModel = new ImmutabilityPolicy() { ImmutabilityPeriodSinceCreationInDays = 3 };
@@ -242,7 +169,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             // create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerData data = new BlobContainerData();
-            BlobContainer container = await blobContainerContainer.CreateOrUpdateAsync(containerName, data);
+            BlobContainerCreateOperation blobContainerCreateOperation = await blobContainerContainer.CreateOrUpdateAsync(containerName, new BlobContainerData());
+            BlobContainer container = await blobContainerCreateOperation.WaitForCompletionAsync();
 
             //set legal hold
             LegalHold legalHoldModel = new LegalHold(new List<string> { "tag1", "tag2", "tag3" });
@@ -264,7 +192,6 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         public async Task UpdateBlobService()
         {
             //validate current file service properties
-            BlobService service1 = blobService;
             Assert.False(blobService.Data.DeleteRetentionPolicy.Enabled);
             Assert.Null(blobService.Data.DeleteRetentionPolicy.Days);
 

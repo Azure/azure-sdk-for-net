@@ -134,55 +134,19 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Deletes specified share under its account. </summary>
         /// <param name="xMsSnapshot"> Optional, used to delete a snapshot. </param>
         /// <param name="include"> Optional. Valid values are: snapshots, leased-snapshots, none. The default value is snapshots. For &apos;snapshots&apos;, the file share is deleted including all of its file share snapshots. If the file share contains leased-snapshots, the deletion fails. For &apos;leased-snapshots&apos;, the file share is deleted included all of its file share snapshots (leased/unleased). For &apos;none&apos;, the file share is deleted if it has no share snapshots. If the file share contains any snapshots (leased or unleased), the deletion fails. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteAsync(string xMsSnapshot = null, string include = null, CancellationToken cancellationToken = default)
+        public async virtual Task<FileShareDeleteOperation> DeleteAsync(string xMsSnapshot = null, string include = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FileShare.Delete");
-            scope.Start();
-            try
-            {
-                var operation = await StartDeleteAsync(xMsSnapshot, include, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes specified share under its account. </summary>
-        /// <param name="xMsSnapshot"> Optional, used to delete a snapshot. </param>
-        /// <param name="include"> Optional. Valid values are: snapshots, leased-snapshots, none. The default value is snapshots. For &apos;snapshots&apos;, the file share is deleted including all of its file share snapshots. If the file share contains leased-snapshots, the deletion fails. For &apos;leased-snapshots&apos;, the file share is deleted included all of its file share snapshots (leased/unleased). For &apos;none&apos;, the file share is deleted if it has no share snapshots. If the file share contains any snapshots (leased or unleased), the deletion fails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(string xMsSnapshot = null, string include = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("FileShare.Delete");
-            scope.Start();
-            try
-            {
-                var operation = StartDelete(xMsSnapshot, include, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes specified share under its account. </summary>
-        /// <param name="xMsSnapshot"> Optional, used to delete a snapshot. </param>
-        /// <param name="include"> Optional. Valid values are: snapshots, leased-snapshots, none. The default value is snapshots. For &apos;snapshots&apos;, the file share is deleted including all of its file share snapshots. If the file share contains leased-snapshots, the deletion fails. For &apos;leased-snapshots&apos;, the file share is deleted included all of its file share snapshots (leased/unleased). For &apos;none&apos;, the file share is deleted if it has no share snapshots. If the file share contains any snapshots (leased or unleased), the deletion fails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<FileShareDeleteOperation> StartDeleteAsync(string xMsSnapshot = null, string include = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("FileShare.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, xMsSnapshot, include, cancellationToken).ConfigureAwait(false);
-                return new FileShareDeleteOperation(response);
+                var operation = new FileShareDeleteOperation(response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -194,15 +158,19 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Deletes specified share under its account. </summary>
         /// <param name="xMsSnapshot"> Optional, used to delete a snapshot. </param>
         /// <param name="include"> Optional. Valid values are: snapshots, leased-snapshots, none. The default value is snapshots. For &apos;snapshots&apos;, the file share is deleted including all of its file share snapshots. If the file share contains leased-snapshots, the deletion fails. For &apos;leased-snapshots&apos;, the file share is deleted included all of its file share snapshots (leased/unleased). For &apos;none&apos;, the file share is deleted if it has no share snapshots. If the file share contains any snapshots (leased or unleased), the deletion fails. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual FileShareDeleteOperation StartDelete(string xMsSnapshot = null, string include = null, CancellationToken cancellationToken = default)
+        public virtual FileShareDeleteOperation Delete(string xMsSnapshot = null, string include = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FileShare.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("FileShare.Delete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, xMsSnapshot, include, cancellationToken);
-                return new FileShareDeleteOperation(response);
+                var operation = new FileShareDeleteOperation(response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

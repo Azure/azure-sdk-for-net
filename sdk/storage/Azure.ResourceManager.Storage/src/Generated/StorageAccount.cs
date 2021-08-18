@@ -133,51 +133,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Deletes a storage account in Microsoft Azure. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<StorageAccountDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("StorageAccount.Delete");
-            scope.Start();
-            try
-            {
-                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a storage account in Microsoft Azure. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.Delete");
-            scope.Start();
-            try
-            {
-                var operation = StartDelete(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a storage account in Microsoft Azure. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<StorageAccountDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new StorageAccountDeleteOperation(response);
+                var operation = new StorageAccountDeleteOperation(response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -187,15 +155,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Deletes a storage account in Microsoft Azure. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual StorageAccountDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual StorageAccountDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("StorageAccount.Delete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new StorageAccountDeleteOperation(response);
+                var operation = new StorageAccountDeleteOperation(response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -684,51 +656,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Failover request can be triggered for a storage account in case of availability issues. The failover occurs from the storage account&apos;s primary cluster to secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> FailoverAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<StorageAccountFailoverOperation> FailoverAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("StorageAccount.Failover");
-            scope.Start();
-            try
-            {
-                var operation = await StartFailoverAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Failover request can be triggered for a storage account in case of availability issues. The failover occurs from the storage account&apos;s primary cluster to secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Failover(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.Failover");
-            scope.Start();
-            try
-            {
-                var operation = StartFailover(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Failover request can be triggered for a storage account in case of availability issues. The failover occurs from the storage account&apos;s primary cluster to secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<StorageAccountFailoverOperation> StartFailoverAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.StartFailover");
             scope.Start();
             try
             {
                 var response = await _restClient.FailoverAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new StorageAccountFailoverOperation(_clientDiagnostics, Pipeline, _restClient.CreateFailoverRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new StorageAccountFailoverOperation(_clientDiagnostics, Pipeline, _restClient.CreateFailoverRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -738,15 +678,19 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Failover request can be triggered for a storage account in case of availability issues. The failover occurs from the storage account&apos;s primary cluster to secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual StorageAccountFailoverOperation StartFailover(CancellationToken cancellationToken = default)
+        public virtual StorageAccountFailoverOperation Failover(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.StartFailover");
+            using var scope = _clientDiagnostics.CreateScope("StorageAccount.Failover");
             scope.Start();
             try
             {
                 var response = _restClient.Failover(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new StorageAccountFailoverOperation(_clientDiagnostics, Pipeline, _restClient.CreateFailoverRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new StorageAccountFailoverOperation(_clientDiagnostics, Pipeline, _restClient.CreateFailoverRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -757,9 +701,10 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Restore blobs in the specified blob ranges. </summary>
         /// <param name="parameters"> The parameters to provide for restore blob ranges. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<BlobRestoreStatus>> RestoreBlobRangesAsync(BlobRestoreParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<StorageAccountRestoreBlobRangesOperation> RestoreBlobRangesAsync(BlobRestoreParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -767,61 +712,14 @@ namespace Azure.ResourceManager.Storage
             }
 
             using var scope = _clientDiagnostics.CreateScope("StorageAccount.RestoreBlobRanges");
-            scope.Start();
-            try
-            {
-                var operation = await StartRestoreBlobRangesAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Restore blobs in the specified blob ranges. </summary>
-        /// <param name="parameters"> The parameters to provide for restore blob ranges. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<BlobRestoreStatus> RestoreBlobRanges(BlobRestoreParameters parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.RestoreBlobRanges");
-            scope.Start();
-            try
-            {
-                var operation = StartRestoreBlobRanges(parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Restore blobs in the specified blob ranges. </summary>
-        /// <param name="parameters"> The parameters to provide for restore blob ranges. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<StorageAccountRestoreBlobRangesOperation> StartRestoreBlobRangesAsync(BlobRestoreParameters parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.StartRestoreBlobRanges");
             scope.Start();
             try
             {
                 var response = await _restClient.RestoreBlobRangesAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new StorageAccountRestoreBlobRangesOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestoreBlobRangesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new StorageAccountRestoreBlobRangesOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestoreBlobRangesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -832,21 +730,25 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Restore blobs in the specified blob ranges. </summary>
         /// <param name="parameters"> The parameters to provide for restore blob ranges. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual StorageAccountRestoreBlobRangesOperation StartRestoreBlobRanges(BlobRestoreParameters parameters, CancellationToken cancellationToken = default)
+        public virtual StorageAccountRestoreBlobRangesOperation RestoreBlobRanges(BlobRestoreParameters parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.StartRestoreBlobRanges");
+            using var scope = _clientDiagnostics.CreateScope("StorageAccount.RestoreBlobRanges");
             scope.Start();
             try
             {
                 var response = _restClient.RestoreBlobRanges(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return new StorageAccountRestoreBlobRangesOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestoreBlobRangesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var operation = new StorageAccountRestoreBlobRangesOperation(_clientDiagnostics, Pipeline, _restClient.CreateRestoreBlobRangesRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
