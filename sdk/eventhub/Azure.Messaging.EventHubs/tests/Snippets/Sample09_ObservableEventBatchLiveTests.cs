@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             {
                 await producer.CloseAsync();
             }
-            #endregion
+#endregion
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             {
                 await producer.CloseAsync();
             }
-            #endregion
+#endregion
         }
 
         /// <summary>
