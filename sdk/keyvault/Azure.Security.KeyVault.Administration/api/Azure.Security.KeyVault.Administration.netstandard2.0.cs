@@ -108,6 +108,7 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction DecryptHsmKey { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction DeleteHsmKey { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction DeleteRoleAssignment { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultDataAction DeleteRoleDefinition { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction DownloadHsmSecurityDomain { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction EncryptHsmKey { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction ExportHsmKey { get { throw null; } }
@@ -132,6 +133,7 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction WrapHsmKey { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction WriteHsmKey { get { throw null; } }
         public static Azure.Security.KeyVault.Administration.KeyVaultDataAction WriteRoleAssignment { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultDataAction WriteRoleDefinition { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Administration.KeyVaultDataAction other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
