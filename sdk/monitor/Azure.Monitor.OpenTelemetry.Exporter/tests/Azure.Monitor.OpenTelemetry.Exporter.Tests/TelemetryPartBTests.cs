@@ -110,5 +110,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             Assert.Equal(activity.GetStatus() != Status.Error, requestData.Success);
         }
+
+        [Theory]
+        [InlineData("mssql")]
+        [InlineData("redis")]
+        public void ValidateDBDependencyType(string dbSystem)
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+
+            activity.SetTag(SemanticConventions.AttributeDbSystem, dbSystem);
+            var remoteDependencyDataType = TelemetryPartB.GetRemoteDependencyData(activity).Type;
+            var expectedType = TelemetryPartB.SqlDbs.Contains(dbSystem) ? "SQL" : dbSystem;
+
+            Assert.Equal(expectedType, remoteDependencyDataType);
+        }
     }
 }

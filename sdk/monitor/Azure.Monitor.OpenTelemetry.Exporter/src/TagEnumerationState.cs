@@ -23,6 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             [SemanticConventions.AttributeHttpHostPort] = PartBType.Http,
             [SemanticConventions.AttributeHttpTarget] = PartBType.Http,
 
+            [SemanticConventions.AttributePeerService] = PartBType.Common,
             [SemanticConventions.AttributeNetPeerName] = PartBType.Common,
             [SemanticConventions.AttributeNetPeerIp] = PartBType.Common,
             [SemanticConventions.AttributeNetPeerPort] = PartBType.Common,
