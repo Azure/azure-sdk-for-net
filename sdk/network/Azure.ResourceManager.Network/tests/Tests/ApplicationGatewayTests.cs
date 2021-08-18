@@ -448,6 +448,134 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             return appGw;
         }
 
+        private ApplicationGatewayData CreateApplicationGatewayWithoutSsl(string location, Subnet subnet, string resourceGroupName, string appGwName, string subscriptionId, string[] ipAddresses)
+        {
+            string gatewayIPConfigName = Recording.GenerateAssetName("azsmnet");
+            string frontendIPConfigName = Recording.GenerateAssetName("azsmnet");
+            string frontendPort1Name = Recording.GenerateAssetName("azsmnet");
+            string backendAddressPoolName = Recording.GenerateAssetName("azsmnet");
+            string nicBackendAddressPoolName = Recording.GenerateAssetName("azsmnet");
+            string backendHttpSettings1Name = Recording.GenerateAssetName("azsmnet");
+            string requestRoutingRule1Name = Recording.GenerateAssetName("azsmnet");
+            string httpListener1Name = Recording.GenerateAssetName("azsmnet");
+
+            var appGw = new ApplicationGatewayData()
+            {
+                Location = location,
+                Sku = new ApplicationGatewaySku()
+                {
+                    Name = ApplicationGatewaySkuName.WAFMedium,
+                    Tier = ApplicationGatewayTier.WAF,
+                    Capacity = 2
+                },
+                GatewayIPConfigurations = {
+                    new ApplicationGatewayIPConfiguration()
+                    {
+                        Name = gatewayIPConfigName,
+                        Subnet = new SubResource()
+                        {
+                            Id = subnet.Id
+                        }
+                    }
+                },
+                FrontendIPConfigurations = {
+                    new ApplicationGatewayFrontendIPConfiguration()
+                    {
+                        Name = frontendIPConfigName,
+                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        Subnet = new SubResource()
+                        {
+                            Id = subnet.Id
+                        }
+                    }
+                },
+                FrontendPorts = {
+                    new ApplicationGatewayFrontendPort()
+                    {
+                        Name = frontendPort1Name,
+                        Port = 80
+                    }
+                },
+                Probes = {
+                },
+                BackendAddressPools = {
+                    new ApplicationGatewayBackendAddressPool()
+                    {
+                        Name = backendAddressPoolName,
+                        BackendAddresses = {
+                            new ApplicationGatewayBackendAddress()
+                            {
+                                IpAddress = ipAddresses[0]
+                            },
+                            new ApplicationGatewayBackendAddress()
+                            {
+                                IpAddress = ipAddresses[1]
+                            }
+                        }
+                    },
+                    new ApplicationGatewayBackendAddressPool()
+                    {
+                        Name = nicBackendAddressPoolName
+                    }
+                },
+                BackendHttpSettingsCollection = {
+                    new ApplicationGatewayBackendHttpSettings()
+                    {
+                        Name = backendHttpSettings1Name,
+                        Port = 80,
+                        Protocol = ApplicationGatewayProtocol.Http,
+                        CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled,
+                        RequestTimeout = 20,
+                    }
+                },
+                HttpListeners = {
+                    new ApplicationGatewayHttpListener()
+                    {
+                        Name = httpListener1Name,
+                        FrontendPort = new SubResource()
+                        {
+                            Id = GetChildAppGwResourceId(subscriptionId,
+                                resourceGroupName, appGwName, "frontendPorts", frontendPort1Name)
+                        },
+                        FrontendIPConfiguration = new SubResource()
+                        {
+                            Id = GetChildAppGwResourceId(subscriptionId,
+                                resourceGroupName, appGwName, "frontendIPConfigurations", frontendIPConfigName)
+                        },
+                        SslCertificate = null,
+                        Protocol = ApplicationGatewayProtocol.Http
+                    }
+                },
+                UrlPathMaps = {
+                },
+                RequestRoutingRules = {
+                    new ApplicationGatewayRequestRoutingRule()
+                    {
+                        Name = requestRoutingRule1Name,
+                        RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
+                        HttpListener = new SubResource()
+                        {
+                            Id = GetChildAppGwResourceId(subscriptionId,
+                                resourceGroupName, appGwName, "httpListeners", httpListener1Name)
+                        },
+                        BackendAddressPool = new SubResource()
+                        {
+                            Id = GetChildAppGwResourceId(subscriptionId,
+                                resourceGroupName, appGwName, "backendAddressPools", backendAddressPoolName)
+                        },
+                        BackendHttpSettings = new SubResource()
+                        {
+                            Id = GetChildAppGwResourceId(subscriptionId,
+                                resourceGroupName, appGwName, "backendHttpSettingsCollection", backendHttpSettings1Name)
+                        }
+                    }
+                },
+                RedirectConfigurations = {
+                },
+            };
+            return appGw;
+        }
+
         private void CompareApplicationGateway(ApplicationGatewayData gw1, ApplicationGatewayData gw2)
         {
             // compare count of child resources
@@ -508,6 +636,57 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(gw1.SslPolicy.MinProtocolVersion, gw2.SslPolicy.MinProtocolVersion);
         }
 
+        private void CompareApplicationGatewayWithoutSsl(ApplicationGatewayData gw1, ApplicationGatewayData gw2)
+        {
+            // compare count of child resources
+            Assert.AreEqual(gw1.GatewayIPConfigurations.Count, gw2.GatewayIPConfigurations.Count);
+            Assert.AreEqual(gw1.FrontendIPConfigurations.Count, gw2.FrontendIPConfigurations.Count);
+            Assert.AreEqual(gw1.FrontendPorts.Count, gw2.FrontendPorts.Count);
+            Assert.AreEqual(gw1.Probes.Count, gw2.Probes.Count);
+            Assert.AreEqual(gw1.BackendAddressPools.Count, gw2.BackendAddressPools.Count);
+            Assert.AreEqual(gw1.BackendHttpSettingsCollection.Count, gw2.BackendHttpSettingsCollection.Count);
+            Assert.AreEqual(gw1.HttpListeners.Count, gw2.HttpListeners.Count);
+            Assert.AreEqual(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);
+            Assert.AreEqual(gw1.RedirectConfigurations.Count, gw2.RedirectConfigurations.Count);
+            Assert.AreEqual(gw1.AuthenticationCertificates.Count, gw2.AuthenticationCertificates.Count);
+
+            // compare sku
+            Assert.AreEqual(gw1.Sku.Name, gw2.Sku.Name);
+            Assert.AreEqual(gw1.Sku.Tier, gw2.Sku.Tier);
+            Assert.AreEqual(gw1.Sku.Capacity, gw2.Sku.Capacity);
+
+            // compare connectionDraining
+            for (int i = 0; i < gw1.BackendHttpSettingsCollection.Count; i++)
+            {
+                if (gw1.BackendHttpSettingsCollection[i].ConnectionDraining != null)
+                {
+                    Assert.NotNull(gw2.BackendHttpSettingsCollection[i].ConnectionDraining);
+                    Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled);
+                    Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSec, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSec);
+                }
+                else
+                {
+                    Assert.Null(gw2.BackendHttpSettingsCollection[i].ConnectionDraining);
+                }
+            }
+
+            //compare WAF
+            if (gw1.WebApplicationFirewallConfiguration != null)
+            {
+                Assert.NotNull(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups);
+                Assert.AreEqual(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count, gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count);
+                for (int i = 0; i < gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count; i++)
+                {
+                    Assert.AreEqual(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].RuleGroupName, gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].RuleGroupName);
+                    Assert.AreEqual(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].Rules, gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].Rules);
+                }
+            }
+
+            // ssl policy
+            Assert.IsNull(gw1.SslPolicy);
+            Assert.IsNull(gw2.SslPolicy);
+        }
+
         [Test]
         [Ignore("Track2: SSL is missing, and there is no explicit SSL creation in the test.")]
         public async Task ApplicationGatewayApiTest()
@@ -534,7 +713,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroup);
             var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
-            await putVnetResponseOperation.WaitForCompletionAsync();;
+            await putVnetResponseOperation.WaitForCompletionAsync();
             Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
             Response<Subnet> getSubnetResponse = await getVnetResponse.Value.GetSubnets().GetAsync(gwSubnetName);
             Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Value.Data.Id);
@@ -545,7 +724,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Put AppGw
             var applicationGatewayContainer = GetApplicationGatewayContainer(resourceGroupName);
             Operation<ApplicationGateway> putAppGw = await applicationGatewayContainer.StartCreateOrUpdateAsync(appGwName, appGw);
-            Response<ApplicationGateway> putAppGwResponse = await putAppGw.WaitForCompletionAsync();;
+            Response<ApplicationGateway> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
 
             // Get AppGw
@@ -607,19 +786,117 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Put Nics
             var networkInterfaceContainer = GetNetworkInterfaceContainer(resourceGroupName);
             var createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Result.Data);
-            await createOrUpdateOperation1.WaitForCompletionAsync();;
+            await createOrUpdateOperation1.WaitForCompletionAsync();
 
             var createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Result.Data);
-            await createOrUpdateOperation2.WaitForCompletionAsync();;
+            await createOrUpdateOperation2.WaitForCompletionAsync();
 
             // Get AppGw backend health
             Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.StartBackendHealthAsync("true");
-            Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();;
+            Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();
 
             Assert.AreEqual(2, backendHealth.Value.BackendAddressPools.Count);
             Assert.AreEqual(1, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection.Count);
             Assert.AreEqual(1, backendHealth.Value.BackendAddressPools[1].BackendHttpSettingsCollection.Count);
             Assert.True(backendHealth.Value.BackendAddressPools[1].BackendAddressPool.BackendIPConfigurations.Any());
+
+            //Start AppGw
+            await getGateway.Value.StartStartAsync();
+
+            // Get AppGw and make sure nics are added to backend
+            getGateway = await applicationGatewayContainer.GetAsync(appGwName);
+            Assert.AreEqual(2, getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count);
+
+            //Stop AppGw
+            await getGateway.Value.StartStopAsync();
+
+            // Delete AppGw
+            await getGateway.Value.StartDeleteAsync();
+        }
+
+        [Test]
+        public async Task AppGatewayBackendHealthCheckTest()
+        {
+            string resourceGroupName = Recording.GenerateAssetName("csmrg");
+            string location = "westus2";
+            var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
+
+            //create vnet
+            string vnetName = Recording.GenerateAssetName("azsmnet");
+            string AGSubnetName = Recording.GenerateAssetName("azsmnet");
+            string BackendSubnetName = Recording.GenerateAssetName("azsmnet");
+
+            var vnetdata = new VirtualNetworkData()
+            {
+                Location = location,
+                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.21.0.0/16", } },
+                DhcpOptions = new DhcpOptions() { DnsServers = { "10.21.1.1", "10.21.2.4" } },
+                Subnets = {
+                        new SubnetData() { Name = BackendSubnetName, AddressPrefix = "10.21.1.0/24" },
+                        new SubnetData() { Name = AGSubnetName, AddressPrefix = "10.21.0.0/24" }
+                    }
+            };
+            var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroup);
+            var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnetdata);
+            var vnet = await putVnetResponseOperation.WaitForCompletionAsync();
+
+            //create VMs
+            string virtualMachineName1 = Recording.GenerateAssetName("azsmnet");
+            string virtualMachineName2 = Recording.GenerateAssetName("azsmnet");
+            string nicName1 = Recording.GenerateAssetName("azsmnet");
+            string nicName2 = Recording.GenerateAssetName("azsmnet");
+
+            //VMs and AppGateway use same vnet, different subnet
+            var vm1 = await CreateLinuxVM(virtualMachineName1, nicName1, location, resourceGroup, vnet);
+            var vm2 = await CreateLinuxVM(virtualMachineName2, nicName2, location, resourceGroup, vnet);
+
+            //associate VMs's nic with application gateway
+            var nicPrivateIpAdd1 = GetNetworkInterfaceContainer(resourceGroup).GetAsync(nicName1).Result.Value.Data.IpConfigurations.FirstOrDefault().PrivateIPAddress;
+            var nicPrivateIpAdd2 = GetNetworkInterfaceContainer(resourceGroup).GetAsync(nicName2).Result.Value.Data.IpConfigurations.FirstOrDefault().PrivateIPAddress;
+            string[] ipAddresses = new string[2] { nicPrivateIpAdd1, nicPrivateIpAdd2 };
+
+            //create ApplicationGateway
+            string appGwName = Recording.GenerateAssetName("azsmnet");
+            Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
+            Response<Subnet> getSubnetResponse = await getVnetResponse.Value.GetSubnets().GetAsync(AGSubnetName);
+            Response<Subnet> agSubnet = getSubnetResponse;
+
+            ApplicationGatewayData appGw = CreateApplicationGatewayWithoutSsl(location, agSubnet, resourceGroupName, appGwName, TestEnvironment.SubscriptionId, ipAddresses);
+
+            // Put AppGw
+            var applicationGatewayContainer = GetApplicationGatewayContainer(resourceGroup);
+            Operation<ApplicationGateway> putAppGw = await applicationGatewayContainer.StartCreateOrUpdateAsync(appGwName, appGw);
+            Response<ApplicationGateway> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
+            Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
+
+            // Get AppGw
+            Response<ApplicationGateway> getGateway = await applicationGatewayContainer.GetAsync(appGwName);
+            Assert.AreEqual(appGwName, getGateway.Value.Data.Name);
+            CompareApplicationGatewayWithoutSsl(appGw, getGateway.Value.Data);
+
+            // Add NIC to application gateway backend address pool.
+            var nic1 = GetNetworkInterfaceContainer(resourceGroup).GetAsync(nicName1);
+            var nic2 = GetNetworkInterfaceContainer(resourceGroup).GetAsync(nicName2);
+            Assert.NotNull(nic1);
+            Assert.NotNull(nic2);
+            nic1.Result.Value.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
+            nic2.Result.Value.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
+
+            // Put Nics
+            var networkInterfaceContainer = GetNetworkInterfaceContainer(resourceGroup);
+            var createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName1, nic1.Result.Value.Data);
+            await createOrUpdateOperation1.WaitForCompletionAsync();
+
+            var createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName2, nic2.Result.Value.Data);
+            await createOrUpdateOperation2.WaitForCompletionAsync();
+
+            // Get AppGw backend health
+            Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.StartBackendHealthAsync("true");
+            Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();
+
+            Assert.AreEqual(2, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers.Count);
+            Assert.AreEqual(nicPrivateIpAdd1, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers[0].Address);
+            Assert.AreEqual(nicPrivateIpAdd2, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers[1].Address);
 
             //Start AppGw
             await getGateway.Value.StartStartAsync();
