@@ -40,7 +40,7 @@ namespace Azure.AI.Translation.Document.Tests
             var documentFormats = await client.GetSupportedDocumentFormatsAsync();
 
             Assert.GreaterOrEqual(documentFormats.Value.Count, 0);
-            foreach (FileFormat fileFormat in documentFormats.Value)
+            foreach (DocumentTranslationFileFormat fileFormat in documentFormats.Value)
             {
                 Assert.IsFalse(string.IsNullOrEmpty(fileFormat.Format));
                 Assert.IsNotNull(fileFormat.FileExtensions);
@@ -58,7 +58,7 @@ namespace Azure.AI.Translation.Document.Tests
             var glossaryFormats = await client.GetSupportedGlossaryFormatsAsync();
 
             Assert.GreaterOrEqual(glossaryFormats.Value.Count, 0);
-            foreach (FileFormat glossaryFormat in glossaryFormats.Value)
+            foreach (DocumentTranslationFileFormat glossaryFormat in glossaryFormats.Value)
             {
                 Assert.IsFalse(string.IsNullOrEmpty(glossaryFormat.Format));
                 Assert.IsNotNull(glossaryFormat.FileExtensions);
