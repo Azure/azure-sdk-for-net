@@ -50,6 +50,13 @@
       CA2000; <!-- Call dispose on IDisposable objects -->
       CA2012; <!-- ValueTask should only be awaited once - conflicts with EnsureCompleted check -->
     </NoWarn>
+    <!--
+      
+    -->
+    <NoWarn>
+      $(NoWarn);
+      MSB3245;
+    </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
