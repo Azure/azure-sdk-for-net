@@ -10,6 +10,7 @@ using Azure.Core.TestFramework;
 using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Sas;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.Data.Tables.Tests
 {
@@ -1329,6 +1330,23 @@ namespace Azure.Data.Tables.Tests
                 ex = Assert.ThrowsAsync<TableTransactionFailedException>(() => client.SubmitTransactionAsync(batch));
                 Assert.That(ex.Message, Does.Contain("The batch request operation exceeds the maximum 100 changes per change set"));
             }
+        }
+
+        [RecordedTest]
+        public async Task IgnoresPropertiesWithIgnoreDataMember()
+        {
+            var entity = new CustomizeSerializationEntity { PartitionKey = "partition", RowKey = "1", CurrentCount = 10, LastCount = 5, NamedProperty = "foo"};
+
+            Assert.NotZero(entity.CountDiff);
+
+            await client.AddEntityAsync(entity);
+
+            TableEntity retrievedEntity = await client.GetEntityAsync<TableEntity>(entity.PartitionKey, entity.RowKey);
+
+            Assert.IsFalse(retrievedEntity.TryGetValue("CountDiff", out var diffVal));
+            Assert.IsFalse(retrievedEntity.TryGetValue("NamedProperty", out var namedPropValue));
+            Assert.IsTrue(retrievedEntity.TryGetValue("renamed_property", out namedPropValue));
+            Assert.AreEqual("foo", namedPropValue);
         }
     }
 }

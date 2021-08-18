@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 
@@ -104,7 +105,11 @@ namespace Azure.Core.Pipeline
                 return null;
             }
 
-            Uri location = new Uri(locationString);
+            if (!TryParseValue(locationString, out Uri? location))
+            {
+                return null;
+            }
+
             Uri requestUri = request.Uri.ToUri();
             // Ensure the redirect location is an absolute URI.
             if (!location.IsAbsoluteUri)
@@ -167,6 +172,78 @@ namespace Azure.Core.Pipeline
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
+        }
+
+        private static bool TryParseValue([NotNullWhen(true)] string? value, [NotNullWhen(true)] out Uri? parsedValue)
+        {
+            parsedValue = null;
+
+            // Some headers support empty/null values. This one doesn't.
+            if (string.IsNullOrEmpty(value))
+            {
+                return false;
+            }
+
+            string uriString = value!;
+            if (!Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out Uri? uri))
+            {
+                // Some servers send the host names in Utf-8.
+                uriString = DecodeUtf8FromString(uriString);
+
+                if (!Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out uri))
+                {
+                    return false;
+                }
+            }
+
+            parsedValue = uri;
+            return true;
+        }
+
+        // The normal client header parser just casts bytes to chars (see GetString).
+        // Check if those bytes were actually utf-8 instead of ASCII.
+        // If not, just return the input value.
+        private static string DecodeUtf8FromString(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return input;
+            }
+
+            bool possibleUtf8 = false;
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] > (char)255)
+                {
+                    return input; // This couldn't have come from the wire, someone assigned it directly.
+                }
+                else if (input[i] > (char)127)
+                {
+                    possibleUtf8 = true;
+                    break;
+                }
+            }
+            if (possibleUtf8)
+            {
+                byte[] rawBytes = new byte[input.Length];
+                for (int i = 0; i < input.Length; i++)
+                {
+                    if (input[i] > (char)255)
+                    {
+                        return input; // This couldn't have come from the wire, someone assigned it directly.
+                    }
+                    rawBytes[i] = (byte)input[i];
+                }
+                try
+                {
+                    // We don't want '?' replacement characters, just fail.
+                    System.Text.Encoding decoder = System.Text.Encoding.GetEncoding("utf-8", System.Text.EncoderFallback.ExceptionFallback,
+                        System.Text.DecoderFallback.ExceptionFallback);
+                    return decoder.GetString(rawBytes, 0, rawBytes.Length);
+                }
+                catch (ArgumentException) { } // Not actually Utf-8
+            }
+            return input;
         }
     }
 }

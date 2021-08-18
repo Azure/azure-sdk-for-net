@@ -2,9 +2,9 @@ parameters:
   - name: Daily
     type: boolean
     default: true
-  - name: Artifacts
+  - name: Artifact
     type: object
-    default: []
+    default: {}
   - name: ArtifactName
     type: string
     default: ""
@@ -21,19 +21,18 @@ jobs:
       displayName: Check Smoke Test Eligibility
       steps:
         # pipelines only supports template each when it generates the entire script block.
-        - ${{ each artifact in parameters.Artifacts }}:
-          - ${{ if and(ne(variables['Skip.Release'], 'true'), ne(artifact.skipPublishPackage, 'true')) }}:
-            - pwsh: |
-                $deps = (Select-Xml -Path ./common/SmokeTests/SmokeTest/SmokeTest.csproj `
-                                    -Xpath //ItemGroup/PackageReference/@Include).Node.Value
-                if ($deps.Contains("${{ artifact.name }}")) {
-                  Write-Host "Smoke tests will run for ${{ artifact.name }}"
-                  Write-Host "##vso[task.setvariable variable=RunSmokeTests]true"
-                } else {
-                  Write-Host "Smoke tests will NOT run for ${{ artifact.name }}"
-                }
-              name: check_smoke_tests_${{ artifact.safeName }}
-              displayName: Check smoke test eligibility for ${{ artifact.name }}
+        - ${{ if and(ne(variables['Skip.Release'], 'true'), ne(parameters.Artifact.skipPublishPackage, 'true')) }}:
+          - pwsh: |
+              $deps = (Select-Xml -Path ./common/SmokeTests/SmokeTest/SmokeTest.csproj `
+                                  -Xpath //ItemGroup/PackageReference/@Include).Node.Value
+              if ($deps.Contains("${{ parameters.Artifact.name }}")) {
+                Write-Host "Smoke tests will run for ${{ parameters.Artifact.name }}"
+                Write-Host "##vso[task.setvariable variable=RunSmokeTests]true"
+              } else {
+                Write-Host "Smoke tests will NOT run for ${{ parameters.Artifact.name }}"
+              }
+            name: check_smoke_tests_${{ parameters.Artifact.safeName }}
+            displayName: Check smoke test eligibility for ${{ parameters.Artifact.name }}
         - pwsh: |
             Write-Host "Setting RunSmokeTests to ${env:RunSmokeTests}"
             Write-Host "##vso[task.setvariable variable=RunSmokeTests;isOutput=true]${env:RunSmokeTests}"
@@ -42,6 +41,7 @@ jobs:
             RunSmokeTests: $(RunSmokeTests)
 
   - job: SmokeTest
+    displayName: Run Smoke Test
     ${{ if eq(parameters.Daily, false) }}:
       dependsOn: smoke_test_eligibility
       condition: and(succeeded(), eq(dependencies.smoke_test_eligibility.outputs['output_eligibility.RunSmokeTests'], true))
