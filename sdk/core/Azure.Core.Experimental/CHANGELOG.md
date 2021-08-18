@@ -1,15 +1,10 @@
 # Release History
 
-## 0.1.0-preview.15 (Unreleased)
+## 0.1.0-preview.15 (2021-08-18)
 
 ### Features Added
 
-### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
-
+- Added support for per call response classification.
 
 ## 0.1.0-preview.14 (2021-06-30)
 
