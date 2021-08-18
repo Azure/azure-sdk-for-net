@@ -553,7 +553,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public void HttpDependencyTargetIsSetUsingHttpUrl(string port)
         {
             var PartBTags = AzMonList.Initialize();
-            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpUrl, $"http://www.wiki.com:{port}/"));
+            if (port == "80")
+            {
+                AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpUrl, $"http://www.wiki.com:{port}/"));
+            }
+            else
+            {
+                AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpUrl, $"https://www.wiki.com:{port}/"));
+            }
             string expectedTarget;
             if (port == "80" || port == "443")
             {

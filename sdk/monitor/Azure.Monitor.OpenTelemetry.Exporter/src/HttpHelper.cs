@@ -351,14 +351,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var httpUrl = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeHttpUrl)?.ToString();
                 if (!string.IsNullOrEmpty(httpUrl) && Uri.TryCreate(httpUrl.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
                 {
-                    target = uri.Host;
+                    target = uri.Authority;
                     if (!string.IsNullOrEmpty(target))
                     {
-                        var port = uri.Port;
-                        if (port != 80 && port != 443 && port != -1)
-                        {
-                            target = $"{target}:{port}";
-                        }
                         return target;
                     }
                 }
