@@ -106,7 +106,8 @@ namespace Azure.Core.Pipeline
 
             return new HttpPipeline(options.Transport,
                 policies.ToArray(),
-                responseClassifier);
+                responseClassifier,
+                new ResponseExceptionFactory(options));
         }
 
         // internal for testing

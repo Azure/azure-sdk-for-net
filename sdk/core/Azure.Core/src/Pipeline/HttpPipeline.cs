@@ -26,9 +26,15 @@ namespace Azure.Core.Pipeline
         /// <param name="policies">Policies to be invoked as part of the pipeline in order.</param>
         /// <param name="responseClassifier">The response classifier to be used in invocations.</param>
         public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
+            : this(transport, policies, responseClassifier, null)
+        {
+        }
+
+        internal HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null, ResponseExceptionFactory? exceptionFactory = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             ResponseClassifier = responseClassifier ?? new ResponseClassifier();
+            ExceptionFactory = exceptionFactory ?? new ResponseExceptionFactory(new DefaultClientOptions());
 
             policies = policies ?? Array.Empty<HttpPipelinePolicy>();
 
@@ -60,6 +66,8 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public ResponseClassifier ResponseClassifier { get; }
 
+        internal ResponseExceptionFactory ExceptionFactory { get; }
+
         /// <summary>
         /// Invokes the pipeline asynchronously. After the task completes response would be set to the <see cref="HttpMessage.Response"/> property.
         /// </summary>
@@ -71,7 +79,8 @@ namespace Azure.Core.Pipeline
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
             var value = _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
-            message.Response.ResponseClassifier = this.ResponseClassifier;
+            message.Response.ResponseClassifier = ResponseClassifier;
+            message.Response.ExceptionFactory = ExceptionFactory;
             return value;
         }
 
@@ -85,6 +94,8 @@ namespace Azure.Core.Pipeline
             message.CancellationToken = cancellationToken;
             AddHttpMessageProperties(message);
             _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+            message.Response.ResponseClassifier = ResponseClassifier;
+            message.Response.ExceptionFactory = ExceptionFactory;
         }
         /// <summary>
         /// Invokes the pipeline asynchronously with the provided request.

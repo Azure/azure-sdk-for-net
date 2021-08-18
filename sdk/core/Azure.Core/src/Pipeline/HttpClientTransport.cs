@@ -53,10 +53,6 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
-        internal ClientOptions? ClientOptions { get; set; }
-
-        internal ResponseClassifier? ResponseClassifier { get; set; }
-
         /// <inheritdoc />
         public sealed override Request CreateRequest()
             => new PipelineRequest();
@@ -133,7 +129,7 @@ namespace Azure.Core.Pipeline
                 throw new RequestFailedException(e.Message, e);
             }
 
-            message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream, this.ClientOptions!, this.ResponseClassifier!);
+            message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
         }
 
         private static HttpClient CreateDefaultClient()
@@ -504,11 +500,9 @@ namespace Azure.Core.Pipeline
             private Stream? _contentStream;
 #pragma warning restore CA2213
 
-            public PipelineResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream, ClientOptions options, ResponseClassifier classifier)
+            public PipelineResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream)
             {
                 ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
-                ExceptionFactory = new ResponseExceptionFactory(options);
-                ResponseClassifier = classifier;
                 _responseMessage = responseMessage ?? throw new ArgumentNullException(nameof(responseMessage));
                 _contentStream = contentStream;
                 _responseContent = _responseMessage.Content;
@@ -532,9 +526,9 @@ namespace Azure.Core.Pipeline
 
             public override string ClientRequestId { get; set; }
 
-            internal override ResponseExceptionFactory ExceptionFactory { get; }
+            internal override ResponseExceptionFactory? ExceptionFactory { get; set; }
 
-            internal override ResponseClassifier ResponseClassifier { get; }
+            internal override ResponseClassifier? ResponseClassifier { get; set; }
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseContent, name, out value);
 

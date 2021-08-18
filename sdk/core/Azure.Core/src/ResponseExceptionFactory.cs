@@ -10,14 +10,20 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
+#nullable enable
+
 namespace Azure.Core.Pipeline
 {
-    internal class ResponseExceptionFactory
+    /// <summary>
+    /// </summary>
+    public class ResponseExceptionFactory
     {
         private const string DefaultMessage = "Service request failed.";
 
         private readonly HttpMessageSanitizer _sanitizer;
 
+        /// <summary>
+        /// </summary>
         public ResponseExceptionFactory(ClientOptions options)
         {
             _sanitizer = new HttpMessageSanitizer(
@@ -25,6 +31,8 @@ namespace Azure.Core.Pipeline
                 options.Diagnostics.LoggedHeaderNames.ToArray());
         }
 
+        /// <summary>
+        /// </summary>
         public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
             var content = await ReadContentAsync(response, true).ConfigureAwait(false);
@@ -32,6 +40,8 @@ namespace Azure.Core.Pipeline
             return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
         }
 
+        /// <summary>
+        /// </summary>
         public RequestFailedException CreateRequestFailedException(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
             string? content = ReadContentAsync(response, false).EnsureCompleted();
