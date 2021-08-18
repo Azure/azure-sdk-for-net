@@ -48,7 +48,7 @@ DocumentTranslationOperation operation = await client.StartTranslationAsync(inpu
 
 await operation.WaitForCompletionAsync();
 
-await foreach (DocumentStatus document in operation.GetValuesAsync())
+await foreach (DocumentStatusResult document in operation.GetValuesAsync())
 {
     Console.WriteLine($"Document with Id: {document.Id}");
     Console.WriteLine($"  Status:{document.Status}");
