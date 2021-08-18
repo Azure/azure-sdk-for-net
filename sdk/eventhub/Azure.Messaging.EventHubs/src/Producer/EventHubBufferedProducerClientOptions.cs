@@ -2,10 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+<<<<<<< HEAD
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
+=======
+using System.ComponentModel;
+using Azure.Core;
+>>>>>>> 88750fe801 (Adding skeleton files)
 
 namespace Azure.Messaging.EventHubs.Producer
 {
@@ -14,6 +19,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   to configure its behavior.
     /// </summary>
     ///
+<<<<<<< HEAD
     internal class EventHubBufferedProducerClientOptions
     {
         /// <summary> The number of batches that may be sent concurrently to each partition. </summary>
@@ -25,6 +31,10 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
         private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
+=======
+    public class EventHubBufferedProducerClientOptions : EventHubProducerClientOptions
+    {
+>>>>>>> 88750fe801 (Adding skeleton files)
         /// <summary>
         ///   The amount of time to wait for a new event to be added to the buffer before sending a partially
         ///   full batch.
@@ -46,7 +56,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The default limit is 2,500 queued events.
         /// </value>
         ///
+<<<<<<< HEAD
         public int MaximumEventBufferLength { get; set; } = 2500;
+=======
+        public int MaximumBufferedEventCount { get; set; } = 2500;
+>>>>>>> 88750fe801 (Adding skeleton files)
 
         /// <summary>
         ///    Indicates whether or not events should be published using idempotent semantics for retries. If enabled, retries during publishing
@@ -79,8 +93,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   must be maintained, <see cref="MaximumConcurrentSendsPerPartition" /> should not exceed 1.
         /// </remarks>
         ///
+<<<<<<< HEAD
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is not between 1 and 100 (inclusive).</exception>
         ///
+=======
+>>>>>>> 88750fe801 (Adding skeleton files)
         public int MaximumConcurrentSendsPerPartition
         {
             get => _maximumConcurrentSendsPerPartition;
@@ -91,6 +108,7 @@ namespace Azure.Messaging.EventHubs.Producer
             }
         }
 
+<<<<<<< HEAD
         /// <summary>
         ///   A unique name used to identify the consumer.  If <c>null</c> or empty, a GUID will be used as the
         ///   identifier.
@@ -127,6 +145,10 @@ namespace Azure.Messaging.EventHubs.Producer
                 _retryOptions = value;
             }
         }
+=======
+        /// <summary> The number of batches that may be sent concurrently to each partition. </summary>
+        private int _maximumConcurrentSendsPerPartition = 1;
+>>>>>>> 88750fe801 (Adding skeleton files)
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -156,6 +178,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+<<<<<<< HEAD
 
         /// <summary>
         ///   Creates a new copy of the current <see cref="EventHubBufferedProducerClientOptions" />, cloning its attributes into a new instance.
@@ -201,5 +224,7 @@ namespace Azure.Messaging.EventHubs.Producer
             };
             return translatedOptions;
         }
+=======
+>>>>>>> 88750fe801 (Adding skeleton files)
     }
 }
