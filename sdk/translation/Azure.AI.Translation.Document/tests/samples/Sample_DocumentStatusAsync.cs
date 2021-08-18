@@ -45,7 +45,7 @@ namespace Azure.AI.Translation.Document.Samples
             {
                 await operation.UpdateStatusAsync();
 
-                AsyncPageable<DocumentStatus> documentsStatus = operation.GetAllDocumentStatusesAsync();
+                AsyncPageable<DocumentStatus> documentsStatus = operation.GetDocumentStatusesAsync();
                 await foreach (DocumentStatus docStatus in documentsStatus)
                 {
                     if (documentscompleted.Contains(docStatus.Id))

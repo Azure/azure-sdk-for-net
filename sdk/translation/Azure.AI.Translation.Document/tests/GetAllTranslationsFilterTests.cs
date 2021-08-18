@@ -46,7 +46,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesFilterByStatusTest()
+        public async Task GetTranslationStatusesFilterByStatusTest()
         {
             // create client
             var client = GetClient();
@@ -64,7 +64,7 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 Statuses = { cancelledStatusList[0], cancelledStatusList[1] }
             };
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
+            var filteredTranslations = await client.GetTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
             var filteredIds = filteredTranslations.Select(t => t.Id).ToList();
 
             // assert
@@ -73,7 +73,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesFilterByIdsTest()
+        public async Task GetTranslationStatusesFilterByIdsTest()
         {
             // create client
             var client = GetClient();
@@ -87,14 +87,14 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 Ids = { targetIds[0] }
             };
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
+            var filteredTranslations = await client.GetTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
 
             // assert
             Assert.That(filteredTranslations.Any(t => targetIds.Contains(t.Id)));
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesFilterByCreatedAfterTest()
+        public async Task GetTranslationStatusesFilterByCreatedAfterTest()
         {
             // create client
             var client = GetClient();
@@ -109,7 +109,7 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 CreatedAfter = timestamp
             };
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
+            var filteredTranslations = await client.GetTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
 
             // assert
             Assert.That(filteredTranslations.Any(t => targetIds.Contains(t.Id)));
@@ -117,7 +117,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesFilterByCreatedBeforeTest()
+        public async Task GetTranslationStatusesFilterByCreatedBeforeTest()
         {
             // create client
             var client = GetClient();
@@ -132,7 +132,7 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 CreatedBefore = timestamp
             };
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
+            var filteredTranslations = await client.GetTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
 
             // assert
             Assert.That(filteredTranslations.Any(t => targetIds.Contains(t.Id)));
@@ -140,7 +140,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesOrderByCreatedOnTest()
+        public async Task GetTranslationStatusesOrderByCreatedOnTest()
         {
             // create client
             var client = GetClient();
@@ -153,7 +153,7 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 OrderBy = { new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, asc: false) }
             };
-            var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
+            var filteredTranslations = await client.GetTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
 
             // assert
             var timestamp = Recording.UtcNow;
