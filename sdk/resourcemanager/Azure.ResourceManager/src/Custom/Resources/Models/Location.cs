@@ -7,12 +7,14 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary>
     /// Represents an Azure geography region where supported resource providers live.
     /// </summary>
+    [PropertyReferenceType]
     public partial class Location : IEquatable<Location>, IComparable<Location>
     {
         #region Public Cloud Locations

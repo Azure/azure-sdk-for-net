@@ -15,6 +15,7 @@ namespace Azure.ResourceManager
     /// <summary>
     /// An Azure Resource Manager resource identifier.
     /// </summary>
+    [PropertyReferenceType]
     public class ResourceIdentifier : IEquatable<ResourceIdentifier>, IComparable<ResourceIdentifier>
     {
         private const string RootStringValue = "/";

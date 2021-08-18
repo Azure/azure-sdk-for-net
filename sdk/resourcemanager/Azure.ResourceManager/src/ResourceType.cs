@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager
 {
     /// <summary>
     /// Structure representing a resource type.
     /// </summary>
+    [PropertyReferenceType]
     public sealed class ResourceType : IEquatable<ResourceType>, IComparable<ResourceType>
     {
         /// <summary>
