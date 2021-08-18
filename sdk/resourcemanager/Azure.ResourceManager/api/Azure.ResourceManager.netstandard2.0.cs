@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ErrorAdditionalInfo
     {
-        internal ErrorAdditionalInfo() { }
+        public ErrorAdditionalInfo() { }
         public object Info { get { throw null; } }
         public string Type { get { throw null; } }
     }
