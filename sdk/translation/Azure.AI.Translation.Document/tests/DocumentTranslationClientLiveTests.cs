@@ -84,10 +84,10 @@ namespace Azure.AI.Translation.Document.Tests
             var input = new DocumentTranslationInput(source, target, "fr");
             await client.StartTranslationAsync(input);
 
-            List<TranslationStatus> translations = await client.GetTranslationStatusesAsync().ToEnumerableAsync();
+            List<TranslationStatusResult> translations = await client.GetTranslationStatusesAsync().ToEnumerableAsync();
 
             Assert.GreaterOrEqual(translations.Count, 1);
-            TranslationStatus oneTranslation = translations[0];
+            TranslationStatusResult oneTranslation = translations[0];
             Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.CreatedOn);
             Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.LastModified);
             Assert.GreaterOrEqual(oneTranslation.DocumentsCanceled, 0);

@@ -103,7 +103,7 @@ namespace Azure.AI.Translation.Document.Samples
             Console.WriteLine($"{operationResult.DocumentsFailed} failed");
             Console.WriteLine($"{operationResult.DocumentsSucceeded} succeeded");
 
-            await foreach (DocumentStatus document in operationResult.GetDocumentStatusesAsync())
+            await foreach (DocumentStatusResult document in operationResult.GetDocumentStatusesAsync())
             {
                 if (document.Status == DocumentTranslationStatus.Succeeded)
                 {

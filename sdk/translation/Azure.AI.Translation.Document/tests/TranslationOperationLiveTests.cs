@@ -201,14 +201,14 @@ namespace Azure.AI.Translation.Document.Tests
             var input = new DocumentTranslationInput(sourceUri, targetUri, translateTo);
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            AsyncPageable<DocumentStatus> documentsFromOperation = await operation.WaitForCompletionAsync();
-            List<DocumentStatus> documentsFromOperationList = await documentsFromOperation.ToEnumerableAsync();
+            AsyncPageable<DocumentStatusResult> documentsFromOperation = await operation.WaitForCompletionAsync();
+            List<DocumentStatusResult> documentsFromOperationList = await documentsFromOperation.ToEnumerableAsync();
 
             Assert.AreEqual(1, documentsFromOperationList.Count);
             CheckDocumentStatus(documentsFromOperationList[0], translateTo);
 
-            AsyncPageable<DocumentStatus> documentsFromGetDocStatuses = operation.GetDocumentStatusesAsync();
-            List<DocumentStatus> documentsFromGetDocStatusesList = await documentsFromGetDocStatuses.ToEnumerableAsync();
+            AsyncPageable<DocumentStatusResult> documentsFromGetDocStatuses = operation.GetDocumentStatusesAsync();
+            List<DocumentStatusResult> documentsFromGetDocStatusesList = await documentsFromGetDocStatuses.ToEnumerableAsync();
 
             Assert.AreEqual(documentsFromOperationList[0].Status, documentsFromGetDocStatusesList[0].Status);
             Assert.AreEqual(documentsFromOperationList[0].Id, documentsFromGetDocStatusesList[0].Id);
@@ -233,13 +233,13 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             await operation.WaitForCompletionAsync();
-            AsyncPageable<DocumentStatus> documents = operation.GetDocumentStatusesAsync();
+            AsyncPageable<DocumentStatusResult> documents = operation.GetDocumentStatusesAsync();
 
-            List<DocumentStatus> documentsList = await documents.ToEnumerableAsync();
+            List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
 
             Assert.AreEqual(1, documentsList.Count);
 
-            DocumentStatus document = await operation.GetDocumentStatusAsync(documentsList[0].Id);
+            DocumentStatusResult document = await operation.GetDocumentStatusAsync(documentsList[0].Id);
 
             CheckDocumentStatus(document, translateTo);
         }
@@ -336,7 +336,7 @@ namespace Azure.AI.Translation.Document.Tests
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            AsyncPageable<DocumentStatus> documents = await operation.WaitForCompletionAsync();
+            AsyncPageable<DocumentStatusResult> documents = await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
@@ -349,7 +349,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
 
-            List<DocumentStatus> documentsList = await documents.ToEnumerableAsync();
+            List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
             Assert.AreEqual(1, documentsList.Count);
             Assert.AreEqual(DocumentTranslationStatus.Failed, documentsList[0].Status);
             Assert.AreEqual(new DocumentTranslationErrorCode("WrongDocumentEncoding"), documentsList[0].Error.ErrorCode);
@@ -366,7 +366,7 @@ namespace Azure.AI.Translation.Document.Tests
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            AsyncPageable<DocumentStatus> documents = await operation.WaitForCompletionAsync();
+            AsyncPageable<DocumentStatusResult> documents = await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
@@ -379,7 +379,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
 
-            List<DocumentStatus> documentsList = await documents.ToEnumerableAsync();
+            List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
             Assert.AreEqual(1, documentsList.Count);
             Assert.AreEqual(DocumentTranslationStatus.Failed, documentsList[0].Status);
             Assert.AreEqual(new DocumentTranslationErrorCode("TargetFileAlreadyExists"), documentsList[0].Error.ErrorCode);
@@ -465,7 +465,7 @@ namespace Azure.AI.Translation.Document.Tests
             }
         }
 
-        private void CheckDocumentStatus(DocumentStatus document, string translateTo)
+        private void CheckDocumentStatus(DocumentStatusResult document, string translateTo)
         {
             Assert.AreEqual(DocumentTranslationStatus.Succeeded, document.Status);
             Assert.IsFalse(string.IsNullOrEmpty(document.Id));

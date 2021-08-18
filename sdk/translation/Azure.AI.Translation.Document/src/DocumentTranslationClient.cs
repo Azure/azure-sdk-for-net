@@ -219,9 +219,9 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="options">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Pageable<TranslationStatus> GetTranslationStatuses(GetTranslationStatusesOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<TranslationStatusResult> GetTranslationStatuses(GetTranslationStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
-            Page<TranslationStatus> FirstPageFunc(int? pageSizeHint)
+            Page<TranslationStatusResult> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
                 scope.Start();
@@ -248,7 +248,7 @@ namespace Azure.AI.Translation.Document
                 }
             }
 
-            Page<TranslationStatus> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<TranslationStatusResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
                 scope.Start();
@@ -273,9 +273,9 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="options">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual AsyncPageable<TranslationStatus> GetTranslationStatusesAsync(GetTranslationStatusesOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TranslationStatusResult> GetTranslationStatusesAsync(GetTranslationStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TranslationStatus>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<TranslationStatusResult>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
                 scope.Start();
@@ -303,7 +303,7 @@ namespace Azure.AI.Translation.Document
                 }
             }
 
-            async Task<Page<TranslationStatus>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<TranslationStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationStatuses)}");
                 scope.Start();

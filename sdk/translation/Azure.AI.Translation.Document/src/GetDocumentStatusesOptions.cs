@@ -20,17 +20,17 @@ namespace Azure.AI.Translation.Document
         {
         }
         /// <summary>
-        /// Filter results by <see cref="DocumentStatus.CreatedOn"/>.
+        /// Filter results by <see cref="DocumentStatusResult.CreatedOn"/>.
         /// Get documents created after a certain date in UTC format.
         /// </summary>
         public DateTimeOffset ? CreatedAfter { get; set; }
         /// <summary>
-        /// Filter results by <see cref="DocumentStatus.CreatedOn"/>.
+        /// Filter results by <see cref="DocumentStatusResult.CreatedOn"/>.
         /// Get documents created before a certain date in UTC format.
         /// </summary>
         public DateTimeOffset ? CreatedBefore { get; set; }
         /// <summary>
-        /// Filter results by <see cref="DocumentStatus.Id"/>.
+        /// Filter results by <see cref="DocumentStatusResult.Id"/>.
         /// </summary>
         public IList<string> Ids { get; } = new List<string>();
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         public IList<DocumentFilterOrder> OrderBy { get; } = new List<DocumentFilterOrder>();
         /// <summary>
-        /// Filter results by <see cref="DocumentStatus.Status"/>.
+        /// Filter results by <see cref="DocumentStatusResult.Status"/>.
         /// See <see cref="DocumentTranslationStatus"/> to know which statuses to use.
         /// </summary>
         public IList<DocumentTranslationStatus> Statuses { get; } = new List<DocumentTranslationStatus>();
