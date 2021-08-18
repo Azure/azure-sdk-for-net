@@ -28,8 +28,6 @@ namespace Azure.Core.TestFramework
         public RecordedTestSanitizer()
         {
             // Lazy sanitize fields in the request and response bodies
-            AddJsonPathSanitizer("$..token");
-            AddJsonPathSanitizer("$..identity");
             AddJsonPathSanitizer("$..primaryKey");
             AddJsonPathSanitizer("$..secondaryKey");
             AddJsonPathSanitizer("$..primaryConnectionString");
@@ -67,7 +65,7 @@ namespace Azure.Core.TestFramework
 
         public virtual string SanitizeTextBody(string contentType, string body)
         {
-            Boolean modified = false;
+            bool modified = false;
 
             if (String.IsNullOrWhiteSpace(body))
                 return body;
