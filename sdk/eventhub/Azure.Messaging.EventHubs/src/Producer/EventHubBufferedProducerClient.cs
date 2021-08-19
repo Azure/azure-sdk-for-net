@@ -105,11 +105,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "Guidance does not apply; this is an event.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
-        public event Func<SendEventBatchSucceededEventArgs, Task> SendEventBatchSuccessAsync
+        public event Func<SendEventBatchSucceededEventArgs, Task> SendEventBatchSucceededAsync
         {
             add
             {
-                Argument.AssertNotNull(value, nameof(SendEventBatchSuccessAsync));
+                Argument.AssertNotNull(value, nameof(SendEventBatchSucceededAsync));
 
                 if (_sendSucceeded != default)
                 {
@@ -120,7 +120,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             remove
             {
-                Argument.AssertNotNull(value, nameof(SendEventBatchSuccessAsync));
+                Argument.AssertNotNull(value, nameof(SendEventBatchSucceededAsync));
 
                 if (_isStarted)
                 {
@@ -457,7 +457,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <remarks>
         ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or
-        ///   <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSuccessAsync" /> and
+        ///   <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSucceededAsync" /> and
         ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
         /// </remarks>
         ///
@@ -482,7 +482,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <remarks>
         ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or
-        ///   <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSuccessAsync" /> and
+        ///   <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSucceededAsync" /> and
         ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
         /// </remarks>
         ///
@@ -506,7 +506,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSuccessAsync" /> and
+        ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSucceededAsync" /> and
         ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
         /// </remarks>
         ///
@@ -530,7 +530,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSuccessAsync" /> and
+        ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSucceededAsync" /> and
         ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
         /// </remarks>
         ///
@@ -543,7 +543,7 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   This method is invoked upon the successful publishing of a batch of events. It is responsible for raising the <see cref="SendEventBatchSuccessAsync"/> event.
+        ///   This method is invoked upon the successful publishing of a batch of events. It is responsible for raising the <see cref="SendEventBatchSucceededAsync"/> event.
         /// </summary>
         ///
         /// <param name="events">The set of events belonging to the batch that was successfully published.</param>
@@ -573,7 +573,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
         /// <summary>
         ///   Attempts to publish all events in the buffer immediately.  This may result in multiple batches being published,
-        ///   the outcome of each of which will be individually reported by the <see cref="SendEventBatchSuccessAsync" /> and
+        ///   the outcome of each of which will be individually reported by the <see cref="SendEventBatchSucceededAsync" /> and
         ///   <see cref="SendEventBatchFailedAsync" /> handlers.
         ///
         ///    Upon completion of this method, the buffer will be empty.
