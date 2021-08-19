@@ -5,13 +5,13 @@
 
 #nullable disable
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> The DocumentFilter. </summary>
-    internal partial class DocumentFilterInternal
+    internal partial class DocumentFilter
     {
-        /// <summary> Initializes a new instance of DocumentFilterInternal. </summary>
-        public DocumentFilterInternal()
+        /// <summary> Initializes a new instance of DocumentFilter. </summary>
+        public DocumentFilter()
         {
         }
 

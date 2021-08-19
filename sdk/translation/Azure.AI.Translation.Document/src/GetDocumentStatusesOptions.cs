@@ -11,12 +11,12 @@ namespace Azure.AI.Translation.Document
     /// A class which defines filtering and ordering options
     /// for listing all document statuses for a certain translation operation.
     /// </summary>
-    public partial class DocumentFilter
+    public partial class GetDocumentStatusesOptions
     {
         /// <summary>
-        /// Initializes and instance of <see cref="DocumentFilter"/>.
+        /// Initializes and instance of <see cref="GetDocumentStatusesOptions"/>.
         /// </summary>
-        public DocumentFilter()
+        public GetDocumentStatusesOptions()
         {
         }
         /// <summary>
