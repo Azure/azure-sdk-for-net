@@ -1,14 +1,5 @@
 namespace Azure.AI.Translation.Document
 {
-    public partial class DocumentFilter
-    {
-        public DocumentFilter() { }
-        public System.DateTimeOffset? CreatedAfter { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedBefore { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Ids { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentFilterOrder> OrderBy { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentTranslationStatus> Statuses { get { throw null; } }
-    }
     public partial class DocumentFilterOrder
     {
         public DocumentFilterOrder(Azure.AI.Translation.Document.DocumentFilterProperty property, bool ascending = true) { }
@@ -180,8 +171,8 @@ namespace Azure.AI.Translation.Document
     public partial class GetDocumentStatusesOptions
     {
         public GetDocumentStatusesOptions() { }
-        public System.DateTimeOffset CreatedAfter { get { throw null; } set { } }
-        public System.DateTimeOffset CreatedBefore { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedAfter { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedBefore { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Ids { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentFilterOrder> OrderBy { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentTranslationStatus> Statuses { get { throw null; } }
