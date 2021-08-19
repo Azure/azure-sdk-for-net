@@ -2,7 +2,7 @@ namespace Azure.AI.Translation.Document
 {
     public partial class DocumentFilterOrder
     {
-        public DocumentFilterOrder(Azure.AI.Translation.Document.DocumentFilterProperty property, bool asc = true) { }
+        public DocumentFilterOrder(Azure.AI.Translation.Document.DocumentFilterProperty property, bool ascending = true) { }
         public Azure.AI.Translation.Document.DocumentFilterProperty Property { get { throw null; } set { } }
     }
     public enum DocumentFilterProperty
