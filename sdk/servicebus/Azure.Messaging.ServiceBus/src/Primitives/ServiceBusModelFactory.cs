@@ -254,15 +254,15 @@ namespace Azure.Messaging.ServiceBus
             DateTimeOffset createdAt = default,
             DateTimeOffset updatedAt = default,
             DateTimeOffset accessedAt = default) =>
-            new(name)
-            {
-                ScheduledMessageCount = scheduledMessageCount,
-                SizeInBytes = sizeInBytes,
-                SubscriptionCount = subscriptionCount,
-                CreatedAt = createdAt,
-                UpdatedAt = updatedAt,
-                AccessedAt = accessedAt
-            };
+                new(name)
+                {
+                    ScheduledMessageCount = scheduledMessageCount,
+                    SizeInBytes = sizeInBytes,
+                    SubscriptionCount = subscriptionCount,
+                    CreatedAt = createdAt,
+                    UpdatedAt = updatedAt,
+                    AccessedAt = accessedAt
+                };
 
         /// <summary>
         /// Creates a new <see cref="SubscriptionRuntimeProperties"/> instance for mocking.
@@ -278,17 +278,17 @@ namespace Azure.Messaging.ServiceBus
             DateTimeOffset createdAt = default,
             DateTimeOffset updatedAt = default,
             DateTimeOffset accessedAt = default) =>
-            new(topicName, subscriptionName)
-            {
-                ActiveMessageCount = activeMessageCount,
-                DeadLetterMessageCount = deadLetterMessageCount,
-                TransferDeadLetterMessageCount = transferDeadLetterMessageCount,
-                TransferMessageCount = transferMessageCount,
-                TotalMessageCount = totalMessageCount,
-                CreatedAt = createdAt,
-                UpdatedAt = updatedAt,
-                AccessedAt = accessedAt
-            };
+                new(topicName, subscriptionName)
+                {
+                    ActiveMessageCount = activeMessageCount,
+                    DeadLetterMessageCount = deadLetterMessageCount,
+                    TransferDeadLetterMessageCount = transferDeadLetterMessageCount,
+                    TransferMessageCount = transferMessageCount,
+                    TotalMessageCount = totalMessageCount,
+                    CreatedAt = createdAt,
+                    UpdatedAt = updatedAt,
+                    AccessedAt = accessedAt
+                };
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch" /> class.
