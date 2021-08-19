@@ -215,7 +215,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(documentsFromOperationList[0].SourceDocumentUri, documentsFromGetDocStatusesList[0].SourceDocumentUri);
             Assert.AreEqual(documentsFromOperationList[0].TranslatedDocumentUri, documentsFromGetDocStatusesList[0].TranslatedDocumentUri);
             Assert.AreEqual(documentsFromOperationList[0].TranslationProgressPercentage, documentsFromGetDocStatusesList[0].TranslationProgressPercentage);
-            Assert.AreEqual(documentsFromOperationList[0].TranslatedTo, documentsFromGetDocStatusesList[0].TranslatedTo);
+            Assert.AreEqual(documentsFromOperationList[0].TranslatedToLanguageCode, documentsFromGetDocStatusesList[0].TranslatedToLanguageCode);
             Assert.AreEqual(documentsFromOperationList[0].CreatedOn, documentsFromGetDocStatusesList[0].CreatedOn);
             Assert.AreEqual(documentsFromOperationList[0].LastModified, documentsFromGetDocStatusesList[0].LastModified);
         }
@@ -472,7 +472,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.IsNotNull(document.SourceDocumentUri);
             Assert.IsNotNull(document.TranslatedDocumentUri);
             Assert.AreEqual(100f, document.TranslationProgressPercentage);
-            Assert.AreEqual(translateTo, document.TranslatedTo);
+            Assert.AreEqual(translateTo, document.TranslatedToLanguageCode);
             Assert.AreNotEqual(new DateTimeOffset(), document.CreatedOn);
             Assert.AreNotEqual(new DateTimeOffset(), document.LastModified);
         }
