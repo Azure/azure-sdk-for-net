@@ -31,7 +31,7 @@ namespace Azure.Monitor.Query.Tests
                 "AzureActivity | top 10 by TimeGenerated",
                 new DateTimeRange(TimeSpan.FromDays(1)));
 
-            LogsQueryResultTable table = response.Value.PrimaryTable;
+            LogsQueryResultTable table = response.Value.Table;
 
             foreach (var row in table.Rows)
             {
@@ -58,7 +58,7 @@ namespace Azure.Monitor.Query.Tests
                 "AzureActivity | top 10 by TimeGenerated",
                 new DateTimeRange(TimeSpan.FromDays(1)));
 
-            LogsQueryResultTable table = response.Value.PrimaryTable;
+            LogsQueryResultTable table = response.Value.Table;
 
             foreach (var column in table.Columns)
             {
@@ -200,6 +200,38 @@ namespace Azure.Monitor.Query.Tests
                 options: new LogsQueryOptions
                 {
                     ServerTimeout = TimeSpan.FromMinutes(10)
+                });
+
+            foreach (var resourceGroup in response.Value)
+            {
+                Console.WriteLine(resourceGroup);
+            }
+
+            #endregion
+        }
+
+        [Test]
+        public async Task QueryLogsWithAdditionalWorkspace()
+        {
+            #region Snippet:QueryLogsWithAdditionalWorkspace
+#if SNIPPET
+            string workspaceId = "<workspace_id>";
+            string additionalWorkspaceId = "<additional_workspace_id>";
+#else
+            string workspaceId = TestEnvironment.WorkspaceId;
+            string additionalWorkspaceId = TestEnvironment.WorkspaceId;
+#endif
+
+            var client = new LogsQueryClient(new DefaultAzureCredential());
+
+            // Query TOP 10 resource groups by event count
+            Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(
+                workspaceId,
+                "AzureActivity | summarize count()",
+                new DateTimeRange(TimeSpan.FromDays(1)),
+                options: new LogsQueryOptions
+                {
+                    AdditionalWorkspaces = { additionalWorkspaceId }
                 });
 
             foreach (var resourceGroup in response.Value)

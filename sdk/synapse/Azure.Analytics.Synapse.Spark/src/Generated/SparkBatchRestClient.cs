@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/batches", false);
             if (@from != null)
             {
@@ -128,10 +128,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/batches", false);
             if (detailed != null)
             {
@@ -209,10 +209,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/batches/", false);
             uri.AppendPath(batchId, true);
             if (detailed != null)
@@ -275,10 +275,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/batches/", false);
             uri.AppendPath(batchId, true);
             request.Uri = uri;

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationOrResponseInternals<ResourceGroup> _operation;
 
-        /// <summary> Initializes a new instance of ResourcesCreateOrUpdateByIdOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceGroupCreateOrUpdateOperation for mocking. </summary>
         protected ResourceGroupCreateOrUpdateOperation()
         {
         }
 
-        internal ResourceGroupCreateOrUpdateOperation(ResourceOperations parentOperation, Response<ResourceGroupData> response)
+        internal ResourceGroupCreateOrUpdateOperation(ArmResource parentOperation, Response<ResourceGroupData> response)
         {
             _operation = new OperationOrResponseInternals<ResourceGroup>(Response.FromValue(new ResourceGroup(parentOperation, response.Value), response.GetRawResponse()));
         }

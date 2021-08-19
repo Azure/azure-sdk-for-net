@@ -1,0 +1,225 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.1/rank",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "139",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-8a2352f590c938419932183af7ad2039-475eb6f9bad6944a-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "72fe1c6ec5e1742467bce38ccf58b021",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "actions": [
+          {
+            "id": "Person",
+            "features": [
+              {
+                "videoType": "documentary",
+                "videoLength": 35,
+                "director": "CarlSagan"
+              },
+              {
+                "mostWatchedByAge": "30-35"
+              }
+            ]
+          }
+        ]
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "a7d4ebf4-e94b-4332-8066-a1936f394b5a",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "124",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 05 Aug 2021 20:55:04 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "13492"
+      },
+      "ResponseBody": {
+        "ranking": [
+          {
+            "id": "Person",
+            "probability": 1.0
+          }
+        ],
+        "eventId": "4e9af3e0604e4fc1af091c9e76c0c93d-8iJRK",
+        "rewardActionId": "Person"
+      }
+    },
+    {
+      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.1/rank",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "527",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-9eed4f0ce6b0c340802623beef2c0a21-5e9e395f17eb1343-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "f451845d717dfcfd636af66ed165bf61",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "contextFeatures": [
+          {
+            "Features": {
+              "day": "tuesday",
+              "time": "night",
+              "weather": "rainy"
+            }
+          },
+          {
+            "Features": {
+              "userId": "1234",
+              "payingUser": true,
+              "favoriteGenre": "documentary",
+              "hoursOnSite": 0.12,
+              "lastwatchedType": "movie"
+            }
+          }
+        ],
+        "actions": [
+          {
+            "id": "Person1",
+            "features": [
+              {
+                "videoType": "documentary",
+                "videoLength": 35,
+                "director": "CarlSagan"
+              },
+              {
+                "mostWatchedByAge": "30-35"
+              }
+            ]
+          },
+          {
+            "id": "Person2",
+            "features": [
+              {
+                "videoType": "documentary",
+                "videoLength": 35,
+                "director": "CarlSagan"
+              },
+              {
+                "mostWatchedByAge": "40-45"
+              }
+            ]
+          }
+        ],
+        "excludedActions": [
+          "Person1"
+        ],
+        "eventId": "123456789"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "f4625cd9-6ee1-4f1a-b6de-af954ff2465e",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "132",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 05 Aug 2021 20:55:19 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "15290"
+      },
+      "ResponseBody": {
+        "ranking": [
+          {
+            "id": "Person1",
+            "probability": 0.0
+          },
+          {
+            "id": "Person2",
+            "probability": 1.0
+          }
+        ],
+        "eventId": "123456789",
+        "rewardActionId": "Person2"
+      }
+    },
+    {
+      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.1/rank",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "139",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-cd2c7cfe73673242856c322a2fa711db-f43e2530c4f71446-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "66317083bf6f0fc05cfb3b5eae739abb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "actions": [
+          {
+            "id": "Person",
+            "features": [
+              {
+                "videoType": "documentary",
+                "videoLength": 35,
+                "director": "CarlSagan"
+              },
+              {
+                "mostWatchedByAge": "30-35"
+              }
+            ]
+          }
+        ]
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "e4c82d6d-7ee8-4eef-85fe-d31735c47995",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "124",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 05 Aug 2021 20:55:33 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "13443"
+      },
+      "ResponseBody": {
+        "ranking": [
+          {
+            "id": "Person",
+            "probability": 1.0
+          }
+        ],
+        "eventId": "c638ab102e9f464dbc35f2f102f59f35-8iJSd",
+        "rewardActionId": "Person"
+      }
+    }
+  ],
+  "Variables": {
+    "PERSONALIZER_API_KEY_SINGLE_SLOT": "Sanitized",
+    "PERSONALIZER_ENDPOINT_SINGLE_SLOT": "https://singleslotrecordsdktests.cognitiveservices.azure.com/",
+    "RandomSeed": "1112192962"
+  }
+}

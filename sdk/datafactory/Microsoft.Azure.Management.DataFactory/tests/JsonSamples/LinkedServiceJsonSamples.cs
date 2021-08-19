@@ -3185,5 +3185,22 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+        [JsonSample]
+        public const string CosmosDbMongoDbApiLinkedService = @"
+{
+    name: ""LinkedService-CosmosDbMongoDbApi"",
+    properties:
+    {
+        type: ""CosmosDbMongoDbApi"",
+        typeProperties: {
+            isServerVersionAbove32: true,
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            database: ""testdb""
+        }
+    }
+}";
     }
 }

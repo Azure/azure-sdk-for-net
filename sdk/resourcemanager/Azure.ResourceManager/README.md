@@ -35,10 +35,10 @@ To authenticate to Azure and create an `ArmClient`, do the following:
 
 ```C# Snippet:Readme_AuthClient
 using Azure.Identity;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using System;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
 
 // Code omitted for brevity
 
@@ -73,31 +73,24 @@ It also has access to all of the operations and like the **[Resource]Operations*
 to a specific resource in Azure.
 
 ### Structured Resource Identifier
-Instead of implementing your own parsing logic, you can implicitly cast a resource identifier string into an object which will do the parsing for you.
+Resource IDs contain useful information about the resource itself, but they are plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object which will do the parsing for you: `new ResourceIdentifer("myid");`.
 
-There are 3 types of ResourceIdentifiers and they correspond to which level the resource lives at:
-- A resource that lives on a tenant will have a `TenantResourceIdentifier`.
-- A resource that lives under a subscription will have a `SubscriptionResourceIdentifer`.  
-- A resource that lives under a resource group will have a `ResourceGroupResourceIdentifier`.
-
-You can usually tell by the id string itself which type it is, but if you are unsure you can always cast it onto a `ResourceIdentifier` and use the Try methods to retrieve the values.
-
-#### Casting to a specific type
+#### Example: Parsing an ID using a ResourceIdentifier object 
 ```C# Snippet:Readme_CastToSpecificType
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
 // We know the subnet is a resource group level identifier since it has a resource group name in its string
-ResourceIdentifier id = resourceId;
+ResourceIdentifier id = new ResourceIdentifier(resourceId);
 Console.WriteLine($"Subscription: {id.SubscriptionId}");
 Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
 Console.WriteLine($"Vnet: {id.Parent.Name}");
 Console.WriteLine($"Subnet: {id.Name}");
 ```
-
-#### Casting to the base resource identifier
+However, keep in mind that some of those properties could be null. You can usually tell by the id string itself which type a resource ID is, but if you are unsure, check if the properties are null or use the Try methods to retrieve the values as it's shown below:
+#### Example: ResourceIdentifier TryGet methods 
 ```C# Snippet:Readme_CastToBaseResourceIdentifier
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
 // Assume we don't know what type of resource id we have we can cast to the base type
-ResourceIdentifier id = resourceId;
+ResourceIdentifier id = new ResourceIdentifier(resourceId);
 string property;
 if (id.TryGetSubscriptionId(out property))
     Console.WriteLine($"Subscription: {property}");
@@ -113,7 +106,8 @@ Performing operations on resources that already exist is a common use case when 
 Here is an example how you to access an `AvailabilitySet` object and manage it directly with its id: 
 ```csharp
 using Azure.Identity;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Compute;
 using System;
 using System.Threading.Tasks;
@@ -130,7 +124,7 @@ Subscription subscription = await armClient.GetSubscriptions().GetAsync(id.Subsc
 // Next we get the specific resource group this resource belongs to
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(id.ResourceGroupName);
 // Finally we get the resource itself
-// Note: for this last stept in this example, Azure.ResourceManager.Compute is needed
+// Note: for this last step in this example, Azure.ResourceManager.Compute is needed
 AvailabilitySet availabilitySet = await resourceGroup.GetAvailabilitySets().GetAsync(id.Name);
 ```
 However, this approach required a lot of code and 3 API calls to Azure. The same can be done with less code and without any API calls by using extension methods that we have provided on the client itself. These extension methods allow you to pass in a resource identifier and retrieve a scoped client. The object returned is a *[Resource]Operations* mentioned above, since it has not reached out to Azure to retrieve the data yet.
@@ -148,10 +142,10 @@ AvailabilitySetOperations availabilitySetOperations = armClient.GetAvailabilityS
 AvailabilitySet availabilitySet = await availabilitySetOperations.GetAsync();
 ```
 
-### `tryGet` and `CheckIfExistss` convenience methods
-If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExistss()` methods, which can be invoque from any [Resource]Container class.
+### `GetIfExists()` and `CheckIfExists` convenience methods
+If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoked from any [Resource]Container class.
 
-`GetIfExists()` and `GetIfExistsAsync()` are going to return a null object if the specified resource name or id does not exists. On the other hand, `CheckIfExistss()` and `CheckIfExistssAsync()` is going to return a boolean, depending if the specified resource exists.
+`GetIfExists()` and `GetIfExistsAsync()` return a null object if the specified resource does not exist. On the other hand, `CheckIfExists()` and `CheckIfExistsAsync()` return ```false``` if the specified resource does not exist.
 
 You can find an example for these methods [below](#check-if-resource-group-exists).
 
@@ -168,7 +162,8 @@ ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 // With the container, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
+ResourceGroupData rgData = new ResourceGroupData(location);
+ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
 ```
 
 ### List all resource groups
@@ -290,6 +285,8 @@ For more detailed examples, take a look at [samples](https://github.com/Azure/az
 - [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ### Additional Documentation
+If you are migrating from the old SDK to this preview, check out this [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/MigrationGuide.md).
+
 For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/).
 
 ## Contributing

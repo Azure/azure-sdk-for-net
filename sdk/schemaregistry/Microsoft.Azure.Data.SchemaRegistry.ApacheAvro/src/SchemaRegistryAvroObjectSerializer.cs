@@ -16,6 +16,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
@@ -72,16 +73,15 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             var schemaProperties = _options.AutoRegisterSchemas
                 ? _client.RegisterSchema(_groupName, schema.Fullname, SerializationType.Avro, schema.ToString(), cancellationToken)
                 : _client.GetSchemaId(_groupName, schema.Fullname, SerializationType.Avro, schema.ToString(), cancellationToken);
-            return schemaProperties.Value.Id;
+            return schemaProperties.Id;
         }
 
         private async Task<string> GetSchemaIdAsync(Schema schema, CancellationToken cancellationToken)
         {
-            var schemaProperties = await (_options.AutoRegisterSchemas
-                    ? _client.RegisterSchemaAsync(_groupName, schema.Fullname, SerializationType.Avro, schema.ToString(), cancellationToken)
-                    : _client.GetSchemaIdAsync(_groupName, schema.Fullname, SerializationType.Avro, schema.ToString(), cancellationToken))
-                .ConfigureAwait(false);
-            return schemaProperties.Value.Id;
+            var schemaProperties = _options.AutoRegisterSchemas
+                    ? (await _client.RegisterSchemaAsync(_groupName, schema.Fullname, SerializationType.Avro, schema.ToString(), cancellationToken).ConfigureAwait(false)).Value
+                    : await _client.GetSchemaIdAsync(_groupName, schema.Fullname, SerializationType.Avro, schema.ToString(), cancellationToken).ConfigureAwait(false);
+            return schemaProperties.Id;
         }
 
         private static DatumWriter<object> GetWriterAndSchema(object value, SupportedType supportedType, out Schema schema)
@@ -100,25 +100,19 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         }
 
         /// <inheritdoc />
-        public override void Serialize(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
-        {
-            Argument.AssertNotNull(stream, nameof(stream));
-            Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(inputType, nameof(inputType));
-
-            var supportedType = GetSupportedTypeOrThrow(inputType);
-            var writer = GetWriterAndSchema(value, supportedType, out var schema);
-            var schemaId = GetSchemaId(schema, cancellationToken);
-
-            var binaryEncoder = new BinaryEncoder(stream);
-            stream.Write(EmptyRecordFormatIndicator, 0, RecordFormatIndicatorLength);
-            stream.Write(Utf8Encoding.GetBytes(schemaId), 0, SchemaIdLength);
-            writer.Write(value, binaryEncoder);
-            binaryEncoder.Flush();
-        }
+        public override void Serialize(Stream stream, object value, Type inputType, CancellationToken cancellationToken) =>
+            SerializeInternalAsync(stream, value, inputType, false, cancellationToken).EnsureCompleted();
 
         /// <inheritdoc />
-        public override async ValueTask SerializeAsync(Stream stream, object value, Type inputType, CancellationToken cancellationToken)
+        public override async ValueTask SerializeAsync(Stream stream, object value, Type inputType, CancellationToken cancellationToken) =>
+            await SerializeInternalAsync(stream, value, inputType, true, cancellationToken).ConfigureAwait(false);
+
+        private async ValueTask SerializeInternalAsync(
+            Stream stream,
+            object value,
+            Type inputType,
+            bool async,
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(stream, nameof(stream));
             Argument.AssertNotNull(value, nameof(value));
@@ -126,36 +120,50 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
             var supportedType = GetSupportedTypeOrThrow(inputType);
             var writer = GetWriterAndSchema(value, supportedType, out var schema);
-            var schemaId = await GetSchemaIdAsync(schema, cancellationToken).ConfigureAwait(false);
+
+            string schemaId;
+            if (async)
+            {
+                schemaId = await GetSchemaIdAsync(schema, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                schemaId = GetSchemaId(schema, cancellationToken);
+            }
 
             var binaryEncoder = new BinaryEncoder(stream);
-            await stream.WriteAsync(EmptyRecordFormatIndicator, 0, RecordFormatIndicatorLength, cancellationToken).ConfigureAwait(false);
-            await stream.WriteAsync(Utf8Encoding.GetBytes(schemaId), 0, SchemaIdLength, cancellationToken).ConfigureAwait(false);
+
+            if (async)
+            {
+                await stream.WriteAsync(EmptyRecordFormatIndicator, 0, RecordFormatIndicatorLength, cancellationToken).ConfigureAwait(false);
+                await stream.WriteAsync(Utf8Encoding.GetBytes(schemaId), 0, SchemaIdLength, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                stream.Write(EmptyRecordFormatIndicator, 0, RecordFormatIndicatorLength);
+                stream.Write(Utf8Encoding.GetBytes(schemaId), 0, SchemaIdLength);
+            }
+
             writer.Write(value, binaryEncoder);
             binaryEncoder.Flush();
         }
 
-        private Schema GetSchemaById(string schemaId, CancellationToken cancellationToken)
+        private async Task<Schema> GetSchemaByIdAsync(string schemaId, bool async, CancellationToken cancellationToken)
         {
-            if (_cachedSchemas.TryGetValue(schemaId, out var cachedSchema))
+            if (_cachedSchemas.TryGetValue(schemaId, out Schema cachedSchema))
             {
                 return cachedSchema;
             }
 
-            var schemaContent = _client.GetSchema(schemaId, cancellationToken).Value.Content;
-            var schema = Schema.Parse(schemaContent);
-            _cachedSchemas.Add(schemaId, schema);
-            return schema;
-        }
-
-        private async Task<Schema> GetSchemaByIdAsync(string schemaId, CancellationToken cancellationToken)
-        {
-            if (_cachedSchemas.TryGetValue(schemaId, out var cachedSchema))
+            string schemaContent;
+            if (async)
             {
-                return cachedSchema;
+                schemaContent = (await _client.GetSchemaAsync(schemaId, cancellationToken).ConfigureAwait(false)).Content;
             }
-
-            var schemaContent = (await _client.GetSchemaAsync(schemaId, cancellationToken).ConfigureAwait(false)).Value.Content;
+            else
+            {
+                schemaContent = _client.GetSchema(schemaId, cancellationToken).Content;
+            }
             var schema = Schema.Parse(schemaContent);
             _cachedSchemas.Add(schemaId, schema);
             return schema;
@@ -192,40 +200,42 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         }
 
         /// <inheritdoc />
-        public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
-        {
-            Argument.AssertNotNull(stream, nameof(stream));
-            Argument.AssertNotNull(returnType, nameof(returnType));
-
-            var supportedType = GetSupportedTypeOrThrow(returnType);
-            var message = CopyToReadOnlyMemory(stream);
-            ValidateRecordFormatIdentifier(message);
-            var schemaIdBytes = message.Slice(RecordFormatIndicatorLength, SchemaIdLength).ToArray();
-            var schemaId = Utf8Encoding.GetString(schemaIdBytes);
-            var schema = GetSchemaById(schemaId, cancellationToken);
-            using var valueStream = new MemoryStream(message.Slice(PayloadStartPosition, message.Length - PayloadStartPosition).ToArray());
-
-            var binaryDecoder = new BinaryDecoder(valueStream);
-            var reader = GetReader(schema, supportedType);
-            return reader.Read(reuse: null, binaryDecoder);
-        }
+        public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken) =>
+            DeserializeInternalAsync(stream, returnType, false, cancellationToken).EnsureCompleted();
 
         /// <inheritdoc />
-        public override async ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken)
+        public override async ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken) =>
+            await DeserializeInternalAsync(stream, returnType, true, cancellationToken).ConfigureAwait(false);
+
+        private async ValueTask<object> DeserializeInternalAsync(
+            Stream stream,
+            Type returnType,
+            bool async,
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(stream, nameof(stream));
             Argument.AssertNotNull(returnType, nameof(returnType));
 
-            var supportedType = GetSupportedTypeOrThrow(returnType);
-            var message = CopyToReadOnlyMemory(stream);
+            SupportedType supportedType = GetSupportedTypeOrThrow(returnType);
+            ReadOnlyMemory<byte> message = CopyToReadOnlyMemory(stream);
             ValidateRecordFormatIdentifier(message);
-            var schemaIdBytes = message.Slice(RecordFormatIndicatorLength, SchemaIdLength).ToArray();
-            var schemaId = Utf8Encoding.GetString(schemaIdBytes);
-            var schema = await GetSchemaByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
+            byte[] schemaIdBytes = message.Slice(RecordFormatIndicatorLength, SchemaIdLength).ToArray();
+            string schemaId = Utf8Encoding.GetString(schemaIdBytes);
+
+            Schema schema;
+            if (async)
+            {
+                schema = await GetSchemaByIdAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                schema = GetSchemaByIdAsync(schemaId, false, cancellationToken).EnsureCompleted();
+            }
+
             using var valueStream = new MemoryStream(message.Slice(PayloadStartPosition, message.Length - PayloadStartPosition).ToArray());
 
             var binaryDecoder = new BinaryDecoder(valueStream);
-            var reader = GetReader(schema, supportedType);
+            DatumReader<object> reader = GetReader(schema, supportedType);
             return reader.Read(reuse: null, binaryDecoder);
         }
     }
