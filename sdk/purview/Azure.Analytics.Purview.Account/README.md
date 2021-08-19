@@ -64,7 +64,7 @@ The following section shows you how to initialize and authenticate your client, 
 var credential = new DefaultAzureCredential();
 var client = new AccountsClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
 
-var Response response = await client.GetAsync();
+var Response response = await client.GetAccountPropertiesAsync();
 var responseDocument = JsonDocument.Parse(response.Content);
 Console.WriteLine(responseDocument.RootElement.GetProperty("name"));
 ```
