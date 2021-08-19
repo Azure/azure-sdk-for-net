@@ -11,28 +11,24 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary>
-    /// Delete management group.
-    /// If a management group contains child resources, the request will fail.
-    /// .
-    /// </summary>
-    public partial class ManagementGroupDeleteOperation : Operation
+    /// <summary> Deletes a resource. </summary>
+    public partial class ResourceDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ManagementGroupDeleteOperation for mocking. </summary>
-        protected ManagementGroupDeleteOperation()
+        /// <summary> Initializes a new instance of ResourcesDeleteOperation for mocking. </summary>
+        protected ResourceDeleteOperation()
         {
         }
 
-        internal ManagementGroupDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ResourceDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupDeleteOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesDeleteOperation");
         }
         /// <inheritdoc />
-        public override string Id => _operation.Id;
+        public override string Id => "";
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

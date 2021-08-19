@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.Management.Models
     /// If a management group contains child resources, the request will fail.
     /// .
     /// </summary>
-    public partial class ManagementGroupsDeleteOperation : Operation
+    public partial class ManagementGroupDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
         /// <summary> Initializes a new instance of ManagementGroupsDeleteOperation for mocking. </summary>
-        protected ManagementGroupsDeleteOperation()
+        protected ManagementGroupDeleteOperation()
         {
         }
 
-        internal ManagementGroupsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagementGroupDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupsDeleteOperation");
         }
