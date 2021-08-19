@@ -1,0 +1,56 @@
+## Claim check pattern
+
+This sample demonstrates the use of the [claim check pattern](https://docs.microsoft.com/en-us/azure/architecture/patterns/claim-check) which enables you to work with arbitrarily large message bodies. For standard namespaces, a message can be at most 256 KB. For Premium namespaces, the limit is 100 MB. If these limits don't work for your application you can leverage Azure Storage Blobs to implement this pattern.
+
+### Sending the message
+
+In our example, we will assume that the message body can fit in memory. This allows us to use the Storage Blob methods that let you work with `BinaryData`. If your message body cannot fit in memory, you can use the stream-based Upload/Download methods instead.
+
+First, we will create a `BlobContainerClient` and use the container name "claim-checks". We will be storing our message bodies in blobs within this container.
+```C# Snippet:CreateBlobContainer
+var containerClient = new BlobContainerClient("<storage connection string>", "claimchecks");
+await containerClient.CreateIfNotExistsAsync();
+```
+
+Next, we will upload our large message body to a blob, and then assign the blob name to an application property in our `ServiceBusMessage`. In this example, we use a helper method that generates a random byte array of the specified size. For the blob name, we generate a GUID.
+
+```C# Snippet:UploadMessage
+byte[] body = GetRandomBuffer(1000000);
+var blobName = Guid.NewGuid().ToString();
+await containerClient.UploadBlobAsync(blobName, new BinaryData(body));
+var message = new ServiceBusMessage
+{
+    ApplicationProperties =
+    {
+        ["blob-name"] = blobName
+    }
+};
+```
+
+Finally, we send our message to our Service Bus queue.
+```C# Snippet:ClaimCheckSendMessage
+var client = new ServiceBusClient("<service bus connection string>");
+ServiceBusSender sender = client.CreateSender(scope.QueueName);
+await sender.SendMessageAsync(message);
+```
+
+### Receiving the message
+
+On the receiving side, we essentially perform the reverse of the operations that we did on the send side. We first receive our message and check for our application property key. After we find the key, we can download the corresponding blob.
+
+```C# Snippet:ReceiveClaimCheck
+var receiver = client.CreateReceiver(scope.QueueName);
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
+{
+    var blobClient = new BlobClient(TestEnvironment.StorageClaimCheckConnectionString, "claim-checks", (string) blobNameReceived);
+    BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
+    BinaryData messageBody = downloadResult.Content;
+}
+```
+
+## Source
+
+To see the full example source, see:
+
+* [Sample10_ClaimCheck.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample10_ClaimCheck.cs)
