@@ -67,11 +67,12 @@ namespace Azure.Core.TestFramework
         {
             bool modified = false;
 
-            if (String.IsNullOrWhiteSpace(body))
+            if (string.IsNullOrWhiteSpace(body))
                 return body;
 
             if (JsonPathSanitizers.Count == 0)
                 return body;
+
             try
             {
                 JToken jsonO;
@@ -96,9 +97,13 @@ namespace Azure.Core.TestFramework
                 }
 
                 if (modified || LegacyConvertJsonDateTokens)
+                {
                     return JsonConvert.SerializeObject(jsonO, SerializerSettings);
+                }
                 else
+                {
                     return body;
+                }
             }
             catch
             {
