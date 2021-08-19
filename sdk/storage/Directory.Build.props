@@ -79,6 +79,9 @@
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Microsoft.ApplicationInsights" VersionOverride="2.18.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" VersionOverride="2.18.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.EventSourceListener" VersionOverride="2.18.0" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
   

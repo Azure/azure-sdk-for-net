@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
+    [Category("NonChaos")]
     public class LargeBlobTests
     {
         private BlobServiceClient blobServiceClient;
