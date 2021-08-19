@@ -38,6 +38,17 @@ namespace Azure.Messaging.ServiceBus.Tests
                 // is not sufficient for all scenarios; since an external process is already needed to manage
                 // orphans, there is no benefit to failing the run; allow the test results to be reported.
             }
+
+            try
+            {
+                if (StorageTestEnvironment.Instance.ShouldRemoveStorageAccountAfterTestRunCompletion)
+                {
+                    StorageScope.DeleteStorageAccountAsync(StorageTestEnvironment.Instance.StorageAccountName).GetAwaiter().GetResult();
+                }
+            }
+            catch
+            {
+            }
         }
     }
 }

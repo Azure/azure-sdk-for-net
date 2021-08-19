@@ -20,51 +20,70 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                 var containerClient = new BlobContainerClient("<storage connection string>", "claim-checks");
 #else
-                var containerClient = new BlobContainerClient(TestEnvironment.StorageClaimCheckConnectionString, "claim-checks");
+                var containerClient = new BlobContainerClient(StorageTestEnvironment.Instance.StorageConnectionString, "claim-checks");
 #endif
                 await containerClient.CreateIfNotExistsAsync();
                 #endregion
 
-                #region Snippet:UploadMessage
-                byte[] body = GetRandomBuffer(1000000);
-                string blobName = Guid.NewGuid().ToString();
-                await containerClient.UploadBlobAsync(blobName, new BinaryData(body));
-                var message = new ServiceBusMessage
+                try
                 {
-                    ApplicationProperties =
-                    {
-                        ["blob-name"] = blobName
-                    }
-                };
-                #endregion
+                    #region Snippet:UploadMessage
 
-                #region Snippet:ClaimCheckSendMessage
+                    byte[] body = GetRandomBuffer(1000000);
+                    string blobName = Guid.NewGuid().ToString();
+                    await containerClient.UploadBlobAsync(blobName, new BinaryData(body));
+                    var message = new ServiceBusMessage
+                    {
+                        ApplicationProperties =
+                        {
+                            ["blob-name"] = blobName
+                        }
+                    };
+
+                    #endregion
+
+                    #region Snippet:ClaimCheckSendMessage
+
 #if SNIPPET
                 var client = new ServiceBusClient("<service bus connection string>");
 #else
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                    var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 #endif
-                ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                await sender.SendMessageAsync(message);
-                #endregion
+                    ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                    await sender.SendMessageAsync(message);
 
-                #region Snippet:ReceiveClaimCheck
-                ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
-                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
-                if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
-                {
+                    #endregion
+
+                    #region Snippet:ReceiveClaimCheck
+
+                    ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
+                    ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+                    if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
+                    {
 #if SNIPPET
-                    var blobClient = new BlobClient("<storage connection string>", "claim-checks", (string) blobNameReceived);
+                        var blobClient = new BlobClient("<storage connection string>", "claim-checks", (string) blobNameReceived);
 #else
-                    var blobClient = new BlobClient(TestEnvironment.StorageClaimCheckConnectionString, "claim-checks", (string) blobNameReceived);
+                        var blobClient = new BlobClient(
+                            StorageTestEnvironment.Instance.StorageConnectionString,
+                            "claim-checks",
+                            (string)blobNameReceived);
 #endif
-                    BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
-                    BinaryData messageBody = downloadResult.Content;
+                        BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
+                        BinaryData messageBody = downloadResult.Content;
+
+                        // Once we determine that we are done with the message, we complete it and delete the corresponding blob.
+                        await receiver.CompleteMessageAsync(receivedMessage);
+                        await blobClient.DeleteAsync();
 #if !SNIPPET
-                    Assert.AreEqual(body, messageBody.ToArray());
+                        Assert.AreEqual(body, messageBody.ToArray());
 #endif
+                    }
+                    #endregion
                 }
-                #endregion
+                finally
+                {
+                    await containerClient.DeleteAsync();
+                }
             }
         }
     }

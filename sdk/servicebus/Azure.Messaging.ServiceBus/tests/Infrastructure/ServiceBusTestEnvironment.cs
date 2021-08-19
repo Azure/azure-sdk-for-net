@@ -135,8 +135,6 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         public string OverrideSecondaryServiceBusConnectionString => GetRecordedOptionalVariable(ServiceBusSecondaryConnectionStringEnvironmentVariable, options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64));
 
-        public string StorageClaimCheckConnectionString => GetRecordedVariable("STORAGE_CLAIM_CHECK_CONNECTION_STRING");
-
         /// <summary>
         ///   The name of an existing Service Bus queue to consider an override and use when
         ///   requesting a test scope, overriding the creation of a new dynamic queue specific to

@@ -30,8 +30,8 @@ var message = new ServiceBusMessage
 Finally, we send our message to our Service Bus queue.
 ```C# Snippet:ClaimCheckSendMessage
 var client = new ServiceBusClient("<service bus connection string>");
-ServiceBusSender sender = client.CreateSender(scope.QueueName);
-await sender.SendMessageAsync(message);
+    ServiceBusSender sender = client.CreateSender(scope.QueueName);
+    await sender.SendMessageAsync(message);
 ```
 
 ### Receiving the message
@@ -46,6 +46,10 @@ if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object bl
     var blobClient = new BlobClient("<storage connection string>", "claim-checks", (string) blobNameReceived);
     BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
     BinaryData messageBody = downloadResult.Content;
+
+    // Once we determine that we are done with the message, we complete it and delete the corresponding blob.
+    await receiver.CompleteMessageAsync(receivedMessage);
+    await blobClient.DeleteAsync();
 }
 ```
 
