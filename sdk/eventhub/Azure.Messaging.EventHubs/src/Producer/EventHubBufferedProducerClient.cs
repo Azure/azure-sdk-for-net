@@ -38,6 +38,10 @@ namespace Azure.Messaging.EventHubs.Producer
     ///
     internal class EventHubBufferedProducerClient : IAsyncDisposable
     {
+        /// <summary>
+        ///   The set of client options to use when options were not passed when the producer was instantiated.
+        /// </summary>
+        ///
         private static EventHubBufferedProducerClientOptions DefaultOptions { get; } = new EventHubBufferedProducerClientOptions
         {
             RetryOptions = new EventHubsRetryOptions { MaximumRetries = 15, TryTimeout = TimeSpan.FromMinutes(3) }
@@ -74,14 +78,34 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public bool IsClosed => _isClosed;
 
+        /// <summary>The producer to use to send events to the Event Hub.</summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is being disposed but it must be in CloseAsync so that dispose can match the IAsyncDisposable signature.")]
+        private readonly EventHubProducerClient _producer;
+
+        /// <summary>Indicates whether or not this instance has started publishing.</summary>
+        private volatile bool _isStarted;
+
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _isClosed;
+
+        /// <summary>The handler to be called once a batch has successfully published.</summary>
+        private event Func<SendEventBatchSucceededEventArgs, Task> _sendSucceeded;
+
+        /// <summary>The handler to be called once a batch has failed to publish.</summary>
+        private event Func<SendEventBatchFailedEventArgs, Task> _sendFailed;
+
         /// <summary>
         ///    Invoked after each batch of events has been successfully published to the Event Hub, this
         ///    handler is optional and is intended to provide notifications for interested listeners.
         /// </summary>
         ///
+        /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
+        /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
+        /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
+        ///
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "Guidance does not apply; this is an event.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
-        public event Func<SendEventBatchSuccessEventArgs, Task> SendEventBatchSuccessAsync
+        public event Func<SendEventBatchSucceededEventArgs, Task> SendEventBatchSuccessAsync
         {
             add
             {
@@ -111,22 +135,6 @@ namespace Azure.Messaging.EventHubs.Producer
             }
         }
 
-        /// <summary>The producer to use to send events to the Event Hub.</summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is being disposed but it must be in CloseAsync so that dispose can match the IAsyncDisposable signature.")]
-        private readonly EventHubProducerClient _producer;
-
-        /// <summary>Indicates whether or not this instance has started publishing.</summary>
-        private volatile bool _isStarted;
-
-        /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _isClosed;
-
-        /// <summary>The handler to be called once a batch has successfully published.</summary>
-        private event Func<SendEventBatchSuccessEventArgs, Task> _sendSucceeded;
-
-        /// <summary>The handler to be called once a batch has failed to publish.</summary>
-        private event Func<SendEventBatchFailedEventArgs, Task> _sendFailed;
-
         /// <summary>
         ///   Invoked for any batch of events that failed to be published to the Event Hub, this handler must be
         ///   provided before events may be enqueued.
@@ -145,6 +153,10 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Doing so will allow the <see cref="EventHubBufferedProducerClient" /> a higher chance to recover from transient failures.  This is
         ///   especially important when ensuring the order of events is needed.
         /// </remarks>
+        ///
+        /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
+        /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
+        /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
         ///
         /// <seealso cref="EventHubsRetryOptions" />
         ///
@@ -222,7 +234,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubBufferedProducerClient(string connectionString,
                                               EventHubBufferedProducerClientOptions clientOptions) : this(clientOptions)
         {
-            _producer = new EventHubProducerClient(connectionString, clientOptions);
+            _producer = new EventHubProducerClient(connectionString, clientOptions.ToEventHubProducerClientOptions());
         }
 
         /// <summary>
@@ -265,7 +277,7 @@ namespace Azure.Messaging.EventHubs.Producer
                                               string eventHubName,
                                               EventHubBufferedProducerClientOptions clientOptions) : this(clientOptions)
         {
-            _producer = new EventHubProducerClient(connectionString, eventHubName, clientOptions);
+            _producer = new EventHubProducerClient(connectionString, eventHubName, clientOptions.ToEventHubProducerClientOptions());
         }
 
         /// <summary>
@@ -282,7 +294,7 @@ namespace Azure.Messaging.EventHubs.Producer
                                               AzureNamedKeyCredential credential,
                                               EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
         {
-            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions);
+            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions?.ToEventHubProducerClientOptions());
         }
 
         /// <summary>
@@ -299,7 +311,7 @@ namespace Azure.Messaging.EventHubs.Producer
                                               AzureSasCredential credential,
                                               EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
         {
-            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions);
+            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions?.ToEventHubProducerClientOptions());
         }
 
         /// <summary>
@@ -316,7 +328,7 @@ namespace Azure.Messaging.EventHubs.Producer
                                               TokenCredential credential,
                                               EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
         {
-            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions);
+            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions?.ToEventHubProducerClientOptions());
         }
 
         /// <summary>
@@ -329,7 +341,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubBufferedProducerClient(EventHubConnection connection,
                                               EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
         {
-            _producer = new EventHubProducerClient(connection, clientOptions);
+            _producer = new EventHubProducerClient(connection, clientOptions?.ToEventHubProducerClientOptions());
         }
 
         /// <summary>
@@ -377,9 +389,58 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <param name="partitionId">The identifier of the partition.</param>
         ///
-        public virtual int GetPartitionBufferedEventCount(string partitionId)
+        public virtual int GetBufferedEventCount(string partitionId)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Retrieves information about the Event Hub that the connection is associated with, including
+        ///   the number of partitions present and their identifiers.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
+        ///
+        public virtual async Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            return await _producer.GetEventHubPropertiesAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///   Retrieves the set of identifiers for the partitions of an Event Hub.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The set of identifiers for the partitions within the Event Hub that this client is associated with.</returns>
+        ///
+        /// <remarks>
+        ///   This method is synonymous with invoking <see cref="GetEventHubPropertiesAsync(CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds" />
+        ///   property that is returned. It is offered as a convenience for quick access to the set of partition identifiers for the associated Event Hub.
+        ///   No new or extended information is presented.
+        /// </remarks>
+        ///
+        public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
+        {
+            return await _producer.GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
+        ///   events in the partition event stream.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
+        ///
+        public virtual async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
+                                                                                   CancellationToken cancellationToken = default)
+        {
+            return await _producer.GetPartitionPropertiesAsync(partitionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -500,11 +561,11 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <param name="events">The set of events belonging to the the batch that failed to be published.</param>
-        /// <param name="ex">The <see cref="Exception"/> that was raised when the events failed to publish.</param>
+        /// <param name="exception">The <see cref="Exception"/> that was raised when the events failed to publish.</param>
         /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
         ///
         protected virtual Task OnSendFailedAsync(IEnumerable<EventData> events,
-                                                 Exception ex,
+                                                 Exception exception,
                                                  string partitionId)
         {
             throw new NotImplementedException();
@@ -560,12 +621,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Closes the producer and performs the tasks needed to clean up all the resources used by the <see cref="EventHubBufferedProducerClient"/>.
         /// </summary>
         ///
-        /// <param name="abandonBufferedEvents">Indicates whether to abandon events in the buffer or attempt to publish them.</param>
+        /// <param name="flush">Indicates whether to abandon events in the buffer or attempt to publish them.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task CloseAsync(bool abandonBufferedEvents,
+        public virtual Task CloseAsync(bool flush = true,
                                        CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();

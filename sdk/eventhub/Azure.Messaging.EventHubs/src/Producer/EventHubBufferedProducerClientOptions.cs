@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Producer
 {
@@ -12,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   to configure its behavior.
     /// </summary>
     ///
-    internal class EventHubBufferedProducerClientOptions : EventHubProducerClientOptions
+    internal class EventHubBufferedProducerClientOptions
     {
         /// <summary>
         ///   The amount of time to wait for a new event to be added to the buffer before sending a partially
@@ -35,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The default limit is 2,500 queued events.
         /// </value>
         ///
-        public int MaximumBufferedEventCount { get; set; } = 2500;
+        public int MaximumEventBufferLength { get; set; } = 2500;
 
         /// <summary>
         ///    Indicates whether or not events should be published using idempotent semantics for retries. If enabled, retries during publishing
@@ -68,6 +70,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   must be maintained, <see cref="MaximumConcurrentSendsPerPartition" /> should not exceed 1.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is not between 1 and 100 (inclusive).</exception>
+        ///
         public int MaximumConcurrentSendsPerPartition
         {
             get => _maximumConcurrentSendsPerPartition;
@@ -78,8 +82,76 @@ namespace Azure.Messaging.EventHubs.Producer
             }
         }
 
+        /// <summary>
+        ///   A unique name used to identify the consumer.  If <c>null</c> or empty, a GUID will be used as the
+        ///   identifier.
+        /// </summary>
+        ///
+        public string Identifier { get; set; }
+
+        /// <summary>
+        ///   The options used for configuring the connection to the Event Hubs service.
+        /// </summary>
+        ///
+        public EventHubConnectionOptions ConnectionOptions
+        {
+            get => _connectionOptions;
+            set
+            {
+                Argument.AssertNotNull(value, nameof(ConnectionOptions));
+                _connectionOptions = value;
+            }
+        }
+
+        /// <summary>
+        ///   The set of options to use for determining whether a failed operation should be retried and,
+        ///   if so, the amount of time to wait between retry attempts.  These options also control the
+        ///   amount of time allowed for publishing events and other interactions with the Event Hubs service.
+        /// </summary>
+        ///
+        public EventHubsRetryOptions RetryOptions
+        {
+            get => _retryOptions;
+            set
+            {
+                Argument.AssertNotNull(value, nameof(RetryOptions));
+                _retryOptions = value;
+            }
+        }
+
+        /// <summary>
+        ///   Indicates whether or not the producer should enable idempotent publishing to the Event Hub partitions.  If
+        ///   enabled, the producer will only be able to publish directly to partitions; it will not be able to publish to
+        ///   the Event Hubs gateway for automatic partition routing nor using a partition key.
+        /// </summary>
+        ///
+        /// <value><c>true</c> if the producer should enable idempotent partition publishing; otherwise, <c>false</c>.</value>
+        ///
+        internal bool EnableIdempotentPartitions { get; set; }
+
+        /// <summary>
+        ///   The set of options that can be specified to influence publishing behavior specific to the configured Event Hub partition.  These
+        ///   options are not necessary in the majority of scenarios and are intended for use with specialized scenarios, such as when
+        ///   recovering the state used for idempotent publishing.
+        ///
+        ///   <para>It is highly recommended that these options only be specified if there is a proven need to do so; Incorrectly configuring these
+        ///   values may result in an <see cref="EventHubProducerClient" /> instance that is unable to publish to the Event Hubs.</para>
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   These options are ignored when publishing to the Event Hubs gateway for automatic routing or when using a partition key.
+        /// </remarks>
+        ///
+        internal Dictionary<string, PartitionPublishingOptions> PartitionOptions { get; } = new Dictionary<string, PartitionPublishingOptions>();
+
         /// <summary> The number of batches that may be sent concurrently to each partition. </summary>
         private int _maximumConcurrentSendsPerPartition = 1;
+
+        /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
+        private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
+
+        /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
+        private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -109,5 +181,90 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="EventHubBufferedProducerClientOptions" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="EventHubBufferedProducerClientOptions" />.</returns>
+        ///
+        internal EventHubBufferedProducerClientOptions Clone()
+        {
+            var copiedOptions = new EventHubBufferedProducerClientOptions
+            {
+                Identifier = Identifier,
+                EnableIdempotentPartitions = EnableIdempotentPartitions,
+                _connectionOptions = ConnectionOptions.Clone(),
+                _retryOptions = RetryOptions.Clone(),
+                _maximumConcurrentSendsPerPartition = MaximumConcurrentSendsPerPartition,
+                MaximumEventBufferLength = MaximumEventBufferLength,
+                MaximumWaitTime = MaximumWaitTime,
+                EnableIdempotentRetries = EnableIdempotentRetries
+            };
+
+            foreach (var pair in PartitionOptions)
+            {
+                copiedOptions.PartitionOptions.Add(pair.Key, pair.Value.Clone());
+            }
+
+            return copiedOptions;
+        }
+
+        /// <summary>
+        /// Creates an <see cref="EventHubProducerClientOptions"/> from the current instance.
+        /// </summary>
+        ///
+        /// <returns>The set of options represented as <see cref="EventHubProducerClientOptions"/></returns>
+        ///
+        internal EventHubProducerClientOptions ToEventHubProducerClientOptions()
+        {
+            var translatedOptions = new EventHubProducerClientOptions
+            {
+                Identifier = Identifier,
+                EnableIdempotentPartitions = EnableIdempotentPartitions,
+                ConnectionOptions = ConnectionOptions,
+                RetryOptions = RetryOptions
+            };
+            return translatedOptions;
+        }
+
+        /// <summary>
+        ///   Creates the set of flags that represents the features requested by these options.
+        /// </summary>
+        ///
+        /// <returns>The set of features that were requested for the <see cref="EventHubProducerClient" />.</returns>
+        ///
+        internal TransportProducerFeatures CreateFeatureFlags()
+        {
+            var features = TransportProducerFeatures.None;
+
+            if (EnableIdempotentPartitions)
+            {
+                features |= TransportProducerFeatures.IdempotentPublishing;
+            }
+
+            return features;
+        }
+
+        /// <summary>
+        ///   Attempts to retrieve the publishing options for a given partition, returning a
+        ///   default in the case that no partition was specified or there were no available options
+        ///   for that partition.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition for which options are requested.</param>
+        ///
+        /// <returns><c>null</c> in the event that there was no partition specified or no options for the partition; otherwise, the publishing options.</returns>
+        ///
+        internal PartitionPublishingOptions GetPublishingOptionsOrDefaultForPartition(string partitionId)
+        {
+            if (string.IsNullOrEmpty(partitionId))
+            {
+                return default;
+            }
+
+            PartitionOptions.TryGetValue(partitionId, out var options);
+            return options;
+        }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Azure.Messaging.EventHubs.Producer
 {
@@ -18,19 +19,25 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The set of events that were in the batch that failed to publish.
         /// </summary>
         ///
-        public IEnumerable<EventData> EventBatch { get; set; }
+        public IReadOnlyList<EventData> EventBatch { get; }
 
         /// <summary>
         ///   The exception that occurred when trying to publish the batch.
         /// </summary>
         ///
-        public Exception Exception { get; set; }
+        public Exception Exception { get; }
 
         /// <summary>
         ///   The identifier of the partition to which the batch was being published.
         /// </summary>
         ///
-        public string PartitionId { get; set; }
+        public string PartitionId { get; }
+
+        /// <summary>
+        /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
+        /// </summary>
+        ///
+        public CancellationToken CancellationToken { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="SendEventBatchFailedEventArgs"/> class.
@@ -38,14 +45,17 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="eventBatch">The set of events that were in the batch that failed to publish.</param>
         /// <param name="exception">The exception that occurred when trying to publish the batch.</param>
         /// <param name="partitionId">The identifier of the partition to which the batch was being published.</param>
+        /// <param name="cancellationToken">A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public SendEventBatchFailedEventArgs(IEnumerable<EventData> eventBatch,
+        public SendEventBatchFailedEventArgs(IReadOnlyList<EventData> eventBatch,
                                              Exception exception,
-                                             string partitionId)
+                                             string partitionId,
+                                             CancellationToken cancellationToken = default)
         {
             EventBatch = eventBatch;
             Exception = exception;
             PartitionId = partitionId;
+            CancellationToken = cancellationToken;
         }
     }
 }

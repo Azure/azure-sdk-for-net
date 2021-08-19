@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Azure.Messaging.EventHubs.Producer
 {
@@ -11,32 +12,41 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   that it was published to.
     /// </summary>
     ///
-    internal class SendEventBatchSuccessEventArgs : EventArgs
+    internal class SendEventBatchSucceededEventArgs : EventArgs
     {
         /// <summary>
         ///   The set of events in the batch that was published.
         /// </summary>
         ///
-        public IEnumerable<EventData> EventBatch { get; set; }
+        public IReadOnlyList<EventData> EventBatch { get; }
 
         /// <summary>
         ///   The identifier of the partition that the batch was published to.
         /// </summary>
         ///
-        public string PartitionId { get; set; }
+        public string PartitionId { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SendEventBatchSuccessEventArgs"/> class.
+        /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
+        /// </summary>
+        ///
+        public CancellationToken CancellationToken { get; }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="SendEventBatchSucceededEventArgs"/> class.
         /// </summary>
         ///
         /// <param name="eventBatch">The set of events in the batch that was published.</param>
         /// <param name="partitionId">The identifier of the partition that the batch was published to.</param>
+        /// <param name="cancellationToken">A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public SendEventBatchSuccessEventArgs(IEnumerable<EventData> eventBatch,
-                                              string partitionId)
+        public SendEventBatchSucceededEventArgs(IReadOnlyList<EventData> eventBatch,
+                                              string partitionId,
+                                              CancellationToken cancellationToken)
         {
             EventBatch = eventBatch;
             PartitionId = partitionId;
+            CancellationToken = cancellationToken;
         }
     }
 }
