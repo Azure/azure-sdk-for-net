@@ -14,8 +14,14 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     [JsonConverter(typeof(ErrorResponseConverter))]
-    public partial class ErrorResponse
+    public partial class ErrorResponse : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+        }
+
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
             Optional<string> code = default;
