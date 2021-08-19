@@ -54,7 +54,7 @@ To reduce both the number of clients needed to perform common tasks and the amou
 
 To accomplish this, we're introducing 3 standard types for all resources in Azure:
 
-#### **[Resource].cs**
+### **[Resource].cs**
 
 This represents a full resource client object which contains a **Data** property exposing the details as a **[Resource]Data** type.
 It also has access to all of the operations on that resource without needing to pass in scope parameters such as subscription ID or resource name.  This makes it very convenient to directly execute operations on the result of list calls
@@ -72,11 +72,11 @@ await foreach (VirtualMachine vm in rg.GetVirtualMachines().GetAllAsync())
 }
 ```
 
-#### **[Resource]Data.cs**
+### **[Resource]Data.cs**
 
 This represents the model that makes up a given resource. Typically, this is the response data from a service call such as HTTP GET and provides details about the underlying resource. Previously, this was represented by a **Model** class.
 
-#### **[Resource]Container.cs**
+### **[Resource]Container.cs**
 
 This represents the operations you can perform on a collection of resources belonging to a specific parent resource.
 This object provides most of the logical collection operations.
@@ -91,10 +91,38 @@ This object provides most of the logical collection operations.
 
 For most things, the parent will be a **ResourceGroup**. However, each parent / child relationship is represented this way. For example, a **Subnet** is a child of a **VirtualNetwork** and a **ResourceGroup** is a child of a **Subscription**.
 
-### Structured Resource Identifier
+## Putting it all together
+Imagine that our company requires all virtual machines to be tagged with the owner. We're tasked with writing a program to add the tag to any missing virtual machines in a given resource group.
+
+ ```csharp
+// First we construct our armClient
+var armClient = new ArmClient(new DefaultAzureCredential());
+
+// Next we get a resource group object
+// ResourceGroup is a [Resource] object from above
+ResourceGroup resourceGroup = await armClient.DefaultSubscription.GetResourceGroups().GetAsync("myRgName");
+
+// Next we get the container for the virtual machines
+// vmContainer is a [Resource]Container object from above
+VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
+
+// Next we loop over all vms in the container
+// Each vm is a [Resource] object from above
+await foreach(VirtualMachine vm in vmContainer.GetAllAsync())
+{
+    // We access the [Resource]Data properties from vm.Data
+    if(!vm.Data.Tags.ContainsKey("owner"))
+    {
+        // We can also access all operations from vm since it is already scoped for us
+        await vm.StartAddTag("owner", GetOwner()).WaitForCompletionAsync();
+    }
+}
+ ```
+
+## Structured Resource Identifier
 Resource IDs contain useful information about the resource itself, but they are plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object which will do the parsing for you: `new ResourceIdentifer("myid");`.
 
-#### Example: Parsing an ID using a ResourceIdentifier object 
+### Example: Parsing an ID using a ResourceIdentifier object 
 ```C# Snippet:Readme_CastToSpecificType
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
 ResourceIdentifier id = new ResourceIdentifier(resourceId);
@@ -104,7 +132,8 @@ Console.WriteLine($"Vnet: {id.Parent.Name}");
 Console.WriteLine($"Subnet: {id.Name}");
 ```
 However, keep in mind that some of those properties could be null. You can usually tell by the id string itself which type a resource ID is, but if you are unsure, check if the properties are null or use the Try methods to retrieve the values as it's shown below:
-#### Example: ResourceIdentifier TryGet methods 
+
+### Example: ResourceIdentifier TryGet methods 
 ```C# Snippet:Readme_CastToBaseResourceIdentifier
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
 // Assume we don't know what type of resource id we have we can cast to the base type
@@ -120,8 +149,8 @@ Console.WriteLine($"Vnet: {id.Parent.Name}");
 Console.WriteLine($"Subnet: {id.Name}");
 ```
 
-### Managing Existing Resources By Id
-Performing operations on resources that already exist is a common use case when using the management client libraries. In this scenario you usually have the identifier of the resource you want to work on as a string.  Although the new object hierarchy is great for provisioning and working within the scope of a given parent, it is not the most efficient when it comes to this specific scenario.  
+## Managing Existing Resources By Id
+Performing operations on resources that already exist is a common use case when using the management client libraries. In this scenario you usually have the identifier of the resource you want to work on as a string. Although the new object hierarchy is great for provisioning and working within the scope of a given parent, it is not the most efficient when it comes to this specific scenario.  
 
 Here is an example how you to access an `AvailabilitySet` object and manage it directly with its id: 
 ```csharp
@@ -165,7 +194,7 @@ availabilitySet = await availabilitySet.GetAsync();
 Console.WriteLine(availabilitySet.Data.Name);
 ```
 
-### Check if a [Resource] exists
+## Check if a [Resource] exists
 
 If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoked from any [Resource]Container class.
 
@@ -281,34 +310,6 @@ ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rg
 await resourceGroup.DeleteAsync();
 ```
 
-### Add a tag to a virtual machine
-Imagine that our company requires all virtual machines to be tagged with the owner. We're tasked with writing a program to add the tag to any missing virtual machines in a given resource group.
-
- ```csharp
-// First we construct our armClient
-var armClient = new ArmClient(new DefaultAzureCredential());
-
-// Next we get a resource group object
-// ResourceGroup is a [Resource] object from above
-ResourceGroup resourceGroup = await armClient.DefaultSubscription.GetResourceGroups().GetAsync("myRgName");
-
-// Next we get the container for the virtual machines
-// vmContainer is a [Resource]Container object from above
-VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
-
-// Next we loop over all vms in the container
-// Each vm is a [Resource] object from above
-await foreach(VirtualMachine vm in vmContainer.GetAllAsync())
-{
-    // We access the [Resource]Data properties from vm.Data
-    if(!vm.Data.Tags.ContainsKey("owner"))
-    {
-        // We can also access all operations from vm since it is already scoped for us
-        await vm.StartAddTag("owner", GetOwner()).WaitForCompletionAsync();
-    }
-}
- ```
-
 For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
 
 ## Troubleshooting
@@ -318,6 +319,7 @@ For more detailed examples, take a look at [samples](https://github.com/Azure/az
     questions](https://stackoverflow.com/questions/tagged/azure+.net)
     or ask new ones on StackOverflow using azure and .NET tags.
 -   If having trouble with authentication, go to [DefaultAzureCredential documentation](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
+
 ## Next steps
 ### More sample code
 
