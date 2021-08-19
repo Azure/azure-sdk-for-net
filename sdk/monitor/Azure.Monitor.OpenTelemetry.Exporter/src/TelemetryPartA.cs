@@ -31,7 +31,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static string RoleInstance { get; set; }
 
+#pragma warning disable CA1801 // Review unused parameters
         internal static TelemetryItem GetTelemetryItem(Activity activity, ref TagEnumerationState monitorTags, Resource resource, string instrumentationKey)
+#pragma warning restore CA1801 // Review unused parameters
         {
             TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], FormatUtcTimestamp(activity.StartTimeUtc))
             {
@@ -49,8 +51,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
-
-            telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()] = GetOperationName(ref monitorTags.PartBTags);
 
             return telemetryItem;
         }
@@ -129,12 +129,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal static string FormatUtcTimestamp(System.DateTime utcTimestamp)
         {
             return utcTimestamp.ToString(DateTimeFormat, CultureInfo.InvariantCulture);
-        }
-
-        private static string GetOperationName(ref AzMonList partBTags)
-        {
-            // replace with correct implementation
-            return AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpMethod)?.ToString();
         }
     }
 }
