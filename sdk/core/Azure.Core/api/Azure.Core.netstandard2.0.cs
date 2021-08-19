@@ -694,8 +694,15 @@ namespace Azure.Core.Pipeline
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
         public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
+        public static Azure.Core.Pipeline.HttpClientTransport CreateWithDefaultSettings(Azure.Core.Pipeline.HttpClientTransportOptions? options = null) { throw null; }
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
+    }
+    public partial class HttpClientTransportOptions
+    {
+        public HttpClientTransportOptions() { }
+        public System.Func<System.Security.Cryptography.X509Certificates.X509Certificate2?, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
+        public bool TrustAllServerCertificates { get { throw null; } set { } }
     }
     public partial class HttpPipeline
     {

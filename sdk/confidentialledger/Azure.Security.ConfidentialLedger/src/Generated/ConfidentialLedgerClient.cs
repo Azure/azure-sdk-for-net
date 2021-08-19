@@ -29,30 +29,6 @@ namespace Azure.Security.ConfidentialLedger
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
-        /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
-        {
-            if (ledgerUri == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerUri));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            options ??= new ConfidentialLedgerClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.ledgerUri = ledgerUri;
-            apiVersion = options.Version;
-        }
-
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
