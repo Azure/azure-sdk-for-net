@@ -599,7 +599,7 @@ namespace Azure.Core.Pipeline
                 else if (options.ServerCertificateCustomValidationCallback != null)
                 {
                     httpHandler.ServerCertificateCustomValidationCallback =
-                        (req, certificate2, _, _) => options.ServerCertificateCustomValidationCallback(certificate2);
+                        (_, certificate2, _, _) => options.ServerCertificateCustomValidationCallback(certificate2);
                 }
             }
             return httpHandler;
