@@ -43,7 +43,7 @@ var receiver = client.CreateReceiver(scope.QueueName);
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
 {
-    var blobClient = new BlobClient(TestEnvironment.StorageClaimCheckConnectionString, "claim-checks", (string) blobNameReceived);
+    var blobClient = new BlobClient("<storage connection string>", "claim-checks", (string) blobNameReceived);
     BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
     BinaryData messageBody = downloadResult.Content;
 }

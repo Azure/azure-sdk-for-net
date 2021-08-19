@@ -53,7 +53,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
                 {
+#if SNIPPET
+                    var blobClient = new BlobClient("<storage connection string>", "claim-checks", (string) blobNameReceived);
+#else
                     var blobClient = new BlobClient(TestEnvironment.StorageClaimCheckConnectionString, "claim-checks", (string) blobNameReceived);
+#endif
                     BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
                     BinaryData messageBody = downloadResult.Content;
 #if !SNIPPET
