@@ -193,7 +193,7 @@ $content =
 $storageTestConfigurationTemplateName = 'TestConfigurationsTemplate.xml'
 $storageTestConfigurationName = 'TestConfigurations.xml'
 
-if(-not (Test-Path $env:BUILD_ARTIFACTSTAGINGDIRECTORY -ErrorAction Ignore) ) {
+if( (-not $env:BUILD_ARTIFACTSTAGINGDIRECTORY ) -or (-not (Test-Path $env:BUILD_ARTIFACTSTAGINGDIRECTORY -ErrorAction Ignore)) ) {
   Write-Verbose "Checking for '$storageTestConfigurationTemplateName' files under '$PSScriptRoot'"
 
   $foundFile = Get-ChildItem -Path $PSScriptRoot -Filter $storageTestConfigurationTemplateName -Recurse | Select-Object -First 1
