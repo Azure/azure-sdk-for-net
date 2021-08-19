@@ -167,5 +167,22 @@ namespace Azure.Security.KeyVault.Keys
             DeletedOn = deletedOn,
             ScheduledPurgeDate = scheduledPurgeDate,
         };
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Keys.ReleaseKeyResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="value">Sets the <see cref="Keys.ReleaseKeyResult.Value"/> property.</param>
+        /// <returns></returns>
+        public static ReleaseKeyResult ReleaseKeyResult(string value) => new ReleaseKeyResult()
+        {
+            Value = value,
+        };
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Keys.RandomBytes"/> for mocking purposes.
+        /// </summary>
+        /// <param name="value">Sets the <see cref="Keys.RandomBytes.Value"/> property.</param>
+        /// <returns>A new instance of the <see cref="Keys.RandomBytes"/> for mocking purposes.</returns>
+        public static RandomBytes RandomBytes(byte[] value) => new RandomBytes { Value = value };
     }
 }

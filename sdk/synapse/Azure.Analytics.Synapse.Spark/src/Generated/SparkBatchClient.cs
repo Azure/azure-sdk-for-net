@@ -76,7 +76,6 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="from"> Optional param specifying which index the list should begin from. </param>
         /// <param name="size">
         /// Optional param specifying the size of the returned list.
-        /// 
         ///             By default it is 20 and that is the maximum.
         /// </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
@@ -100,7 +99,6 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="from"> Optional param specifying which index the list should begin from. </param>
         /// <param name="size">
         /// Optional param specifying the size of the returned list.
-        /// 
         ///             By default it is 20 and that is the maximum.
         /// </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>

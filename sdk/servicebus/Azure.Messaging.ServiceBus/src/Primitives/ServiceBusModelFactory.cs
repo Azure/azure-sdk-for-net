@@ -215,17 +215,93 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusMessageBatch" /> class.
+        /// Creates a new <see cref="QueueRuntimeProperties"/> instance for mocking.
+        /// </summary>
+        public static QueueRuntimeProperties QueueRuntimeProperties(
+            string name,
+            long activeMessageCount = default,
+            long scheduledMessageCount = default,
+            long deadLetterMessageCount = default,
+            long transferDeadLetterMessageCount = default,
+            long transferMessageCount = default,
+            long totalMessageCount = default,
+            long sizeInBytes = default,
+            DateTimeOffset createdAt = default,
+            DateTimeOffset updatedAt = default,
+            DateTimeOffset accessedAt = default) =>
+                new(name)
+                {
+                    ActiveMessageCount = activeMessageCount,
+                    ScheduledMessageCount = scheduledMessageCount,
+                    DeadLetterMessageCount = deadLetterMessageCount,
+                    TransferDeadLetterMessageCount = transferDeadLetterMessageCount,
+                    TransferMessageCount = transferMessageCount,
+                    TotalMessageCount = totalMessageCount,
+                    SizeInBytes = sizeInBytes,
+                    CreatedAt = createdAt,
+                    UpdatedAt = updatedAt,
+                    AccessedAt = accessedAt
+                };
+
+        /// <summary>
+        /// Creates a new <see cref="TopicRuntimeProperties"/> instance for mocking.
+        /// </summary>
+        public static TopicRuntimeProperties TopicRuntimeProperties(
+            string name,
+            long scheduledMessageCount = default,
+            long sizeInBytes = default,
+            int subscriptionCount = default,
+            DateTimeOffset createdAt = default,
+            DateTimeOffset updatedAt = default,
+            DateTimeOffset accessedAt = default) =>
+                new(name)
+                {
+                    ScheduledMessageCount = scheduledMessageCount,
+                    SizeInBytes = sizeInBytes,
+                    SubscriptionCount = subscriptionCount,
+                    CreatedAt = createdAt,
+                    UpdatedAt = updatedAt,
+                    AccessedAt = accessedAt
+                };
+
+        /// <summary>
+        /// Creates a new <see cref="SubscriptionRuntimeProperties"/> instance for mocking.
+        /// </summary>
+        public static SubscriptionRuntimeProperties SubscriptionRuntimeProperties(
+            string topicName,
+            string subscriptionName,
+            long activeMessageCount = default,
+            long deadLetterMessageCount = default,
+            long transferDeadLetterMessageCount = default,
+            long transferMessageCount = default,
+            long totalMessageCount = default,
+            DateTimeOffset createdAt = default,
+            DateTimeOffset updatedAt = default,
+            DateTimeOffset accessedAt = default) =>
+                new(topicName, subscriptionName)
+                {
+                    ActiveMessageCount = activeMessageCount,
+                    DeadLetterMessageCount = deadLetterMessageCount,
+                    TransferDeadLetterMessageCount = transferDeadLetterMessageCount,
+                    TransferMessageCount = transferMessageCount,
+                    TotalMessageCount = totalMessageCount,
+                    CreatedAt = createdAt,
+                    UpdatedAt = updatedAt,
+                    AccessedAt = accessedAt
+                };
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch" /> class.
         /// </summary>
         ///
         /// <param name="batchSizeBytes">The size, in bytes, that the batch should report; this is a static value and will not mutate as messages are added.</param>
-        /// <param name="batchMessageStore">A list to which messages will be added when <see cref="ServiceBusMessageBatch.TryAddMessage" /> calls are successful.</param>
+        /// <param name="batchMessageStore">A list to which messages will be added when <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch.TryAddMessage" /> calls are successful.</param>
         /// <param name="batchOptions">The set of options to consider when creating this batch.</param>
-        /// <param name="tryAddCallback"> A function that will be invoked when <see cref="ServiceBusMessageBatch.TryAddMessage" /> is called;
-        /// the return of this callback represents the result of <see cref="ServiceBusMessageBatch.TryAddMessage" />.
+        /// <param name="tryAddCallback"> A function that will be invoked when <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch.TryAddMessage" /> is called;
+        /// the return of this callback represents the result of <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch.TryAddMessage" />.
         /// If not provided, all events will be accepted into the batch.</param>
         ///
-        /// <returns>The <see cref="ServiceBusMessageBatch" /> instance that was created.</returns>
+        /// <returns>The <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch" /> instance that was created.</returns>
         ///
         public static ServiceBusMessageBatch ServiceBusMessageBatch(long batchSizeBytes,
                                                     IList<ServiceBusMessage> batchMessageStore,

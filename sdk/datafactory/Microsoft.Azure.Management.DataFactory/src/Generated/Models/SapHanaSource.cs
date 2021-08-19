@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="additionalColumns">Specifies the additional columns to
-        /// be added to source data. Type: array of objects (or Expression with
-        /// resultType array of objects).</param>
+        /// be added to source data. Type: array of objects(AdditionalColumns)
+        /// (or Expression with resultType array of objects).</param>
         /// <param name="query">SAP HANA Sql query. Type: string (or Expression
         /// with resultType string).</param>
         /// <param name="packetSize">The packet size of data read from SAP
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </param>
         /// <param name="partitionSettings">The settings that will be leveraged
         /// for SAP HANA source partitioning.</param>
-        public SapHanaSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object query = default(object), object packetSize = default(object), object partitionOption = default(object), SapHanaPartitionSettings partitionSettings = default(SapHanaPartitionSettings))
+        public SapHanaSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object queryTimeout = default(object), object additionalColumns = default(object), object query = default(object), object packetSize = default(object), object partitionOption = default(object), SapHanaPartitionSettings partitionSettings = default(SapHanaPartitionSettings))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, queryTimeout, additionalColumns)
         {
             Query = query;

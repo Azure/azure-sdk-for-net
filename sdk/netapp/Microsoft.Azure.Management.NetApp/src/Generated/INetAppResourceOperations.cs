@@ -71,17 +71,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// The location
         /// </param>
         /// <param name='name'>
-        /// Resource name to verify.
+        /// File path to verify.
         /// </param>
-        /// <param name='type'>
-        /// Resource type used for verification. Possible values include:
-        /// 'Microsoft.NetApp/netAppAccounts',
-        /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
-        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
-        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
-        /// </param>
-        /// <param name='resourceGroup'>
-        /// Resource group name.
+        /// <param name='subnetId'>
+        /// The Azure Resource URI for a delegated subnet. Must have the
+        /// delegation Microsoft.NetApp/volumes
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -98,7 +92,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CheckAvailabilityResponse>> CheckFilePathAvailabilityWithHttpMessagesAsync(string location, string name, string type, string resourceGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CheckAvailabilityResponse>> CheckFilePathAvailabilityWithHttpMessagesAsync(string location, string name, string subnetId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Check quota availability
         /// </summary>

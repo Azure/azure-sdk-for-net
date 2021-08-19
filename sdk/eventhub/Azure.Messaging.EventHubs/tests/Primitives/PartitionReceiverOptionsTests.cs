@@ -29,6 +29,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
                 RetryOptions = new EventHubsRetryOptions { Mode = EventHubsRetryMode.Fixed },
                 DefaultMaximumReceiveWaitTime = TimeSpan.FromMilliseconds(9994),
+                Identifier = "Test-34",
                 OwnerLevel = 99,
                 PrefetchCount = 65,
                 TrackLastEnqueuedEventProperties = false
@@ -43,6 +44,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
             Assert.That(clone.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
             Assert.That(clone.DefaultMaximumReceiveWaitTime, Is.EqualTo(options.DefaultMaximumReceiveWaitTime), "The maximum wait time should match.");
+            Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
             Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The owner level of the clone should match.");
             Assert.That(clone.PrefetchCount, Is.EqualTo(options.PrefetchCount), "The prefetch count should match.");
             Assert.That(clone.PrefetchSizeInBytes, Is.EqualTo(options.PrefetchSizeInBytes), "The prefetch size should match.");

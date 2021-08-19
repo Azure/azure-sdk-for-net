@@ -89,7 +89,7 @@ namespace Azure.Identity
             _pipeline = CredentialPipeline.GetInstance(options ?? new TokenCredentialOptions());
             _redirectUri = options switch
             {
-                AuthorizationCodeCredentialOptions o => o.RedirectUri?.ToString(),
+                AuthorizationCodeCredentialOptions o => o.RedirectUri?.AbsoluteUri,
                 _ => null
             };
 

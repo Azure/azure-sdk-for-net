@@ -34,22 +34,9 @@ namespace Azure.Storage.Files.Shares
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="version"/>, or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
         public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-10-02", string fileRangeWriteFromUrl = "update")
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (fileRangeWriteFromUrl == null)
-            {
-                throw new ArgumentNullException(nameof(fileRangeWriteFromUrl));
-            }
-
-            this.url = url;
-            this.version = version;
-            this.fileRangeWriteFromUrl = fileRangeWriteFromUrl;
+            this.url = url ?? throw new ArgumentNullException(nameof(url));
+            this.version = version ?? throw new ArgumentNullException(nameof(version));
+            this.fileRangeWriteFromUrl = fileRangeWriteFromUrl ?? throw new ArgumentNullException(nameof(fileRangeWriteFromUrl));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

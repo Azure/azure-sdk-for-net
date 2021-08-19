@@ -20,6 +20,7 @@ if ($SpellCheckPublicApiSurface) {
     Write-Host "Spell check public API surface"
     npx cspell lint `
         --config "$PSScriptRoot/../../.vscode/cspell.json" `
+        --no-must-find-files `
         "$PSScriptRoot/../../sdk/$ServiceDirectory/*/api/*.cs"
     if ($LASTEXITCODE) { 
         Write-Host "##vso[task.LogIssue type=error;]Spelling errors detected. To correct false positives or learn about spell checking see: https://aka.ms/azsdk/engsys/spellcheck"

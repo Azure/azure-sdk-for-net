@@ -10,27 +10,31 @@ using NUnit.Framework;
 namespace Azure.AI.Translation.Document.Samples
 {
     [LiveOnly]
-    public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
+    public partial class DocumentTranslationSamples : DocumentTranslationLiveTestBase
     {
         [Test]
+        [SyncOnly]
         public void OperationsHistory()
         {
+#if SNIPPET
+            string endpoint = "<Document Translator Resource Endpoint>";
+            string apiKey = "<Document Translator Resource API Key>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+#endif
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:OperationsHistory
-
             int operationsCount = 0;
             int totalDocs = 0;
-            int docsCancelled = 0;
+            int docsCanceled = 0;
             int docsSucceeded = 0;
             int docsFailed = 0;
 
             TimeSpan pollingInterval = new(1000);
 
-            foreach (TranslationStatus translationStatus in client.GetAllTranslationStatuses())
+            foreach (TranslationStatus translationStatus in client.GetTranslationStatuses())
             {
                 if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
                     translationStatus.Status == DocumentTranslationStatus.Running)
@@ -51,7 +55,7 @@ namespace Azure.AI.Translation.Document.Samples
 
                 operationsCount++;
                 totalDocs += translationStatus.DocumentsTotal;
-                docsCancelled += translationStatus.DocumentsCancelled;
+                docsCanceled += translationStatus.DocumentsCanceled;
                 docsSucceeded += translationStatus.DocumentsSucceeded;
                 docsFailed += translationStatus.DocumentsFailed;
             }
@@ -60,9 +64,7 @@ namespace Azure.AI.Translation.Document.Samples
             Console.WriteLine($"Total Documents: {totalDocs}");
             Console.WriteLine($"Succeeded Document: {docsSucceeded}");
             Console.WriteLine($"Failed Document: {docsFailed}");
-            Console.WriteLine($"Cancelled Documents: {docsCancelled}");
-
-            #endregion
+            Console.WriteLine($"Cancelled Documents: {docsCanceled}");
         }
     }
 }

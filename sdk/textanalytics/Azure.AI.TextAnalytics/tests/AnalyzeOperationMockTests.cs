@@ -707,6 +707,73 @@ namespace Azure.AI.TextAnalytics.Tests
 
         #endregion Analyze sentiment
 
+        #region Extract summary
+
+        [Test]
+        public async Task AnalyzeOperationExtractSummaryWithDisableServiceLogs()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            var actions = new ExtractSummaryAction()
+            {
+                DisableServiceLogs = true
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractSummaryActions = new List<ExtractSummaryAction>() { actions },
+            };
+
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
+
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
+
+            var expectedContent = "loggingOptOut\":true";
+            Assert.AreEqual(expectedContent, logging);
+        }
+
+        [Test]
+        public void AnalyzeOperationExtractSummaryWithTwoActions()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
+
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                ExtractSummaryActions = new List<ExtractSummaryAction>()
+                {
+                    new ExtractSummaryAction(),
+                    new ExtractSummaryAction()
+                    {
+                        ModelVersion = "InvalidVersion"
+                    }
+                },
+            };
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
+            Assert.AreEqual("Multiple of the same action is not currently supported.", ex.Message);
+        }
+
+        #endregion Extract summary
+
         [Test]
         public async Task AnalyzeOperationWithActionsError()
         {
@@ -743,6 +810,11 @@ namespace Azure.AI.TextAnalytics.Tests
                         ""code"": ""InvalidRequest"",
                         ""message"": ""Some error"",
                         ""target"": ""#/tasks/sentimentAnalysisTasks/0""
+                      },
+                      {
+                        ""code"": ""InvalidRequest"",
+                        ""message"": ""Some error"",
+                        ""target"": ""#/tasks/extractiveSummarizationTasks/0""
                       }
                     ],
                     ""tasks"": {
@@ -751,9 +823,9 @@ namespace Azure.AI.TextAnalytics.Tests
                         ""lastUpdateDateTime"": ""2021-03-03T22:39:37Z""
                       },
                       ""completed"": 0,
-                      ""failed"": 5,
+                      ""failed"": 6,
                       ""inProgress"": 0,
-                      ""total"": 5,
+                      ""total"": 6,
                       ""entityRecognitionTasks"": [
                         {
                           ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
@@ -788,6 +860,13 @@ namespace Azure.AI.TextAnalytics.Tests
                           ""taskName"": ""something"",
                           ""state"": ""failed""
                         }
+                      ],
+                      ""extractiveSummarizationTasks"": [
+                        {
+                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
+                          ""taskName"": ""something"",
+                          ""state"": ""failed""
+                        }
                       ]
                     }
                 }"));
@@ -810,16 +889,17 @@ namespace Azure.AI.TextAnalytics.Tests
                 RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() },
                 RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
                 AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
+                ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() },
                 DisplayName = "AnalyzeOperationBatchWithErrorTest"
             };
 
             var operation = new AnalyzeActionsOperation("75d521bc-c2aa-4d8a-aabe-713e72d53a2d", client);
             await operation.UpdateStatusAsync();
 
-            Assert.AreEqual(5, operation.ActionsFailed);
+            Assert.AreEqual(6, operation.ActionsFailed);
             Assert.AreEqual(0, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(5, operation.ActionsTotal);
+            Assert.AreEqual(6, operation.ActionsTotal);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -829,6 +909,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizePiiEntitiesActionResult piiActionsResults = resultCollection.RecognizePiiEntitiesResults.FirstOrDefault();
             RecognizeLinkedEntitiesActionResult entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults.FirstOrDefault();
             AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults.FirstOrDefault();
+            ExtractSummaryActionResult extractSummaryActionsResults = resultCollection.ExtractSummaryResults.FirstOrDefault();
 
             Assert.IsTrue(entitiesActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
@@ -844,6 +925,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(analyzeSentimentActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => analyzeSentimentActionsResults.DocumentsResults.GetType());
+
+            Assert.IsTrue(extractSummaryActionsResults.HasError);
+            Assert.Throws<InvalidOperationException>(() => extractSummaryActionsResults.DocumentsResults.GetType());
         }
 
         [Test]

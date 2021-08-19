@@ -27,5 +27,10 @@ namespace Azure.Identity
         /// Otherwise the credential will only acquire tokens from the tenant configured when the credential was constructed.
         /// </summary>
         public bool AllowMultiTenantAuthentication { get; set; }
+
+        /// <summary>
+        /// Gets or sets value indicating if logging that contains PII content should be logged.
+        /// </summary>
+        public bool IsLoggingPIIEnabled { get; set; }
     }
 }

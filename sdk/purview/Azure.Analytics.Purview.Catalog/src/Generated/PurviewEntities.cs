@@ -48,13 +48,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>referredEntities</term>
         ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
         ///     <term></term>
-        ///     <term> The referred entities. </term>
+        ///     <term>The referred entities.</term>
         ///   </item>
         ///   <item>
         ///     <term>entity</term>
         ///     <term>AtlasEntity</term>
         ///     <term></term>
-        ///     <term> An instance of an entity - like hive_table, hive_database. </term>
+        ///     <term>An instance of an entity - like hive_table, hive_database.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntity</c>:
@@ -69,115 +69,115 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>classifications</term>
         ///     <term>AtlasClassification[]</term>
         ///     <term></term>
-        ///     <term> An array of classifications. </term>
+        ///     <term>An array of classifications.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the entity. </term>
+        ///     <term>The home ID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>meanings</term>
         ///     <term>AtlasTermAssignmentHeader[]</term>
         ///     <term></term>
-        ///     <term> An array of term assignment headers indicating the meanings of the entity. </term>
+        ///     <term>An array of term assignment headers indicating the meanings of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>proxy</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if there&apos;s a proxy. </term>
+        ///     <term>Determines if there&apos;s a proxy.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of relationship. </term>
+        ///     <term>The attributes of relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the entity. </term>
+        ///     <term>The version of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         ///   <item>
         ///     <term>contacts</term>
         ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
         ///     <term></term>
-        ///     <term> The dictionary of contacts for terms. Key could be Expert or Owner. </term>
+        ///     <term>The dictionary of contacts for terms. Key could be Expert or Owner.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
@@ -192,55 +192,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
@@ -255,61 +255,61 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>confidence</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
+        ///     <term>The confidence of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
+        ///     <term>The description of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayText</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display text. </term>
+        ///     <term>The display text.</term>
         ///   </item>
         ///   <item>
         ///     <term>expression</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
+        ///     <term>The expression of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The source of the term. </term>
+        ///     <term>The source of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
         ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
+        ///     <term>The status of terms assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>steward</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The steward of the term. </term>
+        ///     <term>The steward of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>termGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the term. </term>
+        ///     <term>The GUID of the term.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>ContactBasic</c>:
@@ -324,13 +324,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Azure Active Directory object Id. </term>
+        ///     <term>Azure Active Directory object Id.</term>
         ///   </item>
         ///   <item>
         ///     <term>info</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> additional information to describe this contact. </term>
+        ///     <term>additional information to describe this contact.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -345,19 +345,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -418,13 +418,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>referredEntities</term>
         ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
         ///     <term></term>
-        ///     <term> The referred entities. </term>
+        ///     <term>The referred entities.</term>
         ///   </item>
         ///   <item>
         ///     <term>entity</term>
         ///     <term>AtlasEntity</term>
         ///     <term></term>
-        ///     <term> An instance of an entity - like hive_table, hive_database. </term>
+        ///     <term>An instance of an entity - like hive_table, hive_database.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntity</c>:
@@ -439,115 +439,115 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>classifications</term>
         ///     <term>AtlasClassification[]</term>
         ///     <term></term>
-        ///     <term> An array of classifications. </term>
+        ///     <term>An array of classifications.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the entity. </term>
+        ///     <term>The home ID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>meanings</term>
         ///     <term>AtlasTermAssignmentHeader[]</term>
         ///     <term></term>
-        ///     <term> An array of term assignment headers indicating the meanings of the entity. </term>
+        ///     <term>An array of term assignment headers indicating the meanings of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>proxy</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if there&apos;s a proxy. </term>
+        ///     <term>Determines if there&apos;s a proxy.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of relationship. </term>
+        ///     <term>The attributes of relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the entity. </term>
+        ///     <term>The version of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         ///   <item>
         ///     <term>contacts</term>
         ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
         ///     <term></term>
-        ///     <term> The dictionary of contacts for terms. Key could be Expert or Owner. </term>
+        ///     <term>The dictionary of contacts for terms. Key could be Expert or Owner.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
@@ -562,55 +562,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
@@ -625,61 +625,61 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>confidence</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
+        ///     <term>The confidence of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
+        ///     <term>The description of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayText</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display text. </term>
+        ///     <term>The display text.</term>
         ///   </item>
         ///   <item>
         ///     <term>expression</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
+        ///     <term>The expression of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The source of the term. </term>
+        ///     <term>The source of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
         ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
+        ///     <term>The status of terms assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>steward</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The steward of the term. </term>
+        ///     <term>The steward of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>termGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the term. </term>
+        ///     <term>The GUID of the term.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>ContactBasic</c>:
@@ -694,13 +694,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Azure Active Directory object Id. </term>
+        ///     <term>Azure Active Directory object Id.</term>
         ///   </item>
         ///   <item>
         ///     <term>info</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> additional information to describe this contact. </term>
+        ///     <term>additional information to describe this contact.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -715,19 +715,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -926,13 +926,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>referredEntities</term>
         ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
         ///     <term></term>
-        ///     <term> The referred entities. </term>
+        ///     <term>The referred entities.</term>
         ///   </item>
         ///   <item>
         ///     <term>entities</term>
         ///     <term>AtlasEntity[]</term>
         ///     <term></term>
-        ///     <term> An array of entities. </term>
+        ///     <term>An array of entities.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntity</c>:
@@ -947,115 +947,115 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>classifications</term>
         ///     <term>AtlasClassification[]</term>
         ///     <term></term>
-        ///     <term> An array of classifications. </term>
+        ///     <term>An array of classifications.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the entity. </term>
+        ///     <term>The home ID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>meanings</term>
         ///     <term>AtlasTermAssignmentHeader[]</term>
         ///     <term></term>
-        ///     <term> An array of term assignment headers indicating the meanings of the entity. </term>
+        ///     <term>An array of term assignment headers indicating the meanings of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>proxy</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if there&apos;s a proxy. </term>
+        ///     <term>Determines if there&apos;s a proxy.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of relationship. </term>
+        ///     <term>The attributes of relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the entity. </term>
+        ///     <term>The version of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         ///   <item>
         ///     <term>contacts</term>
         ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
         ///     <term></term>
-        ///     <term> The dictionary of contacts for terms. Key could be Expert or Owner. </term>
+        ///     <term>The dictionary of contacts for terms. Key could be Expert or Owner.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
@@ -1070,55 +1070,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
@@ -1133,61 +1133,61 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>confidence</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
+        ///     <term>The confidence of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
+        ///     <term>The description of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayText</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display text. </term>
+        ///     <term>The display text.</term>
         ///   </item>
         ///   <item>
         ///     <term>expression</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
+        ///     <term>The expression of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The source of the term. </term>
+        ///     <term>The source of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
         ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
+        ///     <term>The status of terms assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>steward</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The steward of the term. </term>
+        ///     <term>The steward of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>termGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the term. </term>
+        ///     <term>The GUID of the term.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>ContactBasic</c>:
@@ -1202,13 +1202,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Azure Active Directory object Id. </term>
+        ///     <term>Azure Active Directory object Id.</term>
         ///   </item>
         ///   <item>
         ///     <term>info</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> additional information to describe this contact. </term>
+        ///     <term>additional information to describe this contact.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -1223,19 +1223,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -1296,13 +1296,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>referredEntities</term>
         ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
         ///     <term></term>
-        ///     <term> The referred entities. </term>
+        ///     <term>The referred entities.</term>
         ///   </item>
         ///   <item>
         ///     <term>entities</term>
         ///     <term>AtlasEntity[]</term>
         ///     <term></term>
-        ///     <term> An array of entities. </term>
+        ///     <term>An array of entities.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntity</c>:
@@ -1317,115 +1317,115 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>classifications</term>
         ///     <term>AtlasClassification[]</term>
         ///     <term></term>
-        ///     <term> An array of classifications. </term>
+        ///     <term>An array of classifications.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the entity. </term>
+        ///     <term>The home ID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>meanings</term>
         ///     <term>AtlasTermAssignmentHeader[]</term>
         ///     <term></term>
-        ///     <term> An array of term assignment headers indicating the meanings of the entity. </term>
+        ///     <term>An array of term assignment headers indicating the meanings of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>proxy</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if there&apos;s a proxy. </term>
+        ///     <term>Determines if there&apos;s a proxy.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of relationship. </term>
+        ///     <term>The attributes of relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the entity. </term>
+        ///     <term>The version of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         ///   <item>
         ///     <term>contacts</term>
         ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
         ///     <term></term>
-        ///     <term> The dictionary of contacts for terms. Key could be Expert or Owner. </term>
+        ///     <term>The dictionary of contacts for terms. Key could be Expert or Owner.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
@@ -1440,55 +1440,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
@@ -1503,61 +1503,61 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>confidence</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
+        ///     <term>The confidence of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
+        ///     <term>The description of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayText</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display text. </term>
+        ///     <term>The display text.</term>
         ///   </item>
         ///   <item>
         ///     <term>expression</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
+        ///     <term>The expression of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The source of the term. </term>
+        ///     <term>The source of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
         ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
+        ///     <term>The status of terms assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>steward</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The steward of the term. </term>
+        ///     <term>The steward of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>termGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the term. </term>
+        ///     <term>The GUID of the term.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>ContactBasic</c>:
@@ -1572,13 +1572,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Azure Active Directory object Id. </term>
+        ///     <term>Azure Active Directory object Id.</term>
         ///   </item>
         ///   <item>
         ///     <term>info</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> additional information to describe this contact. </term>
+        ///     <term>additional information to describe this contact.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -1593,19 +1593,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -1779,13 +1779,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>classification</term>
         ///     <term>AtlasClassification</term>
         ///     <term></term>
-        ///     <term> An instance of a classification; it doesn&apos;t have an identity, this object exists only when associated with an entity. </term>
+        ///     <term>An instance of a classification; it doesn&apos;t have an identity, this object exists only when associated with an entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuids</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
@@ -1800,55 +1800,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -1863,19 +1863,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -1932,13 +1932,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>classification</term>
         ///     <term>AtlasClassification</term>
         ///     <term></term>
-        ///     <term> An instance of a classification; it doesn&apos;t have an identity, this object exists only when associated with an entity. </term>
+        ///     <term>An instance of a classification; it doesn&apos;t have an identity, this object exists only when associated with an entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuids</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
@@ -1953,55 +1953,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -2016,19 +2016,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -2734,55 +2734,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -2797,19 +2797,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -2867,55 +2867,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -2930,19 +2930,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -3021,55 +3021,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -3084,19 +3084,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -3154,55 +3154,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -3217,19 +3217,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -3297,7 +3297,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary>
         /// Get complete definition of an entity given its type and unique attribute.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
-        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
+        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;. 
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -3347,7 +3347,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary>
         /// Get complete definition of an entity given its type and unique attribute.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
-        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
+        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;. 
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -3450,13 +3450,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>referredEntities</term>
         ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
         ///     <term></term>
-        ///     <term> The referred entities. </term>
+        ///     <term>The referred entities.</term>
         ///   </item>
         ///   <item>
         ///     <term>entity</term>
         ///     <term>AtlasEntity</term>
         ///     <term></term>
-        ///     <term> An instance of an entity - like hive_table, hive_database. </term>
+        ///     <term>An instance of an entity - like hive_table, hive_database.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntity</c>:
@@ -3471,115 +3471,115 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>classifications</term>
         ///     <term>AtlasClassification[]</term>
         ///     <term></term>
-        ///     <term> An array of classifications. </term>
+        ///     <term>An array of classifications.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the entity. </term>
+        ///     <term>The home ID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>meanings</term>
         ///     <term>AtlasTermAssignmentHeader[]</term>
         ///     <term></term>
-        ///     <term> An array of term assignment headers indicating the meanings of the entity. </term>
+        ///     <term>An array of term assignment headers indicating the meanings of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>proxy</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if there&apos;s a proxy. </term>
+        ///     <term>Determines if there&apos;s a proxy.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of relationship. </term>
+        ///     <term>The attributes of relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the entity. </term>
+        ///     <term>The version of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         ///   <item>
         ///     <term>contacts</term>
         ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
         ///     <term></term>
-        ///     <term> The dictionary of contacts for terms. Key could be Expert or Owner. </term>
+        ///     <term>The dictionary of contacts for terms. Key could be Expert or Owner.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
@@ -3594,55 +3594,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
@@ -3657,61 +3657,61 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>confidence</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
+        ///     <term>The confidence of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
+        ///     <term>The description of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayText</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display text. </term>
+        ///     <term>The display text.</term>
         ///   </item>
         ///   <item>
         ///     <term>expression</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
+        ///     <term>The expression of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The source of the term. </term>
+        ///     <term>The source of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
         ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
+        ///     <term>The status of terms assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>steward</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The steward of the term. </term>
+        ///     <term>The steward of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>termGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the term. </term>
+        ///     <term>The GUID of the term.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>ContactBasic</c>:
@@ -3726,13 +3726,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Azure Active Directory object Id. </term>
+        ///     <term>Azure Active Directory object Id.</term>
         ///   </item>
         ///   <item>
         ///     <term>info</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> additional information to describe this contact. </term>
+        ///     <term>additional information to describe this contact.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -3747,19 +3747,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -3827,13 +3827,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>referredEntities</term>
         ///     <term>Dictionary&lt;string, AtlasEntity&gt;</term>
         ///     <term></term>
-        ///     <term> The referred entities. </term>
+        ///     <term>The referred entities.</term>
         ///   </item>
         ///   <item>
         ///     <term>entity</term>
         ///     <term>AtlasEntity</term>
         ///     <term></term>
-        ///     <term> An instance of an entity - like hive_table, hive_database. </term>
+        ///     <term>An instance of an entity - like hive_table, hive_database.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntity</c>:
@@ -3848,115 +3848,115 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>classifications</term>
         ///     <term>AtlasClassification[]</term>
         ///     <term></term>
-        ///     <term> An array of classifications. </term>
+        ///     <term>An array of classifications.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the entity. </term>
+        ///     <term>The home ID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>meanings</term>
         ///     <term>AtlasTermAssignmentHeader[]</term>
         ///     <term></term>
-        ///     <term> An array of term assignment headers indicating the meanings of the entity. </term>
+        ///     <term>An array of term assignment headers indicating the meanings of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>proxy</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if there&apos;s a proxy. </term>
+        ///     <term>Determines if there&apos;s a proxy.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of relationship. </term>
+        ///     <term>The attributes of relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the entity. </term>
+        ///     <term>The version of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         ///   <item>
         ///     <term>contacts</term>
         ///     <term>Dictionary&lt;string, ContactBasic[]&gt;</term>
         ///     <term></term>
-        ///     <term> The dictionary of contacts for terms. Key could be Expert or Owner. </term>
+        ///     <term>The dictionary of contacts for terms. Key could be Expert or Owner.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
@@ -3971,55 +3971,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
@@ -4034,61 +4034,61 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>confidence</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
+        ///     <term>The confidence of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
+        ///     <term>The description of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayText</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display text. </term>
+        ///     <term>The display text.</term>
         ///   </item>
         ///   <item>
         ///     <term>expression</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
+        ///     <term>The expression of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The source of the term. </term>
+        ///     <term>The source of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
         ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
+        ///     <term>The status of terms assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>steward</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The steward of the term. </term>
+        ///     <term>The steward of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>termGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the term. </term>
+        ///     <term>The GUID of the term.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>ContactBasic</c>:
@@ -4103,13 +4103,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Azure Active Directory object Id. </term>
+        ///     <term>Azure Active Directory object Id.</term>
         ///   </item>
         ///   <item>
         ///     <term>info</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> additional information to describe this contact. </term>
+        ///     <term>additional information to describe this contact.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -4124,19 +4124,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -4449,55 +4449,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -4512,19 +4512,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -4583,55 +4583,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -4646,19 +4646,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -4743,55 +4743,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -4806,19 +4806,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -4877,55 +4877,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -4940,19 +4940,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -5037,7 +5037,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>guidHeaderMap</term>
         ///     <term>Dictionary&lt;string, AtlasEntityHeader&gt;</term>
         ///     <term></term>
-        ///     <term> The description of the guid header map,. </term>
+        ///     <term>The description of the guid header map,</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntityHeader</c>:
@@ -5052,61 +5052,61 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>classificationNames</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of classification names. </term>
+        ///     <term>An array of classification names.</term>
         ///   </item>
         ///   <item>
         ///     <term>classifications</term>
         ///     <term>AtlasClassification[]</term>
         ///     <term></term>
-        ///     <term> An array of classifications. </term>
+        ///     <term>An array of classifications.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayText</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display text. </term>
+        ///     <term>The display text.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the record. </term>
+        ///     <term>The GUID of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>meaningNames</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of meanings. </term>
+        ///     <term>An array of meanings.</term>
         ///   </item>
         ///   <item>
         ///     <term>meanings</term>
         ///     <term>AtlasTermAssignmentHeader[]</term>
         ///     <term></term>
-        ///     <term> An array of term assignment headers. </term>
+        ///     <term>An array of term assignment headers.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
@@ -5121,55 +5121,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
@@ -5184,61 +5184,61 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>confidence</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
+        ///     <term>The confidence of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
+        ///     <term>The description of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayText</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display text. </term>
+        ///     <term>The display text.</term>
         ///   </item>
         ///   <item>
         ///     <term>expression</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
+        ///     <term>The expression of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The source of the term. </term>
+        ///     <term>The source of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
         ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
+        ///     <term>The status of terms assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>steward</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The steward of the term. </term>
+        ///     <term>The steward of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>termGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the term. </term>
+        ///     <term>The GUID of the term.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -5253,19 +5253,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -5322,7 +5322,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>guidHeaderMap</term>
         ///     <term>Dictionary&lt;string, AtlasEntityHeader&gt;</term>
         ///     <term></term>
-        ///     <term> The description of the guid header map,. </term>
+        ///     <term>The description of the guid header map,</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntityHeader</c>:
@@ -5337,61 +5337,61 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>classificationNames</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of classification names. </term>
+        ///     <term>An array of classification names.</term>
         ///   </item>
         ///   <item>
         ///     <term>classifications</term>
         ///     <term>AtlasClassification[]</term>
         ///     <term></term>
-        ///     <term> An array of classifications. </term>
+        ///     <term>An array of classifications.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayText</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display text. </term>
+        ///     <term>The display text.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the record. </term>
+        ///     <term>The GUID of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>meaningNames</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of meanings. </term>
+        ///     <term>An array of meanings.</term>
         ///   </item>
         ///   <item>
         ///     <term>meanings</term>
         ///     <term>AtlasTermAssignmentHeader[]</term>
         ///     <term></term>
-        ///     <term> An array of term assignment headers. </term>
+        ///     <term>An array of term assignment headers.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassification</c>:
@@ -5406,55 +5406,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
+        ///     <term>The GUID of the entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityStatus</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///     <term>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///     <term>Determines if propagations will be removed on entity deletion.</term>
         ///   </item>
         ///   <item>
         ///     <term>validityPeriods</term>
         ///     <term>TimeBoundary[]</term>
         ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///     <term>An array of time boundaries indicating validity periods.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
+        ///     <term>indicate the source who create the classification detail</term>
         ///   </item>
         ///   <item>
         ///     <term>sourceDetails</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> more detail on source information. </term>
+        ///     <term>more detail on source information</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasTermAssignmentHeader</c>:
@@ -5469,61 +5469,61 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>confidence</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The confidence of the term assignment. </term>
+        ///     <term>The confidence of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the term assignment. </term>
+        ///     <term>The description of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayText</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display text. </term>
+        ///     <term>The display text.</term>
         ///   </item>
         ///   <item>
         ///     <term>expression</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The expression of the term assignment. </term>
+        ///     <term>The expression of the term assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The source of the term. </term>
+        ///     <term>The source of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;</term>
         ///     <term></term>
-        ///     <term> The status of terms assignment. </term>
+        ///     <term>The status of terms assignment.</term>
         ///   </item>
         ///   <item>
         ///     <term>steward</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The steward of the term. </term>
+        ///     <term>The steward of the term.</term>
         ///   </item>
         ///   <item>
         ///     <term>termGuid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the term. </term>
+        ///     <term>The GUID of the term.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeBoundary</c>:
@@ -5538,19 +5538,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>endTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
+        ///     <term>The end of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
+        ///     <term>The start of the time boundary.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
+        ///     <term>The timezone of the time boundary.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -5623,7 +5623,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// The REST request would look something like this
         /// 
-        /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1.
+        /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
@@ -5678,7 +5678,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// The REST request would look something like this
         /// 
-        /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1.
+        /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>

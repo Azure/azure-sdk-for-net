@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of StorageError. </summary>
-        /// <param name="message"> . </param>
+        /// <param name="message"></param>
         internal StorageError(string message)
         {
             Message = message;
