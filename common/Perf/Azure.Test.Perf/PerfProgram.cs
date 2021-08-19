@@ -19,6 +19,8 @@ namespace Azure.Test.Perf
 {
     public static class PerfProgram
     {
+        private const int BYTES_PER_MEGABYTE = 1024 * 1024;
+
         private static IPerfTest[] _perfTests;
         private static IList<long> _completedOperations => _perfTests.Select(p => p.CompletedOperations).ToList();
         private static IList<TimeSpan> _lastCompletionTimes => _perfTests.Select(p => p.LastCompletionTime).ToList();
@@ -313,7 +315,7 @@ namespace Azure.Test.Perf
             using var progressStatusCts = new CancellationTokenSource();
             var progressStatusThread = PerfStressUtilities.PrintStatus(
                 $"=== {title} ===" + Environment.NewLine +
-                $"{"Current",11}   {"Total",15}   {"Average",14}   {"CPU",8}   {"PrivateMemory",15}   {"WorkingSet",15}",
+                $"{"Current",11}   {"Total",15}   {"Average",14}   {"CPU",8}    {"WorkingSet",10}    {"PrivateMemory",13}",
                 () =>
                 {
                     var totalCompleted = CompletedOperations;
@@ -331,17 +333,17 @@ namespace Azure.Test.Perf
                     lastCpuElapsed = cpuElapsed;
                     lastCpuTime = cpuTime;
 
-                    var privateMemory = process.PrivateMemorySize64;
-                    var workingSet = process.WorkingSet64;
+                    var privateMemoryMB = ((double)process.PrivateMemorySize64) / (BYTES_PER_MEGABYTE);
+                    var workingSetMB = ((double)process.WorkingSet64) / (BYTES_PER_MEGABYTE);
 
                     // Max Widths
                     // Current: NNN,NNN,NNN (11)
                     // Total: NNN,NNN,NNN,NNN (15)
                     // Average: NNN,NNN,NNN.NN (14)
                     // CPU: NNN.NN % (8)
-                    // Memory: NNN,NNN,NNN,NNN (15)
+                    // Memory: NNN,NNN.NN (10)
                     return $"{currentCompleted,11:N0}   {totalCompleted,15:N0}   {averageCompleted,14:N2}   {cpuPercentage,8:P}   " +
-                        $"{privateMemory,15:N0}   {workingSet,15:N0}";
+                        $"{workingSetMB,10:N2}M   {privateMemoryMB,13:N2}M";
                 },
                 newLine: true,
                 progressStatusCts.Token,
