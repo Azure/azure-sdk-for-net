@@ -362,9 +362,9 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status of documents in the translation operation.
         /// </summary>
-        /// <param name="filter">Options to use when filtering result.</param>
+        /// <param name="options">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        public virtual Pageable<DocumentStatus> GetDocumentStatuses(DocumentFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DocumentStatus> GetDocumentStatuses(GetDocumentStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
             Page<DocumentStatus> FirstPageFunc(int? pageSizeHint)
             {
@@ -375,11 +375,11 @@ namespace Azure.AI.Translation.Document
                 {
                     var response = _serviceClient.GetDocumentsStatus(
                         new Guid(Id),
-                        ids: filter?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")),
-                        statuses: filter?.Statuses?.Select(status => status.ToString()),
-                        createdDateTimeUtcStart: filter?.CreatedAfter,
-                        createdDateTimeUtcEnd: filter?.CreatedBefore,
-                        orderBy: filter?.OrderBy?.Select(order => order.ToGenerated()),
+                        ids: options?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")),
+                        statuses: options?.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: options?.CreatedAfter,
+                        createdDateTimeUtcEnd: options?.CreatedBefore,
+                        orderBy: options?.OrderBy?.Select(order => order.ToGenerated()),
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -413,9 +413,9 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status of documents in the translation operation.
         /// </summary>
-        /// <param name="filter">Options to use when filtering result.</param>
+        /// <param name="options">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        public virtual AsyncPageable<DocumentStatus> GetDocumentStatusesAsync(DocumentFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DocumentStatus> GetDocumentStatusesAsync(GetDocumentStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
             async Task<Page<DocumentStatus>> FirstPageFunc(int? pageSizeHint)
             {
@@ -426,11 +426,11 @@ namespace Azure.AI.Translation.Document
                 {
                     var response = await _serviceClient.GetDocumentsStatusAsync(
                         new Guid(Id),
-                        ids: filter?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")),
-                        statuses: filter?.Statuses?.Select(status => status.ToString()),
-                        createdDateTimeUtcStart: filter?.CreatedAfter,
-                        createdDateTimeUtcEnd: filter?.CreatedBefore,
-                        orderBy: filter?.OrderBy?.Select(order => order.ToGenerated()),
+                        ids: options?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")),
+                        statuses: options?.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: options?.CreatedAfter,
+                        createdDateTimeUtcEnd: options?.CreatedBefore,
+                        orderBy: options?.OrderBy?.Select(order => order.ToGenerated()),
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
