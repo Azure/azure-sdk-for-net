@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:CreateBlobContainer
 #if SNIPPET
-                var containerClient = new BlobContainerClient("<storage connection string>", "claimchecks");
+                var containerClient = new BlobContainerClient("<storage connection string>", "claim-checks");
 #else
                 var containerClient = new BlobContainerClient(TestEnvironment.StorageClaimCheckConnectionString, "claim-checks");
 #endif

@@ -8,7 +8,7 @@ In our example, we will assume that the message body can fit in memory. This all
 
 First, we will create a `BlobContainerClient` and use the container name "claim-checks". We will be storing our message bodies in blobs within this container.
 ```C# Snippet:CreateBlobContainer
-var containerClient = new BlobContainerClient("<storage connection string>", "claimchecks");
+var containerClient = new BlobContainerClient("<storage connection string>", "claim-checks");
 await containerClient.CreateIfNotExistsAsync();
 ```
 
