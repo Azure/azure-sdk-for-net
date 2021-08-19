@@ -7,6 +7,7 @@ using CommandLine;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime;
@@ -35,6 +36,11 @@ namespace Azure.Test.Perf
 
         public static async Task Main(Assembly assembly, string[] args)
         {
+            // Ensure no space between value and percentage sign
+            var newCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+            newCulture.NumberFormat.PercentPositivePattern = 1;
+            Thread.CurrentThread.CurrentCulture = newCulture;
+
             // See if we want to run a BenchmarkDotNet microbenchmark
             if (args.Length > 0 && args[0].Equals("micro", StringComparison.OrdinalIgnoreCase))
             {
@@ -315,7 +321,7 @@ namespace Azure.Test.Perf
             using var progressStatusCts = new CancellationTokenSource();
             var progressStatusThread = PerfStressUtilities.PrintStatus(
                 $"=== {title} ===" + Environment.NewLine +
-                $"{"Current",11}   {"Total",15}   {"Average",14}   {"CPU",8}    {"WorkingSet",10}    {"PrivateMemory",13}",
+                $"{"Current",11}   {"Total",15}   {"Average",14}   {"CPU",7}    {"WorkingSet",10}    {"PrivateMemory",13}",
                 () =>
                 {
                     var totalCompleted = CompletedOperations;
@@ -340,9 +346,9 @@ namespace Azure.Test.Perf
                     // Current: NNN,NNN,NNN (11)
                     // Total: NNN,NNN,NNN,NNN (15)
                     // Average: NNN,NNN,NNN.NN (14)
-                    // CPU: NNN.NN % (8)
+                    // CPU: NNN.NN% (7)
                     // Memory: NNN,NNN.NN (10)
-                    return $"{currentCompleted,11:N0}   {totalCompleted,15:N0}   {averageCompleted,14:N2}   {cpuPercentage,8:P}   " +
+                    return $"{currentCompleted,11:N0}   {totalCompleted,15:N0}   {averageCompleted,14:N2}   {cpuPercentage,7:P}   " +
                         $"{workingSetMB,10:N2}M   {privateMemoryMB,13:N2}M";
                 },
                 newLine: true,
@@ -492,7 +498,7 @@ namespace Azure.Test.Perf
             var percentiles = new double[] { 0.5, 0.75, 0.9, 0.99, 0.999, 0.9999, 0.99999, 1.0 };
             foreach (var percentile in percentiles)
             {
-                Console.WriteLine($"{percentile,9:P3}\t{sortedLatencies[(int)(sortedLatencies.Length * percentile) - 1].TotalMilliseconds:N2}ms");
+                Console.WriteLine($"{percentile,8:P3}\t{sortedLatencies[(int)(sortedLatencies.Length * percentile) - 1].TotalMilliseconds:N2}ms");
             }
             Console.WriteLine();
         }
