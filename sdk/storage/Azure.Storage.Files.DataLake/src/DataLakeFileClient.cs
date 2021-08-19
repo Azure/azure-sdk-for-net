@@ -4218,7 +4218,7 @@ namespace Azure.Storage.Files.DataLake
                         .ConfigureAwait(false);
 
                     position = 0;
-                    eTag = createResponse.Value.ETag;
+                    eTag = (ETag)createResponse.GetRawResponse().Headers.ETag;
                 }
                 else
                 {
@@ -4240,7 +4240,7 @@ namespace Azure.Storage.Files.DataLake
                         }
 
                         position = propertiesResponse.Value.ContentLength;
-                        eTag = propertiesResponse.Value.ETag;
+                        eTag = (ETag)propertiesResponse.GetRawResponse().Headers.ETag;
                     }
                     catch (RequestFailedException ex)
                     when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
@@ -4257,7 +4257,7 @@ namespace Azure.Storage.Files.DataLake
                             .ConfigureAwait(false);
 
                         position = 0;
-                        eTag = createResponse.Value.ETag;
+                        eTag = (ETag)createResponse.GetRawResponse().Headers.ETag;
                     }
                 }
 

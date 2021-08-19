@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
-                _conditions.IfMatch = response.Value.ETag;
+                _conditions.IfMatch = response.GetRawResponse().Headers.ETag;
 
                 _buffer.Clear();
             }

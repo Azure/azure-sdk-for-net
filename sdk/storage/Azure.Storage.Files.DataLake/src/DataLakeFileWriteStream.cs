@@ -69,7 +69,7 @@ namespace Azure.Storage.Files.DataLake
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
-            _conditions.IfMatch = response.Value.ETag;
+            _conditions.IfMatch = response.GetRawResponse().Headers.ETag;
         }
 
         protected override void ValidateBufferSize(long bufferSize)
