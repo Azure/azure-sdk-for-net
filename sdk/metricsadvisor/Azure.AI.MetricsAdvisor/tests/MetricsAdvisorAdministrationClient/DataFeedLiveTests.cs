@@ -68,6 +68,22 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        public async Task CreateAndGetWithTokenCredential()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential: true);
+
+            string dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            DataFeedSource dataSource = CreateDataFeedSource(nameof(DataFeedSourceKind.AzureApplicationInsights));
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = disposableDataFeed.DataFeed;
+
+            Assert.That(createdDataFeed.Id, Is.Not.Null.And.Not.Empty);
+        }
+
+        [RecordedTest]
         [TestCaseSource(nameof(DataFeedSourceTestCases))]
         public async Task CreateAndGetWithMinimumSetup(string dataSourceKind)
         {
