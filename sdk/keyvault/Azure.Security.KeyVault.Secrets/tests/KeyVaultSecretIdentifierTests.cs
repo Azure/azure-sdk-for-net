@@ -63,6 +63,29 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.AreEqual(uri.GetHashCode(), keyId.GetHashCode());
         }
 
+        [Test]
+        public void TryCreateFromNull()
+        {
+            Assert.IsFalse(KeyVaultSecretIdentifier.TryCreate(null, out KeyVaultSecretIdentifier? identifier));
+            Assert.IsNull(identifier);
+        }
+
+        [TestCaseSource(nameof(Data))]
+        public bool TryCreate(Uri id, Uri vaultUri, string name, string version)
+        {
+            bool result = KeyVaultSecretIdentifier.TryCreate(id, out KeyVaultSecretIdentifier? identifier);
+
+            if (result)
+            {
+                Assert.AreEqual(id, identifier.Value.SourceId);
+                Assert.AreEqual(vaultUri, identifier.Value.VaultUri);
+                Assert.AreEqual(name, identifier.Value.Name);
+                Assert.AreEqual(version, identifier.Value.Version);
+            }
+
+            return result;
+        }
+
         private static IEnumerable<IdentifierTestData> Data => new[]
         {
             new IdentifierTestData("https://test.vault.azure.net").Returns(false),
