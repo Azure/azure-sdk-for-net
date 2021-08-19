@@ -3,14 +3,20 @@
 
 using System;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> dcfbe04dad (responding to feedback)
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
+<<<<<<< HEAD
 =======
 using System.ComponentModel;
 using Azure.Core;
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+>>>>>>> dcfbe04dad (responding to feedback)
 
 namespace Azure.Messaging.EventHubs.Producer
 {
@@ -19,6 +25,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   to configure its behavior.
     /// </summary>
     ///
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     internal class EventHubBufferedProducerClientOptions
@@ -37,6 +44,9 @@ namespace Azure.Messaging.EventHubs.Producer
 =======
     internal class EventHubBufferedProducerClientOptions : EventHubProducerClientOptions
 >>>>>>> c7457cff4d (updated to internal classes)
+=======
+    internal class EventHubBufferedProducerClientOptions
+>>>>>>> dcfbe04dad (responding to feedback)
     {
 >>>>>>> 88750fe801 (Adding skeleton files)
         /// <summary>
@@ -61,10 +71,14 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </value>
         ///
 <<<<<<< HEAD
+<<<<<<< HEAD
         public int MaximumEventBufferLength { get; set; } = 2500;
 =======
         public int MaximumBufferedEventCount { get; set; } = 2500;
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+        public int MaximumEventBufferLength { get; set; } = 2500;
+>>>>>>> dcfbe04dad (responding to feedback)
 
         /// <summary>
         ///    Indicates whether or not events should be published using idempotent semantics for retries. If enabled, retries during publishing
@@ -98,10 +112,15 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
 <<<<<<< HEAD
+<<<<<<< HEAD
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is not between 1 and 100 (inclusive).</exception>
         ///
 =======
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is not between 1 and 100 (inclusive).</exception>
+        ///
+>>>>>>> dcfbe04dad (responding to feedback)
         public int MaximumConcurrentSendsPerPartition
         {
             get => _maximumConcurrentSendsPerPartition;
@@ -113,6 +132,9 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> dcfbe04dad (responding to feedback)
         /// <summary>
         ///   A unique name used to identify the consumer.  If <c>null</c> or empty, a GUID will be used as the
         ///   identifier.
@@ -149,10 +171,45 @@ namespace Azure.Messaging.EventHubs.Producer
                 _retryOptions = value;
             }
         }
+<<<<<<< HEAD
 =======
+=======
+
+        /// <summary>
+        ///   Indicates whether or not the producer should enable idempotent publishing to the Event Hub partitions.  If
+        ///   enabled, the producer will only be able to publish directly to partitions; it will not be able to publish to
+        ///   the Event Hubs gateway for automatic partition routing nor using a partition key.
+        /// </summary>
+        ///
+        /// <value><c>true</c> if the producer should enable idempotent partition publishing; otherwise, <c>false</c>.</value>
+        ///
+        internal bool EnableIdempotentPartitions { get; set; }
+
+        /// <summary>
+        ///   The set of options that can be specified to influence publishing behavior specific to the configured Event Hub partition.  These
+        ///   options are not necessary in the majority of scenarios and are intended for use with specialized scenarios, such as when
+        ///   recovering the state used for idempotent publishing.
+        ///
+        ///   <para>It is highly recommended that these options only be specified if there is a proven need to do so; Incorrectly configuring these
+        ///   values may result in an <see cref="EventHubProducerClient" /> instance that is unable to publish to the Event Hubs.</para>
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   These options are ignored when publishing to the Event Hubs gateway for automatic routing or when using a partition key.
+        /// </remarks>
+        ///
+        internal Dictionary<string, PartitionPublishingOptions> PartitionOptions { get; } = new Dictionary<string, PartitionPublishingOptions>();
+
+>>>>>>> dcfbe04dad (responding to feedback)
         /// <summary> The number of batches that may be sent concurrently to each partition. </summary>
         private int _maximumConcurrentSendsPerPartition = 1;
 >>>>>>> 88750fe801 (Adding skeleton files)
+
+        /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
+        private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
+
+        /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
+        private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -183,6 +240,9 @@ namespace Azure.Messaging.EventHubs.Producer
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> dcfbe04dad (responding to feedback)
 
         /// <summary>
         ///   Creates a new copy of the current <see cref="EventHubBufferedProducerClientOptions" />, cloning its attributes into a new instance.
@@ -195,6 +255,7 @@ namespace Azure.Messaging.EventHubs.Producer
             var copiedOptions = new EventHubBufferedProducerClientOptions
             {
                 Identifier = Identifier,
+<<<<<<< HEAD
                 MaximumEventBufferLength = MaximumEventBufferLength,
                 MaximumWaitTime = MaximumWaitTime,
                 EnableIdempotentRetries = EnableIdempotentRetries,
@@ -203,6 +264,22 @@ namespace Azure.Messaging.EventHubs.Producer
                 _maximumConcurrentSendsPerPartition = MaximumConcurrentSendsPerPartition
             };
 
+=======
+                EnableIdempotentPartitions = EnableIdempotentPartitions,
+                _connectionOptions = ConnectionOptions.Clone(),
+                _retryOptions = RetryOptions.Clone(),
+                _maximumConcurrentSendsPerPartition = MaximumConcurrentSendsPerPartition,
+                MaximumEventBufferLength = MaximumEventBufferLength,
+                MaximumWaitTime = MaximumWaitTime,
+                EnableIdempotentRetries = EnableIdempotentRetries
+            };
+
+            foreach (var pair in PartitionOptions)
+            {
+                copiedOptions.PartitionOptions.Add(pair.Key, pair.Value.Clone());
+            }
+
+>>>>>>> dcfbe04dad (responding to feedback)
             return copiedOptions;
         }
 
@@ -210,11 +287,14 @@ namespace Azure.Messaging.EventHubs.Producer
         /// Creates an <see cref="EventHubProducerClientOptions"/> from the current instance.
         /// </summary>
         ///
+<<<<<<< HEAD
         /// <remarks>
         ///   This method does not make defensive copies of the references properties; it is assumed that they'll be used with
         ///    the <see cref="EventHubProducerClient" /> which has responsibility for ensuring defensive copies when constructed.
         /// </remarks>
         ///
+=======
+>>>>>>> dcfbe04dad (responding to feedback)
         /// <returns>The set of options represented as <see cref="EventHubProducerClientOptions"/></returns>
         ///
         internal EventHubProducerClientOptions ToEventHubProducerClientOptions()
@@ -222,13 +302,59 @@ namespace Azure.Messaging.EventHubs.Producer
             var translatedOptions = new EventHubProducerClientOptions
             {
                 Identifier = Identifier,
+<<<<<<< HEAD
                 EnableIdempotentPartitions = EnableIdempotentRetries,
+=======
+                EnableIdempotentPartitions = EnableIdempotentPartitions,
+>>>>>>> dcfbe04dad (responding to feedback)
                 ConnectionOptions = ConnectionOptions,
                 RetryOptions = RetryOptions
             };
             return translatedOptions;
         }
+<<<<<<< HEAD
 =======
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+
+        /// <summary>
+        ///   Creates the set of flags that represents the features requested by these options.
+        /// </summary>
+        ///
+        /// <returns>The set of features that were requested for the <see cref="EventHubProducerClient" />.</returns>
+        ///
+        internal TransportProducerFeatures CreateFeatureFlags()
+        {
+            var features = TransportProducerFeatures.None;
+
+            if (EnableIdempotentPartitions)
+            {
+                features |= TransportProducerFeatures.IdempotentPublishing;
+            }
+
+            return features;
+        }
+
+        /// <summary>
+        ///   Attempts to retrieve the publishing options for a given partition, returning a
+        ///   default in the case that no partition was specified or there were no available options
+        ///   for that partition.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition for which options are requested.</param>
+        ///
+        /// <returns><c>null</c> in the event that there was no partition specified or no options for the partition; otherwise, the publishing options.</returns>
+        ///
+        internal PartitionPublishingOptions GetPublishingOptionsOrDefaultForPartition(string partitionId)
+        {
+            if (string.IsNullOrEmpty(partitionId))
+            {
+                return default;
+            }
+
+            PartitionOptions.TryGetValue(partitionId, out var options);
+            return options;
+        }
+>>>>>>> dcfbe04dad (responding to feedback)
     }
 }
