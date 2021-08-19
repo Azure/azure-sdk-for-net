@@ -20,32 +20,35 @@ namespace Azure.Analytics.Purview.Account.Tests
         {
         }
 
-        [Test]
         [RecordedTest]
         public async Task CreateOrUpdateTask()
         {
             var options = new PurviewAccountClientOptions();
             CollectionsClient client = GetCollectionsClient();
 
-            var collectionName = "myCollection1";
-            /*var data = new
+            var collectionName = "mysubCollection";
+            var data = new
             {
-                "parentCollection": new {
-                    "referenceName": "myParentCollection1"
-                }
-            }*/
-            var data = new {
-                parentCollection = new {
-                    referenceName = "myParentCollection1"
+                parentCollection = new
+                {
+                    referenceName = "dotnetLLCPurviewAccount"
                 },
             };
             Response createResponse = await client.CreateOrUpdateCollectionAsync(collectionName, RequestContent.Create(data), default);
 
             JsonElement createBodyJson = JsonDocument.Parse(GetContentFromResponse(createResponse)).RootElement;
-            Assert.AreEqual("myCollection1", createBodyJson.GetProperty("name").GetString());
+            Assert.AreEqual("mysubCollection", createBodyJson.GetProperty("name").GetString());
+            while (true)
+            {
+                System.Threading.Thread.Sleep(1000);
+                Response getResponse = await client.GetCollectionAsync(collectionName);
+                JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
+                if (getBodyJson.GetProperty("collectionProvisioningState").GetString() == "Succeeded")
+                    break;
+            }
+            Response delRespons = await client.DeleteCollectionAsync(collectionName, default);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GetTask()
         {
@@ -53,24 +56,26 @@ namespace Azure.Analytics.Purview.Account.Tests
             CollectionsClient client = GetCollectionsClient();
 
             var collectionName = "myCollection1";
-            /*var data = new
-            {
-                "parentCollection": new {
-                    "referenceName": "myParentCollection1"
-                }
-            }*/
             var data = new
             {
                 parentCollection = new
                 {
-                    referenceName = "myParentCollection1"
+                    referenceName = "dotnetLLCPurviewAccount"
                 },
             };
             Response createResponse = await client.CreateOrUpdateCollectionAsync(collectionName, RequestContent.Create(data), default);
-
             Response getResponse = await client.GetCollectionAsync(collectionName);
             JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
             Assert.AreEqual("myCollection1", getBodyJson.GetProperty("name").GetString());
+            while (true)
+            {
+                System.Threading.Thread.Sleep(1000);
+                Response getRes = await client.GetCollectionAsync(collectionName);
+                JsonElement getJson = JsonDocument.Parse(GetContentFromResponse(getRes)).RootElement;
+                if (getJson.GetProperty("collectionProvisioningState").GetString() == "Succeeded")
+                    break;
+            }
+            Response delRespons = await client.DeleteCollectionAsync(collectionName, default);
         }
         private static BinaryData GetContentFromResponse(Response r)
         {
