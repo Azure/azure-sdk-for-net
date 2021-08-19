@@ -313,29 +313,35 @@ namespace Azure.Test.Perf
             using var progressStatusCts = new CancellationTokenSource();
             var progressStatusThread = PerfStressUtilities.PrintStatus(
                 $"=== {title} ===" + Environment.NewLine +
-                $"{"Current",11}   {"Total",15}   {"Average",14}   {"CPU",8}",
+                $"{"Current",11}   {"Total",15}   {"Average",14}   {"CPU",8}   {"PrivateMemory",15}   {"WorkingSet",15}",
                 () =>
                 {
                     var totalCompleted = CompletedOperations;
                     var currentCompleted = totalCompleted - lastCompleted;
                     var averageCompleted = OperationsPerSecond;
+                    lastCompleted = totalCompleted;
+
+                    var process = Process.GetCurrentProcess();
 
                     var cpuElapsed = cpuStopwatch.Elapsed;
-                    var cpuTime = Process.GetCurrentProcess().TotalProcessorTime;
+                    var cpuTime = process.TotalProcessorTime;
                     var currentCpuElapsed = (cpuElapsed - lastCpuElapsed).TotalMilliseconds;
                     var currentCpuTime = (cpuTime - lastCpuTime).TotalMilliseconds;
                     var cpuPercentage = (currentCpuTime / currentCpuElapsed) / Environment.ProcessorCount;
                     lastCpuElapsed = cpuElapsed;
                     lastCpuTime = cpuTime;
 
-                    lastCompleted = totalCompleted;
+                    var privateMemory = process.PrivateMemorySize64;
+                    var workingSet = process.WorkingSet64;
 
                     // Max Widths
                     // Current: NNN,NNN,NNN (11)
                     // Total: NNN,NNN,NNN,NNN (15)
                     // Average: NNN,NNN,NNN.NN (14)
                     // CPU: NNN.NN % (8)
-                    return $"{currentCompleted,11:N0}   {totalCompleted,15:N0}   {averageCompleted,14:N2}   {cpuPercentage,8:P}";
+                    // Memory: NNN,NNN,NNN,NNN (15)
+                    return $"{currentCompleted,11:N0}   {totalCompleted,15:N0}   {averageCompleted,14:N2}   {cpuPercentage,8:P}   " +
+                        $"{privateMemory,15:N0}   {workingSet,15:N0}";
                 },
                 newLine: true,
                 progressStatusCts.Token,
