@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Channel;
+using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.DependencyCollector;
 using Microsoft.ApplicationInsights.EventSourceListener;
 using Microsoft.ApplicationInsights.Extensibility;
@@ -12,6 +15,8 @@ using NUnit.Framework;
 [SetUpFixture]
 public class AppInsightsNUnitFixture
 {
+    public static TelemetryClient TelemetryClient { get; private set; }
+
     private TelemetryConfiguration configuration;
     private DependencyTrackingTelemetryModule dependencyModule;
     private EventSourceTelemetryModule eventSourceModule;
@@ -25,6 +30,8 @@ public class AppInsightsNUnitFixture
             configuration = TelemetryConfiguration.CreateDefault();
             configuration.InstrumentationKey = instrumentationKey;
 
+            configuration.TelemetryInitializers.Add(new CustomTelemetryInitializer());
+
             dependencyModule = new DependencyTrackingTelemetryModule();
             dependencyModule.Initialize(configuration);
 
@@ -36,6 +43,8 @@ public class AppInsightsNUnitFixture
                 Level = System.Diagnostics.Tracing.EventLevel.LogAlways
             });
             eventSourceModule.Initialize(configuration);
+
+            TelemetryClient = new TelemetryClient(configuration);
         }
     }
 
@@ -45,5 +54,24 @@ public class AppInsightsNUnitFixture
         dependencyModule?.Dispose();
         eventSourceModule?.Dispose();
         configuration?.Dispose();
+    }
+
+    private class CustomTelemetryInitializer : ITelemetryInitializer
+    {
+        private string _testRunId = Guid.NewGuid().ToString(); // TODO This should come from env, pipeline id or something.
+
+        public void Initialize(ITelemetry telemetry)
+        {
+            var telemetryWithProperties = telemetry as ISupportProperties;
+            if (telemetryWithProperties != null)
+            {
+                telemetryWithProperties.Properties.Add("TestRunId", _testRunId);
+                var testContext = TestContext.CurrentContext;
+                if (testContext != null)
+                {
+                    telemetryWithProperties.Properties.Add("TestName", testContext.Test.FullName);
+                }
+            }
+        }
     }
 }
