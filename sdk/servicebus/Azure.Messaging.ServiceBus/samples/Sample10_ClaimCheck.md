@@ -16,7 +16,7 @@ Next, we will upload our large message body to a blob, and then assign the blob 
 
 ```C# Snippet:UploadMessage
 byte[] body = GetRandomBuffer(1000000);
-var blobName = Guid.NewGuid().ToString();
+string blobName = Guid.NewGuid().ToString();
 await containerClient.UploadBlobAsync(blobName, new BinaryData(body));
 var message = new ServiceBusMessage
 {
@@ -39,7 +39,7 @@ await sender.SendMessageAsync(message);
 On the receiving side, we essentially perform the reverse of the operations that we did on the send side. We first receive our message and check for our application property key. After we find the key, we can download the corresponding blob.
 
 ```C# Snippet:ReceiveClaimCheck
-var receiver = client.CreateReceiver(scope.QueueName);
+ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
 {

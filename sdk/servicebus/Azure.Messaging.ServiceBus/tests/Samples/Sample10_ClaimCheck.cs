@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 #region Snippet:UploadMessage
                 byte[] body = GetRandomBuffer(1000000);
-                var blobName = Guid.NewGuid().ToString();
+                string blobName = Guid.NewGuid().ToString();
                 await containerClient.UploadBlobAsync(blobName, new BinaryData(body));
                 var message = new ServiceBusMessage
                 {
@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #endregion
 
                 #region Snippet:ReceiveClaimCheck
-                var receiver = client.CreateReceiver(scope.QueueName);
+                ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object blobNameReceived))
                 {
