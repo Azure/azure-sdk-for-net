@@ -1,8 +1,6 @@
 # Release History
 
-## 1.0.0-preview.3 (2021-07-30)
-
-Initial track2 network SDK.
+## 1.0.0-preview.3 (Unreleased)
 
 ## 1.0.0-preview.2 (2020-09-23)
 
@@ -28,6 +26,7 @@ This is a Public Preview version, so expect incompatible changes in subsequent r
 ### Migration from Previous Version of Azure Management SDK
 
 #### Package Name
+
 The package name has been changed from `Microsoft.Azure.Management.Network` to `Azure.ResourceManager.Network`
 
 #### Management Client Changes
@@ -35,6 +34,7 @@ The package name has been changed from `Microsoft.Azure.Management.Network` to `
 Example: Create a VNet:
 
 Before upgrade:
+
 ```csharp
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
@@ -64,31 +64,28 @@ vnet = await networkClient.VirtualNetworks
 ```
 
 After upgrade:
+
 ```csharp
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
 
-var networkClient = new NetworkManagementClient(subscriptionId, new DefaultAzureCredential());
-var virtualNetworksOperations = networkClient.VirtualNetworks;
+var armClient = new ArmClient(new DefaultAzureCredential());
+var resourceGroup = (await armClient.DefaultSubscription.GetResourceGroups().GetAsync("abc")).Value;
+var virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
 
 // Create VNet
-var vnet = new VirtualNetwork()
+var vnet = new VirtualNetworkData()
 {
     Location = "westus",
-    AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16" } },
-    Subnets = new List<Subnet>()
-    {
-        new Subnet()
-        {
-            Name = "mySubnet",
-            AddressPrefix = "10.0.0.0/24",
-        }
-    },
 };
+vnet.AddressSpace.AddressPrefixes.Add("10.0.0.0/16");
+vnet.Subnets.Add(new SubnetData {
+    Name = "mySubnet",
+    AddressPrefix = "10.0.0.0/24",
+});
 
-var response = await virtualNetworksOperations.StartCreateOrUpdateAsync(resourceGroup, vmName + "_vent", vnet);
-vnet = await response.WaitForCompletionAsync();
+var virtualNetwork = (await virtualNetworkContainer.CreateOrUpdateAsync("_vent", vnet)).Value;
 ```
 
 #### Object Model Changes
@@ -96,6 +93,7 @@ vnet = await response.WaitForCompletionAsync();
 Example: Create a IpsecPolicy Model
 
 Before upgrade:
+
 ```csharp
 var policy = new IpsecPolicy()
             {
@@ -111,6 +109,7 @@ var policy = new IpsecPolicy()
 ```
 
 After upgrade:
+
 ```csharp
 var policy = new IpsecPolicy(
     300,
