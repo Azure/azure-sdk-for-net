@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Account.Tests
             var credential = new DefaultAzureCredential();
             var testEnv = new PurviewAccountTestEnvironment("https://ycllcPurviewAccount.purview.azure.com");
             var endpoint = new Uri(testEnv.Endpoint);
-            return new CollectionsClient(credential, endpoint, options);
+            return new CollectionsClient(endpoint, credential, options);
         }
     }
 }

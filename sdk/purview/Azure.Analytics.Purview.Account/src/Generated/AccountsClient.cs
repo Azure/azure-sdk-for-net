@@ -30,16 +30,19 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Initializes a new instance of AccountsClient. </summary>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public AccountsClient(TokenCredential credential, Uri endpoint = null, PurviewAccountClientOptions options = null)
+        public AccountsClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
         {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             if (credential == null)
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            endpoint ??= new Uri("");
 
             options ??= new PurviewAccountClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -53,16 +56,16 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Get an account. </summary>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(RequestOptions options = null)
+        public virtual async Task<Response> GetAccountPropertiesAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(options);
+            HttpMessage message = CreateGetAccountPropertiesRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetAccountProperties");
             scope.Start();
             try
             {
@@ -92,16 +95,16 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Get an account. </summary>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Get(RequestOptions options = null)
+        public virtual Response GetAccountProperties(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(options);
+            HttpMessage message = CreateGetAccountPropertiesRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetAccountProperties");
             scope.Start();
             try
             {
@@ -128,9 +131,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GetAccountProperties"/> and <see cref="GetAccountPropertiesAsync"/> operations. </summary>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRequest(RequestOptions options = null)
+        private HttpMessage CreateGetAccountPropertiesRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -165,16 +168,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> UpdateAccountPropertiesAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateRequest(content, options);
+            HttpMessage message = CreateUpdateAccountPropertiesRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("AccountsClient.UpdateAccountProperties");
             scope.Start();
             try
             {
@@ -222,16 +225,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Update(RequestContent content, RequestOptions options = null)
+        public virtual Response UpdateAccountProperties(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateUpdateRequest(content, options);
+            HttpMessage message = CreateUpdateAccountPropertiesRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("AccountsClient.UpdateAccountProperties");
             scope.Start();
             try
             {
@@ -258,10 +261,10 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="Update"/> and <see cref="UpdateAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="UpdateAccountProperties"/> and <see cref="UpdateAccountPropertiesAsync"/> operations. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateUpdateRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateUpdateAccountPropertiesRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -280,16 +283,16 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> List the authorization keys associated with this account. </summary>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListKeysAsync(RequestOptions options = null)
+        public virtual async Task<Response> GetAccessKeysAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListKeysRequest(options);
+            HttpMessage message = CreateGetAccessKeysRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.ListKeys");
+            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetAccessKeys");
             scope.Start();
             try
             {
@@ -319,16 +322,16 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> List the authorization keys associated with this account. </summary>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response ListKeys(RequestOptions options = null)
+        public virtual Response GetAccessKeys(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListKeysRequest(options);
+            HttpMessage message = CreateGetAccessKeysRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.ListKeys");
+            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetAccessKeys");
             scope.Start();
             try
             {
@@ -355,9 +358,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="ListKeys"/> and <see cref="ListKeysAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GetAccessKeys"/> and <see cref="GetAccessKeysAsync"/> operations. </summary>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListKeysRequest(RequestOptions options = null)
+        private HttpMessage CreateGetAccessKeysRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -392,16 +395,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> RegenerateKeysAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> RegenerateAccessKeyAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRegenerateKeysRequest(content, options);
+            HttpMessage message = CreateRegenerateAccessKeyRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.RegenerateKeys");
+            using var scope = _clientDiagnostics.CreateScope("AccountsClient.RegenerateAccessKey");
             scope.Start();
             try
             {
@@ -449,16 +452,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response RegenerateKeys(RequestContent content, RequestOptions options = null)
+        public virtual Response RegenerateAccessKey(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateRegenerateKeysRequest(content, options);
+            HttpMessage message = CreateRegenerateAccessKeyRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.RegenerateKeys");
+            using var scope = _clientDiagnostics.CreateScope("AccountsClient.RegenerateAccessKey");
             scope.Start();
             try
             {
@@ -485,10 +488,10 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="RegenerateKeys"/> and <see cref="RegenerateKeysAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="RegenerateAccessKey"/> and <see cref="RegenerateAccessKeyAsync"/> operations. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateRegenerateKeysRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateRegenerateAccessKeyRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

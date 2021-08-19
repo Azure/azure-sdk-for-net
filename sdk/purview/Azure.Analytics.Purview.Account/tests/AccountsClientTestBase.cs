@@ -20,9 +20,10 @@ namespace Azure.Analytics.Purview.Account.Tests
         public AccountsClient GetAccountsClient(PurviewAccountClientOptions options = default)
         {
             var credential = new DefaultAzureCredential();
-            var testEnv = new PurviewAccountTestEnvironment("https://ycllcPurviewAccount.purview.azure.com");
+            /*var testEnv = new PurviewAccountTestEnvironment("https://ycllcPurviewAccount.purview.azure.com");*/
+            var testEnv = new PurviewAccountTestEnvironment("https://dotnetLLCPurviewAccount.purview.azure.com");
             var endpoint = new Uri(testEnv.Endpoint);
-            return new AccountsClient(credential, endpoint, options);
+            return new AccountsClient(endpoint, credential, options);
         }
     }
 }

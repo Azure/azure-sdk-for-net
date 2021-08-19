@@ -30,16 +30,19 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Initializes a new instance of CollectionsClient. </summary>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public CollectionsClient(TokenCredential credential, Uri endpoint = null, PurviewAccountClientOptions options = null)
+        public CollectionsClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
         {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             if (credential == null)
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            endpoint ??= new Uri("");
 
             options ??= new PurviewAccountClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -54,16 +57,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="collectionName"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string collectionName, RequestOptions options = null)
+        public virtual async Task<Response> GetCollectionAsync(string collectionName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(collectionName, options);
+            HttpMessage message = CreateGetCollectionRequest(collectionName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.GetCollection");
             scope.Start();
             try
             {
@@ -94,16 +97,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="collectionName"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Get(string collectionName, RequestOptions options = null)
+        public virtual Response GetCollection(string collectionName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(collectionName, options);
+            HttpMessage message = CreateGetCollectionRequest(collectionName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.GetCollection");
             scope.Start();
             try
             {
@@ -130,10 +133,10 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GetCollection"/> and <see cref="GetCollectionAsync"/> operations. </summary>
         /// <param name="collectionName"> The String to use. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRequest(string collectionName, RequestOptions options = null)
+        private HttpMessage CreateGetCollectionRequest(string collectionName, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -266,16 +269,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateAsync(string collectionName, RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> CreateOrUpdateCollectionAsync(string collectionName, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(collectionName, content, options);
+            HttpMessage message = CreateCreateOrUpdateCollectionRequest(collectionName, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.CreateOrUpdateCollection");
             scope.Start();
             try
             {
@@ -420,16 +423,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdate(string collectionName, RequestContent content, RequestOptions options = null)
+        public virtual Response CreateOrUpdateCollection(string collectionName, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(collectionName, content, options);
+            HttpMessage message = CreateCreateOrUpdateCollectionRequest(collectionName, content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.CreateOrUpdateCollection");
             scope.Start();
             try
             {
@@ -456,11 +459,11 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="CreateOrUpdateCollection"/> and <see cref="CreateOrUpdateCollectionAsync"/> operations. </summary>
         /// <param name="collectionName"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(string collectionName, RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateCollectionRequest(string collectionName, RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -481,16 +484,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="collectionName"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteAsync(string collectionName, RequestOptions options = null)
+        public virtual async Task<Response> DeleteCollectionAsync(string collectionName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(collectionName, options);
+            HttpMessage message = CreateDeleteCollectionRequest(collectionName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.DeleteCollection");
             scope.Start();
             try
             {
@@ -521,16 +524,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="collectionName"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Delete(string collectionName, RequestOptions options = null)
+        public virtual Response DeleteCollection(string collectionName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(collectionName, options);
+            HttpMessage message = CreateDeleteCollectionRequest(collectionName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.DeleteCollection");
             scope.Start();
             try
             {
@@ -557,10 +560,10 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="DeleteCollection"/> and <see cref="DeleteCollectionAsync"/> operations. </summary>
         /// <param name="collectionName"> The String to use. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(string collectionName, RequestOptions options = null)
+        private HttpMessage CreateDeleteCollectionRequest(string collectionName, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -579,16 +582,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListByAccountAsync(string skipToken = null, RequestOptions options = null)
+        public virtual async Task<Response> ListCollectionsAsync(string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListByAccountRequest(skipToken, options);
+            HttpMessage message = CreateListCollectionsRequest(skipToken, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.ListByAccount");
+            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.ListCollections");
             scope.Start();
             try
             {
@@ -619,16 +622,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response ListByAccount(string skipToken = null, RequestOptions options = null)
+        public virtual Response ListCollections(string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListByAccountRequest(skipToken, options);
+            HttpMessage message = CreateListCollectionsRequest(skipToken, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.ListByAccount");
+            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.ListCollections");
             scope.Start();
             try
             {
@@ -655,10 +658,10 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="ListByAccount"/> and <see cref="ListByAccountAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="ListCollections"/> and <see cref="ListCollectionsAsync"/> operations. </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListByAccountRequest(string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateListCollectionsRequest(string skipToken = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -681,16 +684,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetChildCollectionNamesAsync(string collectionName, string skipToken = null, RequestOptions options = null)
+        public virtual async Task<Response> ListChildCollectionNamesAsync(string collectionName, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetChildCollectionNamesRequest(collectionName, skipToken, options);
+            HttpMessage message = CreateListChildCollectionNamesRequest(collectionName, skipToken, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.GetChildCollectionNames");
+            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.ListChildCollectionNames");
             scope.Start();
             try
             {
@@ -722,16 +725,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetChildCollectionNames(string collectionName, string skipToken = null, RequestOptions options = null)
+        public virtual Response ListChildCollectionNames(string collectionName, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetChildCollectionNamesRequest(collectionName, skipToken, options);
+            HttpMessage message = CreateListChildCollectionNamesRequest(collectionName, skipToken, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.GetChildCollectionNames");
+            using var scope = _clientDiagnostics.CreateScope("CollectionsClient.ListChildCollectionNames");
             scope.Start();
             try
             {
@@ -758,11 +761,11 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="GetChildCollectionNames"/> and <see cref="GetChildCollectionNamesAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="ListChildCollectionNames"/> and <see cref="ListChildCollectionNamesAsync"/> operations. </summary>
         /// <param name="collectionName"> The String to use. </param>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetChildCollectionNamesRequest(string collectionName, string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateListChildCollectionNamesRequest(string collectionName, string skipToken = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -784,14 +787,13 @@ namespace Azure.Analytics.Purview.Account
 
         /// <summary> Gets the parent name and parent friendly name chains that represent the collection path. </summary>
         /// <param name="collectionName"> The String to use. </param>
-        /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetCollectionPathAsync(string collectionName, string skipToken = null, RequestOptions options = null)
+        public virtual async Task<Response> GetCollectionPathAsync(string collectionName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetCollectionPathRequest(collectionName, skipToken, options);
+            HttpMessage message = CreateGetCollectionPathRequest(collectionName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -825,14 +827,13 @@ namespace Azure.Analytics.Purview.Account
 
         /// <summary> Gets the parent name and parent friendly name chains that represent the collection path. </summary>
         /// <param name="collectionName"> The String to use. </param>
-        /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetCollectionPath(string collectionName, string skipToken = null, RequestOptions options = null)
+        public virtual Response GetCollectionPath(string collectionName, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetCollectionPathRequest(collectionName, skipToken, options);
+            HttpMessage message = CreateGetCollectionPathRequest(collectionName, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
@@ -866,9 +867,8 @@ namespace Azure.Analytics.Purview.Account
 
         /// <summary> Create Request for <see cref="GetCollectionPath"/> and <see cref="GetCollectionPathAsync"/> operations. </summary>
         /// <param name="collectionName"> The String to use. </param>
-        /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetCollectionPathRequest(string collectionName, string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateGetCollectionPathRequest(string collectionName, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -879,10 +879,6 @@ namespace Azure.Analytics.Purview.Account
             uri.AppendPath(collectionName, true);
             uri.AppendPath("/getCollectionPath", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

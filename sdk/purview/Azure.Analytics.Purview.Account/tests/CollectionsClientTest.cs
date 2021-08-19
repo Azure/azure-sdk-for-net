@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.Account.Tests
                     referenceName = "myParentCollection1"
                 },
             };
-            Response createResponse = await client.CreateOrUpdateAsync(collectionName, RequestContent.Create(data), default);
+            Response createResponse = await client.CreateOrUpdateCollectionAsync(collectionName, RequestContent.Create(data), default);
 
             JsonElement createBodyJson = JsonDocument.Parse(GetContentFromResponse(createResponse)).RootElement;
             Assert.AreEqual("myCollection1", createBodyJson.GetProperty("name").GetString());
@@ -66,9 +66,9 @@ namespace Azure.Analytics.Purview.Account.Tests
                     referenceName = "myParentCollection1"
                 },
             };
-            Response createResponse = await client.CreateOrUpdateAsync(collectionName, RequestContent.Create(data), default);
+            Response createResponse = await client.CreateOrUpdateCollectionAsync(collectionName, RequestContent.Create(data), default);
 
-            Response getResponse = await client.GetAsync(collectionName);
+            Response getResponse = await client.GetCollectionAsync(collectionName);
             JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
             Assert.AreEqual("myCollection1", getBodyJson.GetProperty("name").GetString());
         }

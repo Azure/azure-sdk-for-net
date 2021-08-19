@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Account
 {
-    /// <summary> The ResourceSetRuleConfigs service client. </summary>
-    public partial class ResourceSetRuleConfigsClient
+    /// <summary> The ResourceSetRules service client. </summary>
+    public partial class ResourceSetRulesClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -24,22 +24,25 @@ namespace Azure.Analytics.Purview.Account
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of ResourceSetRuleConfigsClient for mocking. </summary>
-        protected ResourceSetRuleConfigsClient()
+        /// <summary> Initializes a new instance of ResourceSetRulesClient for mocking. </summary>
+        protected ResourceSetRulesClient()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceSetRuleConfigsClient. </summary>
+        /// <summary> Initializes a new instance of ResourceSetRulesClient. </summary>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public ResourceSetRuleConfigsClient(TokenCredential credential, Uri endpoint = null, PurviewAccountClientOptions options = null)
+        public ResourceSetRulesClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
         {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             if (credential == null)
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            endpoint ??= new Uri("");
 
             options ??= new PurviewAccountClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -53,16 +56,16 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Get a resource set config service model. </summary>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(RequestOptions options = null)
+        public virtual async Task<Response> GetResourceSetRuleAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(options);
+            HttpMessage message = CreateGetResourceSetRuleRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRuleConfigsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.GetResourceSetRule");
             scope.Start();
             try
             {
@@ -92,16 +95,16 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Get a resource set config service model. </summary>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Get(RequestOptions options = null)
+        public virtual Response GetResourceSetRule(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(options);
+            HttpMessage message = CreateGetResourceSetRuleRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRuleConfigsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.GetResourceSetRule");
             scope.Start();
             try
             {
@@ -128,9 +131,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GetResourceSetRule"/> and <see cref="GetResourceSetRuleAsync"/> operations. </summary>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateGetRequest(RequestOptions options = null)
+        private HttpMessage CreateGetResourceSetRuleRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -654,16 +657,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestOptions options = null)
+        public virtual async Task<Response> CreateOrUpdateResourceSetRuleAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRuleConfigsClient.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
             {
@@ -1200,16 +1203,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdate(RequestContent content, RequestOptions options = null)
+        public virtual Response CreateOrUpdateResourceSetRule(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            HttpMessage message = CreateCreateOrUpdateResourceSetRuleRequest(content, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRuleConfigsClient.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
             {
@@ -1236,10 +1239,10 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="CreateOrUpdateResourceSetRule"/> and <see cref="CreateOrUpdateResourceSetRuleAsync"/> operations. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestOptions options = null)
+        private HttpMessage CreateCreateOrUpdateResourceSetRuleRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1258,16 +1261,16 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteAsync(RequestOptions options = null)
+        public virtual async Task<Response> DeleteResourceSetRuleAsync(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(options);
+            HttpMessage message = CreateDeleteResourceSetRuleRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRuleConfigsClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.DeleteResourceSetRule");
             scope.Start();
             try
             {
@@ -1298,16 +1301,16 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Delete(RequestOptions options = null)
+        public virtual Response DeleteResourceSetRule(RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(options);
+            HttpMessage message = CreateDeleteResourceSetRuleRequest(options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRuleConfigsClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.DeleteResourceSetRule");
             scope.Start();
             try
             {
@@ -1335,9 +1338,9 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="DeleteResourceSetRule"/> and <see cref="DeleteResourceSetRuleAsync"/> operations. </summary>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(RequestOptions options = null)
+        private HttpMessage CreateDeleteResourceSetRuleRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1355,16 +1358,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListByAccountAsync(string skipToken = null, RequestOptions options = null)
+        public virtual async Task<Response> ListResourceSetRulesAsync(string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListByAccountRequest(skipToken, options);
+            HttpMessage message = CreateListResourceSetRulesRequest(skipToken, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRuleConfigsClient.ListByAccount");
+            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.ListResourceSetRules");
             scope.Start();
             try
             {
@@ -1395,16 +1398,16 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response ListByAccount(string skipToken = null, RequestOptions options = null)
+        public virtual Response ListResourceSetRules(string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
-            HttpMessage message = CreateListByAccountRequest(skipToken, options);
+            HttpMessage message = CreateListResourceSetRulesRequest(skipToken, options);
             if (options.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRuleConfigsClient.ListByAccount");
+            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.ListResourceSetRules");
             scope.Start();
             try
             {
@@ -1431,10 +1434,10 @@ namespace Azure.Analytics.Purview.Account
             }
         }
 
-        /// <summary> Create Request for <see cref="ListByAccount"/> and <see cref="ListByAccountAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="ListResourceSetRules"/> and <see cref="ListResourceSetRulesAsync"/> operations. </summary>
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListByAccountRequest(string skipToken = null, RequestOptions options = null)
+        private HttpMessage CreateListResourceSetRulesRequest(string skipToken = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
