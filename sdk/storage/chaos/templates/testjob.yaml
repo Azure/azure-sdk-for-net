@@ -1,0 +1,14 @@
+{{- include "stress-test-addons.deploy-job-template.from-pod" (list . "kasobol-test.kasobol-net-chaos") -}}
+{{- define "kasobol-test.kasobol-net-chaos" -}}
+metadata:
+  labels:
+    testInstance: "kasobol-net-chaos-{{ .Release.Name }}-{{ .Release.Revision }}"
+    testName: kasobol-net-chaos
+    chaos: "true"
+spec:
+  containers:
+    - name: kasobol-net-chaos
+      image: stresstestregistry.azurecr.io/kasobol/net-chaos:13
+      command: ["bash", "run.sh"]
+      {{- include "stress-test-addons.container-env" . | nindent 6 }}
+{{- end -}}

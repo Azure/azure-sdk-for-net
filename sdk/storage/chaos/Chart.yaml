@@ -1,0 +1,15 @@
+apiVersion: v2
+name: kasobol-net-chaos
+description: An example kasobol-net-chaos
+version: 0.1.1
+appVersion: v0.1
+annotations:
+  stressTest: 'true'
+  namespace: 'kasobol-test'
+  example: 'true'
+  hasChaos: 'true'
+
+dependencies:
+- name: stress-test-addons
+  version: 0.1.6
+  repository: https://stresstestcharts.blob.core.windows.net/helm/

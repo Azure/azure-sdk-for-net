@@ -1,0 +1,20 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: "{{ .Release.Name }}-{{ .Release.Revision }}"
+  namespace: {{ .Release.Namespace }}
+spec:
+  action: loss
+  direction: to
+  externalTargets:
+    - bing.com
+  mode: one
+  selector:
+    labelSelectors:
+      testInstance: "kasobol-net-chaos-{{ .Release.Name }}-{{ .Release.Revision }}"
+      chaos: "true"
+    namespaces:
+      - {{ .Release.Namespace }}
+  loss:
+    loss: "1"
+    correlation: "1"
