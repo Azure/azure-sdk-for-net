@@ -136,7 +136,6 @@ namespace Azure.AI.Translation.Document.Tests
 
             var filteredTranslations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
 
-
             // assert
             Assert.That(filteredTranslations.Any(t => targetIds.Contains(t.Id)));
             Assert.That(filteredTranslations.All(t => t.CreatedOn <= timestamp));

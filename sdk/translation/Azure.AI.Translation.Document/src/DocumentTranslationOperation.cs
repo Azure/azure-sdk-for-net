@@ -364,7 +364,6 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="options">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-
         public virtual Pageable<DocumentStatus> GetDocumentStatuses(GetDocumentStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
             Page<DocumentStatus> FirstPageFunc(int? pageSizeHint)
@@ -416,7 +415,6 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="options">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-
         public virtual AsyncPageable<DocumentStatus> GetDocumentStatusesAsync(GetDocumentStatusesOptions options = default, CancellationToken cancellationToken = default)
         {
             async Task<Page<DocumentStatus>> FirstPageFunc(int? pageSizeHint)

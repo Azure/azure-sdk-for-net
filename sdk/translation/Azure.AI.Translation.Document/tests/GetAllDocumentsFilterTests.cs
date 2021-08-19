@@ -39,7 +39,6 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 Statuses = {DocumentTranslationStatus.Succeeded}
             };
-
             var result = operation.GetDocumentStatuses(options: options);
 
             // assert.
