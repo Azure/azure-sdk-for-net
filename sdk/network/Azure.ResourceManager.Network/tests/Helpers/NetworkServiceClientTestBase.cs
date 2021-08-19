@@ -685,11 +685,6 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return GetResourceGroup(resourceGroupName).GetApplicationGateways();
         }
 
-        protected ApplicationGatewayContainer GetApplicationGatewayContainer(Resources.ResourceGroup resourceGroup)
-        {
-            return resourceGroup.GetApplicationGateways();
-        }
-
         protected LoadBalancerContainer GetLoadBalancerContainer(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetLoadBalancers();
