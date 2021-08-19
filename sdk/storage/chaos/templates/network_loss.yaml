@@ -7,7 +7,7 @@ spec:
   action: loss
   direction: to
   externalTargets:
-    - bing.com
+    - kasobolchaosprim.blob.core.windows.net
   mode: one
   selector:
     labelSelectors:
@@ -16,5 +16,5 @@ spec:
     namespaces:
       - {{ .Release.Namespace }}
   loss:
-    loss: "1"
-    correlation: "1"
+    loss: "10"
+    correlation: "10"
