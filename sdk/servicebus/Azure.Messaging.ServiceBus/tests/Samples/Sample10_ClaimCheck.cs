@@ -20,7 +20,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
                 var containerClient = new BlobContainerClient("<storage connection string>", "claim-checks");
 #else
-                var containerClient = new BlobContainerClient(StorageTestEnvironment.Instance.StorageConnectionString, "claim-checks");
+                var containerClient = new BlobContainerClient(TestEnvironment.StorageClaimCheckConnectionString, "claim-checks");
 #endif
                 await containerClient.CreateIfNotExistsAsync();
                 #endregion
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         var blobClient = new BlobClient("<storage connection string>", "claim-checks", (string) blobNameReceived);
 #else
                         var blobClient = new BlobClient(
-                            StorageTestEnvironment.Instance.StorageConnectionString,
+                            TestEnvironment.StorageClaimCheckConnectionString,
                             "claim-checks",
                             (string)blobNameReceived);
 #endif

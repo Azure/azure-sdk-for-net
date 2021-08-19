@@ -51,52 +51,6 @@ namespace Azure.Messaging.ServiceBus.Tests
         private static readonly LiveResourceManager ResourceManager = new LiveResourceManager();
 
         /// <summary>
-        ///   Performs the tasks needed to create a new  Service Bus namespace within a resource group, intended to be used as
-        ///   an ephemeral container for the queue and topic instances used in a given test run.
-        /// </summary>
-        ///
-        /// <returns>The key attributes for identifying and accessing a dynamically created  Service Bus namespace.</returns>
-        ///
-        public static async Task<ServiceBusTestEnvironment.NamespaceProperties> CreateNamespaceAsync()
-        {
-            var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
-            var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
-            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
-
-            string CreateName() => $"net-servicebus-{ Guid.NewGuid().ToString("D").Substring(0, 30) }";
-
-            using (var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription })
-            {
-                var location = await ResourceManager.QueryResourceGroupLocationAsync(token, resourceGroup, azureSubscription).ConfigureAwait(false);
-
-                var serviceBusNamspace = new SBNamespace(sku: new SBSku(SkuName.Standard, SkuTier.Standard), tags: GenerateTags(), location: location);
-                serviceBusNamspace = await CreateRetryPolicy<SBNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), serviceBusNamspace)).ConfigureAwait(false);
-
-                var accessKey = await CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, serviceBusNamspace.Name, ServiceBusTestEnvironment.ServiceBusDefaultSharedAccessKey)).ConfigureAwait(false);
-                return new ServiceBusTestEnvironment.NamespaceProperties(serviceBusNamspace.Name, accessKey.PrimaryConnectionString, shouldRemoveAtCompletion: true);
-            }
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to remove an ephemeral Service Bus namespace used as a container for queue and topic instances
-        ///   for a specific test run.
-        /// </summary>
-        ///
-        /// <param name="namespaceName">The name of the namespace to delete.</param>
-        ///
-        public static async Task DeleteNamespaceAsync(string namespaceName)
-        {
-            var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
-            var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
-            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
-
-            using (var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription })
-            {
-                await CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName)).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
         ///   Creates a Service Bus scope associated with a queue instance, intended to be used in the context
         ///   of a single test and disposed when the test has completed.
         /// </summary>
@@ -121,14 +75,6 @@ namespace Azure.Messaging.ServiceBus.Tests
                                                              string overrideNamespace = default,
                                                              [CallerMemberName] string caller = "")
         {
-            // If there was an override and the force flag is not set for creation, then build a scope
-            // for the specified queue.
-
-            if ((!string.IsNullOrEmpty(ServiceBusTestEnvironment.Instance.OverrideQueueName)) && (!forceQueueCreation))
-            {
-                return new QueueScope(ServiceBusTestEnvironment.Instance.ServiceBusNamespace, ServiceBusTestEnvironment.Instance.OverrideQueueName, false);
-            }
-
             // Create a new queue specific to the scope being created.
 
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
