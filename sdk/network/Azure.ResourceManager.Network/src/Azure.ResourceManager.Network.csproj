@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Nullable>annotations</Nullable>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-preview.3</Version>
   </PropertyGroup>
 
   <PropertyGroup>
