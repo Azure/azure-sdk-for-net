@@ -3,44 +3,34 @@ namespace Azure.Analytics.Purview.Account
     public partial class AccountsClient
     {
         protected AccountsClient() { }
-        public AccountsClient(Azure.Core.TokenCredential credential, System.Uri endpoint = null, Azure.Analytics.Purview.Account.PurviewAccountClientOptions options = null) { }
+        public AccountsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Account.PurviewAccountClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response Get(Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response ListKeys(Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListKeysAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response RegenerateKeys(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> RegenerateKeysAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response Update(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetAccessKeys(Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetAccessKeysAsync(Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetAccountProperties(Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetAccountPropertiesAsync(Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response RegenerateAccessKey(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RegenerateAccessKeyAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response UpdateAccountProperties(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAccountPropertiesAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
     }
     public partial class CollectionsClient
     {
         protected CollectionsClient() { }
-        public CollectionsClient(Azure.Core.TokenCredential credential, System.Uri endpoint = null, Azure.Analytics.Purview.Account.PurviewAccountClientOptions options = null) { }
+        public CollectionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Account.PurviewAccountClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string collectionName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string collectionName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response Delete(string collectionName, Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string collectionName, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response Get(string collectionName, Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string collectionName, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetChildCollectionNames(string collectionName, string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetChildCollectionNamesAsync(string collectionName, string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response GetCollectionPath(string collectionName, string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionPathAsync(string collectionName, string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response ListByAccount(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListByAccountAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdateCollection(string collectionName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateCollectionAsync(string collectionName, Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response DeleteCollection(string collectionName, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteCollectionAsync(string collectionName, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetCollection(string collectionName, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionAsync(string collectionName, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetCollectionPath(string collectionName, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionPathAsync(string collectionName, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response ListChildCollectionNames(string collectionName, string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ListChildCollectionNamesAsync(string collectionName, string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response ListCollections(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ListCollectionsAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
     }
     public partial class PurviewAccountClientOptions : Azure.Core.ClientOptions
     {
@@ -50,22 +40,18 @@ namespace Azure.Analytics.Purview.Account
             V2019_11_01_preview = 1,
         }
     }
-    public partial class ResourceSetRuleConfigsClient
+    public partial class ResourceSetRulesClient
     {
-        protected ResourceSetRuleConfigsClient() { }
-        public ResourceSetRuleConfigsClient(Azure.Core.TokenCredential credential, System.Uri endpoint = null, Azure.Analytics.Purview.Account.PurviewAccountClientOptions options = null) { }
+        protected ResourceSetRulesClient() { }
+        public ResourceSetRulesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Account.PurviewAccountClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response Delete(Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response Get(Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response ListByAccount(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<Azure.Response> ListByAccountAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response CreateOrUpdateResourceSetRule(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateResourceSetRuleAsync(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response DeleteResourceSetRule(Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteResourceSetRuleAsync(Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response GetResourceSetRule(Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetResourceSetRuleAsync(Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response ListResourceSetRules(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ListResourceSetRulesAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
     }
 }
