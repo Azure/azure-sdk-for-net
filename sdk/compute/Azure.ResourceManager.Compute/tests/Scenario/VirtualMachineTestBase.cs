@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         protected async Task<GenericResource> CreateVirtualNetwork()
         {
+            _genericResourceContainer = DefaultSubscription.GetGenericResources();
             var vnetName = Recording.GenerateAssetName("testVNet-");
             var subnetName = Recording.GenerateAssetName("testSubnet-");
             ResourceIdentifier vnetId = $"{_resourceGroup.Id}/providers/Microsoft.Network/virtualNetworks/{vnetName}";

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -185,6 +186,31 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         }
         #endregion
 
+        #region GalleryImageVersion
+        public static void AssertGalleryImageVersion(GalleryImageVersionData imageversion1, GalleryImageVersionData imageversion2)
+        {
+            Assert.AreEqual(imageversion1.Name, imageversion2.Name);
+            Assert.AreEqual(imageversion1.Id, imageversion2.Id);
+            Assert.AreEqual(imageversion1.Location, imageversion2.Location);
+            Assert.AreEqual(imageversion1.Tags, imageversion2.Tags);
+        }
+
+        public static GalleryImageVersionData GetBasicGalleryImageVersionData(Location location,string VMID)
+        {
+            var data = new GalleryImageVersionData(location)
+            {
+                StorageProfile = new GalleryImageVersionStorageProfile()
+                {
+                    Source = new GalleryArtifactVersionSource()
+                    {
+                        Id = VMID,
+                    }
+                }
+            };
+            return data;
+        }
+        #endregion
+
         #region VirtualMachine
         public static void AssertVirtualMachine(VirtualMachineData vm1, VirtualMachineData vm2)
         {
@@ -249,6 +275,34 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                         Version = "latest",
                     }
                 }
+            };
+        }
+        #endregion
+
+        #region VirtualMachineExtention
+        public static void AssertVirtualMachineEXtention(VirtualMachineExtensionData vme1, VirtualMachineExtensionData vme2)
+        {
+            Assert.AreEqual(vme1.Id, vme2.Id);
+            Assert.AreEqual(vme1.Name, vme2.Name);
+            // adding these checks one by one is so tedious, is there anything we can do about this?
+            /*ForceUpdateTag = forceUpdateTag;
+              Publisher = publisher; Java withPublisher("Microsoft.OSTCExtensions")
+              TypePropertiesType = typePropertiesType;
+              TypeHandlerVersion = typeHandlerVersion;Java withVersion("2.3")
+              AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+              EnableAutomaticUpgrade = enableAutomaticUpgrade;
+              Settings = settings;
+              ProtectedSettings = protectedSettings; Java 83-85
+              ProvisioningState = provisioningState;
+              InstanceView = instanceView;*/
+        }
+
+        public static VirtualMachineExtensionData GetBasicLinuxVirtualMachineExtensionData(Location location)
+        {
+            return new VirtualMachineExtensionData(location)
+            {
+                Publisher = "Microsoft.OSTCExtensions",//or "Microsoft.Azure.Extensions"
+                TypeHandlerVersion = "2.3",
             };
         }
         #endregion
@@ -337,6 +391,24 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                     }
                 }
             };
+        }
+        #endregion
+
+        #region ProximityPlacementGroup
+        public static void AssertProximityPlacementGroup(ProximityPlacementGroupData group1, ProximityPlacementGroupData group2)
+        {
+            Assert.AreEqual(group1.Name, group2.Name);
+            Assert.AreEqual(group1.Id, group2.Id);
+            Assert.AreEqual(group1.Location, group2.Location);
+            Assert.AreEqual(group1.Tags, group2.Tags);
+        }
+
+        public static ProximityPlacementGroupData  GetBasicProximityPlacementGroupData(Location location)
+        {
+            var data = new ProximityPlacementGroupData(location)
+            {
+            };
+            return data;
         }
         #endregion
     }
