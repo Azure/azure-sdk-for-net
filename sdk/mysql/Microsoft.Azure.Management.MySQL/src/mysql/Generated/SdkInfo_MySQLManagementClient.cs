@@ -5,7 +5,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.MySQL.FlexibleServers
+namespace Microsoft.Azure.Management.MySQL
 {
   using System;
   using System.Collections.Generic;
@@ -19,30 +19,36 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DBForMySql", "CheckNameAvailability", "2020-07-01-privatepreview"),
-                new Tuple<string, string, string>("DBForMySql", "CheckVirtualNetworkSubnetUsage", "2020-07-01-privatepreview"),
-                new Tuple<string, string, string>("DBForMySql", "Configurations", "2020-07-01-privatepreview"),
-                new Tuple<string, string, string>("DBForMySql", "Databases", "2020-07-01-privatepreview"),
-                new Tuple<string, string, string>("DBForMySql", "FirewallRules", "2020-07-01-privatepreview"),
-                new Tuple<string, string, string>("DBForMySql", "LocationBasedCapabilities", "2020-07-01-privatepreview"),
-                new Tuple<string, string, string>("DBForMySql", "Operations", "2020-07-01-privatepreview"),
-                new Tuple<string, string, string>("DBForMySql", "Replicas", "2020-07-01-privatepreview"),
-                new Tuple<string, string, string>("DBForMySql", "ServerKeys", "2020-07-01-privatepreview"),
-                new Tuple<string, string, string>("DBForMySql", "ServerParameters", "2020-07-01-privatepreview"),
-                new Tuple<string, string, string>("DBForMySql", "Servers", "2020-07-01-privatepreview"),
+                new Tuple<string, string, string>("DBforMySQL", "Advisors", "2018-06-01"),
+                new Tuple<string, string, string>("DBforMySQL", "CheckNameAvailability", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "Configurations", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "CreateRecommendedActionSession", "2018-06-01"),
+                new Tuple<string, string, string>("DBforMySQL", "Databases", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "FirewallRules", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "LocationBasedPerformanceTier", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "LocationBasedRecommendedActionSessionsOperationStatus", "2018-06-01"),
+                new Tuple<string, string, string>("DBforMySQL", "LocationBasedRecommendedActionSessionsResult", "2018-06-01"),
+                new Tuple<string, string, string>("DBforMySQL", "LogFiles", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "Operations", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "PrivateEndpointConnections", "2018-06-01"),
+                new Tuple<string, string, string>("DBforMySQL", "PrivateLinkResources", "2018-06-01"),
+                new Tuple<string, string, string>("DBforMySQL", "QueryTexts", "2018-06-01"),
+                new Tuple<string, string, string>("DBforMySQL", "RecommendedActions", "2018-06-01"),
+                new Tuple<string, string, string>("DBforMySQL", "RecoverableServers", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "Replicas", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "ResetQueryPerformanceInsightData", "2018-06-01"),
+                new Tuple<string, string, string>("DBforMySQL", "ServerAdministrators", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "ServerBasedPerformanceTier", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "ServerKeys", "2020-01-01"),
+                new Tuple<string, string, string>("DBforMySQL", "ServerParameters", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "ServerSecurityAlertPolicies", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "Servers", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "Servers", "2020-01-01"),
+                new Tuple<string, string, string>("DBforMySQL", "TopQueryStatistics", "2018-06-01"),
+                new Tuple<string, string, string>("DBforMySQL", "VirtualNetworkRules", "2017-12-01"),
+                new Tuple<string, string, string>("DBforMySQL", "WaitStatistics", "2018-06-01"),
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mysql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.MySQL.FlexibleServers --tag=package-2020-07-01-privatepreview --csharp.output-folder=C:\\Users\\daeunyim\\work\\SDK\\azure-sdk-for-net\\sdk\\mysql\\Microsoft.Azure.Management.MySQL\\src\\mysqlflexibleservers\\Generated";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "3257aacc47c2a03b7964cbb5c6a07ec9f2f232ee";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
