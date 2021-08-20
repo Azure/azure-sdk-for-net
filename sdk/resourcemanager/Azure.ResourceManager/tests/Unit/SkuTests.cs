@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void SerializationTest()
         {
-            string expected = "{\"properties\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"model\":\"ModelForSku\",\"capacity\":123456789}}";
+            string expected = "{\"properties\":{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}}";
             Sku sku = new("NameForSku", SkuTier.Basic, "SizeForSku", "FamilyForSku", 123456789);
             var json = JsonHelper.SerializePropertiesToString(sku);
             Assert.AreEqual(expected, json);
@@ -316,13 +316,13 @@ namespace Azure.ResourceManager.Tests
         {
             Sku sku = new(null, null, null, null, null);
             var json = JsonHelper.SerializePropertiesToString(sku);
-            Assert.IsTrue(json.Equals("{\"properties\":{}}"));
+            Assert.AreEqual("{\"properties\":{\"name\":null}}", json);
         }
 
         [Test]
         public void DeserializationTest()
         {
-            string json = "{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}";
+            string json = "{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}";
             JsonElement element = JsonDocument.Parse(json).RootElement;
             Sku sku = Sku.DeserializeSku(element);
             Assert.IsTrue(sku.Name.Equals("NameForSku"));
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void InvalidDeserializationTest()
         {
-            string json = "{\"name\":\"NameForSku\",\"notTier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\"}";
+            string json = "{\"name\":\"NameForSku\",\"notTier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\"}";
             JsonElement element = JsonDocument.Parse(json).RootElement;
             Sku sku = Sku.DeserializeSku(element);
             Assert.IsTrue(sku.Tier == null);

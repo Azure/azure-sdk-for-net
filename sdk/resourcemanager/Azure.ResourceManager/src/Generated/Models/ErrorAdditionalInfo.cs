@@ -14,6 +14,11 @@ namespace Azure.ResourceManager.Resources.Models
     [PropertyReferenceType]
     public partial class ErrorAdditionalInfo
     {
+        /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
+        [InitializationConstructor]
+        public ErrorAdditionalInfo()
+        {
+        }
 
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
         /// <param name="type"> The additional info type. </param>
@@ -24,5 +29,10 @@ namespace Azure.ResourceManager.Resources.Models
             Type = type;
             Info = info;
         }
+
+        /// <summary> The additional info type. </summary>
+        public ResourceType Type { get; }
+        /// <summary> The additional info. </summary>
+        public object Info { get; }
     }
 }

@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.Resources.Models
             return string.Equals(Name, other.Name, StringComparison.InvariantCultureIgnoreCase) &&
                 string.Equals(Family, other.Family, StringComparison.InvariantCultureIgnoreCase) &&
                 string.Equals(Size, other.Size, StringComparison.InvariantCultureIgnoreCase) &&
+                (Tier.HasValue ? Tier.Value.Equals(other.Tier) : !other.Tier.HasValue) &&
                 long.Equals(Capacity, other.Capacity);
         }
 
