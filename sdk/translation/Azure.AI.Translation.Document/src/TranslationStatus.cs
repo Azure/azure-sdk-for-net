@@ -57,9 +57,9 @@ namespace Azure.AI.Translation.Document
         public int DocumentsNotStarted => Summary.NotYetStarted;
 
         /// <summary>
-        /// Number of documents cancelled.
+        /// Number of documents canceled.
         /// </summary>
-        public int DocumentsCancelled => Summary.Cancelled;
+        public int DocumentsCanceled => Summary.Cancelled;
 
         /// <summary>
         /// Total characters charged by the Document Translation service

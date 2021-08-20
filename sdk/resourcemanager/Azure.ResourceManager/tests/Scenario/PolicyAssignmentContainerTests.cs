@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"AutoTest ${policyAssignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            PolicyAssignment policyAssignment = await mgmtGroup.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData);
+            PolicyAssignment policyAssignment = (await mgmtGroup.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData)).Value;
             Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyAssignments().CreateOrUpdateAsync(null, policyAssignmentData));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, null));
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"AutoTest ${policyAsignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            PolicyAssignment policyAssignment = await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAsignmentName, policyAssignmentData);
+            PolicyAssignment policyAssignment = (await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAsignmentName, policyAssignmentData)).Value;
             Assert.AreEqual(policyAsignmentName, policyAssignment.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyAssignments().CreateOrUpdateAsync(null, policyAssignmentData));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAsignmentName, null));
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"AutoTest ${policyAsignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            PolicyAssignment policyAssignment = await Client.DefaultSubscription.GetPolicyAssignments().CreateOrUpdateAsync(policyAsignmentName, policyAssignmentData);
+            PolicyAssignment policyAssignment = (await Client.DefaultSubscription.GetPolicyAssignments().CreateOrUpdateAsync(policyAsignmentName, policyAssignmentData)).Value;
             Assert.AreEqual(policyAsignmentName, policyAssignment.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.DefaultSubscription.GetPolicyAssignments().CreateOrUpdateAsync(null, policyAssignmentData));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.DefaultSubscription.GetPolicyAssignments().CreateOrUpdateAsync(policyAsignmentName, null));
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"AutoTest ${policyAssignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            PolicyAssignment policyAssignment = await vn.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData);
+            PolicyAssignment policyAssignment = (await vn.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData)).Value;
             Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyAssignments().CreateOrUpdateAsync(null, policyAssignmentData));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, null));
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"AutoTest ${policyAssignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            PolicyAssignment policyAssignment = await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData);
+            PolicyAssignment policyAssignment = (await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData)).Value;
             PolicyAssignment getPolicyAssignment = await rg.GetPolicyAssignments().GetAsync(policyAssignmentName);
             AssertValidPolicyAssignment(policyAssignment, getPolicyAssignment);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyAssignments().GetAsync(null));

@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"AutoTest ${policyAssignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            PolicyAssignment policyAssignment = await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData);
+            PolicyAssignment policyAssignment = (await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData)).Value;
             string policyExemptionName = Recording.GenerateAssetName("polExemp-D-");
             PolicyExemptionData policyExemptionData = new PolicyExemptionData(policyAssignment.Id, new ExemptionCategory("Waiver"));
-            PolicyExemption policyExemption = await rg.GetPolicyExemptions().CreateOrUpdateAsync(policyExemptionName, policyExemptionData);
+            PolicyExemption policyExemption = (await rg.GetPolicyExemptions().CreateOrUpdateAsync(policyExemptionName, policyExemptionData)).Value;
             await policyExemption.DeleteAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await policyExemption.GetAsync());
             Assert.AreEqual(404, ex.Status);

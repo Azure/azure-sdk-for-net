@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"AutoTest ${policyAssignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            PolicyAssignment policyAssignment = await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData);
+            PolicyAssignment policyAssignment = (await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData)).Value;
             string policyExemptionName = Recording.GenerateAssetName("polExemp-C-");
             PolicyExemptionData policyExemptionData = new PolicyExemptionData(policyAssignment.Id, new ExemptionCategory("Waiver"));
-            PolicyExemption policyExemption = await rg.GetPolicyExemptions().CreateOrUpdateAsync(policyExemptionName, policyExemptionData);
+            PolicyExemption policyExemption = (await rg.GetPolicyExemptions().CreateOrUpdateAsync(policyExemptionName, policyExemptionData)).Value;
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(null, policyExemptionData));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(policyExemptionName, null));
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"AutoTest ${policyAssignmentName}",
                 PolicyDefinitionId = policyDefinitionId
             };
-            PolicyAssignment policyAssignment = await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData);
+            PolicyAssignment policyAssignment = (await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData)).Value;
             string policyExemptionName1 = Recording.GenerateAssetName("polExemp-L-");
             string policyExemptionName2 = Recording.GenerateAssetName("polExemp-L-");
             PolicyExemptionData policyExemptionData = new PolicyExemptionData(policyAssignment.Id, new ExemptionCategory("Waiver"));
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"AutoTest ${policyAssignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            PolicyAssignment policyAssignment = await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData);
+            PolicyAssignment policyAssignment = (await rg.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData)).Value;
             string policyExemptionName = Recording.GenerateAssetName("polExemp-G-");
             PolicyExemptionData policyExemptionData = new PolicyExemptionData(policyAssignment.Id, new ExemptionCategory("Waiver"));
-            PolicyExemption policyExemption = await rg.GetPolicyExemptions().CreateOrUpdateAsync(policyExemptionName, policyExemptionData);
+            PolicyExemption policyExemption = (await rg.GetPolicyExemptions().CreateOrUpdateAsync(policyExemptionName, policyExemptionData)).Value;
             PolicyExemption getPolicyExemption = await rg.GetPolicyExemptions().GetAsync(policyExemptionName);
             AssertValidPolicyExemption(policyExemption, getPolicyExemption);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().GetAsync(null));

@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<AliasType> type = default;
             Optional<string> defaultPath = default;
             Optional<AliasPattern> defaultPattern = default;
+            Optional<AliasPathMetadata> defaultMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -67,8 +68,18 @@ namespace Azure.ResourceManager.Resources.Models
                     defaultPattern = AliasPattern.DeserializeAliasPattern(property.Value);
                     continue;
                 }
+                if (property.NameEquals("defaultMetadata"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    defaultMetadata = AliasPathMetadata.DeserializeAliasPathMetadata(property.Value);
+                    continue;
+                }
             }
-            return new Alias(name.Value, Optional.ToList(paths), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value);
+            return new Alias(name.Value, Optional.ToList(paths), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value, defaultMetadata.Value);
         }
     }
 }

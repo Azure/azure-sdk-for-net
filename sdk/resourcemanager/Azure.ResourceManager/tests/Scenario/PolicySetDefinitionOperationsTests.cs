@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Tests
         {
             string policyDefinitionName = Recording.GenerateAssetName("testPolDef-");
             PolicyDefinitionData policyDefinitionData = CreatePolicyDefinitionData(policyDefinitionName);
-            PolicyDefinition policyDefinition = await Client.DefaultSubscription.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, policyDefinitionData);
+            PolicyDefinition policyDefinition = (await Client.DefaultSubscription.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, policyDefinitionData)).Value;
             string policySetDefinitionName = Recording.GenerateAssetName("polSetDef-D-");
             PolicySetDefinitionData policySetDefinitionData = CreatePolicySetDefinitionData(policySetDefinitionName, policyDefinition);
-            PolicySetDefinition policySetDefinition = await Client.DefaultSubscription.GetPolicySetDefinitions().CreateOrUpdateAsync(policySetDefinitionName, policySetDefinitionData);
+            PolicySetDefinition policySetDefinition = (await Client.DefaultSubscription.GetPolicySetDefinitions().CreateOrUpdateAsync(policySetDefinitionName, policySetDefinitionData)).Value;
             await policySetDefinition.DeleteAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await policySetDefinition.GetAsync());
             Assert.AreEqual(404, ex.Status);

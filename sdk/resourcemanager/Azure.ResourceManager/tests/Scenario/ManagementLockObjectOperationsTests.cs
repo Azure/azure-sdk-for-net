@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Tests
         {
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-D-");
             ManagementLockObjectData mgmtLockObjectData = new ManagementLockObjectData(new LockLevel("CanNotDelete"));
-            ManagementLockObject mgmtLockObject = await Client.DefaultSubscription.GetManagementLocks().CreateOrUpdateAsync(mgmtLockObjectName, mgmtLockObjectData);
+            ManagementLockObject mgmtLockObject = (await Client.DefaultSubscription.GetManagementLocks().CreateOrUpdateAsync(mgmtLockObjectName, mgmtLockObjectData)).Value;
             await mgmtLockObject.DeleteAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await mgmtLockObject.GetAsync());
             Assert.AreEqual(404, ex.Status);

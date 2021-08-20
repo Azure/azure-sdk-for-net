@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"AutoTest ${policyAssignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            PolicyAssignment policyAssignment = await Client.DefaultSubscription.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData);
+            PolicyAssignment policyAssignment = (await Client.DefaultSubscription.GetPolicyAssignments().CreateOrUpdateAsync(policyAssignmentName, policyAssignmentData)).Value;
             await policyAssignment.DeleteAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await policyAssignment.GetAsync());
             Assert.AreEqual(404, ex.Status);

@@ -7326,5 +7326,120 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySqlMIToSqlMIWithTableLockUpsert = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SqlMI to SqlMI"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SqlMISource"",
+                        sqlReaderQuery: ""select * from my_table"",
+                        queryTimeout: ""00:00:01"",
+                        partitionOption: ""DynamicRange"",
+                        partitionSettings: {
+                           partitionColumnName: ""column"",
+                           partitionUpperBound: 1,
+                           partitionLowerBound: 100
+                        }
+                    },
+                    sink:
+                    {
+                        type: ""SqlMISink"",
+                        sqlWriterTableType: ""MarketingType"",
+                        sqlWriterUseTableLock: true,
+                        writeBehavior: ""Upsert"",
+                        upsertSettings:{
+                           useTempDB: true,
+                           keys: [""key1""]
+                        }
+                    },
+                    translator:
+                    {
+                        type: ""TabularTranslator"",
+                        columnMappings: ""PartitionKey:PartitionKey""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""exampleDataset"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""exampleDataset"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+        [JsonSample]
+        public const string ExecuteWranglingDataFlowActivityPipeline = @"
+{
+    name: ""My Power Query Activity pipeline"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                type: ""ExecuteWranglingDataflow"",
+                typeProperties: {
+                    dataFlow: {
+                        referenceName: ""referenced1"",
+                        type: ""DataFlowReference""
+                    },
+                    staging: {
+                        linkedService: {
+                            referenceName: ""referenced2"",
+                            type: ""LinkedServiceReference""
+                        },
+                        folderPath: ""adfjobs/staging""
+                    },
+                    integrationRuntime: {
+                        referenceName: ""dataflowIR10minTTL"",
+                        type: ""IntegrationRuntimeReference""
+                    },
+                    compute: {
+                        computeType: ""MemoryOptimized"",
+                        coreCount: 8                         
+                    },
+                    sinks: {
+                        userquery: {
+                            name: ""sink1"",
+                            dataset: {
+                                referenceName: ""dataset1"",
+                                type: ""DatasetReference""
+                            },
+                            script: ""sink() ~> sink1""
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
+";
     }
 }

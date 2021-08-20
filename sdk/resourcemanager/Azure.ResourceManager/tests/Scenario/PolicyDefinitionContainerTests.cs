@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Tests
         {
             string policyDefinitionName = Recording.GenerateAssetName("polDef-C-");
             PolicyDefinitionData policyDefinitionData = CreatePolicyDefinitionData(policyDefinitionName);
-            PolicyDefinition policyDefinition = await Client.DefaultSubscription.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, policyDefinitionData);
+            PolicyDefinition policyDefinition = (await Client.DefaultSubscription.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, policyDefinitionData)).Value;
             Assert.AreEqual(policyDefinitionName, policyDefinition.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.DefaultSubscription.GetPolicyDefinitions().CreateOrUpdateAsync(null, policyDefinitionData));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.DefaultSubscription.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, null));
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Tests
             ManagementGroup mgmtGroup = await Client.GetManagementGroups().CreateOrUpdateAsync(mgmtGroupName, new CreateManagementGroupOptions());
             string policyDefinitionName = Recording.GenerateAssetName("polDef-C-");
             PolicyDefinitionData policyDefinitionData = CreatePolicyDefinitionData(policyDefinitionName);
-            PolicyDefinition policyDefinition = await mgmtGroup.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, policyDefinitionData);
+            PolicyDefinition policyDefinition = (await mgmtGroup.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, policyDefinitionData)).Value;
             Assert.AreEqual(policyDefinitionName, policyDefinition.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyDefinitions().CreateOrUpdateAsync(null, policyDefinitionData));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, null));
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Tests
         {
             string policyDefinitionName = Recording.GenerateAssetName("polDef-L-");
             PolicyDefinitionData policyDefinitionData = CreatePolicyDefinitionData(policyDefinitionName);
-            PolicyDefinition policyDefinition = await Client.DefaultSubscription.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, policyDefinitionData);
+            PolicyDefinition policyDefinition = (await Client.DefaultSubscription.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, policyDefinitionData)).Value;
             int count = 0;
             string policyType = "Custom";
             string filter = $"policyType eq '{policyType}'";
@@ -72,11 +72,12 @@ namespace Azure.ResourceManager.Tests
         {
             string policyDefinitionName = Recording.GenerateAssetName("polDef-G-");
             PolicyDefinitionData policyDefinitionData = CreatePolicyDefinitionData(policyDefinitionName);
-            PolicyDefinition policyDefinition = await Client.DefaultSubscription.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, policyDefinitionData);
+            PolicyDefinition policyDefinition = (await Client.DefaultSubscription.GetPolicyDefinitions().CreateOrUpdateAsync(policyDefinitionName, policyDefinitionData)).Value;
             PolicyDefinition getPolicyDefinition = await Client.DefaultSubscription.GetPolicyDefinitions().GetAsync(policyDefinitionName);
             AssertValidPolicyDefinition(policyDefinition, getPolicyDefinition);
             await policyDefinition.DeleteAsync();
         }
+
         private static PolicyDefinitionData CreatePolicyDefinitionData(string displayName) => new PolicyDefinitionData
         {
             DisplayName = $"AutoTest ${displayName}",

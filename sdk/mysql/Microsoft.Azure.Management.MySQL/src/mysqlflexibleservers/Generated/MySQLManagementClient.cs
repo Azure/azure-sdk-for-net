@@ -108,6 +108,11 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
         public virtual IConfigurationsOperations Configurations { get; private set; }
 
         /// <summary>
+        /// Gets the IServerParametersOperations.
+        /// </summary>
+        public virtual IServerParametersOperations ServerParameters { get; private set; }
+
+        /// <summary>
         /// Gets the ILocationBasedCapabilitiesOperations.
         /// </summary>
         public virtual ILocationBasedCapabilitiesOperations LocationBasedCapabilities { get; private set; }
@@ -374,6 +379,7 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers
             FirewallRules = new FirewallRulesOperations(this);
             Databases = new DatabasesOperations(this);
             Configurations = new ConfigurationsOperations(this);
+            ServerParameters = new ServerParametersOperations(this);
             LocationBasedCapabilities = new LocationBasedCapabilitiesOperations(this);
             CheckVirtualNetworkSubnetUsage = new CheckVirtualNetworkSubnetUsageOperations(this);
             CheckNameAvailability = new CheckNameAvailabilityOperations(this);

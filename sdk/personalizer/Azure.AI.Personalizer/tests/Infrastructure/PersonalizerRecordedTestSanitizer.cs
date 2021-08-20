@@ -6,9 +6,9 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.Personalizer.Tests
 {
-    public class PersonalizerRecordedTestSanitizer: RecordedTestSanitizer
+    public class PersonalizerRecordedTestSanitizer : RecordedTestSanitizer
     {
-        public PersonalizerRecordedTestSanitizer(): base()
+        public PersonalizerRecordedTestSanitizer() : base()
         {
             AddJsonPathSanitizer("$..accessToken");
             AddJsonPathSanitizer("$..source");
@@ -30,7 +30,8 @@ namespace Azure.AI.Personalizer.Tests
         {
             return variableName switch
             {
-                PersonalizerTestEnvironment.ApiKeyEnvironmentVariableName => SanitizeValue,
+                PersonalizerTestEnvironment.MultiSlotApiKeyEnvironmentVariableName => SanitizeValue,
+                PersonalizerTestEnvironment.SingleSlotApiKeyEnvironmentVariableName => SanitizeValue,
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
         }

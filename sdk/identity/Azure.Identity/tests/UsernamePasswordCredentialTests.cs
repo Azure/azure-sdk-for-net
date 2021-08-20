@@ -53,6 +53,20 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
+        {
+            var username = Guid.NewGuid().ToString();
+            var password = Guid.NewGuid().ToString();
+            var clientId = Guid.NewGuid().ToString();
+            var tenantId = Guid.NewGuid().ToString();
+
+            var credential = new UsernamePasswordCredential(username, password, clientId, tenantId, new TokenCredentialOptions{ IsLoggingPIIEnabled = isLoggingPIIEnabled}, default, null);
+
+            Assert.NotNull(credential.Client);
+            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.LogPII);
+        }
+
+        [Test]
         public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();

@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = JsonSerializer.Deserialize<ErrorResponse>(property.Value.ToString());
                     continue;
                 }
             }
-            return new CloudError(error.Value);
+            return new CloudError(error);
         }
     }
 }
