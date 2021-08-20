@@ -144,6 +144,9 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         ///   It is safe to attempt resending the events by calling <see cref="EnqueueEventAsync(EventData, CancellationToken)" /> or <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> from within
         ///   this handler.  It is important to note that doing so will place them at the end of the buffer; the original order will not be maintained.
+        ///
+        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result 
+        ///   in a deadlock scenario if those calls are awaited.
         /// </summary>
         ///
         /// <remarks>
