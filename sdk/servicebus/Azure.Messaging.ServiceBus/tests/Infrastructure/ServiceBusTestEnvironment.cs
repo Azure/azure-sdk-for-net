@@ -24,9 +24,6 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// <summary>The active Service Bus namespace for this test run.</summary>
         private ServiceBusConnectionStringProperties ParsedConnectionString => ServiceBusConnectionStringProperties.Parse(ServiceBusConnectionString);
 
-        /// <summary>The active Service Bus namespace for this test run.</summary>
-        private readonly NamespaceProperties ActiveServiceBusNamespace;
-
         /// <summary>
         ///   The connection string for the Service Bus namespace instance to be used for
         ///   Live tests.
@@ -55,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <value>The name will be determined by creating an ephemeral Service Bus namespace for the test execution.</value>
         ///
-        public string ServiceBusNamespace => ActiveServiceBusNamespace.Name;
+        public string ServiceBusNamespace { get; }
 
         /// <summary>
         ///   The name of the Service Bus namespace to be used for Live tests.
@@ -63,8 +60,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <value>The name will be determined by creating an ephemeral Service Bus namespace for the test execution.</value>
         ///
-        public string ServiceBusSecondaryNamespace => GetRecordedOptionalVariable("SERVICEBUS_SECONDARY_CONNECTION_STRING",
-            options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64));
+        public string ServiceBusSecondaryNamespace { get; }
 
         /// <summary>
         ///   The fully qualified namespace for the Service Bus namespace represented by this scope.
@@ -124,7 +120,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         public ServiceBusTestEnvironment()
         {
-            ActiveServiceBusNamespace = ParseServiceBusNamespace(ServiceBusConnectionString);
+            ServiceBusNamespace = ParseServiceBusNamespace(ServiceBusConnectionString).Name;
+            ServiceBusSecondaryNamespace = ParseServiceBusNamespace(ServiceBusSecondaryNamespaceConnectionString).Name;
         }
 
         /// <summary>
