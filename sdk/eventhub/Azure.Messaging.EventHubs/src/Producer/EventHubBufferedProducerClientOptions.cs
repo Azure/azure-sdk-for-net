@@ -226,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Producer
             var translatedOptions = new EventHubProducerClientOptions
             {
                 Identifier = Identifier,
-                EnableIdempotentPartitions = EnableIdempotentPartitions,
+                EnableIdempotentPartitions = EnableIdempotentRetries,
                 ConnectionOptions = ConnectionOptions,
                 RetryOptions = RetryOptions
             };
