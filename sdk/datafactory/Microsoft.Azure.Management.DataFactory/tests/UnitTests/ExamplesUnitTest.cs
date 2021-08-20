@@ -512,6 +512,55 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
+        public void PowerQueries_Create()
+        {
+            RunTest("PowerQueries_Create", (example, client, responseCode) =>
+            {
+                DataFlowResource resource = client.DataFlows.CreateOrUpdate(RGN(example), FN(example), DFN(example), DFR(example, client));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
+        public void PowerQueries_Update()
+        {
+            RunTest("PowerQueries_Update", (example, client, responseCode) =>
+            {
+                DataFlowResource resource = client.DataFlows.CreateOrUpdate(RGN(example), FN(example), DFN(example), DFR(example, client));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
+        public void PowerQueries_ListByFactory()
+        {
+            RunTest("PowerQueries_ListByFactory", (example, client, responseCode) =>
+            {
+                IPage<DataFlowResource> resources = client.DataFlows.ListByFactory(RGN(example), FN(example));
+                CheckResponseBody(example, client, responseCode, (Page<DataFlowResource>)resources);
+            });
+        }
+
+        [Fact]
+        public void PowerQueries_Get()
+        {
+            RunTest("PowerQueries_Get", (example, client, responseCode) =>
+            {
+                DataFlowResource resource = client.DataFlows.Get(RGN(example), FN(example), DFN(example));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
+        public void PowerQueries_Delete()
+        {
+            RunTest("PowerQueries_Delete", (example, client, responseCode) =>
+            {
+                client.Datasets.Delete(RGN(example), FN(example), DFN(example));
+            });
+        }
+
+        [Fact]
         public void DataFlowDebugSession_Create()
         {
             RunTest("DataFlowDebugSession_Create", (example, client, responseCode) =>

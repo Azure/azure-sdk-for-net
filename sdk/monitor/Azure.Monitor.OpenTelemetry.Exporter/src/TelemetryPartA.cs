@@ -31,7 +31,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static string RoleInstance { get; set; }
 
-        internal static TelemetryItem GetTelemetryItem(Activity activity, Resource resource, string instrumentationKey)
+#pragma warning disable CA1801 // Review unused parameters
+        internal static TelemetryItem GetTelemetryItem(Activity activity, ref TagEnumerationState monitorTags, Resource resource, string instrumentationKey)
+#pragma warning restore CA1801 // Review unused parameters
         {
             TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], FormatUtcTimestamp(activity.StartTimeUtc))
             {

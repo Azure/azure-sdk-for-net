@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `KeyVaultKeyIdentifier.TryCreate` to parse key URIs without throwing an exception when invalid. ([#23146](https://github.com/Azure/azure-sdk-for-net/issues/23146))
+
 ### Breaking Changes
 
 ### Bugs Fixed
