@@ -30,8 +30,8 @@ var message = new ServiceBusMessage
 Finally, we send our message to our Service Bus queue.
 ```C# Snippet:ClaimCheckSendMessage
 var client = new ServiceBusClient("<service bus connection string>");
-    ServiceBusSender sender = client.CreateSender(scope.QueueName);
-    await sender.SendMessageAsync(message);
+ServiceBusSender sender = client.CreateSender(scope.QueueName);
+await sender.SendMessageAsync(message);
 ```
 
 ### Receiving the message

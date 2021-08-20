@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     #region Snippet:ClaimCheckSendMessage
 
 #if SNIPPET
-                var client = new ServiceBusClient("<service bus connection string>");
+                    var client = new ServiceBusClient("<service bus connection string>");
 #else
                     var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 #endif
