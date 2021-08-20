@@ -1,24 +1,20 @@
 apiVersion: chaos-mesh.org/v1alpha1
 kind: NetworkChaos
 metadata:
-  name: network-loss-kasobol-test
+  name: network-corruption-kasobol-test
   namespace: kasobol-test
+  labels: null
+  annotations: null
 spec:
-  action: loss
+  action: corrupt
   mode: one
   value: ''
   selector:
     namespaces:
       - kasobol-test
-  loss:
-    loss: '15'
+  corrupt:
+    corrupt: '15'
     correlation: '0'
   direction: to
-  target:
-    selector:
-      namespaces:
-        - kasobol-test
-    mode: one
-    value: ''
   externalTargets:
     - kasobolchaosprim.blob.core.windows.net
