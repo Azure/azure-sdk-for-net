@@ -602,27 +602,6 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Closes the producer and performs the tasks needed to clean up all the resources used by the <see cref="EventHubBufferedProducerClient"/>.
         /// </summary>
         ///
-        /// <remarks>
-        ///   Calling this method will also call <see cref="FlushAsync(CancellationToken)"/>, which will attempt to publish any events that are still pending,
-        ///   and finish any active sending.
-        ///
-        ///   This method is identical to <see cref="DisposeAsync"/> and either can be used to publish pending events and clean up resources.
-        /// </remarks>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        public virtual Task CloseAsync(CancellationToken cancellationToken = default)
-        {
-            _isClosed = true;
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        ///   Closes the producer and performs the tasks needed to clean up all the resources used by the <see cref="EventHubBufferedProducerClient"/>.
-        /// </summary>
-        ///
         /// <param name="flush">Indicates whether to abandon events in the buffer or attempt to publish them.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
