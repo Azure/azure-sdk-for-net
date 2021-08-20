@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
         protected internal TrackedResource(string id, string name, string type, Location location, IDictionary<string, string> tags)
             : base(id, name, type)
         {
-            Tags = tags;
+            Tags = tags ?? new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             Location = location;
         }
 

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void SerializationTest()
         {
-            string expected = "{\"properties\":{\"location\":\"eastus\",\"tags\":{\"key1\":\"value1\",\"key2\":\"value2\"}}}";
+            string expected = "{\"properties\":{\"tags\":{\"key1\":\"value1\",\"key2\":\"value2\"},\"location\":\"eastus\"}}";
             TestTrackedResource data = new("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1", Location.EastUS);
             data.Tags.Add("key1", "value1");
             data.Tags.Add("key2", "value2");
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void InvalidSerializationTest()
         {
-            string expected = "{\"properties\":{\"location\":\"westus\",\"tags\":{}}}";
+            string expected = "{\"properties\":{\"tags\":{},\"location\":\"westus\"}}";
             TestTrackedResource data = new("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/foo");
             var json = JsonHelper.SerializePropertiesToString(data);
             Assert.IsTrue(expected.Equals(json));
