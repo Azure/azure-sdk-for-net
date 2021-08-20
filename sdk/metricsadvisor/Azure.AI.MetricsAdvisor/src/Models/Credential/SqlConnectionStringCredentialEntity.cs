@@ -11,6 +11,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// <summary>
     /// Authenticates to an SQL server via connection string.
     /// </summary>
+    /// <remarks>
+    /// In order to create a credential entity, you must pass this instance to the method
+    /// <see cref="MetricsAdvisorAdministrationClient.CreateDataSourceCredentialAsync"/>.
+    /// </remarks>
     [CodeGenModel("AzureSQLConnectionStringCredential")]
     [CodeGenSuppress(nameof(SqlConnectionStringCredentialEntity), typeof(string), typeof(AzureSQLConnectionStringParam))]
     public partial class SqlConnectionStringCredentialEntity
@@ -27,14 +31,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
-            DataSourceCredentialType = DataSourceCredentialType.AzureSQLConnectionString;
+            CredentialKind = DataSourceCredentialKind.SqlConnectionString;
             ConnectionString = connectionString;
         }
 
-        internal SqlConnectionStringCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, AzureSQLConnectionStringParam parameters)
+        internal SqlConnectionStringCredentialEntity(DataSourceCredentialKind dataSourceCredentialType, string id, string name, string description, AzureSQLConnectionStringParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
-            DataSourceCredentialType = dataSourceCredentialType;
+            CredentialKind = dataSourceCredentialType;
             ConnectionString = parameters.ConnectionString;
         }
 

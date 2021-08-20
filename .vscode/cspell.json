@@ -26,7 +26,29 @@
     "*.log",
     "*.sln",
     "*.user",
-    ".vscode/cspell.json"
+    ".vscode/cspell.json",
+
+    // These services are opted out of public API surface spell checking.
+    // Spelling issues must be addressed before adding these back in.
+    "sdk/agrifood/*/api/*.cs",
+    "sdk/communication/*/api/*.cs",
+    "sdk/compute/*/api/*.cs",
+    "sdk/containerregistry/*/api/*.cs",
+    "sdk/cosmosdb/*/api/*.cs",
+    "sdk/digitaltwins/*/api/*.cs",
+    "sdk/dns/*/api/*.cs",
+    "sdk/eventgrid/*/api/*.cs",
+    "sdk/insights/*/api/*.cs",
+    "sdk/machinelearningservices/*/api/*.cs",
+    "sdk/modelsrepository/*/api/*.cs",
+    "sdk/monitor/*/api/*.cs",
+    "sdk/network/*/api/*.cs",
+    "sdk/objectanchors/*/api/*.cs",
+    "sdk/purview/*/api/*.cs",
+    "sdk/remoterendering/*/api/*.cs",
+    "sdk/sqlmanagement/*/api/*.cs",
+    "sdk/synapse/*/api/*.cs",
+    "sdk/videoanalyzer/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
@@ -35,8 +57,10 @@
     "azsdk",
     "blazor",
     "contoso",
+    "deserializable",
     "deserializes",
     "diagnoser",
+    "dont",
     "dtmf",
     "epsg",
     "expando",
@@ -62,16 +86,52 @@
     "unhold",
     "uninstrumented",
     "westus",
-    "xunit"
+    "xunit",
+    "vnet",
+    "unencrypted",
+    "personalizer"
   ],
   "overrides": [
+    {
+      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
+      "words": ["warnaserror"]
+    },
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
     {
-      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
-      "words": ["warnaserror"]
+      "filename": "**/sdk/keyvault/**/*.cs",
+      "words": [
+        "deletesas",
+        "getsas",
+        "listsas",
+        "oaep",
+        "setsas"
+      ]
+    },
+    {
+      "filename": "**/sdk/search/**/*.cs",
+      "words": [
+        "Adls",
+        "Bangla",
+        "Bokmaal",
+        "Cyrl",
+        "Decompounder",
+        "Haase",
+        "Hant",
+        "Koelner",
+        "Latn",
+        "Lovins",
+        "Nysiis",
+        "Phonetik",
+        "Piqd",
+        "Reranker",
+        "Rslp",
+        "Soundex",
+        "Sorani",
+        "Unprocessable"
+      ]
     },
     {
       "filename": "**/sdk/storage/**/*.cs",
@@ -86,6 +146,17 @@
         "Rehydrated",
         "Skus",
         "Undelete"
+      ]
+    },
+    {
+      "filename": "**/sdk/textanalytics/**/*.cs",
+      "words": [
+        "Brcpf",
+        "Idrg",
+        "Esdni",
+        "Eugps",
+        "Plregon",
+        "Usuk"
       ]
     }
   ],

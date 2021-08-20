@@ -11,8 +11,8 @@ namespace Azure.Storage.Blobs.Models
     internal partial class ClearRange
     {
         /// <summary> Initializes a new instance of ClearRange. </summary>
-        /// <param name="start"> . </param>
-        /// <param name="end"> . </param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
         internal ClearRange(long start, long end)
         {
             Start = start;

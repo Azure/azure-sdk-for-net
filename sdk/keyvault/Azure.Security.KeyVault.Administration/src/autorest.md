@@ -8,8 +8,8 @@ Run `dotnet build /t:GenerateCode` in src directory to re-generate.
 ``` yaml
 title: Azure.Security.KeyVault.Administration
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1e2c9f3ec93078da8078389941531359e274f32a/specification/keyvault/data-plane/Microsoft.KeyVault/stable/7.2/rbac.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1e2c9f3ec93078da8078389941531359e274f32a/specification/keyvault/data-plane/Microsoft.KeyVault/stable/7.2/backuprestore.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/7a42f16c75e5005c59b75fe7f0888c1103294d43/specification/keyvault/data-plane/Microsoft.KeyVault/preview/7.3-preview/rbac.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/7a42f16c75e5005c59b75fe7f0888c1103294d43/specification/keyvault/data-plane/Microsoft.KeyVault/preview/7.3-preview/backuprestore.json
 namespace: Azure.Security.KeyVault.Administration
 include-csproj: disable
 ```

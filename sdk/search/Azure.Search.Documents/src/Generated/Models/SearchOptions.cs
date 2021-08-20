@@ -44,7 +44,9 @@ namespace Azure.Search.Documents
         /// <param name="selectRaw"> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </param>
         /// <param name="skip"> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </param>
         /// <param name="size"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpeller? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size)
+        /// <param name="queryCaptionRaw"> A value that specifies whether captions should be returned as part of the search response. </param>
+        /// <param name="semanticFieldsRaw"> The comma-separated list of field names used for semantic search. </param>
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpeller? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -68,6 +70,8 @@ namespace Azure.Search.Documents
             SelectRaw = selectRaw;
             Skip = skip;
             Size = size;
+            QueryCaptionRaw = queryCaptionRaw;
+            SemanticFieldsRaw = semanticFieldsRaw;
         }
         /// <summary> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &amp;lt;/em&amp;gt;. </summary>
         public string HighlightPostTag { get; set; }

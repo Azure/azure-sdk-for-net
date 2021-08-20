@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Optional filters, such as filtering by name or by status.
         /// </summary>
-        public GetDataFeedsFilter GetDataFeedsFilter { get; set; }
+        public DataFeedFilter Filter { get; set; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to

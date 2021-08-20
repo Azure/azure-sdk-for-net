@@ -18,11 +18,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of SparkScheduler. </summary>
-        /// <param name="submittedAt"> . </param>
-        /// <param name="scheduledAt"> . </param>
-        /// <param name="endedAt"> . </param>
-        /// <param name="cancellationRequestedAt"> . </param>
-        /// <param name="currentState"> . </param>
+        /// <param name="submittedAt"></param>
+        /// <param name="scheduledAt"></param>
+        /// <param name="endedAt"></param>
+        /// <param name="cancellationRequestedAt"></param>
+        /// <param name="currentState"></param>
         internal SparkScheduler(DateTimeOffset? submittedAt, DateTimeOffset? scheduledAt, DateTimeOffset? endedAt, DateTimeOffset? cancellationRequestedAt, SchedulerCurrentState? currentState)
         {
             SubmittedAt = submittedAt;

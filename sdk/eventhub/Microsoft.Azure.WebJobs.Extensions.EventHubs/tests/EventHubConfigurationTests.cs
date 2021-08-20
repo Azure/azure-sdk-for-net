@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             EventHubOptions options = CreateOptionsFromConfig();
 
-            Assert.AreEqual(123, options.MaxBatchSize);
+            Assert.AreEqual(123, options.MaxEventBatchSize);
             Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 b => { b.AddEventHubs(); },
                 jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
-            Assert.AreEqual(123, result.MaxBatchSize);
+            Assert.AreEqual(123, result.MaxEventBatchSize);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
             Assert.True(result.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, result.PrefetchCount);
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             EventHubOptions options = CreateOptionsFromConfigBackCompat();
 
-            Assert.AreEqual(123, options.MaxBatchSize);
+            Assert.AreEqual(123, options.MaxEventBatchSize);
             Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 b => { b.AddEventHubs(); },
                 jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
-            Assert.AreEqual(123, result.MaxBatchSize);
+            Assert.AreEqual(123, result.MaxEventBatchSize);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
             Assert.True(result.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, result.PrefetchCount);
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             string extensionPath = "AzureWebJobs:Extensions:EventHubs";
             var values = new Dictionary<string, string>
             {
-                { $"{extensionPath}:MaxBatchSize", "123" },
+                { $"{extensionPath}:MaxEventBatchSize", "123" },
                 { $"{extensionPath}:TrackLastEnqueuedEventProperties", "true" },
                 { $"{extensionPath}:PrefetchCount", "123" },
                 { $"{extensionPath}:BatchCheckpointFrequency", "5" },

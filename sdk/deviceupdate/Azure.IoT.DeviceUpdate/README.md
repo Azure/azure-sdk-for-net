@@ -5,7 +5,6 @@ The library provides access to the Device Update for IoT Hub service that enable
   [Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/deviceupdate/Azure.IoT.DeviceUpdate/src) | [Package](https://www.nuget.org) | [Product documentation](https://docs.microsoft.com/azure/iot-hub-device-update/understand-device-update)
 
 
-
 ## Getting started
 
 The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads](https://azure.microsoft.com/downloads/?sdk=net) page and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
@@ -43,7 +42,6 @@ You can learn more about Device Update for IoT Hub by visiting [Device Update fo
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/deviceupdate/Azure.IoT.DeviceUpdate/samples).
 
-
 ## Troubleshooting
 
 All Device Update for IoT Hub service operations will throw a RequestFailedException on failure with helpful ErrorCodes.
@@ -67,7 +65,6 @@ catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFoun
 ## Next steps
 
 Get started with our [Device Update for IoT Hub samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/deviceupdate/Azure.IoT.DeviceUpdate/samples)
-
 
 ## Contributing
 

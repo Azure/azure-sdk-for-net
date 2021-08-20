@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TestHelperProjects>;</TestHelperProjects>
-    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion>
+    <UseNewMgmtFramework>false</UseNewMgmtFramework>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Storage.csproj" />

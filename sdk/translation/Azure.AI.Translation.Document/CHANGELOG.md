@@ -1,6 +1,29 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+- `DocumentFilter.CreatedAfter` and `DocumentFilter.CreatedBefore` are now nullable properties.
+
+### Bugs Fixed
+- `GetDocumentStasus` and `GetDocumentStatusesAsync` no longer set CreatedAfter and CreatedBefore if the user doesn't set it.
+
+### Other Changes
+
+## 1.0.0-beta.4 (2021-08-10)
+
+### Features Added
+- Added filtering options to methods `GetAllTranslationStatuses`, `GetAllDocumentStatuses` and their async equivalent.
+- Added `DocumentTranslationModelFactory` static class to support mocking model types. 
+
+### Breaking Changes
+- Properties `Suffix` and `Prefix` are now available under `TranslationSource` instead of in type `DocumentFilter`.
+- Type `DocumentTranslationError` is now a struct.
+- Type `StorageInputType` is now a regular enum instead of an extensible enum.
+
+## 1.0.0-beta.3 (2021-07-07)
 ### Breaking changes
 
 - Renamed property `DocumentId` to `Id`in `DocumentStatusResult`.

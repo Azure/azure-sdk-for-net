@@ -12,30 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class WholeMetricConfigurationPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ConditionOperator))
-            {
-                writer.WritePropertyName("conditionOperator");
-                writer.WriteStringValue(ConditionOperator.Value.ToString());
-            }
-            if (Optional.IsDefined(SmartDetectionCondition))
-            {
-                writer.WritePropertyName("smartDetectionCondition");
-                writer.WriteObjectValue(SmartDetectionCondition);
-            }
-            if (Optional.IsDefined(HardThresholdCondition))
-            {
-                writer.WritePropertyName("hardThresholdCondition");
-                writer.WriteObjectValue(HardThresholdCondition);
-            }
-            if (Optional.IsDefined(ChangeThresholdCondition))
-            {
-                writer.WritePropertyName("changeThresholdCondition");
-                writer.WriteObjectValue(ChangeThresholdCondition);
-            }
-            writer.WriteEndObject();
-        }
     }
 }

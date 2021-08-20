@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);RESOURCES_RP</DefineConstants>
-    <TestHelperProjects>;</TestHelperProjects>
+    <UseNewMgmtFramework>false</UseNewMgmtFramework>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
   <PropertyGroup>
     <NoWarn>SA1649</NoWarn>

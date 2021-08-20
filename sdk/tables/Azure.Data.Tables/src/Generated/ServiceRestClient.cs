@@ -30,17 +30,8 @@ namespace Azure.Data.Tables
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2019-02-02")
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-
-            this.url = url;
-            this.version = version;
+            this.url = url ?? throw new ArgumentNullException(nameof(url));
+            this.version = version ?? throw new ArgumentNullException(nameof(version));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

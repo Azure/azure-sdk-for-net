@@ -1294,10 +1294,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null)
+        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null)
         {
-            return new AcsChatMessageReceivedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody);
+            metadata ??= new Dictionary<string, string>();
+
+            return new AcsChatMessageReceivedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, metadata);
         }
 
         /// <summary> Initializes a new instance of AcsChatEventInThreadBaseProperties. </summary>
@@ -1334,10 +1337,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null)
+        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null)
         {
-            return new AcsChatMessageReceivedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody);
+            metadata ??= new Dictionary<string, string>();
+
+            return new AcsChatMessageReceivedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, metadata);
         }
 
         /// <summary> Initializes a new instance of AcsChatMessageEditedEventData. </summary>
@@ -1351,11 +1357,14 @@ namespace Azure.Messaging.EventGrid
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, DateTimeOffset? editTime = null)
+        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null, DateTimeOffset? editTime = null)
         {
-            return new AcsChatMessageEditedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, editTime);
+            metadata ??= new Dictionary<string, string>();
+
+            return new AcsChatMessageEditedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, metadata, editTime);
         }
 
         /// <summary> Initializes a new instance of AcsChatMessageEditedInThreadEventData. </summary>
@@ -1368,11 +1377,14 @@ namespace Azure.Messaging.EventGrid
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, DateTimeOffset? editTime = null)
+        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null, DateTimeOffset? editTime = null)
         {
-            return new AcsChatMessageEditedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, editTime);
+            metadata ??= new Dictionary<string, string>();
+
+            return new AcsChatMessageEditedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, metadata, editTime);
         }
 
         /// <summary> Initializes a new instance of AcsChatMessageDeletedEventData. </summary>
@@ -1713,6 +1725,17 @@ namespace Azure.Messaging.EventGrid
         public static PolicyInsightsPolicyStateDeletedEventData PolicyInsightsPolicyStateDeletedEventData(DateTimeOffset? timestamp = null, string policyAssignmentId = null, string policyDefinitionId = null, string policyDefinitionReferenceId = null, string complianceState = null, string subscriptionId = null, string complianceReasonCode = null)
         {
             return new PolicyInsightsPolicyStateDeletedEventData(timestamp, policyAssignmentId, policyDefinitionId, policyDefinitionReferenceId, complianceState, subscriptionId, complianceReasonCode);
+        }
+
+        /// <summary> Initializes a new instance of ContainerServiceNewKubernetesVersionAvailableEventData. </summary>
+        /// <param name="latestSupportedKubernetesVersion"> The highest PATCH Kubernetes version for the highest MINOR version supported by ManagedCluster resource. </param>
+        /// <param name="latestStableKubernetesVersion"> The highest PATCH Kubernetes version for the MINOR version considered stable for the ManagedCluster resource. </param>
+        /// <param name="lowestMinorKubernetesVersion"> The highest PATCH Kubernetes version for the lowest applicable MINOR version available for the ManagedCluster resource. </param>
+        /// <param name="latestPreviewKubernetesVersion"> The highest PATCH Kubernetes version considered preview for the ManagedCluster resource. There might not be any version in preview at the time of publishing the event. </param>
+        /// <returns> A new <see cref="SystemEvents.ContainerServiceNewKubernetesVersionAvailableEventData"/> instance for mocking. </returns>
+        public static ContainerServiceNewKubernetesVersionAvailableEventData ContainerServiceNewKubernetesVersionAvailableEventData(string latestSupportedKubernetesVersion = null, string latestStableKubernetesVersion = null, string lowestMinorKubernetesVersion = null, string latestPreviewKubernetesVersion = null)
+        {
+            return new ContainerServiceNewKubernetesVersionAvailableEventData(latestSupportedKubernetesVersion, latestStableKubernetesVersion, lowestMinorKubernetesVersion, latestPreviewKubernetesVersion);
         }
     }
 }

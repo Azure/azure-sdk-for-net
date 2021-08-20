@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts,
         /// using anonymous access to the registry.  Only operations that support anonymous access are enabled.  Other service
-        /// methods will throw <see cref="RequestFailedException"/> if called.
+        /// methods will throw <see cref="RequestFailedException"/> if called from this client.
         /// </summary>
         /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
         /// to "https://{registry-name}.azurecr.io".</param>
@@ -33,9 +33,9 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Initializes a new instance of the ContainerRegistryClient for managing container images and artifacts,
+        /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts,
         /// using anonymous access to the registry.  Only operations that support anonymous access are enabled.  Other service
-        /// methods will throw <see cref="RequestFailedException"/> if called.
+        /// methods will throw <see cref="RequestFailedException"/> if called from this client.
         /// </summary>
         /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
         /// to "https://{registry-name}.azurecr.io".</param>
@@ -58,7 +58,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Initializes a new instance of the ContainerRegistryClient for managing container images and artifacts.
+        /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts.
         /// </summary>
         /// <param name="endpoint">The URI endpoint of the container registry.  This is likely to be similar
         /// to "https://{registry-name}.azurecr.io".</param>
@@ -72,6 +72,11 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
+            if (options.Audience == null)
+            {
+                throw new InvalidOperationException("ContainerRegistryClientOptions.Audience property must be set to initialize ContainerRegistryClient.");
+            }
+
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -79,7 +84,8 @@ namespace Azure.Containers.ContainerRegistry
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
             _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
-            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, options.AuthenticationScope, _acrAuthClient));
+            string defaultScope = options.Audience + "/.default";
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, defaultScope, _acrAuthClient));
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 
@@ -93,7 +99,7 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         public virtual Uri Endpoint => _endpoint;
 
-        /// <summary> List repositories in this registry. </summary>
+        /// <summary> List the names of the repositories in this registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual AsyncPageable<string> GetRepositoryNamesAsync(CancellationToken cancellationToken = default)
@@ -134,7 +140,7 @@ namespace Azure.Containers.ContainerRegistry
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List repositories in this registry. </summary>
+        /// <summary> List the names of the repositories in this registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Pageable<string> GetRepositoryNames(CancellationToken cancellationToken = default)
@@ -189,7 +195,7 @@ namespace Azure.Containers.ContainerRegistry
             return linkValue?.Substring(1, linkValue.IndexOf('>') - 1);
         }
 
-        /// <summary> Delete the repository identified by `repostitory`. </summary>
+        /// <summary> Delete the repository identified by `repository` and all associated artifacts.</summary>
         /// <param name="repositoryName"> Repository name (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
@@ -212,7 +218,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Delete the repository identified by `repostitory`. </summary>
+        /// <summary> Delete the repository identified by `repository` and all associated artifacts.</summary>
         /// <param name="repositoryName"> Repository name (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
@@ -236,7 +242,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Create a new <see cref="ContainerRepository"/> object for the specified repository.
+        /// Create a new <see cref="ContainerRepository"/> object for calling service methods related to the repository specified by `repositoryName`.
         /// </summary>
         /// <param name="repositoryName"> The name of the repository to reference. </param>
         /// <returns> A new <see cref="ContainerRepository"/> for the desired repository. </returns>
@@ -254,7 +260,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Create a new <see cref="RegistryArtifact"/> object for the specified artifact.
+        /// Create a new <see cref="RegistryArtifact"/> object for calling service methods related to the artifact specified by `repositoryName` and `tagOrDigest`.
         /// </summary>
         /// <param name="repositoryName"> The name of the repository to reference. </param>
         /// <param name="tagOrDigest"> Either a tag or a digest that uniquely identifies the artifact. </param>

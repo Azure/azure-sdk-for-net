@@ -18,7 +18,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
-        /// <param name="summary"> . </param>
+        /// <param name="summary"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="summary"/> is null. </exception>
         internal TranslationStatus(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, StatusSummary summary)
         {
@@ -44,8 +44,8 @@ namespace Azure.AI.Translation.Document
         /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
-        /// <param name="summary"> . </param>
-        internal TranslationStatus(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, DocumentTranslationError error, StatusSummary summary)
+        /// <param name="summary"></param>
+        internal TranslationStatus(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, DocumentTranslationError? error, StatusSummary summary)
         {
             Id = id;
             CreatedOn = createdOn;
@@ -57,6 +57,6 @@ namespace Azure.AI.Translation.Document
         /// <summary> List of possible statuses for job or document. </summary>
         public DocumentTranslationStatus Status { get; }
         /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
-        public DocumentTranslationError Error { get; }
+        public DocumentTranslationError? Error { get; }
     }
 }

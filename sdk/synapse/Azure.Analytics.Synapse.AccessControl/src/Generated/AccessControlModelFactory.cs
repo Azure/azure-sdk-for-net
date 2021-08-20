@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Analytics.Synapse.AccessControl.Models;
 
-namespace Azure.Analytics.Synapse.AccessControl
+namespace Azure.Analytics.Synapse.AccessControl.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class AccessControlModelFactory
@@ -47,6 +46,17 @@ namespace Azure.Analytics.Synapse.AccessControl
             return new RoleAssignmentDetails(id, roleDefinitionId, principalId, scope, principalType);
         }
 
+        /// <summary> Initializes a new instance of RoleAssignmentDetailsList. </summary>
+        /// <param name="count"> Number of role assignments. </param>
+        /// <param name="value"> A list of role assignments. </param>
+        /// <returns> A new <see cref="Models.RoleAssignmentDetailsList"/> instance for mocking. </returns>
+        public static RoleAssignmentDetailsList RoleAssignmentDetailsList(int? count = null, IEnumerable<RoleAssignmentDetails> value = null)
+        {
+            value ??= new List<RoleAssignmentDetails>();
+
+            return new RoleAssignmentDetailsList(count, value?.ToList());
+        }
+
         /// <summary> Initializes a new instance of SynapseRoleDefinition. </summary>
         /// <param name="id"> Role Definition ID. </param>
         /// <param name="name"> Name of the Synapse role. </param>
@@ -78,17 +88,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             notDataActions ??= new List<string>();
 
             return new SynapseRbacPermission(actions?.ToList(), notActions?.ToList(), dataActions?.ToList(), notDataActions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of RoleAssignmentDetailsList. </summary>
-        /// <param name="count"> Number of role assignments. </param>
-        /// <param name="value"> A list of role assignments. </param>
-        /// <returns> A new <see cref="Models.RoleAssignmentDetailsList"/> instance for mocking. </returns>
-        public static RoleAssignmentDetailsList RoleAssignmentDetailsList(int? count = null, IEnumerable<RoleAssignmentDetails> value = null)
-        {
-            value ??= new List<RoleAssignmentDetails>();
-
-            return new RoleAssignmentDetailsList(count, value?.ToList());
         }
     }
 }

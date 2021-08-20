@@ -1,5 +1,32 @@
 # Release History
 
+## 12.2.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.2.0-beta.1 (2021-08-10)
+
+Thank you to our developer community members who helped to make Azure Tables better with their contributions to this release:
+
+- Yifan Bian _([yifanbian-msft](https://github.com/yifanbian-msft))_
+- David Gardiner _([flcdrg](https://github.com/flcdrg))_
+
+### Features Added
+
+- Added support for customization of how model properties are serialized. Decorating a model property with the `[IgnoreDataMember]` attribute will ignore it on serialization and the `[DataMember(Name = "some_new_name")]` will rename the property.
+- Added an extension method to the Builder extensions that accepts just the Table Uri. (A community contribution, courtesy of _[flcdrg](https://github.com/flcdrg))_.
+
+### Bugs Fixed
+
+- Fixed and issue with connection string parsing for Azure Storage Emulator connection strings. (A community contribution, courtesy of _[yifanbian-msft](https://github.com/yifanbian-msft))_.
+
+
 ## 12.1.0 (2021-07-07)
 
 ### Features Added

@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> The DocumentFilter. </summary>
-    public partial class DocumentFilter
+    internal partial class DocumentFilter
     {
         /// <summary> Initializes a new instance of DocumentFilter. </summary>
         public DocumentFilter()
@@ -16,15 +16,13 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// A case-sensitive prefix string to filter documents in the source path for translation.
-        /// 
+        /// A case-sensitive prefix string to filter documents in the source path for translation. 
         /// For example, when using a Azure storage blob Uri, use the prefix to restrict sub folders for translation.
         /// </summary>
         public string Prefix { get; set; }
         /// <summary>
-        /// A case-sensitive suffix string to filter documents in the source path for translation.
-        /// 
-        /// This is most often use for file extensions.
+        /// A case-sensitive suffix string to filter documents in the source path for translation. 
+        /// This is most often use for file extensions
         /// </summary>
         public string Suffix { get; set; }
     }

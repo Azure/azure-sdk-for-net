@@ -32,11 +32,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// This method is called when there is a new message to process, before the job function is invoked.
         /// This allows any preprocessing to take place on the message before processing begins.
         /// </summary>
-        /// <param name="messageActions">The set of actions that can be performed on a <see cref="ServiceBusReceivedMessage"/>.</param>
+        /// <param name="actions">The set of actions that can be performed on a <see cref="ServiceBusReceivedMessage"/>.</param>
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to process.</param>
         /// <param name="cancellationToken">A cancellation token that will be cancelled when the processor is shutting down.</param>
         /// <returns>A <see cref="Task"/> that returns true if the message processing should continue, false otherwise.</returns>
-        protected internal virtual Task<bool> BeginProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
+        protected internal virtual Task<bool> BeginProcessingMessageAsync(ServiceBusMessageActions actions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
         {
             return Task.FromResult<bool>(true);
         }
@@ -49,12 +49,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// is configured. E.g. if <see cref="ServiceBusProcessorOptions.AutoCompleteMessages"/> is false, it is up to the job function to complete
         /// the message.
         /// </remarks>
-        /// <param name="messageActions">The set of actions that can be performed on a <see cref="ServiceBusReceivedMessage"/>.</param>
+        /// <param name="actions">The set of actions that can be performed on a <see cref="ServiceBusReceivedMessage"/>.</param>
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to process.</param>
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
         /// <param name="cancellationToken">A cancellation token that will be cancelled when the processor is shutting down.</param>
         /// <returns>A <see cref="Task"/> that will complete the message processing.</returns>
-        protected internal virtual Task CompleteProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, FunctionResult result, CancellationToken cancellationToken)
+        protected internal virtual Task CompleteProcessingMessageAsync(ServiceBusMessageActions actions, ServiceBusReceivedMessage message, FunctionResult result, CancellationToken cancellationToken)
         {
             if (message is null)
             {

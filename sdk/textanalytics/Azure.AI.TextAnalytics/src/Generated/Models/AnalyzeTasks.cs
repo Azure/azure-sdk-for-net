@@ -14,10 +14,10 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class AnalyzeTasks
     {
         /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
-        /// <param name="completed"> . </param>
-        /// <param name="failed"> . </param>
-        /// <param name="inProgress"> . </param>
-        /// <param name="total"> . </param>
+        /// <param name="completed"></param>
+        /// <param name="failed"></param>
+        /// <param name="inProgress"></param>
+        /// <param name="total"></param>
         internal AnalyzeTasks(int completed, int failed, int inProgress, int total)
         {
             Completed = completed;
@@ -29,19 +29,21 @@ namespace Azure.AI.TextAnalytics.Models
             KeyPhraseExtractionTasks = new ChangeTrackingList<KeyPhraseExtractionTasksItem>();
             EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTasksItem>();
             SentimentAnalysisTasks = new ChangeTrackingList<SentimentAnalysisTasksItem>();
+            ExtractiveSummarizationTasks = new ChangeTrackingList<ExtractiveSummarizationTasksItem>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
-        /// <param name="completed"> . </param>
-        /// <param name="failed"> . </param>
-        /// <param name="inProgress"> . </param>
-        /// <param name="total"> . </param>
-        /// <param name="entityRecognitionTasks"> . </param>
-        /// <param name="entityRecognitionPiiTasks"> . </param>
-        /// <param name="keyPhraseExtractionTasks"> . </param>
-        /// <param name="entityLinkingTasks"> . </param>
-        /// <param name="sentimentAnalysisTasks"> . </param>
-        internal AnalyzeTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<SentimentAnalysisTasksItem> sentimentAnalysisTasks)
+        /// <param name="completed"></param>
+        /// <param name="failed"></param>
+        /// <param name="inProgress"></param>
+        /// <param name="total"></param>
+        /// <param name="entityRecognitionTasks"></param>
+        /// <param name="entityRecognitionPiiTasks"></param>
+        /// <param name="keyPhraseExtractionTasks"></param>
+        /// <param name="entityLinkingTasks"></param>
+        /// <param name="sentimentAnalysisTasks"></param>
+        /// <param name="extractiveSummarizationTasks"></param>
+        internal AnalyzeTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<SentimentAnalysisTasksItem> sentimentAnalysisTasks, IReadOnlyList<ExtractiveSummarizationTasksItem> extractiveSummarizationTasks)
         {
             Completed = completed;
             Failed = failed;
@@ -52,6 +54,7 @@ namespace Azure.AI.TextAnalytics.Models
             KeyPhraseExtractionTasks = keyPhraseExtractionTasks;
             EntityLinkingTasks = entityLinkingTasks;
             SentimentAnalysisTasks = sentimentAnalysisTasks;
+            ExtractiveSummarizationTasks = extractiveSummarizationTasks;
         }
 
         public int Completed { get; }
@@ -63,5 +66,6 @@ namespace Azure.AI.TextAnalytics.Models
         public IReadOnlyList<KeyPhraseExtractionTasksItem> KeyPhraseExtractionTasks { get; }
         public IReadOnlyList<EntityLinkingTasksItem> EntityLinkingTasks { get; }
         public IReadOnlyList<SentimentAnalysisTasksItem> SentimentAnalysisTasks { get; }
+        public IReadOnlyList<ExtractiveSummarizationTasksItem> ExtractiveSummarizationTasks { get; }
     }
 }

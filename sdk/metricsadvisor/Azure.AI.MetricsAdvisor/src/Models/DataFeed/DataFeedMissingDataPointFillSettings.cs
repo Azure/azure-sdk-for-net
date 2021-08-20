@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.MetricsAdvisor.Administration;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Configures the behavior of a <see cref="DataFeed"/> when dealing with missing points in
-    /// the data ingested from the data source.
+    /// Configures the behavior of a <see cref="DataFeed"/> when handling missing points in
+    /// the data ingested from its <see cref="DataFeedSource"/>.
     /// </summary>
     public class DataFeedMissingDataPointFillSettings
     {
@@ -27,7 +29,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The strategy used when filling a missing point.
+        /// The strategy used when filling a missing point. <see cref="CustomFillValue"/> must be set when
+        /// this property is set to <see cref="DataFeedMissingDataPointFillType.CustomValue"/>.
         /// </summary>
         public DataFeedMissingDataPointFillType FillType { get; set; }
 

@@ -42,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(hook.Name, Is.EqualTo("unknownHookName"));
             Assert.That(hook.ExternalUri.AbsoluteUri, Is.EqualTo("https://fakeuri.com/"));
             Assert.That(hook.Description, Is.EqualTo("unknown hook description"));
-            Assert.That(hook.AdministratorEmails.Single(), Is.EqualTo("foo@contoso.com"));
+            Assert.That(hook.Administrators.Single(), Is.EqualTo("foo@contoso.com"));
         }
 
         [Test]

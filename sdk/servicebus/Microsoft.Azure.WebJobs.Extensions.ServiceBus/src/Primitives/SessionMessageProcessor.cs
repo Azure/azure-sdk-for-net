@@ -29,11 +29,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// This method is called when there is a new message to process, before the job function is invoked.
         /// This allows any preprocessing to take place on the message before processing begins.
         /// </summary>
-        /// <param name="sessionActions"></param>
-        /// <param name="message"></param>
+        /// <param name="actions">The set of actions that can be performed on a <see cref="ServiceBusReceivedMessage"/>.</param>
+        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to process.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A <see cref="Task"/> that returns true if the message processing should continue, false otherwise.</returns>
-        public virtual Task<bool> BeginProcessingMessageAsync(ServiceBusSessionMessageActions sessionActions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
+        public virtual Task<bool> BeginProcessingMessageAsync(ServiceBusSessionMessageActions actions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
         {
             return Task.FromResult<bool>(true);
         }
@@ -46,12 +46,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// is configured. E.g. if <see cref="ServiceBusSessionProcessorOptions.AutoCompleteMessages"/> is false, it is up to the job function to complete
         /// the message.
         /// </remarks>
-        /// <param name="sessionActions"></param>
-        /// <param name="message"></param>
+        /// <param name="actions">The set of actions that can be performed on a <see cref="ServiceBusReceivedMessage"/>.</param>
+        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to process.</param>
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns>A <see cref="Task"/> that will complete the message processing.</returns>
-        public virtual Task CompleteProcessingMessageAsync(ServiceBusSessionMessageActions sessionActions, ServiceBusReceivedMessage message, FunctionResult result, CancellationToken cancellationToken)
+        public virtual Task CompleteProcessingMessageAsync(ServiceBusSessionMessageActions actions, ServiceBusReceivedMessage message, FunctionResult result, CancellationToken cancellationToken)
         {
             if (result == null)
             {

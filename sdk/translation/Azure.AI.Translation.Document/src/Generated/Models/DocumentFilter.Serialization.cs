@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
-    public partial class DocumentFilter : IUtf8JsonSerializable
+    internal partial class DocumentFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
