@@ -31,9 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static string RoleInstance { get; set; }
 
-#pragma warning disable CA1801 // Review unused parameters
         internal static TelemetryItem GetTelemetryItem(Activity activity, ref TagEnumerationState monitorTags, Resource resource, string instrumentationKey)
-#pragma warning restore CA1801 // Review unused parameters
         {
             TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], FormatUtcTimestamp(activity.StartTimeUtc))
             {
@@ -45,6 +43,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
             telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
+            // we only have mapping for server spans
+            // todo: non-server spans
+            if (activity.Kind == ActivityKind.Server)
+            {
+                telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()] = GetOperationName(activity, ref monitorTags.PartBTags);
+            }
+
             if (activity.ParentSpanId != default)
             {
                 telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.ParentSpanId.ToHexString();
@@ -53,6 +58,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
 
             return telemetryItem;
+        }
+
+        private static string GetOperationName(Activity activity, ref AzMonList partBTags)
+        {
+            var httpMethod = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpMethod)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpMethod))
+            {
+                if (activity.DisplayName.StartsWith("/", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    return $"{httpMethod} {activity.DisplayName}";
+                }
+                var httpTarget = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpTarget)?.ToString();
+                if (!string.IsNullOrWhiteSpace(httpTarget))
+                {
+                    return $"{httpMethod} {httpTarget}";
+                }
+            }
+
+            return activity.DisplayName;
         }
 
         internal static TelemetryItem GetTelemetryItem(LogRecord logRecord, string instrumentationKey)
