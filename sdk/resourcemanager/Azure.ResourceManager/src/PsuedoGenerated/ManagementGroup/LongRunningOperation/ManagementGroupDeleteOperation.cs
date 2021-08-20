@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Management.Models
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ManagementGroupsDeleteOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ManagementGroupDeleteOperation for mocking. </summary>
         protected ManagementGroupDeleteOperation()
         {
         }
 
         internal ManagementGroupDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupsDeleteOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupDeleteOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

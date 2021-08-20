@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationOrResponseInternals<ResourceGroupExportResult> _operation;
 
-        /// <summary> Initializes a new instance of ResourceGroupsExportTemplateOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceGroupExportTemplateOperation for mocking. </summary>
         protected ResourceGroupExportTemplateOperation()
         {
         }
 
         internal ResourceGroupExportTemplateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<ResourceGroupExportResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupsExportTemplateOperation");
+            _operation = new OperationOrResponseInternals<ResourceGroupExportResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupExportTemplateOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

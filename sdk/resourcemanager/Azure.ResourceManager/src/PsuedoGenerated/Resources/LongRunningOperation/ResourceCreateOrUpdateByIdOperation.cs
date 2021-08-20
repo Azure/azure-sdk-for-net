@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Resources.Models
         private readonly OperationOrResponseInternals<GenericResource> _operation;
         private readonly ArmResource _parentOperation;
 
-        /// <summary> Initializes a new instance of ResourcesCreateOrUpdateByIdOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceCreateOrUpdateByIdOperation for mocking. </summary>
         protected ResourceCreateOrUpdateByIdOperation()
         {
         }
 
         internal ResourceCreateOrUpdateByIdOperation(ArmResource parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesCreateOrUpdateByIdOperation");
+            _operation = new OperationOrResponseInternals<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceCreateOrUpdateByIdOperation");
             _parentOperation = parentOperation;
         }
         /// <inheritdoc />

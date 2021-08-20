@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Resources.Models
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ResourcesMoveResourcesOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of ResourceMoveResourcesOperation for mocking. </summary>
         protected ResourceMoveResourcesOperation()
         {
         }
 
         internal ResourceMoveResourcesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesMoveResourcesOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceMoveResourcesOperation");
         }
 
         /// <inheritdoc />
