@@ -98,7 +98,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///    Invoked after each batch of events has been successfully published to the Event Hub, this
         ///    handler is optional and is intended to provide notifications for interested listeners.
         ///
-        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result 
+        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result
         ///   in a deadlock scenario if those calls are awaited.
         /// </summary>
         ///
@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   It is safe to attempt resending the events by calling <see cref="EnqueueEventAsync(EventData, CancellationToken)" /> or <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> from within
         ///   this handler.  It is important to note that doing so will place them at the end of the buffer; the original order will not be maintained.
         ///
-        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result 
+        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result
         ///   in a deadlock scenario if those calls are awaited.
         /// </summary>
         ///
