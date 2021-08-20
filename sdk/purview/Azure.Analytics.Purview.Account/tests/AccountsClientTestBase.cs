@@ -21,17 +21,14 @@ namespace Azure.Analytics.Purview.Account.Tests
         public AccountsClient GetAccountsClient()
         {
             /*var credential = new DefaultAzureCredential();*/
-            /*var testEnv = new PurviewAccountTestEnvironment("https://ycllcPurviewAccount.purview.azure.com");*/
             var httpHandler = new HttpClientHandler();
             httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) =>
             {
                 return true;
             };
             var options = new PurviewAccountClientOptions { Transport = new HttpClientTransport(httpHandler) };
-            var testEnv = new PurviewAccountTestEnvironment("https://dotnetLLCPurviewAccount.purview.azure.com");
-            var endpoint = new Uri(testEnv.Endpoint);
             var client = InstrumentClient(
-                new AccountsClient(endpoint, testEnv.Credential, InstrumentClientOptions(options)));
+                new AccountsClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
             return client;
         }
     }

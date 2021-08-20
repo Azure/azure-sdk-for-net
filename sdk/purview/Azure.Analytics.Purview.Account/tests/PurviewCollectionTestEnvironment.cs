@@ -15,12 +15,6 @@ namespace Azure.Analytics.Purview.Account.Tests
         public PurviewCollectionTestEnvironment()
         {
         }
-        public PurviewCollectionTestEnvironment(string endpint)
-        {
-            this._endpoint = endpint;
-        }
-        private string _endpoint;
-
-        public string Endpoint { get => _endpoint; set => _endpoint = value; }
+        public Uri Endpoint => new(GetRecordedVariable("PURVIEW_ACCOUNT_URL"));
     }
 }

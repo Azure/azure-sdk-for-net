@@ -8,12 +8,12 @@
         "Authorization": "Sanitized",
         "Content-Length": "64",
         "Content-Type": "application/json",
-        "traceparent": "00-e38fffc5fce4f841b7c2c331033485ea-dad907fec536a040-00",
+        "traceparent": "00-97eb591a51b8844cae8cb94771a13755-4f84ead2d9199143-00",
         "User-Agent": [
           "azsdk-net-Analytics.Purview.Account/1.0.0-alpha.20210820.1",
           "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
         ],
-        "x-ms-client-request-id": "b4e58b7f04f388e9bdb70c17404af02a",
+        "x-ms-client-request-id": "0f1449582f019d2f3b3e0f0a5e2776f5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,11 +24,11 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 Aug 2021 03:37:46 GMT",
+        "Date": "Fri, 20 Aug 2021 06:52:44 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-correlation-request-id": "0cb9a735-faf3-4bcb-9aee-24b4ad4bee43"
+        "x-ms-correlation-request-id": "24d3cac0-0f95-4df7-bba1-e4f4defa41c1"
       },
       "ResponseBody": {
         "name": "mysubCollection",
@@ -40,10 +40,10 @@
         "systemData": {
           "createdBy": "4faa32fd-963a-464d-b6bf-c12cf48c0317",
           "createdByType": "Application",
-          "createdAt": "2021-08-20T03:37:47.1185314Z",
+          "createdAt": "2021-08-20T06:52:44.6070545Z",
           "lastModifiedBy": "4faa32fd-963a-464d-b6bf-c12cf48c0317",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2021-08-20T03:37:47.1185315Z"
+          "lastModifiedAt": "2021-08-20T06:52:44.6070546Z"
         },
         "collectionProvisioningState": "Creating"
       }
@@ -54,23 +54,23 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-50c22e25b0b9eb499c43d599b4e533b4-5550e2b4309b784f-00",
+        "traceparent": "00-f17a935ab0274d4da6b75a5391aeb717-f0210132b07e434d-00",
         "User-Agent": [
           "azsdk-net-Analytics.Purview.Account/1.0.0-alpha.20210820.1",
           "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
         ],
-        "x-ms-client-request-id": "283768140733db563ce98a43bb0945c7",
+        "x-ms-client-request-id": "5563d20befd8259bd8b6dd9f99b204ce",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 Aug 2021 03:37:48 GMT",
+        "Date": "Fri, 20 Aug 2021 06:52:46 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-correlation-request-id": "1e116739-330d-4b24-befa-83331d99740f"
+        "x-ms-correlation-request-id": "c8fac965-e99a-41d0-96db-39ebfcda36e8"
       },
       "ResponseBody": {
         "name": "mysubCollection",
@@ -82,52 +82,10 @@
         "systemData": {
           "createdBy": "4faa32fd-963a-464d-b6bf-c12cf48c0317",
           "createdByType": "Application",
-          "createdAt": "2021-08-20T03:37:47.1185314Z",
+          "createdAt": "2021-08-20T06:52:44.6070545Z",
           "lastModifiedBy": "4faa32fd-963a-464d-b6bf-c12cf48c0317",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2021-08-20T03:37:47.1185315Z"
-        },
-        "collectionProvisioningState": "Creating"
-      }
-    },
-    {
-      "RequestUri": "https://dotnetllcpurviewaccount.purview.azure.com/collections/mysubCollection?api-version=2019-11-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-ecf44e1114477944959e1b6bf3cd4476-8bb8ffe43b0e484d-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Purview.Account/1.0.0-alpha.20210820.1",
-          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
-        ],
-        "x-ms-client-request-id": "9748e30e2976fbd2ec96f35804debf24",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 Aug 2021 03:37:49 GMT",
-        "Server": "Kestrel",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-correlation-request-id": "43e5cc2c-deb6-4409-89de-c85cad84eea8"
-      },
-      "ResponseBody": {
-        "name": "mysubCollection",
-        "friendlyName": "mysubCollection",
-        "parentCollection": {
-          "type": "CollectionReference",
-          "referenceName": "dotnetllcpurviewaccount"
-        },
-        "systemData": {
-          "createdBy": "4faa32fd-963a-464d-b6bf-c12cf48c0317",
-          "createdByType": "Application",
-          "createdAt": "2021-08-20T03:37:47.1185314Z",
-          "lastModifiedBy": "4faa32fd-963a-464d-b6bf-c12cf48c0317",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2021-08-20T03:37:47.1185315Z"
+          "lastModifiedAt": "2021-08-20T06:52:44.6070546Z"
         },
         "collectionProvisioningState": "Succeeded"
       }
@@ -138,26 +96,27 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-44af4e9f9fbbe24bae40494f96363d29-6de54b928c0d064b-00",
+        "traceparent": "00-2b26793566020743ab0928dd75f027a3-4cdaa5ae191c7244-00",
         "User-Agent": [
           "azsdk-net-Analytics.Purview.Account/1.0.0-alpha.20210820.1",
           "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
         ],
-        "x-ms-client-request-id": "53452ec0021c781e350a780a79a6ccb4",
+        "x-ms-client-request-id": "a43b4e193246f70518e01733999be75a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "Date": "Fri, 20 Aug 2021 03:37:51 GMT",
+        "Date": "Fri, 20 Aug 2021 06:52:47 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "1ee85df9-93ed-4847-9e4c-758e1a521043"
+        "x-ms-correlation-request-id": "04d75497-6a28-4522-ab17-27bee0c0fb43"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "RandomSeed": "934309058"
+    "PURVIEW_ACCOUNT_URL": "https://dotnetLLCPurviewAccount.purview.azure.com",
+    "RandomSeed": "1677679430"
   }
 }
