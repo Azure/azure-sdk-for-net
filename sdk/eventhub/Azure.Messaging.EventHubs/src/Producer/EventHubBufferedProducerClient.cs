@@ -570,6 +570,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
 <<<<<<< HEAD
+<<<<<<< HEAD
         public virtual async Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default) =>
             await _producer.GetEventHubPropertiesAsync(cancellationToken).ConfigureAwait(false);
 =======
@@ -578,6 +579,10 @@ namespace Azure.Messaging.EventHubs.Producer
             return await _producer.GetEventHubPropertiesAsync(cancellationToken).ConfigureAwait(false);
         }
 >>>>>>> dcfbe04dad (responding to feedback)
+=======
+        public virtual async Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default) =>
+            await _producer.GetEventHubPropertiesAsync(cancellationToken).ConfigureAwait(false);
+>>>>>>> a942b7b5b3 (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
 
         /// <summary>
         ///   Retrieves the set of identifiers for the partitions of an Event Hub.
