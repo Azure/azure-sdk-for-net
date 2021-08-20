@@ -200,13 +200,19 @@ namespace Azure.Identity
                 if (_record != null)
                 {
                     var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
-                    result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, _record, tenantId, async, cancellationToken)
-                        .ConfigureAwait(false);
+                    try
+                    {
+                        result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, _record, tenantId, async, cancellationToken)
+                            .ConfigureAwait(false);
+                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                    }
+                    catch (MsalUiRequiredException msalEx)
+                    {
+                        AzureIdentityEventSource.Singleton.UsernamePasswordCredentialAcquireTokenSilentFailed(msalEx);
+                        // fall through so that AuthenticateImplAsync is called.
+                    }
                 }
-                else
-                {
-                    result = await AuthenticateImplAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
-                }
+                result = await AuthenticateImplAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)
