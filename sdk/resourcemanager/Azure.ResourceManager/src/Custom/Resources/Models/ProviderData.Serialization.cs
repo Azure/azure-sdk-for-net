@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
+    [JsonConverter(typeof(ProviderDataConverter))]
     public partial class ProviderData
     {
         internal static ProviderData DeserializeProvider(JsonElement element)
@@ -21,6 +24,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> registrationState = default;
             Optional<string> registrationPolicy = default;
             Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
+            Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -58,8 +62,31 @@ namespace Azure.ResourceManager.Resources
                     resourceTypes = array;
                     continue;
                 }
+                if (property.NameEquals("providerAuthorizationConsentState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    providerAuthorizationConsentState = new ProviderAuthorizationConsentState(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, Optional.ToList(resourceTypes));
+            return new ProviderData(id, @namespace.Value, registrationState.Value, registrationPolicy.Value, Optional.ToList(resourceTypes), Optional.ToNullable(providerAuthorizationConsentState));
+        }
+
+        internal partial class ProviderDataConverter : JsonConverter<ProviderData>
+        {
+            public override void Write(Utf8JsonWriter writer, ProviderData providerData, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(providerData);
+            }
+            public override ProviderData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeProvider(document.RootElement);
+            }
         }
     }
 }

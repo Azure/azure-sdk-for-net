@@ -7,15 +7,18 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Resource provider information. </summary>
+    [PropertyReferenceType]
     public partial class ProviderData : SubResource
     {
         /// <summary> Initializes a new instance of Provider. </summary>
-        internal ProviderData()
+        [InitializationConstructor]
+        public ProviderData()
         {
             ResourceTypes = new ChangeTrackingList<ProviderResourceType>();
         }
@@ -26,13 +29,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="registrationState"> The registration state of the resource provider. </param>
         /// <param name="registrationPolicy"> The registration policy of the resource provider. </param>
         /// <param name="resourceTypes"> The collection of provider resource types. </param>
-        internal ProviderData(string id, string @namespace, string registrationState, string registrationPolicy, IReadOnlyList<ProviderResourceType> resourceTypes)
-            : base(id)
+        /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
+        [SerializationConstructor]
+        internal ProviderData(string id, string @namespace, string registrationState, string registrationPolicy, IReadOnlyList<ProviderResourceType> resourceTypes, ProviderAuthorizationConsentState? providerAuthorizationConsentState) : base(id)
         {
             Namespace = @namespace;
             RegistrationState = registrationState;
             RegistrationPolicy = registrationPolicy;
             ResourceTypes = resourceTypes;
+            ProviderAuthorizationConsentState = providerAuthorizationConsentState;
         }
 
         /// <summary> The namespace of the resource provider. </summary>
@@ -43,5 +48,7 @@ namespace Azure.ResourceManager.Resources
         public string RegistrationPolicy { get; }
         /// <summary> The collection of provider resource types. </summary>
         public IReadOnlyList<ProviderResourceType> ResourceTypes { get; }
+        /// <summary> The provider authorization consent state. </summary>
+        public ProviderAuthorizationConsentState? ProviderAuthorizationConsentState { get; }
     }
 }

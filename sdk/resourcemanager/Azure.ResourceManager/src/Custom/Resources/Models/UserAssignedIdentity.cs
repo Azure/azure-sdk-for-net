@@ -4,20 +4,31 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary>
     /// A class representing an Identity assigned by the user.
     /// </summary>
+    [PropertyReferenceType]
     public sealed partial class UserAssignedIdentity : IEquatable<UserAssignedIdentity>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAssignedIdentity"/> class.
         /// </summary>
+        [InitializationConstructor]
+        public UserAssignedIdentity()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserAssignedIdentity"/> class.
+        /// </summary>
         /// <param name="clientId"> ClientId . </param>
         /// <param name="principalId"> PrincipalId. </param>
-        public UserAssignedIdentity(Guid clientId, Guid principalId)
+        [SerializationConstructor]
+        internal UserAssignedIdentity(Guid clientId, Guid principalId)
         {
             ClientId = clientId;
             PrincipalId = principalId;
