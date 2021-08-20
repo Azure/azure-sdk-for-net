@@ -90,14 +90,14 @@ namespace Azure.Storage
         private readonly long? _blockSize;
 
         /// <summary>
-        /// Hashing options to use for each upload call.
+        /// Hashing options to use for paritioned upload calls.
         /// </summary>
         private readonly UploadTransactionalHashingOptions _hashingOptions;
 
         /// <summary>
         /// Optionally available precalculated hash for the entire upload contents.
         /// </summary>
-        private readonly byte[] _precalculatedHash;
+        private readonly UploadTransactionalHashingOptions _precalculatedHashingOptions;
 
         /// <summary>
         /// The name of the calling operaiton.
@@ -155,14 +155,14 @@ namespace Azure.Storage
                     transferOptions.MaximumTransferSize.Value);
             }
 
-            // separate potential precalculated hash from hashing options to deal with partitioning
+            // separate potential precalculated hash to deal with partitioning
+            _precalculatedHashingOptions = hashingOptions;
             _hashingOptions = hashingOptions == default
                 ? default
                 : new UploadTransactionalHashingOptions
                 {
                     Algorithm = hashingOptions.Algorithm
                 };
-            _precalculatedHash = hashingOptions?.PrecalculatedHash;
 
             _operationName = operationName;
         }
@@ -201,7 +201,7 @@ namespace Azure.Storage
                     content,
                     args,
                     progressHandler,
-                    _hashingOptions,
+                    _precalculatedHashingOptions,
                     _operationName,
                     async,
                     cancellationToken)

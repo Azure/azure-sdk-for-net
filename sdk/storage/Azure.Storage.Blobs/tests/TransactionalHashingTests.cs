@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -373,19 +375,16 @@ namespace Azure.Storage.Blobs.Tests
             // Arrange
             const int blockSize = Constants.KB;
             var data = GetRandomBuffer(2 * blockSize);
-            // create bad hash for to ignore
-            var precalculatedHash = GetRandomBuffer(16);
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             var hashingOptions = new UploadTransactionalHashingOptions
             {
-                Algorithm = algorithm,
-                PrecalculatedHash = precalculatedHash
+                Algorithm = algorithm
             };
 
             // Act
             using (var stream = new MemoryStream(data))
             {
-                await blob.StageBlockAsync("blockId", stream, new BlockBlobStageBlockOptions
+                await blob.StageBlockAsync(Convert.ToBase64String(Encoding.UTF8.GetBytes("blockId")), stream, new BlockBlobStageBlockOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
                 });

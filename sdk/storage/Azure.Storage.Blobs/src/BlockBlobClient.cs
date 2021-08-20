@@ -929,6 +929,8 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
+                            transactionalContentMD5: hashResult.MD5,
+                            // TODO CRC64 not in generated code
                             cancellationToken: cancellationToken);
                     }
 

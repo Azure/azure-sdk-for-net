@@ -951,7 +951,7 @@ namespace Azure.Storage.Blobs.Specialized
                             Algorithm = TransactionalHashAlgorithm.MD5
                         }
                         : default,
-                    OperationName = $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}"
+                    OperationName = $"{nameof(BlobBaseClient)}.{nameof(Download)}"
                 },
                 async,
                 cancellationToken).ConfigureAwait(false);
@@ -1795,6 +1795,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
+            options ??= new BlobBaseDownloadOptions();
+            options.OperationName = $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}";
+
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                 options,
                 async: async,
@@ -2674,7 +2677,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 new BlobBaseDownloadOptions
                                 {
                                     Range = range,
-                                    Conditions = conditions,
+                                    Conditions = readConditions,
                                     TransactionalHashingOptions = hashingOptions,
                                     OperationName = operationName
                                 },
