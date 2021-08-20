@@ -13,17 +13,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> This operation deletes the policy set definition in the given subscription with the given name. </summary>
-    public partial class PolicySetDefinitionsDeleteOperation : Azure.Operation
+    /// <summary> This operation deletes a policy exemption, given its name and the scope it was created in. The scope of a policy exemption is the part of its ID preceding &apos;/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}&apos;. </summary>
+    public partial class PolicyExemptionDeleteOperation : Azure.Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of PolicySetDefinitionsDeleteOperation for mocking. </summary>
-        protected PolicySetDefinitionsDeleteOperation()
+        /// <summary> Initializes a new instance of PolicyExemptionDeleteOperation for mocking. </summary>
+        protected PolicyExemptionDeleteOperation()
         {
         }
 
-        internal PolicySetDefinitionsDeleteOperation(Response response)
+        internal PolicyExemptionDeleteOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }

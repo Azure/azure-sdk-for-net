@@ -15,16 +15,16 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> This operation deletes a policy assignment, given its name and the scope it was created in. The scope of a policy assignment is the part of its ID preceding &apos;/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}&apos;. </summary>
-    public partial class PolicyAssignmentsDeleteOperation : Operation<PolicyAssignmentData>
+    public partial class PolicyAssignmentDeleteOperation : Operation<PolicyAssignmentData>
     {
         private readonly OperationOrResponseInternals<PolicyAssignmentData> _operation;
 
-        /// <summary> Initializes a new instance of PolicyAssignmentsDeleteOperation for mocking. </summary>
-        protected PolicyAssignmentsDeleteOperation()
+        /// <summary> Initializes a new instance of PolicyAssignmentDeleteOperation for mocking. </summary>
+        protected PolicyAssignmentDeleteOperation()
         {
         }
 
-        internal PolicyAssignmentsDeleteOperation(Response<PolicyAssignmentData> response)
+        internal PolicyAssignmentDeleteOperation(Response<PolicyAssignmentData> response)
         {
             _operation = new OperationOrResponseInternals<PolicyAssignmentData>(response);
         }

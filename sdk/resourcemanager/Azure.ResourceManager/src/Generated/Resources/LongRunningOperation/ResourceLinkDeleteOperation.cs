@@ -13,17 +13,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> This operation deletes the policy definition in the given subscription with the given name. </summary>
-    public partial class PolicyDefinitionsDeleteOperation : Azure.Operation
+    /// <summary> Deletes a resource link with the specified ID. </summary>
+    public partial class ResourceLinkDeleteOperation : Azure.Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of PolicyDefinitionsDeleteOperation for mocking. </summary>
-        protected PolicyDefinitionsDeleteOperation()
+        /// <summary> Initializes a new instance of ResourceLinkDeleteOperation for mocking. </summary>
+        protected ResourceLinkDeleteOperation()
         {
         }
 
-        internal PolicyDefinitionsDeleteOperation(Response response)
+        internal ResourceLinkDeleteOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }

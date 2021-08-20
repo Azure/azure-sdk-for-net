@@ -16,16 +16,16 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Creates or updates a resource link between the specified resources. </summary>
-    public partial class ResourceLinksCreateOrUpdateOperation : Operation<ResourceLink>
+    public partial class ResourceLinkCreateOrUpdateOperation : Operation<ResourceLink>
     {
         private readonly OperationOrResponseInternals<ResourceLink> _operation;
 
-        /// <summary> Initializes a new instance of ResourceLinksCreateOrUpdateOperation for mocking. </summary>
-        protected ResourceLinksCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of ResourceLinkCreateOrUpdateOperation for mocking. </summary>
+        protected ResourceLinkCreateOrUpdateOperation()
         {
         }
 
-        internal ResourceLinksCreateOrUpdateOperation(ResourceOperations operationsBase, Response<ResourceLinkData> response)
+        internal ResourceLinkCreateOrUpdateOperation(ArmResource operationsBase, Response<ResourceLinkData> response)
         {
             _operation = new OperationOrResponseInternals<ResourceLink>(Response.FromValue(new ResourceLink(operationsBase, response.Value), response.GetRawResponse()));
         }

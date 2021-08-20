@@ -15,17 +15,17 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> This operation creates or updates a policy definition in the given subscription with the given name. </summary>
-    public partial class PolicyDefinitionsCreateOrUpdateOperation : Operation<PolicyDefinition>
+    /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
+    public partial class PolicyDefinitionCreateOrUpdateAtManagementGroupOperation : Operation<PolicyDefinition>
     {
         private readonly OperationOrResponseInternals<PolicyDefinition> _operation;
 
-        /// <summary> Initializes a new instance of PolicyDefinitionsCreateOrUpdateOperation for mocking. </summary>
-        protected PolicyDefinitionsCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of PolicyDefinitionCreateOrUpdateAtManagementGroupOperation for mocking. </summary>
+        protected PolicyDefinitionCreateOrUpdateAtManagementGroupOperation()
         {
         }
 
-        internal PolicyDefinitionsCreateOrUpdateOperation(ResourceOperations operationsBase, Response<PolicyDefinitionData> response)
+        internal PolicyDefinitionCreateOrUpdateAtManagementGroupOperation(ArmResource operationsBase, Response<PolicyDefinitionData> response)
         {
             _operation = new OperationOrResponseInternals<PolicyDefinition>(Response.FromValue(new PolicyDefinition(operationsBase, response.Value), response.GetRawResponse()));
         }

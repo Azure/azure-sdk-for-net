@@ -5,27 +5,242 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Management;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a PolicyDefinition along with the instance operations that can be performed on it. </summary>
-    public class PolicyDefinition : PolicyDefinitionOperations
+    public partial class PolicyDefinition : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref = "PolicyDefinition"/> class for mocking. </summary>
-        protected PolicyDefinition() : base()
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly PolicyDefinitionsRestOperations _restClient;
+        private readonly PolicyDefinitionData _data;
+
+        /// <summary> Initializes a new instance of the <see cref="PolicyDefinition"/> class for mocking. </summary>
+        protected PolicyDefinition()
         {
         }
 
         /// <summary> Initializes a new instance of the <see cref = "PolicyDefinition"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal PolicyDefinition(ResourceOperations options, PolicyDefinitionData resource) : base(options, resource.Id)
+        internal PolicyDefinition(ArmResource options, PolicyDefinitionData resource) : base(options, resource.Id)
         {
-            Data = resource;
+            HasData = true;
+            _data = resource;
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
         }
 
-        /// <summary> Gets or sets the PolicyDefinitionData. </summary>
-        public virtual PolicyDefinitionData Data { get; private set; }
+        /// <summary> Initializes a new instance of the <see cref="PolicyDefinition"/> class. </summary>
+        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal PolicyDefinition(ArmResource options, ResourceIdentifier id) : base(options, id)
+        {
+            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+        }
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policyDefinitions";
+
+        /// <summary> Gets the valid resource type for the operations. </summary>
+        protected override ResourceType ValidResourceType => ResourceType;
+
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual PolicyDefinitionData Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
+
+        /// <summary> This operation retrieves the policy definition in the given subscription with the given name. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<PolicyDefinition>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PolicyDefinition.Get");
+            scope.Start();
+            try
+            {
+                if (Id.TryGetSubscriptionId(out _))
+                {
+                    var response = await _restClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    if (response.Value == null)
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    return Response.FromValue(new PolicyDefinition(this, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    var parent = Id;
+                    while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
+                    {
+                        parent = parent.Parent;
+                    }
+                    if (parent.ResourceType.Equals(ManagementGroup.ResourceType))
+                    {
+                        var response = await _restClient.GetAtManagementGroupAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                        if (response.Value == null)
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                        return Response.FromValue(new PolicyDefinition(this, response.Value), response.GetRawResponse());
+                    }
+                    else
+                    {
+                        var response = await _restClient.GetBuiltInAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                        if (response.Value == null)
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                        return Response.FromValue(new PolicyDefinition(this, response.Value), response.GetRawResponse());
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation retrieves the policy definition in the given subscription with the given name. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PolicyDefinition> Get(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PolicyDefinition.Get");
+            scope.Start();
+            try
+            {
+                if (Id.TryGetSubscriptionId(out _))
+                {
+                    var response = _restClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                    if (response.Value == null)
+                        throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    return Response.FromValue(new PolicyDefinition(this, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    var parent = Id;
+                    while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
+                    {
+                        parent = parent.Parent;
+                    }
+                    if (parent.ResourceType.Equals(ManagementGroup.ResourceType))
+                    {
+                        var response = _restClient.GetAtManagementGroup(Id.Parent.Name, Id.Name, cancellationToken);
+                        if (response.Value == null)
+                            throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                        return Response.FromValue(new PolicyDefinition(this, response.Value), response.GetRawResponse());
+                    }
+                    else
+                    {
+                        var response = _restClient.GetBuiltIn(Id.Name, cancellationToken);
+                        if (response.Value == null)
+                            throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                        return Response.FromValue(new PolicyDefinition(this, response.Value), response.GetRawResponse());
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        {
+            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Lists all available geo-locations. </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
+        {
+            return ListAvailableLocations(ResourceType, cancellationToken);
+        }
+
+        /// <summary> This operation deletes the policy definition in the given subscription with the given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<PolicyDefinitionDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PolicyDefinition.Delete");
+            scope.Start();
+            try
+            {
+                if (Id.TryGetSubscriptionId(out _))
+                {
+                    var response = await _restClient.DeleteAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var operation = new PolicyDefinitionDeleteOperation(response);
+                    if (waitForCompletion)
+                        await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    return operation;
+                }
+                else
+                {
+                    var response = await _restClient.DeleteAtManagementGroupAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var operation = new PolicyDefinitionDeleteOperation(response);
+                    if (waitForCompletion)
+                        await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    return operation;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> This operation deletes the policy definition in the given subscription with the given name. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual PolicyDefinitionDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PolicyDefinition.Delete");
+            scope.Start();
+            try
+            {
+                if (Id.TryGetSubscriptionId(out _))
+                {
+                    var response = _restClient.Delete(Id.Parent.Name, Id.Name, cancellationToken);
+                    var operation = new PolicyDefinitionDeleteOperation(response);
+                    if (waitForCompletion)
+                        operation.WaitForCompletion(cancellationToken);
+                    return operation;
+                }
+                else
+                {
+                    var response = _restClient.DeleteAtManagementGroup(Id.Parent.Name, Id.Name, cancellationToken);
+                    var operation = new PolicyDefinitionDeleteOperation(response);
+                    if (waitForCompletion)
+                        operation.WaitForCompletion(cancellationToken);
+                    return operation;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

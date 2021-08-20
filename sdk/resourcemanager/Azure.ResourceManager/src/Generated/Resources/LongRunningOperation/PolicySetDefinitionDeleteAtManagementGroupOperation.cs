@@ -14,16 +14,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> This operation deletes the policy set definition in the given management group with the given name. </summary>
-    public partial class PolicySetDefinitionsDeleteAtManagementGroupOperation : Azure.Operation
+    public partial class PolicySetDefinitionDeleteAtManagementGroupOperation : Azure.Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of PolicySetDefinitionsDeleteAtManagementGroupOperation for mocking. </summary>
-        protected PolicySetDefinitionsDeleteAtManagementGroupOperation()
+        /// <summary> Initializes a new instance of PolicySetDefinitionDeleteAtManagementGroupOperation for mocking. </summary>
+        protected PolicySetDefinitionDeleteAtManagementGroupOperation()
         {
         }
 
-        internal PolicySetDefinitionsDeleteAtManagementGroupOperation(Response response)
+        internal PolicySetDefinitionDeleteAtManagementGroupOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }

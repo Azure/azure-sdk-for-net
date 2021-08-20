@@ -13,17 +13,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> This operation deletes the policy definition in the given management group with the given name. </summary>
-    public partial class PolicyDefinitionsDeleteAtManagementGroupOperation : Azure.Operation
+    /// <summary> Delete a management lock by scope. </summary>
+    public partial class ManagementLockDeleteByScopeOperation : Azure.Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of PolicyDefinitionsDeleteAtManagementGroupOperation for mocking. </summary>
-        protected PolicyDefinitionsDeleteAtManagementGroupOperation()
+        /// <summary> Initializes a new instance of ManagementLockDeleteByScopeOperation for mocking. </summary>
+        protected ManagementLockDeleteByScopeOperation()
         {
         }
 
-        internal PolicyDefinitionsDeleteAtManagementGroupOperation(Response response)
+        internal ManagementLockDeleteByScopeOperation(Response response)
         {
             _operation = new OperationOrResponseInternals(response);
         }

@@ -16,16 +16,16 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Create or update a management lock by scope. </summary>
-    public partial class ManagementLocksCreateOrUpdateByScopeOperation : Operation<ManagementLockObject>
+    public partial class ManagementLockCreateOrUpdateByScopeOperation : Operation<ManagementLockObject>
     {
         private readonly OperationOrResponseInternals<ManagementLockObject> _operation;
 
-        /// <summary> Initializes a new instance of ManagementLocksCreateOrUpdateByScopeOperation for mocking. </summary>
-        protected ManagementLocksCreateOrUpdateByScopeOperation()
+        /// <summary> Initializes a new instance of ManagementLockCreateOrUpdateByScopeOperation for mocking. </summary>
+        protected ManagementLockCreateOrUpdateByScopeOperation()
         {
         }
 
-        internal ManagementLocksCreateOrUpdateByScopeOperation(ResourceOperations operationsBase, Response<ManagementLockObjectData> response)
+        internal ManagementLockCreateOrUpdateByScopeOperation(ArmResource operationsBase, Response<ManagementLockObjectData> response)
         {
             _operation = new OperationOrResponseInternals<ManagementLockObject>(Response.FromValue(new ManagementLockObject(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -20,8 +20,11 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of PolicySetDefinition and their operations over a Tenant. </summary>
-    public partial class PolicySetDefinitionContainer : ResourceContainer
+    public partial class PolicySetDefinitionContainer : ArmContainer
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly PolicySetDefinitionsRestOperations _restClient;
+
         /// <summary> Initializes a new instance of the <see cref="PolicySetDefinitionContainer"/> class for mocking. </summary>
         protected PolicySetDefinitionContainer()
         {
@@ -29,9 +32,10 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Initializes a new instance of PolicySetDefinitionContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal PolicySetDefinitionContainer(ResourceOperations parent) : base(parent)
+        internal PolicySetDefinitionContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
         }
 
         /// <summary> Verify that the input resource Id is a valid container for this type. </summary>
@@ -39,11 +43,6 @@ namespace Azure.ResourceManager.Resources
         protected override void ValidateResourceType(ResourceIdentifier identifier)
         {
         }
-
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary> Represents the REST operations. </summary>
-        private PolicySetDefinitionsRestOperations _restClient => new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
@@ -53,9 +52,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation creates or updates a policy set definition in the given subscription with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<PolicySetDefinition> CreateOrUpdate(string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
+        public virtual PolicySetDefinitionCreateOrUpdateOperation CreateOrUpdate(string policySetDefinitionName, PolicySetDefinitionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -67,78 +67,24 @@ namespace Azure.ResourceManager.Resources
             }
 
             using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(policySetDefinitionName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> This operation creates or updates a policy set definition in the given subscription with the given name. </summary>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
-        /// <param name="parameters"> The policy set definition properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<PolicySetDefinition>> CreateOrUpdateAsync(string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
-        {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(policySetDefinitionName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> This operation creates or updates a policy set definition in the given subscription with the given name. </summary>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
-        /// <param name="parameters"> The policy set definition properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PolicySetDefinitionsCreateOrUpdateOperation StartCreateOrUpdate(string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
-        {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 if (Id.TryGetSubscriptionId(out _))
                 {
                     var response = _restClient.CreateOrUpdate(Id.Name, policySetDefinitionName, parameters, cancellationToken);
-                    return new PolicySetDefinitionsCreateOrUpdateOperation(Parent, response);
+                    var operation = new PolicySetDefinitionCreateOrUpdateOperation(Parent, response);
+                    if (waitForCompletion)
+                        operation.WaitForCompletion(cancellationToken);
+                    return operation;
                 }
                 else
                 {
                     var response = _restClient.CreateOrUpdateAtManagementGroup(Id.Name, policySetDefinitionName, parameters, cancellationToken);
-                    return new PolicySetDefinitionsCreateOrUpdateOperation(Parent, response);
+                    var operation = new PolicySetDefinitionCreateOrUpdateOperation(Parent, response);
+                    if (waitForCompletion)
+                        operation.WaitForCompletion(cancellationToken);
+                    return operation;
                 }
             }
             catch (Exception e)
@@ -151,9 +97,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation creates or updates a policy set definition in the given subscription with the given name. </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PolicySetDefinitionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<PolicySetDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(string policySetDefinitionName, PolicySetDefinitionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (policySetDefinitionName == null)
             {
@@ -164,19 +111,25 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 if (Id.TryGetSubscriptionId(out _))
                 {
                     var response = await _restClient.CreateOrUpdateAsync(Id.Name, policySetDefinitionName, parameters, cancellationToken).ConfigureAwait(false);
-                    return new PolicySetDefinitionsCreateOrUpdateOperation(Parent, response);
+                    var operation = new PolicySetDefinitionCreateOrUpdateOperation(Parent, response);
+                    if (waitForCompletion)
+                        await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    return operation;
                 }
                 else
                 {
                     var response = await _restClient.CreateOrUpdateAtManagementGroupAsync(Id.Name, policySetDefinitionName, parameters, cancellationToken).ConfigureAwait(false);
-                    return new PolicySetDefinitionsCreateOrUpdateOperation(Parent, response);
+                    var operation = new PolicySetDefinitionCreateOrUpdateOperation(Parent, response);
+                    if (waitForCompletion)
+                        await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    return operation;
                 }
             }
             catch (Exception e)
@@ -214,7 +167,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         parent = parent.Parent;
                     }
-                    if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                    if (parent.ResourceType.Equals(ManagementGroup.ResourceType))
                     {
                         var response = _restClient.GetAtManagementGroup(Id.Name, policySetDefinitionName, cancellationToken: cancellationToken);
                         if (response.Value == null)
@@ -265,7 +218,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         parent = parent.Parent;
                     }
-                    if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                    if (parent.ResourceType.Equals(ManagementGroup.ResourceType))
                     {
                         var response = await _restClient.GetAtManagementGroupAsync(Id.Name, policySetDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                         if (response.Value == null)
@@ -393,7 +346,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicySetDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<PolicySetDefinition> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicySetDefinition> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<PolicySetDefinition> FirstPageFunc(int? pageSizeHint)
             {
@@ -413,7 +366,7 @@ namespace Azure.ResourceManager.Resources
                         {
                             parent = parent.Parent;
                         }
-                        if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                        if (parent.ResourceType.Equals(ManagementGroup.ResourceType))
                         {
                             var response = _restClient.GetAllByManagementGroup(Id.Name, filter, top, cancellationToken: cancellationToken);
                             return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
@@ -449,7 +402,7 @@ namespace Azure.ResourceManager.Resources
                         {
                             parent = parent.Parent;
                         }
-                        if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                        if (parent.ResourceType.Equals(ManagementGroup.ResourceType))
                         {
                             var response = _restClient.GetAllByManagementGroupNextPage(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken);
                             return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
@@ -475,7 +428,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicySetDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<PolicySetDefinition> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicySetDefinition> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicySetDefinition>> FirstPageFunc(int? pageSizeHint)
             {
@@ -495,7 +448,7 @@ namespace Azure.ResourceManager.Resources
                         {
                             parent = parent.Parent;
                         }
-                        if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                        if (parent.ResourceType.Equals(ManagementGroup.ResourceType))
                         {
                             var response = await _restClient.GetAllByManagementGroupAsync(Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                             return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
@@ -531,7 +484,7 @@ namespace Azure.ResourceManager.Resources
                         {
                             parent = parent.Parent;
                         }
-                        if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                        if (parent.ResourceType.Equals(ManagementGroup.ResourceType))
                         {
                             var response = await _restClient.GetAllByManagementGroupNextPageAsync(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                             return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
@@ -558,15 +511,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(PolicySetDefinitionOperations.ResourceType);
+                var filters = new ResourceFilterCollection(PolicySetDefinition.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -581,15 +534,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(PolicySetDefinitionOperations.ResourceType);
+                var filters = new ResourceFilterCollection(PolicySetDefinition.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

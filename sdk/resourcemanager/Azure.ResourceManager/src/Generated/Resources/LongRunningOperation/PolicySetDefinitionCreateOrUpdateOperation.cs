@@ -16,16 +16,16 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> This operation creates or updates a policy set definition in the given subscription with the given name. </summary>
-    public partial class PolicySetDefinitionsCreateOrUpdateOperation : Operation<PolicySetDefinition>
+    public partial class PolicySetDefinitionCreateOrUpdateOperation : Operation<PolicySetDefinition>
     {
         private readonly OperationOrResponseInternals<PolicySetDefinition> _operation;
 
-        /// <summary> Initializes a new instance of PolicySetDefinitionsCreateOrUpdateOperation for mocking. </summary>
-        protected PolicySetDefinitionsCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of PolicySetDefinitionCreateOrUpdateOperation for mocking. </summary>
+        protected PolicySetDefinitionCreateOrUpdateOperation()
         {
         }
 
-        internal PolicySetDefinitionsCreateOrUpdateOperation(ResourceOperations operationsBase, Response<PolicySetDefinitionData> response)
+        internal PolicySetDefinitionCreateOrUpdateOperation(ArmResource operationsBase, Response<PolicySetDefinitionData> response)
         {
             _operation = new OperationOrResponseInternals<PolicySetDefinition>(Response.FromValue(new PolicySetDefinition(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -16,16 +16,16 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> This operation creates or updates a policy exemption with the given scope and name. Policy exemptions apply to all resources contained within their scope. For example, when you create a policy exemption at resource group scope for a policy assignment at the same or above level, the exemption exempts to all applicable resources in the resource group. </summary>
-    public partial class PolicyExemptionsCreateOrUpdateOperation : Operation<PolicyExemption>
+    public partial class PolicyExemptionCreateOrUpdateOperation : Operation<PolicyExemption>
     {
         private readonly OperationOrResponseInternals<PolicyExemption> _operation;
 
-        /// <summary> Initializes a new instance of PolicyExemptionsCreateOrUpdateOperation for mocking. </summary>
-        protected PolicyExemptionsCreateOrUpdateOperation()
+        /// <summary> Initializes a new instance of PolicyExemptionCreateOrUpdateOperation for mocking. </summary>
+        protected PolicyExemptionCreateOrUpdateOperation()
         {
         }
 
-        internal PolicyExemptionsCreateOrUpdateOperation(ResourceOperations operationsBase, Response<PolicyExemptionData> response)
+        internal PolicyExemptionCreateOrUpdateOperation(ArmResource operationsBase, Response<PolicyExemptionData> response)
         {
             _operation = new OperationOrResponseInternals<PolicyExemption>(Response.FromValue(new PolicyExemption(operationsBase, response.Value), response.GetRawResponse()));
         }
