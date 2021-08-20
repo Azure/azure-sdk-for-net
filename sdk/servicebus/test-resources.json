@@ -60,7 +60,8 @@
     "serviceBusDataOwnerRoleId": "090c5cfd-751d-490a-894a-3ce6f1109419",
     "storageDataOwnerRoleId": "b7e6dc6d-f1e8-4753-8033-0f276bb0955b",
     "storageAccount": "[concat('blb', parameters('baseName'))]",
-    "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount'))]"
+    "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount'))]",
+    "storageMgmtApiVersion": "2019-06-01"
   },
   "resources": [
     {
@@ -173,6 +174,33 @@
       }
     }
   ],
+  "functions": [
+    {
+      "namespace": "connectionString",
+      "members": {
+        "create": {
+          "parameters": [
+            {
+              "name": "accountName",
+              "type": "string"
+            },
+            {
+              "name": "accountKey",
+              "type": "string"
+            },
+            {
+              "name": "blobEndpoint",
+              "type": "string"
+            }
+          ],
+          "output": {
+            "type": "string",
+            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('accountName'), ';AccountKey=', parameters('accountKey'), ';BlobEndpoint=', parameters('blobEndpoint'))]"
+          }
+        }
+      }
+    }
+  ],
   "outputs": {
     "SERVICEBUS_CONNECTION_STRING": {
       "type": "string",
@@ -184,7 +212,10 @@
     },
     "STORAGE_CLAIM_CHECK_CONNECTION_STRING": {
       "type": "string",
-      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccount'), ';AccountKey=', listKeys(variables('storageAccountId'), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ';EndpointSuffix=core.windows.net')]"
+      "value": "[connectionString.create(
+        variables('storageAccount'),
+        listKeys(variables('storageAccountId'), variables('storageMgmtApiVersion')).keys[0].value,
+        reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount')), variables('storageMgmtApiVersion')).primaryEndpoints.blob)]"
     }
   }
 }
