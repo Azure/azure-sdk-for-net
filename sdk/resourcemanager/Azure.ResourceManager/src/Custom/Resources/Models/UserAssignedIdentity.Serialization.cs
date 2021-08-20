@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="writer"> Utf8JsonWriter object to which the output is going to be written. </param>
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
+            if (writer == null)
+                throw new ArgumentNullException(nameof(writer));
             writer.WriteStartObject();
             writer.WriteEndObject();
         }
