@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -10,6 +11,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary>
     /// A class representing an Identity assigned by the user.
     /// </summary>
+    [JsonConverter(typeof(UserAssignedIdentityConverter))]
     public partial class UserAssignedIdentity : IUtf8JsonSerializable
     {
         /// <summary>
@@ -69,6 +71,19 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new InvalidOperationException("Either ClientId or PrincipalId were null");
 
             return new UserAssignedIdentity(clientId, principalId);
+        }
+
+        internal partial class UserAssignedIdentityConverter : JsonConverter<UserAssignedIdentity>
+        {
+            public override void Write(Utf8JsonWriter writer, UserAssignedIdentity userAssignedIdentity, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(userAssignedIdentity);
+            }
+            public override UserAssignedIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeUserAssignedIdentity(document.RootElement);
+            }
         }
     }
 }
