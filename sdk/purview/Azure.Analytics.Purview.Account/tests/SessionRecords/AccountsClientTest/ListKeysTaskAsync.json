@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://dotnetllcpurviewaccount.purview.azure.com/regeneratekeys?api-version=2019-11-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "34",
+        "Content-Type": "application/json",
+        "traceparent": "00-0eac8ed398f4b94f85a91b40b0a225de-58f213fe0499d948-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Account/1.0.0-alpha.20210820.1",
+          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "1a7a6e1b5513b4813b116a0fcf9883fd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "keyType": "PrimaryAtlasKafkaKey"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 20 Aug 2021 03:44:17 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-correlation-request-id": "a00557ef-e431-40d4-84ce-7461f440f789"
+      },
+      "ResponseBody": {
+        "atlasKafkaPrimaryEndpoint": "Endpoint=sb://atlas-7fd51f91-de1e-4e8b-a5b6-da64dd299b9f.servicebus.windows.net/;SharedAccessKeyName=AlternateSharedAccessKey;SharedAccessKey=fR6D5vYkHI5H1VXJSSpe9HNxqmtL55X70YvCg5/kpkQ=",
+        "atlasKafkaSecondaryEndpoint": "Endpoint=sb://atlas-7fd51f91-de1e-4e8b-a5b6-da64dd299b9f.servicebus.windows.net/;SharedAccessKeyName=AlternateSharedAccessKey;SharedAccessKey=GcMVTNPGShESagjYw\u002B\u002BLGPPYfZ1h3Bj1IjL4tdejn9k="
+      }
+    },
+    {
+      "RequestUri": "https://dotnetllcpurviewaccount.purview.azure.com/listkeys?api-version=2019-11-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6f0c926c82c4af4c980f14c3ff59f8a7-df81662fc072b549-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Purview.Account/1.0.0-alpha.20210820.1",
+          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "dd3b3a361ff03bdb992a3465b5e8c85c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 20 Aug 2021 03:44:17 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-correlation-request-id": "12c9f68a-b8eb-4fc9-b0ca-f1764eb6f501"
+      },
+      "ResponseBody": {
+        "atlasKafkaPrimaryEndpoint": "Endpoint=sb://atlas-7fd51f91-de1e-4e8b-a5b6-da64dd299b9f.servicebus.windows.net/;SharedAccessKeyName=AlternateSharedAccessKey;SharedAccessKey=fR6D5vYkHI5H1VXJSSpe9HNxqmtL55X70YvCg5/kpkQ=",
+        "atlasKafkaSecondaryEndpoint": "Endpoint=sb://atlas-7fd51f91-de1e-4e8b-a5b6-da64dd299b9f.servicebus.windows.net/;SharedAccessKeyName=AlternateSharedAccessKey;SharedAccessKey=GcMVTNPGShESagjYw\u002B\u002BLGPPYfZ1h3Bj1IjL4tdejn9k="
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "255435112"
+  }
+}

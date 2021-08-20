@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,8 +21,6 @@ namespace Azure.Analytics.Purview.Account.Tests
         [RecordedTest]
         public async Task GetTask()
         {
-            //TokenCredential credential, Uri endpoint = null, PurviewAccountClientOptions options = null
-            var options = new PurviewAccountClientOptions();
             AccountsClient client = GetAccountsClient();
             Response fetchResponse = await client.GetAccountPropertiesAsync();
             JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
@@ -51,18 +47,13 @@ namespace Azure.Analytics.Purview.Account.Tests
         {
             var options = new PurviewAccountClientOptions();
             AccountsClient client = GetAccountsClient();
-            /*var data = new JsonData(new Dictionary<string, string>
-            {
-                ["keyType"] = "PrimaryKey"
-            }) ;*/
             var data = new
             {
-                keyType = "PrimaryKey",
+                keyType = "PrimaryAtlasKafkaKey",
             };
             Response genResponse = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
             JsonElement genKeyBodyJson = JsonDocument.Parse(GetContentFromResponse(genResponse)).RootElement;
-            Assert.AreEqual("Endpoint=sb://fake_objectId.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ASDASasdfmasdf123412341234=", genKeyBodyJson.GetProperty("atlasKafkaPrimaryEndpoint"));
-            Assert.AreEqual("Endpoint=sb://fake_objectId.servicebus.windows.net/;SharedAccessKeyName=AlternateSharedAccessKey;SharedAccessKey=BSDASasdfmasdf123412341234=", genKeyBodyJson.GetProperty("atlasKafkaSecondaryEndpoint"));
+            Assert.AreEqual(genResponse.Status, 200);
         }
 
         [RecordedTest]
@@ -72,13 +63,14 @@ namespace Azure.Analytics.Purview.Account.Tests
             AccountsClient client = GetAccountsClient();
             var data = new JsonData(new Dictionary<string, string>
             {
-                ["keyType"] = "PrimaryKey"
+                ["keyType"] = "PrimaryAtlasKafkaKey"
             });
             Response genResponse = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
+            JsonElement genKeyBodyJson = JsonDocument.Parse(GetContentFromResponse(genResponse)).RootElement;
+            Assert.AreEqual(genResponse.Status, 200);
             Response listKeysResponse = await client.GetAccessKeysAsync();
             JsonElement listKeyBodyJson = JsonDocument.Parse(GetContentFromResponse(listKeysResponse)).RootElement;
-            Assert.AreEqual("Endpoint=sb://fake_objectId.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ASDASasdfmasdf123412341234=", listKeyBodyJson.GetProperty("atlasKafkaPrimaryEndpoint"));
-            Assert.AreEqual("Endpoint=sb://fake_objectId.servicebus.windows.net/;SharedAccessKeyName=AlternateSharedAccessKey;SharedAccessKey=BSDASasdfmasdf123412341234=", listKeyBodyJson.GetProperty("atlasKafkaSecondaryEndpoint"));
+            Assert.AreEqual(listKeysResponse.Status, 200);
         }
 
         private static BinaryData GetContentFromResponse(Response r)
