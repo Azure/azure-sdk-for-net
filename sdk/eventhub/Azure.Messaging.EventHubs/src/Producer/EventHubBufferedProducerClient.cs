@@ -592,6 +592,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
         internal virtual Task ClearAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
