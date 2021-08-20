@@ -53,9 +53,6 @@ parameters:
 - name: MatrixReplace
   type: object
   default: []
-- name: SpellCheckPublicApiSurface
-  type: boolean
-  default: false
 
 variables:
   - template: ../variables/globals.yml
@@ -74,7 +71,6 @@ stages:
         ArtifactName: packages
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-        SpellCheckPublicApiSurface: ${{ parameters.SpellCheckPublicApiSurface }}
         MatrixConfigs:
           - ${{ each config in parameters.MatrixConfigs }}:
             -  ${{ config }}

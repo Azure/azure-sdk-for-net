@@ -1,6 +1,6 @@
 # Release History
 
-## 1.18.0-beta.1 (Unreleased)
+## 1.19.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.18.0 (2021-08-18)
+
+### Bugs Fixed
+
+- Fixed a bug where a buffered error responses on .NET Framework were prematurely disposed
+- Fixed relative redirect support.
 
 ## 1.17.0 (2021-08-10)
 

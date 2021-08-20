@@ -911,6 +911,10 @@ namespace Azure.Data.Tables
             TableAccountSasBuilder builder)
         {
             Argument.AssertNotNull(builder, nameof(builder));
+            if (SharedKeyCredential == null)
+            {
+                throw new InvalidOperationException($"{nameof(GenerateSasUri)} requires that this client be constructed with a credential type other than {nameof(TokenCredential)} in order to sign the SAS token.");
+            }
 
             TableUriBuilder sasUri = new(_endpoint);
             sasUri.Query = builder.ToSasQueryParameters(SharedKeyCredential).ToString();
