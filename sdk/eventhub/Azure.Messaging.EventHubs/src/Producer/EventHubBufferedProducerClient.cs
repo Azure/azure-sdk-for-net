@@ -455,6 +455,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="eventData">The event to be enqueued into the buffer and, later, published.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
+        /// <returns>The total number of events that are currently buffered and waiting to be published, across all partitions.</returns>
+        ///
         /// <remarks>
         ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or
         ///   <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSucceededAsync" /> and
