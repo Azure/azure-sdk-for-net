@@ -5,20 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
+    [JsonConverter(typeof(ProviderResourceTypeConverter))]
     public partial class ProviderResourceType
     {
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element)
         {
             Optional<string> resourceType = default;
             Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<ProviderExtendedLocation>> locationMappings = default;
             Optional<IReadOnlyList<Alias>> aliases = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<string> defaultApiVersion = default;
+            Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
             Optional<string> capabilities = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -41,6 +47,21 @@ namespace Azure.ResourceManager.Resources.Models
                         array.Add(item.GetString());
                     }
                     locations = array;
+                    continue;
+                }
+                if (property.NameEquals("locationMappings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ProviderExtendedLocation> array = new List<ProviderExtendedLocation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ProviderExtendedLocation.DeserializeProviderExtendedLocation(item));
+                    }
+                    locationMappings = array;
                     continue;
                 }
                 if (property.NameEquals("aliases"))
@@ -73,6 +94,26 @@ namespace Azure.ResourceManager.Resources.Models
                     apiVersions = array;
                     continue;
                 }
+                if (property.NameEquals("defaultApiVersion"))
+                {
+                    defaultApiVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("apiProfiles"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ApiProfile> array = new List<ApiProfile>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ApiProfile.DeserializeApiProfile(item));
+                    }
+                    apiProfiles = array;
+                    continue;
+                }
                 if (property.NameEquals("capabilities"))
                 {
                     capabilities = property.Value.GetString();
@@ -94,7 +135,20 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(aliases), Optional.ToList(apiVersions), capabilities.Value, Optional.ToDictionary(properties));
+            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
+        }
+
+        internal partial class ProviderResourceTypeConverter : JsonConverter<ProviderResourceType>
+        {
+            public override void Write(Utf8JsonWriter writer, ProviderResourceType providerResourceType, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(providerResourceType);
+            }
+            public override ProviderResourceType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeProviderResourceType(document.RootElement);
+            }
         }
     }
 }
