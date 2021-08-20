@@ -385,7 +385,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         private EventHubBufferedProducerClient(EventHubBufferedProducerClientOptions options)
         {
-            options ??= DefaultOptions;
+            options = options?.Clone() ?? DefaultOptions;
             throw new NotImplementedException();
         }
 
