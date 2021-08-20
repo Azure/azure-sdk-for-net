@@ -121,7 +121,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var resource = CreateTestResource();
 
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
@@ -144,7 +146,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
 
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
@@ -166,7 +170,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 startTime: DateTime.UtcNow);
             var resource = CreateTestResource();
 
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
