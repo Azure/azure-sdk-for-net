@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Properly handle `GenerateSasUri` when the client is constructed with a connection string ([#23404](https://github.com/Azure/azure-sdk-for-net/issues/23404))
+
 ### Other Changes
 
 ## 12.2.0-beta.1 (2021-08-10)
