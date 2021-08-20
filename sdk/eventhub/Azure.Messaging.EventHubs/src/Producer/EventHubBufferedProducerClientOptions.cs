@@ -214,6 +214,11 @@ namespace Azure.Messaging.EventHubs.Producer
         /// Creates an <see cref="EventHubProducerClientOptions"/> from the current instance.
         /// </summary>
         ///
+        /// <remarks>
+        ///   This method does not make defensive copies of the references properties; it is assumed that they'll be used with 
+        ///    the <see cref="EventHubProducerClient" /> which has responsibility for ensuring defensive copies when constructed.
+        /// </remarks>
+        ///
         /// <returns>The set of options represented as <see cref="EventHubProducerClientOptions"/></returns>
         ///
         internal EventHubProducerClientOptions ToEventHubProducerClientOptions()
