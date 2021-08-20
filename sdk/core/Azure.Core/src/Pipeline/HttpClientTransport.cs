@@ -526,8 +526,6 @@ namespace Azure.Core.Pipeline
 
             public override string ClientRequestId { get; set; }
 
-            internal override ResponseExceptionFactory? ExceptionFactory { get; set; }
-
             internal override ResponseClassifier? ResponseClassifier { get; set; }
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseContent, name, out value);

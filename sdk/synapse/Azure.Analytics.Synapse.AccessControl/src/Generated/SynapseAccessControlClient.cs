@@ -23,6 +23,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         private Uri endpoint;
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ResponseClassifier _responseClassifier;
 
         /// <summary> Initializes a new instance of SynapseAccessControlClient for mocking. </summary>
         protected SynapseAccessControlClient()
@@ -149,7 +150,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                            throw await _responseClassifier.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
@@ -260,7 +261,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                            throw _responseClassifier.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
@@ -322,7 +323,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                            throw await _responseClassifier.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
@@ -365,7 +366,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                            throw _responseClassifier.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
@@ -477,7 +478,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                            throw await _responseClassifier.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
@@ -553,7 +554,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                            throw _responseClassifier.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
@@ -614,7 +615,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                            throw await _responseClassifier.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
@@ -654,7 +655,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                            throw _responseClassifier.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
@@ -714,7 +715,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 204:
                             return message.Response;
                         default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                            throw await _responseClassifier.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
@@ -756,7 +757,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 204:
                             return message.Response;
                         default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                            throw _responseClassifier.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
@@ -820,7 +821,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                            throw await _responseClassifier.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
@@ -861,7 +862,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                            throw _responseClassifier.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
@@ -927,7 +928,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                            throw await _responseClassifier.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
@@ -967,7 +968,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                            throw _responseClassifier.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
@@ -1024,7 +1025,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                            throw await _responseClassifier.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
@@ -1063,7 +1064,7 @@ namespace Azure.Analytics.Synapse.AccessControl
                         case 200:
                             return message.Response;
                         default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                            throw _responseClassifier.CreateRequestFailedException(message.Response);
                     }
                 }
                 else

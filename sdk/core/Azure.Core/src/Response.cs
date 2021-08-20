@@ -113,8 +113,6 @@ namespace Azure
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
-        internal abstract ResponseExceptionFactory? ExceptionFactory { get; set; }
-
         internal abstract ResponseClassifier? ResponseClassifier { get; set; }
 
         /// <summary>
@@ -122,7 +120,7 @@ namespace Azure
         /// </summary>
         public void Throw()
         {
-            throw this.ExceptionFactory!.CreateRequestFailedException(this);
+            throw this.ResponseClassifier!.CreateRequestFailedException(this);
             //throw new RequestFailedException("<error message>");
         }
 
@@ -131,7 +129,7 @@ namespace Azure
         /// </summary>
         public async Task ThrowAsync()
         {
-             throw await this.ExceptionFactory!.CreateRequestFailedExceptionAsync(this).ConfigureAwait(false);
+             throw await this.ResponseClassifier!.CreateRequestFailedExceptionAsync(this).ConfigureAwait(false);
             //throw new RequestFailedException("<error message>");
         }
 
