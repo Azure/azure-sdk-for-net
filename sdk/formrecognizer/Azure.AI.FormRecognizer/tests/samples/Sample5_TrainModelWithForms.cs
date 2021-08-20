@@ -27,9 +27,9 @@ namespace Azure.AI.FormRecognizer.Samples
 #if SNIPPET
             Uri trainingFileUri = <trainingFileUri>;
 #else
-            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
 #endif
-            FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey), new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
 
             TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My Model");
             Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
