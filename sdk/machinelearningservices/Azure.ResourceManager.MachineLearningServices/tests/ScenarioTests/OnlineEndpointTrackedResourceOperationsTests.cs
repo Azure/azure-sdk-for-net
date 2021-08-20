@@ -42,25 +42,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await GlobalClient.DefaultSubscription.GetResourceGroups()
                 .CreateOrUpdateAsync(_resourceGroupName, new ResourceGroupData(_defaultLocation));
 
-            //Create VNet & Subnet
-            //var vnetId = $"/subscriptions/{SessionEnvironment.SubscriptionId}/resourceGroups/{rg.Data.Name}/providers/Microsoft.Network/virtualNetworks/testvnet";
-            //var vnet = new GenericResourceData()
-            //{
-            //    Location = Location.WestUS2,
-            //    Properties = new Dictionary<string, object>
-            //    {
-            //        { "addressSpace", new Dictionary<string, object> { {"addressPrefixes",  new string[] { "10.0.0.0/16" } } } },
-            //        { "subnets", new Dictionary<string, object>[]{
-            //            new Dictionary<string, object> {
-            //                {"name", "testvnet"},
-            //                { "properties", new Dictionary<string, object> { { "addressPrefix", "10.0.0.0/24"} } }
-            //            }}
-            //        }
-            //    },
-            //};
-            //_ = GlobalClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vnetId, vnet)
-            //    .ConfigureAwait(false).GetAwaiter().GetResult();
-
             var id = $"/subscriptions/{SessionEnvironment.SubscriptionId}/resourceGroups/test-ml-common/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mltestid";
             var result = GlobalClient.DefaultSubscription.GetGenericResources().GetAsync(id)
                 .ConfigureAwait(false).GetAwaiter().GetResult();
@@ -68,10 +49,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             Workspace ws = await rg.GetWorkspaces().CreateOrUpdateAsync(
                 _workspaceName,
                 DataHelper.GenerateWorkspaceData());
-
-            //ComputeResource compute = await ws.GetComputeResources().CreateOrUpdateAsync(
-            //    _computeName,
-            //    GenerateComputeResourceData(rg.Id.ToString()));
 
             _ = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _resourceName,

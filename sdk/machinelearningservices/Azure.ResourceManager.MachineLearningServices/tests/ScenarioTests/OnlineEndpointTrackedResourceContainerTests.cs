@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            ComputeResource compute = await ws.GetComputeResources().CreateOrUpdateAsync(
-                _computeName,
-                DataHelper.GenerateComputeResourceData());
+            var id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/test-ml-common/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mltestid";
+            var result = Client.DefaultSubscription.GetGenericResources().GetAsync(id)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
 
             Assert.DoesNotThrowAsync(async () => _ = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData()));
+                DataHelper.GenerateOnlineEndpointTrackedResourceData(result)));
 
             var count = (await ws.GetOnlineEndpointTrackedResources().GetAllAsync().ToEnumerableAsync()).Count;
             Assert.AreEqual(count, 1);
@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            ComputeResource compute = await ws.GetComputeResources().CreateOrUpdateAsync(
-                _computeName,
-                DataHelper.GenerateComputeResourceData());
+            var id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/test-ml-common/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mltestid";
+            var result = Client.DefaultSubscription.GetGenericResources().GetAsync(id)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
 
             OnlineEndpointTrackedResource resource = null;
             Assert.DoesNotThrowAsync(async () => resource = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData()));
+                DataHelper.GenerateOnlineEndpointTrackedResourceData(result)));
 
             resource.Data.Properties.Description = "Updated";
             Assert.DoesNotThrowAsync(async () => resource = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            ComputeResource compute = await ws.GetComputeResources().CreateOrUpdateAsync(
-                _computeName,
-                DataHelper.GenerateComputeResourceData());
+            var id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/test-ml-common/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mltestid";
+            var result = Client.DefaultSubscription.GetGenericResources().GetAsync(id)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
 
             OnlineEndpointTrackedResource resource = null;
             Assert.DoesNotThrowAsync(async () => resource = await (await ws.GetOnlineEndpointTrackedResources().StartCreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData())).WaitForCompletionAsync());
+                DataHelper.GenerateOnlineEndpointTrackedResourceData(result))).WaitForCompletionAsync());
 
             resource.Data.Properties.Description = "Updated";
             Assert.DoesNotThrowAsync(async () => resource = await (await ws.GetOnlineEndpointTrackedResources().StartCreateOrUpdateAsync(
@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            ComputeResource compute = await ws.GetComputeResources().CreateOrUpdateAsync(
-                _computeName,
-                DataHelper.GenerateComputeResourceData());
+            var id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/test-ml-common/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mltestid";
+            var result = Client.DefaultSubscription.GetGenericResources().GetAsync(id)
+                .ConfigureAwait(false).GetAwaiter().GetResult();
 
             Assert.DoesNotThrowAsync(async () => _ = await (await ws.GetOnlineEndpointTrackedResources().StartCreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateOnlineEndpointTrackedResourceData())).WaitForCompletionAsync());
+                DataHelper.GenerateOnlineEndpointTrackedResourceData(result))).WaitForCompletionAsync());
 
             Assert.IsTrue(await ws.GetOnlineEndpointTrackedResources().CheckIfExistsAsync(_resourceName));
             Assert.IsFalse(await ws.GetOnlineEndpointTrackedResources().CheckIfExistsAsync(_resourceName + "xyz"));
