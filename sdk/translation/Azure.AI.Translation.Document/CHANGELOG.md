@@ -5,8 +5,10 @@
 ### Features Added
 
 ### Breaking Changes
+- `DocumentFilter.CreatedAfter` and `DocumentFilter.CreatedBefore` are now nullable properties.
 
 ### Bugs Fixed
+- `GetDocumentStasus` and `GetDocumentStatusesAsync` no longer set CreatedAfter and CreatedBefore if the user doesn't set it.
 
 ### Other Changes
 

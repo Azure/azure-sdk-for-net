@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue with refreshing authorization where redundant requests were made to acquire AAD tokens that were due to expire.  Refreshes will now coordinate to ensure a single AAD token acquisition.
+
 ### Other Changes
 
 ## 7.3.0-beta.1 (2021-08-10)
