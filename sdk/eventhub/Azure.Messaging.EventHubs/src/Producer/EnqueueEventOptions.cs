@@ -1,16 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 using System.ComponentModel;
 
-=======
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-using System.ComponentModel;
-
->>>>>>> c7457cff4d (updated to internal classes)
 namespace Azure.Messaging.EventHubs.Producer
 {
     /// <summary>
@@ -18,15 +10,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   are published to the Event Hubs service.
     /// </summary>
     ///
-<<<<<<< HEAD
-<<<<<<< HEAD
     internal class EnqueueEventOptions : SendEventOptions
-=======
-    public class EnqueueEventOptions : SendEventOptions
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-    internal class EnqueueEventOptions : SendEventOptions
->>>>>>> c7457cff4d (updated to internal classes)
     {
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
