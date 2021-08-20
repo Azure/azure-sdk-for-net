@@ -409,10 +409,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
-        public virtual async Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
-        {
-            return await _producer.GetEventHubPropertiesAsync(cancellationToken).ConfigureAwait(false);
-        }
+        public virtual async Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default) =>
+            await _producer.GetEventHubPropertiesAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Retrieves the set of identifiers for the partitions of an Event Hub.
