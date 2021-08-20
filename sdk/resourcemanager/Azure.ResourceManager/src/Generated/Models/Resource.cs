@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     [ReferenceType]
-    public partial class Resource
+    public abstract partial class Resource
     {
         /// <summary> Initializes a new instance of Resource. </summary>
         [InitializationConstructor]
-        public Resource()
+        protected Resource()
         {
         }
 
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         [SerializationConstructor]
-        internal Resource(ResourceIdentifier id, string name, ResourceType type)
+        protected Resource(ResourceIdentifier id, string name, ResourceType type)
         {
             Id = id;
             Name = name;

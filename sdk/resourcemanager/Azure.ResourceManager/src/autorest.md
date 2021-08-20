@@ -7,7 +7,9 @@ azure-arm: true
 arm-core: true
 namespace: Azure.ResourceManager
 input-file:
-  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ac3be41ee22ada179ab7b970e98f1289188b3bae/specification/common-types/resource-management/v2/types.json
+# temporarily using a local file to work around an autorest bug that loses extensions during depulication of schemas
+#  - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ac3be41ee22ada179ab7b970e98f1289188b3bae/specification/common-types/resource-management/v2/types.json
+  - $(this-folder)/types.json
 save-inputs: true
 
 modelerfour:

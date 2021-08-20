@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The type of identity that created the resource. </summary>
     public readonly partial struct CreatedByType : IEquatable<CreatedByType>
