@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a local network gateway in the specified resource group. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<LocalNetworkGateway> CreateOrUpdate(string localNetworkGatewayName, LocalNetworkGatewayData parameters, CancellationToken cancellationToken = default)
+        public virtual LocalNetworkGatewayCreateOrUpdateOperation CreateOrUpdate(string localNetworkGatewayName, LocalNetworkGatewayData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (localNetworkGatewayName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(localNetworkGatewayName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a local network gateway in the specified resource group. </summary>
-        /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<LocalNetworkGateway>> CreateOrUpdateAsync(string localNetworkGatewayName, LocalNetworkGatewayData parameters, CancellationToken cancellationToken = default)
-        {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a local network gateway in the specified resource group. </summary>
-        /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual LocalNetworkGatewayCreateOrUpdateOperation StartCreateOrUpdate(string localNetworkGatewayName, LocalNetworkGatewayData parameters, CancellationToken cancellationToken = default)
-        {
-            if (localNetworkGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(localNetworkGatewayName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, localNetworkGatewayName, parameters, cancellationToken);
-                return new LocalNetworkGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
+                var operation = new LocalNetworkGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a local network gateway in the specified resource group. </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="parameters"> Parameters supplied to the create or update local network gateway operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<LocalNetworkGatewayCreateOrUpdateOperation> StartCreateOrUpdateAsync(string localNetworkGatewayName, LocalNetworkGatewayData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<LocalNetworkGatewayCreateOrUpdateOperation> CreateOrUpdateAsync(string localNetworkGatewayName, LocalNetworkGatewayData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (localNetworkGatewayName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, localNetworkGatewayName, parameters, cancellationToken).ConfigureAwait(false);
-                return new LocalNetworkGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
+                var operation = new LocalNetworkGatewayCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, localNetworkGatewayName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -318,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the local network gateways in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalNetworkGateway" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<LocalNetworkGateway> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<LocalNetworkGateway> GetAll(CancellationToken cancellationToken = default)
         {
             Page<LocalNetworkGateway> FirstPageFunc(int? pageSizeHint)
             {
@@ -356,7 +304,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the local network gateways in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LocalNetworkGateway" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<LocalNetworkGateway> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LocalNetworkGateway> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<LocalNetworkGateway>> FirstPageFunc(int? pageSizeHint)
             {
@@ -397,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.GetAllAsGenericResources");
             scope.Start();
@@ -420,7 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LocalNetworkGatewayContainer.GetAllAsGenericResources");
             scope.Start();

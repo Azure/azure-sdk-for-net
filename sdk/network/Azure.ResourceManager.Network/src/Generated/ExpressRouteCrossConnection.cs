@@ -177,51 +177,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the currently advertised ARP table associated with the express route cross connection in a resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExpressRouteCircuitsArpTableListResult>> GetArpTableAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCrossConnectionGetArpTableOperation> GetArpTableAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.GetArpTable");
-            scope.Start();
-            try
-            {
-                var operation = await StartGetArpTableAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the currently advertised ARP table associated with the express route cross connection in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteCircuitsArpTableListResult> GetArpTable(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.GetArpTable");
-            scope.Start();
-            try
-            {
-                var operation = StartGetArpTable(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the currently advertised ARP table associated with the express route cross connection in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteCrossConnectionGetArpTableOperation> StartGetArpTableAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.StartGetArpTable");
             scope.Start();
             try
             {
                 var response = await _restClient.GetArpTableAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCrossConnectionGetArpTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetArpTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ExpressRouteCrossConnectionGetArpTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetArpTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -231,15 +199,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the currently advertised ARP table associated with the express route cross connection in a resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteCrossConnectionGetArpTableOperation StartGetArpTable(CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCrossConnectionGetArpTableOperation GetArpTable(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.StartGetArpTable");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.GetArpTable");
             scope.Start();
             try
             {
                 var response = _restClient.GetArpTable(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ExpressRouteCrossConnectionGetArpTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetArpTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ExpressRouteCrossConnectionGetArpTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetArpTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -249,51 +221,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the route table summary associated with the express route cross connection in a resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>> GetRoutesTableSummaryAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCrossConnectionGetRoutesTableSummaryOperation> GetRoutesTableSummaryAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.GetRoutesTableSummary");
-            scope.Start();
-            try
-            {
-                var operation = await StartGetRoutesTableSummaryAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the route table summary associated with the express route cross connection in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> GetRoutesTableSummary(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.GetRoutesTableSummary");
-            scope.Start();
-            try
-            {
-                var operation = StartGetRoutesTableSummary(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the route table summary associated with the express route cross connection in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteCrossConnectionGetRoutesTableSummaryOperation> StartGetRoutesTableSummaryAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.StartGetRoutesTableSummary");
             scope.Start();
             try
             {
                 var response = await _restClient.GetRoutesTableSummaryAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCrossConnectionGetRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableSummaryRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ExpressRouteCrossConnectionGetRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableSummaryRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -303,15 +243,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the route table summary associated with the express route cross connection in a resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteCrossConnectionGetRoutesTableSummaryOperation StartGetRoutesTableSummary(CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCrossConnectionGetRoutesTableSummaryOperation GetRoutesTableSummary(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.StartGetRoutesTableSummary");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.GetRoutesTableSummary");
             scope.Start();
             try
             {
                 var response = _restClient.GetRoutesTableSummary(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ExpressRouteCrossConnectionGetRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableSummaryRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ExpressRouteCrossConnectionGetRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableSummaryRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -321,51 +265,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the currently advertised routes table associated with the express route cross connection in a resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExpressRouteCircuitsRoutesTableListResult>> GetRoutesTableAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCrossConnectionGetRoutesTableOperation> GetRoutesTableAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.GetRoutesTable");
-            scope.Start();
-            try
-            {
-                var operation = await StartGetRoutesTableAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the currently advertised routes table associated with the express route cross connection in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteCircuitsRoutesTableListResult> GetRoutesTable(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.GetRoutesTable");
-            scope.Start();
-            try
-            {
-                var operation = StartGetRoutesTable(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the currently advertised routes table associated with the express route cross connection in a resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteCrossConnectionGetRoutesTableOperation> StartGetRoutesTableAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.StartGetRoutesTable");
             scope.Start();
             try
             {
                 var response = await _restClient.GetRoutesTableAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCrossConnectionGetRoutesTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ExpressRouteCrossConnectionGetRoutesTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -375,15 +287,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the currently advertised routes table associated with the express route cross connection in a resource group. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteCrossConnectionGetRoutesTableOperation StartGetRoutesTable(CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCrossConnectionGetRoutesTableOperation GetRoutesTable(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.StartGetRoutesTable");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnection.GetRoutesTable");
             scope.Start();
             try
             {
                 var response = _restClient.GetRoutesTable(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ExpressRouteCrossConnectionGetRoutesTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ExpressRouteCrossConnectionGetRoutesTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

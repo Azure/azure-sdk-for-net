@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetByVpnGatewayRequest(string resourceGroupName, string gatewayName)
+        internal HttpMessage CreateGetAllByVpnGatewayRequest(string resourceGroupName, string gatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
-        public async Task<Response<ListVpnGatewayNatRulesResult>> GetByVpnGatewayAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListVpnGatewayNatRulesResult>> GetAllByVpnGatewayAsync(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var message = CreateGetByVpnGatewayRequest(resourceGroupName, gatewayName);
+            using var message = CreateGetAllByVpnGatewayRequest(resourceGroupName, gatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="gatewayName"/> is null. </exception>
-        public Response<ListVpnGatewayNatRulesResult> GetByVpnGateway(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public Response<ListVpnGatewayNatRulesResult> GetAllByVpnGateway(string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var message = CreateGetByVpnGatewayRequest(resourceGroupName, gatewayName);
+            using var message = CreateGetAllByVpnGatewayRequest(resourceGroupName, gatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetByVpnGatewayNextPageRequest(string nextLink, string resourceGroupName, string gatewayName)
+        internal HttpMessage CreateGetAllByVpnGatewayNextPageRequest(string nextLink, string resourceGroupName, string gatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="gatewayName"/> is null. </exception>
-        public async Task<Response<ListVpnGatewayNatRulesResult>> GetByVpnGatewayNextPageAsync(string nextLink, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListVpnGatewayNatRulesResult>> GetAllByVpnGatewayNextPageAsync(string nextLink, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var message = CreateGetByVpnGatewayNextPageRequest(nextLink, resourceGroupName, gatewayName);
+            using var message = CreateGetAllByVpnGatewayNextPageRequest(nextLink, resourceGroupName, gatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="gatewayName"/> is null. </exception>
-        public Response<ListVpnGatewayNatRulesResult> GetByVpnGatewayNextPage(string nextLink, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
+        public Response<ListVpnGatewayNatRulesResult> GetAllByVpnGatewayNextPage(string nextLink, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(gatewayName));
             }
 
-            using var message = CreateGetByVpnGatewayNextPageRequest(nextLink, resourceGroupName, gatewayName);
+            using var message = CreateGetAllByVpnGatewayNextPageRequest(nextLink, resourceGroupName, gatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

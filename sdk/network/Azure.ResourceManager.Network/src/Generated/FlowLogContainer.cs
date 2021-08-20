@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Create or update a flow log for the specified network security group. </summary>
         /// <param name="flowLogName"> The name of the flow log. </param>
         /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<FlowLog> CreateOrUpdate(string flowLogName, FlowLogData parameters, CancellationToken cancellationToken = default)
+        public virtual FlowLogCreateOrUpdateOperation CreateOrUpdate(string flowLogName, FlowLogData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (flowLogName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("FlowLogContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(flowLogName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update a flow log for the specified network security group. </summary>
-        /// <param name="flowLogName"> The name of the flow log. </param>
-        /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<FlowLog>> CreateOrUpdateAsync(string flowLogName, FlowLogData parameters, CancellationToken cancellationToken = default)
-        {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("FlowLogContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(flowLogName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update a flow log for the specified network security group. </summary>
-        /// <param name="flowLogName"> The name of the flow log. </param>
-        /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual FlowLogCreateOrUpdateOperation StartCreateOrUpdate(string flowLogName, FlowLogData parameters, CancellationToken cancellationToken = default)
-        {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("FlowLogContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, flowLogName, parameters, cancellationToken);
-                return new FlowLogCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, flowLogName, parameters).Request, response);
+                var operation = new FlowLogCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, flowLogName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Create or update a flow log for the specified network security group. </summary>
         /// <param name="flowLogName"> The name of the flow log. </param>
         /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<FlowLogCreateOrUpdateOperation> StartCreateOrUpdateAsync(string flowLogName, FlowLogData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<FlowLogCreateOrUpdateOperation> CreateOrUpdateAsync(string flowLogName, FlowLogData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (flowLogName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("FlowLogContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("FlowLogContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, flowLogName, parameters, cancellationToken).ConfigureAwait(false);
-                return new FlowLogCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, flowLogName, parameters).Request, response);
+                var operation = new FlowLogCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, flowLogName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -318,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all flow log resources for the specified Network Watcher. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FlowLog" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<FlowLog> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<FlowLog> GetAll(CancellationToken cancellationToken = default)
         {
             Page<FlowLog> FirstPageFunc(int? pageSizeHint)
             {
@@ -356,7 +304,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all flow log resources for the specified Network Watcher. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FlowLog" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<FlowLog> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FlowLog> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<FlowLog>> FirstPageFunc(int? pageSizeHint)
             {
@@ -397,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FlowLogContainer.GetAllAsGenericResources");
             scope.Start();
@@ -420,7 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FlowLogContainer.GetAllAsGenericResources");
             scope.Start();

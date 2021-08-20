@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a security rule in the specified network security group. </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="securityRuleParameters"/> is null. </exception>
-        public virtual Response<SecurityRule> CreateOrUpdate(string securityRuleName, SecurityRuleData securityRuleParameters, CancellationToken cancellationToken = default)
+        public virtual SecurityRuleCreateOrUpdateOperation CreateOrUpdate(string securityRuleName, SecurityRuleData securityRuleParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (securityRuleName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("SecurityRuleContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(securityRuleName, securityRuleParameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a security rule in the specified network security group. </summary>
-        /// <param name="securityRuleName"> The name of the security rule. </param>
-        /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="securityRuleParameters"/> is null. </exception>
-        public async virtual Task<Response<SecurityRule>> CreateOrUpdateAsync(string securityRuleName, SecurityRuleData securityRuleParameters, CancellationToken cancellationToken = default)
-        {
-            if (securityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleName));
-            }
-            if (securityRuleParameters == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SecurityRuleContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(securityRuleName, securityRuleParameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a security rule in the specified network security group. </summary>
-        /// <param name="securityRuleName"> The name of the security rule. </param>
-        /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="securityRuleParameters"/> is null. </exception>
-        public virtual SecurityRuleCreateOrUpdateOperation StartCreateOrUpdate(string securityRuleName, SecurityRuleData securityRuleParameters, CancellationToken cancellationToken = default)
-        {
-            if (securityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleName));
-            }
-            if (securityRuleParameters == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SecurityRuleContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, securityRuleName, securityRuleParameters, cancellationToken);
-                return new SecurityRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, securityRuleName, securityRuleParameters).Request, response);
+                var operation = new SecurityRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, securityRuleName, securityRuleParameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a security rule in the specified network security group. </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="securityRuleParameters"/> is null. </exception>
-        public async virtual Task<SecurityRuleCreateOrUpdateOperation> StartCreateOrUpdateAsync(string securityRuleName, SecurityRuleData securityRuleParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<SecurityRuleCreateOrUpdateOperation> CreateOrUpdateAsync(string securityRuleName, SecurityRuleData securityRuleParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (securityRuleName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(securityRuleParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SecurityRuleContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SecurityRuleContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, securityRuleName, securityRuleParameters, cancellationToken).ConfigureAwait(false);
-                return new SecurityRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, securityRuleName, securityRuleParameters).Request, response);
+                var operation = new SecurityRuleCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, securityRuleName, securityRuleParameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -318,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all security rules in a network security group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityRule" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<SecurityRule> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityRule> GetAll(CancellationToken cancellationToken = default)
         {
             Page<SecurityRule> FirstPageFunc(int? pageSizeHint)
             {
@@ -356,7 +304,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all security rules in a network security group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityRule" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<SecurityRule> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityRule> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SecurityRule>> FirstPageFunc(int? pageSizeHint)
             {
@@ -397,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SecurityRuleContainer.GetAllAsGenericResources");
             scope.Start();
@@ -420,7 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SecurityRuleContainer.GetAllAsGenericResources");
             scope.Start();

@@ -128,51 +128,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes the specified private endpoint connection on application gateway. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ApplicationGatewayPrivateEndpointConnectionDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayPrivateEndpointConnection.Delete");
-            scope.Start();
-            try
-            {
-                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the specified private endpoint connection on application gateway. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayPrivateEndpointConnection.Delete");
-            scope.Start();
-            try
-            {
-                var operation = StartDelete(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the specified private endpoint connection on application gateway. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ApplicationGatewayPrivateEndpointConnectionDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayPrivateEndpointConnection.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ApplicationGatewayPrivateEndpointConnectionDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ApplicationGatewayPrivateEndpointConnectionDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -182,15 +150,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes the specified private endpoint connection on application gateway. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ApplicationGatewayPrivateEndpointConnectionDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual ApplicationGatewayPrivateEndpointConnectionDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayPrivateEndpointConnection.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayPrivateEndpointConnection.Delete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ApplicationGatewayPrivateEndpointConnectionDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new ApplicationGatewayPrivateEndpointConnectionDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -201,9 +173,10 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Updates the specified private endpoint connection on application gateway. </summary>
         /// <param name="parameters"> Parameters supplied to update application gateway private endpoint connection operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<ApplicationGatewayPrivateEndpointConnection>> UpdateAsync(ApplicationGatewayPrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ApplicationGatewayPrivateEndpointConnectionUpdateOperation> UpdateAsync(ApplicationGatewayPrivateEndpointConnectionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -211,61 +184,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayPrivateEndpointConnection.Update");
-            scope.Start();
-            try
-            {
-                var operation = await StartUpdateAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates the specified private endpoint connection on application gateway. </summary>
-        /// <param name="parameters"> Parameters supplied to update application gateway private endpoint connection operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<ApplicationGatewayPrivateEndpointConnection> Update(ApplicationGatewayPrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayPrivateEndpointConnection.Update");
-            scope.Start();
-            try
-            {
-                var operation = StartUpdate(parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates the specified private endpoint connection on application gateway. </summary>
-        /// <param name="parameters"> Parameters supplied to update application gateway private endpoint connection operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ApplicationGatewayPrivateEndpointConnectionUpdateOperation> StartUpdateAsync(ApplicationGatewayPrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayPrivateEndpointConnection.StartUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new ApplicationGatewayPrivateEndpointConnectionUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new ApplicationGatewayPrivateEndpointConnectionUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -276,21 +202,25 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Updates the specified private endpoint connection on application gateway. </summary>
         /// <param name="parameters"> Parameters supplied to update application gateway private endpoint connection operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ApplicationGatewayPrivateEndpointConnectionUpdateOperation StartUpdate(ApplicationGatewayPrivateEndpointConnectionData parameters, CancellationToken cancellationToken = default)
+        public virtual ApplicationGatewayPrivateEndpointConnectionUpdateOperation Update(ApplicationGatewayPrivateEndpointConnectionData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayPrivateEndpointConnection.StartUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayPrivateEndpointConnection.Update");
             scope.Start();
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                return new ApplicationGatewayPrivateEndpointConnectionUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new ApplicationGatewayPrivateEndpointConnectionUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

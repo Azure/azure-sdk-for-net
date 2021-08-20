@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a virtual network in the specified resource group. </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<VirtualNetwork> CreateOrUpdate(string virtualNetworkName, VirtualNetworkData parameters, CancellationToken cancellationToken = default)
+        public virtual VirtualNetworkCreateOrUpdateOperation CreateOrUpdate(string virtualNetworkName, VirtualNetworkData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(virtualNetworkName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a virtual network in the specified resource group. </summary>
-        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update virtual network operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<VirtualNetwork>> CreateOrUpdateAsync(string virtualNetworkName, VirtualNetworkData parameters, CancellationToken cancellationToken = default)
-        {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(virtualNetworkName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a virtual network in the specified resource group. </summary>
-        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update virtual network operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkCreateOrUpdateOperation StartCreateOrUpdate(string virtualNetworkName, VirtualNetworkData parameters, CancellationToken cancellationToken = default)
-        {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, virtualNetworkName, parameters, cancellationToken);
-                return new VirtualNetworkCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualNetworkName, parameters).Request, response);
+                var operation = new VirtualNetworkCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualNetworkName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a virtual network in the specified resource group. </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="parameters"> Parameters supplied to the create or update virtual network operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkCreateOrUpdateOperation> StartCreateOrUpdateAsync(string virtualNetworkName, VirtualNetworkData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualNetworkCreateOrUpdateOperation> CreateOrUpdateAsync(string virtualNetworkName, VirtualNetworkData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, virtualNetworkName, parameters, cancellationToken).ConfigureAwait(false);
-                return new VirtualNetworkCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualNetworkName, parameters).Request, response);
+                var operation = new VirtualNetworkCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualNetworkName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -324,7 +272,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all virtual networks in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<VirtualNetwork> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualNetwork> GetAll(CancellationToken cancellationToken = default)
         {
             Page<VirtualNetwork> FirstPageFunc(int? pageSizeHint)
             {
@@ -362,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all virtual networks in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VirtualNetwork> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualNetwork> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualNetwork>> FirstPageFunc(int? pageSizeHint)
             {
@@ -403,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkContainer.GetAllAsGenericResources");
             scope.Start();
@@ -426,7 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkContainer.GetAllAsGenericResources");
             scope.Start();

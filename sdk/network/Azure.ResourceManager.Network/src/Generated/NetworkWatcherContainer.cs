@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a network watcher in the specified resource group. </summary>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="parameters"> Parameters that define the network watcher resource. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<NetworkWatcher> CreateOrUpdate(string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
+        public virtual NetworkWatcherCreateOrUpdateOperation CreateOrUpdate(string networkWatcherName, NetworkWatcherData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (networkWatcherName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(networkWatcherName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a network watcher in the specified resource group. </summary>
-        /// <param name="networkWatcherName"> The name of the network watcher. </param>
-        /// <param name="parameters"> Parameters that define the network watcher resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<NetworkWatcher>> CreateOrUpdateAsync(string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
-        {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(networkWatcherName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a network watcher in the specified resource group. </summary>
-        /// <param name="networkWatcherName"> The name of the network watcher. </param>
-        /// <param name="parameters"> Parameters that define the network watcher resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatcherCreateOrUpdateOperation StartCreateOrUpdate(string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
-        {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, networkWatcherName, parameters, cancellationToken);
-                return new NetworkWatcherCreateOrUpdateOperation(Parent, response);
+                var operation = new NetworkWatcherCreateOrUpdateOperation(Parent, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a network watcher in the specified resource group. </summary>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="parameters"> Parameters that define the network watcher resource. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatcherCreateOrUpdateOperation> StartCreateOrUpdateAsync(string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatcherCreateOrUpdateOperation> CreateOrUpdateAsync(string networkWatcherName, NetworkWatcherData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (networkWatcherName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, networkWatcherName, parameters, cancellationToken).ConfigureAwait(false);
-                return new NetworkWatcherCreateOrUpdateOperation(Parent, response);
+                var operation = new NetworkWatcherCreateOrUpdateOperation(Parent, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -318,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all network watchers by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkWatcher" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<NetworkWatcher> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkWatcher> GetAll(CancellationToken cancellationToken = default)
         {
             Page<NetworkWatcher> FirstPageFunc(int? pageSizeHint)
             {
@@ -341,7 +289,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all network watchers by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkWatcher" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<NetworkWatcher> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkWatcher> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<NetworkWatcher>> FirstPageFunc(int? pageSizeHint)
             {
@@ -367,7 +315,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherContainer.GetAllAsGenericResources");
             scope.Start();
@@ -390,7 +338,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherContainer.GetAllAsGenericResources");
             scope.Start();
