@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Tests
         {
             var data = new GenericResourceData();
             data.Location = Location.WestUS2;
-            data.Sku = new Sku();
+            data.Sku = new Sku("Aligned");
             data.Sku.Name = "Aligned";
             var propertyBag = new Dictionary<string, object>();
             propertyBag.Add("platformUpdateDomainCount", 5);
