@@ -440,10 +440,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
         public virtual async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                                   CancellationToken cancellationToken = default)
-        {
-            return await _producer.GetPartitionPropertiesAsync(partitionId, cancellationToken).ConfigureAwait(false);
-        }
+                                                                                   CancellationToken cancellationToken = default) =>
+            await _producer.GetPartitionPropertiesAsync(partitionId, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Enqueues an <see cref="EventData"/> into the buffer to be published to the Event Hub.  If there is no capacity in
