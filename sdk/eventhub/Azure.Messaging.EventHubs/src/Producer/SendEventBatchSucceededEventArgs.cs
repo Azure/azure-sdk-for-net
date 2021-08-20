@@ -27,8 +27,15 @@ namespace Azure.Messaging.EventHubs.Producer
         public string PartitionId { get; }
 
         /// <summary>
-        /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
+        ///   A <see cref="System.Threading.CancellationToken"/> to indicate that the producer is being closed
+        ///    or disposed and is requesting that the handler stop its activities.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   The handler processing events has responsibility for deciding whether or not to honor
+        ///   the cancellation request.  If the application chooses not to do so, the producer will wait for the
+        ///   handler to complete before shutting down.
+        /// </remarks>
         ///
         public CancellationToken CancellationToken { get; }
 
