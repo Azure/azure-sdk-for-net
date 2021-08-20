@@ -8,11 +8,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
+using System.Resources;
 using System.Runtime.CompilerServices;
+using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.ServiceBus;
 using Microsoft.Azure.Management.ServiceBus.Models;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure;
 using Polly;
@@ -47,8 +50,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// <summary>The seed to use for random number generation.</summary>
         private static int s_randomSeed = Environment.TickCount;
 
-        /// <summary>The manager for common live test resource operations.</summary>
-        private static readonly LiveResourceManager ResourceManager = new LiveResourceManager();
+        /// <summary>The token credential to be used with the  Service Bus management client.</summary>
+        private static ManagementToken s_managementToken;
 
         /// <summary>
         ///   Creates a Service Bus scope associated with a queue instance, intended to be used in the context
@@ -82,7 +85,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
             var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
             var serviceBusNamespace = overrideNamespace ?? ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
-            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
+            var token = await AcquireManagementTokenAsync().ConfigureAwait(false);
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
@@ -126,7 +129,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
             var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
             var serviceBusNamespace = ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
-            var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
+            var token = await AcquireManagementTokenAsync().ConfigureAwait(false);
 
             using (var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription })
             {
@@ -166,6 +169,40 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 return new TopicScope(serviceBusNamespace, topic.Name, activeSubscriptions.Select(item => item.Name).ToList(), true);
             }
+        }
+
+        /// <summary>
+        ///   Acquires a JWT token for use with the  Service Bus management client.
+        /// </summary>
+        ///
+        /// <returns>The token to use for management operations against the  Service Bus Live test namespace.</returns>
+        ///
+        private static async Task<string> AcquireManagementTokenAsync()
+        {
+            var token = s_managementToken;
+            var authority = new Uri(new Uri(ServiceBusTestEnvironment.Instance.AuthorityHostUrl), ServiceBusTestEnvironment.Instance.TenantId).ToString();
+
+            // If there was no current token, or it is within the buffer for expiration, request a new token.
+            // There is a benign race condition here, where there may be multiple requests in-flight for a new token.  Since
+            // this is test infrastructure, just allow the acquired token to replace the current one without attempting to
+            // coordinate or ensure that the most recent is kept.
+
+            if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
+            {
+                var context = new AuthenticationContext(authority);
+                var credential = new ClientCredential(ServiceBusTestEnvironment.Instance.ClientId, ServiceBusTestEnvironment.Instance.ClientSecret);
+                var result = await context.AcquireTokenAsync(ServiceBusTestEnvironment.Instance.ServiceManagementUrl, credential);
+
+                if ((string.IsNullOrEmpty(result?.AccessToken)))
+                {
+                    throw new AuthenticationException("Unable to acquire an Active Directory token for the  Service Bus management client.");
+                }
+
+                token = new ManagementToken(result.AccessToken, result.ExpiresOn);
+                Interlocked.Exchange(ref s_managementToken, token);
+            }
+
+            return token.Token;
         }
 
         /// <summary>
@@ -373,7 +410,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 {
                     var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
                     var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
-                    var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
+                    var token = await AcquireManagementTokenAsync().ConfigureAwait(false);
 
                     using var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription };
                     await CreateRetryPolicy().ExecuteAsync(() => client.Queues.DeleteAsync(resourceGroup, NamespaceName, QueueName)).ConfigureAwait(false);
@@ -470,7 +507,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 {
                     var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
                     var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
-                    var token = await ResourceManager.AcquireManagementTokenAsync().ConfigureAwait(false);
+                    var token = await AcquireManagementTokenAsync().ConfigureAwait(false);
 
                     using var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription };
                     await CreateRetryPolicy().ExecuteAsync(() => client.Topics.DeleteAsync(resourceGroup, NamespaceName, TopicName)).ConfigureAwait(false);
