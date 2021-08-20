@@ -97,6 +97,9 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>
         ///    Invoked after each batch of events has been successfully published to the Event Hub, this
         ///    handler is optional and is intended to provide notifications for interested listeners.
+        ///
+        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result 
+        ///   in a deadlock scenario if those calls are awaited.
         /// </summary>
         ///
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
