@@ -543,8 +543,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
         public virtual Task<int> EnqueueEventsAsync(IEnumerable<EventData> events,
-                                               EnqueueEventOptions options,
-                                               CancellationToken cancellationToken = default)
+                                                    EnqueueEventOptions options,
+                                                    CancellationToken cancellationToken = default)
         {
             _isStarted = true;
             throw new NotImplementedException();
