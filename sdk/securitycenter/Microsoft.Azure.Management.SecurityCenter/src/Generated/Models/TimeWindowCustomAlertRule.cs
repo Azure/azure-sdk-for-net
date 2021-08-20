@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.Security.Models
     /// A custom alert rule that checks if the number of activities (depends on
     /// the custom alert type) in a time window is within the given range.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("TimeWindowCustomAlertRule")]
     public partial class TimeWindowCustomAlertRule : ThresholdCustomAlertRule
     {
         /// <summary>
