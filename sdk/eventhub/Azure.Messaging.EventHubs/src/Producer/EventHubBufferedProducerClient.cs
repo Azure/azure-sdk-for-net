@@ -549,7 +549,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="events">The set of events belonging to the batch that was successfully published.</param>
         /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
         ///
-        protected virtual Task OnSendSucceededAsync(IEnumerable<EventData> events,
+        protected virtual Task OnSendSucceededAsync(IReadOnlyList<EventData> events,
                                                     string partitionId)
         {
             throw new NotImplementedException();
