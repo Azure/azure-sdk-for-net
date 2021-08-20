@@ -8,7 +8,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
-using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Security.Authentication;
 using System.Threading;
@@ -133,23 +132,6 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             using (var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription })
             {
-                // If there was an override and the force flag is not set for creation, then build a scope for the
-                // specified topic.  Query the topic resource to build the list of its subscriptions for the scope.
-
-                if ((!string.IsNullOrEmpty(ServiceBusTestEnvironment.Instance.OverrideTopicName)) && (!forceTopicCreation))
-                {
-                    var subscriptionPage = await CreateRetryPolicy<IPage<SBSubscription>>().ExecuteAsync(() => client.Subscriptions.ListByTopicAsync(resourceGroup, serviceBusNamespace, ServiceBusTestEnvironment.Instance.OverrideTopicName)).ConfigureAwait(false);
-                    var existingSubscriptions = new List<string>(subscriptionPage.Select(item => item.Name));
-
-                    while (!string.IsNullOrEmpty(subscriptionPage.NextPageLink))
-                    {
-                        subscriptionPage = await CreateRetryPolicy<IPage<SBSubscription>>().ExecuteAsync(() => client.Subscriptions.ListByTopicAsync(resourceGroup, serviceBusNamespace, ServiceBusTestEnvironment.Instance.OverrideTopicName)).ConfigureAwait(false);
-                        existingSubscriptions.AddRange(subscriptionPage.Select(item => item.Name));
-                    }
-
-                    return new TopicScope(ServiceBusTestEnvironment.Instance.ServiceBusNamespace, ServiceBusTestEnvironment.Instance.OverrideTopicName, existingSubscriptions, false);
-                }
-
                 // Create a new topic specific for the scope being created.
 
                 string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
