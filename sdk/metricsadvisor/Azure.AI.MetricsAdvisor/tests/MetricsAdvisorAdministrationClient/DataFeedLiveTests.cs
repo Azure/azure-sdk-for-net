@@ -387,7 +387,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
 
-            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, dataFeedName);
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, dataFeedToUpdate.Id, updatedDataFeedName);
             ValidateDataFeedSource(updatedDataFeed.DataSource, dataSourceKind);
         }
 
