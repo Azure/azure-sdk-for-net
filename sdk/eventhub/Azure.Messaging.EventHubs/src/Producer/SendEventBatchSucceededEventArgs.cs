@@ -27,8 +27,6 @@ namespace Azure.Messaging.EventHubs.Producer
         public string PartitionId { get; }
 
         /// <summary>
-<<<<<<< HEAD
-<<<<<<< HEAD
         ///   A <see cref="System.Threading.CancellationToken"/> to indicate that the producer is being closed
         ///    or disposed and is requesting that the handler stop its activities.
         /// </summary>
@@ -39,23 +37,6 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   handler to complete before shutting down.
         /// </remarks>
         ///
-=======
-        /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
-        /// </summary>
-        ///
->>>>>>> dcfbe04dad (responding to feedback)
-=======
-        ///   A <see cref="System.Threading.CancellationToken"/> to indicate that the producer is being closed
-        ///    or disposed and is requesting that the handler stop its activities.
-        /// </summary>
-        ///
-        /// <remarks>
-        ///   The handler processing events has responsibility for deciding whether or not to honor
-        ///   the cancellation request.  If the application chooses not to do so, the producer will wait for the
-        ///   handler to complete before shutting down.
-        /// </remarks>
-        ///
->>>>>>> 18184865e0 (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/SendEventBatchSucceededEventArgs.cs)
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
@@ -67,18 +48,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="cancellationToken">A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public SendEventBatchSucceededEventArgs(IReadOnlyList<EventData> eventBatch,
-<<<<<<< HEAD
-<<<<<<< HEAD
                                                 string partitionId,
                                                 CancellationToken cancellationToken)
-=======
-                                              string partitionId,
-                                              CancellationToken cancellationToken)
->>>>>>> dcfbe04dad (responding to feedback)
-=======
-                                                string partitionId,
-                                                CancellationToken cancellationToken)
->>>>>>> 8d26e1c3bb (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/SendEventBatchSucceededEventArgs.cs)
         {
             EventBatch = eventBatch;
             PartitionId = partitionId;

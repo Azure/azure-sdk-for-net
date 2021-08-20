@@ -36,24 +36,12 @@ namespace Azure.Messaging.EventHubs.Producer
     ///
     /// <seealso cref="EventHubProducerClient" />
     ///
-<<<<<<< HEAD
-<<<<<<< HEAD
     internal class EventHubBufferedProducerClient : IAsyncDisposable
     {
         /// <summary>
         ///   The set of client options to use when options were not passed when the producer was instantiated.
         /// </summary>
         ///
-<<<<<<< HEAD
-=======
-    public class EventHubBufferedProducerClient : IAsyncDisposable
-=======
-    internal class EventHubBufferedProducerClient : IAsyncDisposable
->>>>>>> c7457cff4d (updated to internal classes)
-    {
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
->>>>>>> dcfbe04dad (responding to feedback)
         private static EventHubBufferedProducerClientOptions DefaultOptions { get; } = new EventHubBufferedProducerClientOptions
         {
             RetryOptions = new EventHubsRetryOptions { MaximumRetries = 15, TryTimeout = TimeSpan.FromMinutes(3) }
@@ -90,10 +78,6 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public bool IsClosed => _isClosed;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> dcfbe04dad (responding to feedback)
         /// <summary>The producer to use to send events to the Event Hub.</summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is being disposed but it must be in CloseAsync so that dispose can match the IAsyncDisposable signature.")]
         private readonly EventHubProducerClient _producer;
@@ -110,7 +94,6 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>The handler to be called once a batch has failed to publish.</summary>
         private event Func<SendEventBatchFailedEventArgs, Task> _sendFailed;
 
-<<<<<<< HEAD
         /// <summary>
         ///    Invoked after each batch of events has been successfully published to the Event Hub, this
         ///    handler is optional and is intended to provide notifications for interested listeners.
@@ -130,33 +113,6 @@ namespace Azure.Messaging.EventHubs.Producer
             add
             {
                 Argument.AssertNotNull(value, nameof(SendEventBatchSucceededAsync));
-=======
-=======
->>>>>>> dcfbe04dad (responding to feedback)
-        /// <summary>
-        ///    Invoked after each batch of events has been successfully published to the Event Hub, this
-        ///    handler is optional and is intended to provide notifications for interested listeners.
-        ///
-        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result
-        ///   in a deadlock scenario if those calls are awaited.
-        /// </summary>
-        ///
-        /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
-        /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
-        /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
-        ///
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "Guidance does not apply; this is an event.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
-        public event Func<SendEventBatchSucceededEventArgs, Task> SendEventBatchSucceededAsync
-        {
-            add
-            {
-<<<<<<< HEAD
-                Argument.AssertNotNull(value, nameof(SendEventBatchSuccessAsync));
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-                Argument.AssertNotNull(value, nameof(SendEventBatchSucceededAsync));
->>>>>>> e179b867ee (Fixing method name for OnSendSucceeded)
 
                 if (_sendSucceeded != default)
                 {
@@ -167,15 +123,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             remove
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
                 Argument.AssertNotNull(value, nameof(SendEventBatchSucceededAsync));
-=======
-                Argument.AssertNotNull(value, nameof(SendEventBatchSuccessAsync));
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-                Argument.AssertNotNull(value, nameof(SendEventBatchSucceededAsync));
->>>>>>> e179b867ee (Fixing method name for OnSendSucceeded)
 
                 if (_isStarted)
                 {
@@ -190,46 +138,15 @@ namespace Azure.Messaging.EventHubs.Producer
             }
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        /// <summary>The producer to use to send events to the Event Hub.</summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2213:Disposable fields should be disposed", Justification = "It is being disposed but it must be in CloseAsync so that dispose can match the IAsyncDisposable signature.")]
-        private readonly EventHubProducerClient _producer;
-
-        /// <summary>Indicates whether or not this instance has started publishing.</summary>
-        private volatile bool _isStarted;
-
-        /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _isClosed;
-
-        /// <summary>The handler to be called once a batch has successfully published.</summary>
-        private event Func<SendEventBatchSuccessEventArgs, Task> _sendSucceeded;
-
-        /// <summary>The handler to be called once a batch has failed to publish.</summary>
-        private event Func<SendEventBatchFailedEventArgs, Task> _sendFailed;
-
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
->>>>>>> dcfbe04dad (responding to feedback)
         /// <summary>
         ///   Invoked for any batch of events that failed to be published to the Event Hub, this handler must be
         ///   provided before events may be enqueued.
         ///
         ///   It is safe to attempt resending the events by calling <see cref="EnqueueEventAsync(EventData, CancellationToken)" /> or <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> from within
         ///   this handler.  It is important to note that doing so will place them at the end of the buffer; the original order will not be maintained.
-<<<<<<< HEAD
-<<<<<<< HEAD
         ///
         ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result
         ///   in a deadlock scenario if those calls are awaited.
-=======
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-        ///
-        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result
-        ///   in a deadlock scenario if those calls are awaited.
->>>>>>> 5a65d627f6 (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
         /// </summary>
         ///
         /// <remarks>
@@ -243,19 +160,10 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   especially important when ensuring the order of events is needed.
         /// </remarks>
         ///
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> dcfbe04dad (responding to feedback)
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
         ///
-<<<<<<< HEAD
-=======
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
->>>>>>> dcfbe04dad (responding to feedback)
         /// <seealso cref="EventHubsRetryOptions" />
         ///
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "Guidance does not apply; this is an event.")]
@@ -332,15 +240,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubBufferedProducerClient(string connectionString,
                                               EventHubBufferedProducerClientOptions clientOptions) : this(clientOptions)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             _producer = new EventHubProducerClient(connectionString, clientOptions.ToEventHubProducerClientOptions());
-=======
-            _producer = new EventHubProducerClient(connectionString, clientOptions);
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-            _producer = new EventHubProducerClient(connectionString, clientOptions.ToEventHubProducerClientOptions());
->>>>>>> dcfbe04dad (responding to feedback)
         }
 
         /// <summary>
@@ -383,15 +283,7 @@ namespace Azure.Messaging.EventHubs.Producer
                                               string eventHubName,
                                               EventHubBufferedProducerClientOptions clientOptions) : this(clientOptions)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             _producer = new EventHubProducerClient(connectionString, eventHubName, clientOptions.ToEventHubProducerClientOptions());
-=======
-            _producer = new EventHubProducerClient(connectionString, eventHubName, clientOptions);
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-            _producer = new EventHubProducerClient(connectionString, eventHubName, clientOptions.ToEventHubProducerClientOptions());
->>>>>>> dcfbe04dad (responding to feedback)
         }
 
         /// <summary>
@@ -408,15 +300,7 @@ namespace Azure.Messaging.EventHubs.Producer
                                               AzureNamedKeyCredential credential,
                                               EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions?.ToEventHubProducerClientOptions());
-=======
-            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions);
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions?.ToEventHubProducerClientOptions());
->>>>>>> dcfbe04dad (responding to feedback)
         }
 
         /// <summary>
@@ -433,15 +317,7 @@ namespace Azure.Messaging.EventHubs.Producer
                                               AzureSasCredential credential,
                                               EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions?.ToEventHubProducerClientOptions());
-=======
-            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions);
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions?.ToEventHubProducerClientOptions());
->>>>>>> dcfbe04dad (responding to feedback)
         }
 
         /// <summary>
@@ -458,15 +334,7 @@ namespace Azure.Messaging.EventHubs.Producer
                                               TokenCredential credential,
                                               EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions?.ToEventHubProducerClientOptions());
-=======
-            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions);
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-            _producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential, clientOptions?.ToEventHubProducerClientOptions());
->>>>>>> dcfbe04dad (responding to feedback)
         }
 
         /// <summary>
@@ -479,15 +347,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubBufferedProducerClient(EventHubConnection connection,
                                               EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             _producer = new EventHubProducerClient(connection, clientOptions?.ToEventHubProducerClientOptions());
-=======
-            _producer = new EventHubProducerClient(connection, clientOptions);
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-            _producer = new EventHubProducerClient(connection, clientOptions?.ToEventHubProducerClientOptions());
->>>>>>> dcfbe04dad (responding to feedback)
         }
 
         /// <summary>
@@ -525,15 +385,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         private EventHubBufferedProducerClient(EventHubBufferedProducerClientOptions options)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             options = options?.Clone() ?? DefaultOptions;
-=======
-            options ??= DefaultOptions;
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-            options = options?.Clone() ?? DefaultOptions;
->>>>>>> bc26ea528b (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
             throw new NotImplementedException();
         }
 
@@ -543,24 +395,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <param name="partitionId">The identifier of the partition.</param>
         ///
-<<<<<<< HEAD
-<<<<<<< HEAD
         public virtual int GetBufferedEventCount(string partitionId)
-=======
-        public virtual int GetPartitionBufferedEventCount(string partitionId)
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-        public virtual int GetBufferedEventCount(string partitionId)
->>>>>>> dcfbe04dad (responding to feedback)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> dcfbe04dad (responding to feedback)
         ///   Retrieves information about the Event Hub that the connection is associated with, including
         ///   the number of partitions present and their identifiers.
         /// </summary>
@@ -569,20 +409,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
-<<<<<<< HEAD
-<<<<<<< HEAD
         public virtual async Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default) =>
             await _producer.GetEventHubPropertiesAsync(cancellationToken).ConfigureAwait(false);
-=======
-        public virtual async Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
-        {
-            return await _producer.GetEventHubPropertiesAsync(cancellationToken).ConfigureAwait(false);
-        }
->>>>>>> dcfbe04dad (responding to feedback)
-=======
-        public virtual async Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default) =>
-            await _producer.GetEventHubPropertiesAsync(cancellationToken).ConfigureAwait(false);
->>>>>>> a942b7b5b3 (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
 
         /// <summary>
         ///   Retrieves the set of identifiers for the partitions of an Event Hub.
@@ -598,20 +426,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   No new or extended information is presented.
         /// </remarks>
         ///
-<<<<<<< HEAD
-<<<<<<< HEAD
         public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default) =>
             await _producer.GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
-=======
-        public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
-        {
-            return await _producer.GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
-        }
->>>>>>> dcfbe04dad (responding to feedback)
-=======
-        public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default) =>
-            await _producer.GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
->>>>>>> 191d200765 (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
 
         /// <summary>
         ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
@@ -624,26 +440,10 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
         public virtual async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-<<<<<<< HEAD
-<<<<<<< HEAD
                                                                                    CancellationToken cancellationToken = default) =>
             await _producer.GetPartitionPropertiesAsync(partitionId, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-=======
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-                                                                                   CancellationToken cancellationToken = default)
-        {
-            return await _producer.GetPartitionPropertiesAsync(partitionId, cancellationToken).ConfigureAwait(false);
-        }
-=======
-                                                                                   CancellationToken cancellationToken = default) =>
-            await _producer.GetPartitionPropertiesAsync(partitionId, cancellationToken).ConfigureAwait(false);
->>>>>>> 658416b142 (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
-
-        /// <summary>
->>>>>>> dcfbe04dad (responding to feedback)
         ///   Enqueues an <see cref="EventData"/> into the buffer to be published to the Event Hub.  If there is no capacity in
         ///   the buffer when this method is invoked, it will wait for space to become available and ensure that the <paramref name="eventData"/>
         ///   has been enqueued.
@@ -655,7 +455,6 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="eventData">The event to be enqueued into the buffer and, later, published.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-<<<<<<< HEAD
         /// <returns>The total number of events that are currently buffered and waiting to be published, across all partitions.</returns>
         ///
         /// <remarks>
@@ -665,19 +464,6 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
         public virtual Task<int> EnqueueEventAsync(EventData eventData,
-=======
-        /// <remarks>
-        ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or
-        ///   <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSucceededAsync" /> and
-        ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
-        /// </remarks>
-        ///
-<<<<<<< HEAD
-        public virtual Task EnqueueEventAsync(EventData eventData,
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-        public virtual Task<int> EnqueueEventAsync(EventData eventData,
->>>>>>> dc92cbe9bc (adding int to task)
                                               CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -696,7 +482,6 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="options">The set of options to apply when publishing this event.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-<<<<<<< HEAD
         /// <returns>The total number of events that are currently buffered and waiting to be published, across all partitions.</returns>
         ///
         /// <remarks>
@@ -706,19 +491,6 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
         public virtual Task<int> EnqueueEventAsync(EventData eventData,
-=======
-        /// <remarks>
-        ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or
-        ///   <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSucceededAsync" /> and
-        ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
-        /// </remarks>
-        ///
-<<<<<<< HEAD
-        public virtual Task EnqueueEventAsync(EventData eventData,
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-        public virtual Task<int> EnqueueEventAsync(EventData eventData,
->>>>>>> dc92cbe9bc (adding int to task)
                                               EnqueueEventOptions options,
                                               CancellationToken cancellationToken = default)
         {
@@ -737,7 +509,6 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="events">The set of events to be enqueued into the buffer and, later, published.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-<<<<<<< HEAD
         /// <returns>The total number of events that are currently buffered and waiting to be published, across all partitions.</returns>
         ///
         /// <remarks>
@@ -746,18 +517,6 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
         public virtual Task<int> EnqueueEventsAsync(IEnumerable<EventData> events,
-=======
-        /// <remarks>
-        ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSucceededAsync" /> and
-        ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
-        /// </remarks>
-        ///
-<<<<<<< HEAD
-        public virtual Task EnqueueEventsAsync(IEnumerable<EventData> events,
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-        public virtual Task<int> EnqueueEventsAsync(IEnumerable<EventData> events,
->>>>>>> dc92cbe9bc (adding int to task)
                                                CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -776,7 +535,6 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="options">The set of options to apply when publishing these events.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-<<<<<<< HEAD
         /// <returns>The total number of events that are currently buffered and waiting to be published, across all partitions.</returns>
         ///
         /// <remarks>
@@ -787,45 +545,19 @@ namespace Azure.Messaging.EventHubs.Producer
         public virtual Task<int> EnqueueEventsAsync(IEnumerable<EventData> events,
                                                     EnqueueEventOptions options,
                                                     CancellationToken cancellationToken = default)
-=======
-        /// <remarks>
-        ///   Upon the first call to <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> or <see cref="EnqueueEventsAsync(IEnumerable{EventData}, EnqueueEventOptions, CancellationToken)" />, the <see cref="SendEventBatchSucceededAsync" /> and
-        ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
-        /// </remarks>
-        ///
-        public virtual Task<int> EnqueueEventsAsync(IEnumerable<EventData> events,
-                                               EnqueueEventOptions options,
-                                               CancellationToken cancellationToken = default)
->>>>>>> 88750fe801 (Adding skeleton files)
         {
             _isStarted = true;
             throw new NotImplementedException();
         }
 
         /// <summary>
-<<<<<<< HEAD
-<<<<<<< HEAD
         ///   This method is invoked upon the successful publishing of a batch of events. It is responsible for raising the <see cref="SendEventBatchSucceededAsync"/> event.
-=======
-        ///   This method is invoked upon the successful publishing of a batch of events. It is responsible for raising the <see cref="SendEventBatchSuccessAsync"/> event.
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-        ///   This method is invoked upon the successful publishing of a batch of events. It is responsible for raising the <see cref="SendEventBatchSucceededAsync"/> event.
->>>>>>> e179b867ee (Fixing method name for OnSendSucceeded)
         /// </summary>
         ///
         /// <param name="events">The set of events belonging to the batch that was successfully published.</param>
         /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
         ///
-<<<<<<< HEAD
-<<<<<<< HEAD
         protected virtual Task OnSendSucceededAsync(IReadOnlyList<EventData> events,
-=======
-        protected virtual Task OnSendSucceededAsync(IEnumerable<EventData> events,
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-        protected virtual Task OnSendSucceededAsync(IReadOnlyList<EventData> events,
->>>>>>> ca131bff2b (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
                                                     string partitionId)
         {
             throw new NotImplementedException();
@@ -837,27 +569,11 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <param name="events">The set of events belonging to the the batch that failed to be published.</param>
-<<<<<<< HEAD
-<<<<<<< HEAD
         /// <param name="exception">The <see cref="Exception"/> that was raised when the events failed to publish.</param>
         /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
         ///
         protected virtual Task OnSendFailedAsync(IReadOnlyList<EventData> events,
                                                  Exception exception,
-=======
-        /// <param name="ex">The <see cref="Exception"/> that was raised when the events failed to publish.</param>
-        /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
-        ///
-        protected virtual Task OnSendFailedAsync(IEnumerable<EventData> events,
-                                                 Exception ex,
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-        /// <param name="exception">The <see cref="Exception"/> that was raised when the events failed to publish.</param>
-        /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
-        ///
-        protected virtual Task OnSendFailedAsync(IReadOnlyList<EventData> events,
-                                                 Exception exception,
->>>>>>> dcfbe04dad (responding to feedback)
                                                  string partitionId)
         {
             throw new NotImplementedException();
@@ -865,29 +581,14 @@ namespace Azure.Messaging.EventHubs.Producer
 
         /// <summary>
         ///   Attempts to publish all events in the buffer immediately.  This may result in multiple batches being published,
-<<<<<<< HEAD
-<<<<<<< HEAD
         ///   the outcome of each of which will be individually reported by the <see cref="SendEventBatchSucceededAsync" /> and
-=======
-        ///   the outcome of each of which will be individually reported by the <see cref="SendEventBatchSuccessAsync" /> and
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-        ///   the outcome of each of which will be individually reported by the <see cref="SendEventBatchSucceededAsync" /> and
->>>>>>> e179b867ee (Fixing method name for OnSendSucceeded)
         ///   <see cref="SendEventBatchFailedAsync" /> handlers.
         ///
         ///    Upon completion of this method, the buffer will be empty.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
-<<<<<<< HEAD
-<<<<<<< HEAD
         ///
-=======
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-        ///
->>>>>>> b80c500990 (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
         public virtual Task FlushAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -899,14 +600,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
-<<<<<<< HEAD
-<<<<<<< HEAD
         ///
-=======
->>>>>>> 88750fe801 (Adding skeleton files)
-=======
-        ///
->>>>>>> bec6432a7e (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
         internal virtual Task ClearAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -916,46 +610,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Closes the producer and performs the tasks needed to clean up all the resources used by the <see cref="EventHubBufferedProducerClient"/>.
         /// </summary>
         ///
-<<<<<<< HEAD
-<<<<<<< HEAD
         /// <param name="flush">Indicates whether to abandon events in the buffer or attempt to publish them.</param>
-=======
-        /// <remarks>
-        ///   Calling this method will also call <see cref="FlushAsync(CancellationToken)"/>, which will attempt to publish any events that are still pending,
-        ///   and finish any active sending.
-        ///
-        ///   This method is identical to <see cref="DisposeAsync"/> and either can be used to publish pending events and clean up resources.
-        /// </remarks>
-        ///
->>>>>>> 88750fe801 (Adding skeleton files)
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-<<<<<<< HEAD
-        public virtual Task CloseAsync(bool flush = true,
-                                       CancellationToken cancellationToken = default)
-=======
-        public virtual Task CloseAsync(CancellationToken cancellationToken = default)
->>>>>>> 88750fe801 (Adding skeleton files)
-        {
-            _isClosed = true;
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        ///   Closes the producer and performs the tasks needed to clean up all the resources used by the <see cref="EventHubBufferedProducerClient"/>.
-        /// </summary>
-        ///
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        /// <param name="abandonBufferedEvents">Indicates whether to abandon events in the buffer or attempt to publish them.</param>
-=======
-=======
->>>>>>> d002e791c3 (updating close to remove overload)
-        /// <param name="flush">Indicates whether to abandon events in the buffer or attempt to publish them.</param>
->>>>>>> dcfbe04dad (responding to feedback)
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -971,7 +626,6 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Closes the producer and performs the tasks needed to clean up all the resources used by the <see cref="EventHubBufferedProducerClient"/>.
         /// </summary>
         ///
->>>>>>> 88750fe801 (Adding skeleton files)
         /// <remarks>
         ///   Calling this method will also call <see cref="FlushAsync(CancellationToken)"/>, which will attempt to publish any events that are still pending,
         ///   and finish any active sending.
