@@ -625,6 +625,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public virtual async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                                                    CancellationToken cancellationToken = default) =>
             await _producer.GetPartitionPropertiesAsync(partitionId, cancellationToken).ConfigureAwait(false);
 
@@ -636,6 +637,10 @@ namespace Azure.Messaging.EventHubs.Producer
         {
             return await _producer.GetPartitionPropertiesAsync(partitionId, cancellationToken).ConfigureAwait(false);
         }
+=======
+                                                                                   CancellationToken cancellationToken = default) =>
+            await _producer.GetPartitionPropertiesAsync(partitionId, cancellationToken).ConfigureAwait(false);
+>>>>>>> 658416b142 (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
 
         /// <summary>
 >>>>>>> dcfbe04dad (responding to feedback)
