@@ -843,7 +843,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="exception">The <see cref="Exception"/> that was raised when the events failed to publish.</param>
         /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
         ///
-        protected virtual Task OnSendFailedAsync(IEnumerable<EventData> events,
+        protected virtual Task OnSendFailedAsync(IReadOnlyList<EventData> events,
                                                  Exception exception,
 >>>>>>> dcfbe04dad (responding to feedback)
                                                  string partitionId)
