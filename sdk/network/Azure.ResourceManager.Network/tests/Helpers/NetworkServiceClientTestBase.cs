@@ -151,6 +151,90 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             })).Value;
         }
 
+        public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup, VirtualNetwork vnet)
+        {
+            var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
+
+            var adminUsername = Recording.GenerateAssetName("admin");
+            var vmId = $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+            return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(vmId, new GenericResourceData
+            {
+                Location = location,
+                Properties = new Dictionary<string, object>
+                {
+                    { "hardwareProfile", new Dictionary<string, object>
+                        {
+                            { "vmSize", "Standard_F2" }
+                        }
+                    },
+                    { "storageProfile", new Dictionary<string, object>
+                        {
+                            { "imageReference", new Dictionary<string, object>
+                                {
+                                    { "sku", "16.04-LTS" },
+                                    { "publisher", "Canonical" },
+                                    { "version", "latest" },
+                                    { "offer", "UbuntuServer" }
+                                }
+                            },
+                            { "osDisk", new Dictionary<string, object>
+                                {
+                                    { "name", $"{vmName}_os_disk" },
+                                    { "osType", "Linux" },
+                                    { "caching", "ReadWrite" },
+                                    { "createOption", "FromImage" },
+                                    { "managedDisk", new Dictionary<string, object>
+                                        {
+                                            { "storageAccountType", "Standard_LRS" }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    { "osProfile", new Dictionary<string, object>
+                        {
+                            { "adminUsername",  adminUsername },
+                            { "computerName", vmName },
+                            { "linuxConfiguration", new Dictionary<string, object>
+                                {
+                                    { "ssh", new Dictionary<string, object>
+                                        {
+                                            { "publicKeys", new List<object>
+                                                { new Dictionary<string, object>
+                                                    {
+                                                        { "path", $"/home/{adminUsername}/.ssh/authorized_keys" },
+                                                        { "keyData", dummySSHKey }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    { "disablePasswordAuthentication", true },
+                                }
+                            },
+                        }
+                    },
+                    { "networkProfile", new Dictionary<string, object>
+                        {
+                            { "networkInterfaces", new List<object>
+                                { new Dictionary<string, object>
+                                    {
+                                        { "id", networkInterface.Id.ToString() },
+                                        { "properties", new Dictionary<string, object>
+                                            {
+                                                { "primary", true }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            })).Value;
+        }
+
         public async Task<GenericResource> CreateWindowsVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
         {
             var vnet = await CreateVirtualNetwork(Recording.GenerateAssetName("vnet_"), Recording.GenerateAssetName("subnet_"), location, resourceGroup.GetVirtualNetworks());
@@ -501,6 +585,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             return getNicResponse;
         }
+
         public async Task<NetworkInterface> CreateNetworkInterface(string name,  string publicIpAddressId, string subnetId,
             string location, string ipConfigName, NetworkInterfaceContainer networkInterfaceContainer)
         {
@@ -535,6 +620,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             return getNicResponse;
         }
+
         public async Task<VirtualNetwork> CreateVirtualNetwork(string vnetName, string subnetName, string resourceGroupName, string location)
         {
             var vnet = new VirtualNetworkData()
@@ -623,9 +709,15 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             return resourceGroup.GetVirtualNetworks();
         }
+
         protected NetworkInterfaceContainer GetNetworkInterfaceContainer(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
+        }
+
+        protected NetworkInterfaceContainer GetNetworkInterfaceContainer(Resources.ResourceGroup resourceGroup)
+        {
+            return resourceGroup.GetNetworkInterfaces();
         }
 
         protected NetworkSecurityGroupContainer GetNetworkSecurityGroupContainer(string resourceGroupName)
