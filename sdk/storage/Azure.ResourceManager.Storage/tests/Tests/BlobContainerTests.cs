@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
-using Azure.ResourceManager.Storage.Tests.Tests.Helpers;
+using Azure.ResourceManager.Storage.Tests.Helpers;
 
 namespace Azure.ResourceManager.Storage.Tests.Tests
 {

@@ -10,7 +10,7 @@ using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
 
-namespace Azure.ResourceManager.Storage.Tests.Tests.Helpers
+namespace Azure.ResourceManager.Storage.Tests.Helpers
 {
     [ClientTestFixture]
     public class StorageTestBase:ManagementRecordedTestBase<StorageManagementTestEnvironment>
