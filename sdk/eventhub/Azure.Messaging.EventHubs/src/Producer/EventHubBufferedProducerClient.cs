@@ -905,6 +905,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
 <<<<<<< HEAD
+<<<<<<< HEAD
         /// <param name="flush">Indicates whether to abandon events in the buffer or attempt to publish them.</param>
 =======
         /// <remarks>
@@ -939,6 +940,8 @@ namespace Azure.Messaging.EventHubs.Producer
 =======
         /// <param name="abandonBufferedEvents">Indicates whether to abandon events in the buffer or attempt to publish them.</param>
 =======
+=======
+>>>>>>> d002e791c3 (updating close to remove overload)
         /// <param name="flush">Indicates whether to abandon events in the buffer or attempt to publish them.</param>
 >>>>>>> dcfbe04dad (responding to feedback)
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
