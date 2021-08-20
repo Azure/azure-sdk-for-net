@@ -4,12 +4,14 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using System.Text.Json.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary>
     /// A class representing an Identity assigned by the user.
     /// </summary>
+    [JsonConverter(typeof(UserAssignedIdentityConverter))]
     public partial class UserAssignedIdentity : IUtf8JsonSerializable
     {
         /// <summary>
@@ -20,17 +22,8 @@ namespace Azure.ResourceManager.Resources.Models
         {
             if (writer == null)
                 throw new ArgumentNullException(nameof(writer));
-
             writer.WriteStartObject();
-
-            writer.WritePropertyName("clientId");
-            writer.WriteStringValue(ClientId.ToString());
-
-            writer.WritePropertyName("principalId");
-            writer.WriteStringValue(PrincipalId.ToString());
-
             writer.WriteEndObject();
-            writer.Flush();
         }
 
         /// <summary>
@@ -69,6 +62,19 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new InvalidOperationException("Either ClientId or PrincipalId were null");
 
             return new UserAssignedIdentity(clientId, principalId);
+        }
+
+        internal partial class UserAssignedIdentityConverter : JsonConverter<UserAssignedIdentity>
+        {
+            public override void Write(Utf8JsonWriter writer, UserAssignedIdentity userAssignedIdentity, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(userAssignedIdentity);
+            }
+            public override UserAssignedIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeUserAssignedIdentity(document.RootElement);
+            }
         }
     }
 }

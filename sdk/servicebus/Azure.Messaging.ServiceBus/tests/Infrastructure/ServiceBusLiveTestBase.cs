@@ -8,8 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
-    [Category(TestCategory.Live)]
-    [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
+    [LiveOnly(true)]
     public abstract class ServiceBusLiveTestBase : ServiceBusTestBase
     {
         private const int DefaultTryTimeout = 10;
