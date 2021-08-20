@@ -129,9 +129,10 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Grants access to a diskRestorePoint. </summary>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public async virtual Task<Response<AccessUri>> GrantAccessAsync(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskRestorePointGrantAccessOperation> GrantAccessAsync(GrantAccessData grantAccessData, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
@@ -139,61 +140,14 @@ namespace Azure.ResourceManager.Compute
             }
 
             using var scope = _clientDiagnostics.CreateScope("DiskRestorePoint.GrantAccess");
-            scope.Start();
-            try
-            {
-                var operation = await StartGrantAccessAsync(grantAccessData, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Grants access to a diskRestorePoint. </summary>
-        /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public virtual Response<AccessUri> GrantAccess(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
-        {
-            if (grantAccessData == null)
-            {
-                throw new ArgumentNullException(nameof(grantAccessData));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePoint.GrantAccess");
-            scope.Start();
-            try
-            {
-                var operation = StartGrantAccess(grantAccessData, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Grants access to a diskRestorePoint. </summary>
-        /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public async virtual Task<DiskRestorePointGrantAccessOperation> StartGrantAccessAsync(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
-        {
-            if (grantAccessData == null)
-            {
-                throw new ArgumentNullException(nameof(grantAccessData));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePoint.StartGrantAccess");
             scope.Start();
             try
             {
                 var response = await _restClient.GrantAccessAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, grantAccessData, cancellationToken).ConfigureAwait(false);
-                return new DiskRestorePointGrantAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateGrantAccessRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, grantAccessData).Request, response);
+                var operation = new DiskRestorePointGrantAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateGrantAccessRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, grantAccessData).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -204,21 +158,25 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Grants access to a diskRestorePoint. </summary>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public virtual DiskRestorePointGrantAccessOperation StartGrantAccess(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public virtual DiskRestorePointGrantAccessOperation GrantAccess(GrantAccessData grantAccessData, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
                 throw new ArgumentNullException(nameof(grantAccessData));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePoint.StartGrantAccess");
+            using var scope = _clientDiagnostics.CreateScope("DiskRestorePoint.GrantAccess");
             scope.Start();
             try
             {
                 var response = _restClient.GrantAccess(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, grantAccessData, cancellationToken);
-                return new DiskRestorePointGrantAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateGrantAccessRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, grantAccessData).Request, response);
+                var operation = new DiskRestorePointGrantAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateGrantAccessRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, grantAccessData).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -228,51 +186,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Revokes access to a diskRestorePoint. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> RevokeAccessAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<DiskRestorePointRevokeAccessOperation> RevokeAccessAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskRestorePoint.RevokeAccess");
-            scope.Start();
-            try
-            {
-                var operation = await StartRevokeAccessAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Revokes access to a diskRestorePoint. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RevokeAccess(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePoint.RevokeAccess");
-            scope.Start();
-            try
-            {
-                var operation = StartRevokeAccess(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Revokes access to a diskRestorePoint. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DiskRestorePointRevokeAccessOperation> StartRevokeAccessAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePoint.StartRevokeAccess");
             scope.Start();
             try
             {
                 var response = await _restClient.RevokeAccessAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new DiskRestorePointRevokeAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateRevokeAccessRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new DiskRestorePointRevokeAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateRevokeAccessRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -282,15 +208,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Revokes access to a diskRestorePoint. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DiskRestorePointRevokeAccessOperation StartRevokeAccess(CancellationToken cancellationToken = default)
+        public virtual DiskRestorePointRevokeAccessOperation RevokeAccess(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePoint.StartRevokeAccess");
+            using var scope = _clientDiagnostics.CreateScope("DiskRestorePoint.RevokeAccess");
             scope.Start();
             try
             {
                 var response = _restClient.RevokeAccess(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return new DiskRestorePointRevokeAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateRevokeAccessRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new DiskRestorePointRevokeAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateRevokeAccessRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = (await CreateResourceGroupAsync()).GetDedicatedHostGroups();
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            return await container.CreateOrUpdateAsync(groupName, input);
+            var lro = await container.CreateOrUpdateAsync(groupName, input);
+            return lro.Value;
         }
 
         private async Task<DedicatedHost> CreateDedicatedHostAsync(string hostName)
@@ -28,7 +29,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var hostGroupName = Recording.GenerateAssetName("testDHG-");
             var container = (await CreateDedicatedHostGroupAsync(hostGroupName)).GetDedicatedHosts();
             var input = ResourceDataHelper.GetBasicDedicatedHost(DefaultLocation, "DSv3-Type1", 0);
-            return await container.CreateOrUpdateAsync(hostName, input);
+            var lro = await container.CreateOrUpdateAsync(hostName, input);
+            return lro.Value;
         }
 
         [TestCase]
@@ -38,16 +40,6 @@ namespace Azure.ResourceManager.Compute.Tests
             var hostName = Recording.GenerateAssetName("testHost-");
             var dedicatedHost = await CreateDedicatedHostAsync(hostName);
             await dedicatedHost.DeleteAsync();
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartDelete()
-        {
-            var hostName = Recording.GenerateAssetName("testHost-");
-            var dedicatedHost = await CreateDedicatedHostAsync(hostName);
-            var deleteOp = await dedicatedHost.StartDeleteAsync();
-            await deleteOp.WaitForCompletionResponseAsync();
         }
 
         [TestCase]
@@ -72,7 +64,8 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 AutoReplaceOnFailure = updatedAutoReplaceOnFailure
             };
-            DedicatedHost updatedHost = await dedicatedHost.UpdateAsync(update);
+            var lro = await dedicatedHost.UpdateAsync(update);
+            DedicatedHost updatedHost = lro.Value;
 
             Assert.AreEqual(updatedAutoReplaceOnFailure, updatedHost.Data.AutoReplaceOnFailure);
         }

@@ -29,19 +29,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetDiskAccessContainerAsync();
             var name = Recording.GenerateAssetName("testDA");
             var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
-            DiskAccess access = await container.CreateOrUpdateAsync(name, input);
-            Assert.AreEqual(name, access.Data.Name);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartCreateOrUpdate()
-        {
-            var container = await GetDiskAccessContainerAsync();
-            var name = Recording.GenerateAssetName("testDA");
-            var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
-            var op = await container.StartCreateOrUpdateAsync(name, input);
-            DiskAccess access = await op.WaitForCompletionAsync();
+            var lro = await container.CreateOrUpdateAsync(name, input);
+            DiskAccess access = lro.Value;
             Assert.AreEqual(name, access.Data.Name);
         }
 
@@ -52,7 +41,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetDiskAccessContainerAsync();
             var name = Recording.GenerateAssetName("testDA");
             var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
-            DiskAccess access1 = await container.CreateOrUpdateAsync(name, input);
+            var lro = await container.CreateOrUpdateAsync(name, input);
+            DiskAccess access1 = lro.Value;
             DiskAccess access2 = await container.GetAsync(name);
             ResourceDataHelper.AssertDiskAccess(access1.Data, access2.Data);
         }
@@ -64,7 +54,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetDiskAccessContainerAsync();
             var name = Recording.GenerateAssetName("testDA");
             var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
-            DiskAccess access = await container.CreateOrUpdateAsync(name, input);
+            var lro = await container.CreateOrUpdateAsync(name, input);
+            DiskAccess access = lro.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(name));
             Assert.IsFalse(await container.CheckIfExistsAsync(name + "1"));
 

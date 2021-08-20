@@ -24,7 +24,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
-            VirtualMachineScaleSet vmss = await container.CreateOrUpdateAsync(vmssName, input);
+            var lro = await container.CreateOrUpdateAsync(vmssName, input);
+            VirtualMachineScaleSet vmss = lro.Value;
             Assert.AreEqual(vmssName, vmss.Data.Name);
         }
 
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
-            VirtualMachineScaleSet vmss1 = await container.CreateOrUpdateAsync(vmssName, input);
+            var lro = await container.CreateOrUpdateAsync(vmssName, input);
+            VirtualMachineScaleSet vmss1 = lro.Value;
             VirtualMachineScaleSet vmss2 = await container.GetAsync(vmssName);
 
             ResourceDataHelper.AssertVirtualMachineScaleSet(vmss1.Data, vmss2.Data);
@@ -50,7 +52,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
-            VirtualMachineScaleSet vmss = await container.CreateOrUpdateAsync(vmssName, input);
+            var lro = await container.CreateOrUpdateAsync(vmssName, input);
+            VirtualMachineScaleSet vmss = lro.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(vmssName));
             Assert.IsFalse(await container.CheckIfExistsAsync(vmssName + "1"));
 

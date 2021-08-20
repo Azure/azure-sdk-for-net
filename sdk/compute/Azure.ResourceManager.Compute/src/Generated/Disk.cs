@@ -128,51 +128,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes a disk. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<DiskDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Disk.Delete");
-            scope.Start();
-            try
-            {
-                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a disk. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Disk.Delete");
-            scope.Start();
-            try
-            {
-                var operation = StartDelete(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a disk. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DiskDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Disk.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new DiskDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new DiskDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -182,15 +150,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes a disk. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DiskDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual DiskDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Disk.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("Disk.Delete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new DiskDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new DiskDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -373,9 +345,10 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Updates (patches) a disk. </summary>
         /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="disk"/> is null. </exception>
-        public async virtual Task<Response<Disk>> UpdateAsync(DiskUpdate disk, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskUpdateOperation> UpdateAsync(DiskUpdate disk, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (disk == null)
             {
@@ -383,61 +356,14 @@ namespace Azure.ResourceManager.Compute
             }
 
             using var scope = _clientDiagnostics.CreateScope("Disk.Update");
-            scope.Start();
-            try
-            {
-                var operation = await StartUpdateAsync(disk, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates (patches) a disk. </summary>
-        /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="disk"/> is null. </exception>
-        public virtual Response<Disk> Update(DiskUpdate disk, CancellationToken cancellationToken = default)
-        {
-            if (disk == null)
-            {
-                throw new ArgumentNullException(nameof(disk));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Disk.Update");
-            scope.Start();
-            try
-            {
-                var operation = StartUpdate(disk, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates (patches) a disk. </summary>
-        /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="disk"/> is null. </exception>
-        public async virtual Task<DiskUpdateOperation> StartUpdateAsync(DiskUpdate disk, CancellationToken cancellationToken = default)
-        {
-            if (disk == null)
-            {
-                throw new ArgumentNullException(nameof(disk));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Disk.StartUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, disk, cancellationToken).ConfigureAwait(false);
-                return new DiskUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, disk).Request, response);
+                var operation = new DiskUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, disk).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -448,21 +374,25 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Updates (patches) a disk. </summary>
         /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="disk"/> is null. </exception>
-        public virtual DiskUpdateOperation StartUpdate(DiskUpdate disk, CancellationToken cancellationToken = default)
+        public virtual DiskUpdateOperation Update(DiskUpdate disk, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (disk == null)
             {
                 throw new ArgumentNullException(nameof(disk));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Disk.StartUpdate");
+            using var scope = _clientDiagnostics.CreateScope("Disk.Update");
             scope.Start();
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Name, disk, cancellationToken);
-                return new DiskUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, disk).Request, response);
+                var operation = new DiskUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, disk).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -473,9 +403,10 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Grants access to a disk. </summary>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public async virtual Task<Response<AccessUri>> GrantAccessAsync(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskGrantAccessOperation> GrantAccessAsync(GrantAccessData grantAccessData, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
@@ -483,61 +414,14 @@ namespace Azure.ResourceManager.Compute
             }
 
             using var scope = _clientDiagnostics.CreateScope("Disk.GrantAccess");
-            scope.Start();
-            try
-            {
-                var operation = await StartGrantAccessAsync(grantAccessData, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Grants access to a disk. </summary>
-        /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public virtual Response<AccessUri> GrantAccess(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
-        {
-            if (grantAccessData == null)
-            {
-                throw new ArgumentNullException(nameof(grantAccessData));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Disk.GrantAccess");
-            scope.Start();
-            try
-            {
-                var operation = StartGrantAccess(grantAccessData, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Grants access to a disk. </summary>
-        /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public async virtual Task<DiskGrantAccessOperation> StartGrantAccessAsync(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
-        {
-            if (grantAccessData == null)
-            {
-                throw new ArgumentNullException(nameof(grantAccessData));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Disk.StartGrantAccess");
             scope.Start();
             try
             {
                 var response = await _restClient.GrantAccessAsync(Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken).ConfigureAwait(false);
-                return new DiskGrantAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateGrantAccessRequest(Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                var operation = new DiskGrantAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateGrantAccessRequest(Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -548,21 +432,25 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Grants access to a disk. </summary>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public virtual DiskGrantAccessOperation StartGrantAccess(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public virtual DiskGrantAccessOperation GrantAccess(GrantAccessData grantAccessData, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
                 throw new ArgumentNullException(nameof(grantAccessData));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Disk.StartGrantAccess");
+            using var scope = _clientDiagnostics.CreateScope("Disk.GrantAccess");
             scope.Start();
             try
             {
                 var response = _restClient.GrantAccess(Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken);
-                return new DiskGrantAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateGrantAccessRequest(Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                var operation = new DiskGrantAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateGrantAccessRequest(Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -572,51 +460,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Revokes access to a disk. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> RevokeAccessAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<DiskRevokeAccessOperation> RevokeAccessAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Disk.RevokeAccess");
-            scope.Start();
-            try
-            {
-                var operation = await StartRevokeAccessAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Revokes access to a disk. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RevokeAccess(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Disk.RevokeAccess");
-            scope.Start();
-            try
-            {
-                var operation = StartRevokeAccess(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Revokes access to a disk. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DiskRevokeAccessOperation> StartRevokeAccessAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Disk.StartRevokeAccess");
             scope.Start();
             try
             {
                 var response = await _restClient.RevokeAccessAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new DiskRevokeAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateRevokeAccessRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new DiskRevokeAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateRevokeAccessRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -626,15 +482,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Revokes access to a disk. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DiskRevokeAccessOperation StartRevokeAccess(CancellationToken cancellationToken = default)
+        public virtual DiskRevokeAccessOperation RevokeAccess(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Disk.StartRevokeAccess");
+            using var scope = _clientDiagnostics.CreateScope("Disk.RevokeAccess");
             scope.Start();
             try
             {
                 var response = _restClient.RevokeAccess(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new DiskRevokeAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateRevokeAccessRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new DiskRevokeAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateRevokeAccessRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

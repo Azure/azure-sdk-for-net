@@ -21,7 +21,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetVirtualMachineScaleSetContainerAsync();
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
-            return await container.CreateOrUpdateAsync(vmssName, input);
+            var lro = await container.CreateOrUpdateAsync(vmssName, input);
+            return lro.Value;
         }
 
         [TestCase]
@@ -31,16 +32,6 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vmss = await CreateVirtualMachineScaleSetAsync(vmssName);
             await vmss.DeleteAsync();
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartDelete()
-        {
-            var vmssName = Recording.GenerateAssetName("testVMSS-");
-            var vmss = await CreateVirtualMachineScaleSetAsync(vmssName);
-            var deleteOp = await vmss.StartDeleteAsync();
-            await deleteOp.WaitForCompletionResponseAsync();
         }
 
         [TestCase]
@@ -63,7 +54,8 @@ namespace Azure.ResourceManager.Compute.Tests
             // Create a PPG here and add this PPG to this virtual machine using Update
             var ppgName = Recording.GenerateAssetName("testPPG-");
             var ppgData = new ProximityPlacementGroupData(DefaultLocation) { };
-            ProximityPlacementGroup ppg = await _resourceGroup.GetProximityPlacementGroups().CreateOrUpdateAsync(ppgName, ppgData);
+            var ppgLro = await _resourceGroup.GetProximityPlacementGroups().CreateOrUpdateAsync(ppgName, ppgData);
+            ProximityPlacementGroup ppg = ppgLro.Value;
             // update PPG requires the VM to be deallocated
             await vmss.DeallocateAsync();
             var update = new VirtualMachineScaleSetUpdate()
@@ -73,7 +65,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     Id = ppg.Id
                 }
             };
-            VirtualMachineScaleSet updatedVM = await vmss.UpdateAsync(update);
+            var lro = await vmss.UpdateAsync(update);
+            VirtualMachineScaleSet updatedVM = lro.Value;
 
             Assert.AreEqual(ppg.Id, updatedVM.Data.ProximityPlacementGroup.Id);
         }

@@ -34,23 +34,8 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            AvailabilitySet availabilitySet = await container.CreateOrUpdateAsync(setName, input);
-            Assert.AreEqual(setName, availabilitySet.Data.Name);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartCreateOrUpdate()
-        {
-            var container = await GetAvailabilitySetContainerAsync();
-            var setName = Recording.GenerateAssetName("testAS-");
-            var input = ResourceDataHelper.GetBasicAvailabilitySetData(DefaultLocation);
-            input.Tags.ReplaceWith(new Dictionary<string, string>
-            {
-                { "key", "value" }
-            });
-            var availabilitySetOp = await container.StartCreateOrUpdateAsync(setName, input);
-            AvailabilitySet availabilitySet = await availabilitySetOp.WaitForCompletionAsync();
+            var lro = await container.CreateOrUpdateAsync(setName, input);
+            var availabilitySet = lro.Value;
             Assert.AreEqual(setName, availabilitySet.Data.Name);
         }
 
@@ -65,7 +50,8 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            AvailabilitySet set1 = await container.CreateOrUpdateAsync(setName, input);
+            var lro = await container.CreateOrUpdateAsync(setName, input);
+            AvailabilitySet set1 = lro.Value;
             AvailabilitySet set2 = await container.GetAsync(setName);
 
             ResourceDataHelper.AssertAvailabilitySet(set1.Data, set2.Data);
@@ -82,7 +68,8 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            AvailabilitySet availabilitySet = await container.CreateOrUpdateAsync(setName, input);
+            var lro = await container.CreateOrUpdateAsync(setName, input);
+            var availabilitySet = lro.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(setName));
             Assert.IsFalse(await container.CheckIfExistsAsync(setName + "1"));
 

@@ -129,53 +129,19 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Updates the role instances in the specified update domain. </summary>
         /// <param name="parameters"> The update domain object. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> WalkUpdateDomainAsync(UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServicesUpdateDomainWalkUpdateDomainOperation> WalkUpdateDomainAsync(UpdateDomainData parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("UpdateDomain.WalkUpdateDomain");
-            scope.Start();
-            try
-            {
-                var operation = await StartWalkUpdateDomainAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates the role instances in the specified update domain. </summary>
-        /// <param name="parameters"> The update domain object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response WalkUpdateDomain(UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomain.WalkUpdateDomain");
-            scope.Start();
-            try
-            {
-                var operation = StartWalkUpdateDomain(parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates the role instances in the specified update domain. </summary>
-        /// <param name="parameters"> The update domain object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<CloudServicesUpdateDomainWalkUpdateDomainOperation> StartWalkUpdateDomainAsync(UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomain.StartWalkUpdateDomain");
             scope.Start();
             try
             {
                 var response = await _restClient.WalkUpdateDomainAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _restClient.CreateWalkUpdateDomainRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _restClient.CreateWalkUpdateDomainRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -186,15 +152,19 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Updates the role instances in the specified update domain. </summary>
         /// <param name="parameters"> The update domain object. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CloudServicesUpdateDomainWalkUpdateDomainOperation StartWalkUpdateDomain(UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
+        public virtual CloudServicesUpdateDomainWalkUpdateDomainOperation WalkUpdateDomain(UpdateDomainData parameters = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomain.StartWalkUpdateDomain");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomain.WalkUpdateDomain");
             scope.Start();
             try
             {
                 var response = _restClient.WalkUpdateDomain(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                return new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _restClient.CreateWalkUpdateDomainRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                var operation = new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _restClient.CreateWalkUpdateDomainRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

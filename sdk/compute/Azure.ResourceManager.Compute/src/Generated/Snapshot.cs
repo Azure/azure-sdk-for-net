@@ -128,51 +128,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes a snapshot. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Snapshot.Delete");
-            scope.Start();
-            try
-            {
-                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a snapshot. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.Delete");
-            scope.Start();
-            try
-            {
-                var operation = StartDelete(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a snapshot. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SnapshotDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new SnapshotDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new SnapshotDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -182,15 +150,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes a snapshot. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SnapshotDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual SnapshotDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("Snapshot.Delete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new SnapshotDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new SnapshotDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -373,9 +345,10 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Updates (patches) a snapshot. </summary>
         /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
-        public async virtual Task<Response<Snapshot>> UpdateAsync(SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotUpdateOperation> UpdateAsync(SnapshotUpdate snapshot, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (snapshot == null)
             {
@@ -383,61 +356,14 @@ namespace Azure.ResourceManager.Compute
             }
 
             using var scope = _clientDiagnostics.CreateScope("Snapshot.Update");
-            scope.Start();
-            try
-            {
-                var operation = await StartUpdateAsync(snapshot, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates (patches) a snapshot. </summary>
-        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
-        public virtual Response<Snapshot> Update(SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
-        {
-            if (snapshot == null)
-            {
-                throw new ArgumentNullException(nameof(snapshot));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.Update");
-            scope.Start();
-            try
-            {
-                var operation = StartUpdate(snapshot, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates (patches) a snapshot. </summary>
-        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
-        public async virtual Task<SnapshotUpdateOperation> StartUpdateAsync(SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
-        {
-            if (snapshot == null)
-            {
-                throw new ArgumentNullException(nameof(snapshot));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.StartUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, snapshot, cancellationToken).ConfigureAwait(false);
-                return new SnapshotUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, snapshot).Request, response);
+                var operation = new SnapshotUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, snapshot).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -448,21 +374,25 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Updates (patches) a snapshot. </summary>
         /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
-        public virtual SnapshotUpdateOperation StartUpdate(SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        public virtual SnapshotUpdateOperation Update(SnapshotUpdate snapshot, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (snapshot == null)
             {
                 throw new ArgumentNullException(nameof(snapshot));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.StartUpdate");
+            using var scope = _clientDiagnostics.CreateScope("Snapshot.Update");
             scope.Start();
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Name, snapshot, cancellationToken);
-                return new SnapshotUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, snapshot).Request, response);
+                var operation = new SnapshotUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, snapshot).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -473,9 +403,10 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Grants access to a snapshot. </summary>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public async virtual Task<Response<AccessUri>> GrantAccessAsync(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotGrantAccessOperation> GrantAccessAsync(GrantAccessData grantAccessData, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
@@ -483,61 +414,14 @@ namespace Azure.ResourceManager.Compute
             }
 
             using var scope = _clientDiagnostics.CreateScope("Snapshot.GrantAccess");
-            scope.Start();
-            try
-            {
-                var operation = await StartGrantAccessAsync(grantAccessData, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Grants access to a snapshot. </summary>
-        /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public virtual Response<AccessUri> GrantAccess(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
-        {
-            if (grantAccessData == null)
-            {
-                throw new ArgumentNullException(nameof(grantAccessData));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.GrantAccess");
-            scope.Start();
-            try
-            {
-                var operation = StartGrantAccess(grantAccessData, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Grants access to a snapshot. </summary>
-        /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public async virtual Task<SnapshotGrantAccessOperation> StartGrantAccessAsync(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
-        {
-            if (grantAccessData == null)
-            {
-                throw new ArgumentNullException(nameof(grantAccessData));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.StartGrantAccess");
             scope.Start();
             try
             {
                 var response = await _restClient.GrantAccessAsync(Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken).ConfigureAwait(false);
-                return new SnapshotGrantAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateGrantAccessRequest(Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                var operation = new SnapshotGrantAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateGrantAccessRequest(Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -548,21 +432,25 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Grants access to a snapshot. </summary>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public virtual SnapshotGrantAccessOperation StartGrantAccess(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public virtual SnapshotGrantAccessOperation GrantAccess(GrantAccessData grantAccessData, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
                 throw new ArgumentNullException(nameof(grantAccessData));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.StartGrantAccess");
+            using var scope = _clientDiagnostics.CreateScope("Snapshot.GrantAccess");
             scope.Start();
             try
             {
                 var response = _restClient.GrantAccess(Id.ResourceGroupName, Id.Name, grantAccessData, cancellationToken);
-                return new SnapshotGrantAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateGrantAccessRequest(Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                var operation = new SnapshotGrantAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateGrantAccessRequest(Id.ResourceGroupName, Id.Name, grantAccessData).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -572,51 +460,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Revokes access to a snapshot. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> RevokeAccessAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotRevokeAccessOperation> RevokeAccessAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Snapshot.RevokeAccess");
-            scope.Start();
-            try
-            {
-                var operation = await StartRevokeAccessAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Revokes access to a snapshot. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RevokeAccess(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.RevokeAccess");
-            scope.Start();
-            try
-            {
-                var operation = StartRevokeAccess(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Revokes access to a snapshot. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SnapshotRevokeAccessOperation> StartRevokeAccessAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.StartRevokeAccess");
             scope.Start();
             try
             {
                 var response = await _restClient.RevokeAccessAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new SnapshotRevokeAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateRevokeAccessRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new SnapshotRevokeAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateRevokeAccessRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -626,15 +482,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Revokes access to a snapshot. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SnapshotRevokeAccessOperation StartRevokeAccess(CancellationToken cancellationToken = default)
+        public virtual SnapshotRevokeAccessOperation RevokeAccess(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Snapshot.StartRevokeAccess");
+            using var scope = _clientDiagnostics.CreateScope("Snapshot.RevokeAccess");
             scope.Start();
             try
             {
                 var response = _restClient.RevokeAccess(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new SnapshotRevokeAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateRevokeAccessRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new SnapshotRevokeAccessOperation(_clientDiagnostics, Pipeline, _restClient.CreateRevokeAccessRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

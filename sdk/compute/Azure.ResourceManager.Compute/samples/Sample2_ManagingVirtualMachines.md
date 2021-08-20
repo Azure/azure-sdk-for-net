@@ -101,7 +101,8 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
         }
     }
 };
-VirtualMachine vm = await vmContainer.CreateOrUpdateAsync(vmName, input);
+VirtualMachineCreateOrUpdateOperation lro = await vmContainer.CreateOrUpdateAsync(vmName, input);
+VirtualMachine vm = lro.Value;
 ```
 
 ***List all virtual machines***

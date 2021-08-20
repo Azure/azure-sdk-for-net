@@ -25,7 +25,8 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            return await container.CreateOrUpdateAsync(setName, input);
+            var lro = await container.CreateOrUpdateAsync(setName, input);
+            return lro.Value;
         }
 
         [TestCase]
@@ -35,16 +36,6 @@ namespace Azure.ResourceManager.Compute.Tests
             var setName = Recording.GenerateAssetName("testAS-");
             var availabilitySet = await CreateAvailabilitySetAsync(setName);
             await availabilitySet.DeleteAsync();
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartDelete()
-        {
-            var setName = Recording.GenerateAssetName("testAS-");
-            var availabilitySet = await CreateAvailabilitySetAsync(setName);
-            var deleteOp = await availabilitySet.StartDeleteAsync();
-            await deleteOp.WaitForCompletionResponseAsync();
         }
 
         [TestCase]

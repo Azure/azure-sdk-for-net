@@ -128,51 +128,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Delete a gallery Application. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryApplicationDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryApplication.Delete");
-            scope.Start();
-            try
-            {
-                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete a gallery Application. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplication.Delete");
-            scope.Start();
-            try
-            {
-                var operation = StartDelete(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete a gallery Application. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<GalleryApplicationDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplication.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new GalleryApplicationDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new GalleryApplicationDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -182,15 +150,19 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Delete a gallery Application. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual GalleryApplicationDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual GalleryApplicationDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplication.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplication.Delete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new GalleryApplicationDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new GalleryApplicationDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -373,9 +345,10 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Update a gallery Application Definition. </summary>
         /// <param name="galleryApplication"> Parameters supplied to the update gallery Application operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplication"/> is null. </exception>
-        public async virtual Task<Response<GalleryApplication>> UpdateAsync(GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryApplicationUpdateOperation> UpdateAsync(GalleryApplicationUpdate galleryApplication, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (galleryApplication == null)
             {
@@ -383,61 +356,14 @@ namespace Azure.ResourceManager.Compute
             }
 
             using var scope = _clientDiagnostics.CreateScope("GalleryApplication.Update");
-            scope.Start();
-            try
-            {
-                var operation = await StartUpdateAsync(galleryApplication, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update a gallery Application Definition. </summary>
-        /// <param name="galleryApplication"> Parameters supplied to the update gallery Application operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplication"/> is null. </exception>
-        public virtual Response<GalleryApplication> Update(GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
-        {
-            if (galleryApplication == null)
-            {
-                throw new ArgumentNullException(nameof(galleryApplication));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplication.Update");
-            scope.Start();
-            try
-            {
-                var operation = StartUpdate(galleryApplication, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update a gallery Application Definition. </summary>
-        /// <param name="galleryApplication"> Parameters supplied to the update gallery Application operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplication"/> is null. </exception>
-        public async virtual Task<GalleryApplicationUpdateOperation> StartUpdateAsync(GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
-        {
-            if (galleryApplication == null)
-            {
-                throw new ArgumentNullException(nameof(galleryApplication));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplication.StartUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication, cancellationToken).ConfigureAwait(false);
-                return new GalleryApplicationUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response);
+                var operation = new GalleryApplicationUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -448,21 +374,25 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Update a gallery Application Definition. </summary>
         /// <param name="galleryApplication"> Parameters supplied to the update gallery Application operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplication"/> is null. </exception>
-        public virtual GalleryApplicationUpdateOperation StartUpdate(GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default)
+        public virtual GalleryApplicationUpdateOperation Update(GalleryApplicationUpdate galleryApplication, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (galleryApplication == null)
             {
                 throw new ArgumentNullException(nameof(galleryApplication));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplication.StartUpdate");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplication.Update");
             scope.Start();
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication, cancellationToken);
-                return new GalleryApplicationUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response);
+                var operation = new GalleryApplicationUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplication).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

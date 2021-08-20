@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Compute.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             var galleryName = Recording.GenerateAssetName("testGallery_");
             var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            _gallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, input);
+            var lro = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, input);
+            _gallery = lro.Value;
             return _gallery.GetGalleryImages();
         }
 
@@ -48,7 +49,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetGalleryImageContainerAsync();
             var name = Recording.GenerateAssetName("testImage_");
-            GalleryImage image = await container.CreateOrUpdateAsync(name, BasicGalleryImageData);
+            var lro = await container.CreateOrUpdateAsync(name, BasicGalleryImageData);
+            GalleryImage image = lro.Value;
             Assert.AreEqual(name, image.Data.Name);
         }
 
@@ -58,10 +60,11 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetGalleryImageContainerAsync();
             var name = Recording.GenerateAssetName("testImage_");
-            GalleryImage image = await container.CreateOrUpdateAsync(name, BasicGalleryImageData);
+            var lro = await container.CreateOrUpdateAsync(name, BasicGalleryImageData);
+            GalleryImage image1 = lro.Value;
             GalleryImage image2 = await container.GetAsync(name);
 
-            ResourceDataHelper.AssertGalleryImage(image.Data, image2.Data);
+            ResourceDataHelper.AssertGalleryImage(image1.Data, image2.Data);
         }
 
         [TestCase]
@@ -70,7 +73,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = await GetGalleryImageContainerAsync();
             var name = Recording.GenerateAssetName("testImage_");
-            GalleryImage image = await container.CreateOrUpdateAsync(name, BasicGalleryImageData);
+            var lro = await container.CreateOrUpdateAsync(name, BasicGalleryImageData);
+            GalleryImage image = lro.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(name));
             Assert.IsFalse(await container.CheckIfExistsAsync(name + "1"));
 

@@ -19,7 +19,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = (await CreateResourceGroupAsync()).GetDiskAccesses();
             var input = ResourceDataHelper.GetEmptyDiskAccess(DefaultLocation);
-            return await container.CreateOrUpdateAsync(name, input);
+            var lro = await container.CreateOrUpdateAsync(name, input);
+            return lro.Value;
         }
 
         [TestCase]
@@ -29,16 +30,6 @@ namespace Azure.ResourceManager.Compute.Tests
             var name = Recording.GenerateAssetName("testDA-");
             var access = await CreateDiskAccessAsync(name);
             await access.DeleteAsync();
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartDelete()
-        {
-            var name = Recording.GenerateAssetName("testDA-");
-            var access = await CreateDiskAccessAsync(name);
-            var deleteOp = await access.StartDeleteAsync();
-            await deleteOp.WaitForCompletionResponseAsync();
         }
 
         [TestCase]

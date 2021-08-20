@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 CreationData = new CreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 1,
             };
-            Disk disk = await diskContainer.CreateOrUpdateAsync(diskName, input);
+            DiskCreateOrUpdateOperation lro = await diskContainer.CreateOrUpdateAsync(diskName, input);
+            Disk disk = lro.Value;
             #endregion Snippet:Managing_Disks_CreateADisk
         }
 

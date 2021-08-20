@@ -30,19 +30,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetDiskContainerAsync();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
-            Disk disk = await container.CreateOrUpdateAsync(diskName, input);
-            Assert.AreEqual(diskName, disk.Data.Name);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartCreateOrUpdate()
-        {
-            var container = await GetDiskContainerAsync();
-            var diskName = Recording.GenerateAssetName("testDisk-");
-            var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
-            var diskOp = await container.StartCreateOrUpdateAsync(diskName, input);
-            Disk disk = await diskOp.WaitForCompletionAsync();
+            var lro = await container.CreateOrUpdateAsync(diskName, input);
+            Disk disk = lro.Value;
             Assert.AreEqual(diskName, disk.Data.Name);
         }
 
@@ -53,7 +42,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetDiskContainerAsync();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
-            Disk disk1 = await container.CreateOrUpdateAsync(diskName, input);
+            var lro = await container.CreateOrUpdateAsync(diskName, input);
+            Disk disk1 = lro.Value;
             Disk disk2 = await container.GetAsync(diskName);
             ResourceDataHelper.AssertDisk(disk1.Data, disk2.Data);
         }
@@ -65,7 +55,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetDiskContainerAsync();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
-            Disk disk = await container.CreateOrUpdateAsync(diskName, input);
+            var lro = await container.CreateOrUpdateAsync(diskName, input);
+            Disk disk = lro.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(diskName));
             Assert.IsFalse(await container.CheckIfExistsAsync(diskName + "1"));
 

@@ -29,19 +29,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetDedicatedHostGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testDHG-");
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            DedicatedHostGroup group = await container.CreateOrUpdateAsync(groupName, input);
-            Assert.AreEqual(groupName, group.Data.Name);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartCreateOrUpdate()
-        {
-            var container = await GetDedicatedHostGroupContainerAsync();
-            var groupName = Recording.GenerateAssetName("testDHG-");
-            var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            var groupOp = await container.StartCreateOrUpdateAsync(groupName, input);
-            DedicatedHostGroup group = await groupOp.WaitForCompletionAsync();
+            var lro = await container.CreateOrUpdateAsync(groupName, input);
+            var group = lro.Value;
             Assert.AreEqual(groupName, group.Data.Name);
         }
 
@@ -52,7 +41,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetDedicatedHostGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testDHG-");
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            DedicatedHostGroup group1 = await container.CreateOrUpdateAsync(groupName, input);
+            var lro = await container.CreateOrUpdateAsync(groupName, input);
+            DedicatedHostGroup group1 = lro.Value;
             DedicatedHostGroup group2 = await container.GetAsync(groupName);
             ResourceDataHelper.AssertGroup(group1.Data, group2.Data);
         }
@@ -64,7 +54,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetDedicatedHostGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testDHG-");
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            DedicatedHostGroup group = await container.CreateOrUpdateAsync(groupName, input);
+            var lro = await container.CreateOrUpdateAsync(groupName, input);
+            var group = lro.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(groupName));
             Assert.IsFalse(await container.CheckIfExistsAsync(groupName + "1"));
 

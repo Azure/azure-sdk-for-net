@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetGalleryContainerAsync();
             var name = Recording.GenerateAssetName("testGallery_");
             var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            Gallery gallery = await container.CreateOrUpdateAsync(name, input);
+            var lro = await container.CreateOrUpdateAsync(name, input);
+            Gallery gallery = lro.Value;
             Assert.AreEqual(name, gallery.Data.Name);
         }
 
@@ -43,10 +44,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetGalleryContainerAsync();
             var name = Recording.GenerateAssetName("testGallery_");
             var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            Gallery gallery = await container.CreateOrUpdateAsync(name, input);
+            var lro = await container.CreateOrUpdateAsync(name, input);
+            Gallery gallery1 = lro.Value;
             Gallery gallery2 = await container.GetAsync(name);
 
-            ResourceDataHelper.AssertGallery(gallery.Data, gallery2.Data);
+            ResourceDataHelper.AssertGallery(gallery1.Data, gallery2.Data);
         }
 
         [TestCase]
@@ -56,7 +58,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetGalleryContainerAsync();
             var name = Recording.GenerateAssetName("testGallery_");
             var input = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            Gallery gallery = await container.CreateOrUpdateAsync(name, input);
+            var lro = await container.CreateOrUpdateAsync(name, input);
+            Gallery gallery = lro.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(name));
             Assert.IsFalse(await container.CheckIfExistsAsync(name + "1"));
 

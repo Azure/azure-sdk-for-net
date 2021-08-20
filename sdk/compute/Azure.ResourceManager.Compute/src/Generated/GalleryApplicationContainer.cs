@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Create or update a gallery Application Definition. </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryApplication"> Parameters supplied to the create or update gallery Application operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> or <paramref name="galleryApplication"/> is null. </exception>
-        public virtual Response<GalleryApplication> CreateOrUpdate(string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
+        public virtual GalleryApplicationCreateOrUpdateOperation CreateOrUpdate(string galleryApplicationName, GalleryApplicationData galleryApplication, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (galleryApplicationName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Compute
             }
 
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(galleryApplicationName, galleryApplication, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update a gallery Application Definition. </summary>
-        /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
-        /// <param name="galleryApplication"> Parameters supplied to the create or update gallery Application operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> or <paramref name="galleryApplication"/> is null. </exception>
-        public async virtual Task<Response<GalleryApplication>> CreateOrUpdateAsync(string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
-        {
-            if (galleryApplicationName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryApplicationName));
-            }
-            if (galleryApplication == null)
-            {
-                throw new ArgumentNullException(nameof(galleryApplication));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(galleryApplicationName, galleryApplication, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update a gallery Application Definition. </summary>
-        /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
-        /// <param name="galleryApplication"> Parameters supplied to the create or update gallery Application operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> or <paramref name="galleryApplication"/> is null. </exception>
-        public virtual GalleryApplicationCreateOrUpdateOperation StartCreateOrUpdate(string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
-        {
-            if (galleryApplicationName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryApplicationName));
-            }
-            if (galleryApplication == null)
-            {
-                throw new ArgumentNullException(nameof(galleryApplication));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication, cancellationToken);
-                return new GalleryApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response);
+                var operation = new GalleryApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Create or update a gallery Application Definition. </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="galleryApplication"> Parameters supplied to the create or update gallery Application operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> or <paramref name="galleryApplication"/> is null. </exception>
-        public async virtual Task<GalleryApplicationCreateOrUpdateOperation> StartCreateOrUpdateAsync(string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryApplicationCreateOrUpdateOperation> CreateOrUpdateAsync(string galleryApplicationName, GalleryApplicationData galleryApplication, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (galleryApplicationName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryApplication));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication, cancellationToken).ConfigureAwait(false);
-                return new GalleryApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response);
+                var operation = new GalleryApplicationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, galleryApplicationName, galleryApplication).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {

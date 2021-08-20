@@ -67,7 +67,8 @@ ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, new 
 AvailabilitySetContainer availabilitySetContainer = resourceGroup.GetAvailabilitySets();
 string availabilitySetName = "myAvailabilitySet";
 AvailabilitySetData input = new AvailabilitySetData(location);
-AvailabilitySet availabilitySet = await availabilitySetContainer.CreateOrUpdateAsync(availabilitySetName, input);
+AvailabilitySetCreateOrUpdateOperation lro = await availabilitySetContainer.CreateOrUpdateAsync(availabilitySetName, input);
+AvailabilitySet availabilitySet = lro.Value;
 ```
 
 ### Get all availability set in a resource group

@@ -54,7 +54,8 @@ var input = new DiskData(resourceGroup.Data.Location)
     CreationData = new CreationData(DiskCreateOption.Empty),
     DiskSizeGB = 1,
 };
-Disk disk = await diskContainer.CreateOrUpdateAsync(diskName, input);
+DiskCreateOrUpdateOperation lro = await diskContainer.CreateOrUpdateAsync(diskName, input);
+Disk disk = lro.Value;
 ```
 
 ***List all disks***
