@@ -68,12 +68,17 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public SendEventBatchSucceededEventArgs(IReadOnlyList<EventData> eventBatch,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                 string partitionId,
                                                 CancellationToken cancellationToken)
 =======
                                               string partitionId,
                                               CancellationToken cancellationToken)
 >>>>>>> dcfbe04dad (responding to feedback)
+=======
+                                                string partitionId,
+                                                CancellationToken cancellationToken)
+>>>>>>> 8d26e1c3bb (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/SendEventBatchSucceededEventArgs.cs)
         {
             EventBatch = eventBatch;
             PartitionId = partitionId;
