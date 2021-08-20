@@ -140,7 +140,7 @@ namespace Azure.Storage.Blobs
                 // Capture the etag from the first segment and construct
                 // conditions to ensure the blob doesn't change while we're
                 // downloading the remaining segments
-                ETag etag = (ETag)initialResponse.GetRawResponse().Headers.ETag;
+                ETag etag = initialResponse.Value.Details.ETag;
                 BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
                 // Create a queue of tasks that will each download one segment
@@ -276,7 +276,7 @@ namespace Azure.Storage.Blobs
                 // Capture the etag from the first segment and construct
                 // conditions to ensure the blob doesn't change while we're
                 // downloading the remaining segments
-                ETag etag = (ETag)initialResponse.GetRawResponse().Headers.ETag;
+                ETag etag = initialResponse.Value.Details.ETag;
                 BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
                 // Download each of the remaining ranges in the blob

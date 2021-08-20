@@ -3605,7 +3605,7 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    etag = (ETag)createResponse.GetRawResponse().Headers.ETag;
+                    etag = createResponse.Value.ETag;
                 }
                 else
                 {

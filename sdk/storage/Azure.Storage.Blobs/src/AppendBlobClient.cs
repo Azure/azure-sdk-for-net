@@ -1893,7 +1893,7 @@ namespace Azure.Storage.Blobs.Specialized
                         .ConfigureAwait(false);
 
                     position = 0;
-                    etag = (ETag) createResponse.GetRawResponse().Headers.ETag;
+                    etag = createResponse.Value.ETag;
                 }
                 else
                 {
@@ -1906,7 +1906,7 @@ namespace Azure.Storage.Blobs.Specialized
                             .ConfigureAwait(false);
 
                         position = propertiesResponse.Value.ContentLength;
-                        etag = (ETag)propertiesResponse.GetRawResponse().Headers.ETag;
+                        etag = propertiesResponse.Value.ETag;
                     }
                     catch (RequestFailedException ex)
                     when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
@@ -1923,7 +1923,7 @@ namespace Azure.Storage.Blobs.Specialized
                             .ConfigureAwait(false);
 
                         position = 0;
-                        etag = (ETag)createResponse.GetRawResponse().Headers.ETag;
+                        etag = createResponse.Value.ETag;
                     }
                 }
 

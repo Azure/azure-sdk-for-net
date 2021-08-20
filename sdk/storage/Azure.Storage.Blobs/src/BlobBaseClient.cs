@@ -1138,7 +1138,7 @@ namespace Azure.Storage.Blobs.Specialized
                         return response.GetRawResponse().AsNoBodyResponse<BlobDownloadStreamingResult>();
                     }
 
-                    ETag etag = (ETag)response.GetRawResponse().Headers.ETag;
+                    ETag etag = response.Value.Details.ETag;
                     BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
                     // Wrap the response Content in a RetriableStream so we
@@ -2306,7 +2306,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // This also makes sure that we fail fast if file doesn't exist.
                     Response<BlobProperties> blobProperties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
 
-                    ETag etag = (ETag) blobProperties.GetRawResponse().Headers.ETag;
+                    ETag etag = blobProperties.Value.ETag;
                     var readConditions = conditions;
                     if (!allowModifications)
                     {

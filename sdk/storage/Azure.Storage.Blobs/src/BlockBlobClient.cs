@@ -2631,7 +2631,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                 BlobRequestConditions conditions = new BlobRequestConditions
                 {
-                    IfMatch = (ETag) response.GetRawResponse().Headers.ETag,
+                    IfMatch = response.Value.ETag,
                     LeaseId = options?.OpenConditions?.LeaseId
                 };
 
