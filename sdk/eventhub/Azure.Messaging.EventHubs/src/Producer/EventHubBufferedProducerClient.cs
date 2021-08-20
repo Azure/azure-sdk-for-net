@@ -426,10 +426,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   No new or extended information is presented.
         /// </remarks>
         ///
-        public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
-        {
-            return await _producer.GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
-        }
+        public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default) =>
+            await _producer.GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
