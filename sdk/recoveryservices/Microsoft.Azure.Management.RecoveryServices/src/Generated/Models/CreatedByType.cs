@@ -12,13 +12,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
 
     /// <summary>
-    /// Defines values for ResourceIdentityType.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class ResourceIdentityType
+    public static class CreatedByType
     {
-        public const string SystemAssigned = "SystemAssigned";
-        public const string None = "None";
-        public const string UserAssigned = "UserAssigned";
-        public const string SystemAssignedUserAssigned = "SystemAssigned, UserAssigned";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }
