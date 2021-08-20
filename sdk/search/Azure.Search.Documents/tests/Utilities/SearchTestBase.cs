@@ -71,11 +71,13 @@ namespace Azure.Search.Documents.Tests
         {
             options ??= new SearchClientOptions(ServiceVersion);
             options.Diagnostics.IsLoggingEnabled = true;
+            options.Diagnostics.IsLoggingContentEnabled = true;
             options.Retry.Mode = RetryMode.Exponential;
             options.Retry.MaxRetries = 10;
             options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1);
             options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 600);
             options.Transport = new HttpClientTransport(s_httpClient);
+
             return InstrumentClientOptions(options);
         }
 
