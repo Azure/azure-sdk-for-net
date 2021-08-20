@@ -200,6 +200,7 @@ namespace Azure.Data.Tables
 
             TableConnectionString connString = TableConnectionString.Parse(connectionString);
             _accountName = connString._accountName;
+            _endpoint = connString.TableStorageUri.PrimaryUri;
 
             options ??= TableClientOptions.DefaultOptions;
             var endpointString = connString.TableStorageUri.PrimaryUri.AbsoluteUri;
