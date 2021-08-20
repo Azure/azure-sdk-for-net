@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Management
     /// <summary>
     /// A class representing collection of ManagementGroupContainer and their operations over a ManagementGroup.
     /// </summary>
-    public class ManagementGroupContainer : ResourceContainer
+    public class ManagementGroupContainer : ArmContainer
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
+        private ClientDiagnostics _clientDiagnostics;
         private ManagementGroupsRestOperations _restClient;
 
         /// <summary>
@@ -32,20 +32,22 @@ namespace Azure.ResourceManager.Management
         /// Initializes a new instance of the <see cref="ManagementGroupContainer"/> class.
         /// </summary>
         /// <param name="tenant"> The parent tenant. </param>
-        internal ManagementGroupContainer(TenantOperations tenant)
+        internal ManagementGroupContainer(Tenant tenant)
             : base(tenant)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
         }
 
         /// <summary>
         /// Gets the parent resource of this resource.
         /// </summary>
-        protected new TenantOperations Parent { get {return base.Parent as TenantOperations;} }
+        protected new Tenant Parent { get {return base.Parent as Tenant;} }
 
         /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => TenantOperations.ResourceType;
+        protected override ResourceType ValidResourceType => Tenant.ResourceType;
+
+        private ManagementGroupsRestOperations RestClient => _restClient ??= new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+
+        private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
         /// <summary>
         /// List management groups for the authenticated user.
@@ -58,16 +60,16 @@ namespace Azure.ResourceManager.Management
         /// .
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ManagementGroupInfo> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagementGroup> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagementGroupInfo> FirstPageFunc(int? pageSizeHint)
+            Page<ManagementGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(cacheControl, skiptoken, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroupInfo(this, d)), response.Value.NextLink, response.GetRawResponse());
+                    var response = RestClient.List(cacheControl, skiptoken, cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroup(this, d)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -75,14 +77,14 @@ namespace Azure.ResourceManager.Management
                     throw;
                 }
             }
-            Page<ManagementGroupInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagementGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, cacheControl, skiptoken, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroupInfo(this, d)), response.Value.NextLink, response.GetRawResponse());
+                    var response = RestClient.ListNextPage(nextLink, cacheControl, skiptoken, cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroup(this, d)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -104,16 +106,16 @@ namespace Azure.ResourceManager.Management
         /// .
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ManagementGroupInfo> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagementGroup> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagementGroupInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagementGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(cacheControl, skiptoken, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroupInfo(this, d)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await RestClient.ListAsync(cacheControl, skiptoken, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroup(this, d)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -121,14 +123,14 @@ namespace Azure.ResourceManager.Management
                     throw;
                 }
             }
-            async Task<Page<ManagementGroupInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagementGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetAll");
+                using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, cacheControl, skiptoken, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroupInfo(this, d)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await RestClient.ListNextPageAsync(nextLink, cacheControl, skiptoken, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(d => new ManagementGroup(this, d)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -151,11 +153,11 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementGroup> Get(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.Get");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.Get");
             scope.Start();
             try
             {
-                var response = _restClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken);
+                var response = RestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken);
                 if (response.Value == null)
                     throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
 
@@ -180,11 +182,11 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagementGroup>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.Get");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.Get");
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
@@ -209,11 +211,11 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementGroup> GetIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetIfExists");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetIfExists");
             scope.Start();
             try
             {
-                var response = _restClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken);
+                var response = RestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken);
                 return response.Value == null
                     ? Response.FromValue<ManagementGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
@@ -237,11 +239,11 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagementGroup>> GetIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetIfExists");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
                 return response.Value == null
                     ? Response.FromValue<ManagementGroup>(null, response.GetRawResponse())
                     : Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
@@ -265,7 +267,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> CheckIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CheckIfExists");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -291,7 +293,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<bool>> CheckIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CheckIfExists");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -311,26 +313,26 @@ namespace Azure.ResourceManager.Management
         /// .
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="createManagementGroupRequest"> Management group creation parameters. </param>
+        /// <param name="createManagementGroupOptions"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public virtual Response<ManagementGroup> CreateOrUpdate(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupOptions"/> is null. </exception>
+        public virtual Response<ManagementGroup> CreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
                 throw new ArgumentNullException(nameof(groupId));
             }
-            if (createManagementGroupRequest == null)
+            if (createManagementGroupOptions == null)
             {
-                throw new ArgumentNullException(nameof(createManagementGroupRequest));
+                throw new ArgumentNullException(nameof(createManagementGroupOptions));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                var operation = StartCreateOrUpdate(groupId, createManagementGroupRequest, cacheControl, cancellationToken);
+                var operation = StartCreateOrUpdate(groupId, createManagementGroupOptions, cacheControl, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -346,26 +348,26 @@ namespace Azure.ResourceManager.Management
         /// .
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="createManagementGroupRequest"> Management group creation parameters. </param>
+        /// <param name="createManagementGroupOptions"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroup>> CreateOrUpdateAsync(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupOptions"/> is null. </exception>
+        public async virtual Task<Response<ManagementGroup>> CreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
                 throw new ArgumentNullException(nameof(groupId));
             }
-            if (createManagementGroupRequest == null)
+            if (createManagementGroupOptions == null)
             {
-                throw new ArgumentNullException(nameof(createManagementGroupRequest));
+                throw new ArgumentNullException(nameof(createManagementGroupOptions));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                var operation = await StartCreateOrUpdateAsync(groupId, createManagementGroupRequest, cacheControl, cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(groupId, createManagementGroupOptions, cacheControl, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -381,27 +383,27 @@ namespace Azure.ResourceManager.Management
         /// .
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="createManagementGroupRequest"> Management group creation parameters. </param>
+        /// <param name="createManagementGroupOptions"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public virtual ManagementGroupsCreateOrUpdateOperation StartCreateOrUpdate(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupOptions"/> is null. </exception>
+        public virtual ManagementGroupCreateOrUpdateOperation StartCreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
                 throw new ArgumentNullException(nameof(groupId));
             }
-            if (createManagementGroupRequest == null)
+            if (createManagementGroupOptions == null)
             {
-                throw new ArgumentNullException(nameof(createManagementGroupRequest));
+                throw new ArgumentNullException(nameof(createManagementGroupOptions));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.StartCreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                var originalResponse = _restClient.CreateOrUpdate(groupId, createManagementGroupRequest, cacheControl, cancellationToken);
-                return new ManagementGroupsCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, originalResponse);
+                var originalResponse = RestClient.CreateOrUpdate(groupId, createManagementGroupOptions, cacheControl, cancellationToken);
+                return new ManagementGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupOptions, cacheControl).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -416,27 +418,27 @@ namespace Azure.ResourceManager.Management
         /// .
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="createManagementGroupRequest"> Management group creation parameters. </param>
+        /// <param name="createManagementGroupOptions"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public async virtual Task<ManagementGroupsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupOptions"/> is null. </exception>
+        public async virtual Task<ManagementGroupCreateOrUpdateOperation> StartCreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
                 throw new ArgumentNullException(nameof(groupId));
             }
-            if (createManagementGroupRequest == null)
+            if (createManagementGroupOptions == null)
             {
-                throw new ArgumentNullException(nameof(createManagementGroupRequest));
+                throw new ArgumentNullException(nameof(createManagementGroupOptions));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.StartCreateOrUpdate");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                var originalResponse = await _restClient.CreateOrUpdateAsync(groupId, createManagementGroupRequest, cacheControl, cancellationToken).ConfigureAwait(false);
-                return new ManagementGroupsCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, originalResponse);
+                var originalResponse = await RestClient.CreateOrUpdateAsync(groupId, createManagementGroupOptions, cacheControl, cancellationToken).ConfigureAwait(false);
+                return new ManagementGroupCreateOrUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupOptions, cacheControl).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -446,15 +448,15 @@ namespace Azure.ResourceManager.Management
         }
 
         /// <summary> Checks if the specified management group name is valid and unique. </summary>
-        /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
+        /// <param name="checkNameAvailabilityOptions"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityOptions checkNameAvailabilityOptions, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CheckNameAvailability");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CheckNameAvailability");
             scope.Start();
             try
             {
-                return _restClient.CheckNameAvailability(checkNameAvailabilityRequest, cancellationToken);
+                return RestClient.CheckNameAvailability(checkNameAvailabilityOptions, cancellationToken);
             }
             catch (Exception e)
             {
@@ -464,15 +466,15 @@ namespace Azure.ResourceManager.Management
         }
 
         /// <summary> Checks if the specified management group name is valid and unique. </summary>
-        /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
+        /// <param name="checkNameAvailabilityOptions"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityOptions checkNameAvailabilityOptions, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CheckNameAvailability");
+            using var scope = Diagnostics.CreateScope("ManagementGroupContainer.CheckNameAvailability");
             scope.Start();
             try
             {
-                return await _restClient.CheckNameAvailabilityAsync(checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CheckNameAvailabilityAsync(checkNameAvailabilityOptions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {

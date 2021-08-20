@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -17,7 +18,9 @@ namespace Azure.Data.Tables.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [ClientTestFixture(serviceVersions: default, additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD })]
+    [ClientTestFixture(
+        serviceVersions: default,
+        additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
         public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
@@ -55,14 +58,14 @@ namespace Azure.Data.Tables.Tests
 
         private readonly Dictionary<string, string> _cosmosIgnoreTests = new()
         {
-            {"GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints."},
-            {"GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints."},
-            {"GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints."},
-            {"ValidateSasCredentialsWithRowKeyAndPartitionKeyRanges", "Shared access signature with PartitionKey or RowKey are not supported"},
-            {"ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported"},
-            {"ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported"},
-            {"ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported"},
-            {"CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405"}
+            { "GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints." },
+            { "GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints." },
+            { "GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints." },
+            { "ValidateSasCredentialsWithRowKeyAndPartitionKeyRanges", "Shared access signature with PartitionKey or RowKey are not supported" },
+            { "ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported" },
+            { "ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported" },
+            { "ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported" },
+            { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" }
         };
 
         private readonly Dictionary<string, string> _AadIgnoreTests = new()
@@ -102,7 +105,7 @@ namespace Azure.Data.Tables.Tests
                 _ => TestEnvironment.PrimaryStorageAccountKey,
             };
 
-            ConnectionString =_endpointType switch
+            ConnectionString = _endpointType switch
             {
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosConnectionString,
                 _ => TestEnvironment.StorageConnectionString,
@@ -110,14 +113,16 @@ namespace Azure.Data.Tables.Tests
             var options = InstrumentClientOptions(new TableClientOptions());
             service = _endpointType switch
             {
-                TableEndpointType.StorageAAD => InstrumentClient(new TableServiceClient(
-                    new Uri(ServiceUri),
-                    TestEnvironment.Credential,
-                    options)),
-                _ =>InstrumentClient(new TableServiceClient(
-                    new Uri(ServiceUri),
-                    new TableSharedKeyCredential(AccountName, AccountKey),
-                    options))
+                TableEndpointType.StorageAAD => InstrumentClient(
+                    new TableServiceClient(
+                        new Uri(ServiceUri),
+                        TestEnvironment.Credential,
+                        options)),
+                _ => InstrumentClient(
+                    new TableServiceClient(
+                        new Uri(ServiceUri),
+                        new TableSharedKeyCredential(AccountName, AccountKey),
+                        options))
             };
 
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
@@ -150,23 +155,26 @@ namespace Azure.Data.Tables.Tests
         internal static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
-            return Enumerable.Range(1, count).Select(n =>
-            {
-                string number = n.ToString();
-                return new TableEntity
+            return Enumerable.Range(1, count)
+                .Select(
+                    n =>
                     {
-                        {"PartitionKey", partitionKeyValue},
-                        {"RowKey", n.ToString("D2")},
-                        {StringTypePropertyName, $"This is table entity number {n:D2}"},
-                        {DateTypePropertyName, new DateTime(2020, 1,1,1,1,0,DateTimeKind.Utc).AddMinutes(n) },
-                        {GuidTypePropertyName, new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}")},
-                        {BinaryTypePropertyName, new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
-                        {Int64TypePropertyName, long.Parse(number)},
-                        {DoubleTypePropertyName, double.Parse($"{number}.0")},
-                        {DoubleDecimalTypePropertyName, n + 0.5},
-                        {IntTypePropertyName, n},
-                    };
-            }).ToList();
+                        string number = n.ToString();
+                        return new TableEntity
+                        {
+                            { "PartitionKey", partitionKeyValue },
+                            { "RowKey", n.ToString("D2") },
+                            { StringTypePropertyName, $"This is table entity number {n:D2}" },
+                            { DateTypePropertyName, new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n) },
+                            { GuidTypePropertyName, new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}") },
+                            { BinaryTypePropertyName, new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 } },
+                            { Int64TypePropertyName, long.Parse(number) },
+                            { DoubleTypePropertyName, double.Parse($"{number}.0") },
+                            { DoubleDecimalTypePropertyName, n + 0.5 },
+                            { IntTypePropertyName, n },
+                        };
+                    })
+                .ToList();
         }
 
         /// <summary>
@@ -178,23 +186,27 @@ namespace Azure.Data.Tables.Tests
         internal static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
-            return Enumerable.Range(1, count).Select(n =>
-            {
-                string number = n.ToString();
-                return new TableEntity(new TableEntity
+            return Enumerable.Range(1, count)
+                .Select(
+                    n =>
                     {
-                        {"PartitionKey", partitionKeyValue},
-                        {"RowKey", n.ToString("D2")},
-                        {StringTypePropertyName, $"This is table entity number {n:D2}"},
-                        {DateTypePropertyName, new DateTime(2020, 1,1,1,1,0,DateTimeKind.Utc).AddMinutes(n) },
-                        {GuidTypePropertyName, new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}")},
-                        {BinaryTypePropertyName, new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
-                        {Int64TypePropertyName, long.Parse(number)},
-                        {DoubleTypePropertyName, (double)n},
-                        {DoubleDecimalTypePropertyName, n + 0.5},
-                        {IntTypePropertyName, n},
-                    });
-            }).ToList();
+                        string number = n.ToString();
+                        return new TableEntity(
+                            new TableEntity
+                            {
+                                { "PartitionKey", partitionKeyValue },
+                                { "RowKey", n.ToString("D2") },
+                                { StringTypePropertyName, $"This is table entity number {n:D2}" },
+                                { DateTypePropertyName, new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n) },
+                                { GuidTypePropertyName, new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}") },
+                                { BinaryTypePropertyName, new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 } },
+                                { Int64TypePropertyName, long.Parse(number) },
+                                { DoubleTypePropertyName, (double)n },
+                                { DoubleDecimalTypePropertyName, n + 0.5 },
+                                { IntTypePropertyName, n },
+                            });
+                    })
+                .ToList();
         }
 
         /// <summary>
@@ -206,23 +218,26 @@ namespace Azure.Data.Tables.Tests
         internal static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
-            return Enumerable.Range(1, count).Select(n =>
-            {
-                string number = n.ToString();
-                return new TestEntity
-                {
-                    PartitionKey = partitionKeyValue,
-                    RowKey = n.ToString("D2"),
-                    StringTypeProperty = $"This is table entity number {n:D2}",
-                    DatetimeTypeProperty = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
-                    DatetimeOffsetTypeProperty = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
-                    GuidTypeProperty = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
-                    BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
-                    Int64TypeProperty = long.Parse(number),
-                    DoubleTypeProperty = double.Parse($"{number}.0"),
-                    IntTypeProperty = n,
-                };
-            }).ToList();
+            return Enumerable.Range(1, count)
+                .Select(
+                    n =>
+                    {
+                        string number = n.ToString();
+                        return new TestEntity
+                        {
+                            PartitionKey = partitionKeyValue,
+                            RowKey = n.ToString("D2"),
+                            StringTypeProperty = $"This is table entity number {n:D2}",
+                            DatetimeTypeProperty = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
+                            DatetimeOffsetTypeProperty = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
+                            GuidTypeProperty = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
+                            BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
+                            Int64TypeProperty = long.Parse(number),
+                            DoubleTypeProperty = double.Parse($"{number}.0"),
+                            IntTypeProperty = n,
+                        };
+                    })
+                .ToList();
         }
 
         /// <summary>
@@ -234,36 +249,39 @@ namespace Azure.Data.Tables.Tests
         internal static List<ComplexEntity> CreateComplexTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
-            return Enumerable.Range(1, count).Select(n =>
-            {
-                return new ComplexEntity(partitionKeyValue, string.Format("{0:0000}", n))
-                {
-                    String = string.Format("{0:0000}", n),
-                    Binary = new BinaryData(new byte[] { 0x01, 0x02, (byte)n }),
-                    BinaryPrimitive = new byte[] { 0x01, 0x02, (byte)n },
-                    Bool = n % 2 == 0,
-                    BoolPrimitive = n % 2 == 0,
-                    DateTime = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
-                    DateTimeOffset = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
-                    DateTimeAsString = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n).ToString("o"),
-                    DateTimeN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
-                    DateTimeOffsetN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
-                    Double = n + 0.5,
-                    DoubleInteger = double.Parse($"{n.ToString()}.0"),
-                    DoubleN = n + 0.5,
-                    DoublePrimitive = n + 0.5,
-                    DoublePrimitiveN = n + 0.5,
-                    Guid = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
-                    GuidN = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
-                    Int32 = n,
-                    Int32N = n,
-                    IntegerPrimitive = n,
-                    IntegerPrimitiveN = n,
-                    Int64 = (long)int.MaxValue + n,
-                    LongPrimitive = (long)int.MaxValue + n,
-                    LongPrimitiveN = (long)int.MaxValue + n,
-                };
-            }).ToList();
+            return Enumerable.Range(1, count)
+                .Select(
+                    n =>
+                    {
+                        return new ComplexEntity(partitionKeyValue, string.Format("{0:0000}", n))
+                        {
+                            String = string.Format("{0:0000}", n),
+                            Binary = new BinaryData(new byte[] { 0x01, 0x02, (byte)n }),
+                            BinaryPrimitive = new byte[] { 0x01, 0x02, (byte)n },
+                            Bool = n % 2 == 0,
+                            BoolPrimitive = n % 2 == 0,
+                            DateTime = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
+                            DateTimeOffset = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
+                            DateTimeAsString = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n).ToString("o"),
+                            DateTimeN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
+                            DateTimeOffsetN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
+                            Double = n + 0.5,
+                            DoubleInteger = double.Parse($"{n.ToString()}.0"),
+                            DoubleN = n + 0.5,
+                            DoublePrimitive = n + 0.5,
+                            DoublePrimitiveN = n + 0.5,
+                            Guid = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
+                            GuidN = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
+                            Int32 = n,
+                            Int32N = n,
+                            IntegerPrimitive = n,
+                            IntegerPrimitiveN = n,
+                            Int64 = (long)int.MaxValue + n,
+                            LongPrimitive = (long)int.MaxValue + n,
+                            LongPrimitiveN = (long)int.MaxValue + n,
+                        };
+                    })
+                .ToList();
         }
 
         // This is needed to prevent Live nightly test runs from failing due to 429 response failures.
@@ -376,8 +394,7 @@ namespace Azure.Data.Tables.Tests
             public const int NumberOfNonNullProperties = 28;
 
             public ComplexEntity()
-            {
-            }
+            { }
 
             public ComplexEntity(string pk, string rk)
             {
@@ -386,6 +403,7 @@ namespace Azure.Data.Tables.Tests
             }
 
             private DateTimeOffset? dateTimeOffsetNull = null;
+
             public DateTimeOffset? DateTimeOffsetNull
             {
                 get { return dateTimeOffsetNull; }
@@ -393,6 +411,7 @@ namespace Azure.Data.Tables.Tests
             }
 
             private DateTimeOffset? dateTimeOffsetN = DateTimeOffset.Now;
+
             public DateTimeOffset? DateTimeOffsetN
             {
                 get { return dateTimeOffsetN; }
@@ -400,6 +419,7 @@ namespace Azure.Data.Tables.Tests
             }
 
             private DateTimeOffset dateTimeOffset = DateTimeOffset.Now;
+
             public DateTimeOffset DateTimeOffset
             {
                 get { return dateTimeOffset; }
@@ -447,6 +467,7 @@ namespace Azure.Data.Tables.Tests
             public Double DoubleInteger { get; set; } = (Double)1234;
 
             private Guid? guidNull = null;
+
             public Guid? GuidNull
             {
                 get { return guidNull; }
@@ -454,6 +475,7 @@ namespace Azure.Data.Tables.Tests
             }
 
             private Guid? guidN = Guid.NewGuid();
+
             public Guid? GuidN
             {
                 get { return guidN; }
@@ -461,6 +483,7 @@ namespace Azure.Data.Tables.Tests
             }
 
             private Guid guid = Guid.NewGuid();
+
             public Guid Guid
             {
                 get { return guid; }
@@ -564,6 +587,25 @@ namespace Azure.Data.Tables.Tests
         {
             One,
             Two
+        }
+
+        public class CustomizeSerializationEntity : ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            public int CurrentCount { get; set; }
+            public int LastCount { get; set; }
+
+            [IgnoreDataMember]
+            public int CountDiff
+            {
+                get => CurrentCount - LastCount;
+            }
+
+            [DataMember(Name = "renamed_property")]
+            public string NamedProperty { get; set; }
         }
     }
 }

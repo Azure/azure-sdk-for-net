@@ -50,6 +50,15 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
+        {
+            var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled});
+
+            Assert.NotNull(credential.Client);
+            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.LogPII);
+        }
+
+        [Test]
         public async Task InteractiveBrowserAcquireTokenSilentException()
         {
             string expInnerExMessage = Guid.NewGuid().ToString();

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -68,6 +69,9 @@ namespace Azure.ResourceManager.Resources
 
         internal static GenericResourceData DeserializeGenericResource(JsonElement element)
         {
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> changedTime = default;
+            Optional<string> provisioningState = default;
             Optional<Plan> plan = default;
             Optional<object> properties = default;
             Optional<string> kind = default;
@@ -81,6 +85,31 @@ namespace Azure.ResourceManager.Resources
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("createdTime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createdTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("changedTime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    changedTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"))
+                {
+                    provisioningState = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("plan"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -167,7 +196,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new GenericResourceData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), plan.Value, properties.Value, kind.Value, managedBy.Value, sku.Value, identity.Value);
+            return new GenericResourceData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), plan.Value, properties.Value, kind.Value, managedBy.Value, sku.Value, identity.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
         }
     }
 }
