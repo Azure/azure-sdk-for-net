@@ -869,9 +869,13 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
 <<<<<<< HEAD
+<<<<<<< HEAD
         ///
 =======
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+        ///
+>>>>>>> b80c500990 (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
         public virtual Task FlushAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
