@@ -48,8 +48,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="cancellationToken">A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public SendEventBatchSucceededEventArgs(IReadOnlyList<EventData> eventBatch,
-                                              string partitionId,
-                                              CancellationToken cancellationToken)
+                                                string partitionId,
+                                                CancellationToken cancellationToken)
         {
             EventBatch = eventBatch;
             PartitionId = partitionId;
