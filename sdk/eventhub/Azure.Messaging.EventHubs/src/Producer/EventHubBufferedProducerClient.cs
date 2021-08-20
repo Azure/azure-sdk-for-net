@@ -526,10 +526,14 @@ namespace Azure.Messaging.EventHubs.Producer
         private EventHubBufferedProducerClient(EventHubBufferedProducerClientOptions options)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             options = options?.Clone() ?? DefaultOptions;
 =======
             options ??= DefaultOptions;
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+            options = options?.Clone() ?? DefaultOptions;
+>>>>>>> bc26ea528b (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
             throw new NotImplementedException();
         }
 
