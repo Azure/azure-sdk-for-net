@@ -311,10 +311,14 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 Identifier = Identifier,
 <<<<<<< HEAD
+<<<<<<< HEAD
                 EnableIdempotentPartitions = EnableIdempotentRetries,
 =======
                 EnableIdempotentPartitions = EnableIdempotentPartitions,
 >>>>>>> dcfbe04dad (responding to feedback)
+=======
+                EnableIdempotentPartitions = EnableIdempotentRetries,
+>>>>>>> 233f6fedbb (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClientOptions.cs)
                 ConnectionOptions = ConnectionOptions,
                 RetryOptions = RetryOptions
             };
