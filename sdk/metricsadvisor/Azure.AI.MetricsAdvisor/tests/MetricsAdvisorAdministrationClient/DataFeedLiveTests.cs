@@ -17,19 +17,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private const string DataSourceAccount = "account";
         private const string DataSourceAppId = "appId";
         private const string DataSourceClientId = "clientId";
-        private const string DataSourceClientSecret = "clientSecret";
         private const string DataSourceCloud = "cloud";
         private const string DataSourceCollectionId = "collectId";
         private const string DataSourceCommand = "command";
-        private const string DataSourceConnectionString = "connectionStr";
         private const string DataSourceConsumerGroup = "consumerGroup";
         private const string DataSourceContainer = "container";
         private const string DataSourceDatabase = "database";
         private const string DataSourceDirectory = "dir";
         private const string DataSourceFile = "file";
         private const string DataSourceFileSystem = "fileSystem";
-        private const string DataSourceKey = "key";
-        private const string DataSourcePassword = "pass";
         private const string DataSourceQuery = "query";
         private const string DataSourceTable = "table";
         private const string DataSourceTemplate = "template";
@@ -314,6 +310,27 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdDataSource.Authentication, Is.EqualTo(authentication));
             Assert.That(createdDataSource.DataSourceCredentialId, Is.EqualTo(credentialId));
+        }
+
+        [RecordedTest]
+        public async Task UpdateWithTokenCredential()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential: true);
+
+            string dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            string description = "This data feed was created to test the .NET client.";
+            DataFeedSource dataSource = CreateDataFeedSource(nameof(DataFeedSourceKind.AzureBlob));
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = disposableDataFeed.DataFeed;
+
+            dataFeedToUpdate.Description = description;
+
+            DataFeed updatedDataFeed = await adminClient.UpdateDataFeedAsync(dataFeedToUpdate);
+
+            Assert.That(updatedDataFeed.Description, Is.EqualTo(description));
         }
 
         [RecordedTest]
