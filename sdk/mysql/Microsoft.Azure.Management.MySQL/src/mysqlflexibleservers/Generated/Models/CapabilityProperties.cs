@@ -34,10 +34,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// <param name="zone">zone name</param>
         /// <param name="supportedFlexibleServerEditions">A list of supported
         /// flexible server editions.</param>
-        public CapabilityProperties(string zone = default(string), IList<ServerEditionCapability> supportedFlexibleServerEditions = default(IList<ServerEditionCapability>))
+        /// <param name="status">The status of the capability.</param>
+        public CapabilityProperties(string zone = default(string), IList<ServerEditionCapability> supportedFlexibleServerEditions = default(IList<ServerEditionCapability>), string status = default(string))
         {
             Zone = zone;
             SupportedFlexibleServerEditions = supportedFlexibleServerEditions;
+            Status = status;
             CustomInit();
         }
 
@@ -57,6 +59,12 @@ namespace Microsoft.Azure.Management.MySQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "supportedFlexibleServerEditions")]
         public IList<ServerEditionCapability> SupportedFlexibleServerEditions { get; private set; }
+
+        /// <summary>
+        /// Gets the status of the capability.
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
 
     }
 }
