@@ -806,10 +806,14 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="partitionId">The identifier of the partition that the batch of events was published to.</param>
         ///
 <<<<<<< HEAD
+<<<<<<< HEAD
         protected virtual Task OnSendSucceededAsync(IReadOnlyList<EventData> events,
 =======
         protected virtual Task OnSendSucceededAsync(IEnumerable<EventData> events,
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+        protected virtual Task OnSendSucceededAsync(IReadOnlyList<EventData> events,
+>>>>>>> ca131bff2b (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
                                                     string partitionId)
         {
             throw new NotImplementedException();
