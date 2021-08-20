@@ -25,7 +25,7 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// The table endpoint.
         /// </summary>
-        private readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
+        private static readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
 
         private readonly Uri _urlHttp = new Uri($"http://someaccount.table.core.windows.net");
 
@@ -139,15 +139,21 @@ namespace Azure.Data.Tables.Tests
             Assert.That(sas.ResourceTypes, Is.EqualTo(resourceTypes));
         }
 
-        [Test]
-        public void GenerateSasUri()
+        private static IEnumerable<object[]> TableServiceClients()
+        {
+            var cred = new TableSharedKeyCredential(AccountName, Secret);
+            var sharedKeyClient = new TableServiceClient(_url, cred);
+            var connStringClient = new TableServiceClient($"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;");
+            yield return new object[] { sharedKeyClient, cred };
+            yield return new object[] { connStringClient, cred };
+        }
+
+        [TestCaseSource(nameof(TableServiceClients))]
+        public void GenerateSasUri(TableServiceClient client, TableSharedKeyCredential cred)
         {
             TableAccountSasPermissions permissions = TableAccountSasPermissions.Add;
             TableAccountSasResourceTypes resourceTypes = TableAccountSasResourceTypes.Container;
             var expires = DateTime.Now.AddDays(1);
-            var cred = new TableSharedKeyCredential(AccountName, Secret);
-            var client = new TableServiceClient(_url, cred);
-
             var expectedSas = new TableAccountSasBuilder(permissions, resourceTypes, expires).Sign(cred);
 
             var actualSas = client.GenerateSasUri(permissions, resourceTypes, expires);
