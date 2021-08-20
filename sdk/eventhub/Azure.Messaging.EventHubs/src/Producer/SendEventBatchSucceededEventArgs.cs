@@ -28,6 +28,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
         /// <summary>
 <<<<<<< HEAD
+<<<<<<< HEAD
         ///   A <see cref="System.Threading.CancellationToken"/> to indicate that the producer is being closed
         ///    or disposed and is requesting that the handler stop its activities.
         /// </summary>
@@ -43,6 +44,18 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
 >>>>>>> dcfbe04dad (responding to feedback)
+=======
+        ///   A <see cref="System.Threading.CancellationToken"/> to indicate that the producer is being closed
+        ///    or disposed and is requesting that the handler stop its activities.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   The handler processing events has responsibility for deciding whether or not to honor
+        ///   the cancellation request.  If the application chooses not to do so, the producer will wait for the
+        ///   handler to complete before shutting down.
+        /// </remarks>
+        ///
+>>>>>>> 18184865e0 (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/SendEventBatchSucceededEventArgs.cs)
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
