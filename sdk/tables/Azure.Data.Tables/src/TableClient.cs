@@ -309,6 +309,7 @@ namespace Azure.Data.Tables
 
         internal TableClient(
             string table,
+            string accountName,
             TableRestClient tableOperations,
             string version,
             ClientDiagnostics diagnostics,
@@ -319,6 +320,7 @@ namespace Azure.Data.Tables
             _tableOperations = tableOperations;
             _version = version;
             Name = table;
+            _accountName = accountName;
             _diagnostics = diagnostics;
             _isCosmosEndpoint = isPremiumEndpoint;
             _endpoint = endpoint;
