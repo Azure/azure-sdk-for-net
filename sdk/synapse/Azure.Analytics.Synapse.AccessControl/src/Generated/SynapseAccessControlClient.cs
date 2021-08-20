@@ -47,6 +47,7 @@ namespace Azure.Analytics.Synapse.AccessControl
 
             options ??= new SynapseAdministrationClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
+            _responseClassifier = new ResponseClassifier(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());

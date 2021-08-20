@@ -113,7 +113,7 @@ namespace Azure
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
-        internal abstract ResponseClassifier? ResponseClassifier { get; set; }
+        internal ResponseClassifier? ResponseClassifier { get; set; }
 
         /// <summary>
         /// Throw a RequestFailedException appropriate to the Response.
