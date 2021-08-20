@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <value>The connection string will be determined by creating an ephemeral Service Bus namespace for the test execution.</value>
         ///
-        public string ServiceBusConnectionString => GetRecordedVariable(
+        public string ServiceBusConnectionString => GetRecordedOptionalVariable(
             "SERVICEBUS_CONNECTION_STRING",
             options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64));
 
@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <value>The connection string will be determined by creating an ephemeral Service Bus namespace for the test execution.</value>
         ///
-        public string ServiceBusSecondaryNamespaceConnectionString => GetRecordedVariable(
+        public string ServiceBusSecondaryNamespaceConnectionString => GetRecordedOptionalVariable(
             "SERVICEBUS_SECONDARY_NAMESPACE_CONNECTION_STRING",
             options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64));
 
@@ -104,7 +104,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         public new string ResourceManagerUrl => base.ResourceManagerUrl ?? "https://management.azure.com/";
 
-        public string StorageClaimCheckConnectionString => GetRecordedVariable("STORAGE_CLAIM_CHECK_CONNECTION_STRING");
+        public string StorageClaimCheckConnectionString => GetRecordedOptionalVariable("STORAGE_CLAIM_CHECK_CONNECTION_STRING");
 
         /// <summary>
         ///   The name of an existing Service Bus topic to consider an override and use when
