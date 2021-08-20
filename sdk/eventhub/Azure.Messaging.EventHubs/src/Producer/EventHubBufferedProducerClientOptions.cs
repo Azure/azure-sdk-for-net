@@ -48,7 +48,19 @@ namespace Azure.Messaging.EventHubs.Producer
     internal class EventHubBufferedProducerClientOptions
 >>>>>>> dcfbe04dad (responding to feedback)
     {
+<<<<<<< HEAD
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+        /// <summary> The number of batches that may be sent concurrently to each partition. </summary>
+        private int _maximumConcurrentSendsPerPartition = 1;
+
+        /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
+        private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
+
+        /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
+        private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
+
+>>>>>>> 0be971dd5e (responding to feedback)
         /// <summary>
         ///   The amount of time to wait for a new event to be added to the buffer before sending a partially
         ///   full batch.
@@ -176,6 +188,7 @@ namespace Azure.Messaging.EventHubs.Producer
 =======
 
         /// <summary>
+<<<<<<< HEAD
         ///   Indicates whether or not the producer should enable idempotent publishing to the Event Hub partitions.  If
         ///   enabled, the producer will only be able to publish directly to partitions; it will not be able to publish to
         ///   the Event Hubs gateway for automatic partition routing nor using a partition key.
@@ -212,6 +225,8 @@ namespace Azure.Messaging.EventHubs.Producer
         private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
         /// <summary>
+=======
+>>>>>>> 0be971dd5e (responding to feedback)
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -256,6 +271,7 @@ namespace Azure.Messaging.EventHubs.Producer
             {
                 Identifier = Identifier,
 <<<<<<< HEAD
+<<<<<<< HEAD
                 MaximumEventBufferLength = MaximumEventBufferLength,
                 MaximumWaitTime = MaximumWaitTime,
                 EnableIdempotentRetries = EnableIdempotentRetries,
@@ -269,17 +285,25 @@ namespace Azure.Messaging.EventHubs.Producer
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone(),
                 _maximumConcurrentSendsPerPartition = MaximumConcurrentSendsPerPartition,
+=======
+>>>>>>> 0be971dd5e (responding to feedback)
                 MaximumEventBufferLength = MaximumEventBufferLength,
                 MaximumWaitTime = MaximumWaitTime,
-                EnableIdempotentRetries = EnableIdempotentRetries
+                EnableIdempotentRetries = EnableIdempotentRetries,
+                _connectionOptions = ConnectionOptions.Clone(),
+                _retryOptions = RetryOptions.Clone(),
+                _maximumConcurrentSendsPerPartition = MaximumConcurrentSendsPerPartition
             };
 
+<<<<<<< HEAD
             foreach (var pair in PartitionOptions)
             {
                 copiedOptions.PartitionOptions.Add(pair.Key, pair.Value.Clone());
             }
 
 >>>>>>> dcfbe04dad (responding to feedback)
+=======
+>>>>>>> 0be971dd5e (responding to feedback)
             return copiedOptions;
         }
 
@@ -298,7 +322,7 @@ namespace Azure.Messaging.EventHubs.Producer
 >>>>>>> dcfbe04dad (responding to feedback)
 =======
         /// <remarks>
-        ///   This method does not make defensive copies of the references properties; it is assumed that they'll be used with 
+        ///   This method does not make defensive copies of the references properties; it is assumed that they'll be used with
         ///    the <see cref="EventHubProducerClient" /> which has responsibility for ensuring defensive copies when constructed.
         /// </remarks>
         ///
@@ -324,6 +348,7 @@ namespace Azure.Messaging.EventHubs.Producer
             };
             return translatedOptions;
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> 88750fe801 (Adding skeleton files)
@@ -368,5 +393,7 @@ namespace Azure.Messaging.EventHubs.Producer
             return options;
         }
 >>>>>>> dcfbe04dad (responding to feedback)
+=======
+>>>>>>> 0be971dd5e (responding to feedback)
     }
 }

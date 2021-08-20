@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///    Invoked after each batch of events has been successfully published to the Event Hub, this
         ///    handler is optional and is intended to provide notifications for interested listeners.
         ///
-        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result 
+        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result
         ///   in a deadlock scenario if those calls are awaited.
         /// </summary>
         ///
@@ -227,7 +227,7 @@ namespace Azure.Messaging.EventHubs.Producer
 >>>>>>> 88750fe801 (Adding skeleton files)
 =======
         ///
-        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result 
+        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result
         ///   in a deadlock scenario if those calls are awaited.
 >>>>>>> 5a65d627f6 (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
         /// </summary>
