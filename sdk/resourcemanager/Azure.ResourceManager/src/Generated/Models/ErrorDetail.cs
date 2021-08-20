@@ -7,17 +7,36 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Common
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The error detail. </summary>
-    internal partial class ErrorDetail
+    [PropertyReferenceType]
+    public partial class ErrorDetail
     {
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
-        internal ErrorDetail()
+        [InitializationConstructor]
+        public ErrorDetail()
         {
             Details = new ChangeTrackingList<ErrorDetail>();
             AdditionalInfo = new ChangeTrackingList<ErrorAdditionalInfo>();
+        }
+
+        /// <summary> Initializes a new instance of ErrorDetail. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The error target. </param>
+        /// <param name="details"> The error details. </param>
+        /// <param name="additionalInfo"> The error additional info. </param>
+        [SerializationConstructor]
+        internal ErrorDetail(string code, string message, string target, IReadOnlyList<ErrorDetail> details, IReadOnlyList<ErrorAdditionalInfo> additionalInfo)
+        {
+            Code = code;
+            Message = message;
+            Target = target;
+            Details = details;
+            AdditionalInfo = additionalInfo;
         }
 
         /// <summary> The error code. </summary>

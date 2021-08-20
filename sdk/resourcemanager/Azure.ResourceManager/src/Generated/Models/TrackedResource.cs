@@ -8,17 +8,20 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Common
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has &apos;tags&apos; and a &apos;location&apos;. </summary>
-    internal partial class TrackedResource : Resources.Models.Resource
+    [ReferenceType]
+    public partial class TrackedResource : Resource
     {
         /// <summary> Initializes a new instance of TrackedResource. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        internal TrackedResource(string location)
+        [InitializationConstructor]
+        public TrackedResource(Location location)
         {
             if (location == null)
             {
@@ -29,9 +32,22 @@ namespace Azure.ResourceManager.Common
             Location = location;
         }
 
+        /// <summary> Initializes a new instance of TrackedResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        [SerializationConstructor]
+        internal TrackedResource(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location) : base(id, name, type)
+        {
+            Tags = tags;
+            Location = location;
+        }
+
         /// <summary> Resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
+        public Location Location { get; set; }
     }
 }

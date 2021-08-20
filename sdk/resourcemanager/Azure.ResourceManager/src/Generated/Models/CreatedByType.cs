@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Models
 {
     /// <summary> The type of identity that created the resource. </summary>
-    internal readonly partial struct CreatedByType : IEquatable<CreatedByType>
+    public readonly partial struct CreatedByType : IEquatable<CreatedByType>
     {
         private readonly string _value;
 

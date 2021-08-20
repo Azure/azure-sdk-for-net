@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The reason why the given name is not available. </summary>
-    internal readonly partial struct CheckNameAvailabilityReason : IEquatable<CheckNameAvailabilityReason>
+    public readonly partial struct CheckNameAvailabilityReason : IEquatable<CheckNameAvailabilityReason>
     {
         private readonly string _value;
 

@@ -5,21 +5,33 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Common
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Configuration of key for data encryption. </summary>
-    internal partial class EncryptionProperties
+    [PropertyReferenceType]
+    public partial class EncryptionProperties
     {
         /// <summary> Initializes a new instance of EncryptionProperties. </summary>
-        internal EncryptionProperties()
+        [InitializationConstructor]
+        public EncryptionProperties()
         {
         }
 
+        /// <summary> Initializes a new instance of EncryptionProperties. </summary>
+        /// <param name="status"> Indicates whether or not the encryption is enabled for container registry. </param>
+        /// <param name="keyVaultProperties"> Key vault properties. </param>
+        [SerializationConstructor]
+        internal EncryptionProperties(EncryptionStatus? status, KeyVaultProperties keyVaultProperties)
+        {
+            Status = status;
+            KeyVaultProperties = keyVaultProperties;
+        }
+
         /// <summary> Indicates whether or not the encryption is enabled for container registry. </summary>
-        public EncryptionStatus? Status { get; }
+        public EncryptionStatus? Status { get; set; }
         /// <summary> Key vault properties. </summary>
-        public KeyVaultProperties KeyVaultProperties { get; }
+        public KeyVaultProperties KeyVaultProperties { get; set; }
     }
 }

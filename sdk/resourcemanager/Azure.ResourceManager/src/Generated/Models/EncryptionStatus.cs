@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Indicates whether or not the encryption is enabled for container registry. </summary>
-    internal readonly partial struct EncryptionStatus : IEquatable<EncryptionStatus>
+    public readonly partial struct EncryptionStatus : IEquatable<EncryptionStatus>
     {
         private readonly string _value;
 

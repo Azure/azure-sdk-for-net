@@ -5,17 +5,29 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Common
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
-    internal partial class ErrorResponse
+    [PropertyReferenceType]
+    public partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        internal ErrorResponse()
+        [InitializationConstructor]
+        public ErrorResponse()
         {
         }
 
+        /// <summary> Initializes a new instance of ErrorResponse. </summary>
+        /// <param name="error"> The error object. </param>
+        [SerializationConstructor]
+        internal ErrorResponse(ErrorDetail error)
+        {
+            Error = error;
+        }
+
         /// <summary> The error object. </summary>
-        public ErrorDetail Error { get; }
+        public ErrorDetail Error { get; set; }
     }
 }

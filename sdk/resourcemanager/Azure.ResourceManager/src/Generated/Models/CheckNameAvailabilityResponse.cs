@@ -5,23 +5,37 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Common
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The check availability result. </summary>
-    internal partial class CheckNameAvailabilityResponse
+    [PropertyReferenceType]
+    public partial class CheckNameAvailabilityResponse
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
-        internal CheckNameAvailabilityResponse()
+        [InitializationConstructor]
+        public CheckNameAvailabilityResponse()
         {
         }
 
+        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
+        /// <param name="message"> Detailed reason why the given name is available. </param>
+        [SerializationConstructor]
+        internal CheckNameAvailabilityResponse(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message)
+        {
+            NameAvailable = nameAvailable;
+            Reason = reason;
+            Message = message;
+        }
+
         /// <summary> Indicates if the resource name is available. </summary>
-        public bool? NameAvailable { get; }
+        public bool? NameAvailable { get; set; }
         /// <summary> The reason why the given name is not available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; }
+        public CheckNameAvailabilityReason? Reason { get; set; }
         /// <summary> Detailed reason why the given name is available. </summary>
-        public string Message { get; }
+        public string Message { get; set; }
     }
 }

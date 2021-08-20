@@ -5,21 +5,38 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Common
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
-    internal partial class Resource : SubResource
+    [ReferenceType]
+    public partial class Resource
     {
         /// <summary> Initializes a new instance of Resource. </summary>
-        internal Resource()
+        [InitializationConstructor]
+        public Resource()
         {
         }
 
+        /// <summary> Initializes a new instance of Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        [SerializationConstructor]
+        internal Resource(ResourceIdentifier id, string name, ResourceType type)
+        {
+            Id = id;
+            Name = name;
+            Type = type;
+        }
+
+        /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
+        public ResourceIdentifier Id { get; }
         /// <summary> The name of the resource. </summary>
         public string Name { get; }
         /// <summary> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </summary>
-        public string Type { get; }
+        public ResourceType Type { get; }
     }
 }

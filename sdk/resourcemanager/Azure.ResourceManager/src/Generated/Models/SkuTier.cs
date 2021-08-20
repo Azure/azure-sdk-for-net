@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </summary>
-    internal enum SkuTier
+    public enum SkuTier
     {
         /// <summary> Free. </summary>
         Free,

@@ -5,19 +5,34 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Common
+using Azure.ResourceManager;
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The check availability request body. </summary>
-    internal partial class CheckNameAvailabilityRequest
+    [PropertyReferenceType]
+    public partial class CheckNameAvailabilityRequest
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityRequest. </summary>
-        internal CheckNameAvailabilityRequest()
+        [InitializationConstructor]
+        public CheckNameAvailabilityRequest()
         {
         }
 
+        /// <summary> Initializes a new instance of CheckNameAvailabilityRequest. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="type"> The resource type. </param>
+        [SerializationConstructor]
+        internal CheckNameAvailabilityRequest(string name, ResourceType type)
+        {
+            Name = name;
+            Type = type;
+        }
+
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The resource type. </summary>
-        public string Type { get; }
+        public ResourceType Type { get; set; }
     }
 }
