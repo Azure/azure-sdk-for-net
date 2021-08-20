@@ -672,8 +672,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
         /// </remarks>
         ///
+<<<<<<< HEAD
         public virtual Task EnqueueEventAsync(EventData eventData,
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+        public virtual Task<int> EnqueueEventAsync(EventData eventData,
+>>>>>>> dc92cbe9bc (adding int to task)
                                               CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -709,8 +713,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
         /// </remarks>
         ///
+<<<<<<< HEAD
         public virtual Task EnqueueEventAsync(EventData eventData,
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+        public virtual Task<int> EnqueueEventAsync(EventData eventData,
+>>>>>>> dc92cbe9bc (adding int to task)
                                               EnqueueEventOptions options,
                                               CancellationToken cancellationToken = default)
         {
@@ -744,8 +752,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
         /// </remarks>
         ///
+<<<<<<< HEAD
         public virtual Task EnqueueEventsAsync(IEnumerable<EventData> events,
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+        public virtual Task<int> EnqueueEventsAsync(IEnumerable<EventData> events,
+>>>>>>> dc92cbe9bc (adding int to task)
                                                CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -781,7 +793,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   <see cref="SendEventBatchFailedAsync" /> handlers will be validated and can no longer be changed.
         /// </remarks>
         ///
-        public virtual Task EnqueueEventsAsync(IEnumerable<EventData> events,
+        public virtual Task<int> EnqueueEventsAsync(IEnumerable<EventData> events,
                                                EnqueueEventOptions options,
                                                CancellationToken cancellationToken = default)
 >>>>>>> 88750fe801 (Adding skeleton files)
@@ -951,6 +963,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public virtual Task CloseAsync(bool flush = true,
                                        CancellationToken cancellationToken = default)
         {
+            _isClosed = true;
             throw new NotImplementedException();
         }
 
