@@ -219,11 +219,17 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   It is safe to attempt resending the events by calling <see cref="EnqueueEventAsync(EventData, CancellationToken)" /> or <see cref="EnqueueEventAsync(EventData, EnqueueEventOptions, CancellationToken)" /> from within
         ///   this handler.  It is important to note that doing so will place them at the end of the buffer; the original order will not be maintained.
 <<<<<<< HEAD
+<<<<<<< HEAD
         ///
         ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result
         ///   in a deadlock scenario if those calls are awaited.
 =======
 >>>>>>> 88750fe801 (Adding skeleton files)
+=======
+        ///
+        ///   It is not recommended to invoke <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> from this handler; doing so may result 
+        ///   in a deadlock scenario if those calls are awaited.
+>>>>>>> 5a65d627f6 (Update sdk/eventhub/Azure.Messaging.EventHubs/src/Producer/EventHubBufferedProducerClient.cs)
         /// </summary>
         ///
         /// <remarks>
