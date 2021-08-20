@@ -3,9 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
+    [LiveOnly]
     public abstract class ServiceBusLiveTestBase : ServiceBusTestBase
     {
         private const int DefaultTryTimeout = 10;
