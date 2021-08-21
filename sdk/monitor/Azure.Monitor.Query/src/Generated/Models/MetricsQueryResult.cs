@@ -15,35 +15,35 @@ namespace Azure.Monitor.Query.Models
     public partial class MetricsQueryResult
     {
         /// <summary> Initializes a new instance of MetricsQueryResult. </summary>
-        /// <param name="Timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
+        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="metrics"> the value of the collection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="Timespan"/> or <paramref name="metrics"/> is null. </exception>
-        internal MetricsQueryResult(string Timespan, IEnumerable<Metric> metrics)
+        /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="metrics"/> is null. </exception>
+        internal MetricsQueryResult(string timespan, IEnumerable<Metric> metrics)
         {
-            if (Timespan == null)
+            if (timespan == null)
             {
-                throw new ArgumentNullException(nameof(Timespan));
+                throw new ArgumentNullException(nameof(timespan));
             }
             if (metrics == null)
             {
                 throw new ArgumentNullException(nameof(metrics));
             }
 
-            _timespan = Timespan;
+            _timespan = timespan;
             Metrics = metrics.ToList();
         }
 
         /// <summary> Initializes a new instance of MetricsQueryResult. </summary>
         /// <param name="cost"> The integer value representing the relative cost of the query. </param>
-        /// <param name="Timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
+        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics being queried. </param>
         /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
         /// <param name="metrics"> the value of the collection. </param>
-        internal MetricsQueryResult(int? cost, string Timespan, TimeSpan? interval, string @namespace, string resourceRegion, IReadOnlyList<Metric> metrics)
+        internal MetricsQueryResult(int? cost, string timespan, TimeSpan? interval, string @namespace, string resourceRegion, IReadOnlyList<Metric> metrics)
         {
             Cost = cost;
-            _timespan = Timespan;
+            _timespan = timespan;
             Interval = interval;
             Namespace = @namespace;
             ResourceRegion = resourceRegion;
