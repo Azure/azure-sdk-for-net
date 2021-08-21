@@ -154,7 +154,7 @@ namespace Azure.Test.Perf
 
                 if (Options.Latency)
                 {
-                    for (var i=0; i < completedOperations; i++)
+                    for (var i = 0; i < completedOperations; i++)
                     {
                         _latencies.Add(latencySw.Elapsed);
 
@@ -206,7 +206,7 @@ namespace Azure.Test.Perf
 
                 if (Options.Latency)
                 {
-                    for (var i=0; i < completedOperations; i++)
+                    for (var i = 0; i < completedOperations; i++)
                     {
                         _latencies.Add(latencySw.Elapsed);
 
