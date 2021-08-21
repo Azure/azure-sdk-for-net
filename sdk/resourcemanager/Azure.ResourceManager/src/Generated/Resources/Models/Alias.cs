@@ -25,13 +25,15 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="type"> The type of the alias. </param>
         /// <param name="defaultPath"> The default path for an alias. </param>
         /// <param name="defaultPattern"> The default pattern for an alias. </param>
-        internal Alias(string name, IReadOnlyList<AliasPath> paths, AliasType? type, string defaultPath, AliasPattern defaultPattern)
+        /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn&apos;t have metadata. </param>
+        internal Alias(string name, IReadOnlyList<AliasPath> paths, AliasType? type, string defaultPath, AliasPattern defaultPattern, AliasPathMetadata defaultMetadata)
         {
             Name = name;
             Paths = paths;
             Type = type;
             DefaultPath = defaultPath;
             DefaultPattern = defaultPattern;
+            DefaultMetadata = defaultMetadata;
         }
 
         /// <summary> The alias name. </summary>
@@ -44,5 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string DefaultPath { get; }
         /// <summary> The default pattern for an alias. </summary>
         public AliasPattern DefaultPattern { get; }
+        /// <summary> The default alias path metadata. Applies to the default path and to any alias path that doesn&apos;t have metadata. </summary>
+        public AliasPathMetadata DefaultMetadata { get; }
     }
 }
