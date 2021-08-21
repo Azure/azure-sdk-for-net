@@ -10,7 +10,7 @@ namespace Azure.Test.Perf
         public static byte[] Create(int size)
         {
             var bytes = new byte[size];
-            (new Random(0)).NextBytes(bytes);
+            ThreadsafeRandom.NextBytes(bytes);
             return bytes;
         }
     }
