@@ -87,7 +87,12 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             SynapseRoleAssignment roleAssignment = new SynapseRoleAssignment(roleId, principalId, scope);
 
-            await client.CreateRoleAssignmentAsync(roleAssignmentId, roleAssignment);
+            SynapseRoleAssignment returnedRoleAssignment = await client.CreateRoleAssignmentAsync(roleAssignmentId, roleAssignment, new RequestOptions()
+            {
+                StatusOption = ResponseStatusOption.NoThrow
+            });
+
+            // TODO: Finish this test and figure out the rest.
 
             await using DisposableClientRole role = await DisposableClientRole.Create(client, TestEnvironment);
 
