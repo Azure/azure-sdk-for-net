@@ -1,4 +1,4 @@
-﻿    // Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -70,7 +70,7 @@ namespace Azure.AI.Translation.Document.Samples
                 if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-                    Console.WriteLine($"  Translated to language: {document.TranslatedToLanguageCode}.");
+                    Console.WriteLine($"  Translated to language code: {document.TranslatedToLanguageCode}.");
                     Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
                 }
                 else
