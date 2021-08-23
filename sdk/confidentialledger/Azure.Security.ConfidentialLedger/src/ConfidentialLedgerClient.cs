@@ -87,7 +87,7 @@ namespace Azure.Security.ConfidentialLedger
                     .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
                 return isCertSignedByTheTlsCert;
             }
-            return HttpClientTransport.CreateWithDefaultSettings(new HttpClientTransportOptions
+            return new HttpClientTransport(new HttpPipelineTransportOptions
             {
                 ServerCertificateCustomValidationCallback = certificate2 => CertValidationCheck(null, certificate2, certificateChain, SslPolicyErrors.None)
             });
