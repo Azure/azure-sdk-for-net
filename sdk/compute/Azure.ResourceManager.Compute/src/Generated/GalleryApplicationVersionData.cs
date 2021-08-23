@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="publishingProfile"> The publishing profile of a gallery image version. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        internal GalleryApplicationVersionData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, GalleryApplicationVersionPublishingProfile publishingProfile, GalleryApplicationVersionPropertiesProvisioningState? provisioningState, ReplicationStatus replicationStatus) : base(id, name, type, location, tags)
+        internal GalleryApplicationVersionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, GalleryApplicationVersionPublishingProfile publishingProfile, GalleryApplicationVersionPropertiesProvisioningState? provisioningState, ReplicationStatus replicationStatus) : base(id, name, type, tags, location)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;

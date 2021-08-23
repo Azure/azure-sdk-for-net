@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new AvailabilitySetData(id, name, type, location, tags, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachines), proximityPlacementGroup.Value, Optional.ToList(statuses));
+            return new AvailabilitySetData(id, name, type, tags, location, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachines), proximityPlacementGroup.Value, Optional.ToList(statuses));
         }
     }
 }

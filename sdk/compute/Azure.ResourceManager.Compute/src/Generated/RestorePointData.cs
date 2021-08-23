@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the RestorePoint data model. </summary>
-    public partial class RestorePointData : Resources.Models.Resource
+    public partial class RestorePointData : Resource
     {
         /// <summary> Initializes a new instance of RestorePointData. </summary>
         public RestorePointData()

@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="policy"> The rolling upgrade policies applied for this upgrade. </param>
         /// <param name="runningStatus"> Information about the current running state of the overall upgrade. </param>
         /// <param name="progress"> Information about the number of virtual machine instances in each upgrade state. </param>
         /// <param name="error"> Error details for this upgrade, if there are any. </param>
-        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, RollingUpgradePolicy policy, RollingUpgradeRunningStatus runningStatus, RollingUpgradeProgressInfo progress, ApiError error) : base(id, name, type, location, tags)
+        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, RollingUpgradePolicy policy, RollingUpgradeRunningStatus runningStatus, RollingUpgradeProgressInfo progress, ApiError error) : base(id, name, type, tags, location)
         {
             Policy = policy;
             RunningStatus = runningStatus;

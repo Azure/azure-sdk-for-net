@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CloudServiceData(id, name, type, location, tags, properties.Value);
+            return new CloudServiceData(id, name, type, tags, location, properties.Value);
         }
     }
 }

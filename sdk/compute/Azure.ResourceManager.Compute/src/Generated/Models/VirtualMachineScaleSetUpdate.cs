@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The purchase plan when deploying a virtual machine scale set from VM Marketplace images. </summary>
         public Plan Plan { get; set; }
         /// <summary> The identity of the virtual machine scale set, if configured. </summary>
-        public ResourceIdentity ResourceIdentity { get; set; }
+        public ResourceIdentity Identity { get; set; }
         /// <summary> The upgrade policy. </summary>
         public UpgradePolicy UpgradePolicy { get; set; }
         /// <summary> Policy for automatic repairs. </summary>

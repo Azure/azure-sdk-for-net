@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<UpdateDomain>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomain.GetUpdateDomain");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomain.Get");
             scope.Start();
             try
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<UpdateDomain> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomain.GetUpdateDomain");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomain.Get");
             scope.Start();
             try
             {

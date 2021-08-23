@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new GalleryApplicationVersionData(id, name, type, location, tags, publishingProfile.Value, Optional.ToNullable(provisioningState), replicationStatus.Value);
+            return new GalleryApplicationVersionData(id, name, type, tags, location, publishingProfile.Value, Optional.ToNullable(provisioningState), replicationStatus.Value);
         }
     }
 }

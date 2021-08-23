@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SnapshotData(id, name, type, location, tags, managedBy.Value, sku.Value, extendedLocation.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), Optional.ToNullable(diskState), uniqueId.Value, encryptionSettingsCollection.Value, provisioningState.Value, Optional.ToNullable(incremental), encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, Optional.ToNullable(supportsHibernation));
+            return new SnapshotData(id, name, type, tags, location, managedBy.Value, sku.Value, extendedLocation.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), Optional.ToNullable(diskState), uniqueId.Value, encryptionSettingsCollection.Value, provisioningState.Value, Optional.ToNullable(incremental), encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, Optional.ToNullable(supportsHibernation));
         }
     }
 }

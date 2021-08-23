@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a role of the cloud service. </summary>
-    public partial class CloudServiceRole : Resources.Models.Resource
+    public partial class CloudServiceRole : Resource
     {
         /// <summary> Initializes a new instance of CloudServiceRole. </summary>
         internal CloudServiceRole()

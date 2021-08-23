@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="description"> The description of this Shared Image Gallery resource. This property is updatable. </param>
         /// <param name="identifier"> Describes the gallery unique name. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="sharingProfile"> Profile for gallery sharing to subscription or tenant. </param>
-        internal GalleryData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, string description, GalleryIdentifier identifier, GalleryPropertiesProvisioningState? provisioningState, SharingProfile sharingProfile) : base(id, name, type, location, tags)
+        internal GalleryData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string description, GalleryIdentifier identifier, GalleryPropertiesProvisioningState? provisioningState, SharingProfile sharingProfile) : base(id, name, type, tags, location)
         {
             Description = description;
             Identifier = identifier;

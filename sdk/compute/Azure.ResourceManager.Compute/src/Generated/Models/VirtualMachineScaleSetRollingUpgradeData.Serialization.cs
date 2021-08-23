@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetRollingUpgradeData(id, name, type, location, tags, policy.Value, runningStatus.Value, progress.Value, error.Value);
+            return new VirtualMachineScaleSetRollingUpgradeData(id, name, type, tags, location, policy.Value, runningStatus.Value, progress.Value, error.Value);
         }
     }
 }

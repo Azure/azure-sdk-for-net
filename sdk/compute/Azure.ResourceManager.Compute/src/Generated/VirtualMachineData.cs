@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </param>
         /// <param name="resources"> The virtual machine child extension resources. </param>
-        /// <param name="resourceIdentity"> The identity of the virtual machine, if configured. </param>
+        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
         /// <param name="zones"> The virtual machine zones. </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
         /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="platformFaultDomain"> Specifies the scale set logical fault domain into which the Virtual Machine will be created. By default, the Virtual Machine will by automatically assigned to a fault domain that best maintains balance across available fault domains.&lt;br&gt;&lt;li&gt;This is applicable only if the &apos;virtualMachineScaleSet&apos; property of this Virtual Machine is set.&lt;li&gt;The Virtual Machine Scale Set that is referenced, must have &apos;platformFaultDomainCount&apos; &amp;gt; 1.&lt;li&gt;This property cannot be updated once the Virtual Machine is created.&lt;li&gt;Fault domain assignment can be viewed in the Virtual Machine Instance View.&lt;br&gt;&lt;br&gt;Minimum api‐version: 2020‐12‐01. </param>
         /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
-        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, Models.Plan plan, IReadOnlyList<VirtualMachineExtensionData> resources, ResourceIdentity resourceIdentity, IList<string> zones, ExtendedLocation extendedLocation, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, Models.SubResource availabilitySet, Models.SubResource virtualMachineScaleSet, Models.SubResource proximityPlacementGroup, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, Models.SubResource host, Models.SubResource hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ScheduledEventsProfile scheduledEventsProfile, string userData) : base(id, name, type, location, tags)
+        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, Models.Plan plan, IReadOnlyList<VirtualMachineExtensionData> resources, ResourceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, Models.SubResource availabilitySet, Models.SubResource virtualMachineScaleSet, Models.SubResource proximityPlacementGroup, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, Models.SubResource host, Models.SubResource hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ScheduledEventsProfile scheduledEventsProfile, string userData) : base(id, name, type, tags, location)
         {
             Plan = plan;
             Resources = resources;
-            ResourceIdentity = resourceIdentity;
+            Identity = identity;
             Zones = zones;
             ExtendedLocation = extendedLocation;
             HardwareProfile = hardwareProfile;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The virtual machine child extension resources. </summary>
         public IReadOnlyList<VirtualMachineExtensionData> Resources { get; }
         /// <summary> The identity of the virtual machine, if configured. </summary>
-        public ResourceIdentity ResourceIdentity { get; set; }
+        public ResourceIdentity Identity { get; set; }
         /// <summary> The virtual machine zones. </summary>
         public IList<string> Zones { get; }
         /// <summary> The extended location of the Virtual Machine. </summary>

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new GalleryImageVersionData(id, name, type, location, tags, publishingProfile.Value, Optional.ToNullable(provisioningState), storageProfile.Value, replicationStatus.Value);
+            return new GalleryImageVersionData(id, name, type, tags, location, publishingProfile.Value, Optional.ToNullable(provisioningState), storageProfile.Value, replicationStatus.Value);
         }
     }
 }

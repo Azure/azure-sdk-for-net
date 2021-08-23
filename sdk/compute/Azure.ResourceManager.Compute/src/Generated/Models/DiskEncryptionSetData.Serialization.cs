@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DiskEncryptionSetData(id, name, type, location, tags, identity.Value, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToList(previousKeys), provisioningState.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), Optional.ToNullable(lastKeyRotationTimestamp));
+            return new DiskEncryptionSetData(id, name, type, tags, location, identity.Value, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToList(previousKeys), provisioningState.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), Optional.ToNullable(lastKeyRotationTimestamp));
         }
     }
 }

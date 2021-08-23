@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the Image. </param>
         /// <param name="sourceVirtualMachine"> The source virtual machine from which Image is created. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
-        internal ImageData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, Models.SubResource sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGenerationTypes? hyperVGeneration) : base(id, name, type, location, tags)
+        internal ImageData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ExtendedLocation extendedLocation, Models.SubResource sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGenerationTypes? hyperVGeneration) : base(id, name, type, tags, location)
         {
             ExtendedLocation = extendedLocation;
             SourceVirtualMachine = sourceVirtualMachine;

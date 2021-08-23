@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="description"> The description of this gallery image definition resource. This property is updatable. </param>
         /// <param name="eula"> The Eula agreement for the gallery image definition. </param>
         /// <param name="privacyStatementUri"> The privacy statement uri. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="features"> A list of gallery image features. </param>
-        internal GalleryImageData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, string description, string eula, string privacyStatementUri, string releaseNoteUri, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeDate, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryImagePropertiesProvisioningState? provisioningState, IList<GalleryImageFeature> features) : base(id, name, type, location, tags)
+        internal GalleryImageData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, string description, string eula, string privacyStatementUri, string releaseNoteUri, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeDate, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryImagePropertiesProvisioningState? provisioningState, IList<GalleryImageFeature> features) : base(id, name, type, tags, location)
         {
             Description = description;
             Eula = eula;

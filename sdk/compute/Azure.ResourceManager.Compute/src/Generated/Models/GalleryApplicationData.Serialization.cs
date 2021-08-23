@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new GalleryApplicationData(id, name, type, location, tags, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType));
+            return new GalleryApplicationData(id, name, type, tags, location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType));
         }
     }
 }

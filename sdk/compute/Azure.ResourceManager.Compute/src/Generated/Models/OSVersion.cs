@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a cloud service OS version. </summary>
-    public partial class OSVersion : Resources.Models.Resource
+    public partial class OSVersion : Resource
     {
         /// <summary> Initializes a new instance of OSVersion. </summary>
         internal OSVersion()

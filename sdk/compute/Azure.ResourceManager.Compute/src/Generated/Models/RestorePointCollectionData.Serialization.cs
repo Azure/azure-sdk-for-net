@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new RestorePointCollectionData(id, name, type, location, tags, source.Value, provisioningState.Value, restorePointCollectionId.Value, Optional.ToList(restorePoints));
+            return new RestorePointCollectionData(id, name, type, tags, location, source.Value, provisioningState.Value, restorePointCollectionId.Value, Optional.ToList(restorePoints));
         }
     }
 }

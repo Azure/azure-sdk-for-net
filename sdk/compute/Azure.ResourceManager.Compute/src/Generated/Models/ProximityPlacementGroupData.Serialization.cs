@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new ProximityPlacementGroupData(id, name, type, location, tags, Optional.ToNullable(proximityPlacementGroupType), Optional.ToList(virtualMachines), Optional.ToList(virtualMachineScaleSets), Optional.ToList(availabilitySets), colocationStatus.Value);
+            return new ProximityPlacementGroupData(id, name, type, tags, location, Optional.ToNullable(proximityPlacementGroupType), Optional.ToList(virtualMachines), Optional.ToList(virtualMachineScaleSets), Optional.ToList(availabilitySets), colocationStatus.Value);
         }
     }
 }

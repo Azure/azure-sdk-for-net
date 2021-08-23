@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new GalleryData(id, name, type, location, tags, description.Value, identifier.Value, Optional.ToNullable(provisioningState), sharingProfile.Value);
+            return new GalleryData(id, name, type, tags, location, description.Value, identifier.Value, Optional.ToNullable(provisioningState), sharingProfile.Value);
         }
     }
 }

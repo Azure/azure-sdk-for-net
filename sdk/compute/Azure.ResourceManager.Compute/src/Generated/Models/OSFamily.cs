@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a cloud service OS family. </summary>
-    public partial class OSFamily : Resources.Models.Resource
+    public partial class OSFamily : Resource
     {
         /// <summary> Initializes a new instance of OSFamily. </summary>
         internal OSFamily()

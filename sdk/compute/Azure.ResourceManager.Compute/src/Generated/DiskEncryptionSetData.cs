@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="identity"> The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks. </param>
         /// <param name="encryptionType"> The type of key used to encrypt the data of the disk. </param>
         /// <param name="activeKey"> The key vault key which is currently used by this disk encryption set. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningState"> The disk encryption set provisioning state. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of this disk encryption set to the latest key version. </param>
         /// <param name="lastKeyRotationTimestamp"> The time when the active key of this disk encryption set was updated. </param>
-        internal DiskEncryptionSetData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, EncryptionSetIdentity identity, DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IReadOnlyList<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationTimestamp) : base(id, name, type, location, tags)
+        internal DiskEncryptionSetData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, EncryptionSetIdentity identity, DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IReadOnlyList<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationTimestamp) : base(id, name, type, tags, location)
         {
             Identity = identity;
             EncryptionType = encryptionType;

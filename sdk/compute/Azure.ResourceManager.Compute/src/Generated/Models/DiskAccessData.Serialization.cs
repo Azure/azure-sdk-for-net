@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DiskAccessData(id, name, type, location, tags, Optional.ToList(privateEndpointConnections), provisioningState.Value, Optional.ToNullable(timeCreated));
+            return new DiskAccessData(id, name, type, tags, location, Optional.ToList(privateEndpointConnections), provisioningState.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

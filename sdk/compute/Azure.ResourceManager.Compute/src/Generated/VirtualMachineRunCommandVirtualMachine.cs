@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualMachineRunCommandVirtualMachine>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.GetByVirtualMachine");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.Get");
             scope.Start();
             try
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualMachineRunCommandVirtualMachine> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.GetByVirtualMachine");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachine.Get");
             scope.Start();
             try
             {

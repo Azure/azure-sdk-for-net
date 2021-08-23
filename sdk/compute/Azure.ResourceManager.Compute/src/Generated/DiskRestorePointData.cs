@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the DiskRestorePoint data model. </summary>
-    public partial class DiskRestorePointData : Resources.Models.Resource
+    public partial class DiskRestorePointData : Resource
     {
         /// <summary> Initializes a new instance of DiskRestorePointData. </summary>
         internal DiskRestorePointData()

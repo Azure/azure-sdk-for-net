@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="proximityPlacementGroupType"> Specifies the type of the proximity placement group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Standard** : Co-locate resources within an Azure region or Availability Zone. &lt;br&gt;&lt;br&gt; **Ultra** : For future use. </param>
         /// <param name="virtualMachines"> A list of references to all virtual machines in the proximity placement group. </param>
         /// <param name="virtualMachineScaleSets"> A list of references to all virtual machine scale sets in the proximity placement group. </param>
         /// <param name="availabilitySets"> A list of references to all availability sets in the proximity placement group. </param>
         /// <param name="colocationStatus"> Describes colocation status of the Proximity Placement Group. </param>
-        internal ProximityPlacementGroupData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, ProximityPlacementGroupType? proximityPlacementGroupType, IReadOnlyList<SubResourceWithColocationStatus> virtualMachines, IReadOnlyList<SubResourceWithColocationStatus> virtualMachineScaleSets, IReadOnlyList<SubResourceWithColocationStatus> availabilitySets, InstanceViewStatus colocationStatus) : base(id, name, type, location, tags)
+        internal ProximityPlacementGroupData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ProximityPlacementGroupType? proximityPlacementGroupType, IReadOnlyList<SubResourceWithColocationStatus> virtualMachines, IReadOnlyList<SubResourceWithColocationStatus> virtualMachineScaleSets, IReadOnlyList<SubResourceWithColocationStatus> availabilitySets, InstanceViewStatus colocationStatus) : base(id, name, type, tags, location)
         {
             ProximityPlacementGroupType = proximityPlacementGroupType;
             VirtualMachines = virtualMachines;

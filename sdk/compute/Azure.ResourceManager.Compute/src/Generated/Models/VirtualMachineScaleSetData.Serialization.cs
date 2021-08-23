@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("plan");
                 writer.WriteObjectValue(Plan);
             }
-            if (Optional.IsDefined(ResourceIdentity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, ResourceIdentity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetData(id, name, type, location, tags, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation.Value, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVMs), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup.Value, hostGroup.Value, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode));
+            return new VirtualMachineScaleSetData(id, name, type, tags, location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation.Value, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVMs), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup.Value, hostGroup.Value, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode));
         }
     }
 }

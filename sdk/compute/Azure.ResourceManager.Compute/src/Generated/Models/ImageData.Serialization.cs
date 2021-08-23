@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new ImageData(id, name, type, location, tags, extendedLocation.Value, sourceVirtualMachine.Value, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
+            return new ImageData(id, name, type, tags, location, extendedLocation.Value, sourceVirtualMachine.Value, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
         }
     }
 }

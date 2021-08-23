@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="privateEndpointConnections"> A readonly collection of private endpoint connections created on the disk. Currently only one endpoint connection is supported. </param>
         /// <param name="provisioningState"> The disk access resource provisioning state. </param>
         /// <param name="timeCreated"> The time when the disk access was created. </param>
-        internal DiskAccessData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, DateTimeOffset? timeCreated) : base(id, name, type, location, tags)
+        internal DiskAccessData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, DateTimeOffset? timeCreated) : base(id, name, type, tags, location)
         {
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;

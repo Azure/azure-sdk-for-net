@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="source"> The properties of the source resource that this restore point collection is created from. </param>
         /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
         /// <param name="restorePointCollectionId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
-        internal RestorePointCollectionData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, RestorePointCollectionSourceProperties source, string provisioningState, string restorePointCollectionId, IReadOnlyList<RestorePointData> restorePoints) : base(id, name, type, location, tags)
+        internal RestorePointCollectionData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, RestorePointCollectionSourceProperties source, string provisioningState, string restorePointCollectionId, IReadOnlyList<RestorePointData> restorePoints) : base(id, name, type, tags, location)
         {
             Source = source;
             ProvisioningState = provisioningState;

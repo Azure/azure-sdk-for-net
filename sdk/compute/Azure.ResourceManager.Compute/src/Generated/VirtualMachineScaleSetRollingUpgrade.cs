@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<VirtualMachineScaleSetRollingUpgrade>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgrade.GetLatest");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgrade.Get");
             scope.Start();
             try
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualMachineScaleSetRollingUpgrade> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgrade.GetLatest");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetRollingUpgrade.Get");
             scope.Start();
             try
             {
