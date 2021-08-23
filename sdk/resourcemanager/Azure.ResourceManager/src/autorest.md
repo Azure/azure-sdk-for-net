@@ -60,4 +60,8 @@ directive:
     where: $.definitions.*.properties[?(@.enum)]
     transform: >
       $["x-accessibility"] = "public"
+  - from: types.json
+    where: $.definitions.systemData.properties.*
+    transform: >
+      $["readOnly"] = true
 ```
