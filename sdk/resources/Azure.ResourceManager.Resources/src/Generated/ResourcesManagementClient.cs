@@ -112,5 +112,11 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Returns an instance of ApplicationDefinitionsOperations. </summary>
         public virtual ApplicationDefinitionsOperations ApplicationDefinitions => new ApplicationDefinitionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of TemplateSpecsOperations. </summary>
+        public virtual TemplateSpecsOperations TemplateSpecs => new TemplateSpecsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of TemplateSpecVersionsOperations. </summary>
+        public virtual TemplateSpecVersionsOperations TemplateSpecVersions => new TemplateSpecVersionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }

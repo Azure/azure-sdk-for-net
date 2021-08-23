@@ -17,6 +17,7 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f9d1625a69e739f362dd16e32f8f9e8fa01abd37/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f9d1625a69e739f362dd16e32f8f9e8fa01abd37/specification/resources/resource-manager/Microsoft.Resources/stable/2016-09-01/links.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f9d1625a69e739f362dd16e32f8f9e8fa01abd37/specification/resources/resource-manager/Microsoft.Solutions/stable/2018-06-01/managedapplications.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a51292fefc306800c8ac008b5a5c84e8e06e66b7/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
 modelerfour:
     lenient-model-deduplication: true
 directive:
