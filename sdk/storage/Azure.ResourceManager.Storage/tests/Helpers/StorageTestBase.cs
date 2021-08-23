@@ -9,6 +9,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
+using SkuTier= Azure.ResourceManager.Storage.Models.SkuTier;
 
 namespace Azure.ResourceManager.Storage.Tests.Helpers
 {
