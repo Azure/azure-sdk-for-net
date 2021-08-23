@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<ManagementLockObject>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementLockObject.GetByScope");
+            using var scope = _clientDiagnostics.CreateScope("ManagementLockObject.Get");
             scope.Start();
             try
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementLockObject> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementLockObject.GetByScope");
+            using var scope = _clientDiagnostics.CreateScope("ManagementLockObject.Get");
             scope.Start();
             try
             {

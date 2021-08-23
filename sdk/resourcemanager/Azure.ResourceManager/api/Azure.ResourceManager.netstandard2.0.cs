@@ -230,6 +230,8 @@ namespace Azure.ResourceManager.Management
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Management.ManagementGroup>> GetAsync(Azure.ResourceManager.Management.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.Management.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Management.Models.DescendantInfo> GetDescendants(string skiptoken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Management.Models.DescendantInfo> GetDescendantsAsync(string skiptoken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.PolicyDefinitionContainer GetPolicyDefinitions() { throw null; }
+        public virtual Azure.ResourceManager.Resources.PolicySetDefinitionContainer GetPolicySetDefinitions() { throw null; }
         public virtual Azure.ResourceManager.Management.Models.ManagementGroupDeleteOperation StartDelete(string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Management.Models.ManagementGroupDeleteOperation> StartDeleteAsync(string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Management.ManagementGroup> Update(Azure.ResourceManager.Management.Models.PatchManagementGroupOptions patchGroupOptions, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -974,6 +976,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.ResourceManager.Resources.GenericResourceContainer GetGenericResources() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.LocationExpanded> GetLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.LocationExpanded> GetLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.PolicyDefinitionContainer GetPolicyDefinitions() { throw null; }
+        public virtual Azure.ResourceManager.Resources.PolicySetDefinitionContainer GetPolicySetDefinitions() { throw null; }
         public virtual Azure.ResourceManager.Resources.PredefinedTagContainer GetPredefinedTags() { throw null; }
         public virtual Azure.ResourceManager.Resources.ProviderContainer GetProviders() { throw null; }
         public virtual Azure.ResourceManager.Resources.ResourceGroupContainer GetResourceGroups() { throw null; }
@@ -1045,6 +1049,15 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.ResourceManager.Resources.TenantData Data { get { throw null; } }
         public bool HasData { get { throw null; } }
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.PolicyDefinition> GetAllBuiltInPolicyDefinitions(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.PolicyDefinition> GetAllBuiltInPolicyDefinitionsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.PolicySetDefinition> GetAllBuiltInPolicySetDefinitions(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.PolicySetDefinition> GetAllBuiltInPolicySetDefinitionsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.PolicyDefinition> GetBuiltInPolicyDefinition(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.PolicyDefinition>> GetBuiltInPolicyDefinitionAsync(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.PolicySetDefinition> GetBuiltInPolicySetDefinition(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.PolicySetDefinition>> GetBuiltInPolicySetDefinitionAsync(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Resources.DataPolicyManifestContainer GetDataPolicyManifests() { throw null; }
         public virtual Azure.ResourceManager.Management.ManagementGroupContainer GetManagementGroups() { throw null; }
         public virtual Azure.ResourceManager.Resources.SubscriptionContainer GetSubscriptions() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.Models.ProviderInfo> GetTenantProvider(string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -296,5 +296,23 @@ namespace Azure.ResourceManager.Resources
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
+
+        /// <summary>
+        /// Gets the policy definition container for this subscription.
+        /// </summary>
+        /// <returns> A container of the policy definition. </returns>
+        public virtual PolicyDefinitionContainer GetPolicyDefinitions()
+        {
+            return new PolicyDefinitionContainer(this);
+        }
+
+        /// <summary>
+        /// Gets the policy set definition container for this subscription.
+        /// </summary>
+        /// <returns> A container of the policy set definition. </returns>
+        public virtual PolicySetDefinitionContainer GetPolicySetDefinitions()
+        {
+            return new PolicySetDefinitionContainer(this);
+        }
     }
 }
