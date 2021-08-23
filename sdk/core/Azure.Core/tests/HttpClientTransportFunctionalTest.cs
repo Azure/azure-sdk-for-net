@@ -26,7 +26,6 @@ namespace Azure.Core.Tests
 #if NET461
             ServicePointManager.ServerCertificateValidationCallback += (_, _, _, _) => true;
 #endif
-
         }
 
         public HttpClientTransportFunctionalTest(bool isAsync) : base(isAsync)
@@ -39,8 +38,7 @@ namespace Azure.Core.Tests
 #if !NET461
                 return options switch
                 {
-                    null => new HttpClientTransport(
-                        new HttpClientHandler { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator }),
+                    null => new HttpClientTransport(new HttpPipelineTransportOptions{ ServerCertificateCustomValidationCallback = _ => true }),
                     _ => new HttpClientTransport(options)
 
                 };

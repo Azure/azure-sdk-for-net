@@ -33,7 +33,7 @@ namespace Azure.Core.Pipeline
         {
         }
 
-        public HttpWebRequestTransport(HttpPipelineTransportOptions options)
+        internal HttpWebRequestTransport(HttpPipelineTransportOptions options)
             : this(req => ApplyOptionsToRequest(req, options))
         { }
 

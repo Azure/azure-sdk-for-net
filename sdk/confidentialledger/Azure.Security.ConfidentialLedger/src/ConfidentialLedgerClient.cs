@@ -38,7 +38,16 @@ namespace Azure.Security.ConfidentialLedger
             }
 
             var transport = GetIdentityServerTlsCertAndTrust(ledgerUri);
-            options ??= new ConfidentialLedgerClientOptions { Transport = transport };
+            if (options == null)
+            {
+                // No options were provided. Create then with the transport set.
+                options = new ConfidentialLedgerClientOptions { Transport = transport };
+            }
+            else if (options.Transport == HttpPipelineTransport.Create())
+            {
+                // The default Transport is in place, so it is safe to replace with the ones from GetIdentityServerTlsCertAndTrust.
+                options.Transport = transport;
+            }
             _clientDiagnostics = new ClientDiagnostics(options);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
@@ -51,7 +60,7 @@ namespace Azure.Security.ConfidentialLedger
             apiVersion = options.Version;
         }
 
-        internal HttpClientTransport GetIdentityServerTlsCertAndTrust(Uri ledgerUri)
+        internal HttpPipelineTransport GetIdentityServerTlsCertAndTrust(Uri ledgerUri)
         {
             var identityClient = new ConfidentialLedgerIdentityServiceClient(new Uri("https://identity.accledger.azure.com"));
 
@@ -87,7 +96,7 @@ namespace Azure.Security.ConfidentialLedger
                     .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
                 return isCertSignedByTheTlsCert;
             }
-            return new HttpClientTransport(new HttpPipelineTransportOptions
+            return HttpPipelineTransport.Create(new HttpPipelineTransportOptions
             {
                 ServerCertificateCustomValidationCallback = certificate2 => CertValidationCheck(null, certificate2, certificateChain, SslPolicyErrors.None)
             });

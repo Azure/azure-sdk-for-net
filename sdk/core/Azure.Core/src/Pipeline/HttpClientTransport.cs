@@ -34,7 +34,7 @@ namespace Azure.Core.Pipeline
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
         /// <param name="options">The <see cref="HttpPipelineTransportOptions"/> that to configure the behavior of the transport.</param>
-        public HttpClientTransport(HttpPipelineTransportOptions? options = null) : this(CreateDefaultClient(options))
+        internal HttpClientTransport(HttpPipelineTransportOptions? options = null) : this(CreateDefaultClient(options))
         { }
 
         /// <summary>
