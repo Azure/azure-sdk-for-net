@@ -46,14 +46,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 parentContext: default,
                 startTime: DateTime.UtcNow);
 
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
             if (telemetryType == "RequestData")
             {
-                var telemetryPartBRequestData = TelemetryPartB.GetRequestData(activity);
+                var telemetryPartBRequestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
                 Assert.False(telemetryPartBRequestData.Properties.TryGetValue(msLinks, out var mslinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var telemetryPartBRemoteDependencyData = TelemetryPartB.GetRemoteDependencyData(activity);
+                var telemetryPartBRemoteDependencyData = TelemetryPartB.GetRemoteDependencyData(activity, ref monitorTags);
                 Assert.False(telemetryPartBRemoteDependencyData.Properties.TryGetValue(msLinks, out var mslinks));
             }
         }
@@ -83,14 +85,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             string expectedMSlinks = GetExpectedMSlinks(links);
             string actualMSlinks = null;
 
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
             if (telemetryType == "RequestData")
             {
-                var telemetryPartBRequestData = TelemetryPartB.GetRequestData(activity);
+                var telemetryPartBRequestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
                 Assert.True(telemetryPartBRequestData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var telemetryPartBRemoteDependencyData = TelemetryPartB.GetRemoteDependencyData(activity);
+                var telemetryPartBRemoteDependencyData = TelemetryPartB.GetRemoteDependencyData(activity, ref monitorTags);
                 Assert.True(telemetryPartBRemoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
 
@@ -127,14 +131,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 links,
                 startTime: DateTime.UtcNow);
 
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
             if (telemetryType == "RequestData")
             {
-                var telemetryPartBRequestData = TelemetryPartB.GetRequestData(activity);
+                var telemetryPartBRequestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
                 Assert.True(telemetryPartBRequestData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var telemetryPartBRemoteDependencyData = TelemetryPartB.GetRemoteDependencyData(activity);
+                var telemetryPartBRemoteDependencyData = TelemetryPartB.GetRemoteDependencyData(activity, ref monitorTags);
                 Assert.True(telemetryPartBRemoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
 
@@ -180,14 +186,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             string expectedMslinks = GetExpectedMSlinks(links);
             string actualMSlinks = null;
 
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
             if (telemetryType == "RequestData")
             {
-                var telemetryPartBRequestData = TelemetryPartB.GetRequestData(activity);
+                var telemetryPartBRequestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
                 Assert.True(telemetryPartBRequestData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var telemetryPartBRemoteDependencyData = TelemetryPartB.GetRemoteDependencyData(activity);
+                var telemetryPartBRemoteDependencyData = TelemetryPartB.GetRemoteDependencyData(activity, ref monitorTags);
                 Assert.True(telemetryPartBRemoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
 

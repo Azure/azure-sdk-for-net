@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.Translation.Document.Models;
 
 namespace Azure.AI.Translation.Document
 {

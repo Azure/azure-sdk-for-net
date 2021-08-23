@@ -76,9 +76,9 @@
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Common" Version="1.0.1" />
-    <PackageReference Update="Azure.Core" Version="1.17.0" />
+    <PackageReference Update="Azure.Core" Version="1.18.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.2.0" />
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.14" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.15" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.6.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.5.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.2.1" />
@@ -137,14 +137,14 @@
     All should have PrivateAssets="All" set so they don't become pacakge dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210805.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210820.3" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20210601.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
-    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
     <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Update="SauceControl.InheritDoc" Version="1.2.0" PrivateAssets="All" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
