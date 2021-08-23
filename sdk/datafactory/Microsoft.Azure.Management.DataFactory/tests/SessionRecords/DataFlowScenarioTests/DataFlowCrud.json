@@ -1529,6 +1529,537 @@
       },
       "ResponseBody": "",
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows/TestPowerQuery?api-version=2018-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWU0MjU5MWYtMWYwYy00YzVhLWI3ZjItYTI2OGY2MTA1ZWM1L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzkyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3Rvcnk0NDkxL2RhdGFmbG93cy9UZXN0UG93ZXJRdWVyeT9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"type\": \"WranglingDataFlow\",\r\n    \"typeProperties\": {\r\n      \"sources\": [\r\n        {\r\n          \"dataset\": {\r\n            \"referenceName\": \"TestDataFlowDataset\",\r\n            \"parameters\": {\r\n              \"JobId\": {\r\n                \"value\": \"@pipeline().parameters.JobId\",\r\n                \"type\": \"Expression\"\r\n              }\r\n            },\r\n            \"type\": \"DatasetReference\"\r\n          },\r\n          \"name\": \"source\",\r\n          \"description\": \"source 1\"\r\n        }\r\n      ],\r\n      \"script\": \"sample script\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cda7b77d-8fb5-45f3-a38a-53f407b38455"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/4.1.4.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "1093"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "bde240ba-d456-42e1-a810-240cfe37519a"
+        ],
+        "x-ms-correlation-request-id": [
+          "bde240ba-d456-42e1-a810-240cfe37519a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190925T205939Z:bde240ba-d456-42e1-a810-240cfe37519a"
+        ],
+        "Date": [
+          "Wed, 25 Sep 2019 20:59:38 GMT"
+        ],
+        "Content-Length": [
+          "863"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows/TestPowerQuery\",\r\n  \"name\": \"TestPowerQuery\",\r\n  \"type\": \"Microsoft.DataFactory/factories/dataflows\",\r\n  \"properties\": {\r\n    \"type\": \"WranglingDataFlow\",\r\n    \"typeProperties\": {\r\n      \"sources\": [\r\n        {\r\n          \"dataset\": {\r\n            \"referenceName\": \"TestDataFlowDataset\",\r\n            \"parameters\": {\r\n              \"JobId\": {\r\n                \"value\": \"@pipeline().parameters.JobId\",\r\n                \"type\": \"Expression\"\r\n              }\r\n            },\r\n            \"type\": \"DatasetReference\"\r\n          },\r\n          \"name\": \"source\",\r\n          \"description\": \"source 1\"\r\n        }\r\n      ],\r\n\t\t\"script\":\"sample script\"\r\n    }\r\n  },\r\n  \"etag\": \"1500ed32-0000-0700-0000-5d8bd53b0000\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows/TestPowerQuery?api-version=2018-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWU0MjU5MWYtMWYwYy00YzVhLWI3ZjItYTI2OGY2MTA1ZWM1L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzkyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3Rvcnk0NDkxL2RhdGFmbG93cy9UZXN0UG93ZXJRdWVyeT9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"type\": \"WranglingDataFlow\",\r\n    \"typeProperties\": {\r\n      \"sources\": [\r\n        {\r\n          \"dataset\": {\r\n            \"referenceName\": \"TestDataFlowDataset\",\r\n            \"parameters\": {\r\n              \"JobId\": {\r\n                \"value\": \"@pipeline().parameters.JobId\",\r\n                \"type\": \"Expression\"\r\n              }\r\n            },\r\n            \"type\": \"DatasetReference\"\r\n          },\r\n          \"name\": \"source\",\r\n          \"description\": \"source 1\"\r\n        }\r\n      ],\r\n      \"script\": \"sample script\"\r\n    },\r\n        \"description\": \"power query description\"\r\n    }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8d1d0557-e28f-45f5-b2cc-fb679e03f0e1"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/4.1.4.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "1138"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-request-id": [
+          "d9d42a2a-28ed-4a97-8071-e0a51905e3fd"
+        ],
+        "x-ms-correlation-request-id": [
+          "d9d42a2a-28ed-4a97-8071-e0a51905e3fd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190925T205939Z:d9d42a2a-28ed-4a97-8071-e0a51905e3fd"
+        ],
+        "Date": [
+          "Wed, 25 Sep 2019 20:59:38 GMT"
+        ],
+        "Content-Length": [
+          "901"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows/TestPowerQuery\",\r\n  \"name\": \"TestPowerQuery\",\r\n  \"type\": \"Microsoft.DataFactory/factories/dataflows\",\r\n  \"properties\": {\r\n    \"type\": \"WranglingDataFlow\",\r\n    \"typeProperties\": {\r\n      \"sources\": [\r\n        {\r\n          \"dataset\": {\r\n            \"referenceName\": \"TestDataFlowDataset\",\r\n            \"parameters\": {\r\n              \"JobId\": {\r\n                \"value\": \"@pipeline().parameters.JobId\",\r\n                \"type\": \"Expression\"\r\n              }\r\n            },\r\n            \"type\": \"DatasetReference\"\r\n          },\r\n          \"name\": \"source\",\r\n          \"description\": \"source 1\"\r\n        }\r\n      ],\r\n\t\t\"script\":\"sample script\"\r\n    },\r\n        \"description\": \"power query description\"\r\n    },\r\n  \"etag\": \"1500ed32-0000-0700-0000-5d8bd53b0000\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows/TestPowerQuery?api-version=2018-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWU0MjU5MWYtMWYwYy00YzVhLWI3ZjItYTI2OGY2MTA1ZWM1L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzkyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3Rvcnk0NDkxL2RhdGFmbG93cy9UZXN0UG93ZXJRdWVyeT9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7797ecfa-fae7-4ec5-aa7c-f5558cd0fb8a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/4.1.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "a2474d59-a525-4e3a-b52e-584edaa7b021"
+        ],
+        "x-ms-correlation-request-id": [
+          "a2474d59-a525-4e3a-b52e-584edaa7b021"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190925T205939Z:a2474d59-a525-4e3a-b52e-584edaa7b021"
+        ],
+        "Date": [
+          "Wed, 25 Sep 2019 20:59:38 GMT"
+        ],
+        "Content-Length": [
+          "863"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows/TestPowerQuery\",\r\n  \"name\": \"TestPowerQuery\",\r\n  \"type\": \"Microsoft.DataFactory/factories/dataflows\",\r\n  \"properties\": {\r\n    \"type\": \"WranglingDataFlow\",\r\n    \"typeProperties\": {\r\n      \"sources\": [\r\n        {\r\n          \"dataset\": {\r\n            \"referenceName\": \"TestDataFlowDataset\",\r\n            \"parameters\": {\r\n              \"JobId\": {\r\n                \"value\": \"@pipeline().parameters.JobId\",\r\n                \"type\": \"Expression\"\r\n              }\r\n            },\r\n            \"type\": \"DatasetReference\"\r\n          },\r\n          \"name\": \"source\",\r\n          \"description\": \"source 1\"\r\n        }\r\n      ],\r\n\t\t\"script\":\"sample script\"\r\n    }\r\n  },\r\n  \"etag\": \"1500ed32-0000-0700-0000-5d8bd53b0000\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows/TestPowerQuery?api-version=2018-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWU0MjU5MWYtMWYwYy00YzVhLWI3ZjItYTI2OGY2MTA1ZWM1L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzkyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3Rvcnk0NDkxL2RhdGFmbG93cy9UZXN0UG93ZXJRdWVyeT9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "bdab2da0-d830-4594-899b-edf4e41596ac"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/4.1.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "784662b8-e792-4ac7-8045-647261c7ada1"
+        ],
+        "x-ms-correlation-request-id": [
+          "784662b8-e792-4ac7-8045-647261c7ada1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190925T205939Z:784662b8-e792-4ac7-8045-647261c7ada1"
+        ],
+        "Date": [
+          "Wed, 25 Sep 2019 20:59:38 GMT"
+        ],
+        "Content-Length": [
+          "863"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows/TestPowerQuery\",\r\n  \"name\": \"TestPowerQuery\",\r\n  \"type\": \"Microsoft.DataFactory/factories/dataflows\",\r\n  \"properties\": {\r\n    \"type\": \"WranglingDataFlow\",\r\n    \"typeProperties\": {\r\n      \"sources\": [\r\n        {\r\n          \"dataset\": {\r\n            \"referenceName\": \"TestDataFlowDataset\",\r\n            \"parameters\": {\r\n              \"JobId\": {\r\n                \"value\": \"@pipeline().parameters.JobId\",\r\n                \"type\": \"Expression\"\r\n              }\r\n            },\r\n            \"type\": \"DatasetReference\"\r\n          },\r\n          \"name\": \"source\",\r\n          \"description\": \"source 1\"\r\n        }\r\n      ],\r\n\t\t\"script\":\"sample script\"\r\n    },\r\n        \"description\": \"power query description\"\r\n  \t},\r\n  \"etag\": \"1500ed32-0000-0700-0000-5d8bd53b0000\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows?api-version=2018-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWU0MjU5MWYtMWYwYy00YzVhLWI3ZjItYTI2OGY2MTA1ZWM1L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzkyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3Rvcnk0NDkxL2RhdGFmbG93cz9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "39afdb59-ff7b-4bf8-8cc1-7cf5c3184d99"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/4.1.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-request-id": [
+          "4fcf5ed1-1db9-4b20-a14a-17d22aa6eb83"
+        ],
+        "x-ms-correlation-request-id": [
+          "4fcf5ed1-1db9-4b20-a14a-17d22aa6eb83"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190925T205939Z:4fcf5ed1-1db9-4b20-a14a-17d22aa6eb83"
+        ],
+        "Date": [
+          "Wed, 25 Sep 2019 20:59:38 GMT"
+        ],
+        "Content-Length": [
+          "875"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n\t   \"id\": \"/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows/TestPowerQuery\",\r\n  \"name\": \"TestPowerQuery\",\r\n  \"type\": \"Microsoft.DataFactory/factories/dataflows\",\r\n  \"properties\": {\r\n    \"type\": \"WranglingDataFlow\",\r\n    \"typeProperties\": {\r\n      \"sources\": [\r\n        {\r\n          \"dataset\": {\r\n            \"referenceName\": \"TestDataFlowDataset\",\r\n            \"parameters\": {\r\n              \"JobId\": {\r\n                \"value\": \"@pipeline().parameters.JobId\",\r\n                \"type\": \"Expression\"\r\n              }\r\n            },\r\n            \"type\": \"DatasetReference\"\r\n          },\r\n          \"name\": \"source\",\r\n          \"description\": \"source 1\"\r\n        }\r\n      ],\r\n\t\t\"script\":\"sample script\"\r\n    }\r\n  },\r\n  \"etag\": \"1500ed32-0000-0700-0000-5d8bd53b0000\"\r\n}\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows?api-version=2018-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWU0MjU5MWYtMWYwYy00YzVhLWI3ZjItYTI2OGY2MTA1ZWM1L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzkyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3Rvcnk0NDkxL2RhdGFmbG93cz9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "36e61b85-8552-4168-aa5c-fac61e9ec619"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/4.1.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-request-id": [
+          "b84ba4d0-2965-4cc7-a8fb-4b58354baba6"
+        ],
+        "x-ms-correlation-request-id": [
+          "b84ba4d0-2965-4cc7-a8fb-4b58354baba6"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190925T205940Z:b84ba4d0-2965-4cc7-a8fb-4b58354baba6"
+        ],
+        "Date": [
+          "Wed, 25 Sep 2019 20:59:39 GMT"
+        ],
+        "Content-Length": [
+          "913"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n\t   \"id\": \"/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows/TestPowerQuery\",\r\n  \"name\": \"TestPowerQuery\",\r\n  \"type\": \"Microsoft.DataFactory/factories/dataflows\",\r\n  \"properties\": {\r\n    \"type\": \"WranglingDataFlow\",\r\n    \"typeProperties\": {\r\n      \"sources\": [\r\n        {\r\n          \"dataset\": {\r\n            \"referenceName\": \"TestDataFlowDataset\",\r\n            \"parameters\": {\r\n              \"JobId\": {\r\n                \"value\": \"@pipeline().parameters.JobId\",\r\n                \"type\": \"Expression\"\r\n              }\r\n            },\r\n            \"type\": \"DatasetReference\"\r\n          },\r\n          \"name\": \"source\",\r\n          \"description\": \"source 1\"\r\n        }\r\n      ],\r\n\t\t\"script\":\"sample script\"\r\n    },\r\n        \"description\": \"power query description\"\r\n    },\r\n  \"etag\": \"1500ed32-0000-0700-0000-5d8bd53b0000\"\r\n}\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows/TestPowerQuery?api-version=2018-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWU0MjU5MWYtMWYwYy00YzVhLWI3ZjItYTI2OGY2MTA1ZWM1L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzkyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3Rvcnk0NDkxL2RhdGFmbG93cy9UZXN0UG93ZXJRdWVyeT9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a4e13e42-18b3-4b84-8fa9-d68a3e40a500"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/4.1.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "d09706ae-4b76-46aa-90df-295c83650c9e"
+        ],
+        "x-ms-correlation-request-id": [
+          "d09706ae-4b76-46aa-90df-295c83650c9e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190925T205940Z:d09706ae-4b76-46aa-90df-295c83650c9e"
+        ],
+        "Date": [
+          "Wed, 25 Sep 2019 20:59:39 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/sdktestingadfrg9216/providers/Microsoft.DataFactory/factories/sdktestingfactory4491/dataflows/TestPowerQuery?api-version=2018-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWU0MjU5MWYtMWYwYy00YzVhLWI3ZjItYTI2OGY2MTA1ZWM1L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RpbmdhZGZyZzkyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhRmFjdG9yeS9mYWN0b3JpZXMvc2RrdGVzdGluZ2ZhY3Rvcnk0NDkxL2RhdGFmbG93cy9UZXN0UG93ZXJRdWVyeT9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a50a2c18-8721-4d13-ae71-cb5def14daa6"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.DataFactory.DataFactoryManagementClient/4.1.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "a8c7ef6a-c9f1-413f-94e8-4e416d9fbeaf"
+        ],
+        "x-ms-correlation-request-id": [
+          "a8c7ef6a-c9f1-413f-94e8-4e416d9fbeaf"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190925T205940Z:a8c7ef6a-c9f1-413f-94e8-4e416d9fbeaf"
+        ],
+        "Date": [
+          "Wed, 25 Sep 2019 20:59:39 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
     }
   ],
   "Names": {

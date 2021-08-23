@@ -65,6 +65,9 @@ namespace Azure.ResourceManager
         public Azure.ResourceManager.ResourceTagFilter TagFilter { get { throw null; } set { } }
         public override string ToString() { throw null; }
     }
+    public static partial class ResourceGroupExtensions
+    {
+    }
     public partial class ResourceIdentifier : System.IComparable<Azure.ResourceManager.ResourceIdentifier>, System.IEquatable<Azure.ResourceManager.ResourceIdentifier>
     {
         public static readonly Azure.ResourceManager.ResourceIdentifier RootResourceIdentifier;
@@ -159,6 +162,9 @@ namespace Azure.ResourceManager
         public override string GetFilterString() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+    }
+    public static partial class SubscriptionExtensions
+    {
     }
 }
 namespace Azure.ResourceManager.Core
@@ -512,7 +518,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class GenericResourceData : Azure.ResourceManager.Resources.Models.TrackedResource
     {
-        public GenericResourceData() { }
+        public GenericResourceData(string location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
         public System.DateTimeOffset? ChangedTime { get { throw null; } }
         public System.DateTimeOffset? CreatedTime { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourceIdentity Identity { get { throw null; } set { } }
@@ -588,8 +594,9 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ProviderData : Azure.ResourceManager.Resources.Models.SubResource
     {
-        internal ProviderData() { }
+        public ProviderData() { }
         public string Namespace { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState? ProviderAuthorizationConsentState { get { throw null; } }
         public string RegistrationPolicy { get { throw null; } }
         public string RegistrationState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ProviderResourceType> ResourceTypes { get { throw null; } }
@@ -650,7 +657,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourceGroupData : Azure.ResourceManager.Resources.Models.TrackedResource
     {
-        public ResourceGroupData(string location) { }
+        public ResourceGroupData(string location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ResourceGroupProperties Properties { get { throw null; } set { } }
     }
@@ -697,11 +704,10 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class SubscriptionData : Azure.ResourceManager.Resources.Models.TrackedResource
     {
-        internal SubscriptionData() { }
+        internal SubscriptionData() : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
         public string AuthorizationSource { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ManagedByTenant> ManagedByTenants { get { throw null; } }
-        public override string Name { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.SubscriptionState? State { get { throw null; } }
         public string SubscriptionGuid { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.SubscriptionPolicies SubscriptionPolicies { get { throw null; } }
@@ -779,6 +785,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class Alias
     {
         internal Alias() { }
+        public Azure.ResourceManager.Resources.Models.AliasPathMetadata DefaultMetadata { get { throw null; } }
         public string DefaultPath { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.AliasPattern DefaultPattern { get { throw null; } }
         public string Name { get { throw null; } }
@@ -789,8 +796,57 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal AliasPath() { }
         public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.AliasPathMetadata Metadata { get { throw null; } }
         public string Path { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.AliasPattern Pattern { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AliasPathAttributes : System.IEquatable<Azure.ResourceManager.Resources.Models.AliasPathAttributes>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AliasPathAttributes(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.AliasPathAttributes Modifiable { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathAttributes None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.AliasPathAttributes other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.AliasPathAttributes left, Azure.ResourceManager.Resources.Models.AliasPathAttributes right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.AliasPathAttributes (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.AliasPathAttributes left, Azure.ResourceManager.Resources.Models.AliasPathAttributes right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AliasPathMetadata
+    {
+        internal AliasPathMetadata() { }
+        public Azure.ResourceManager.Resources.Models.AliasPathAttributes? Attributes { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.AliasPathTokenType? Type { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AliasPathTokenType : System.IEquatable<Azure.ResourceManager.Resources.Models.AliasPathTokenType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AliasPathTokenType(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Any { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Array { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Boolean { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Integer { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Number { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Object { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType String { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.AliasPathTokenType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.AliasPathTokenType left, Azure.ResourceManager.Resources.Models.AliasPathTokenType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.AliasPathTokenType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.AliasPathTokenType left, Azure.ResourceManager.Resources.Models.AliasPathTokenType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AliasPattern
     {
@@ -810,20 +866,106 @@ namespace Azure.ResourceManager.Resources.Models
         PlainText = 1,
         Mask = 2,
     }
+    public partial class ApiProfile
+    {
+        internal ApiProfile() { }
+        public string ApiVersion { get { throw null; } }
+        public string ProfileVersion { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CheckNameAvailabilityReason : System.IEquatable<Azure.ResourceManager.Resources.Models.CheckNameAvailabilityReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CheckNameAvailabilityReason(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.CheckNameAvailabilityReason AlreadyExists { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.CheckNameAvailabilityReason Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.CheckNameAvailabilityReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.Resources.Models.CheckNameAvailabilityReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.CheckNameAvailabilityReason (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.Resources.Models.CheckNameAvailabilityReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CheckNameAvailabilityRequest
+    {
+        public CheckNameAvailabilityRequest() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.ResourceType Type { get { throw null; } set { } }
+    }
+    public partial class CheckNameAvailabilityResponse
+    {
+        public CheckNameAvailabilityResponse() { }
+        public string Message { get { throw null; } set { } }
+        public bool? NameAvailable { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.CheckNameAvailabilityReason? Reason { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.Resources.Models.CreatedByType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CreatedByType(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.CreatedByType Application { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.CreatedByType Key { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.CreatedByType ManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.CreatedByType User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.CreatedByType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.CreatedByType left, Azure.ResourceManager.Resources.Models.CreatedByType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.CreatedByType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.CreatedByType left, Azure.ResourceManager.Resources.Models.CreatedByType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class EncryptionProperties
+    {
+        public EncryptionProperties() { }
+        public Azure.ResourceManager.Resources.Models.KeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.EncryptionStatus? Status { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EncryptionStatus : System.IEquatable<Azure.ResourceManager.Resources.Models.EncryptionStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EncryptionStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.EncryptionStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.EncryptionStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.EncryptionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.EncryptionStatus left, Azure.ResourceManager.Resources.Models.EncryptionStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.EncryptionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.EncryptionStatus left, Azure.ResourceManager.Resources.Models.EncryptionStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ErrorAdditionalInfo
     {
-        internal ErrorAdditionalInfo() { }
+        public ErrorAdditionalInfo() { }
         public object Info { get { throw null; } }
-        public string Type { get { throw null; } }
+        public Azure.ResourceManager.ResourceType Type { get { throw null; } }
+    }
+    public partial class ErrorDetail
+    {
+        public ErrorDetail() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ErrorAdditionalInfo> AdditionalInfo { get { throw null; } }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ErrorDetail> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Target { get { throw null; } }
     }
     public partial class ErrorResponse
     {
-        internal ErrorResponse() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ErrorAdditionalInfo> AdditionalInfo { get { throw null; } }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ErrorResponse> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
+        public ErrorResponse() { }
+        public Azure.ResourceManager.Resources.Models.ErrorDetail Error { get { throw null; } set { } }
     }
     public partial class ExportTemplateRequest
     {
@@ -835,6 +977,12 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal FeatureProperties() { }
         public string State { get { throw null; } }
+    }
+    public partial class KeyVaultProperties
+    {
+        public KeyVaultProperties() { }
+        public string Identity { get { throw null; } set { } }
+        public string KeyIdentifier { get { throw null; } set { } }
     }
     public partial class Location : System.IComparable<Azure.ResourceManager.Resources.Models.Location>, System.IEquatable<Azure.ResourceManager.Resources.Models.Location>
     {
@@ -931,7 +1079,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public sealed partial class Plan : System.IComparable<Azure.ResourceManager.Resources.Models.Plan>, System.IEquatable<Azure.ResourceManager.Resources.Models.Plan>
     {
-        public Plan() { }
+        public Plan(string name, string publisher, string product) { }
         public string Name { get { throw null; } set { } }
         public string Product { get { throw null; } set { } }
         public string PromotionCode { get { throw null; } set { } }
@@ -987,6 +1135,33 @@ namespace Azure.ResourceManager.Resources.Models
         public string Id { get { throw null; } }
         public string TagValueValue { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProviderAuthorizationConsentState : System.IEquatable<Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProviderAuthorizationConsentState(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState Consented { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState NotRequired { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState Required { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState left, Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState left, Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ProviderExtendedLocation
+    {
+        internal ProviderExtendedLocation() { }
+        public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
+        public string Location { get { throw null; } }
+        public string Type { get { throw null; } }
+    }
     public partial class ProviderInfo
     {
         internal ProviderInfo() { }
@@ -995,10 +1170,13 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ProviderResourceType
     {
-        internal ProviderResourceType() { }
+        public ProviderResourceType() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Alias> Aliases { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApiProfile> ApiProfiles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
         public string Capabilities { get { throw null; } }
+        public string DefaultApiVersion { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ProviderExtendedLocation> LocationMappings { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Properties { get { throw null; } }
         public string ResourceType { get { throw null; } }
@@ -1042,10 +1220,10 @@ namespace Azure.ResourceManager.Resources.Models
     public abstract partial class Resource
     {
         protected Resource() { }
-        protected internal Resource(Azure.ResourceManager.ResourceIdentifier id, string name, Azure.ResourceManager.ResourceType type) { }
-        public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } }
-        public virtual string Name { get { throw null; } }
-        public virtual Azure.ResourceManager.ResourceType Type { get { throw null; } }
+        protected Resource(Azure.ResourceManager.ResourceIdentifier id, string name, Azure.ResourceManager.ResourceType type) { }
+        public Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.ResourceType Type { get { throw null; } }
     }
     public partial class ResourceCreateOrUpdateByIdOperation : Azure.Operation<Azure.ResourceManager.Resources.GenericResource>
     {
@@ -1157,6 +1335,11 @@ namespace Azure.ResourceManager.Resources.Models
         UserAssigned = 2,
         SystemAssignedUserAssigned = 3,
     }
+    public static partial class ResourceIdentityTypeExtensions
+    {
+        public static Azure.ResourceManager.Resources.Models.ResourceIdentityType ToResourceIdentityType(this string value) { throw null; }
+        public static string ToSerialString(this Azure.ResourceManager.Resources.Models.ResourceIdentityType value) { throw null; }
+    }
     public partial class ResourceMoveResourcesOperation : Azure.Operation
     {
         protected ResourceMoveResourcesOperation() { }
@@ -1210,13 +1393,12 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public sealed partial class Sku : System.IComparable<Azure.ResourceManager.Resources.Models.Sku>, System.IEquatable<Azure.ResourceManager.Resources.Models.Sku>
     {
-        public Sku() { }
-        public long? Capacity { get { throw null; } set { } }
+        public Sku(string name) { }
+        public int? Capacity { get { throw null; } set { } }
         public string Family { get { throw null; } set { } }
-        public string Model { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
-        public string Tier { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.SkuTier? Tier { get { throw null; } set { } }
         public int CompareTo(Azure.ResourceManager.Resources.Models.Sku other) { throw null; }
         public bool Equals(Azure.ResourceManager.Resources.Models.Sku other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1230,16 +1412,23 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator <(Azure.ResourceManager.Resources.Models.Sku left, Azure.ResourceManager.Resources.Models.Sku right) { throw null; }
         public static bool operator <=(Azure.ResourceManager.Resources.Models.Sku left, Azure.ResourceManager.Resources.Models.Sku right) { throw null; }
     }
+    public enum SkuTier
+    {
+        Free = 0,
+        Basic = 1,
+        Standard = 2,
+        Premium = 3,
+    }
     public enum SpendingLimit
     {
         On = 0,
         Off = 1,
         CurrentPeriodOff = 2,
     }
-    public partial class SubResource
+    public abstract partial class SubResource
     {
         protected SubResource() { }
-        protected internal SubResource(string id) { }
+        protected SubResource(string id) { }
         public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } }
     }
     public partial class SubscriptionPolicies
@@ -1270,6 +1459,16 @@ namespace Azure.ResourceManager.Resources.Models
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+    }
+    public partial class SystemData
+    {
+        public SystemData() { }
+        public System.DateTimeOffset? CreatedAt { get { throw null; } set { } }
+        public string CreatedBy { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.CreatedByType? CreatedByType { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedAt { get { throw null; } set { } }
+        public string LastModifiedBy { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.CreatedByType? LastModifiedByType { get { throw null; } set { } }
     }
     public partial class Tag : Azure.ResourceManager.Resources.Models.Resource
     {
@@ -1322,15 +1521,14 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public abstract partial class TrackedResource : Azure.ResourceManager.Resources.Models.Resource
     {
-        protected TrackedResource() { }
-        protected internal TrackedResource(Azure.ResourceManager.ResourceIdentifier id, string name, Azure.ResourceManager.ResourceType type, Azure.ResourceManager.Resources.Models.Location location, System.Collections.Generic.IDictionary<string, string> tags) { }
+        protected TrackedResource(Azure.ResourceManager.ResourceIdentifier id, string name, Azure.ResourceManager.ResourceType type, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Resources.Models.Location location) { }
         protected TrackedResource(Azure.ResourceManager.Resources.Models.Location location) { }
-        public virtual Azure.ResourceManager.Resources.Models.Location Location { get { throw null; } set { } }
-        public virtual System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.Location Location { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public sealed partial class UserAssignedIdentity : System.IEquatable<Azure.ResourceManager.Resources.Models.UserAssignedIdentity>
     {
-        public UserAssignedIdentity(System.Guid clientId, System.Guid principalId) { }
+        public UserAssignedIdentity() { }
         public System.Guid ClientId { get { throw null; } }
         public System.Guid PrincipalId { get { throw null; } }
         public int CompareTo(Azure.ResourceManager.Resources.Models.UserAssignedIdentity other) { throw null; }

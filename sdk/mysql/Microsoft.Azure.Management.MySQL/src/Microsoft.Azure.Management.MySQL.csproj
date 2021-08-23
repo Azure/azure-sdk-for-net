@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.MySQL</PackageId>
     <Description>Provides developers with libraries for the Azure Database for MySQL under Azure Resource manager to deploy an instance of MySQL. Create, Update, Delete, Restore, and more.</Description>
-    <Version>0.1.0-preview</Version>
+    <Version>0.1.1-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.MySQL</AssemblyName>
     <PackageTags>MySQL;Azure Database for MySQL;</PackageTags>
     <PackageReleaseNotes>

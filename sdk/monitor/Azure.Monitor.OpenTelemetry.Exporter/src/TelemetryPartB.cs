@@ -28,10 +28,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/database.md#connection-level-attributes
         internal static readonly HashSet<string> SqlDbs = new HashSet<string>() {"mssql"};
 
-        internal static RequestData GetRequestData(Activity activity)
+        internal static RequestData GetRequestData(Activity activity, ref TagEnumerationState monitorTags)
         {
             string url = null;
-            var monitorTags = EnumerateActivityTags(activity);
 
             AddActivityLinksToPartCTags(activity.Links, ref monitorTags.PartCTags);
 
@@ -58,10 +57,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return request;
         }
 
-        internal static RemoteDependencyData GetRemoteDependencyData(Activity activity)
+        internal static RemoteDependencyData GetRemoteDependencyData(Activity activity, ref TagEnumerationState monitorTags)
         {
-            var monitorTags = EnumerateActivityTags(activity);
-
             AddActivityLinksToPartCTags(activity.Links, ref monitorTags.PartCTags);
 
             var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
@@ -108,18 +105,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 SeverityLevel = GetSeverityLevel(logRecord.LogLevel),
             };
-        }
-
-        private static TagEnumerationState EnumerateActivityTags(Activity activity)
-        {
-            var monitorTags = new TagEnumerationState
-            {
-                PartBTags = AzMonList.Initialize(),
-                PartCTags = AzMonList.Initialize()
-            };
-
-            monitorTags.ForEach(activity.TagObjects);
-            return monitorTags;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

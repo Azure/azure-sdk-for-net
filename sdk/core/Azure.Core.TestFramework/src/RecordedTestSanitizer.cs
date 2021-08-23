@@ -25,6 +25,16 @@ namespace Azure.Core.TestFramework
 
         private static readonly string[] s_sanitizeValueArray = { SanitizeValue };
 
+        public RecordedTestSanitizer()
+        {
+            // Lazy sanitize fields in the request and response bodies
+            AddJsonPathSanitizer("$..primaryKey");
+            AddJsonPathSanitizer("$..secondaryKey");
+            AddJsonPathSanitizer("$..primaryConnectionString");
+            AddJsonPathSanitizer("$..secondaryConnectionString");
+            AddJsonPathSanitizer("$..connectionString");
+        }
+
         private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
         {
             DateParseHandling = DateParseHandling.None
@@ -55,8 +65,14 @@ namespace Azure.Core.TestFramework
 
         public virtual string SanitizeTextBody(string contentType, string body)
         {
+            bool modified = false;
+
+            if (string.IsNullOrWhiteSpace(body))
+                return body;
+
             if (JsonPathSanitizers.Count == 0)
                 return body;
+
             try
             {
                 JToken jsonO;
@@ -76,9 +92,18 @@ namespace Azure.Core.TestFramework
                     foreach (JToken token in jsonO.SelectTokens(jsonPath))
                     {
                         token.Replace(sanitizer(token));
+                        modified = true;
                     }
                 }
-                return JsonConvert.SerializeObject(jsonO, SerializerSettings);
+
+                if (modified || LegacyConvertJsonDateTokens)
+                {
+                    return JsonConvert.SerializeObject(jsonO, SerializerSettings);
+                }
+                else
+                {
+                    return body;
+                }
             }
             catch
             {

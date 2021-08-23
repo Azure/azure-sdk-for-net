@@ -35,10 +35,8 @@ namespace Azure.ResourceManager.Tests
 
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
-            var data = new GenericResourceData();
-            data.Location = Location.WestUS2;
-            data.Sku = new Sku();
-            data.Sku.Name = "Aligned";
+            var data = new GenericResourceData(Location.WestUS2);
+            data.Sku = new Sku("Aligned");
             var propertyBag = new Dictionary<string, object>();
             propertyBag.Add("platformUpdateDomainCount", 5);
             propertyBag.Add("platformFaultDomainCount", 2);
