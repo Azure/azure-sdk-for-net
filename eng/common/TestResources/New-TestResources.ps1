@@ -50,7 +50,7 @@ param (
 
     [Parameter()]
     [ValidateRange(1, [int]::MaxValue)]
-    [int] $DeleteAfterHours = 48,
+    [int] $DeleteAfterHours = 120,
 
     [Parameter()]
     [string] $Location = '',

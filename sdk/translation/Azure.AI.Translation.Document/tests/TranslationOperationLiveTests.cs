@@ -48,7 +48,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, operation.DocumentsTotal);
             Assert.AreEqual(1, operation.DocumentsSucceeded);
             Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
         }
@@ -81,7 +81,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(3, operation.DocumentsTotal);
             Assert.AreEqual(3, operation.DocumentsSucceeded);
             Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
         }
@@ -116,7 +116,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(2, operation.DocumentsTotal);
             Assert.AreEqual(2, operation.DocumentsSucceeded);
             Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
         }
@@ -150,7 +150,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, operation.DocumentsTotal);
             Assert.AreEqual(1, operation.DocumentsSucceeded);
             Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
         }
@@ -184,7 +184,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, operation.DocumentsTotal);
             Assert.AreEqual(1, operation.DocumentsSucceeded);
             Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
         }
@@ -207,17 +207,17 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, documentsFromOperationList.Count);
             CheckDocumentStatus(documentsFromOperationList[0], translateTo);
 
-            AsyncPageable<DocumentStatus> documentsFromGetAll = operation.GetAllDocumentStatusesAsync();
-            List<DocumentStatus> documentsFromGetAllList = await documentsFromGetAll.ToEnumerableAsync();
+            AsyncPageable<DocumentStatus> documentsFromGetDocStatuses = operation.GetDocumentStatusesAsync();
+            List<DocumentStatus> documentsFromGetDocStatusesList = await documentsFromGetDocStatuses.ToEnumerableAsync();
 
-            Assert.AreEqual(documentsFromOperationList[0].Status, documentsFromGetAllList[0].Status);
-            Assert.AreEqual(documentsFromOperationList[0].Id, documentsFromGetAllList[0].Id);
-            Assert.AreEqual(documentsFromOperationList[0].SourceDocumentUri, documentsFromGetAllList[0].SourceDocumentUri);
-            Assert.AreEqual(documentsFromOperationList[0].TranslatedDocumentUri, documentsFromGetAllList[0].TranslatedDocumentUri);
-            Assert.AreEqual(documentsFromOperationList[0].TranslationProgressPercentage, documentsFromGetAllList[0].TranslationProgressPercentage);
-            Assert.AreEqual(documentsFromOperationList[0].TranslatedTo, documentsFromGetAllList[0].TranslatedTo);
-            Assert.AreEqual(documentsFromOperationList[0].CreatedOn, documentsFromGetAllList[0].CreatedOn);
-            Assert.AreEqual(documentsFromOperationList[0].LastModified, documentsFromGetAllList[0].LastModified);
+            Assert.AreEqual(documentsFromOperationList[0].Status, documentsFromGetDocStatusesList[0].Status);
+            Assert.AreEqual(documentsFromOperationList[0].Id, documentsFromGetDocStatusesList[0].Id);
+            Assert.AreEqual(documentsFromOperationList[0].SourceDocumentUri, documentsFromGetDocStatusesList[0].SourceDocumentUri);
+            Assert.AreEqual(documentsFromOperationList[0].TranslatedDocumentUri, documentsFromGetDocStatusesList[0].TranslatedDocumentUri);
+            Assert.AreEqual(documentsFromOperationList[0].TranslationProgressPercentage, documentsFromGetDocStatusesList[0].TranslationProgressPercentage);
+            Assert.AreEqual(documentsFromOperationList[0].TranslatedTo, documentsFromGetDocStatusesList[0].TranslatedTo);
+            Assert.AreEqual(documentsFromOperationList[0].CreatedOn, documentsFromGetDocStatusesList[0].CreatedOn);
+            Assert.AreEqual(documentsFromOperationList[0].LastModified, documentsFromGetDocStatusesList[0].LastModified);
         }
 
         [RecordedTest]
@@ -233,7 +233,7 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             await operation.WaitForCompletionAsync();
-            AsyncPageable<DocumentStatus> documents = operation.GetAllDocumentStatusesAsync();
+            AsyncPageable<DocumentStatus> documents = operation.GetDocumentStatusesAsync();
 
             List<DocumentStatus> documentsList = await documents.ToEnumerableAsync();
 
@@ -315,7 +315,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, operation.DocumentsTotal);
             Assert.AreEqual(1, operation.DocumentsSucceeded);
             Assert.AreEqual(0, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
         }
@@ -345,7 +345,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, operation.DocumentsTotal);
             Assert.AreEqual(0, operation.DocumentsSucceeded);
             Assert.AreEqual(1, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
 
@@ -375,7 +375,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, operation.DocumentsTotal);
             Assert.AreEqual(0, operation.DocumentsSucceeded);
             Assert.AreEqual(1, operation.DocumentsFailed);
-            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
 

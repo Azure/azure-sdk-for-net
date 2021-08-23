@@ -309,6 +309,10 @@ namespace Azure.Messaging.ServiceBus
         /// or Subscription.
         /// Implementation is mandatory.
         /// </summary>
+        /// <remarks>
+        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        /// a deadlock scenario.
+        /// </remarks>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
             Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
@@ -384,6 +388,10 @@ namespace Azure.Messaging.ServiceBus
         /// this processor is running.
         /// Implementation is mandatory.
         /// </summary>
+        /// <remarks>
+        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        /// a deadlock scenario.
+        /// </remarks>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
             Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",

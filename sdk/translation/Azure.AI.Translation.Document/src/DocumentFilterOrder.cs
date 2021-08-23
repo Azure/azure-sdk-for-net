@@ -16,15 +16,15 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Initializes an instance of <see cref="DocumentFilterOrder"/>.
         /// </summary>
-        public DocumentFilterOrder(DocumentFilterProperty property, bool asc = true)
+        public DocumentFilterOrder(DocumentFilterProperty property, bool ascending = true)
         {
             Property = property;
-            Asc = asc;
+            Ascending = ascending;
         }
         /// <summary>
         /// Sort results ascendingly if true, or descendingly if false.
         /// </summary>
-        internal bool Asc { get; set; }
+        internal bool Ascending { get; set; }
         /// <summary>
         /// See <see cref="DocumentFilterProperty"/> for list of properties supported.
         /// </summary>
@@ -47,7 +47,7 @@ namespace Azure.AI.Translation.Document
             }
 
             // sorting direction
-            var direction = Asc ? "Asc" : "Desc";
+            var direction = Ascending ? "Asc" : "Desc";
 
             return $"{property} {direction}";
         }
