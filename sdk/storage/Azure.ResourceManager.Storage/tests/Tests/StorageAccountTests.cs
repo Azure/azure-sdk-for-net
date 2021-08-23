@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.True(account2.Data.Encryption.Services.File.Enabled);
             Assert.NotNull(account2.Data.Encryption.Services.File.LastEnabledTime);
 
-            //update hhtptrafficonly and validate
+            //update http traffic only and validate
             parameters = new StorageAccountUpdateParameters()
             {
                 EnableHttpsTrafficOnly = false

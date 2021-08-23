@@ -91,4 +91,4 @@ await storageAccount.DeleteAsync();
 
 ## Next steps
 
-Take a look at the [Managing Network Interfaces](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2-network/sdk/network/Azure.ResourceManager.Network/samples/Sample2_ManagingNetworkInterfaces.md) samples.
+Take a look at the [Managing Blob Containers](https://github.com/yukun-dong/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/storage/Azure.ResourceManager.Storage/samples/Sample2_ManagingBlobContainers.md) samples.

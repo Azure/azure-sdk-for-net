@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
         [Test]
         [RecordedTest]
-        public async Task UpdataBlobContainer()
+        public async Task UpdateBlobContainer()
         {
             //create a blob container
             string containerName = Recording.GenerateAssetName("testblob");

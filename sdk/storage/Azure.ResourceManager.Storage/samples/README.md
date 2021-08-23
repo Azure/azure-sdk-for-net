@@ -11,5 +11,5 @@ description: Samples for the Azure.ResourceManager.Storage client library
 
 # Azure.ResourceManager.Storage Samples
 
-- [Managing Virtual Networks](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/network/Azure.ResourceManager.Storage/samples/Sample1_ManagingStorageAccounts.md)
-- [Managing Network Interfaces](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/network/Azure.ResourceManager.Storage/samples/Sample2_ManagingBlobContainers.md)
+- [Managing Storage Accounts](https://github.com/yukun-dong/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/storage/Azure.ResourceManager.Storage/samples/Sample1_ManagingStorageAccounts.md)
+- [Managing Blob Containers](https://github.com/yukun-dong/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/storage/Azure.ResourceManager.Storage/samples/Sample2_ManagingBlobContainers.md)
