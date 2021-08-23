@@ -13,7 +13,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    [JsonConverter(typeof(ProviderResourceTypeConverter))]
     public partial class ProviderResourceType
     {
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element)
@@ -136,19 +135,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
-        }
-
-        internal partial class ProviderResourceTypeConverter : JsonConverter<ProviderResourceType>
-        {
-            public override void Write(Utf8JsonWriter writer, ProviderResourceType providerResourceType, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(providerResourceType);
-            }
-            public override ProviderResourceType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeProviderResourceType(document.RootElement);
-            }
         }
     }
 }

@@ -12,11 +12,9 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Resource type managed by the resource provider. </summary>
-    [PropertyReferenceType]
     public partial class ProviderResourceType
     {
         /// <summary> Initializes a new instance of ProviderResourceType. </summary>
-        [InitializationConstructor]
         public ProviderResourceType()
         {
             Locations = new ChangeTrackingList<string>();
@@ -37,7 +35,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="apiProfiles"> The API profiles for the resource provider. </param>
         /// <param name="capabilities"> The additional capabilities offered by this resource type. </param>
         /// <param name="properties"> The properties. </param>
-        [SerializationConstructor]
         internal ProviderResourceType(string resourceType, IReadOnlyList<string> locations, IReadOnlyList<ProviderExtendedLocation> locationMappings, IReadOnlyList<Alias> aliases, IReadOnlyList<string> apiVersions, string defaultApiVersion, IReadOnlyList<ApiProfile> apiProfiles, string capabilities, IReadOnlyDictionary<string, string> properties)
         {
             ResourceType = resourceType;
