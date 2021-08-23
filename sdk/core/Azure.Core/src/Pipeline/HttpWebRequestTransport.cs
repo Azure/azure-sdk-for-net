@@ -362,13 +362,10 @@ namespace Azure.Core.Pipeline
             }
 
             // ServerCertificateCustomValidationCallback
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+            if (options.ServerCertificateCustomValidationCallback != null)
             {
-                if (options.ServerCertificateCustomValidationCallback != null)
-                {
-                    request.ServerCertificateValidationCallback =
-                        (_, certificate, _, _) => options.ServerCertificateCustomValidationCallback(new X509Certificate2(certificate));
-                }
+                request.ServerCertificateValidationCallback =
+                    (_, certificate, _, _) => options.ServerCertificateCustomValidationCallback(new X509Certificate2(certificate));
             }
         }
     }
