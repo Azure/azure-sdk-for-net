@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// device.</param>
         /// <param name="lastOccurrence">Most recent time this alert was raised
         /// for this device, on this day.</param>
-        public IoTSecurityAggregatedAlertPropertiesTopDevicesListItem(string deviceId = default(string), int? alertsCount = default(int?), string lastOccurrence = default(string))
+        public IoTSecurityAggregatedAlertPropertiesTopDevicesListItem(string deviceId = default(string), long? alertsCount = default(long?), string lastOccurrence = default(string))
         {
             DeviceId = deviceId;
             AlertsCount = alertsCount;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Gets number of alerts raised for this device.
         /// </summary>
         [JsonProperty(PropertyName = "alertsCount")]
-        public int? AlertsCount { get; private set; }
+        public long? AlertsCount { get; private set; }
 
         /// <summary>
         /// Gets most recent time this alert was raised for this device, on
