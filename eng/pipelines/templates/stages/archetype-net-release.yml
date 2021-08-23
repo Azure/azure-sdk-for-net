@@ -43,6 +43,23 @@ stages:
         dependsOn: Signing
         condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
         jobs:
+          - ${{if ne(artifact.skipPublishPackage, 'true')}}:
+            - job: InstallationCheck
+              displayName: "Installation Check"
+              steps:
+                - download: current
+                  artifact: ${{parameters.ArtifactName}}-signed
+                - pwsh: |
+                    Write-Host "Create new console"
+                    dotnet new console
+                    Write-Host "Adding package dependency for ${{artifact.name}}"
+                    dotnet add package ${{artifact.name}}
+                    Write-Host "NuGet Cache list:"
+                    nuget locals all -list
+                    Write-Host "Clearing NuGet package cache"
+                    nuget locals all -clear
+                    Write-Host "Restoring dependencies"
+                    dotnet restore
           - deployment: TagRepository
             displayName: "Create release tag"
             condition: ne(variables['Skip.TagRepository'], 'true')
