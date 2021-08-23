@@ -12,7 +12,7 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the FileService data model. </summary>
-    public partial class FileServiceData : Resources.Models.Resource
+    public partial class FileServiceData : Resource
     {
         /// <summary> Initializes a new instance of FileServiceData. </summary>
         public FileServiceData()

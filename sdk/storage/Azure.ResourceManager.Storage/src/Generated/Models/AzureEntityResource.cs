@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The resource model definition for an Azure Resource Manager resource with an etag. </summary>
-    public partial class AzureEntityResource : Resources.Models.Resource
+    public partial class AzureEntityResource : Resource
     {
         /// <summary> Initializes a new instance of AzureEntityResource. </summary>
         public AzureEntityResource()

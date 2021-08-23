@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<QueueService>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("QueueService.GetServiceProperties");
+            using var scope = _clientDiagnostics.CreateScope("QueueService.Get");
             scope.Start();
             try
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<QueueService> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("QueueService.GetServiceProperties");
+            using var scope = _clientDiagnostics.CreateScope("QueueService.Get");
             scope.Start();
             try
             {

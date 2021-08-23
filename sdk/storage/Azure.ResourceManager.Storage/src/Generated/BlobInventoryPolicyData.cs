@@ -13,7 +13,7 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the BlobInventoryPolicy data model. </summary>
-    public partial class BlobInventoryPolicyData : Resources.Models.Resource
+    public partial class BlobInventoryPolicyData : Resource
     {
         /// <summary> Initializes a new instance of BlobInventoryPolicyData. </summary>
         public BlobInventoryPolicyData()

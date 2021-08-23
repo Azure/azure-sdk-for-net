@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<TableService>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TableService.GetServiceProperties");
+            using var scope = _clientDiagnostics.CreateScope("TableService.Get");
             scope.Start();
             try
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TableService> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("TableService.GetServiceProperties");
+            using var scope = _clientDiagnostics.CreateScope("TableService.Get");
             scope.Start();
             try
             {

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class PrivateLinkResource : Resources.Models.Resource
+    public partial class PrivateLinkResource : Resource
     {
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
         public PrivateLinkResource()

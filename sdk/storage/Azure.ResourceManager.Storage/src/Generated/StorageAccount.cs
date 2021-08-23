@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<StorageAccount>> GetAsync(StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.GetProperties");
+            using var scope = _clientDiagnostics.CreateScope("StorageAccount.Get");
             scope.Start();
             try
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StorageAccount> Get(StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("StorageAccount.GetProperties");
+            using var scope = _clientDiagnostics.CreateScope("StorageAccount.Get");
             scope.Start();
             try
             {
