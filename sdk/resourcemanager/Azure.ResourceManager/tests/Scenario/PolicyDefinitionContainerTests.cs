@@ -68,6 +68,20 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task ListByTenant()
+        {
+            string filter = "category eq 'Compute'";
+            await foreach (var tempTenant in Client.GetTenants().GetAllAsync())
+            {
+                await foreach (var builtInPolicyDefinition in tempTenant.GetAllBuiltInPolicyDefinitionsAsync(filter))
+                {
+                    Assert.AreEqual(builtInPolicyDefinition.Data.PolicyType, PolicyType.BuiltIn);
+                }
+            }
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task Get()
         {
             string policyDefinitionName = Recording.GenerateAssetName("polDef-G-");
@@ -76,6 +90,17 @@ namespace Azure.ResourceManager.Tests
             PolicyDefinition getPolicyDefinition = await Client.DefaultSubscription.GetPolicyDefinitions().GetAsync(policyDefinitionName);
             AssertValidPolicyDefinition(policyDefinition, getPolicyDefinition);
             await policyDefinition.DeleteAsync();
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetByTenant()
+        {
+            await foreach (var tempTenant in Client.GetTenants().GetAllAsync())
+            {
+                PolicyDefinition getBuiltInPolicyDefinition = await tempTenant.GetBuiltInPolicyDefinitionAsync("04d53d87-841c-4f23-8a5b-21564380b55e");
+                Assert.AreEqual(getBuiltInPolicyDefinition.Data.DisplayName, "Deploy Diagnostic Settings for Service Bus to Log Analytics workspace");
+            }
         }
 
         private static PolicyDefinitionData CreatePolicyDefinitionData(string displayName) => new PolicyDefinitionData

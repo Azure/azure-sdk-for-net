@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace Azure.ResourceManager.Resources
     public class Tenant : ArmResource
     {
         private readonly ProviderRestOperations _providerRestOperations;
+        private readonly PolicyDefinitionsRestOperations _policyDefinitionsRestOperations;
+        private readonly PolicySetDefinitionsRestOperations _policySetDefinitionsRestOperations;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly TenantData _data;
 
@@ -42,6 +45,8 @@ namespace Azure.ResourceManager.Resources
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, Guid.Empty.ToString(), BaseUri);
+            _policyDefinitionsRestOperations = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _policySetDefinitionsRestOperations = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
         }
 
         /// <summary>
@@ -56,6 +61,8 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, Guid.Empty.ToString(), BaseUri);
+            _policyDefinitionsRestOperations = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _policySetDefinitionsRestOperations = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
         }
 
         /// <summary>
@@ -264,13 +271,45 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// This operation retrieves a list of all the built-in policy definitions that match the optional given $filter. If $filter='policyType -eq {value}' is provided, the returned list only includes all built-in policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all built-in policy definitions whose category match the {value}.
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given scope. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose category match the {value}. </param>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyDefinition> GetAllBuiltInPolicyDefinitionAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyDefinition> GetAllBuiltInPolicyDefinitionsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return new PolicyDefinitionContainer(this).GetAllAsync(filter, top, cancellationToken);
+            async Task<Page<PolicyDefinition>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetAllBuiltInPolicyDefinitions");
+                scope.Start();
+
+                try
+                {
+                    Response<PolicyDefinitionListResult> response = await _policyDefinitionsRestOperations.GetBuiltInAsync(filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<PolicyDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetAllBuiltInPolicyDefinitions");
+                scope.Start();
+
+                try
+                {
+                    Response<PolicyDefinitionListResult> response = await _policyDefinitionsRestOperations.GetBuiltInNextPageAsync(nextLink, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -280,9 +319,41 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyDefinition> GetAllBuiltInPolicyDefinition(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyDefinition> GetAllBuiltInPolicyDefinitions(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return new PolicyDefinitionContainer(this).GetAll(filter, top, cancellationToken);
+            Page<PolicyDefinition> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetAllBuiltInPolicyDefinitions");
+                scope.Start();
+
+                try
+                {
+                    Response<PolicyDefinitionListResult> response = _policyDefinitionsRestOperations.GetBuiltIn(filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<PolicyDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetAllBuiltInPolicyDefinitions");
+                scope.Start();
+
+                try
+                {
+                    Response<PolicyDefinitionListResult> response = _policyDefinitionsRestOperations.GetBuiltInNextPage(nextLink, filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -292,9 +363,41 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicySetDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicySetDefinition> GetAllBuiltInPolicySetDefinitionAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicySetDefinition> GetAllBuiltInPolicySetDefinitionsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return new PolicySetDefinitionContainer(this).GetAllAsync(filter, top, cancellationToken);
+            async Task<Page<PolicySetDefinition>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetAllBuiltInPolicySetDefinitions");
+                scope.Start();
+
+                try
+                {
+                    Response<PolicySetDefinitionListResult> response = await _policySetDefinitionsRestOperations.GetBuiltInAsync(filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<PolicySetDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetAllBuiltInPolicySetDefinitions");
+                scope.Start();
+
+                try
+                {
+                    Response<PolicySetDefinitionListResult> response = await _policySetDefinitionsRestOperations.GetBuiltInNextPageAsync(nextLink, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -304,9 +407,41 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicySetDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicySetDefinition> GetAllBuiltInPolicySetDefinition(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicySetDefinition> GetAllBuiltInPolicySetDefinitions(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return new PolicySetDefinitionContainer(this).GetAll(filter, top, cancellationToken);
+            Page<PolicySetDefinition> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetAllBuiltInPolicySetDefinitions");
+                scope.Start();
+
+                try
+                {
+                    Response<PolicySetDefinitionListResult> response = _policySetDefinitionsRestOperations.GetBuiltIn(filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<PolicySetDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("Tenant.GetAllBuiltInPolicySetDefinitions");
+                scope.Start();
+
+                try
+                {
+                    Response<PolicySetDefinitionListResult> response = _policySetDefinitionsRestOperations.GetBuiltInNextPage(nextLink, filter, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(this, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> This operation retrieves the built-in policy definition with the given name. </summary>
@@ -314,7 +449,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<PolicyDefinition>> GetBuiltInPolicyDefinitionAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            return await new PolicyDefinitionContainer(this).GetAsync(policyDefinitionName, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("Tenant.GetBuiltInPolicyDefinition");
+            scope.Start();
+
+            try
+            {
+                var response = await _policyDefinitionsRestOperations.GetBuiltInAsync(policyDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PolicyDefinition(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> This operation retrieves the built-in policy definition with the given name. </summary>
@@ -322,7 +471,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<PolicyDefinition> GetBuiltInPolicyDefinition(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            return new PolicyDefinitionContainer(this).Get(policyDefinitionName, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("Tenant.GetBuiltInPolicyDefinition");
+            scope.Start();
+
+            try
+            {
+                var response = _policyDefinitionsRestOperations.GetBuiltIn(policyDefinitionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PolicyDefinition(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
@@ -330,7 +493,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public async virtual Task<Response<PolicySetDefinition>> GetBuiltInPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            return await new PolicySetDefinitionContainer(this).GetAsync(policySetDefinitionName, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("Tenant.GetBuiltInPolicySetDefinition");
+            scope.Start();
+
+            try
+            {
+                var response = await _policySetDefinitionsRestOperations.GetBuiltInAsync(policySetDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PolicySetDefinition(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
@@ -338,7 +515,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         public virtual Response<PolicySetDefinition> GetBuiltInPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            return new PolicySetDefinitionContainer(this).Get(policySetDefinitionName, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("Tenant.GetBuiltInPolicySetDefinition");
+            scope.Start();
+
+            try
+            {
+                var response = _policySetDefinitionsRestOperations.GetBuiltIn(policySetDefinitionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PolicySetDefinition(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

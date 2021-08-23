@@ -80,6 +80,19 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task ListByTenant()
+        {
+            await foreach (var tempTenant in Client.GetTenants().GetAllAsync())
+            {
+                await foreach (var builtInPolicyDefinition in tempTenant.GetAllBuiltInPolicySetDefinitionsAsync())
+                {
+                    Assert.AreEqual(builtInPolicyDefinition.Data.PolicyType, PolicyType.BuiltIn);
+                }
+            }
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task Get()
         {
             string policyDefinitionName = Recording.GenerateAssetName("tesPolDef-4-");
@@ -92,6 +105,17 @@ namespace Azure.ResourceManager.Tests
             AssertValidPolicySetDefinition(policySetDefinition, getPolicySetDefinition);
             await policySetDefinition.DeleteAsync();
             await policyDefinition.DeleteAsync();
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetByTenant()
+        {
+            await foreach (var tempTenant in Client.GetTenants().GetAllAsync())
+            {
+                PolicySetDefinition getBuiltInPolicyDefinition = await tempTenant.GetBuiltInPolicySetDefinitionAsync("75714362-cae7-409e-9b99-a8e5075b7fad");
+                Assert.AreEqual(getBuiltInPolicyDefinition.Data.DisplayName, "Enable Azure Monitor for Virtual Machine Scale Sets");
+            }
         }
 
         private static PolicyDefinitionData CreatePolicyDefinitionData(string displayName) => new PolicyDefinitionData
