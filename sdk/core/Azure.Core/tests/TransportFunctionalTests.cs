@@ -3,10 +3,13 @@
 
 using System;
 using System.Buffers;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,7 +31,7 @@ namespace Azure.Core.Tests
         {
         }
 
-        protected abstract HttpPipelineTransport GetTransport(bool https = false);
+        protected abstract HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null);
 
         public static object[] ContentWithLength =>
             new object[]
@@ -914,6 +917,55 @@ namespace Azure.Core.Tests
                 tcs.SetResult(null);
 
                 Assert.ThrowsAsync<IOException>(async () => await response.ContentStream.CopyToAsync(new MemoryStream()));
+            }
+        }
+
+        [Test]
+        public async Task ServerCertificateCustomValidationCallbackIsHonored([Values(true, false)] bool setCertCallback,[Values(true, false)]  bool isValidCert)
+        {
+            using (TestServer testServer = new TestServer(
+                async context =>
+                {
+                    byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+                }, true))
+            {
+                bool certValidationCalled = false;
+                var options = new HttpPipelineTransportOptions();
+
+                if (setCertCallback)
+                {
+                    options.ServerCertificateCustomValidationCallback = certificate2 =>
+                    {
+                        certValidationCalled = true;
+                        return isValidCert;
+                    };
+                }
+                var transport = GetTransport(true, options);
+                Request request = transport.CreateRequest();
+                request.Uri.Reset(testServer.Address);
+
+                try
+                {
+                    Response response = await ExecuteRequest(request, transport);
+                }
+                catch (Exception ex)
+                {
+                    ex = ex.InnerException;
+                    while (ex is { } && ex is not AuthenticationException)
+                    {
+                        ex = ex.InnerException;
+                    }
+                    if (ex is not AuthenticationException)
+                    {
+                        throw;
+                    }
+                    Assert.That(ex.Message.Contains("certificate"));
+                }
+                finally
+                {
+                    Assert.AreEqual(setCertCallback, certValidationCalled);
+                }
             }
         }
 

@@ -16,14 +16,22 @@ namespace Azure.Core.Tests
         {
         }
 
-        protected override HttpPipelineTransport GetTransport(bool https = false)
+        protected override HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null)
         {
             if (https)
             {
-                return new HttpWebRequestTransport(request => request.ServerCertificateValidationCallback += (_, _, _, _) => true);
+                return options switch
+                {
+                    null => new HttpWebRequestTransport(request => request.ServerCertificateValidationCallback += (_, _, _, _) => true),
+                    _ => new HttpWebRequestTransport(options)
+                };
             }
 
-            return new HttpWebRequestTransport();
+            return options switch
+            {
+                null => new HttpWebRequestTransport(),
+                _ => new HttpWebRequestTransport(options)
+            };
         }
 
         [Test]

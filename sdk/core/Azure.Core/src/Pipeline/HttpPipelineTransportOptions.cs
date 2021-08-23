@@ -9,16 +9,11 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Enables configuration of options for the <see cref="HttpClientTransport"/>
     /// </summary>
-    public class HttpClientTransportOptions
+    public class HttpPipelineTransportOptions
     {
         /// <summary>
-        /// A callback that defines whether to validate the certificate presented by the server.
+        /// A delegate that validates the certificate presented by the server.
         /// </summary>
         public Func<X509Certificate2?, bool>? ServerCertificateCustomValidationCallback { get; set; }
-
-        /// <summary>
-        /// If <c>true</c>, all service certificates are treated as trusted.
-        /// </summary>
-        public bool TrustAllServerCertificates { get; set; }
     }
 }

@@ -28,15 +28,14 @@ namespace Azure.Core.Pipeline
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
         public HttpClientTransport() : this(CreateDefaultClient())
-        {
-        }
+        { }
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
-        /// <param name="options">The <see cref="HttpClientTransportOptions"/> that to configure the behavior of the transport.</param>
-        public static HttpClientTransport CreateWithDefaultSettings(HttpClientTransportOptions? options = null)
-            => new(CreateDefaultClient(options));
+        /// <param name="options">The <see cref="HttpPipelineTransportOptions"/> that to configure the behavior of the transport.</param>
+        public HttpClientTransport(HttpPipelineTransportOptions? options = null) : this(CreateDefaultClient(options))
+        { }
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
@@ -140,7 +139,7 @@ namespace Azure.Core.Pipeline
             message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
         }
 
-        private static HttpClient CreateDefaultClient(HttpClientTransportOptions? options = null)
+        private static HttpClient CreateDefaultClient(HttpPipelineTransportOptions? options = null)
         {
             var httpMessageHandler = CreateDefaultHandler(options);
             SetProxySettings(httpMessageHandler);
@@ -153,7 +152,7 @@ namespace Azure.Core.Pipeline
             };
         }
 
-        private static HttpMessageHandler CreateDefaultHandler(HttpClientTransportOptions? options = null)
+        private static HttpMessageHandler CreateDefaultHandler(HttpPipelineTransportOptions? options = null)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
@@ -545,23 +544,17 @@ namespace Azure.Core.Pipeline
             public override string ToString() => _responseMessage.ToString();
         }
 #if NETCOREAPP
-        private static SocketsHttpHandler ApplyOptionsToHandler(SocketsHttpHandler httpHandler, HttpClientTransportOptions? options)
+        private static SocketsHttpHandler ApplyOptionsToHandler(SocketsHttpHandler httpHandler, HttpPipelineTransportOptions? options)
         {
             if (options == null)
             {
                 return httpHandler;
             }
 
-            // TrustAllServerCertificates and ServerCertificateCustomValidationCallback
+            // ServerCertificateCustomValidationCallback
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
-                if (options.TrustAllServerCertificates)
-                {
-#pragma warning disable CA5359 // The ServerCertificateValidationCallback is set to a function that accepts any server certificate, by always returning true. Ensure that server certificates are validated to verify the identity of the server receiving requests.
-                    httpHandler.SslOptions.RemoteCertificateValidationCallback = (_, _, _, _) => true;
-#pragma warning restore CA5359 // The ServerCertificateValidationCallback is set to a function that accepts any server certificate, by always returning true. Ensure that server certificates are validated to verify the identity of the server receiving requests.
-                }
-                else if (options.ServerCertificateCustomValidationCallback != null)
+                if (options.ServerCertificateCustomValidationCallback != null)
                 {
                     httpHandler.SslOptions.RemoteCertificateValidationCallback = (_, certificate, _, _) =>
                         certificate switch
@@ -578,25 +571,17 @@ namespace Azure.Core.Pipeline
         }
 #endif
 
-        private static HttpClientHandler ApplyOptionsToHandler(HttpClientHandler httpHandler, HttpClientTransportOptions? options)
+        private static HttpClientHandler ApplyOptionsToHandler(HttpClientHandler httpHandler, HttpPipelineTransportOptions? options)
         {
             if (options == null)
             {
                 return httpHandler;
             }
 
-            // TrustAllServerCertificates and ServerCertificateCustomValidationCallback
+            // ServerCertificateCustomValidationCallback
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
-                if (options.TrustAllServerCertificates)
-                {
-#if NETSTANDARD
-                httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
-#else
-                    httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-#endif
-                }
-                else if (options.ServerCertificateCustomValidationCallback != null)
+                if (options.ServerCertificateCustomValidationCallback != null)
                 {
                     httpHandler.ServerCertificateCustomValidationCallback =
                         (_, certificate2, _, _) => options.ServerCertificateCustomValidationCallback(certificate2);

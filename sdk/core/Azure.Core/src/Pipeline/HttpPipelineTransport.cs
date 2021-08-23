@@ -28,5 +28,31 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns></returns>
         public abstract Request CreateRequest();
+
+        /// <summary>
+        /// Creates the default <see cref="HttpPipelineTransport"/> based on the current environment and configuration.
+        /// </summary>
+        /// <param name="options"><see cref="HttpPipelineTransportOptions"/> that affect how the transport is configured.</param>
+        /// <returns></returns>
+        public static HttpPipelineTransport Create(HttpPipelineTransportOptions? options = null)
+        {
+#if NETFRAMEWORK
+            if (!AppContextSwitchHelper.GetConfigValue(
+                "Azure.Core.Pipeline.DisableHttpWebRequestTransport",
+                "AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT"))
+            {
+                return options switch
+                {
+                    null => HttpWebRequestTransport.Shared,
+                    _ => new HttpWebRequestTransport(options)
+                };
+            }
+#endif
+            return options switch
+            {
+                null => HttpClientTransport.Shared,
+                _ => new HttpClientTransport(options)
+            };
+        }
     }
 }
