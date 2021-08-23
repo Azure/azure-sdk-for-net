@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates an express route circuit. </summary>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="parameters"> Parameters supplied to the create or update express route circuit operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<ExpressRouteCircuit> CreateOrUpdate(string circuitName, ExpressRouteCircuitData parameters, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCircuitCreateOrUpdateOperation CreateOrUpdate(string circuitName, ExpressRouteCircuitData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (circuitName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(circuitName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates an express route circuit. </summary>
-        /// <param name="circuitName"> The name of the circuit. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update express route circuit operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteCircuit>> CreateOrUpdateAsync(string circuitName, ExpressRouteCircuitData parameters, CancellationToken cancellationToken = default)
-        {
-            if (circuitName == null)
-            {
-                throw new ArgumentNullException(nameof(circuitName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(circuitName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates an express route circuit. </summary>
-        /// <param name="circuitName"> The name of the circuit. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update express route circuit operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ExpressRouteCircuitCreateOrUpdateOperation StartCreateOrUpdate(string circuitName, ExpressRouteCircuitData parameters, CancellationToken cancellationToken = default)
-        {
-            if (circuitName == null)
-            {
-                throw new ArgumentNullException(nameof(circuitName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, circuitName, parameters, cancellationToken);
-                return new ExpressRouteCircuitCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, circuitName, parameters).Request, response);
+                var operation = new ExpressRouteCircuitCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, circuitName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates an express route circuit. </summary>
         /// <param name="circuitName"> The name of the circuit. </param>
         /// <param name="parameters"> Parameters supplied to the create or update express route circuit operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteCircuitCreateOrUpdateOperation> StartCreateOrUpdateAsync(string circuitName, ExpressRouteCircuitData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCircuitCreateOrUpdateOperation> CreateOrUpdateAsync(string circuitName, ExpressRouteCircuitData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (circuitName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, circuitName, parameters, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCircuitCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, circuitName, parameters).Request, response);
+                var operation = new ExpressRouteCircuitCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, circuitName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -318,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the express route circuits in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCircuit" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<ExpressRouteCircuit> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ExpressRouteCircuit> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ExpressRouteCircuit> FirstPageFunc(int? pageSizeHint)
             {
@@ -356,7 +304,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the express route circuits in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCircuit" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<ExpressRouteCircuit> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ExpressRouteCircuit> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ExpressRouteCircuit>> FirstPageFunc(int? pageSizeHint)
             {
@@ -397,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitContainer.GetAllAsGenericResources");
             scope.Start();
@@ -420,7 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitContainer.GetAllAsGenericResources");
             scope.Start();

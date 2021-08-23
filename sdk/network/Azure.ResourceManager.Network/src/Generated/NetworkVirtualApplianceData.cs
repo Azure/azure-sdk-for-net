@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="resourceIdentity"> The service principal that has read access to cloud-init and config blob. </param>
+        /// <param name="identity"> The service principal that has read access to cloud-init and config blob. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="nvaSku"> Network Virtual Appliance SKU. </param>
         /// <param name="addressPrefix"> Address Prefix. </param>
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal NetworkVirtualApplianceData(string id, string name, string type, string location, IDictionary<string, string> tags, ResourceIdentity resourceIdentity, string etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, Models.SubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IReadOnlyList<Models.SubResource> virtualApplianceSites, IReadOnlyList<Models.SubResource> inboundSecurityRules, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal NetworkVirtualApplianceData(string id, string name, string type, string location, IDictionary<string, string> tags, ResourceIdentity identity, string etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, Models.SubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IReadOnlyList<Models.SubResource> virtualApplianceSites, IReadOnlyList<Models.SubResource> inboundSecurityRules, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
         {
-            ResourceIdentity = resourceIdentity;
+            Identity = identity;
             Etag = etag;
             NvaSku = nvaSku;
             AddressPrefix = addressPrefix;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The service principal that has read access to cloud-init and config blob. </summary>
-        public ResourceIdentity ResourceIdentity { get; set; }
+        public ResourceIdentity Identity { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Network Virtual Appliance SKU. </summary>

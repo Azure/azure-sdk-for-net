@@ -2515,7 +2515,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2530,7 +2530,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2560,7 +2560,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllBySubscription(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2575,7 +2575,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpoint(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2640,7 +2640,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2655,7 +2655,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2685,7 +2685,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllBySubscription(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -2700,7 +2700,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -4741,7 +4741,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await restOperations.GetBySubscriptionAsync(cancellationToken).ConfigureAwait(false);
+                    var response = await restOperations.GetAllBySubscriptionAsync(cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(response.Value.Value.Select(data => new ExpressRouteGateway(subscription, data)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -4766,7 +4766,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = restOperations.GetBySubscription(cancellationToken);
+                    var response = restOperations.GetAllBySubscription(cancellationToken);
                     return Response.FromValue(response.Value.Value.Select(data => new ExpressRouteGateway(subscription, data)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -5504,7 +5504,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -5519,7 +5519,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -5549,7 +5549,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscription(cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllBySubscription(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -5564,7 +5564,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -6400,7 +6400,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetByResourceGroupAsync(resourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllByResourceGroupAsync(resourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -6415,7 +6415,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetByResourceGroupNextPageAsync(nextLink, resourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllByResourceGroupNextPageAsync(nextLink, resourceGroupName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -6457,7 +6457,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetByResourceGroup(resourceGroupName, location, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllByResourceGroup(resourceGroupName, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -6472,7 +6472,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetByResourceGroupNextPage(nextLink, resourceGroupName, location, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllByResourceGroupNextPage(nextLink, resourceGroupName, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)

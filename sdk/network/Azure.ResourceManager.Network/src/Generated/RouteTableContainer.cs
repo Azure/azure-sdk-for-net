@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Create or updates a route table in a specified resource group. </summary>
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="parameters"> Parameters supplied to the create or update route table operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<RouteTable> CreateOrUpdate(string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
+        public virtual RouteTableCreateOrUpdateOperation CreateOrUpdate(string routeTableName, RouteTableData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (routeTableName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(routeTableName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or updates a route table in a specified resource group. </summary>
-        /// <param name="routeTableName"> The name of the route table. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update route table operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<RouteTable>> CreateOrUpdateAsync(string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
-        {
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(routeTableName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or updates a route table in a specified resource group. </summary>
-        /// <param name="routeTableName"> The name of the route table. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update route table operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual RouteTableCreateOrUpdateOperation StartCreateOrUpdate(string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
-        {
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, routeTableName, parameters, cancellationToken);
-                return new RouteTableCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, routeTableName, parameters).Request, response);
+                var operation = new RouteTableCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, routeTableName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Create or updates a route table in a specified resource group. </summary>
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="parameters"> Parameters supplied to the create or update route table operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<RouteTableCreateOrUpdateOperation> StartCreateOrUpdateAsync(string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<RouteTableCreateOrUpdateOperation> CreateOrUpdateAsync(string routeTableName, RouteTableData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (routeTableName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, routeTableName, parameters, cancellationToken).ConfigureAwait(false);
-                return new RouteTableCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, routeTableName, parameters).Request, response);
+                var operation = new RouteTableCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, routeTableName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -324,7 +272,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all route tables in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RouteTable" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<RouteTable> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<RouteTable> GetAll(CancellationToken cancellationToken = default)
         {
             Page<RouteTable> FirstPageFunc(int? pageSizeHint)
             {
@@ -362,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all route tables in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RouteTable" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<RouteTable> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RouteTable> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<RouteTable>> FirstPageFunc(int? pageSizeHint)
             {
@@ -403,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.GetAllAsGenericResources");
             scope.Start();
@@ -426,7 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RouteTableContainer.GetAllAsGenericResources");
             scope.Start();

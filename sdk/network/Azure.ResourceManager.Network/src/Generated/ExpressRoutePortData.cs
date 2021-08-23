@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceIdentity"> The identity of ExpressRoutePort, if configured. </param>
+        /// <param name="identity"> The identity of ExpressRoutePort, if configured. </param>
         /// <param name="peeringLocation"> The name of the peering location that the ExpressRoutePort is mapped to physically. </param>
         /// <param name="bandwidthInGbps"> Bandwidth of procured ports in Gbps. </param>
         /// <param name="provisionedBandwidthInGbps"> Aggregate Gbps of associated circuit bandwidths. </param>
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuits"> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource. </param>
         /// <param name="provisioningState"> The provisioning state of the express route port resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the express route port resource. </param>
-        internal ExpressRoutePortData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ResourceIdentity resourceIdentity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLink> links, IReadOnlyList<Models.SubResource> circuits, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, type, location, tags)
+        internal ExpressRoutePortData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ResourceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLink> links, IReadOnlyList<Models.SubResource> circuits, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, type, location, tags)
         {
             Etag = etag;
-            ResourceIdentity = resourceIdentity;
+            Identity = identity;
             PeeringLocation = peeringLocation;
             BandwidthInGbps = bandwidthInGbps;
             ProvisionedBandwidthInGbps = provisionedBandwidthInGbps;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The identity of ExpressRoutePort, if configured. </summary>
-        public ResourceIdentity ResourceIdentity { get; set; }
+        public ResourceIdentity Identity { get; set; }
         /// <summary> The name of the peering location that the ExpressRoutePort is mapped to physically. </summary>
         public string PeeringLocation { get; set; }
         /// <summary> Bandwidth of procured ports in Gbps. </summary>

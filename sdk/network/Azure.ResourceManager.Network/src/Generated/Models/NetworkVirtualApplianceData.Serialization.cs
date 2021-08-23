@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceIdentity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, ResourceIdentity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Location))
             {

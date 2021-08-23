@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Update route filter
             filterRule.Data.Access = Access.Deny;
-            filterRule = await filter.GetRouteFilterRules().CreateOrUpdateAsync(ruleName, filterRule.Data);
+            filterRule = await filter.GetRouteFilterRules().CreateOrUpdate(ruleName, filterRule.Data).WaitForCompletionAsync();
             Assert.AreEqual(ruleName, filterRule.Data.Name);
             Assert.AreEqual(Access.Deny, filterRule.Data.Access);
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
 
             // Put route filter
-            Operation<RouteFilter> filterOperation = await filterContainer.StartCreateOrUpdateAsync(filterName, filter);
+            Operation<RouteFilter> filterOperation = await filterContainer.CreateOrUpdateAsync(filterName, filter);
             return await filterOperation.WaitForCompletionAsync();;
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             // Put route filter rule
-            Operation<RouteFilterRule> ruleOperation = await filter.GetRouteFilterRules().StartCreateOrUpdateAsync(ruleName, rule);
+            Operation<RouteFilterRule> ruleOperation = await filter.GetRouteFilterRules().CreateOrUpdateAsync(ruleName, rule);
             Response<RouteFilterRule> ruleResponse = await ruleOperation.WaitForCompletionAsync();;
             return ruleResponse;
         }

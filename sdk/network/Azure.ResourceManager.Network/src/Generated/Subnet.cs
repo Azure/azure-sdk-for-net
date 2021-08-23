@@ -136,51 +136,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes the specified subnet. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<SubnetDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("Subnet.Delete");
-            scope.Start();
-            try
-            {
-                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the specified subnet. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.Delete");
-            scope.Start();
-            try
-            {
-                var operation = StartDelete(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the specified subnet. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<SubnetDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new SubnetDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SubnetDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -190,15 +158,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes the specified subnet. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual SubnetDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual SubnetDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("Subnet.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("Subnet.Delete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new SubnetDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var operation = new SubnetDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -280,9 +252,10 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Prepares a subnet by applying network intent policies. </summary>
         /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public async virtual Task<Response> PrepareNetworkPoliciesAsync(PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<SubnetPrepareNetworkPoliciesOperation> PrepareNetworkPoliciesAsync(PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (prepareNetworkPoliciesRequestParameters == null)
             {
@@ -290,61 +263,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
-            scope.Start();
-            try
-            {
-                var operation = await StartPrepareNetworkPoliciesAsync(prepareNetworkPoliciesRequestParameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Prepares a subnet by applying network intent policies. </summary>
-        /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public virtual Response PrepareNetworkPolicies(PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
-        {
-            if (prepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
-            scope.Start();
-            try
-            {
-                var operation = StartPrepareNetworkPolicies(prepareNetworkPoliciesRequestParameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Prepares a subnet by applying network intent policies. </summary>
-        /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public async virtual Task<SubnetPrepareNetworkPoliciesOperation> StartPrepareNetworkPoliciesAsync(PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
-        {
-            if (prepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Subnet.StartPrepareNetworkPolicies");
             scope.Start();
             try
             {
                 var response = await _restClient.PrepareNetworkPoliciesAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters, cancellationToken).ConfigureAwait(false);
-                return new SubnetPrepareNetworkPoliciesOperation(_clientDiagnostics, Pipeline, _restClient.CreatePrepareNetworkPoliciesRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters).Request, response);
+                var operation = new SubnetPrepareNetworkPoliciesOperation(_clientDiagnostics, Pipeline, _restClient.CreatePrepareNetworkPoliciesRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -355,21 +281,25 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Prepares a subnet by applying network intent policies. </summary>
         /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public virtual SubnetPrepareNetworkPoliciesOperation StartPrepareNetworkPolicies(PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
+        public virtual SubnetPrepareNetworkPoliciesOperation PrepareNetworkPolicies(PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (prepareNetworkPoliciesRequestParameters == null)
             {
                 throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Subnet.StartPrepareNetworkPolicies");
+            using var scope = _clientDiagnostics.CreateScope("Subnet.PrepareNetworkPolicies");
             scope.Start();
             try
             {
                 var response = _restClient.PrepareNetworkPolicies(Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters, cancellationToken);
-                return new SubnetPrepareNetworkPoliciesOperation(_clientDiagnostics, Pipeline, _restClient.CreatePrepareNetworkPoliciesRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters).Request, response);
+                var operation = new SubnetPrepareNetworkPoliciesOperation(_clientDiagnostics, Pipeline, _restClient.CreatePrepareNetworkPoliciesRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, prepareNetworkPoliciesRequestParameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -380,9 +310,10 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Unprepares a subnet by removing network intent policies. </summary>
         /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public async virtual Task<Response> UnprepareNetworkPoliciesAsync(UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<SubnetUnprepareNetworkPoliciesOperation> UnprepareNetworkPoliciesAsync(UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (unprepareNetworkPoliciesRequestParameters == null)
             {
@@ -390,61 +321,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
-            scope.Start();
-            try
-            {
-                var operation = await StartUnprepareNetworkPoliciesAsync(unprepareNetworkPoliciesRequestParameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Unprepares a subnet by removing network intent policies. </summary>
-        /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public virtual Response UnprepareNetworkPolicies(UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
-        {
-            if (unprepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
-            scope.Start();
-            try
-            {
-                var operation = StartUnprepareNetworkPolicies(unprepareNetworkPoliciesRequestParameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Unprepares a subnet by removing network intent policies. </summary>
-        /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public async virtual Task<SubnetUnprepareNetworkPoliciesOperation> StartUnprepareNetworkPoliciesAsync(UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
-        {
-            if (unprepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("Subnet.StartUnprepareNetworkPolicies");
             scope.Start();
             try
             {
                 var response = await _restClient.UnprepareNetworkPoliciesAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters, cancellationToken).ConfigureAwait(false);
-                return new SubnetUnprepareNetworkPoliciesOperation(_clientDiagnostics, Pipeline, _restClient.CreateUnprepareNetworkPoliciesRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters).Request, response);
+                var operation = new SubnetUnprepareNetworkPoliciesOperation(_clientDiagnostics, Pipeline, _restClient.CreateUnprepareNetworkPoliciesRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -455,21 +339,25 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Unprepares a subnet by removing network intent policies. </summary>
         /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public virtual SubnetUnprepareNetworkPoliciesOperation StartUnprepareNetworkPolicies(UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
+        public virtual SubnetUnprepareNetworkPoliciesOperation UnprepareNetworkPolicies(UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (unprepareNetworkPoliciesRequestParameters == null)
             {
                 throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("Subnet.StartUnprepareNetworkPolicies");
+            using var scope = _clientDiagnostics.CreateScope("Subnet.UnprepareNetworkPolicies");
             scope.Start();
             try
             {
                 var response = _restClient.UnprepareNetworkPolicies(Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters, cancellationToken);
-                return new SubnetUnprepareNetworkPoliciesOperation(_clientDiagnostics, Pipeline, _restClient.CreateUnprepareNetworkPoliciesRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters).Request, response);
+                var operation = new SubnetUnprepareNetworkPoliciesOperation(_clientDiagnostics, Pipeline, _restClient.CreateUnprepareNetworkPoliciesRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, unprepareNetworkPoliciesRequestParameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

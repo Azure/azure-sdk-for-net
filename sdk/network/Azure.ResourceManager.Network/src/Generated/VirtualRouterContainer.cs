@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates the specified Virtual Router. </summary>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<VirtualRouter> CreateOrUpdate(string virtualRouterName, VirtualRouterData parameters, CancellationToken cancellationToken = default)
+        public virtual VirtualRouterCreateOrUpdateOperation CreateOrUpdate(string virtualRouterName, VirtualRouterData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (virtualRouterName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("VirtualRouterContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(virtualRouterName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates the specified Virtual Router. </summary>
-        /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update Virtual Router. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<VirtualRouter>> CreateOrUpdateAsync(string virtualRouterName, VirtualRouterData parameters, CancellationToken cancellationToken = default)
-        {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(virtualRouterName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates the specified Virtual Router. </summary>
-        /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update Virtual Router. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualRouterCreateOrUpdateOperation StartCreateOrUpdate(string virtualRouterName, VirtualRouterData parameters, CancellationToken cancellationToken = default)
-        {
-            if (virtualRouterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualRouterName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, virtualRouterName, parameters, cancellationToken);
-                return new VirtualRouterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualRouterName, parameters).Request, response);
+                var operation = new VirtualRouterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualRouterName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates the specified Virtual Router. </summary>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Virtual Router. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualRouterCreateOrUpdateOperation> StartCreateOrUpdateAsync(string virtualRouterName, VirtualRouterData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualRouterCreateOrUpdateOperation> CreateOrUpdateAsync(string virtualRouterName, VirtualRouterData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (virtualRouterName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualRouterContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("VirtualRouterContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, virtualRouterName, parameters, cancellationToken).ConfigureAwait(false);
-                return new VirtualRouterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualRouterName, parameters).Request, response);
+                var operation = new VirtualRouterCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualRouterName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -324,7 +272,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all Virtual Routers in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualRouter" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<VirtualRouter> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualRouter> GetAll(CancellationToken cancellationToken = default)
         {
             Page<VirtualRouter> FirstPageFunc(int? pageSizeHint)
             {
@@ -332,7 +280,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -347,7 +295,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -362,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all Virtual Routers in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualRouter" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VirtualRouter> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualRouter> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualRouter>> FirstPageFunc(int? pageSizeHint)
             {
@@ -370,7 +318,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -385,7 +333,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualRouter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -403,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualRouterContainer.GetAllAsGenericResources");
             scope.Start();
@@ -426,7 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualRouterContainer.GetAllAsGenericResources");
             scope.Start();

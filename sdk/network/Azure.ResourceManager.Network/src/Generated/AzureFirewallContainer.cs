@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates the specified Azure Firewall. </summary>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Azure Firewall operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<AzureFirewall> CreateOrUpdate(string azureFirewallName, AzureFirewallData parameters, CancellationToken cancellationToken = default)
+        public virtual AzureFirewallCreateOrUpdateOperation CreateOrUpdate(string azureFirewallName, AzureFirewallData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (azureFirewallName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("AzureFirewallContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(azureFirewallName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates the specified Azure Firewall. </summary>
-        /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update Azure Firewall operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<AzureFirewall>> CreateOrUpdateAsync(string azureFirewallName, AzureFirewallData parameters, CancellationToken cancellationToken = default)
-        {
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("AzureFirewallContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(azureFirewallName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates the specified Azure Firewall. </summary>
-        /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update Azure Firewall operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual AzureFirewallCreateOrUpdateOperation StartCreateOrUpdate(string azureFirewallName, AzureFirewallData parameters, CancellationToken cancellationToken = default)
-        {
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("AzureFirewallContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, azureFirewallName, parameters, cancellationToken);
-                return new AzureFirewallCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, azureFirewallName, parameters).Request, response);
+                var operation = new AzureFirewallCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, azureFirewallName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates the specified Azure Firewall. </summary>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Azure Firewall operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<AzureFirewallCreateOrUpdateOperation> StartCreateOrUpdateAsync(string azureFirewallName, AzureFirewallData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<AzureFirewallCreateOrUpdateOperation> CreateOrUpdateAsync(string azureFirewallName, AzureFirewallData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (azureFirewallName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("AzureFirewallContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("AzureFirewallContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, azureFirewallName, parameters, cancellationToken).ConfigureAwait(false);
-                return new AzureFirewallCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, azureFirewallName, parameters).Request, response);
+                var operation = new AzureFirewallCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, azureFirewallName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -318,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all Azure Firewalls in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AzureFirewall" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<AzureFirewall> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<AzureFirewall> GetAll(CancellationToken cancellationToken = default)
         {
             Page<AzureFirewall> FirstPageFunc(int? pageSizeHint)
             {
@@ -356,7 +304,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all Azure Firewalls in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AzureFirewall" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<AzureFirewall> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AzureFirewall> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AzureFirewall>> FirstPageFunc(int? pageSizeHint)
             {
@@ -397,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AzureFirewallContainer.GetAllAsGenericResources");
             scope.Start();
@@ -420,7 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AzureFirewallContainer.GetAllAsGenericResources");
             scope.Start();

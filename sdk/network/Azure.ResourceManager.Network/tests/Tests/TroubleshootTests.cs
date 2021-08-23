@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             var virtualNetworkGatewayContainer = GetVirtualNetworkGatewayContainer(resourceGroupName);
             var putVirtualNetworkGatewayResponseOperation =
-                await virtualNetworkGatewayContainer.StartCreateOrUpdateAsync(virtualNetworkGatewayName, virtualNetworkGateway);
+                await virtualNetworkGatewayContainer.CreateOrUpdateAsync(virtualNetworkGatewayName, virtualNetworkGateway);
             await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();;
             // GetVirtualNetworkGateway API
             Response<VirtualNetworkGateway> getVirtualNetworkGatewayResponse =
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //string storageName = Recording.GenerateAssetName("azsmnet");
             //var storageParameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardLRS), Kind.Storage, location);
 
-            //Operation<StorageAccount> accountOperation = await StorageManagementClient.StorageAccounts.StartCreateAsync(resourceGroupName, storageName, storageParameters);
+            //Operation<StorageAccount> accountOperation = await StorageManagementClient.StorageAccounts.CreateAsync(resourceGroupName, storageName, storageParameters);
             //Response<StorageAccount> account = await accountOperation.WaitForCompletionAsync();;
             //TroubleshootingParameters parameters = new TroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id, account.Value.Id, "https://nwtestdbdzq4xsvskrei6.blob.core.windows.net/vhds");
 
             ////Get troubleshooting
             //var networkWatcherContainer = GetNetworkWatcherContainer("NetworkWatcherRG");
-            //var troubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingAsync(parameters);
+            //var troubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.GetTroubleshootingAsync(parameters);
             //await troubleshootOperation.WaitForCompletionAsync();;
 
             ////Query last troubleshoot
-            //var queryTroubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingResultAsync(new QueryTroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id));
+            //var queryTroubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.GetTroubleshootingResultAsync(new QueryTroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id));
             //await queryTroubleshootOperation.WaitForCompletionAsync();;
             //TODO: make verification once fixed for troubleshoot API deployed
         }

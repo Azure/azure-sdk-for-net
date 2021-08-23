@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or update policy with specified rule set name within a resource group. </summary>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="parameters"> Policy to be created. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<WebApplicationFirewallPolicy> CreateOrUpdate(string policyName, WebApplicationFirewallPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual WebApplicationFirewallPolicyCreateOrUpdateOperation CreateOrUpdate(string policyName, WebApplicationFirewallPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (policyName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(policyName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or update policy with specified rule set name within a resource group. </summary>
-        /// <param name="policyName"> The name of the policy. </param>
-        /// <param name="parameters"> Policy to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<WebApplicationFirewallPolicy>> CreateOrUpdateAsync(string policyName, WebApplicationFirewallPolicyData parameters, CancellationToken cancellationToken = default)
-        {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(policyName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or update policy with specified rule set name within a resource group. </summary>
-        /// <param name="policyName"> The name of the policy. </param>
-        /// <param name="parameters"> Policy to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual WebApplicationFirewallPolicyCreateOrUpdateOperation StartCreateOrUpdate(string policyName, WebApplicationFirewallPolicyData parameters, CancellationToken cancellationToken = default)
-        {
-            if (policyName == null)
-            {
-                throw new ArgumentNullException(nameof(policyName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, policyName, parameters, cancellationToken);
-                return new WebApplicationFirewallPolicyCreateOrUpdateOperation(Parent, response);
+                var operation = new WebApplicationFirewallPolicyCreateOrUpdateOperation(Parent, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or update policy with specified rule set name within a resource group. </summary>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="parameters"> Policy to be created. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<WebApplicationFirewallPolicyCreateOrUpdateOperation> StartCreateOrUpdateAsync(string policyName, WebApplicationFirewallPolicyData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<WebApplicationFirewallPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(string policyName, WebApplicationFirewallPolicyData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (policyName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, policyName, parameters, cancellationToken).ConfigureAwait(false);
-                return new WebApplicationFirewallPolicyCreateOrUpdateOperation(Parent, response);
+                var operation = new WebApplicationFirewallPolicyCreateOrUpdateOperation(Parent, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -318,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all of the protection policies within a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebApplicationFirewallPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<WebApplicationFirewallPolicy> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<WebApplicationFirewallPolicy> GetAll(CancellationToken cancellationToken = default)
         {
             Page<WebApplicationFirewallPolicy> FirstPageFunc(int? pageSizeHint)
             {
@@ -356,7 +304,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all of the protection policies within a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebApplicationFirewallPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<WebApplicationFirewallPolicy> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebApplicationFirewallPolicy> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<WebApplicationFirewallPolicy>> FirstPageFunc(int? pageSizeHint)
             {
@@ -397,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyContainer.GetAllAsGenericResources");
             scope.Start();
@@ -420,7 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebApplicationFirewallPolicyContainer.GetAllAsGenericResources");
             scope.Start();

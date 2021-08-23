@@ -53,9 +53,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         public const string Peering_Microsoft = "MicrosoftPeering";
 
         [Test]
+        [RecordedTest]
         public async Task BGPCommunityApiTest()
         {
-            _ = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/routefilters");
+            //_ = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/routefilters");
             AsyncPageable<BgpServiceCommunity> communitiesAsync = ArmClient.DefaultSubscription.GetBgpServiceCommunitiesAsync();
             List<BgpServiceCommunity> communities = await communitiesAsync.ToEnumerableAsync();
             Assert.IsNotEmpty(communities);
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         [Ignore("Track2: The corresponding configuration is needed, and the account is missing the key configuration")]
         public async Task ExpressRouteMicrosoftPeeringApiTest()
         {
@@ -86,6 +88,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         [Ignore("Track2: The corresponding configuration is needed, and the account is missing the key configuration")]
         public async Task ExpressRouteMicrosoftPeeringApiWithIpv6Test()
         {

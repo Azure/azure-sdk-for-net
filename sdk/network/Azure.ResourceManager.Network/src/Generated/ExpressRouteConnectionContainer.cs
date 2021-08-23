@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit. </summary>
         /// <param name="connectionName"> The name of the connection subresource. </param>
         /// <param name="putExpressRouteConnectionParameters"> Parameters required in an ExpressRouteConnection PUT operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="putExpressRouteConnectionParameters"/> is null. </exception>
-        public virtual Response<ExpressRouteConnection> CreateOrUpdate(string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteConnectionCreateOrUpdateOperation CreateOrUpdate(string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteConnectionContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(connectionName, putExpressRouteConnectionParameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit. </summary>
-        /// <param name="connectionName"> The name of the connection subresource. </param>
-        /// <param name="putExpressRouteConnectionParameters"> Parameters required in an ExpressRouteConnection PUT operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="putExpressRouteConnectionParameters"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteConnection>> CreateOrUpdateAsync(string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
-        {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
-            if (putExpressRouteConnectionParameters == null)
-            {
-                throw new ArgumentNullException(nameof(putExpressRouteConnectionParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteConnectionContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(connectionName, putExpressRouteConnectionParameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit. </summary>
-        /// <param name="connectionName"> The name of the connection subresource. </param>
-        /// <param name="putExpressRouteConnectionParameters"> Parameters required in an ExpressRouteConnection PUT operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="putExpressRouteConnectionParameters"/> is null. </exception>
-        public virtual ExpressRouteConnectionCreateOrUpdateOperation StartCreateOrUpdate(string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
-        {
-            if (connectionName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionName));
-            }
-            if (putExpressRouteConnectionParameters == null)
-            {
-                throw new ArgumentNullException(nameof(putExpressRouteConnectionParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteConnectionContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, connectionName, putExpressRouteConnectionParameters, cancellationToken);
-                return new ExpressRouteConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, putExpressRouteConnectionParameters).Request, response);
+                var operation = new ExpressRouteConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, putExpressRouteConnectionParameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit. </summary>
         /// <param name="connectionName"> The name of the connection subresource. </param>
         /// <param name="putExpressRouteConnectionParameters"> Parameters required in an ExpressRouteConnection PUT operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="putExpressRouteConnectionParameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteConnectionCreateOrUpdateOperation> StartCreateOrUpdateAsync(string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(string connectionName, ExpressRouteConnectionData putExpressRouteConnectionParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (connectionName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(putExpressRouteConnectionParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteConnectionContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteConnectionContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, connectionName, putExpressRouteConnectionParameters, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, putExpressRouteConnectionParameters).Request, response);
+                var operation = new ExpressRouteConnectionCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, connectionName, putExpressRouteConnectionParameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -357,7 +305,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteConnectionContainer.GetAllAsGenericResources");
             scope.Start();
@@ -380,7 +328,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteConnectionContainer.GetAllAsGenericResources");
             scope.Start();

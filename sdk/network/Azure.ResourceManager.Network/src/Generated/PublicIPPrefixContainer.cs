@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a static or dynamic public IP prefix. </summary>
         /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP prefix operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIpPrefixName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<PublicIPPrefix> CreateOrUpdate(string publicIpPrefixName, PublicIPPrefixData parameters, CancellationToken cancellationToken = default)
+        public virtual PublicIPPrefixCreateOrUpdateOperation CreateOrUpdate(string publicIpPrefixName, PublicIPPrefixData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (publicIpPrefixName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("PublicIPPrefixContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(publicIpPrefixName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a static or dynamic public IP prefix. </summary>
-        /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update public IP prefix operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIpPrefixName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<PublicIPPrefix>> CreateOrUpdateAsync(string publicIpPrefixName, PublicIPPrefixData parameters, CancellationToken cancellationToken = default)
-        {
-            if (publicIpPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIpPrefixName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefixContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(publicIpPrefixName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a static or dynamic public IP prefix. </summary>
-        /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update public IP prefix operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIpPrefixName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual PublicIPPrefixCreateOrUpdateOperation StartCreateOrUpdate(string publicIpPrefixName, PublicIPPrefixData parameters, CancellationToken cancellationToken = default)
-        {
-            if (publicIpPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIpPrefixName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefixContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, publicIpPrefixName, parameters, cancellationToken);
-                return new PublicIPPrefixCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, publicIpPrefixName, parameters).Request, response);
+                var operation = new PublicIPPrefixCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, publicIpPrefixName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a static or dynamic public IP prefix. </summary>
         /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
         /// <param name="parameters"> Parameters supplied to the create or update public IP prefix operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIpPrefixName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<PublicIPPrefixCreateOrUpdateOperation> StartCreateOrUpdateAsync(string publicIpPrefixName, PublicIPPrefixData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<PublicIPPrefixCreateOrUpdateOperation> CreateOrUpdateAsync(string publicIpPrefixName, PublicIPPrefixData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (publicIpPrefixName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefixContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PublicIPPrefixContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, publicIpPrefixName, parameters, cancellationToken).ConfigureAwait(false);
-                return new PublicIPPrefixCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, publicIpPrefixName, parameters).Request, response);
+                var operation = new PublicIPPrefixCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, publicIpPrefixName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -324,7 +272,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all public IP prefixes in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PublicIPPrefix" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<PublicIPPrefix> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<PublicIPPrefix> GetAll(CancellationToken cancellationToken = default)
         {
             Page<PublicIPPrefix> FirstPageFunc(int? pageSizeHint)
             {
@@ -362,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all public IP prefixes in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PublicIPPrefix" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<PublicIPPrefix> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PublicIPPrefix> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PublicIPPrefix>> FirstPageFunc(int? pageSizeHint)
             {
@@ -403,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PublicIPPrefixContainer.GetAllAsGenericResources");
             scope.Start();
@@ -426,7 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PublicIPPrefixContainer.GetAllAsGenericResources");
             scope.Start();

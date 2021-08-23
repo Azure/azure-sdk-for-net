@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates an authorization in the specified express route circuit. </summary>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="authorizationParameters"> Parameters supplied to the create or update express route circuit authorization operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> or <paramref name="authorizationParameters"/> is null. </exception>
-        public virtual Response<ExpressRouteCircuitAuthorization> CreateOrUpdate(string authorizationName, ExpressRouteCircuitAuthorizationData authorizationParameters, CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCircuitAuthorizationCreateOrUpdateOperation CreateOrUpdate(string authorizationName, ExpressRouteCircuitAuthorizationData authorizationParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (authorizationName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(authorizationName, authorizationParameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates an authorization in the specified express route circuit. </summary>
-        /// <param name="authorizationName"> The name of the authorization. </param>
-        /// <param name="authorizationParameters"> Parameters supplied to the create or update express route circuit authorization operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> or <paramref name="authorizationParameters"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteCircuitAuthorization>> CreateOrUpdateAsync(string authorizationName, ExpressRouteCircuitAuthorizationData authorizationParameters, CancellationToken cancellationToken = default)
-        {
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationParameters == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(authorizationName, authorizationParameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates an authorization in the specified express route circuit. </summary>
-        /// <param name="authorizationName"> The name of the authorization. </param>
-        /// <param name="authorizationParameters"> Parameters supplied to the create or update express route circuit authorization operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> or <paramref name="authorizationParameters"/> is null. </exception>
-        public virtual ExpressRouteCircuitAuthorizationCreateOrUpdateOperation StartCreateOrUpdate(string authorizationName, ExpressRouteCircuitAuthorizationData authorizationParameters, CancellationToken cancellationToken = default)
-        {
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationParameters == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters, cancellationToken);
-                return new ExpressRouteCircuitAuthorizationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters).Request, response);
+                var operation = new ExpressRouteCircuitAuthorizationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates an authorization in the specified express route circuit. </summary>
         /// <param name="authorizationName"> The name of the authorization. </param>
         /// <param name="authorizationParameters"> Parameters supplied to the create or update express route circuit authorization operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> or <paramref name="authorizationParameters"/> is null. </exception>
-        public async virtual Task<ExpressRouteCircuitAuthorizationCreateOrUpdateOperation> StartCreateOrUpdateAsync(string authorizationName, ExpressRouteCircuitAuthorizationData authorizationParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCircuitAuthorizationCreateOrUpdateOperation> CreateOrUpdateAsync(string authorizationName, ExpressRouteCircuitAuthorizationData authorizationParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (authorizationName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(authorizationParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCircuitAuthorizationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters).Request, response);
+                var operation = new ExpressRouteCircuitAuthorizationCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, authorizationName, authorizationParameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -318,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all authorizations in an express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCircuitAuthorization" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<ExpressRouteCircuitAuthorization> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ExpressRouteCircuitAuthorization> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ExpressRouteCircuitAuthorization> FirstPageFunc(int? pageSizeHint)
             {
@@ -356,7 +304,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all authorizations in an express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCircuitAuthorization" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<ExpressRouteCircuitAuthorization> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ExpressRouteCircuitAuthorization> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ExpressRouteCircuitAuthorization>> FirstPageFunc(int? pageSizeHint)
             {
@@ -397,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationContainer.GetAllAsGenericResources");
             scope.Start();
@@ -420,7 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationContainer.GetAllAsGenericResources");
             scope.Start();

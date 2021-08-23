@@ -18,13 +18,13 @@ namespace Azure.Azure.Test
         /// <param name="client">The resource management client</param>
         /// <param name="resourceType">The type of resource to create</param>
         /// <returns>A location where this resource type is supported for the current subscription</returns>
-        public static string GetResourceLocation(ArmClient client, string resourceType)
+        public static async Task<string> GetResourceLocation(ArmClient client, string resourceType)
         {
             string location = null;
             string[] parts = resourceType.Split('/');
             string providerName = parts[0];
-            var provider = client.GetProvider(providerName);
-            foreach (var resource in provider.Data.ResourceTypes)
+            ProviderInfo provider = await client.GetTenantProviderAsync(providerName);
+            foreach (var resource in provider.ResourceTypes)
             {
                 if (string.Equals(resource.ResourceType, parts[1], StringComparison.OrdinalIgnoreCase))
                 {

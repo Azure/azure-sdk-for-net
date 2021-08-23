@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a subnet in the specified virtual network. </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
-        public virtual Response<Subnet> CreateOrUpdate(string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
+        public virtual SubnetCreateOrUpdateOperation CreateOrUpdate(string subnetName, SubnetData subnetParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (subnetName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("SubnetContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(subnetName, subnetParameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a subnet in the specified virtual network. </summary>
-        /// <param name="subnetName"> The name of the subnet. </param>
-        /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
-        public async virtual Task<Response<Subnet>> CreateOrUpdateAsync(string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
-        {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
-            if (subnetParameters == null)
-            {
-                throw new ArgumentNullException(nameof(subnetParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SubnetContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(subnetName, subnetParameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a subnet in the specified virtual network. </summary>
-        /// <param name="subnetName"> The name of the subnet. </param>
-        /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
-        public virtual SubnetCreateOrUpdateOperation StartCreateOrUpdate(string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
-        {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
-            if (subnetParameters == null)
-            {
-                throw new ArgumentNullException(nameof(subnetParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("SubnetContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken);
-                return new SubnetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
+                var operation = new SubnetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a subnet in the specified virtual network. </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="subnetParameters"/> is null. </exception>
-        public async virtual Task<SubnetCreateOrUpdateOperation> StartCreateOrUpdateAsync(string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<SubnetCreateOrUpdateOperation> CreateOrUpdateAsync(string subnetName, SubnetData subnetParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (subnetName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(subnetParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SubnetContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("SubnetContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters, cancellationToken).ConfigureAwait(false);
-                return new SubnetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
+                var operation = new SubnetCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, subnetName, subnetParameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -324,7 +272,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all subnets in a virtual network. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Subnet" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<Subnet> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<Subnet> GetAll(CancellationToken cancellationToken = default)
         {
             Page<Subnet> FirstPageFunc(int? pageSizeHint)
             {
@@ -362,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all subnets in a virtual network. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Subnet" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<Subnet> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Subnet> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<Subnet>> FirstPageFunc(int? pageSizeHint)
             {
@@ -403,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SubnetContainer.GetAllAsGenericResources");
             scope.Start();
@@ -426,7 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SubnetContainer.GetAllAsGenericResources");
             scope.Start();

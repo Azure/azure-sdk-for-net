@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates the specified Network Virtual Appliance. </summary>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<NetworkVirtualAppliance> CreateOrUpdate(string networkVirtualApplianceName, NetworkVirtualApplianceData parameters, CancellationToken cancellationToken = default)
+        public virtual NetworkVirtualApplianceCreateOrUpdateOperation CreateOrUpdate(string networkVirtualApplianceName, NetworkVirtualApplianceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (networkVirtualApplianceName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(networkVirtualApplianceName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates the specified Network Virtual Appliance. </summary>
-        /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<NetworkVirtualAppliance>> CreateOrUpdateAsync(string networkVirtualApplianceName, NetworkVirtualApplianceData parameters, CancellationToken cancellationToken = default)
-        {
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(networkVirtualApplianceName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates the specified Network Virtual Appliance. </summary>
-        /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkVirtualApplianceCreateOrUpdateOperation StartCreateOrUpdate(string networkVirtualApplianceName, NetworkVirtualApplianceData parameters, CancellationToken cancellationToken = default)
-        {
-            if (networkVirtualApplianceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkVirtualApplianceName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, networkVirtualApplianceName, parameters, cancellationToken);
-                return new NetworkVirtualApplianceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, networkVirtualApplianceName, parameters).Request, response);
+                var operation = new NetworkVirtualApplianceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, networkVirtualApplianceName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates the specified Network Virtual Appliance. </summary>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="parameters"> Parameters supplied to the create or update Network Virtual Appliance. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkVirtualApplianceCreateOrUpdateOperation> StartCreateOrUpdateAsync(string networkVirtualApplianceName, NetworkVirtualApplianceData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkVirtualApplianceCreateOrUpdateOperation> CreateOrUpdateAsync(string networkVirtualApplianceName, NetworkVirtualApplianceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (networkVirtualApplianceName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, networkVirtualApplianceName, parameters, cancellationToken).ConfigureAwait(false);
-                return new NetworkVirtualApplianceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, networkVirtualApplianceName, parameters).Request, response);
+                var operation = new NetworkVirtualApplianceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, networkVirtualApplianceName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -324,7 +272,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all Network Virtual Appliances in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkVirtualAppliance" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<NetworkVirtualAppliance> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkVirtualAppliance> GetAll(CancellationToken cancellationToken = default)
         {
             Page<NetworkVirtualAppliance> FirstPageFunc(int? pageSizeHint)
             {
@@ -332,7 +280,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -347,7 +295,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -362,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all Network Virtual Appliances in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkVirtualAppliance" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<NetworkVirtualAppliance> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkVirtualAppliance> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<NetworkVirtualAppliance>> FirstPageFunc(int? pageSizeHint)
             {
@@ -370,7 +318,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -385,7 +333,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkVirtualAppliance(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -403,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.GetAllAsGenericResources");
             scope.Start();
@@ -426,7 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkVirtualApplianceContainer.GetAllAsGenericResources");
             scope.Start();

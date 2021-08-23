@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetByResourceGroupRequest(string resourceGroupName, string location)
+        internal HttpMessage CreateGetAllByResourceGroupRequest(string resourceGroupName, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<AvailablePrivateEndpointTypesResult>> GetByResourceGroupAsync(string resourceGroupName, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailablePrivateEndpointTypesResult>> GetAllByResourceGroupAsync(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetByResourceGroupRequest(resourceGroupName, location);
+            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
-        public Response<AvailablePrivateEndpointTypesResult> GetByResourceGroup(string resourceGroupName, string location, CancellationToken cancellationToken = default)
+        public Response<AvailablePrivateEndpointTypesResult> GetAllByResourceGroup(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetByResourceGroupRequest(resourceGroupName, location);
+            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateGetByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string location)
+        internal HttpMessage CreateGetAllByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="location"/> is null. </exception>
-        public async Task<Response<AvailablePrivateEndpointTypesResult>> GetByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailablePrivateEndpointTypesResult>> GetAllByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, location);
+            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="location"/> is null. </exception>
-        public Response<AvailablePrivateEndpointTypesResult> GetByResourceGroupNextPage(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
+        public Response<AvailablePrivateEndpointTypesResult> GetAllByResourceGroupNextPage(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, location);
+            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

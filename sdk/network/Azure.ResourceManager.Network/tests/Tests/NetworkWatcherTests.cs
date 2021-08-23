@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //await getResponse.Value.GetNetworkConfigurationDiagnosticAsync();
 
             //Delete Network Watcher
-            await getResponse.Value.StartDeleteAsync();
+            await getResponse.Value.DeleteAsync();
 
             //Get all Network Watchers in the subscription
             List<NetworkWatcher> listAllAfterDeletingResponse = await ArmClient.DefaultSubscription.GetNetworkWatchersAsync().ToEnumerableAsync();

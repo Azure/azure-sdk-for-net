@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates a VirtualWAN resource if it doesn&apos;t exist else updates the existing VirtualWAN. </summary>
         /// <param name="virtualWANName"> The name of the VirtualWAN being created or updated. </param>
         /// <param name="wANParameters"> Parameters supplied to create or update VirtualWAN. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> or <paramref name="wANParameters"/> is null. </exception>
-        public virtual Response<VirtualWAN> CreateOrUpdate(string virtualWANName, VirtualWANData wANParameters, CancellationToken cancellationToken = default)
+        public virtual VirtualWanCreateOrUpdateOperation CreateOrUpdate(string virtualWANName, VirtualWANData wANParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (virtualWANName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("VirtualWANContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(virtualWANName, wANParameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a VirtualWAN resource if it doesn&apos;t exist else updates the existing VirtualWAN. </summary>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being created or updated. </param>
-        /// <param name="wANParameters"> Parameters supplied to create or update VirtualWAN. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> or <paramref name="wANParameters"/> is null. </exception>
-        public async virtual Task<Response<VirtualWAN>> CreateOrUpdateAsync(string virtualWANName, VirtualWANData wANParameters, CancellationToken cancellationToken = default)
-        {
-            if (virtualWANName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualWANName));
-            }
-            if (wANParameters == null)
-            {
-                throw new ArgumentNullException(nameof(wANParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(virtualWANName, wANParameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a VirtualWAN resource if it doesn&apos;t exist else updates the existing VirtualWAN. </summary>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being created or updated. </param>
-        /// <param name="wANParameters"> Parameters supplied to create or update VirtualWAN. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> or <paramref name="wANParameters"/> is null. </exception>
-        public virtual VirtualWanCreateOrUpdateOperation StartCreateOrUpdate(string virtualWANName, VirtualWANData wANParameters, CancellationToken cancellationToken = default)
-        {
-            if (virtualWANName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualWANName));
-            }
-            if (wANParameters == null)
-            {
-                throw new ArgumentNullException(nameof(wANParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, virtualWANName, wANParameters, cancellationToken);
-                return new VirtualWanCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualWANName, wANParameters).Request, response);
+                var operation = new VirtualWanCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualWANName, wANParameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates a VirtualWAN resource if it doesn&apos;t exist else updates the existing VirtualWAN. </summary>
         /// <param name="virtualWANName"> The name of the VirtualWAN being created or updated. </param>
         /// <param name="wANParameters"> Parameters supplied to create or update VirtualWAN. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> or <paramref name="wANParameters"/> is null. </exception>
-        public async virtual Task<VirtualWanCreateOrUpdateOperation> StartCreateOrUpdateAsync(string virtualWANName, VirtualWANData wANParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualWanCreateOrUpdateOperation> CreateOrUpdateAsync(string virtualWANName, VirtualWANData wANParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (virtualWANName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(wANParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualWANContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("VirtualWANContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, virtualWANName, wANParameters, cancellationToken).ConfigureAwait(false);
-                return new VirtualWanCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualWANName, wANParameters).Request, response);
+                var operation = new VirtualWanCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualWANName, wANParameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -318,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all the VirtualWANs in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualWAN" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<VirtualWAN> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualWAN> GetAll(CancellationToken cancellationToken = default)
         {
             Page<VirtualWAN> FirstPageFunc(int? pageSizeHint)
             {
@@ -326,7 +274,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -341,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -356,7 +304,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all the VirtualWANs in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualWAN" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VirtualWAN> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualWAN> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualWAN>> FirstPageFunc(int? pageSizeHint)
             {
@@ -364,7 +312,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -379,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualWAN(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -397,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualWANContainer.GetAllAsGenericResources");
             scope.Start();
@@ -420,7 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualWANContainer.GetAllAsGenericResources");
             scope.Start();

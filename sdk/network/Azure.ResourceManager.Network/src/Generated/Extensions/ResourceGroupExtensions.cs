@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetByResourceGroupAsync(resourceGroup.Id.Name, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllByResourceGroupAsync(resourceGroup.Id.Name, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetByResourceGroupNextPageAsync(nextLink, resourceGroup.Id.Name, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllByResourceGroupNextPageAsync(nextLink, resourceGroup.Id.Name, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetByResourceGroup(resourceGroup.Id.Name, location, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllByResourceGroup(resourceGroup.Id.Name, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Network
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetByResourceGroupNextPage(nextLink, resourceGroup.Id.Name, location, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllByResourceGroupNextPage(nextLink, resourceGroup.Id.Name, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)

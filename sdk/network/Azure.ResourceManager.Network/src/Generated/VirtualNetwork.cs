@@ -131,51 +131,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes the specified virtual network. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualNetworkDeleteOperation> DeleteAsync(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.Delete");
-            scope.Start();
-            try
-            {
-                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the specified virtual network. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.Delete");
-            scope.Start();
-            try
-            {
-                var operation = StartDelete(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the specified virtual network. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.StartDelete");
             scope.Start();
             try
             {
                 var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new VirtualNetworkDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new VirtualNetworkDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -185,15 +153,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes the specified virtual network. </summary>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual VirtualNetworkDeleteOperation Delete(bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.StartDelete");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetwork.Delete");
             scope.Start();
             try
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new VirtualNetworkDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var operation = new VirtualNetworkDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

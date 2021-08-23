@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceIdentity"> The identity of the firewall policy. </param>
+        /// <param name="identity"> The identity of the firewall policy. </param>
         /// <param name="ruleCollectionGroups"> List of references to FirewallPolicyRuleCollectionGroups. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy resource. </param>
         /// <param name="basePolicy"> The parent firewall policy from which rules are inherited. </param>
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
         /// <param name="transportSecurity"> TLS Configuration definition. </param>
         /// <param name="sku"> The Firewall Policy SKU. </param>
-        internal FirewallPolicyData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ResourceIdentity resourceIdentity, IReadOnlyList<Models.SubResource> ruleCollectionGroups, ProvisioningState? provisioningState, Models.SubResource basePolicy, IReadOnlyList<Models.SubResource> firewalls, IReadOnlyList<Models.SubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, DnsSettings dnsSettings, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku) : base(id, name, type, location, tags)
+        internal FirewallPolicyData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ResourceIdentity identity, IReadOnlyList<Models.SubResource> ruleCollectionGroups, ProvisioningState? provisioningState, Models.SubResource basePolicy, IReadOnlyList<Models.SubResource> firewalls, IReadOnlyList<Models.SubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, DnsSettings dnsSettings, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku) : base(id, name, type, location, tags)
         {
             Etag = etag;
-            ResourceIdentity = resourceIdentity;
+            Identity = identity;
             RuleCollectionGroups = ruleCollectionGroups;
             ProvisioningState = provisioningState;
             BasePolicy = basePolicy;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The identity of the firewall policy. </summary>
-        public ResourceIdentity ResourceIdentity { get; set; }
+        public ResourceIdentity Identity { get; set; }
         /// <summary> List of references to FirewallPolicyRuleCollectionGroups. </summary>
         public IReadOnlyList<Models.SubResource> RuleCollectionGroups { get; }
         /// <summary> The provisioning state of the firewall policy resource. </summary>

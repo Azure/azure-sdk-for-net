@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 AzureLocations = { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.StartGetAzureReachabilityReportAsync(parameters);
+            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(parameters);
             Response<AzureReachabilityReport> report = await reportOperation.WaitForCompletionAsync();;
 
             //Validation
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 AzureLocations = { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.StartGetAzureReachabilityReportAsync(parameters);
+            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(parameters);
             Response<AzureReachabilityReport> report = await reportOperation.WaitForCompletionAsync();;
 
             //Validation
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 AzureLocations = { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.StartGetAzureReachabilityReportAsync(parameters);
+            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(parameters);
             Response<AzureReachabilityReport> report = await reportOperation.WaitForCompletionAsync();;
 
             //Validation

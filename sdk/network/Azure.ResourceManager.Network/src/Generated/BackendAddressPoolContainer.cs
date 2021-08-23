@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a load balancer backend address pool. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer backend address pool operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<BackendAddressPool> CreateOrUpdate(string backendAddressPoolName, BackendAddressPoolData parameters, CancellationToken cancellationToken = default)
+        public virtual LoadBalancerBackendAddressPoolCreateOrUpdateOperation CreateOrUpdate(string backendAddressPoolName, BackendAddressPoolData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (backendAddressPoolName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(backendAddressPoolName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a load balancer backend address pool. </summary>
-        /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update load balancer backend address pool operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<BackendAddressPool>> CreateOrUpdateAsync(string backendAddressPoolName, BackendAddressPoolData parameters, CancellationToken cancellationToken = default)
-        {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(backendAddressPoolName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a load balancer backend address pool. </summary>
-        /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update load balancer backend address pool operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual LoadBalancerBackendAddressPoolCreateOrUpdateOperation StartCreateOrUpdate(string backendAddressPoolName, BackendAddressPoolData parameters, CancellationToken cancellationToken = default)
-        {
-            if (backendAddressPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(backendAddressPoolName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters, cancellationToken);
-                return new LoadBalancerBackendAddressPoolCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters).Request, response);
+                var operation = new LoadBalancerBackendAddressPoolCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a load balancer backend address pool. </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer backend address pool operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<LoadBalancerBackendAddressPoolCreateOrUpdateOperation> StartCreateOrUpdateAsync(string backendAddressPoolName, BackendAddressPoolData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<LoadBalancerBackendAddressPoolCreateOrUpdateOperation> CreateOrUpdateAsync(string backendAddressPoolName, BackendAddressPoolData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (backendAddressPoolName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters, cancellationToken).ConfigureAwait(false);
-                return new LoadBalancerBackendAddressPoolCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters).Request, response);
+                var operation = new LoadBalancerBackendAddressPoolCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -318,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancer backed address pools. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BackendAddressPool" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<BackendAddressPool> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<BackendAddressPool> GetAll(CancellationToken cancellationToken = default)
         {
             Page<BackendAddressPool> FirstPageFunc(int? pageSizeHint)
             {
@@ -356,7 +304,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancer backed address pools. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BackendAddressPool" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<BackendAddressPool> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BackendAddressPool> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<BackendAddressPool>> FirstPageFunc(int? pageSizeHint)
             {
@@ -397,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolContainer.GetAllAsGenericResources");
             scope.Start();
@@ -420,7 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BackendAddressPoolContainer.GetAllAsGenericResources");
             scope.Start();

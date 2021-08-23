@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a network interface. </summary>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network interface operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<NetworkInterface> CreateOrUpdate(string networkInterfaceName, NetworkInterfaceData parameters, CancellationToken cancellationToken = default)
+        public virtual NetworkInterfaceCreateOrUpdateOperation CreateOrUpdate(string networkInterfaceName, NetworkInterfaceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (networkInterfaceName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(networkInterfaceName, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a network interface. </summary>
-        /// <param name="networkInterfaceName"> The name of the network interface. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update network interface operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<NetworkInterface>> CreateOrUpdateAsync(string networkInterfaceName, NetworkInterfaceData parameters, CancellationToken cancellationToken = default)
-        {
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(networkInterfaceName, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a network interface. </summary>
-        /// <param name="networkInterfaceName"> The name of the network interface. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update network interface operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkInterfaceCreateOrUpdateOperation StartCreateOrUpdate(string networkInterfaceName, NetworkInterfaceData parameters, CancellationToken cancellationToken = default)
-        {
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, networkInterfaceName, parameters, cancellationToken);
-                return new NetworkInterfaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, networkInterfaceName, parameters).Request, response);
+                var operation = new NetworkInterfaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, networkInterfaceName, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates or updates a network interface. </summary>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="parameters"> Parameters supplied to the create or update network interface operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkInterfaceCreateOrUpdateOperation> StartCreateOrUpdateAsync(string networkInterfaceName, NetworkInterfaceData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkInterfaceCreateOrUpdateOperation> CreateOrUpdateAsync(string networkInterfaceName, NetworkInterfaceData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (networkInterfaceName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, networkInterfaceName, parameters, cancellationToken).ConfigureAwait(false);
-                return new NetworkInterfaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, networkInterfaceName, parameters).Request, response);
+                var operation = new NetworkInterfaceCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, networkInterfaceName, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -324,7 +272,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all network interfaces in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkInterface" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<NetworkInterface> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkInterface> GetAll(CancellationToken cancellationToken = default)
         {
             Page<NetworkInterface> FirstPageFunc(int? pageSizeHint)
             {
@@ -362,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all network interfaces in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkInterface" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<NetworkInterface> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkInterface> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<NetworkInterface>> FirstPageFunc(int? pageSizeHint)
             {
@@ -403,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.GetAllAsGenericResources");
             scope.Start();
@@ -426,7 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.GetAllAsGenericResources");
             scope.Start();

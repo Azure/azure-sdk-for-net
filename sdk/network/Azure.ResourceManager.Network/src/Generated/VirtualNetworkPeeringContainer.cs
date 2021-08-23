@@ -47,9 +47,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkPeeringName"> The name of the peering. </param>
         /// <param name="virtualNetworkPeeringParameters"> Parameters supplied to the create or update virtual network peering operation. </param>
         /// <param name="syncRemoteAddressSpace"> Parameter indicates the intention to sync the peering with the current address space on the remote vNet after it&apos;s updated. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> or <paramref name="virtualNetworkPeeringParameters"/> is null. </exception>
-        public virtual Response<VirtualNetworkPeering> CreateOrUpdate(string virtualNetworkPeeringName, VirtualNetworkPeeringData virtualNetworkPeeringParameters, SyncRemoteAddressSpace? syncRemoteAddressSpace = null, CancellationToken cancellationToken = default)
+        public virtual VirtualNetworkPeeringCreateOrUpdateOperation CreateOrUpdate(string virtualNetworkPeeringName, VirtualNetworkPeeringData virtualNetworkPeeringParameters, SyncRemoteAddressSpace? syncRemoteAddressSpace = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkPeeringName == null)
             {
@@ -61,73 +62,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a peering in the specified virtual network. </summary>
-        /// <param name="virtualNetworkPeeringName"> The name of the peering. </param>
-        /// <param name="virtualNetworkPeeringParameters"> Parameters supplied to the create or update virtual network peering operation. </param>
-        /// <param name="syncRemoteAddressSpace"> Parameter indicates the intention to sync the peering with the current address space on the remote vNet after it&apos;s updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> or <paramref name="virtualNetworkPeeringParameters"/> is null. </exception>
-        public async virtual Task<Response<VirtualNetworkPeering>> CreateOrUpdateAsync(string virtualNetworkPeeringName, VirtualNetworkPeeringData virtualNetworkPeeringParameters, SyncRemoteAddressSpace? syncRemoteAddressSpace = null, CancellationToken cancellationToken = default)
-        {
-            if (virtualNetworkPeeringName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
-            }
-            if (virtualNetworkPeeringParameters == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkPeeringParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a peering in the specified virtual network. </summary>
-        /// <param name="virtualNetworkPeeringName"> The name of the peering. </param>
-        /// <param name="virtualNetworkPeeringParameters"> Parameters supplied to the create or update virtual network peering operation. </param>
-        /// <param name="syncRemoteAddressSpace"> Parameter indicates the intention to sync the peering with the current address space on the remote vNet after it&apos;s updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> or <paramref name="virtualNetworkPeeringParameters"/> is null. </exception>
-        public virtual VirtualNetworkPeeringCreateOrUpdateOperation StartCreateOrUpdate(string virtualNetworkPeeringName, VirtualNetworkPeeringData virtualNetworkPeeringParameters, SyncRemoteAddressSpace? syncRemoteAddressSpace = null, CancellationToken cancellationToken = default)
-        {
-            if (virtualNetworkPeeringName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkPeeringName));
-            }
-            if (virtualNetworkPeeringParameters == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkPeeringParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace, cancellationToken);
-                return new VirtualNetworkPeeringCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace).Request, response);
+                var operation = new VirtualNetworkPeeringCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -140,9 +82,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkPeeringName"> The name of the peering. </param>
         /// <param name="virtualNetworkPeeringParameters"> Parameters supplied to the create or update virtual network peering operation. </param>
         /// <param name="syncRemoteAddressSpace"> Parameter indicates the intention to sync the peering with the current address space on the remote vNet after it&apos;s updated. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> or <paramref name="virtualNetworkPeeringParameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkPeeringCreateOrUpdateOperation> StartCreateOrUpdateAsync(string virtualNetworkPeeringName, VirtualNetworkPeeringData virtualNetworkPeeringParameters, SyncRemoteAddressSpace? syncRemoteAddressSpace = null, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualNetworkPeeringCreateOrUpdateOperation> CreateOrUpdateAsync(string virtualNetworkPeeringName, VirtualNetworkPeeringData virtualNetworkPeeringParameters, SyncRemoteAddressSpace? syncRemoteAddressSpace = null, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (virtualNetworkPeeringName == null)
             {
@@ -153,12 +96,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkPeeringParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace, cancellationToken).ConfigureAwait(false);
-                return new VirtualNetworkPeeringCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace).Request, response);
+                var operation = new VirtualNetworkPeeringCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, virtualNetworkPeeringName, virtualNetworkPeeringParameters, syncRemoteAddressSpace).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -322,7 +268,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all virtual network peerings in a virtual network. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkPeering" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<VirtualNetworkPeering> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualNetworkPeering> GetAll(CancellationToken cancellationToken = default)
         {
             Page<VirtualNetworkPeering> FirstPageFunc(int? pageSizeHint)
             {
@@ -360,7 +306,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all virtual network peerings in a virtual network. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkPeering" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VirtualNetworkPeering> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualNetworkPeering> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualNetworkPeering>> FirstPageFunc(int? pageSizeHint)
             {
@@ -401,7 +347,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringContainer.GetAllAsGenericResources");
             scope.Start();
@@ -424,7 +370,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkPeeringContainer.GetAllAsGenericResources");
             scope.Start();

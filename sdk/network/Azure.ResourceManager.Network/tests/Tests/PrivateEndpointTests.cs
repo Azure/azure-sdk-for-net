@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                     PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
                 }}
             };
-            return await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(name, vnet);
+            return await resourceGroup.GetVirtualNetworks().CreateOrUpdate(name, vnet).WaitForCompletionAsync();
         }
 
         private async Task<GenericResource> createStorageAccount()
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var storageAccountId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{name}";
 
         //var storageParameters = new Storage.Models.StorageAccountCreateParameters(new Storage.Models.Sku(Storage.Models.SkuName.StandardLRS), Storage.Models.Kind.Storage, TestEnvironment.Location);
-        //var accountOperation = await StorageManagementClient.StorageAccounts.StartCreateAsync(resourceGroup.Data.Name, name, storageParameters);
+        //var accountOperation = await StorageManagementClient.StorageAccounts.CreateAsync(resourceGroup.Data.Name, name, storageParameters);
         //Response<Storage.Models.StorageAccount> account = await accountOperation.WaitForCompletionAsync();
         //return account.Value;
 

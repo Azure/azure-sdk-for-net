@@ -36,11 +36,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         //}
 
         [Test]
+        [RecordedTest]
         public async Task ExpandResourceTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
-            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Network/loadBalancers");
+            string location = TestEnvironment.Location;
             var resourceGroup = await CreateResourceGroup(resourceGroupName);
 
             // Create lbPublicIP
@@ -204,13 +205,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put Nics
             var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
-            var createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Data);
+            var createOrUpdateOperation1 = await networkInterfaceContainer.CreateOrUpdateAsync(nic1name, nic1.Data);
             await createOrUpdateOperation1.WaitForCompletionAsync();
 
-            var createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Data);
+            var createOrUpdateOperation2 = await networkInterfaceContainer.CreateOrUpdateAsync(nic2name, nic2.Data);
             await createOrUpdateOperation2.WaitForCompletionAsync();
 
-            var createOrUpdateOperation3 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic3name, nic3.Data);
+            var createOrUpdateOperation3 = await networkInterfaceContainer.CreateOrUpdateAsync(nic3name, nic3.Data);
             await createOrUpdateOperation3.WaitForCompletionAsync();
 
             // Get Nics
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.NotNull(publicip.Value.Data.IpConfiguration.Etag);
 
             // Delete LoadBalancer
-            Operation deleteOperation = await loadBalancerContainer.Get(lbName).Value.StartDeleteAsync();
+            Operation deleteOperation = await loadBalancerContainer.Get(lbName).Value.DeleteAsync();
             await deleteOperation.WaitForCompletionResponseAsync();
 
             // Verify Delete
@@ -299,12 +300,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all NetworkInterfaces
-            await networkInterfaceContainer.Get(nic1name).Value.StartDeleteAsync();
-            await networkInterfaceContainer.Get(nic2name).Value.StartDeleteAsync();
-            await networkInterfaceContainer.Get(nic3name).Value.StartDeleteAsync();
+            await networkInterfaceContainer.Get(nic1name).Value.DeleteAsync();
+            await networkInterfaceContainer.Get(nic2name).Value.DeleteAsync();
+            await networkInterfaceContainer.Get(nic3name).Value.DeleteAsync();
 
             // Delete all PublicIPAddresses
-            await resourceGroup.GetPublicIPAddresses().Get(lbPublicIpName).Value.StartDeleteAsync();
+            await resourceGroup.GetPublicIPAddresses().Get(lbPublicIpName).Value.DeleteAsync();
         }
     }
 }

@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates a VirtualHub resource if it doesn&apos;t exist else updates the existing VirtualHub. </summary>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="virtualHubParameters"> Parameters supplied to create or update VirtualHub. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="virtualHubParameters"/> is null. </exception>
-        public virtual Response<VirtualHub> CreateOrUpdate(string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
+        public virtual VirtualHubCreateOrUpdateOperation CreateOrUpdate(string virtualHubName, VirtualHubData virtualHubParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (virtualHubName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.Network
             }
 
             using var scope = _clientDiagnostics.CreateScope("VirtualHubContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(virtualHubName, virtualHubParameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a VirtualHub resource if it doesn&apos;t exist else updates the existing VirtualHub. </summary>
-        /// <param name="virtualHubName"> The name of the VirtualHub. </param>
-        /// <param name="virtualHubParameters"> Parameters supplied to create or update VirtualHub. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="virtualHubParameters"/> is null. </exception>
-        public async virtual Task<Response<VirtualHub>> CreateOrUpdateAsync(string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
-        {
-            if (virtualHubName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHubName));
-            }
-            if (virtualHubParameters == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHubParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualHubContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(virtualHubName, virtualHubParameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a VirtualHub resource if it doesn&apos;t exist else updates the existing VirtualHub. </summary>
-        /// <param name="virtualHubName"> The name of the VirtualHub. </param>
-        /// <param name="virtualHubParameters"> Parameters supplied to create or update VirtualHub. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="virtualHubParameters"/> is null. </exception>
-        public virtual VirtualHubCreateOrUpdateOperation StartCreateOrUpdate(string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
-        {
-            if (virtualHubName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHubName));
-            }
-            if (virtualHubParameters == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHubParameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VirtualHubContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, virtualHubName, virtualHubParameters, cancellationToken);
-                return new VirtualHubCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response);
+                var operation = new VirtualHubCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Creates a VirtualHub resource if it doesn&apos;t exist else updates the existing VirtualHub. </summary>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="virtualHubParameters"> Parameters supplied to create or update VirtualHub. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="virtualHubParameters"/> is null. </exception>
-        public async virtual Task<VirtualHubCreateOrUpdateOperation> StartCreateOrUpdateAsync(string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualHubCreateOrUpdateOperation> CreateOrUpdateAsync(string virtualHubName, VirtualHubData virtualHubParameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (virtualHubName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualHubParameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("VirtualHubContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("VirtualHubContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, virtualHubName, virtualHubParameters, cancellationToken).ConfigureAwait(false);
-                return new VirtualHubCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response);
+                var operation = new VirtualHubCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, virtualHubName, virtualHubParameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -318,7 +266,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all the VirtualHubs in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualHub" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<VirtualHub> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualHub> GetAll(CancellationToken cancellationToken = default)
         {
             Page<VirtualHub> FirstPageFunc(int? pageSizeHint)
             {
@@ -326,7 +274,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -341,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -356,7 +304,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all the VirtualHubs in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualHub" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VirtualHub> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualHub> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualHub>> FirstPageFunc(int? pageSizeHint)
             {
@@ -364,7 +312,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -379,7 +327,7 @@ namespace Azure.ResourceManager.Network
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualHub(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -397,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualHubContainer.GetAllAsGenericResources");
             scope.Start();
@@ -420,7 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualHubContainer.GetAllAsGenericResources");
             scope.Start();

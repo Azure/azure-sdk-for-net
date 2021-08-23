@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             //compare base data
             CompareApplicationGatewayBase(gw1,gw2);
-            
+
             //compare WAF
             Assert.AreEqual(gw1.WebApplicationFirewallConfiguration.Enabled, gw2.WebApplicationFirewallConfiguration.Enabled);
             Assert.AreEqual(gw1.WebApplicationFirewallConfiguration.FirewallMode, gw2.WebApplicationFirewallConfiguration.FirewallMode);
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroup);
-            var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkContainer.CreateOrUpdateAsync(vnetName, vnet);
             await putVnetResponseOperation.WaitForCompletionAsync();
             Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
             Response<Subnet> getSubnetResponse = await getVnetResponse.Value.GetSubnets().GetAsync(gwSubnetName);
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put AppGw
             var applicationGatewayContainer = GetApplicationGatewayContainer(resourceGroupName);
-            Operation<ApplicationGateway> putAppGw = await applicationGatewayContainer.StartCreateOrUpdateAsync(appGwName, appGw);
+            Operation<ApplicationGateway> putAppGw = await applicationGatewayContainer.CreateOrUpdateAsync(appGwName, appGw);
             Response<ApplicationGateway> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
 
@@ -740,14 +740,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             nic2.Result.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
             // Put Nics
             var networkInterfaceContainer = GetNetworkInterfaceContainer(resourceGroupName);
-            var createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Result.Data);
+            var createOrUpdateOperation1 = await networkInterfaceContainer.CreateOrUpdateAsync(nic1name, nic1.Result.Data);
             await createOrUpdateOperation1.WaitForCompletionAsync();
 
-            var createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Result.Data);
+            var createOrUpdateOperation2 = await networkInterfaceContainer.CreateOrUpdateAsync(nic2name, nic2.Result.Data);
             await createOrUpdateOperation2.WaitForCompletionAsync();
 
             // Get AppGw backend health
-            Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.StartBackendHealthAsync("true");
+            Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.BackendHealthAsync("true");
             Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();
 
             Assert.AreEqual(2, backendHealth.Value.BackendAddressPools.Count);
@@ -756,17 +756,17 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.True(backendHealth.Value.BackendAddressPools[1].BackendAddressPool.BackendIPConfigurations.Any());
 
             //Start AppGw
-            await getGateway.Value.StartStartAsync();
+            await getGateway.Value.StartAsync();
 
             // Get AppGw and make sure nics are added to backend
             getGateway = await applicationGatewayContainer.GetAsync(appGwName);
             Assert.AreEqual(2, getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count);
 
             //Stop AppGw
-            await getGateway.Value.StartStopAsync();
+            await getGateway.Value.StopAsync();
 
             // Delete AppGw
-            await getGateway.Value.StartDeleteAsync();
+            await getGateway.Value.DeleteAsync();
         }
 
         [Test]
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                     }
             };
             var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroup);
-            var putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnetdata);
+            var putVnetResponseOperation = await virtualNetworkContainer.CreateOrUpdateAsync(vnetName, vnetdata);
             var vnet = await putVnetResponseOperation.WaitForCompletionAsync();
 
             //create VMs
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put AppGw
             var applicationGatewayContainer = resourceGroup.GetApplicationGateways();
-            Operation<ApplicationGateway> putAppGw = await applicationGatewayContainer.StartCreateOrUpdateAsync(appGwName, appGw);
+            Operation<ApplicationGateway> putAppGw = await applicationGatewayContainer.CreateOrUpdateAsync(appGwName, appGw);
             Response<ApplicationGateway> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
 
@@ -840,14 +840,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put Nics
             var networkInterfaceContainer = GetNetworkInterfaceContainer(resourceGroup);
-            var createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName1, nic1.Result.Value.Data);
+            var createOrUpdateOperation1 = await networkInterfaceContainer.CreateOrUpdateAsync(nicName1, nic1.Result.Value.Data);
             await createOrUpdateOperation1.WaitForCompletionAsync();
 
-            var createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nicName2, nic2.Result.Value.Data);
+            var createOrUpdateOperation2 = await networkInterfaceContainer.CreateOrUpdateAsync(nicName2, nic2.Result.Value.Data);
             await createOrUpdateOperation2.WaitForCompletionAsync();
 
             // Get AppGw backend health
-            Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.StartBackendHealthAsync("true");
+            Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.BackendHealthAsync("true");
             Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();
 
             Assert.AreEqual(2, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers.Count);
@@ -855,17 +855,17 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual(nicPrivateIpAdd2, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection[0].Servers[1].Address);
 
             //Start AppGw
-            await getGateway.Value.StartStartAsync();
+            await getGateway.Value.StartAsync();
 
             // Get AppGw and make sure nics are added to backend
             getGateway = await applicationGatewayContainer.GetAsync(appGwName);
             Assert.AreEqual(2, getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count);
 
             //Stop AppGw
-            await getGateway.Value.StartStopAsync();
+            await getGateway.Value.StopAsync();
 
             // Delete AppGw
-            await getGateway.Value.StartDeleteAsync();
+            await getGateway.Value.DeleteAsync();
         }
     }
 }
