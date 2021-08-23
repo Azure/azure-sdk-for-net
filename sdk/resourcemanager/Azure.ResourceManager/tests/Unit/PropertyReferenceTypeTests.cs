@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Tests
             {
                 var initializationCtor = refType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(c => HasAttribute(c.GetCustomAttributes<Attribute>(false), InitializationConstructor)).FirstOrDefault();
-                Assert.IsNotNull(initializationCtor);
+                Assert.IsNotNull(initializationCtor, $"Initialization ctro was null for {refType.Name}");
                 Assert.IsTrue(refType.IsAbstract == initializationCtor.IsFamily, $"If {refType.Name} is abstract then its initialization ctor should be protected");
                 Assert.IsTrue(refType.IsAbstract != initializationCtor.IsPublic, $"If {refType.Name} is abstract then its initialization ctor should be public");
                 Assert.IsFalse(initializationCtor.IsAssembly, $"Initialization ctor for {refType.Name} should not be internal");

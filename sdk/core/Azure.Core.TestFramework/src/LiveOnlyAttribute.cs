@@ -14,6 +14,18 @@ namespace Azure.Core.TestFramework
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = true, Inherited = true)]
     public class LiveOnlyAttribute : NUnitAttribute, IApplyToTest
     {
+        private readonly bool _alwaysRunLocally;
+
+        /// <summary>
+        /// Creates a new LiveOnlyAttribute instance.
+        /// </summary>
+        /// <param name="alwaysRunLocally">If true, the test will still be run even if the Mode is not Live.
+        /// This can be used to allow tests that do not depend on RecordedTestMode to run locally, while still being skipped in CI.</param>
+        public LiveOnlyAttribute(bool alwaysRunLocally = false)
+        {
+            _alwaysRunLocally = alwaysRunLocally;
+        }
+
         /// <summary>
         /// Modifies the <paramref name="test"/> by adding categories to it and changing the run state as needed.
         /// </summary>
@@ -25,7 +37,7 @@ namespace Azure.Core.TestFramework
             if (test.RunState != RunState.NotRunnable)
             {
                 RecordedTestMode mode = TestEnvironment.GlobalTestMode;
-                if (mode != RecordedTestMode.Live)
+                if (mode != RecordedTestMode.Live && !_alwaysRunLocally)
                 {
                     test.RunState = RunState.Ignored;
                     test.Properties.Set("_SKIPREASON", $"Live tests will not run when AZURE_TEST_MODE is {mode}");

@@ -93,7 +93,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
-        /// <param name="attestationType"><see cref="AttestationType"/> to retrive.</param>
+        /// <param name="attestationType"><see cref="AttestationType"/> to retrieve.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{String}"/> with the policy for the specified attestation type.</returns>
         /// <remarks>
@@ -108,7 +108,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
-        /// <param name="attestationType">Attestation Type to retrive.</param>
+        /// <param name="attestationType">Attestation Type to retrieve.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{String}"/> with the policy for the specified attestation type.</returns>
         /// <remarks>
@@ -123,7 +123,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
-        /// <param name="attestationType"><see cref="AttestationType"/> to retrive.</param>
+        /// <param name="attestationType"><see cref="AttestationType"/> to retrieve.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <param name="async">True if the call should be asynchronous.</param>
         /// <returns>An <see cref="AttestationResponse{String}"/> with the policy for the specified attestation type.</returns>
