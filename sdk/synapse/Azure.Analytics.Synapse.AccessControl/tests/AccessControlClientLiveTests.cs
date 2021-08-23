@@ -87,18 +87,29 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             SynapseRoleAssignment roleAssignment = new SynapseRoleAssignment(roleId, principalId, scope);
 
-            SynapseRoleAssignment returnedRoleAssignment = await client.CreateRoleAssignmentAsync(roleAssignmentId, roleAssignment, new RequestOptions()
+            // Calling the LLC directly:
+            Response response = await client.CreateRoleAssignmentAsync(roleAssignmentId, roleAssignment,
+                new RequestOptions()
+                {
+                    StatusOption = ResponseStatusOption.NoThrow
+                });
+
+            // This is the implicit cast -- it will throw if the response is an error
+            // according to the classifier
+            SynapseRoleAssignment returnedRoleAssignment = response;
+
+            // But since we suppressed the error, we might want to think
+            // about it the following way:
+            if (response.IsError())
             {
-                StatusOption = ResponseStatusOption.NoThrow
-            });
-
-            // TODO: Finish this test and figure out the rest.
-
-            await using DisposableClientRole role = await DisposableClientRole.Create(client, TestEnvironment);
-
-            Assert.NotNull(role.Assignment.Id);
-            Assert.NotNull(role.Assignment.Properties.RoleDefinitionId);
-            Assert.NotNull(role.Assignment.Properties.PrincipalId);
+                await response.ThrowAsync();
+            }
+            else
+            {
+                Assert.NotNull(returnedRoleAssignment.Id);
+                Assert.NotNull(returnedRoleAssignment.Properties.RoleDefinitionId);
+                Assert.NotNull(returnedRoleAssignment.Properties.PrincipalId);
+            }
         }
 
         [Test]

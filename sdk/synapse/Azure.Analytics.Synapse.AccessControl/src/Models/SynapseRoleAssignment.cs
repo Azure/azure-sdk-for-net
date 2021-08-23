@@ -44,19 +44,19 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         public static implicit operator SynapseRoleAssignment(Response response)
         {
-            switch (response.Status)
+            if (!response.IsError())
             {
-                case 200:
-                    return DeserializeResponse(response);
-                default:
-
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new NotImplementedException();
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-
-                    //response.Throw();
-                    //break;
+                return DeserializeResponse(response);
             }
+            else
+            {
+                response.Throw(); // What to do about Async here? Can you put awaits in operators?
+            }
+
+            // we should never get here, since we throw in the else statement above.
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+            throw new NotSupportedException();
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
         }
 
         private static SynapseRoleAssignment DeserializeResponse(Response response)
