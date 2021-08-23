@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Output for task that migrates SQL Server databases to Azure SQL
     /// Database Managed Instance using Log Replay Service.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MigrateSqlServerSqlMISyncTaskOutput")]
     public partial class MigrateSqlServerSqlMISyncTaskOutput
     {
         /// <summary>

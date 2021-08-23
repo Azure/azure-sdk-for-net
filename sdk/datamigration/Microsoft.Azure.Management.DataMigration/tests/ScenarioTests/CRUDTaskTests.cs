@@ -52,7 +52,7 @@ namespace DataMigration.Tests.ScenarioTests
         }
 
         [Fact]
-        public void CreateMySQLResourceSucceeds()
+        public void CreateMySQLOfflineResourceSucceeds()
         {
             var dmsClientHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
             var resourcesHandler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
@@ -63,7 +63,7 @@ namespace DataMigration.Tests.ScenarioTests
                 var dmsClient = Utilities.GetDataMigrationManagementClient(context, dmsClientHandler);
                 var service = CreateDMSInstance(context, dmsClient, resourceGroup, DmsDeploymentName);
                 var project = CreateDMSMySqlProject(context, dmsClient, resourceGroup, service.Name, DmsProjectName);
-                var task = CreateDMSMySqlSyncTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
+                var task = CreateDMSMySqlOfflineTask(context, dmsClient, resourceGroup, service, project.Name, DmsTaskName);
             }
             // Wait for resource group deletion to complete.
             Utilities.WaitIfNotInPlaybackMode();
@@ -284,16 +284,16 @@ namespace DataMigration.Tests.ScenarioTests
                         dmsTaskName);
         }
 
-        private ProjectTask CreateDMSMySqlSyncTask(MockContext context,
+        private ProjectTask CreateDMSMySqlOfflineTask(MockContext context,
             DataMigrationServiceClient client,
             ResourceGroup resourceGroup,
             DataMigrationService service,
             string dmsProjectName,
             string dmsTaskName)
         {
-            var taskProps = new MigrateMySqlAzureDbForMySqlSyncTaskProperties
+            var taskProps = new MigrateMySqlAzureDbForMySqlOfflineTaskProperties
             {
-                Input = new MigrateMySqlAzureDbForMySqlSyncTaskInput(
+                Input = new MigrateMySqlAzureDbForMySqlOfflineTaskInput(
                     new MySqlConnectionInfo
                     {
                         ServerName = @"someSourceServerName",
@@ -306,9 +306,9 @@ namespace DataMigration.Tests.ScenarioTests
                         UserName = "someTargetUser",
                         Password = "someTargetPassword"
                     },
-                    new List<MigrateMySqlAzureDbForMySqlSyncDatabaseInput>
+                    new List<MigrateMySqlAzureDbForMySqlOfflineDatabaseInput>
                     {
-                        new MigrateMySqlAzureDbForMySqlSyncDatabaseInput
+                        new MigrateMySqlAzureDbForMySqlOfflineDatabaseInput
                         {
                             Name = "someSourceDatabaseName",
                             TargetDatabaseName = "someTargetDatabaseName",

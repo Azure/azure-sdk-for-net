@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Output for the task that migrates Schema for SQL Server databases to
     /// Azure SQL databases
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MigrateSchemaSqlServerSqlDbTaskOutput")]
     public partial class MigrateSchemaSqlServerSqlDbTaskOutput
     {
         /// <summary>

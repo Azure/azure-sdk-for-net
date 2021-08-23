@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Base class for all types of DMS command properties. If command is not
     /// supported by current client, this object is returned.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("CommandProperties")]
     public partial class CommandProperties
     {
         /// <summary>

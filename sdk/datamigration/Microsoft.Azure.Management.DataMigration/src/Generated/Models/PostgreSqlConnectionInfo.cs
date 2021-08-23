@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Information for connecting to PostgreSQL server
     /// </summary>
+    [Newtonsoft.Json.JsonObject("PostgreSqlConnectionInfo")]
     public partial class PostgreSqlConnectionInfo : ConnectionInfo
     {
         /// <summary>

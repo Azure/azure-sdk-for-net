@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Output for task that migrates SSIS packages from SQL Server to Azure
     /// SQL Database Managed Instance.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MigrateSsisTaskOutput")]
     public partial class MigrateSsisTaskOutput
     {
         /// <summary>

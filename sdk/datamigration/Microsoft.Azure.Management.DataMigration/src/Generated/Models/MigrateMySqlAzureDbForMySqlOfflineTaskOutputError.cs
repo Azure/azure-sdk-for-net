@@ -13,30 +13,28 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Output for the task that validates connection to SQL Server and also
-    /// validates source server requirements
-    /// </summary>
-    [Newtonsoft.Json.JsonObject("ConnectToSourceSqlServerTaskOutput")]
-    public partial class ConnectToSourceSqlServerTaskOutput
+    [Newtonsoft.Json.JsonObject("ErrorOutput")]
+    public partial class MigrateMySqlAzureDbForMySqlOfflineTaskOutputError : MigrateMySqlAzureDbForMySqlOfflineTaskOutput
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ConnectToSourceSqlServerTaskOutput class.
+        /// MigrateMySqlAzureDbForMySqlOfflineTaskOutputError class.
         /// </summary>
-        public ConnectToSourceSqlServerTaskOutput()
+        public MigrateMySqlAzureDbForMySqlOfflineTaskOutputError()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// ConnectToSourceSqlServerTaskOutput class.
+        /// MigrateMySqlAzureDbForMySqlOfflineTaskOutputError class.
         /// </summary>
         /// <param name="id">Result identifier</param>
-        public ConnectToSourceSqlServerTaskOutput(string id = default(string))
+        /// <param name="error">Migration error</param>
+        public MigrateMySqlAzureDbForMySqlOfflineTaskOutputError(string id = default(string), ReportableException error = default(ReportableException))
+            : base(id)
         {
-            Id = id;
+            Error = error;
             CustomInit();
         }
 
@@ -46,10 +44,10 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets result identifier
+        /// Gets migration error
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        [JsonProperty(PropertyName = "error")]
+        public ReportableException Error { get; private set; }
 
     }
 }

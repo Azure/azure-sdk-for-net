@@ -14,27 +14,27 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using System.Linq;
 
     /// <summary>
-    /// Output for the task that validates connection to SQL Server and also
-    /// validates source server requirements
+    /// Output for the task that migrates MySQL databases to Azure Database for
+    /// MySQL for offline migrations
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ConnectToSourceSqlServerTaskOutput")]
-    public partial class ConnectToSourceSqlServerTaskOutput
+    [Newtonsoft.Json.JsonObject("MigrateMySqlAzureDbForMySqlOfflineTaskOutput")]
+    public partial class MigrateMySqlAzureDbForMySqlOfflineTaskOutput
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ConnectToSourceSqlServerTaskOutput class.
+        /// MigrateMySqlAzureDbForMySqlOfflineTaskOutput class.
         /// </summary>
-        public ConnectToSourceSqlServerTaskOutput()
+        public MigrateMySqlAzureDbForMySqlOfflineTaskOutput()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// ConnectToSourceSqlServerTaskOutput class.
+        /// MigrateMySqlAzureDbForMySqlOfflineTaskOutput class.
         /// </summary>
         /// <param name="id">Result identifier</param>
-        public ConnectToSourceSqlServerTaskOutput(string id = default(string))
+        public MigrateMySqlAzureDbForMySqlOfflineTaskOutput(string id = default(string))
         {
             Id = id;
             CustomInit();

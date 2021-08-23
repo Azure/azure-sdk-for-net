@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// <summary>
     /// Describes a connection to a MongoDB data source
     /// </summary>
+    [Newtonsoft.Json.JsonObject("MongoDbConnectionInfo")]
     public partial class MongoDbConnectionInfo : ConnectionInfo
     {
         /// <summary>
