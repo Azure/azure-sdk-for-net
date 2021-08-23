@@ -780,6 +780,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class Alias
     {
         internal Alias() { }
+        public Azure.ResourceManager.Resources.Models.AliasPathMetadata DefaultMetadata { get { throw null; } }
         public string DefaultPath { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.AliasPattern DefaultPattern { get { throw null; } }
         public string Name { get { throw null; } }
@@ -790,8 +791,57 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal AliasPath() { }
         public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.AliasPathMetadata Metadata { get { throw null; } }
         public string Path { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.AliasPattern Pattern { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AliasPathAttributes : System.IEquatable<Azure.ResourceManager.Resources.Models.AliasPathAttributes>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AliasPathAttributes(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.AliasPathAttributes Modifiable { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathAttributes None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.AliasPathAttributes other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.AliasPathAttributes left, Azure.ResourceManager.Resources.Models.AliasPathAttributes right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.AliasPathAttributes (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.AliasPathAttributes left, Azure.ResourceManager.Resources.Models.AliasPathAttributes right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AliasPathMetadata
+    {
+        internal AliasPathMetadata() { }
+        public Azure.ResourceManager.Resources.Models.AliasPathAttributes? Attributes { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.AliasPathTokenType? Type { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AliasPathTokenType : System.IEquatable<Azure.ResourceManager.Resources.Models.AliasPathTokenType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AliasPathTokenType(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Any { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Array { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Boolean { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Integer { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Number { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Object { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType String { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.AliasPathTokenType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.AliasPathTokenType left, Azure.ResourceManager.Resources.Models.AliasPathTokenType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.AliasPathTokenType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.AliasPathTokenType left, Azure.ResourceManager.Resources.Models.AliasPathTokenType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AliasPattern
     {
