@@ -41,8 +41,10 @@ namespace Azure.ResourceManager.Compute.Tests
                     Recording.GenerateAssetName("offer"),
                     Recording.GenerateAssetName("sku"));
             var input_2 = ResourceDataHelper.GetBasicGalleryImageData(DefaultLocation, OperatingSystemTypes.Linux, identifier);
-            _gallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, input);
-            _galleryImage = await _gallery.GetGalleryImages().CreateOrUpdateAsync(galleryImageName, input_2);
+            var Iro_Gallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, input);
+            _gallery = Iro_Gallery.Value;
+            var Iro_GalleryImage = await _gallery.GetGalleryImages().CreateOrUpdateAsync(galleryImageName, input_2);
+            _galleryImage = Iro_GalleryImage.Value;
             return _galleryImage.GetGalleryImageVersions();
         }
 
@@ -131,11 +133,13 @@ namespace Azure.ResourceManager.Compute.Tests
             var vnet = await CreateVirtualNetwork();
             var nic = await CreateNetworkInterface(GetSubnetId(vnet));
             var VMInput = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, VMName, nic.Id);
-            _VM = await VMContainer.CreateOrUpdateAsync(VMName, VMInput);
+            var Iro_VM = await VMContainer.CreateOrUpdateAsync(VMName, VMInput);
+            _VM = Iro_VM.Value;
             var GalleryImageVersionName = "1.0.0";
             var VMID = _VM.Id;
             var BasicGalleryImageVersionData = ResourceDataHelper.GetBasicGalleryImageVersionData(DefaultLocation, VMID);
-            GalleryImageVersion imageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
+            var Iro_imageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
+            GalleryImageVersion imageVersion = Iro_imageVersion.Value;
             Assert.AreEqual(GalleryImageVersionName, imageVersion.Data.Name);
         }
 
@@ -148,11 +152,13 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskContainer = _resourceGroup.GetDisks();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
-            _disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            var Iro_disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            _disk = Iro_disk.Value;
             var GalleryImageVersionName = "1.0.0";
             var diskID = _disk.Id;
             var BasicGalleryImageVersionData = ResourceDataHelper.GetBasicGalleryImageVersionData(DefaultLocation, diskID);
-            GalleryImageVersion imageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
+            var Iro_imageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
+            GalleryImageVersion imageVersion = Iro_imageVersion.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(GalleryImageVersionName));
             Assert.IsFalse(await container.CheckIfExistsAsync(GalleryImageVersionName + "1"));
 
@@ -168,11 +174,13 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskContainer = _resourceGroup.GetDisks();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
-            _disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            var Iro_disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            _disk = Iro_disk.Value;
             var GalleryImageVersionName = "1.0.0";
             var diskID = _disk.Id;
             var BasicGalleryImageVersionData = ResourceDataHelper.GetBasicGalleryImageVersionData(DefaultLocation, diskID);
-            GalleryImageVersion imageversion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
+            var Iro_imageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
+            GalleryImageVersion imageversion = Iro_imageVersion.Value;
             GalleryImageVersion imageversion2 = await container.GetAsync(GalleryImageVersionName);
 
             ResourceDataHelper.AssertGalleryImageVersion(imageversion.Data, imageversion2.Data);
@@ -187,7 +195,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskContainer = _resourceGroup.GetDisks();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
-            _disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            var Iro_disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            _disk = Iro_disk.Value;
             var GalleryImageVersionName1 = "1.0.0";
             var GalleryImageVersionName2 = "1.0.0";
             var diskID = _disk.Id;
@@ -213,11 +222,13 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskContainer = _resourceGroup.GetDisks();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
-            _disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            var Iro_disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            _disk = Iro_disk.Value;
             var GalleryImageVersionName = "1.0.0";
             var diskID = _disk.Id;
             var BasicGalleryImageVersionData = ResourceDataHelper.GetBasicGalleryImageVersionData(DefaultLocation, diskID);
-            GalleryImageVersion imageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
+            var Iro_imageVersion = await container.CreateOrUpdateAsync(GalleryImageVersionName, BasicGalleryImageVersionData);
+            GalleryImageVersion imageVersion = Iro_imageVersion.Value;
             Assert.AreEqual(GalleryImageVersionName, imageVersion.Data.Name);
         }
     }

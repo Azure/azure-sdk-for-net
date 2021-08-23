@@ -36,22 +36,10 @@ namespace Azure.ResourceManager.Compute.Tests
         public async Task CreateOrUpdate()
         {
             var container = await GetProximityPlacementGroupContainerAsync();
-            //var groupName = Recording.GenerateAssetName("testPro-");
             var groupName = Recording.GenerateAssetName("management.azure.com");
             var input = ResourceDataHelper.GetBasicProximityPlacementGroupData(DefaultLocation);
-            ProximityPlacementGroup group = await container.CreateOrUpdateAsync(groupName, input);
-            Assert.AreEqual(groupName, group.Data.Name);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartCreateOrUpdate()
-        {
-            var container = await GetProximityPlacementGroupContainerAsync();
-            var groupName = Recording.GenerateAssetName("testPro-");
-            var input = ResourceDataHelper.GetBasicProximityPlacementGroupData(DefaultLocation);
-            var groupOp = await container.StartCreateOrUpdateAsync(groupName, input);
-            ProximityPlacementGroup group = await groupOp.WaitForCompletionAsync();
+            var Iro_group = await container.CreateOrUpdateAsync(groupName, input);
+            ProximityPlacementGroup group = Iro_group.Value;
             Assert.AreEqual(groupName, group.Data.Name);
         }
 
@@ -62,7 +50,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetProximityPlacementGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testPro-");
             var input = ResourceDataHelper.GetBasicProximityPlacementGroupData(DefaultLocation);
-            ProximityPlacementGroup group1 = await container.CreateOrUpdateAsync(groupName, input);
+            var Iro_group1 = await container.CreateOrUpdateAsync(groupName, input);
+            ProximityPlacementGroup group1 = Iro_group1.Value;
             ProximityPlacementGroup group2 = await container.GetAsync(groupName);
             ResourceDataHelper.AssertProximityPlacementGroup(group1.Data, group2.Data);
         }
@@ -74,7 +63,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var container = await GetProximityPlacementGroupContainerAsync();
             var groupName = Recording.GenerateAssetName("testPro-");
             var input = ResourceDataHelper.GetBasicProximityPlacementGroupData(DefaultLocation);
-            ProximityPlacementGroup group = await container.CreateOrUpdateAsync(groupName, input);
+            var Iro_group = await container.CreateOrUpdateAsync(groupName, input);
+            ProximityPlacementGroup group = Iro_group.Value;
             Assert.IsTrue(await container.CheckIfExistsAsync(groupName));
             Assert.IsFalse(await container.CheckIfExistsAsync(groupName + "1"));
 

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Tests
         private ResourceGroup _resourceGroup;
         private Gallery _gallery;
         private GalleryImage _galleryImage;
+        private GalleryImageVersion _galleryImageVersion;
         private Disk _disk;
         public GalleryImageVersionOperationsTests(bool isAsync)
         : base(isAsync , RecordedTestMode.Record)
@@ -28,7 +29,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var galleryName = Recording.GenerateAssetName("testGallery_");
             var galleryImageName = Recording.GenerateAssetName("testGalleryImage_");
             var galleryInput = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            _gallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, galleryInput);
+            var Iro_gallery = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(galleryName, galleryInput);
+            _gallery = Iro_gallery.Value;
             var identifier = ResourceDataHelper.GetGalleryImageIdentifier(
                     Recording.GenerateAssetName("publisher"),
                     Recording.GenerateAssetName("offer"),
@@ -37,13 +39,17 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskContainer = _resourceGroup.GetDisks();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
-            _disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            var Iro_disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
+            _disk = Iro_disk.Value;
             //var GalleryImageVersionName = "1.0.0";
             var diskID = _disk.Id;
             var imageVersionInput = ResourceDataHelper.GetBasicGalleryImageVersionData(DefaultLocation, diskID);
             //var imageVersionInput = ResourceDataHelper.GetBasicGalleryImageVersionData(DefaultLocation);
-            _galleryImage = await _gallery.GetGalleryImages().CreateOrUpdateAsync(galleryImageName, imageInput);
-            return await _galleryImage.GetGalleryImageVersions().CreateOrUpdateAsync(galleryImageVersionName, imageVersionInput);
+            var Iro_galleryImage = await _gallery.GetGalleryImages().CreateOrUpdateAsync(galleryImageName, imageInput);
+            _galleryImage = Iro_galleryImage.Value;
+            var Iro_galleryImageVersion =  await _galleryImage.GetGalleryImageVersions().CreateOrUpdateAsync(galleryImageVersionName, imageVersionInput);
+            _galleryImageVersion = Iro_galleryImageVersion.Value;
+            return _galleryImageVersion;
         }
 
         [TestCase]
@@ -53,16 +59,6 @@ namespace Azure.ResourceManager.Compute.Tests
             var name = Recording.GenerateAssetName("testGalleryImage_");
             var imageVersion = await CreateGalleryImageVersionAsync(name);
             await imageVersion.DeleteAsync();
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartDelete()
-        {
-            var name = Recording.GenerateAssetName("testGalleryImage_");
-            var imageVersion = await CreateGalleryImageVersionAsync(name);
-            var deleteOp = await imageVersion.StartDeleteAsync();
-            await deleteOp.WaitForCompletionResponseAsync();
         }
 
         [TestCase]
@@ -86,8 +82,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var update = new GalleryImageVersionUpdate()
             {
             };
-            GalleryImageVersion updatedGalleryImageVersion = await imageVersion.UpdateAsync(update);
-
+            var Iro_updatedGalleryImageVersion = await imageVersion.UpdateAsync(update);
+            GalleryImageVersion updatedGalleryImageVersion = Iro_updatedGalleryImageVersion.Value;
             Assert.AreEqual(publishingProfile, updatedGalleryImageVersion.Data.StorageProfile);
         }
 

@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var container = (await CreateResourceGroupAsync()).GetProximityPlacementGroups();
             var input = ResourceDataHelper.GetBasicProximityPlacementGroupData(DefaultLocation);
-            return await container.CreateOrUpdateAsync(groupName, input);
+            var Iro_group =  await container.CreateOrUpdateAsync(groupName, input);
+            ProximityPlacementGroup group = Iro_group.Value;
+            return group;
         }
 
         [TestCase]
@@ -29,16 +31,6 @@ namespace Azure.ResourceManager.Compute.Tests
             var groupName = Recording.GenerateAssetName("testPro-");
             var dedicatedHostGroup = await CreateProximityPlacementGroupAsync(groupName);
             await dedicatedHostGroup.DeleteAsync();
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartDelete()
-        {
-            var groupName = Recording.GenerateAssetName("testPro-");
-            var dedicatedHostGroup = await CreateProximityPlacementGroupAsync(groupName);
-            var deleteOp = await dedicatedHostGroup.StartDeleteAsync();
-            await deleteOp.WaitForCompletionResponseAsync();
         }
 
         [TestCase]
