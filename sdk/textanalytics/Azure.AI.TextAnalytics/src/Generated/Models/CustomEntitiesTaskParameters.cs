@@ -8,7 +8,7 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The CustomEntitiesTaskParameters. </summary>
-    public partial class CustomEntitiesTaskParameters
+    internal partial class CustomEntitiesTaskParameters
     {
         /// <summary> Initializes a new instance of CustomEntitiesTaskParameters. </summary>
         public CustomEntitiesTaskParameters()

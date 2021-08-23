@@ -8,7 +8,7 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The CustomMultiClassificationTaskParameters. </summary>
-    public partial class CustomMultiClassificationTaskParameters
+    internal partial class CustomMultiClassificationTaskParameters
     {
         /// <summary> Initializes a new instance of CustomMultiClassificationTaskParameters. </summary>
         public CustomMultiClassificationTaskParameters()
