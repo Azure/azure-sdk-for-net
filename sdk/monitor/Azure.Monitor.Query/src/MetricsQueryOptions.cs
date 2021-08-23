@@ -16,12 +16,14 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets or sets the timespan over which the metric will be queried.
         /// </summary>
-        public DateTimeRange? TimeSpan { get; set; }
+        [CodeGenMember("TimeSpan")]
+        public DateTimeRange? TimeRange { get; set; }
 
         /// <summary>
         /// Gets or sets the interval at which to sample metrics.
         /// </summary>
-        public TimeSpan? Interval { get; set; }
+        [CodeGenMember("Interval")]
+        public TimeSpan? Granularity { get; set; }
 
         /// <summary>
         /// Gets the list of metric aggregations to retrieve.

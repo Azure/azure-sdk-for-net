@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Monitor.Query.Models
 {
     [CodeGenModel("Table")]
-    public partial class LogsQueryResultTable
+    public partial class LogsTable
     {
         private IReadOnlyList<LogsQueryResultRow> _rows;
 

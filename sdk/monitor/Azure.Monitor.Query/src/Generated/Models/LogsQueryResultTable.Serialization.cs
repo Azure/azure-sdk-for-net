@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class LogsQueryResultTable
+    public partial class LogsTable
     {
-        internal static LogsQueryResultTable DeserializeLogsQueryResultTable(JsonElement element)
+        internal static LogsTable DeserializeLogsQueryResultTable(JsonElement element)
         {
             string name = default;
             IReadOnlyList<LogsQueryResultColumn> columns = default;
@@ -41,7 +41,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new LogsQueryResultTable(name, columns, rows);
+            return new LogsTable(name, columns, rows);
         }
     }
 }
