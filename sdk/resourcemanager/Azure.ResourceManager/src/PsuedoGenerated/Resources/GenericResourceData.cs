@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.Resources
     public partial class GenericResourceData : TrackedResource
     {
         /// <summary> Initializes a new instance of GenericResource. </summary>
-        public GenericResourceData()
+        public GenericResourceData(string location)
+            : base(location)
         {
         }
 
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="createdTime"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="changedTime"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        internal GenericResourceData(string id, string name, string type, string location, IDictionary<string, string> tags, Plan plan, object properties, string kind, string managedBy, Sku sku, ResourceIdentity identity, DateTimeOffset? createdTime, DateTimeOffset? changedTime, string provisioningState) : base(id, name, type, location, tags)
+        internal GenericResourceData(string id, string name, string type, string location, IDictionary<string, string> tags, Plan plan, object properties, string kind, string managedBy, Sku sku, ResourceIdentity identity, DateTimeOffset? createdTime, DateTimeOffset? changedTime, string provisioningState) : base(id, name, type, tags, location)
         {
             Plan = plan;
             Properties = properties;

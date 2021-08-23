@@ -5,11 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
+    [JsonConverter(typeof(ErrorAdditionalInfoConverter))]
     public partial class ErrorAdditionalInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -20,13 +24,18 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             Optional<object> info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = (ResourceType)property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("info"))
@@ -40,7 +49,20 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ErrorAdditionalInfo(type.Value, info.Value);
+            return new ErrorAdditionalInfo(type, info.Value);
+        }
+
+        internal partial class ErrorAdditionalInfoConverter : JsonConverter<ErrorAdditionalInfo>
+        {
+            public override void Write(Utf8JsonWriter writer, ErrorAdditionalInfo model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ErrorAdditionalInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeErrorAdditionalInfo(document.RootElement);
+            }
         }
     }
 }

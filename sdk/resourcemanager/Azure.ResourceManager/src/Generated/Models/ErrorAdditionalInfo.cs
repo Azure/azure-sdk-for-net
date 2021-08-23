@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -23,14 +24,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="type"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
         [SerializationConstructor]
-        internal ErrorAdditionalInfo(string type, object info)
+        internal ErrorAdditionalInfo(ResourceType type, object info)
         {
             Type = type;
             Info = info;
         }
 
         /// <summary> The additional info type. </summary>
-        public string Type { get; }
+        public ResourceType Type { get; }
         /// <summary> The additional info. </summary>
         public object Info { get; }
     }

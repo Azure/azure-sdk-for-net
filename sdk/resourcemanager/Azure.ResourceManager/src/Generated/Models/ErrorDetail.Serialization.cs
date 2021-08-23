@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    [JsonConverter(typeof(ErrorResponseConverter))]
-    public partial class ErrorResponse : IUtf8JsonSerializable
+    [JsonConverter(typeof(ErrorDetailConverter))]
+    public partial class ErrorDetail : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
+        internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<ErrorResponse>> details = default;
+            Optional<IReadOnlyList<ErrorDetail>> details = default;
             Optional<IReadOnlyList<ErrorAdditionalInfo>> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ErrorResponse> array = new List<ErrorResponse>();
+                    List<ErrorDetail> array = new List<ErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeErrorResponse(item));
+                        array.Add(DeserializeErrorDetail(item));
                     }
                     details = array;
                     continue;
@@ -77,19 +77,19 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ErrorResponse(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
+            return new ErrorDetail(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
         }
 
-        internal partial class ErrorResponseConverter : JsonConverter<ErrorResponse>
+        internal partial class ErrorDetailConverter : JsonConverter<ErrorDetail>
         {
-            public override void Write(Utf8JsonWriter writer, ErrorResponse errorResponse, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, ErrorDetail model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(errorResponse);
+                writer.WriteObjectValue(model);
             }
-            public override ErrorResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override ErrorDetail Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeErrorResponse(document.RootElement);
+                return DeserializeErrorDetail(document.RootElement);
             }
         }
     }

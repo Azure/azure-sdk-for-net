@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="managedBy"> The ID of the resource that manages this resource group. </param>
         /// <param name="tags"> The tags attached to the resource group. </param>
         internal ResourceGroupData(string id, string name, string type, ResourceGroupProperties properties, string location, string managedBy, IDictionary<string, string> tags)
-            : base(id, name, type, location, tags)
+            : base(id, name, type, tags, location)
         {
             Properties = properties;
             ManagedBy = managedBy;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
         internal SubscriptionData(string id,
             string displayName,
             IDictionary<string, string> tags,
-            string resourceType = "Microsoft.Resources/subscriptions") : base(id, displayName, resourceType, null, tags)
+            string resourceType = "Microsoft.Resources/subscriptions") : base(id, displayName, resourceType, tags, null)
         {
             ManagedByTenants = new ChangeTrackingList<ManagedByTenant>();
         }
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Resources
             IReadOnlyList<ManagedByTenant> managedByTenants,
             IDictionary<string, string> tags,
             string resourceType = "Microsoft.Resources/subscriptions")
-            : base(id, displayName, resourceType, null, tags)
+            : base(id, displayName, resourceType, tags, null)
         {
-            Name = displayName;
             SubscriptionGuid = subscriptionId;
             DisplayName = displayName;
             State = state;
@@ -59,11 +58,6 @@ namespace Azure.ResourceManager.Resources
             AuthorizationSource = authorizationSource;
             ManagedByTenants = managedByTenants;
         }
-
-        /// <summary>
-        /// Gets the subscription id.
-        /// </summary>
-        public override string Name { get; }
 
         /// <summary>
         /// Gets the Id of the Subscription.
