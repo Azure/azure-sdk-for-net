@@ -9,10 +9,10 @@ namespace Azure.Analytics.Purview.Account
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAccessKeysAsync(Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response GetAccountProperties(Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAccountPropertiesAsync(Azure.RequestOptions options = null) { throw null; }
-        public Azure.Analytics.Purview.Account.PurviewCollection GetCollectionClient(string collectionName) { throw null; }
+        public virtual Azure.Analytics.Purview.Account.PurviewCollection GetCollectionClient(string collectionName) { throw null; }
         public virtual Azure.Response GetCollections(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionsAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
-        public Azure.Analytics.Purview.Account.PurviewResourceSetRule GetResourceSetRuleClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Account.PurviewResourceSetRule GetResourceSetRuleClient() { throw null; }
         public virtual Azure.Response GetResourceSetRules(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetResourceSetRulesAsync(string skipToken = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response RegenerateAccessKey(Azure.Core.RequestContent content, Azure.RequestOptions options = null) { throw null; }
