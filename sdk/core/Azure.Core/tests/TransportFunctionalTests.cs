@@ -938,6 +938,7 @@ namespace Azure.Core.Tests
                     options.ServerCertificateCustomValidationCallback = certificate2 =>
                     {
                         certValidationCalled = true;
+                        Assert.NotNull(certificate2);
                         return isValidCert;
                     };
                 }
