@@ -22,3 +22,39 @@ directive:
         $.format = "url";
       }
 ```
+
+# Promote collectionName to be a client parameter.
+
+```yaml
+directive:
+  - from: swagger-document
+    where: $.parameters
+    transform: >
+      $["collectionName"] = {
+        "in": "path",
+        "name": "collectionName",
+        "required": true,
+        "type": "string",
+        "x-ms-parameter-location": "client"
+      };
+
+  - from: swagger-document
+    where: $.paths..parameters[?(@.name=='collectionName')]
+    transform: >
+      $ = { "$ref": "#/parameters/collectionName" };
+```
+
+# Promote List Methods to Account Client
+
+```yaml
+directive:
+  - from: swagger-document
+    where: $..[?(@.operationId !== undefined)]
+    transform: >
+      const mappingTable = {
+        "Collections_ListCollections": "Accounts_GetCollections",
+        "ResourceSetRules_ListResourceSetRules": "Accounts_GetResourceSetRules"
+      };
+
+      $.operationId = (mappingTable[$.operationId] ?? $.operationId);
+```

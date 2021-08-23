@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Account
 {
-    /// <summary> The ResourceSetRules service client. </summary>
-    public partial class ResourceSetRulesClient
+    /// <summary> The PurviewResourceSetRule service client. </summary>
+    public partial class PurviewResourceSetRule
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -24,33 +24,9 @@ namespace Azure.Analytics.Purview.Account
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of ResourceSetRulesClient for mocking. </summary>
-        protected ResourceSetRulesClient()
+        /// <summary> Initializes a new instance of PurviewResourceSetRule for mocking. </summary>
+        protected PurviewResourceSetRule()
         {
-        }
-
-        /// <summary> Initializes a new instance of ResourceSetRulesClient. </summary>
-        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public ResourceSetRulesClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
-        {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            options ??= new PurviewAccountClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _tokenCredential = credential;
-            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
         }
 
         /// <summary> Get a resource set config service model. </summary>
@@ -65,7 +41,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.GetResourceSetRule");
+            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
             try
             {
@@ -104,7 +80,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.GetResourceSetRule");
+            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
             try
             {
@@ -666,7 +642,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.CreateOrUpdateResourceSetRule");
+            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
             {
@@ -1212,7 +1188,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.CreateOrUpdateResourceSetRule");
+            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
             try
             {
@@ -1270,7 +1246,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.DeleteResourceSetRule");
+            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
             scope.Start();
             try
             {
@@ -1310,7 +1286,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.DeleteResourceSetRule");
+            using var scope = _clientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
             scope.Start();
             try
             {
@@ -1349,107 +1325,6 @@ namespace Azure.Analytics.Purview.Account
             uri.Reset(endpoint);
             uri.AppendPath("/resourceSetRuleConfigs/defaultResourceSetRuleConfig", false);
             uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Get a resource set config service model. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> ListResourceSetRulesAsync(string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListResourceSetRulesRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.ListResourceSetRules");
-            scope.Start();
-            try
-            {
-                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get a resource set config service model. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-#pragma warning disable AZC0002
-        public virtual Response ListResourceSetRules(string skipToken = null, RequestOptions options = null)
-#pragma warning restore AZC0002
-        {
-            options ??= new RequestOptions();
-            HttpMessage message = CreateListResourceSetRulesRequest(skipToken, options);
-            if (options.PerCallPolicy != null)
-            {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
-            }
-            using var scope = _clientDiagnostics.CreateScope("ResourceSetRulesClient.ListResourceSetRules");
-            scope.Start();
-            try
-            {
-                Pipeline.Send(message, options.CancellationToken);
-                if (options.StatusOption == ResponseStatusOption.Default)
-                {
-                    switch (message.Response.Status)
-                    {
-                        case 200:
-                            return message.Response;
-                        default:
-                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                    }
-                }
-                else
-                {
-                    return message.Response;
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create Request for <see cref="ListResourceSetRules"/> and <see cref="ListResourceSetRulesAsync"/> operations. </summary>
-        /// <param name="skipToken"> The String to use. </param>
-        /// <param name="options"> The request options. </param>
-        private HttpMessage CreateListResourceSetRulesRequest(string skipToken = null, RequestOptions options = null)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/resourceSetRuleConfigs", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

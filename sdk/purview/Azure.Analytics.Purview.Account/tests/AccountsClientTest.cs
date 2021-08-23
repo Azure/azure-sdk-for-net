@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Account.Tests
 {
-    public class AccountsClientTest:AccountsClientTestBase
+    public class AccountsClientTest : AccountsClientTestBase
     {
         public AccountsClientTest(bool isAsync) : base(isAsync)
         {
@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.Account.Tests
         [RecordedTest]
         public async Task GetTask()
         {
-            AccountsClient client = GetAccountsClient();
+            PurviewAccountClient client = GetAccountClient();
             Response fetchResponse = await client.GetAccountPropertiesAsync();
             JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
             Assert.AreEqual("dotnetLLCPurviewAccount", fetchBodyJson.GetProperty("name").GetString());
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Purview.Account.Tests
         public async Task UpdateTask()
         {
             var options = new PurviewAccountClientOptions();
-            AccountsClient client = GetAccountsClient();
+            PurviewAccountClient client = GetAccountClient();
             var data = new JsonData(new Dictionary<string, string>
             {
                 ["friendlyName"] = "udpatedFriendlyName"
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Purview.Account.Tests
         public async Task RegenerateKeysTask()
         {
             var options = new PurviewAccountClientOptions();
-            AccountsClient client = GetAccountsClient();
+            PurviewAccountClient client = GetAccountClient();
             var data = new
             {
                 keyType = "PrimaryAtlasKafkaKey",
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.Account.Tests
         public async Task ListKeysTask()
         {
             var options = new PurviewAccountClientOptions();
-            AccountsClient client = GetAccountsClient();
+            PurviewAccountClient client = GetAccountClient();
             var data = new JsonData(new Dictionary<string, string>
             {
                 ["keyType"] = "PrimaryAtlasKafkaKey"

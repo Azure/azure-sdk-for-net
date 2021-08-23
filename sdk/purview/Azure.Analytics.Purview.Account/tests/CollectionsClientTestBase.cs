@@ -23,10 +23,8 @@ namespace Azure.Analytics.Purview.Account.Tests
         {
         }
 
-        public CollectionsClient GetCollectionsClient()
+        public PurviewCollection GetCollectionsClient(string collectionName)
         {
-/*            var credential = new DefaultAzureCredential();*/
-
             var httpHandler = new HttpClientHandler();
             httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) =>
             {
@@ -34,7 +32,7 @@ namespace Azure.Analytics.Purview.Account.Tests
             };
             var options = new PurviewAccountClientOptions { Transport = new HttpClientTransport(httpHandler) };
             var client = InstrumentClient(
-                new CollectionsClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
+                new PurviewAccountClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)).GetCollectionClient(collectionName));
             return client;
         }
     }

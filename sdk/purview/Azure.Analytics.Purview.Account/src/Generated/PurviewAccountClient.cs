@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Account
 {
-    /// <summary> The Accounts service client. </summary>
-    public partial class AccountsClient
+    /// <summary> The PurviewAccount service client. </summary>
+    public partial class PurviewAccountClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -24,16 +24,16 @@ namespace Azure.Analytics.Purview.Account
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of AccountsClient for mocking. </summary>
-        protected AccountsClient()
+        /// <summary> Initializes a new instance of PurviewAccountClient for mocking. </summary>
+        protected PurviewAccountClient()
         {
         }
 
-        /// <summary> Initializes a new instance of AccountsClient. </summary>
+        /// <summary> Initializes a new instance of PurviewAccountClient. </summary>
         /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public AccountsClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
+        public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetAccountProperties");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
             {
@@ -104,7 +104,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetAccountProperties");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
             try
             {
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.UpdateAccountProperties");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
             {
@@ -234,7 +234,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.UpdateAccountProperties");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
             try
             {
@@ -292,7 +292,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetAccessKeys");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
             {
@@ -331,7 +331,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.GetAccessKeys");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
             try
             {
@@ -404,7 +404,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.RegenerateAccessKey");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
             {
@@ -461,7 +461,7 @@ namespace Azure.Analytics.Purview.Account
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("AccountsClient.RegenerateAccessKey");
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
             try
             {
@@ -504,6 +504,208 @@ namespace Azure.Analytics.Purview.Account
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
+            return message;
+        }
+
+        /// <summary> List the collections in the account. </summary>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetCollectionsAsync(string skipToken = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetCollectionsRequest(skipToken, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetCollections");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List the collections in the account. </summary>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetCollections(string skipToken = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetCollectionsRequest(skipToken, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetCollections");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetCollections"/> and <see cref="GetCollectionsAsync"/> operations. </summary>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetCollectionsRequest(string skipToken = null, RequestOptions options = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/collections", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get a resource set config service model. </summary>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetResourceSetRulesAsync(string skipToken = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetResourceSetRulesRequest(skipToken, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetResourceSetRules");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a resource set config service model. </summary>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetResourceSetRules(string skipToken = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetResourceSetRulesRequest(skipToken, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewAccountClient.GetResourceSetRules");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetResourceSetRules"/> and <see cref="GetResourceSetRulesAsync"/> operations. </summary>
+        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetResourceSetRulesRequest(string skipToken = null, RequestOptions options = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/resourceSetRuleConfigs", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
     }

@@ -8,7 +8,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Analytics.Purview.Account.Tests
 {
-    public class AccountsClientTestBase: RecordedTestBase<PurviewAccountTestEnvironment>
+    public class AccountsClientTestBase : RecordedTestBase<PurviewAccountTestEnvironment>
     {
         public AccountsClientTestBase(bool isAsync) : base(isAsync)
         {
@@ -18,9 +18,8 @@ namespace Azure.Analytics.Purview.Account.Tests
         {
         }
 
-        public AccountsClient GetAccountsClient()
+        public PurviewAccountClient GetAccountClient()
         {
-            /*var credential = new DefaultAzureCredential();*/
             var httpHandler = new HttpClientHandler();
             httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) =>
             {
@@ -28,7 +27,7 @@ namespace Azure.Analytics.Purview.Account.Tests
             };
             var options = new PurviewAccountClientOptions { Transport = new HttpClientTransport(httpHandler) };
             var client = InstrumentClient(
-                new AccountsClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
+                new PurviewAccountClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
             return client;
         }
     }
