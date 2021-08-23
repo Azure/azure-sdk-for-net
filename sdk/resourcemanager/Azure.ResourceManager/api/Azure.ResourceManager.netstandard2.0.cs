@@ -1287,7 +1287,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ResourceGroupExportResult
     {
         internal ResourceGroupExportResult() { }
-        public Azure.ResourceManager.Resources.Models.ErrorResponse Error { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ErrorDetail Error { get { throw null; } }
         public object Template { get { throw null; } }
     }
     public partial class ResourceGroupExportTemplateOperation : Azure.Operation<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>
