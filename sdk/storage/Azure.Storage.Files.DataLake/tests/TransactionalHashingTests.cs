@@ -83,7 +83,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 : new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
             // Act
-            var response = await file.ReadAsync(new DataLakeFileReadOptions { TransactionalHashingOptions = hashingOptions });
+            var response = await file.ReadAsync(new DataLakeFileReadOptions
+            {
+                TransactionalHashingOptions = hashingOptions,
+                Range = new HttpRange(length: data.Length)
+            });
 
             // Assert
             if (isBuffered)

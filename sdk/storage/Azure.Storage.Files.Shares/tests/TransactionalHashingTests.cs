@@ -39,7 +39,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [Test, Combinatorial]
         public async Task DownloadSuccessfulHashVerification(
-            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
+            [Values(TransactionalHashAlgorithm.MD5)] TransactionalHashAlgorithm algorithm,
             [ValueSource("DefaultDataHttpRanges")] HttpRange range)
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -47,6 +47,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             var data = GetRandomBuffer(DefaultDataSize);
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await file.CreateAsync(data.Length);
             using (var stream = new MemoryStream(data))
             {
                 await file.UploadAsync(stream);
@@ -63,7 +64,6 @@ namespace Azure.Storage.Files.Shares.Tests
 
         // hashing, so we buffered the stream to hash then rewind before returning to user
         [TestCase(TransactionalHashAlgorithm.MD5, true)]
-        [TestCase(TransactionalHashAlgorithm.StorageCrc64, true)]
         // no hashing, so we save users a buffer
         [TestCase(TransactionalHashAlgorithm.None, false)]
         public async Task ExpectedDownloadStreamTypeReturned(TransactionalHashAlgorithm algorithm, bool isBuffered)
@@ -73,6 +73,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await file.CreateAsync(data.Length);
             using (var stream = new MemoryStream(data))
             {
                 await file.UploadAsync(stream);
@@ -83,7 +84,11 @@ namespace Azure.Storage.Files.Shares.Tests
                 : new DownloadTransactionalHashingOptions { Algorithm = algorithm };
 
             // Act
-            var response = await file.DownloadAsync(new ShareFileDownloadOptions { TransactionalHashingOptions = hashingOptions });
+            var response = await file.DownloadAsync(new ShareFileDownloadOptions
+            {
+                TransactionalHashingOptions = hashingOptions,
+                Range = new HttpRange(length: data.Length)
+            });
 
             // Assert
             if (isBuffered)
@@ -99,7 +104,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [Test, Combinatorial]
         public async Task OpenReadSuccessfulHashVerification(
-            [Values(TransactionalHashAlgorithm.MD5, TransactionalHashAlgorithm.StorageCrc64)] TransactionalHashAlgorithm algorithm,
+            [Values(TransactionalHashAlgorithm.MD5)] TransactionalHashAlgorithm algorithm,
             [ValueSource("StorageStreamDefinitions")] (int DataSize, int BufferSize) storageStreamDefinitions)
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -107,6 +112,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             var data = GetRandomBuffer(storageStreamDefinitions.DataSize);
             ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await file.CreateAsync(data.Length);
             using (var stream = new MemoryStream(data))
             {
                 await file.UploadAsync(stream);

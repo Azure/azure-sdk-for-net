@@ -2037,6 +2037,11 @@ namespace Azure.Storage.Files.Shares
         {
             options ??= new ShareFileDownloadOptions();
 
+            if (options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.StorageCrc64)
+            {
+                throw new ArgumentException("Azure File Shares do not support transactional CRC 64");
+            }
+
             var pageRange = new HttpRange(
                 options.Range.Offset + startOffset,
                 options.Range.Length.HasValue ?
@@ -2050,7 +2055,7 @@ namespace Azure.Storage.Files.Shares
             {
                 response = await FileRestClient.DownloadAsync(
                     range: pageRange == default ? null : pageRange.ToString(),
-                    rangeGetContentMD5: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5,
+                    rangeGetContentMD5: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
                     leaseAccessConditions: options.Conditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -2059,7 +2064,7 @@ namespace Azure.Storage.Files.Shares
             {
                 response = FileRestClient.Download(
                     range: pageRange == default ? null : pageRange.ToString(),
-                    rangeGetContentMD5: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5,
+                    rangeGetContentMD5: options.TransactionalHashingOptions?.Algorithm == TransactionalHashAlgorithm.MD5 ? true : null,
                     leaseAccessConditions: options.Conditions,
                     cancellationToken: cancellationToken);
             }
