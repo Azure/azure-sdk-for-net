@@ -30,5 +30,15 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// userDefinedRouting](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-userdefinedrouting).
         /// </summary>
         public const string UserDefinedRouting = "userDefinedRouting";
+        /// <summary>
+        /// The AKS-managed NAT gateway is used for egress.
+        /// </summary>
+        public const string ManagedNATGateway = "managedNATGateway";
+        /// <summary>
+        /// The user-assigned NAT gateway associated to the cluster subnet is
+        /// used for egress. This is an advanced scenario and requires proper
+        /// network configuration.
+        /// </summary>
+        public const string UserAssignedNATGateway = "userAssignedNATGateway";
     }
 }
