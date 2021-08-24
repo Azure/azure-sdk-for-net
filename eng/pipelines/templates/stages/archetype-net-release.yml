@@ -52,6 +52,8 @@ stages:
                 - pwsh:
                     mkdir InstallationCheck
                 - pwsh: |
+                    dir
+                    tree /F
                     Write-Host "Create new console"
                     dotnet new console -n "Installation.Check"
                     Write-Host "Adding package dependency for ${{artifact.name}}"
