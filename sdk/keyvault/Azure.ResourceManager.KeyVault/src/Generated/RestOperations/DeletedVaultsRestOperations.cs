@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetBySubscriptionRequest()
+        internal HttpMessage CreateGetAllBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets information about the deleted vaults in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DeletedVaultListResult>> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedVaultListResult>> GetAllBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBySubscriptionRequest();
+            using var message = CreateGetAllBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets information about the deleted vaults in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DeletedVaultListResult> GetBySubscription(CancellationToken cancellationToken = default)
+        public Response<DeletedVaultListResult> GetAllBySubscription(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBySubscriptionRequest();
+            using var message = CreateGetAllBySubscriptionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetBySubscriptionNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetAllBySubscriptionNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -276,14 +276,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DeletedVaultListResult>> GetBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedVaultListResult>> GetAllBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -303,14 +303,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DeletedVaultListResult> GetBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<DeletedVaultListResult> GetAllBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

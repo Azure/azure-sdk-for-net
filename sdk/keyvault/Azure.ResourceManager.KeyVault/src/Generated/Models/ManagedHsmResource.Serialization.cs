@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new ManagedHsmResource(id, name, type, location, tags, sku.Value, systemData.Value);
+            return new ManagedHsmResource(id, name, type, tags, location, sku.Value, systemData.Value);
         }
     }
 }

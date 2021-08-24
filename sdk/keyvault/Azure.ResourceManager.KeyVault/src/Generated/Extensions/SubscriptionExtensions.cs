@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionAsync(top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllBySubscriptionAsync(top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Vault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionNextPageAsync(nextLink, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Vault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscription(top, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllBySubscription(top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Vault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscriptionNextPage(nextLink, top, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllBySubscriptionNextPage(nextLink, top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Vault(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionAsync(top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllBySubscriptionAsync(top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.GetBySubscriptionNextPageAsync(nextLink, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllBySubscriptionNextPageAsync(nextLink, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscription(top, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllBySubscription(top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.KeyVault
                     scope.Start();
                     try
                     {
-                        var response = restOperations.GetBySubscriptionNextPage(nextLink, top, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllBySubscriptionNextPage(nextLink, top, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)

@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             var parameters = new VaultCreateOrUpdateParameters("westeurope", VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
-            var vault = await VaultContainer.StartCreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
+            var vault = await VaultContainer.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
             var vaultValue = vault.Value;
 
             Assert.False(vaultValue.Data.Properties.EnableSoftDelete);
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 if (exists)
                 {
                     // Purge vault
-                    await v.StartPurgeAsync().ConfigureAwait(false);
+                    await v.PurgeAsync().ConfigureAwait(false);
                     Assert.ThrowsAsync<RequestFailedException>(async () => await DeletedVaultContainer.GetAsync(Location));
                 }
                 if (resourceIds.Count == 0)

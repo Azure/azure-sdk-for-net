@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <param name="systemData"> System metadata for the key vault. </param>
         /// <param name="properties"> Properties of the vault. </param>
-        internal VaultData(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, SystemData systemData, VaultProperties properties) : base(id, name, type)
+        internal VaultData(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, Models.SystemData systemData, VaultProperties properties) : base(id, name, type)
         {
             Location = location;
             Tags = tags;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Tags assigned to the key vault resource. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> System metadata for the key vault. </summary>
-        public SystemData SystemData { get; }
+        public Models.SystemData SystemData { get; }
         /// <summary> Properties of the vault. </summary>
         public VaultProperties Properties { get; }
     }

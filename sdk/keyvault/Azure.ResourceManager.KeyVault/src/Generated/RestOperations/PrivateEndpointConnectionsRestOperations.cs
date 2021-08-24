@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetByResourceRequest(string resourceGroupName, string vaultName)
+        internal HttpMessage CreateGetAllByResourceRequest(string resourceGroupName, string vaultName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionListResult>> GetByResourceAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateEndpointConnectionListResult>> GetAllByResourceAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateGetByResourceRequest(resourceGroupName, vaultName);
+            using var message = CreateGetAllByResourceRequest(resourceGroupName, vaultName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionListResult> GetByResource(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public Response<PrivateEndpointConnectionListResult> GetAllByResource(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateGetByResourceRequest(resourceGroupName, vaultName);
+            using var message = CreateGetAllByResourceRequest(resourceGroupName, vaultName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetByResourceNextPageRequest(string nextLink, string resourceGroupName, string vaultName)
+        internal HttpMessage CreateGetAllByResourceNextPageRequest(string nextLink, string resourceGroupName, string vaultName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vaultName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionListResult>> GetByResourceNextPageAsync(string nextLink, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateEndpointConnectionListResult>> GetAllByResourceNextPageAsync(string nextLink, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateGetByResourceNextPageRequest(nextLink, resourceGroupName, vaultName);
+            using var message = CreateGetAllByResourceNextPageRequest(nextLink, resourceGroupName, vaultName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vaultName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionListResult> GetByResourceNextPage(string nextLink, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public Response<PrivateEndpointConnectionListResult> GetAllByResourceNextPage(string nextLink, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateGetByResourceNextPageRequest(nextLink, resourceGroupName, vaultName);
+            using var message = CreateGetAllByResourceNextPageRequest(nextLink, resourceGroupName, vaultName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

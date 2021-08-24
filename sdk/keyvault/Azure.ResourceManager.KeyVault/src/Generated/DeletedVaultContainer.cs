@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetBySubscription(cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllBySubscription(cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DeletedVault(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllBySubscriptionNextPage(nextLink, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DeletedVault(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllBySubscriptionAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DeletedVault(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllBySubscriptionNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DeletedVault(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

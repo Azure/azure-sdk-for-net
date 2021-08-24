@@ -12,7 +12,4 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.KeyVault.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="Azure.Core" VersionOverride="1.18.0-alpha.20210812.1" />
-  </ItemGroup>
 </Project>

@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Create or update a managed HSM Pool in the specified subscription. </summary>
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="parameters"> Parameters to create or update the managed HSM Pool. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual Response<ManagedHsm> CreateOrUpdate(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public virtual ManagedHsmCreateOrUpdateOperation CreateOrUpdate(string name, ManagedHsmData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.KeyVault
             }
 
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(name, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update a managed HSM Pool in the specified subscription. </summary>
-        /// <param name="name"> Name of the managed HSM Pool. </param>
-        /// <param name="parameters"> Parameters to create or update the managed HSM Pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<ManagedHsm>> CreateOrUpdateAsync(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(name, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update a managed HSM Pool in the specified subscription. </summary>
-        /// <param name="name"> Name of the managed HSM Pool. </param>
-        /// <param name="parameters"> Parameters to create or update the managed HSM Pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedHsmCreateOrUpdateOperation StartCreateOrUpdate(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, name, parameters, cancellationToken);
-                return new ManagedHsmCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, name, parameters).Request, response);
+                var operation = new ManagedHsmCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, name, parameters).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Create or update a managed HSM Pool in the specified subscription. </summary>
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="parameters"> Parameters to create or update the managed HSM Pool. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedHsmCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedHsmCreateOrUpdateOperation> CreateOrUpdateAsync(string name, ManagedHsmData parameters, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
-                return new ManagedHsmCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, name, parameters).Request, response);
+                var operation = new ManagedHsmCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, name, parameters).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -327,7 +275,7 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetByResourceGroup(Id.ResourceGroupName, top, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllByResourceGroup(Id.ResourceGroupName, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -342,7 +290,7 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetByResourceGroupNextPage(nextLink, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllByResourceGroupNextPage(nextLink, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -366,7 +314,7 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetByResourceGroupAsync(Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllByResourceGroupAsync(Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -381,7 +329,7 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagedHsm(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

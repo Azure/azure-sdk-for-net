@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Optional<ManagedHsmProperties> properties = default;
             Optional<ManagedHsmSku> sku = default;
-            Optional<SystemData> systemData = default;
+            Optional<Models.SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             Location location = default;
             ResourceIdentifier id = default;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    systemData = Models.SystemData.DeserializeSystemData(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new ManagedHsmData(id, name, type, location, tags, sku.Value, systemData.Value, properties.Value);
+            return new ManagedHsmData(id, name, type, tags, location, sku.Value, systemData.Value, properties.Value);
         }
     }
 }

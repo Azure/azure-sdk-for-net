@@ -10,7 +10,4 @@
     <!-- TODO: Temp workaround. Should be fixed prio release  -->
     <NoWarn>$(NoWarn);AZC0008;AZC0001;AZC0100;CS1591;IDT003;</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Update="Azure.Core" VersionOverride="1.18.0-alpha.20210812.1" />
-  </ItemGroup>
 </Project>

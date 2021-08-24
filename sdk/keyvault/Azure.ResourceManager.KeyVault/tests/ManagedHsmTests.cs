@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             parameters.Tags.InitializeFrom(Tags);
 
-            Response<ManagedHsm> updateManagedHsm = null;
+            ManagedHsm updateManagedHsm = null;
 
             if (Mode == RecordedTestMode.Record)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 {
                     try
                     {
-                        updateManagedHsm = await ManagedHsmContainer.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
+                        updateManagedHsm = (await ManagedHsmContainer.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false)).Value;
                         break;
                     }
                     catch (Exception)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 {
                     try
                     {
-                        updateManagedHsm = await ManagedHsmContainer.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
+                        updateManagedHsm = (await ManagedHsmContainer.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false)).Value;
                         break;
                     }
                     catch (Exception)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 }
             }
 
-            ValidateVault(updateManagedHsm.Value.Data,
+            ValidateVault(updateManagedHsm.Data,
                 VaultName,
                 ResGroupName,
                 TestEnvironment.SubscriptionId,

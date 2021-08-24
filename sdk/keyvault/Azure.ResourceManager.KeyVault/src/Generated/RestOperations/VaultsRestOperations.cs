@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetByResourceGroupRequest(string resourceGroupName, int? top)
+        internal HttpMessage CreateGetAllByResourceGroupRequest(string resourceGroupName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -424,14 +424,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<VaultListResult>> GetByResourceGroupAsync(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VaultListResult>> GetAllByResourceGroupAsync(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetByResourceGroupRequest(resourceGroupName, top);
+            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -452,14 +452,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<VaultListResult> GetByResourceGroup(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<VaultListResult> GetAllByResourceGroup(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetByResourceGroupRequest(resourceGroupName, top);
+            using var message = CreateGetAllByResourceGroupRequest(resourceGroupName, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetBySubscriptionRequest(int? top)
+        internal HttpMessage CreateGetAllBySubscriptionRequest(int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -498,9 +498,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<VaultListResult>> GetBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VaultListResult>> GetAllBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBySubscriptionRequest(top);
+            using var message = CreateGetAllBySubscriptionRequest(top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -519,9 +519,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> The List operation gets information about the vaults associated with the subscription. </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<VaultListResult> GetBySubscription(int? top = null, CancellationToken cancellationToken = default)
+        public Response<VaultListResult> GetAllBySubscription(int? top = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBySubscriptionRequest(top);
+            using var message = CreateGetAllBySubscriptionRequest(top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, int? top)
+        internal HttpMessage CreateGetAllByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<VaultListResult>> GetByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VaultListResult>> GetAllByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, top);
+            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<VaultListResult> GetByResourceGroupNextPage(string nextLink, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<VaultListResult> GetAllByResourceGroupNextPage(string nextLink, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, top);
+            using var message = CreateGetAllByResourceGroupNextPageRequest(nextLink, resourceGroupName, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetBySubscriptionNextPageRequest(string nextLink, int? top)
+        internal HttpMessage CreateGetAllBySubscriptionNextPageRequest(string nextLink, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -709,14 +709,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<VaultListResult>> GetBySubscriptionNextPageAsync(string nextLink, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VaultListResult>> GetAllBySubscriptionNextPageAsync(string nextLink, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetBySubscriptionNextPageRequest(nextLink, top);
+            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -737,14 +737,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<VaultListResult> GetBySubscriptionNextPage(string nextLink, int? top = null, CancellationToken cancellationToken = default)
+        public Response<VaultListResult> GetAllBySubscriptionNextPage(string nextLink, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetBySubscriptionNextPageRequest(nextLink, top);
+            using var message = CreateGetAllBySubscriptionNextPageRequest(nextLink, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

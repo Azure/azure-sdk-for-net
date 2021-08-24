@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetByResourceRequest(string resourceGroupName, string name)
+        internal HttpMessage CreateGetAllByResourceRequest(string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<MhsmPrivateEndpointConnectionsListResult>> GetByResourceAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<MhsmPrivateEndpointConnectionsListResult>> GetAllByResourceAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetByResourceRequest(resourceGroupName, name);
+            using var message = CreateGetAllByResourceRequest(resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public Response<MhsmPrivateEndpointConnectionsListResult> GetByResource(string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<MhsmPrivateEndpointConnectionsListResult> GetAllByResource(string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetByResourceRequest(resourceGroupName, name);
+            using var message = CreateGetAllByResourceRequest(resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetByResourceNextPageRequest(string nextLink, string resourceGroupName, string name)
+        internal HttpMessage CreateGetAllByResourceNextPageRequest(string nextLink, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
-        public async Task<Response<MhsmPrivateEndpointConnectionsListResult>> GetByResourceNextPageAsync(string nextLink, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<MhsmPrivateEndpointConnectionsListResult>> GetAllByResourceNextPageAsync(string nextLink, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetByResourceNextPageRequest(nextLink, resourceGroupName, name);
+            using var message = CreateGetAllByResourceNextPageRequest(nextLink, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="name"/> is null. </exception>
-        public Response<MhsmPrivateEndpointConnectionsListResult> GetByResourceNextPage(string nextLink, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<MhsmPrivateEndpointConnectionsListResult> GetAllByResourceNextPage(string nextLink, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateGetByResourceNextPageRequest(nextLink, resourceGroupName, name);
+            using var message = CreateGetAllByResourceNextPageRequest(nextLink, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

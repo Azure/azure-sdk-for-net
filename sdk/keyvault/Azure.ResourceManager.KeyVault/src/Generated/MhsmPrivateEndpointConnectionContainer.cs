@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Updates the specified private endpoint connection associated with the managed hsm pool. </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
         /// <param name="properties"> The intended state of private endpoint connection. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual Response<MhsmPrivateEndpointConnection> CreateOrUpdate(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
+        public virtual MhsmPrivateEndpointConnectionPutOperation CreateOrUpdate(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (privateEndpointConnectionName == null)
             {
@@ -60,71 +61,14 @@ namespace Azure.ResourceManager.KeyVault
             }
 
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(privateEndpointConnectionName, properties, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates the specified private endpoint connection associated with the managed hsm pool. </summary>
-        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
-        /// <param name="properties"> The intended state of private endpoint connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<Response<MhsmPrivateEndpointConnection>> CreateOrUpdateAsync(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
-        {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(privateEndpointConnectionName, properties, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates the specified private endpoint connection associated with the managed hsm pool. </summary>
-        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
-        /// <param name="properties"> The intended state of private endpoint connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual MhsmPrivateEndpointConnectionPutOperation StartCreateOrUpdate(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
-        {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.Put(Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, properties, cancellationToken);
-                return new MhsmPrivateEndpointConnectionPutOperation(Parent, response);
+                var operation = new MhsmPrivateEndpointConnectionPutOperation(Parent, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -136,9 +80,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Updates the specified private endpoint connection associated with the managed hsm pool. </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
         /// <param name="properties"> The intended state of private endpoint connection. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<MhsmPrivateEndpointConnectionPutOperation> StartCreateOrUpdateAsync(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
+        public async virtual Task<MhsmPrivateEndpointConnectionPutOperation> CreateOrUpdateAsync(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (privateEndpointConnectionName == null)
             {
@@ -149,12 +94,15 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.PutAsync(Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, properties, cancellationToken).ConfigureAwait(false);
-                return new MhsmPrivateEndpointConnectionPutOperation(Parent, response);
+                var operation = new MhsmPrivateEndpointConnectionPutOperation(Parent, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -326,7 +274,7 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetByResource(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllByResource(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MhsmPrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -341,7 +289,7 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetByResourceNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllByResourceNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MhsmPrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -364,7 +312,7 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetByResourceAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllByResourceAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MhsmPrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -379,7 +327,7 @@ namespace Azure.ResourceManager.KeyVault
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetByResourceNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllByResourceNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MhsmPrivateEndpointConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
