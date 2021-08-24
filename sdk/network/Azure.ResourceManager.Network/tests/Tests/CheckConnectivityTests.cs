@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             ConnectivityParameters connectivityParameters =
                 new ConnectivityParameters(new ConnectivitySource(vm.Id), new ConnectivityDestination { Address = "bing.com", Port = 80 });
 
-            Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.StartCheckConnectivityAsync(connectivityParameters);
+            Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.CheckConnectivityAsync(connectivityParameters);
             Response<ConnectivityInformation> connectivityCheck = await connectivityCheckOperation.WaitForCompletionAsync();;
 
             //Validation

@@ -66,11 +66,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         //Response<Storage.Models.StorageAccount> account = await accountOperation.WaitForCompletionAsync();
         //return account.Value;
 
-            return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(storageAccountId, new GenericResourceData
+            return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(storageAccountId, new GenericResourceData(TestEnvironment.Location)
             {
                 //Sku = new Resources.Models.Sku(),
                 Kind = "storage",
-                Location = TestEnvironment.Location
             })).Value;
         }
 
@@ -192,7 +191,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             var privateDnsZoneName = Recording.GenerateAssetName("private_dns_zone");
             var privateDnsZoneResourceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/Microsoft.Network/privateDnsZones/{privateDnsZoneName}";
-            privateDnsZone = ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdate(privateDnsZoneResourceId, new GenericResourceData { }).Value;
+            privateDnsZone = ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdate(privateDnsZoneResourceId, new GenericResourceData(TestEnvironment.Location)).Value;
 
             var privateDnsZoneGroupName = Recording.GenerateAssetName("private_dns_zone_group");
             var privateDnsZoneGroupContainer = privateEndpoint.GetPrivateDnsZoneGroups();
