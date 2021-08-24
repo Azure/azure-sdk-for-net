@@ -110,4 +110,4 @@ await blobContainer.DeleteAsync();
 
 ## Next steps
 
-Take a look at the [Managing Storage Accounts](https://github.com/yukun-dong/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/storage/Azure.ResourceManager.Storage/samples/Sample1_ManagingStorageAccounts.md) samples.
+Take a look at the [Managing Storage Accounts](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/storage/Azure.ResourceManager.Storage/samples/Sample1_ManagingStorageAccounts.md) samples.

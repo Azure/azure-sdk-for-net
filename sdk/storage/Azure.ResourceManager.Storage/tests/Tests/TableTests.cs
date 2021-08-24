@@ -25,8 +25,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             resourceGroup = await CreateResourceGroupAsync();
             string accountName = Recording.GenerateAssetName("storage");
             StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
-            StorageAccountCreateOperation accountCreateOperation= await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters());
-            storageAccount = await accountCreateOperation.WaitForCompletionAsync();
+            storageAccount = (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
             tableServiceContainer = storageAccount.GetTableServices();
             tableService = await tableServiceContainer.GetAsync("default");
             tableContainer = tableService.GetTables();
@@ -51,8 +50,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
             //create table
             string tableName = Recording.GenerateAssetName("testtable");
-            TableCreateOperation tableCreateOperation=await tableContainer.CreateOrUpdateAsync(tableName);
-            Table table1 = await tableCreateOperation.WaitForCompletionAsync();
+            Table table1 = (await tableContainer.CreateOrUpdateAsync(tableName)).Value;
             Assert.IsNotNull(table1);
             Assert.AreEqual(table1.Id.Name, tableName);
 
@@ -77,10 +75,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create two tables
             string tableName1 = Recording.GenerateAssetName("testtable1");
             string tableName2 = Recording.GenerateAssetName("testtable2");
-            TableCreateOperation tableCreateOperation1 = await tableContainer.CreateOrUpdateAsync(tableName1);
-            Table table1 = await tableCreateOperation1.WaitForCompletionAsync();
-            TableCreateOperation tableCreateOperation2 = await tableContainer.CreateOrUpdateAsync(tableName2);
-            Table table2 = await tableCreateOperation2.WaitForCompletionAsync();
+            Table table1 = (await tableContainer.CreateOrUpdateAsync(tableName1)).Value;
+            Table table2 = (await tableContainer.CreateOrUpdateAsync(tableName2)).Value;
 
             //validate two tables
             Table table3 = null;

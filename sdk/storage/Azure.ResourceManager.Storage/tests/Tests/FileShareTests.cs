@@ -26,8 +26,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             resourceGroup = await CreateResourceGroupAsync();
             string accountName = Recording.GenerateAssetName("storage");
             StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
-            StorageAccountCreateOperation accountCreateOperation = await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters());
-            storageAccount = await accountCreateOperation.WaitForCompletionAsync();
+            storageAccount = (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
             fileServiceContainer = storageAccount.GetFileServices();
             fileService = await fileServiceContainer.GetAsync("default");
             fileShareContainer = fileService.GetFileShares();
@@ -52,8 +51,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
             //create file share
             string fileShareName = Recording.GenerateAssetName("testfileshare");
-            FileShareCreateOperation fileShareCreateOperation=await fileShareContainer.CreateOrUpdateAsync(fileShareName, new FileShareData());
-            FileShare share1 = await fileShareCreateOperation.WaitForCompletionAsync();
+            FileShare share1 = (await fileShareContainer.CreateOrUpdateAsync(fileShareName, new FileShareData())).Value;
             Assert.AreEqual(share1.Id.Name, fileShareName);
 
             //validate if created successfully
@@ -79,10 +77,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             //create two file shares
             string fileShareName1 = Recording.GenerateAssetName("testfileshare1");
             string fileShareName2 = Recording.GenerateAssetName("testfileshare2");
-            FileShareCreateOperation fileShareCreateOperation1 = await fileShareContainer.CreateOrUpdateAsync(fileShareName1, new FileShareData());
-            FileShare share1 = await fileShareCreateOperation1.WaitForCompletionAsync();
-            FileShareCreateOperation fileShareCreateOperation2 = await fileShareContainer.CreateOrUpdateAsync(fileShareName2, new FileShareData());
-            FileShare share2 = await fileShareCreateOperation2.WaitForCompletionAsync();
+            FileShare share1 = (await fileShareContainer.CreateOrUpdateAsync(fileShareName1, new FileShareData())).Value;
+            FileShare share2 = (await fileShareContainer.CreateOrUpdateAsync(fileShareName2, new FileShareData())).Value;
 
             //validate if there are two file shares
             FileShare share3 = null;
@@ -107,8 +103,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         {
             //create file share
             string fileShareName = Recording.GenerateAssetName("testfileshare");
-            FileShareCreateOperation fileShareCreateOperation = await fileShareContainer.CreateOrUpdateAsync(fileShareName, new FileShareData());
-            FileShare share1 = await fileShareCreateOperation.WaitForCompletionAsync();
+            FileShare share1 = (await fileShareContainer.CreateOrUpdateAsync(fileShareName, new FileShareData())).Value;
             Assert.AreEqual(share1.Id.Name, fileShareName);
 
             //update metadata and share quota

@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             string accountName = Recording.GenerateAssetName("storage");
             resourceGroup = await CreateResourceGroupAsync();
             StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
-            StorageAccountCreateOperation accountOperation = await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters(),false);
-            StorageAccount account1=await accountOperation.WaitForCompletionAsync();
+            StorageAccount account1= (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
             Assert.AreEqual(accountName, account1.Id.Name);
             VerifyAccountProperties(account1, true);
             AssertStorageAccountEqual(account1, await account1.GetAsync());
@@ -72,10 +71,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             string accountName2 = Recording.GenerateAssetName("storage2");
             resourceGroup = await CreateResourceGroupAsync();
             StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
-            StorageAccountCreateOperation accountCreateOperation1 = await storageAccountContainer.CreateOrUpdateAsync(accountName1, GetDefaultStorageAccountParameters());
-            StorageAccount account1 = await accountCreateOperation1.WaitForCompletionAsync();
-            StorageAccountCreateOperation accountCreateOperation2 = await storageAccountContainer.CreateOrUpdateAsync(accountName2, GetDefaultStorageAccountParameters());
-            StorageAccount account2 = await accountCreateOperation2.WaitForCompletionAsync();
+            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName1, GetDefaultStorageAccountParameters())).Value;
+            StorageAccount account2 = (await storageAccountContainer.CreateOrUpdateAsync(accountName2, GetDefaultStorageAccountParameters())).Value;
 
             //validate two storage accounts
             int count = 0;
@@ -101,8 +98,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             string accountName = Recording.GenerateAssetName("storage");
             resourceGroup = await CreateResourceGroupAsync();
             StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
-            StorageAccountCreateOperation accountCreateOperation = await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters());
-            StorageAccount account1 = await accountCreateOperation.WaitForCompletionAsync();
+            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
             VerifyAccountProperties(account1, true);
 
             //update sku
@@ -177,8 +173,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Sku sku = new Sku(SkuName.StandardLRS);
             StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: sku,kind:Kind.StorageV2);
             parameters.LargeFileSharesState = LargeFileSharesState.Enabled;
-            StorageAccountCreateOperation accountCreateOperation = await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters);
-            StorageAccount account1 = await accountCreateOperation.WaitForCompletionAsync();
+            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
             VerifyAccountProperties(account1, false);
 
             //create file share with share quota 5200, which is allowed in large file shares
@@ -200,8 +195,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             string accountName = Recording.GenerateAssetName("storage");
             resourceGroup = await CreateResourceGroupAsync();
             StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
-            StorageAccountCreateOperation accountCreateOperation = await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters());
-            StorageAccount account1 = await accountCreateOperation.WaitForCompletionAsync();
+            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, GetDefaultStorageAccountParameters())).Value;
             VerifyAccountProperties(account1, true);
             StorageAccountListKeysResult keys = await account1.GetKeysAsync();
             Assert.NotNull(keys);
@@ -233,8 +227,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
                 Bypass = @"Logging, AzureServices",
                 IpRules = { new IPRule(iPAddressOrRange: "23.45.67.89") }
             };
-            StorageAccountCreateOperation accountCreateOperation = await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters);
-            StorageAccount account1 = await accountCreateOperation.WaitForCompletionAsync();
+            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
             VerifyAccountProperties(account1, false);
 
             //verify network rule
@@ -286,6 +279,52 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.NotNull(accountData.NetworkRuleSet);
             Assert.AreEqual(@"Logging, Metrics", accountData.NetworkRuleSet.Bypass.ToString());
             Assert.AreEqual(DefaultAction.Allow, accountData.NetworkRuleSet.DefaultAction);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task CreateStorageAccountWithBlockBlobStorage()
+        {
+            //create storage account with block blob storage
+            string accountName = Recording.GenerateAssetName("storage");
+            resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            Sku sku = new Sku(SkuName.PremiumLRS);
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku:sku,kind: Kind.BlockBlobStorage);
+            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+
+            //validate
+            VerifyAccountProperties(account1, false);
+            Assert.AreEqual(Kind.BlockBlobStorage, account1.Data.Kind);
+            Assert.AreEqual(SkuName.PremiumLRS, account1.Data.Sku.Name);
+            //this storage account should onlu have endpoints on blob and dfs
+            Assert.NotNull(account1.Data.PrimaryEndpoints.Blob);
+            Assert.NotNull(account1.Data.PrimaryEndpoints.Dfs);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.File);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.Table);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.Queue);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task CreateStorageAccountWithFileStorage()
+        {
+            //create storage account with file storage
+            string accountName = Recording.GenerateAssetName("storage");
+            resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            Sku sku = new Sku(SkuName.PremiumLRS);
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku: sku, kind: Kind.FileStorage);
+            StorageAccount account1 = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+
+            //validate
+            VerifyAccountProperties(account1, false);
+            Assert.AreEqual(Kind.FileStorage, account1.Data.Kind);
+            Assert.AreEqual(SkuName.PremiumLRS, account1.Data.Sku.Name);
+            //this storage account should onlu have endpoints on blob and dfs
+            Assert.IsNull(account1.Data.PrimaryEndpoints.Blob);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.Dfs);
+            Assert.NotNull(account1.Data.PrimaryEndpoints.File);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.Table);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.Queue);
         }
     }
 }
