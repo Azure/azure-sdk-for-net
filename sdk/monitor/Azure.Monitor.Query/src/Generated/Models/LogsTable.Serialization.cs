@@ -30,7 +30,7 @@ namespace Azure.Monitor.Query.Models
                     List<LogsTableColumn> array = new List<LogsTableColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogsTableColumn.DeserializeLogsQueryResultColumn(item));
+                        array.Add(LogsTableColumn.DeserializeLogsTableColumn(item));
                     }
                     columns = array;
                     continue;

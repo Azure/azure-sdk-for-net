@@ -12,7 +12,7 @@ namespace Azure.Monitor.Query.Models
 {
     public partial class LogsTableColumn
     {
-        internal static LogsTableColumn DeserializeLogsQueryResultColumn(JsonElement element)
+        internal static LogsTableColumn DeserializeLogsTableColumn(JsonElement element)
         {
             string name = default;
             LogsColumnType type = default;

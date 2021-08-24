@@ -7,7 +7,7 @@
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> MetricResult namespace class specifies the metadata for a metric namespace. </summary>
+    /// <summary> Metric namespace class specifies the metadata for a metric namespace. </summary>
     public partial class MetricNamespace
     {
         /// <summary> Initializes a new instance of MetricNamespace. </summary>

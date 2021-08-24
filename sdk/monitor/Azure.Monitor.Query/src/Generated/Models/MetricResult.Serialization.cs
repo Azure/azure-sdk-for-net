@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
 {
     public partial class MetricResult
     {
-        internal static MetricResult DeserializeMetric(JsonElement element)
+        internal static MetricResult DeserializeMetricResult(JsonElement element)
         {
             string id = default;
             string type = default;

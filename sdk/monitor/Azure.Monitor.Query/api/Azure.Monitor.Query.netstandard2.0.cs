@@ -63,10 +63,10 @@ namespace Azure.Monitor.Query
         public MetricsQueryOptions() { }
         public System.Collections.Generic.IList<Azure.Monitor.Query.Models.MetricAggregationType> Aggregations { get { throw null; } }
         public string Filter { get { throw null; } set { } }
-        public System.TimeSpan? Interval { get { throw null; } set { } }
+        public System.TimeSpan? Granularity { get { throw null; } set { } }
         public string MetricNamespace { get { throw null; } set { } }
         public string OrderBy { get { throw null; } set { } }
-        public Azure.Core.DateTimeRange? TimeSpan { get { throw null; } set { } }
+        public Azure.Core.DateTimeRange? TimeRange { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
     }
 }
@@ -114,22 +114,31 @@ namespace Azure.Monitor.Query.Models
     public partial class LogsQueryResult
     {
         internal LogsQueryResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultTable> AllTables { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsTable> AllTables { get { throw null; } }
         public Azure.Core.ResponseError Error { get { throw null; } }
-        public Azure.Monitor.Query.Models.LogsQueryResultTable Table { get { throw null; } }
+        public Azure.Monitor.Query.Models.LogsTable Table { get { throw null; } }
         public System.BinaryData GetStatistics() { throw null; }
         public System.BinaryData GetVisualization() { throw null; }
     }
-    public partial class LogsQueryResultColumn
+    public partial class LogsTable
     {
-        internal LogsQueryResultColumn() { }
+        internal LogsTable() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsTableColumn> Columns { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsTableRow> Rows { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<T> Deserialize<T>() { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LogsTableColumn
+    {
+        internal LogsTableColumn() { }
         public string Name { get { throw null; } }
         public Azure.Monitor.Query.Models.LogsColumnType Type { get { throw null; } }
         public override string ToString() { throw null; }
     }
-    public partial class LogsQueryResultRow
+    public partial class LogsTableRow
     {
-        internal LogsQueryResultRow() { }
+        internal LogsTableRow() { }
         public int Count { get { throw null; } }
         public object this[int index] { get { throw null; } }
         public object this[string name] { get { throw null; } }
@@ -158,26 +167,6 @@ namespace Azure.Monitor.Query.Models
         public bool IsNull(int index) { throw null; }
         public bool IsNull(string name) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class LogsQueryResultTable
-    {
-        internal LogsQueryResultTable() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultColumn> Columns { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultRow> Rows { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<T> Deserialize<T>() { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Metric
-    {
-        internal Metric() { }
-        public string DisplayDescription { get { throw null; } }
-        public Azure.Core.ResponseError Error { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.TimeSeriesElement> TimeSeries { get { throw null; } }
-        public string Type { get { throw null; } }
-        public Azure.Monitor.Query.Models.MetricUnit Unit { get { throw null; } }
     }
     public enum MetricAggregationType
     {
@@ -241,12 +230,23 @@ namespace Azure.Monitor.Query.Models
         public string Name { get { throw null; } }
         public string Type { get { throw null; } }
     }
+    public partial class MetricResult
+    {
+        internal MetricResult() { }
+        public string DisplayDescription { get { throw null; } }
+        public Azure.Core.ResponseError Error { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.TimeSeriesElement> TimeSeries { get { throw null; } }
+        public string Type { get { throw null; } }
+        public Azure.Monitor.Query.Models.MetricUnit Unit { get { throw null; } }
+    }
     public partial class MetricsQueryResult
     {
         internal MetricsQueryResult() { }
         public int? Cost { get { throw null; } }
         public System.TimeSpan? Interval { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.Metric> Metrics { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricResult> Metrics { get { throw null; } }
         public string Namespace { get { throw null; } }
         public string ResourceRegion { get { throw null; } }
         public Azure.Core.DateTimeRange TimeSpan { get { throw null; } }
@@ -312,7 +312,7 @@ namespace Azure.Monitor.Query.Models
     }
     public static partial class QueryModelFactory
     {
-        public static Azure.Monitor.Query.Models.LogsQueryResultColumn LogsQueryResultColumn(string name = null, Azure.Monitor.Query.Models.LogsColumnType type = default(Azure.Monitor.Query.Models.LogsColumnType)) { throw null; }
+        public static Azure.Monitor.Query.Models.LogsTableColumn LogsTableColumn(string name = null, Azure.Monitor.Query.Models.LogsColumnType type = default(Azure.Monitor.Query.Models.LogsColumnType)) { throw null; }
         public static Azure.Monitor.Query.Models.MetricAvailability MetricAvailability(System.TimeSpan? timeGrain = default(System.TimeSpan?), System.TimeSpan? retention = default(System.TimeSpan?)) { throw null; }
         public static Azure.Monitor.Query.Models.MetricValue MetricValue(System.DateTimeOffset timeStamp = default(System.DateTimeOffset), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?)) { throw null; }
     }

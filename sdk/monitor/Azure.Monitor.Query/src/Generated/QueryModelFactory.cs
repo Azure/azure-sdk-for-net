@@ -16,7 +16,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
         /// <returns> A new <see cref="Models.LogsTableColumn"/> instance for mocking. </returns>
-        public static LogsTableColumn LogsQueryResultColumn(string name = null, LogsColumnType type = default)
+        public static LogsTableColumn LogsTableColumn(string name = null, LogsColumnType type = default)
         {
             return new LogsTableColumn(name, type);
         }

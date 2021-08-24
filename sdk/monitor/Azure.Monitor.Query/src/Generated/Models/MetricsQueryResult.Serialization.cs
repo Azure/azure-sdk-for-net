@@ -64,7 +64,7 @@ namespace Azure.Monitor.Query.Models
                     List<MetricResult> array = new List<MetricResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricResult.DeserializeMetric(item));
+                        array.Add(MetricResult.DeserializeMetricResult(item));
                     }
                     value = array;
                     continue;

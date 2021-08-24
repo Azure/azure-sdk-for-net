@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> MetricResult definition class specifies the metadata for a metric. </summary>
+    /// <summary> Metric definition class specifies the metadata for a metric. </summary>
     public partial class MetricDefinition
     {
         /// <summary> Initializes a new instance of MetricDefinition. </summary>

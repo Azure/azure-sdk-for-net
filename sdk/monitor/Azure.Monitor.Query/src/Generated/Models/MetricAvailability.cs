@@ -6,11 +6,10 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> MetricResult availability specifies the time grain (aggregation interval or frequency) and the retention period for that time grain. </summary>
+    /// <summary> Metric availability specifies the time grain (aggregation interval or frequency) and the retention period for that time grain. </summary>
     public partial class MetricAvailability
     {
         /// <summary> Initializes a new instance of MetricAvailability. </summary>
@@ -23,13 +22,12 @@ namespace Azure.Monitor.Query.Models
         /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </param>
         internal MetricAvailability(TimeSpan? timeGrain, TimeSpan? retention)
         {
-            Granularity = timeGrain;
+            TimeGrain = timeGrain;
             Retention = retention;
         }
 
         /// <summary> the time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </summary>
-        [CodeGenMember("TimeGrain")]
-        public TimeSpan? Granularity { get; }
+        public TimeSpan? TimeGrain { get; }
         /// <summary> the retention period for the metric at the specified timegrain.  Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </summary>
         public TimeSpan? Retention { get; }
     }
