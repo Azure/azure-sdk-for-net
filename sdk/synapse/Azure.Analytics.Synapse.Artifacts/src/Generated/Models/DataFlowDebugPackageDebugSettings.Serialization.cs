@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -42,6 +43,57 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(DatasetParameters);
             }
             writer.WriteEndObject();
+        }
+
+        internal static DataFlowDebugPackageDebugSettings DeserializeDataFlowDebugPackageDebugSettings(JsonElement element)
+        {
+            Optional<IList<DataFlowSourceSetting>> sourceSettings = default;
+            Optional<IDictionary<string, object>> parameters = default;
+            Optional<object> datasetParameters = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sourceSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DataFlowSourceSetting> array = new List<DataFlowSourceSetting>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataFlowSourceSetting.DeserializeDataFlowSourceSetting(item));
+                    }
+                    sourceSettings = array;
+                    continue;
+                }
+                if (property.NameEquals("parameters"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                    }
+                    parameters = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("datasetParameters"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    datasetParameters = property.Value.GetObject();
+                    continue;
+                }
+            }
+            return new DataFlowDebugPackageDebugSettings(Optional.ToList(sourceSettings), Optional.ToDictionary(parameters), datasetParameters.Value);
         }
     }
 }
