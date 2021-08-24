@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         public List<NugetPublishStatus> NugetPublishStatus { get; private set; }
 
         /// <summary>
-        /// API key to be used to publish the nuget pakcage
+        /// API key to be used to publish the nuget package
         /// </summary>
         public string ApiKey
         {

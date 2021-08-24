@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// within the IoT Security solution.</param>
         /// <param name="logAnalyticsQuery">Log analytics query for getting the
         /// list of affected devices/alerts.</param>
-        public IoTSecurityAggregatedRecommendation(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string recommendationName = default(string), string recommendationDisplayName = default(string), string description = default(string), string recommendationTypeId = default(string), string detectedBy = default(string), string remediationSteps = default(string), string reportedSeverity = default(string), int? healthyDevices = default(int?), int? unhealthyDeviceCount = default(int?), string logAnalyticsQuery = default(string))
+        public IoTSecurityAggregatedRecommendation(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string recommendationName = default(string), string recommendationDisplayName = default(string), string description = default(string), string recommendationTypeId = default(string), string detectedBy = default(string), string remediationSteps = default(string), string reportedSeverity = default(string), long? healthyDevices = default(long?), long? unhealthyDeviceCount = default(long?), string logAnalyticsQuery = default(string))
         {
             Id = id;
             Name = name;
@@ -156,13 +156,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Gets number of healthy devices within the IoT Security solution.
         /// </summary>
         [JsonProperty(PropertyName = "properties.healthyDevices")]
-        public int? HealthyDevices { get; private set; }
+        public long? HealthyDevices { get; private set; }
 
         /// <summary>
         /// Gets number of unhealthy devices within the IoT Security solution.
         /// </summary>
         [JsonProperty(PropertyName = "properties.unhealthyDeviceCount")]
-        public int? UnhealthyDeviceCount { get; private set; }
+        public long? UnhealthyDeviceCount { get; private set; }
 
         /// <summary>
         /// Gets log analytics query for getting the list of affected

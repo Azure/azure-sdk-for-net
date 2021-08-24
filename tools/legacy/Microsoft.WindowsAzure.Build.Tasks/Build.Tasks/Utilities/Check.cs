@@ -14,7 +14,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
     {
         /// <summary>
         /// Checks if the argument passed in is NotNull
-        /// Throws NullReferenceException if the arugment is Null
+        /// Throws NullReferenceException if the argument is Null
         /// </summary>
         /// <param name="argument">arument info for logging purpose</param>
         /// <param name="argumentName">argument info for logging</param>
@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
 
         /// <summary>
         /// Checks if the string argument passed in is NonEmpty and NotNull
-        /// Throws NullReferenceException if the arugment is Null or Empty
+        /// Throws NullReferenceException if the argument is Null or Empty
         /// </summary>
         /// <param name="argument">arument info for logging purpose</param>
         /// <param name="argumentName">argument info for logging</param>

@@ -7,8 +7,8 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20210805.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+          "azsdk-net-ResourceManager/1.0.0-alpha.20210824.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "a0cd6711cd80bb05c1a927b057ac8ad2",
         "x-ms-return-client-request-id": "true"
@@ -19,15 +19,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "410",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Aug 2021 08:56:21 GMT",
+        "Date": "Tue, 24 Aug 2021 05:52:01 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b6520b21-0840-4951-a794-f31f014ddcf2",
-        "x-ms-ratelimit-remaining-subscription-reads": "11993",
-        "x-ms-request-id": "b6520b21-0840-4951-a794-f31f014ddcf2",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210805T085621Z:b6520b21-0840-4951-a794-f31f014ddcf2"
+        "x-ms-correlation-request-id": "98ec2a2b-1d15-441f-9821-c40c81386cf1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "98ec2a2b-1d15-441f-9821-c40c81386cf1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T055202Z:98ec2a2b-1d15-441f-9821-c40c81386cf1"
       },
       "ResponseBody": {
         "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a",
@@ -50,41 +50,39 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "32",
+        "Content-Length": "22",
         "Content-Type": "application/json",
-        "traceparent": "00-bcfdf232a5b98e498c1d69870f560ccc-6dcfa3ed13796b41-00",
+        "traceparent": "00-26c1ae8c526c9746b49ed8ee7079e80e-583751bfffdad547-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20210805.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+          "azsdk-net-ResourceManager/1.0.0-alpha.20210824.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "ae28f93f6f2cd0fc03cbac7ecb0ba451",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "location": "westus2",
-        "tags": {}
+        "location": "westus2"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "234",
+        "Content-Length": "224",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Aug 2021 08:56:22 GMT",
+        "Date": "Tue, 24 Aug 2021 05:52:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a65351eb-951e-4b5a-99e8-3f6c2d0285f8",
-        "x-ms-ratelimit-remaining-subscription-writes": "1196",
-        "x-ms-request-id": "a65351eb-951e-4b5a-99e8-3f6c2d0285f8",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210805T085622Z:a65351eb-951e-4b5a-99e8-3f6c2d0285f8"
+        "x-ms-correlation-request-id": "dbe4cbd0-010d-4e57-8e21-1431bdef8607",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "dbe4cbd0-010d-4e57-8e21-1431bdef8607",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T055203Z:dbe4cbd0-010d-4e57-8e21-1431bdef8607"
       },
       "ResponseBody": {
         "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-1-8404",
         "name": "testRg-1-8404",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
-        "tags": {},
         "properties": {
           "provisioningState": "Succeeded"
         }
@@ -98,10 +96,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "172",
         "Content-Type": "application/json",
-        "traceparent": "00-61ea7f1520666743a605247ffad19dbf-e473060f1c3b974b-00",
+        "traceparent": "00-953aa78c0f965744b8326fb8deabe108-21d399da0846f34e-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20210805.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
+          "azsdk-net-ResourceManager/1.0.0-alpha.20210824.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "f43aa63a824471d0b0ea71672b73cebb",
         "x-ms-return-client-request-id": "true"
@@ -117,16 +115,16 @@
         "Cache-Control": "no-cache",
         "Content-Length": "666",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Aug 2021 08:56:22 GMT",
+        "Date": "Tue, 24 Aug 2021 05:52:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ddea1042-9543-4db0-82fc-6501dd36034f",
-        "x-ms-ratelimit-remaining-subscription-writes": "1195",
-        "x-ms-request-id": "ddea1042-9543-4db0-82fc-6501dd36034f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210805T085622Z:ddea1042-9543-4db0-82fc-6501dd36034f"
+        "x-ms-correlation-request-id": "9db75e18-03d2-4d6e-bd4f-82eb8dc3ff99",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "9db75e18-03d2-4d6e-bd4f-82eb8dc3ff99",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T055203Z:9db75e18-03d2-4d6e-bd4f-82eb8dc3ff99"
       },
       "ResponseBody": {
         "properties": {
@@ -135,7 +133,7 @@
           "scope": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/testRg-1-8404",
           "metadata": {
             "createdBy": "a7f6524f-c945-44eb-8671-431626ab4768",
-            "createdOn": "2021-08-05T08:56:22.6204807Z",
+            "createdOn": "2021-08-24T05:52:03.7701454Z",
             "updatedBy": null,
             "updatedOn": null
           },

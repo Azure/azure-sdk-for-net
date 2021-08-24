@@ -148,9 +148,8 @@ namespace Azure.ResourceManager.Tests
         
         private GenericResourceData ConstructGenericVirtualNetwork()
         {
-            var virtualNetwork = new GenericResourceData()
+            var virtualNetwork = new GenericResourceData(Location.WestUS2)
             {
-                Location = Location.WestUS2,
                 Properties = new JsonObject()
                 {
                     {"addressSpace", new JsonObject()
