@@ -18,36 +18,6 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedBy))
-            {
-                writer.WritePropertyName("createdBy");
-                writer.WriteStringValue(CreatedBy);
-            }
-            if (Optional.IsDefined(CreatedByType))
-            {
-                writer.WritePropertyName("createdByType");
-                writer.WriteStringValue(CreatedByType.Value.ToString());
-            }
-            if (Optional.IsDefined(CreatedAt))
-            {
-                writer.WritePropertyName("createdAt");
-                writer.WriteStringValue(CreatedAt.Value, "O");
-            }
-            if (Optional.IsDefined(LastModifiedBy))
-            {
-                writer.WritePropertyName("lastModifiedBy");
-                writer.WriteStringValue(LastModifiedBy);
-            }
-            if (Optional.IsDefined(LastModifiedByType))
-            {
-                writer.WritePropertyName("lastModifiedByType");
-                writer.WriteStringValue(LastModifiedByType.Value.ToString());
-            }
-            if (Optional.IsDefined(LastModifiedAt))
-            {
-                writer.WritePropertyName("lastModifiedAt");
-                writer.WriteStringValue(LastModifiedAt.Value, "O");
-            }
             writer.WriteEndObject();
         }
 
