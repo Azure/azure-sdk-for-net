@@ -48,7 +48,7 @@ stages:
               displayName: "Installation Check"
               steps:
                 - download: current
-                  artifact: ${{parameters.ArtifactName}}-signed
+                  artifact: ${{parameters.ArtifactName}}
                 - pwsh:
                     mkdir InstallationCheck
                 - pwsh: |
