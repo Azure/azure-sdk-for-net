@@ -6,7 +6,8 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class Metric
+    [CodeGenModel("Metric")]
+    public partial class MetricResult
     {
         private const string SuccessErrorCode = "Success";
 
