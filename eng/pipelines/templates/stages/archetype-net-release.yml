@@ -56,8 +56,10 @@ stages:
                     dotnet new console
                     Write-Host "Installing .nupkg into package source"
                     $nupkg = Get-ChildItem -Path "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}/*.nupkg" -Exclude "*.symbols.nupkg"
+                    dotnet nuget add source "$($nupkg)"
                     Write-Host "Adding package dependency for ${{artifact.name}}"
-                    dotnet add package ${{artifact.name}} --prerelease -s "$($nupkg)"
+                    dotnet add package ${{artifact.name}} --prerelease
+                    # Check exit code, exit if needed
                     Write-Host "NuGet Cache list:"
                     nuget locals all -list
                     Write-Host "Clearing NuGet package cache"
@@ -66,7 +68,6 @@ stages:
                     dotnet restore
                   displayName: Blank Slate Installation
                   workingDirectory: $(System.DefaultWorkingDirectory)/InstallationCheck
-                  # Check exit code, exit if needed after package add
           - deployment: TagRepository
             displayName: "Create release tag"
             condition: ne(variables['Skip.TagRepository'], 'true')
