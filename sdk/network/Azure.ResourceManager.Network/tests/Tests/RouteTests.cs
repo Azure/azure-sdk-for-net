@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task RoutesApiTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -138,6 +139,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task RoutesHopTypeTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");

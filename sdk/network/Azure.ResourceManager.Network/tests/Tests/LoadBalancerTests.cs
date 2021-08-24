@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-
         [Test]
-        public async Task LoadBalancerApiTestAsync()
+        [RecordedTest]
+        public async Task LoadBalancerApiTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
@@ -309,6 +309,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task LoadBalancerApiTestWithDynamicIp()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -476,6 +477,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task LoadBalancerApiTestWithStaticIp()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -647,6 +649,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task LoadBalancerApiTestWithDistributionPolicy()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -820,6 +823,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task CreateEmptyLoadBalancer()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -860,6 +864,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task UpdateLoadBalancerRule()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -983,6 +988,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task LoadBalancerApiNicAssociationTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -1169,6 +1175,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task LoadBalancerNatPoolTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");

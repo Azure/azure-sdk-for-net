@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Review after preview")]
         public async Task PacketCaptureApiTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");

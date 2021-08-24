@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task UsageTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");

@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task SubnetApiTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         [Ignore("Track2: Need  RedisManagementClient")]
         public async Task SubnetResourceNavigationLinksTest()
         {

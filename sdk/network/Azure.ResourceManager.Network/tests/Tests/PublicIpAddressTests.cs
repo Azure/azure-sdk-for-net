@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task PublicIpAddressApiTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -84,6 +85,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task PublicIpAddressApiTestWithIdletTimeoutAndReverseFqdn()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -148,6 +150,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task PublicIpAddressApiTestIPv6()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
