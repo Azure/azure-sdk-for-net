@@ -13,10 +13,10 @@ namespace Azure.Monitor.Query.Models
 {
     public partial class LogsTable
     {
-        internal static LogsTable DeserializeLogsQueryResultTable(JsonElement element)
+        internal static LogsTable DeserializeLogsTable(JsonElement element)
         {
             string name = default;
-            IReadOnlyList<LogsQueryResultColumn> columns = default;
+            IReadOnlyList<LogsTableColumn> columns = default;
             JsonElement rows = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("columns"))
                 {
-                    List<LogsQueryResultColumn> array = new List<LogsQueryResultColumn>();
+                    List<LogsTableColumn> array = new List<LogsTableColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogsQueryResultColumn.DeserializeLogsQueryResultColumn(item));
+                        array.Add(LogsTableColumn.DeserializeLogsQueryResultColumn(item));
                     }
                     columns = array;
                     continue;

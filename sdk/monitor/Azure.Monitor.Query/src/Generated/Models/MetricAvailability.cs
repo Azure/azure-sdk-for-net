@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> Metric availability specifies the time grain (aggregation interval or frequency) and the retention period for that time grain. </summary>
+    /// <summary> MetricResult availability specifies the time grain (aggregation interval or frequency) and the retention period for that time grain. </summary>
     public partial class MetricAvailability
     {
         /// <summary> Initializes a new instance of MetricAvailability. </summary>

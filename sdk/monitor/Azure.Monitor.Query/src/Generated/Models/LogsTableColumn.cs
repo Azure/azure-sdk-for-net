@@ -6,17 +6,18 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> A column in a table. </summary>
-    public partial class LogsQueryResultColumn
+    public partial class LogsTableColumn
     {
-        /// <summary> Initializes a new instance of LogsQueryResultColumn. </summary>
+        /// <summary> Initializes a new instance of LogsTableColumn. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal LogsQueryResultColumn(string name, LogsColumnType type)
+        internal LogsTableColumn(string name, LogsColumnType type)
         {
             if (name == null)
             {

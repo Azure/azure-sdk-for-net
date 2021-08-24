@@ -55,7 +55,7 @@ namespace Azure.Monitor.Query
 
         /// <summary> Lists the metric definitions for the resource. </summary>
         /// <param name="resourceUri"> The identifier of the resource. </param>
-        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="metricnamespace"> MetricResult namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<MetricDefinitionCollection>> ListAsync(string resourceUri, string metricnamespace = null, CancellationToken cancellationToken = default)
@@ -83,7 +83,7 @@ namespace Azure.Monitor.Query
 
         /// <summary> Lists the metric definitions for the resource. </summary>
         /// <param name="resourceUri"> The identifier of the resource. </param>
-        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="metricnamespace"> MetricResult namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<MetricDefinitionCollection> List(string resourceUri, string metricnamespace = null, CancellationToken cancellationToken = default)

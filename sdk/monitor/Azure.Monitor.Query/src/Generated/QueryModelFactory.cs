@@ -12,13 +12,13 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class QueryModelFactory
     {
-        /// <summary> Initializes a new instance of LogsQueryResultColumn. </summary>
+        /// <summary> Initializes a new instance of LogsTableColumn. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
-        /// <returns> A new <see cref="Models.LogsQueryResultColumn"/> instance for mocking. </returns>
-        public static LogsQueryResultColumn LogsQueryResultColumn(string name = null, LogsColumnType type = default)
+        /// <returns> A new <see cref="Models.LogsTableColumn"/> instance for mocking. </returns>
+        public static LogsTableColumn LogsQueryResultColumn(string name = null, LogsColumnType type = default)
         {
-            return new LogsQueryResultColumn(name, type);
+            return new LogsTableColumn(name, type);
         }
 
         /// <summary> Initializes a new instance of MetricAvailability. </summary>

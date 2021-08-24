@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class Metric
+    public partial class MetricResult
     {
-        internal static Metric DeserializeMetric(JsonElement element)
+        internal static MetricResult DeserializeMetric(JsonElement element)
         {
             string id = default;
             string type = default;
@@ -71,7 +71,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new Metric(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries);
+            return new MetricResult(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries);
         }
     }
 }
