@@ -12,14 +12,13 @@ namespace Azure.Monitor.Query.Models
     /// <summary>
     /// Represents a row in the table of results returned from the logs query.
     /// </summary>
-    [CodeGenModel("LogsQueryResultRow")]
-    public class LogsTableRow
+    public class LogsQueryResultRow
     {
         private readonly Dictionary<string, int> _columnMap;
-        private readonly IReadOnlyList<LogsTableColumn> _columns;
+        private readonly IReadOnlyList<LogsQueryResultColumn> _columns;
         private readonly JsonElement _row;
 
-        internal LogsTableRow(Dictionary<string, int> columnMap, IReadOnlyList<LogsTableColumn> columns, JsonElement row)
+        internal LogsQueryResultRow(Dictionary<string, int> columnMap, IReadOnlyList<LogsQueryResultColumn> columns, JsonElement row)
         {
             _columnMap = columnMap;
             _columns = columns;

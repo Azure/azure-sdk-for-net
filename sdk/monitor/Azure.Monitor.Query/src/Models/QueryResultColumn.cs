@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Monitor.Query.Models
 {
     [CodeGenModel("Column")]
-    public partial class LogsTableColumn
+    public partial class LogsQueryResultColumn
     {
         /// <inheritdoc />
         public override string ToString()

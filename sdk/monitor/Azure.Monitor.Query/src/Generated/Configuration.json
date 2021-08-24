@@ -1,9 +1,0 @@
-{
-  "OutputFolder": ".",
-  "Namespace": "Azure.Monitor.Query",
-  "LibraryName": null,
-  "SharedSourceFolders": [
-    "..\\..\\..\\..\\core\\Azure.Core\\src\\Shared\\",
-    "..\\..\\..\\..\\..\\..\\..\\Users\\nibhati\\.nuget\\packages\\microsoft.azure.autorest.csharp\\3.0.0-beta.20210822.2\\content\\Generator.Shared\\"
-  ]
-}

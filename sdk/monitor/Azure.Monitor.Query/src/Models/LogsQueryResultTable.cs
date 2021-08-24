@@ -11,7 +11,7 @@ namespace Azure.Monitor.Query.Models
     [CodeGenModel("Table")]
     public partial class LogsTable
     {
-        private IReadOnlyList<LogsTableRow> _rows;
+        private IReadOnlyList<LogsQueryResultRow> _rows;
 
         [CodeGenMember("Rows")]
         private JsonElement InternalRows { get; }
@@ -19,9 +19,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Gets the rows of the result table.
         /// </summary>
-        public IReadOnlyList<LogsTableRow> Rows => _rows ??= CreateRows();
+        public IReadOnlyList<LogsQueryResultRow> Rows => _rows ??= CreateRows();
 
-        private IReadOnlyList<LogsTableRow> CreateRows()
+        private IReadOnlyList<LogsQueryResultRow> CreateRows()
         {
             Dictionary<string, int> columnDictionary = new();
 
@@ -30,11 +30,11 @@ namespace Azure.Monitor.Query.Models
                 columnDictionary[Columns[index].Name] = index;
             }
 
-            List<LogsTableRow> rows = new List<LogsTableRow>();
+            List<LogsQueryResultRow> rows = new List<LogsQueryResultRow>();
 
             foreach (var row in InternalRows.EnumerateArray())
             {
-                rows.Add(new LogsTableRow(columnDictionary, Columns, row));
+                rows.Add(new LogsQueryResultRow(columnDictionary, Columns, row));
             }
 
             return rows;

@@ -38,7 +38,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets or sets the filter that is used to refine the set of metric data returned.
         /// <example>
-        /// MetricResult contains metadata A, B and C.<br/>
+        /// Metric contains metadata A, B and C.<br/>
         /// <br/>
         ///     - Return all time series of C where A = a1 and B = b1 or b2:<br/>
         ///         <c>A eq 'a1' and B eq 'b1' or B eq 'b2' and C eq '*'</c><br/>

@@ -59,7 +59,7 @@ namespace Azure.Monitor.Query.Models
                     List<LogsTable> array = new List<LogsTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogsTable.DeserializeLogsTable(item));
+                        array.Add(LogsTable.DeserializeLogsQueryResultTable(item));
                     }
                     tables = array;
                     continue;
