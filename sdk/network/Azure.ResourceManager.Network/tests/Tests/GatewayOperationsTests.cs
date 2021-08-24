@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task VnetGatewayBaseTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
