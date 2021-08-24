@@ -9,7 +9,6 @@
     </Description>
     <PackageTags>azure;management;resource</PackageTags>
     <NoWarn>$(NoWarn);CA2214</NoWarn>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
 
   <ItemGroup>

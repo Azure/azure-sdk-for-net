@@ -91,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
         /// <summary>
         /// Even if some events in a batch fail, we still checkpoint. Event error handling
-        /// is the responsiblity of user function code.
+        /// is the responsibility of user function code.
         /// </summary>
         /// <returns></returns>
         [Test]

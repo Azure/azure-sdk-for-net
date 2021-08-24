@@ -35,9 +35,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="allowSkillsetToReadFileData"> If true, will create a path //document//file_data that is an object representing the original file data downloaded from your blob data source.  This allows you to pass the original file data to a custom skill for processing within the enrichment pipeline, or to the Document Extraction skill. </param>
         /// <param name="pdfTextRotationAlgorithm"> Determines algorithm for text extraction from PDF files in Azure blob storage. </param>
         /// <param name="executionEnvironment"> Specifies the environment in which the indexer should execute. </param>
-        /// <param name="QueryTimeout"> Increases the timeout beyond the 5-minute default for Azure SQL database data sources, specified in the format &quot;hh:mm:ss&quot;. </param>
+        /// <param name="queryTimeout"> Increases the timeout beyond the 5-minute default for Azure SQL database data sources, specified in the format &quot;hh:mm:ss&quot;. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode, string excludedFileNameExtensions, string indexedFileNameExtensions, bool? failOnUnsupportedContentType, bool? failOnUnprocessableDocument, bool? indexStorageMetadataOnlyForOversizedDocuments, string delimitedTextHeaders, string delimitedTextDelimiter, bool? firstLineContainsHeaders, string documentRoot, BlobIndexerDataToExtract? dataToExtract, BlobIndexerImageAction? imageAction, bool? allowSkillsetToReadFileData, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm, IndexerExecutionEnvironment? executionEnvironment, string QueryTimeout, IDictionary<string, object> additionalProperties)
+        internal IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode, string excludedFileNameExtensions, string indexedFileNameExtensions, bool? failOnUnsupportedContentType, bool? failOnUnprocessableDocument, bool? indexStorageMetadataOnlyForOversizedDocuments, string delimitedTextHeaders, string delimitedTextDelimiter, bool? firstLineContainsHeaders, string documentRoot, BlobIndexerDataToExtract? dataToExtract, BlobIndexerImageAction? imageAction, bool? allowSkillsetToReadFileData, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm, IndexerExecutionEnvironment? executionEnvironment, string queryTimeout, IDictionary<string, object> additionalProperties)
         {
             ParsingMode = parsingMode;
             ExcludedFileNameExtensions = excludedFileNameExtensions;
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
             AllowSkillsetToReadFileData = allowSkillsetToReadFileData;
             PdfTextRotationAlgorithm = pdfTextRotationAlgorithm;
             ExecutionEnvironment = executionEnvironment;
-            _queryTimeout = QueryTimeout;
+            _queryTimeout = queryTimeout;
             AdditionalProperties = additionalProperties;
         }
 

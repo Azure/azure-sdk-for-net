@@ -12,8 +12,6 @@ using System.Runtime.CompilerServices;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.ServiceBus;
 using Microsoft.Azure.Management.ServiceBus.Models;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
@@ -55,52 +53,6 @@ namespace Azure.Messaging.ServiceBus.Tests
         private static ManagementToken s_managementToken;
 
         /// <summary>
-        ///   Performs the tasks needed to create a new  Service Bus namespace within a resource group, intended to be used as
-        ///   an ephemeral container for the queue and topic instances used in a given test run.
-        /// </summary>
-        ///
-        /// <returns>The key attributes for identifying and accessing a dynamically created  Service Bus namespace.</returns>
-        ///
-        public static async Task<ServiceBusTestEnvironment.NamespaceProperties> CreateNamespaceAsync()
-        {
-            var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
-            var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
-            var token = await AquireManagementTokenAsync().ConfigureAwait(false);
-
-            string CreateName() => $"net-servicebus-{ Guid.NewGuid().ToString("D").Substring(0, 30) }";
-
-            using (var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription })
-            {
-                var location = await QueryResourceGroupLocationAsync(token, resourceGroup, azureSubscription).ConfigureAwait(false);
-
-                var serviceBusNamspace = new SBNamespace(sku: new SBSku(SkuName.Standard, SkuTier.Standard), tags: GenerateTags(), location: location);
-                serviceBusNamspace = await CreateRetryPolicy<SBNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), serviceBusNamspace)).ConfigureAwait(false);
-
-                var accessKey = await CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, serviceBusNamspace.Name, ServiceBusTestEnvironment.ServiceBusDefaultSharedAccessKey)).ConfigureAwait(false);
-                return new ServiceBusTestEnvironment.NamespaceProperties(serviceBusNamspace.Name, accessKey.PrimaryConnectionString, shouldRemoveAtCompletion: true);
-            }
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to remove an ephemeral Service Bus namespace used as a container for queue and topic instances
-        ///   for a specific test run.
-        /// </summary>
-        ///
-        /// <param name="namespaceName">The name of the namespace to delete.</param>
-        ///
-        public static async Task DeleteNamespaceAsync(string namespaceName)
-        {
-            var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
-            var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
-            var token = await AquireManagementTokenAsync().ConfigureAwait(false);
-
-            using (var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription })
-            {
-                await CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName)).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
         ///   Creates a Service Bus scope associated with a queue instance, intended to be used in the context
         ///   of a single test and disposed when the test has completed.
         /// </summary>
@@ -125,14 +77,6 @@ namespace Azure.Messaging.ServiceBus.Tests
                                                              string overrideNamespace = default,
                                                              [CallerMemberName] string caller = "")
         {
-            // If there was an override and the force flag is not set for creation, then build a scope
-            // for the specified queue.
-
-            if ((!string.IsNullOrEmpty(ServiceBusTestEnvironment.Instance.OverrideQueueName)) && (!forceQueueCreation))
-            {
-                return new QueueScope(ServiceBusTestEnvironment.Instance.ServiceBusNamespace, ServiceBusTestEnvironment.Instance.OverrideQueueName, false);
-            }
-
             // Create a new queue specific to the scope being created.
 
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
@@ -140,7 +84,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
             var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
             var serviceBusNamespace = overrideNamespace ?? ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
-            var token = await AquireManagementTokenAsync().ConfigureAwait(false);
+            var token = await AcquireManagementTokenAsync().ConfigureAwait(false);
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
@@ -184,27 +128,10 @@ namespace Azure.Messaging.ServiceBus.Tests
             var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
             var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
             var serviceBusNamespace = ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
-            var token = await AquireManagementTokenAsync().ConfigureAwait(false);
+            var token = await AcquireManagementTokenAsync().ConfigureAwait(false);
 
             using (var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription })
             {
-                // If there was an override and the force flag is not set for creation, then build a scope for the
-                // specified topic.  Query the topic resource to build the list of its subscriptions for the scope.
-
-                if ((!string.IsNullOrEmpty(ServiceBusTestEnvironment.Instance.OverrideTopicName)) && (!forceTopicCreation))
-                {
-                    var subscriptionPage = await CreateRetryPolicy<IPage<SBSubscription>>().ExecuteAsync(() => client.Subscriptions.ListByTopicAsync(resourceGroup, serviceBusNamespace, ServiceBusTestEnvironment.Instance.OverrideTopicName)).ConfigureAwait(false);
-                    var existingSubscriptions = new List<string>(subscriptionPage.Select(item => item.Name));
-
-                    while (!string.IsNullOrEmpty(subscriptionPage.NextPageLink))
-                    {
-                        subscriptionPage = await CreateRetryPolicy<IPage<SBSubscription>>().ExecuteAsync(() => client.Subscriptions.ListByTopicAsync(resourceGroup, serviceBusNamespace, ServiceBusTestEnvironment.Instance.OverrideTopicName)).ConfigureAwait(false);
-                        existingSubscriptions.AddRange(subscriptionPage.Select(item => item.Name));
-                    }
-
-                    return new TopicScope(ServiceBusTestEnvironment.Instance.ServiceBusNamespace, ServiceBusTestEnvironment.Instance.OverrideTopicName, existingSubscriptions, false);
-                }
-
                 // Create a new topic specific for the scope being created.
 
                 string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
@@ -227,33 +154,12 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
-        ///   Queries the location for the requested Azure Resource Group.
-        /// </summary>
-        ///
-        /// <param name="accessToken">The access token to use for the query request.</param>
-        /// <param name="resourceGroupName">The name of the resource group to query the location of.</param>
-        /// <param name="subscriptionId">The identifier of the Azure subscription in which the resource group resides.</param>
-        ///
-        /// <returns>The location code for the requested <paramref name="resourceGroupName"/>.</returns>
-        ///
-        private static async Task<string> QueryResourceGroupLocationAsync(string accessToken,
-                                                                          string resourceGroupName,
-                                                                          string subscriptionId)
-        {
-            using var client = new ResourceManagementClient(ResourceManagerUri, new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId };
-            {
-                ResourceGroup resourceGroup = await CreateRetryPolicy<ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName));
-                return resourceGroup.Location;
-            }
-        }
-
-        /// <summary>
         ///   Acquires a JWT token for use with the  Service Bus management client.
         /// </summary>
         ///
         /// <returns>The token to use for management operations against the  Service Bus Live test namespace.</returns>
         ///
-        private static async Task<string> AquireManagementTokenAsync()
+        private static async Task<string> AcquireManagementTokenAsync()
         {
             var token = s_managementToken;
             var authority = new Uri(new Uri(ServiceBusTestEnvironment.Instance.AuthorityHostUrl), ServiceBusTestEnvironment.Instance.TenantId).ToString();
@@ -486,7 +392,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 {
                     var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
                     var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
-                    var token = await AquireManagementTokenAsync().ConfigureAwait(false);
+                    var token = await AcquireManagementTokenAsync().ConfigureAwait(false);
 
                     using var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription };
                     await CreateRetryPolicy().ExecuteAsync(() => client.Queues.DeleteAsync(resourceGroup, NamespaceName, QueueName)).ConfigureAwait(false);
@@ -583,7 +489,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 {
                     var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
                     var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
-                    var token = await AquireManagementTokenAsync().ConfigureAwait(false);
+                    var token = await AcquireManagementTokenAsync().ConfigureAwait(false);
 
                     using var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription };
                     await CreateRetryPolicy().ExecuteAsync(() => client.Topics.DeleteAsync(resourceGroup, NamespaceName, TopicName)).ConfigureAwait(false);
