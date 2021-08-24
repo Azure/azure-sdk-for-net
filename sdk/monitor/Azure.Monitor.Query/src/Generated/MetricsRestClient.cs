@@ -106,7 +106,7 @@ namespace Azure.Monitor.Query
         /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<MetricQueryResult>> ListAsync(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricsQueryResult>> ListAsync(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
             if (resourceUri == null)
             {
@@ -119,9 +119,9 @@ namespace Azure.Monitor.Query
             {
                 case 200:
                     {
-                        MetricQueryResult value = default;
+                        MetricsQueryResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricQueryResult.DeserializeMetricQueryResult(document.RootElement);
+                        value = MetricsQueryResult.DeserializeMetricsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -150,7 +150,7 @@ namespace Azure.Monitor.Query
         /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<MetricQueryResult> List(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, CancellationToken cancellationToken = default)
+        public Response<MetricsQueryResult> List(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
             if (resourceUri == null)
             {
@@ -163,9 +163,9 @@ namespace Azure.Monitor.Query
             {
                 case 200:
                     {
-                        MetricQueryResult value = default;
+                        MetricsQueryResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricQueryResult.DeserializeMetricQueryResult(document.RootElement);
+                        value = MetricsQueryResult.DeserializeMetricsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -45,9 +45,11 @@ $PremiumFileAccountName = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_NAME'
 $PremiumFileAccountKey = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_KEY']
 $PremiumFileAccountEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
 $KeyVaultUri = $DeploymentOutputs['KEYVAULT_URI']
+$VmName = $DeploymentOutputs['VM_NAME']
 $StorageTenantId = $DeploymentOutputs['STORAGE_TENANT_ID']
 $ResourceGroupName = $DeploymentOutputs['RESOURCE_GROUP_NAME']
 $SubscriptionId = $DeploymentOutputs['SUBSCRIPTION_ID']
+$Location = $DeploymentOutputs['LOCATION']
 
 # Construct the content of the configuration file that the Storage tests expect
 $content = 
@@ -61,6 +63,7 @@ $content =
   <TargetBlobAndContainerSoftDeleteTenant>SoftDeleteTenant</TargetBlobAndContainerSoftDeleteTenant>
   <TargetPremiumFileTenant>PremiumFileTenant</TargetPremiumFileTenant>
   <TargetKeyVault>ClientsideEncryptionKeyvault</TargetKeyVault>
+  <TargetManagedDisk>DefaultManagedDisk</TargetManagedDisk>
   <TenantConfigurations>
     <TenantConfiguration>
       <TenantName>ProductionTenant</TenantName>
@@ -173,6 +176,18 @@ $content =
       <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
     </KeyVaultConfiguration>
   </KeyVaultConfigurations>
+  <ManagedDiskConfigurations>
+    <ManagedDiskConfiguration>
+      <Name>DefaultManagedDisk</Name>
+      <DiskNamePrefix>$VmName</DiskNamePrefix>
+      <ResourceGroupName>$ResourceGroupName</ResourceGroupName>
+      <SubsriptionId>$SubscriptionId</SubsriptionId>
+      <Location>$Location</Location>
+      <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
+      <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
+      <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
+    </ManagedDiskConfiguration>
+  </ManagedDiskConfigurations>
 </TestConfigurations>"
 
 $storageTestConfigurationTemplateName = 'TestConfigurationsTemplate.xml'

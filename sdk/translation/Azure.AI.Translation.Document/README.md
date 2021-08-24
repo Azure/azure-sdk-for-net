@@ -76,8 +76,8 @@ update the API key without creating a new client.
 With the value of the endpoint and an `AzureKeyCredential`, you can create the [DocumentTranslationClient][documenttranslation_client_class]:
 
 ```C# Snippet:CreateDocumentTranslationClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
+string endpoint = "<Document Translator Resource Endpoint>";
+string apiKey = "<Document Translator Resource API Key>";
 var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
@@ -98,7 +98,7 @@ You will also need to [register a new AAD application][register_aad_app] and [gr
 Set the values of the `client ID`, `tenant ID`, and `client secret` of the AAD application as environment variables: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_CLIENT_SECRET`.
 
 ```C# Snippet:CreateDocumentTranslationClientTokenCredential
-string endpoint = "<endpoint>";
+string endpoint = "<Document Translator Resource Endpoint>";
 var client = new DocumentTranslationClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
@@ -127,7 +127,6 @@ A single source URL to documents can be translated to many different languages:
 ```C# Snippet:DocumentTranslationSingleInput
 Uri sourceSasUri = new Uri("<source SAS URI>");
 Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
-
 var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr");
 ```
 
@@ -193,7 +192,6 @@ Start a translation operation to translate documents in the source container and
 ```C# Snippet:StartTranslationAsync
 Uri sourceUri = new Uri("<source SAS URI>");
 Uri targetUri = new Uri("<target SAS URI>");
-
 var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
 DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
@@ -233,11 +231,11 @@ Get History of all submitted translation operations
 ```C# Snippet:OperationsHistoryAsync
 int operationsCount = 0;
 int totalDocs = 0;
-int docsCancelled = 0;
+int docsCanceled = 0;
 int docsSucceeded = 0;
 int docsFailed = 0;
 
-await foreach (TranslationStatus translationStatus in client.GetAllTranslationStatusesAsync())
+await foreach (TranslationStatus translationStatus in client.GetTranslationStatusesAsync())
 {
     if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
         translationStatus.Status == DocumentTranslationStatus.Running)
@@ -248,7 +246,7 @@ await foreach (TranslationStatus translationStatus in client.GetAllTranslationSt
 
     operationsCount++;
     totalDocs += translationStatus.DocumentsTotal;
-    docsCancelled += translationStatus.DocumentsCancelled;
+    docsCanceled += translationStatus.DocumentsCanceled;
     docsSucceeded += translationStatus.DocumentsSucceeded;
     docsFailed += translationStatus.DocumentsFailed;
 }
@@ -257,14 +255,14 @@ Console.WriteLine($"# of operations: {operationsCount}");
 Console.WriteLine($"Total Documents: {totalDocs}");
 Console.WriteLine($"Succeeded Document: {docsSucceeded}");
 Console.WriteLine($"Failed Document: {docsFailed}");
-Console.WriteLine($"Cancelled Documents: {docsCancelled}");
+Console.WriteLine($"Canceled Documents: {docsCanceled}");
 ```
 
 ### Start Translation with Multiple Inputs Asynchronously
 Start a translation operation to translate documents in multiple source containers to multiple target containers in different languages. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
 ```C# Snippet:MultipleInputsAsync
-Uri source1SasUriUri = new Uri("<source1 SAS URI>");
+Uri source1SasUri = new Uri("<source1 SAS URI>");
 Uri source2SasUri = new Uri("<source2 SAS URI>");
 Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
 Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
@@ -273,7 +271,7 @@ Uri frenchGlossarySasUri = new Uri("<french glossary SAS URI>");
 
 var glossaryFormat = "TSV";
 
-var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
+var input1 = new DocumentTranslationInput(source1SasUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
 input1.AddTarget(spanishTargetSasUri, "es");
 
 var input2 = new DocumentTranslationInput(source2SasUri, arabicTargetSasUri, "ar");
@@ -314,7 +312,6 @@ Start a translation operation to translate documents in the source container and
 ```C# Snippet:StartTranslation
 Uri sourceUri = new Uri("<source SAS URI>");
 Uri targetUri = new Uri("<target SAS URI>");
-
 var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
 DocumentTranslationOperation operation = client.StartTranslation(input);

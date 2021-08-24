@@ -1,12 +1,31 @@
 # Release History
 
-## 1.17.0-beta.1 (Unreleased)
+## 1.19.0-beta.1 (Unreleased)
+
+- Added `HttpAuthorization` to represent authentication information in Authorization, ProxyAuthorization, WWW-Authenticate, and Proxy-Authenticate header values.
 
 ### Features Added
 
 ### Breaking Changes
 
-### Key Bugs Fixed
+### Bugs Fixed
+
+### Other Changes
+
+## 1.18.0 (2021-08-18)
+
+
+### Bugs Fixed
+
+- Fixed a bug where a buffered error responses on .NET Framework were prematurely disposed
+- Fixed relative redirect support.
+
+## 1.17.0 (2021-08-10)
+
+### Features Added
+
+- Added `ClientOptions.Default` to configure defaults process-wide.
+- Added `HttpPipelinePosition.BeforeTransport` to be able to add policies at the end of the pipeline before the transport.
 
 ### Fixed
 

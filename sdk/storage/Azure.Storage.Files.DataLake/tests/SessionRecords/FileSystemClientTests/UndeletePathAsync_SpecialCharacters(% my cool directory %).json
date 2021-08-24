@@ -35,7 +35,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seannsecanary.dfs.core.windows.net/test-filesystem-ab9ed33d-18f3-207a-ca59-161ab781821c/ my cool directory ?resource=directory",
+      "RequestUri": "http://seannsecanary.dfs.core.windows.net/test-filesystem-ab9ed33d-18f3-207a-ca59-161ab781821c/%20my%20cool%20directory%20?resource=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -68,7 +68,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seannsecanary.dfs.core.windows.net/test-filesystem-ab9ed33d-18f3-207a-ca59-161ab781821c/ my cool directory ?recursive=true",
+      "RequestUri": "http://seannsecanary.dfs.core.windows.net/test-filesystem-ab9ed33d-18f3-207a-ca59-161ab781821c/%20my%20cool%20directory%20?recursive=true",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -133,7 +133,7 @@
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"http://seannsecanary.blob.core.windows.net/\" ContainerName=\"test-filesystem-ab9ed33d-18f3-207a-ca59-161ab781821c\"><Blobs><Blob><Name> my cool directory </Name><DeletionId>132610024430424656</DeletionId><Deleted>true</Deleted><Properties><Creation-Time>Tue, 23 Mar 2021 19:47:22 GMT</Creation-Time><Last-Modified>Tue, 23 Mar 2021 19:47:22 GMT</Last-Modified><Expiry-Time>Tue, 30 Mar 2021 19:47:23 GMT</Expiry-Time><Etag>0x8D8EE347A40E07C</Etag><Content-Length>0</Content-Length><Content-Type>application/octet-stream</Content-Type><Content-Encoding /><Content-Language /><Content-CRC64>AAAAAAAAAAA=</Content-CRC64><Content-MD5 /><Cache-Control /><Content-Disposition /><BlobType>BlockBlob</BlobType><AccessTier>Hot</AccessTier><AccessTierInferred>true</AccessTierInferred><ServerEncrypted>true</ServerEncrypted><DeletedTime>Tue, 23 Mar 2021 19:47:23 GMT</DeletedTime><RemainingRetentionDays>6</RemainingRetentionDays></Properties><OrMetadata /></Blob></Blobs><NextMarker /></EnumerationResults>"
     },
     {
-      "RequestUri": "http://seannsecanary.blob.core.windows.net/test-filesystem-ab9ed33d-18f3-207a-ca59-161ab781821c/ my cool directory ?comp=undelete",
+      "RequestUri": "http://seannsecanary.blob.core.windows.net/test-filesystem-ab9ed33d-18f3-207a-ca59-161ab781821c/%20my%20cool%20directory%20?comp=undelete",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -165,7 +165,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seannsecanary.blob.core.windows.net/test-filesystem-ab9ed33d-18f3-207a-ca59-161ab781821c/ my cool directory ",
+      "RequestUri": "http://seannsecanary.blob.core.windows.net/test-filesystem-ab9ed33d-18f3-207a-ca59-161ab781821c/%20my%20cool%20directory%20",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",
