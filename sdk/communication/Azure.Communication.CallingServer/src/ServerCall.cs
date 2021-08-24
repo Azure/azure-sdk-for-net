@@ -277,7 +277,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="recordingId">The recording id to get the state of.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public virtual async Task<Response<CallRecordingProperties>> GetRecordingStateAsync(string recordingId,  CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallRecordingProperties>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(GetRecordingState)}");
             scope.Start();
