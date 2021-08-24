@@ -7,6 +7,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test.Shared;
@@ -40,6 +41,44 @@ namespace Azure.Storage.Blobs.Tests
         public TransactionalHashingTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+        }
+
+        internal Action<Request> GetHashAssertion(TransactionalHashAlgorithm algorithm, byte[] expectedHash = default)
+        {
+            return request =>
+            {
+                switch (algorithm)
+                {
+                    case TransactionalHashAlgorithm.MD5:
+                        if (request.Headers.TryGetValue("Content-MD5", out string md5))
+                        {
+                            if (expectedHash != default)
+                            {
+                                Assert.AreEqual(Convert.ToBase64String(expectedHash), md5);
+                            }
+                        }
+                        else
+                        {
+                            Assert.Fail("Content-MD5 expected on request but was not found.");
+                        }
+                        break;
+                    case TransactionalHashAlgorithm.StorageCrc64:
+                        if (request.Headers.TryGetValue("x-ms-content-crc64", out string crc))
+                        {
+                            if (expectedHash != default)
+                            {
+                                Assert.AreEqual(Convert.ToBase64String(expectedHash), crc);
+                            }
+                        }
+                        else
+                        {
+                            Assert.Fail("x-ms-content-crc64 expected on request but was not found.");
+                        }
+                        break;
+                    default:
+                        throw new Exception("Bad TransactionalHashAlgorithm provided to Request hash assertion.");
+                }
+            };
         }
 
         [Test, Combinatorial]
@@ -233,6 +272,10 @@ namespace Azure.Storage.Blobs.Tests
             // Arrange
             var data = GetRandomBuffer(Constants.KB); // well below partition size
 
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetHashAssertion(algorithm));
+            var clientOptions = GetOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
             // create an incorrect hash to check on request pipeline, guaranteeing we didn't autocalculate
             var precalculatedHash = GetRandomBuffer(16);
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
@@ -243,15 +286,24 @@ namespace Azure.Storage.Blobs.Tests
             };
 
             // Act / Assert
-
-            // TODO mock this instead of bad request
             using (var stream = new MemoryStream(data))
             {
-                // we sent a bad hash; this request will fail
-                Assert.ThrowsAsync(typeof(RequestFailedException), async () => await blob.UploadAsync(stream, new BlobUploadOptions
+                hashPipelineAssertion.CheckRequest = true;
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await blob.UploadAsync(stream, new BlobUploadOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
                 }));
+                switch (algorithm)
+                {
+                    case TransactionalHashAlgorithm.MD5:
+                        Assert.AreEqual("Md5Mismatch", exception.ErrorCode);
+                        break;
+                    case TransactionalHashAlgorithm.StorageCrc64:
+                        Assert.AreEqual("Crc64Mismatch", exception.ErrorCode);
+                        break;
+                    default:
+                        throw new ArgumentException("Test arguments contain bad algorithm specifier.");
+                }
             }
 
             // TODO intercept requests in pipeline to check for hash values
@@ -267,18 +319,24 @@ namespace Azure.Storage.Blobs.Tests
             const int blockSize = Constants.KB;
             var data = GetRandomBuffer(2 * blockSize);
 
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetHashAssertion(algorithm));
+            var clientOptions = GetOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
             // create bad hash for to ignore
             var precalculatedHash = GetRandomBuffer(16);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm,
                 PrecalculatedHash = precalculatedHash
             };
 
-            // Act
+            // Act / Assert
             using (var stream = new MemoryStream(data))
             {
+                hashPipelineAssertion.CheckRequest = true;
                 await blob.UploadAsync(stream, new BlobUploadOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
@@ -289,10 +347,6 @@ namespace Azure.Storage.Blobs.Tests
                     }
                 });
             }
-
-            // Assert
-            // we didn't throw, so we didn't send the bad hash anywhere
-            // TODO intercept requests in pipeline to check for hash values
         }
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
@@ -304,9 +358,14 @@ namespace Azure.Storage.Blobs.Tests
             // Arrange
             var data = GetRandomBuffer(Constants.KB); // well below partition size
 
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetHashAssertion(algorithm));
+            var clientOptions = GetOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
             // create an incorrect hash to check on request pipeline, guaranteeing we didn't autocalculate
             var precalculatedHash = GetRandomBuffer(16);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm,
@@ -315,14 +374,24 @@ namespace Azure.Storage.Blobs.Tests
 
             // Act / Assert
 
-            // TODO mock this instead of bad request
             using (var stream = new MemoryStream(data))
             {
-                // we sent a bad hash; this request will fail
-                Assert.ThrowsAsync(typeof(RequestFailedException), async () => await blob.UploadAsync(stream, new BlobUploadOptions
+                hashPipelineAssertion.CheckRequest = true;
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await blob.UploadAsync(stream, new BlobUploadOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
                 }));
+                switch (algorithm)
+                {
+                    case TransactionalHashAlgorithm.MD5:
+                        Assert.AreEqual("Md5Mismatch", exception.ErrorCode);
+                        break;
+                    case TransactionalHashAlgorithm.StorageCrc64:
+                        Assert.AreEqual("Crc64Mismatch", exception.ErrorCode);
+                        break;
+                    default:
+                        throw new ArgumentException("Test arguments contain bad algorithm specifier.");
+                }
             }
 
             // TODO intercept requests in pipeline to check for hash values
@@ -338,18 +407,25 @@ namespace Azure.Storage.Blobs.Tests
             const int blockSize = Constants.KB;
             var data = GetRandomBuffer(2 * blockSize);
 
-            // create bad hash for to ignore
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetHashAssertion(algorithm));
+            var clientOptions = GetOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
+
+            // create bad hash to ignore
             var precalculatedHash = GetRandomBuffer(16);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm,
                 PrecalculatedHash = precalculatedHash
             };
 
-            // Act
+            // Act / Assert
             using (var stream = new MemoryStream(data))
             {
+                hashPipelineAssertion.CheckRequest = true;
                 await blob.UploadAsync(stream, new BlobUploadOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
@@ -360,10 +436,6 @@ namespace Azure.Storage.Blobs.Tests
                     }
                 });
             }
-
-            // Assert
-            // we didn't throw, so we didn't send the bad hash anywhere
-            // TODO intercept requests in pipeline to check for hash values
         }
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
@@ -375,24 +447,27 @@ namespace Azure.Storage.Blobs.Tests
             // Arrange
             const int blockSize = Constants.KB;
             var data = GetRandomBuffer(2 * blockSize);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm
             };
 
-            // Act
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetHashAssertion(algorithm));
+            var clientOptions = GetOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act / Assert
             using (var stream = new MemoryStream(data))
             {
+                hashPipelineAssertion.CheckRequest = true;
                 await blob.StageBlockAsync(Convert.ToBase64String(Encoding.UTF8.GetBytes("blockId")), stream, new BlockBlobStageBlockOptions
                 {
                     TransactionalHashingOptions = hashingOptions,
                 });
             }
-
-            // Assert
-            // we didn't throw, so we didn't send the bad hash anywhere
-            // TODO intercept requests in pipeline to check for hash values
         }
 
         [TestCase(TransactionalHashAlgorithm.MD5)]
@@ -404,24 +479,45 @@ namespace Azure.Storage.Blobs.Tests
             // Arrange
             const int blockSize = Constants.KB;
             var data = GetRandomBuffer(2 * blockSize);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            var precalculatedHash = GetRandomBuffer(16);
             var hashingOptions = new UploadTransactionalHashingOptions
             {
                 Algorithm = algorithm,
+                PrecalculatedHash = precalculatedHash
             };
 
-            // Act
+            var hashPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetHashAssertion(algorithm, expectedHash: precalculatedHash));
+            var clientOptions = GetOptions();
+            clientOptions.AddPolicy(hashPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var container = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetNewSharedKeyCredentials(), clientOptions));
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act / Assert
+            hashPipelineAssertion.CheckRequest = true;
             using (var stream = new MemoryStream(data))
             {
                 // we sent a bad hash; this request will fail
-                Assert.ThrowsAsync(typeof(RequestFailedException), async () => await blob.StageBlockAsync("blockId", stream, new BlockBlobStageBlockOptions
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await blob.StageBlockAsync(
+                    Convert.ToBase64String(Encoding.UTF8.GetBytes("blockId")),
+                    stream,
+                    new BlockBlobStageBlockOptions
+                    {
+                        TransactionalHashingOptions = hashingOptions,
+                    }));
+                switch (algorithm)
                 {
-                    TransactionalHashingOptions = hashingOptions,
-                }));
+                    case TransactionalHashAlgorithm.MD5:
+                        Assert.AreEqual("Md5Mismatch", exception.ErrorCode);
+                        break;
+                    case TransactionalHashAlgorithm.StorageCrc64:
+                        Assert.AreEqual("Crc64Mismatch", exception.ErrorCode);
+                        break;
+                    default:
+                        throw new ArgumentException("Test arguments contain bad algorithm specifier.");
+                }
             }
-
-            // Assert
-            // TODO intercept request in pipeline to check for hash value
         }
     }
 }
