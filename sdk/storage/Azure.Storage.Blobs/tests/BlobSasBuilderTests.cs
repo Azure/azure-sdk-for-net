@@ -455,7 +455,8 @@ namespace Azure.Storage.Blobs.Test
                 ContentDisposition = constants.Sas.ContentDisposition,
                 ContentEncoding = constants.Sas.ContentEncoding,
                 ContentLanguage = constants.Sas.ContentLanguage,
-                ContentType = constants.Sas.ContentType
+                ContentType = constants.Sas.ContentType,
+                EncryptionScope = constants.Sas.EncryptionScope
             };
             builder.SetPermissions(BlobAccountSasPermissions.Read | BlobAccountSasPermissions.Write | BlobAccountSasPermissions.Delete);
             return builder;
@@ -565,6 +566,7 @@ namespace Azure.Storage.Blobs.Test
                 SasQueryParametersInternals.DefaultSasVersionInternal,
                 resource,
                 includeSnapshot ? Snapshot : null,
+                constants.Sas.EncryptionScope,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,
@@ -609,6 +611,7 @@ namespace Azure.Storage.Blobs.Test
                 SasQueryParametersInternals.DefaultSasVersionInternal,
                 resource,
                 includeSnapshot ? Snapshot : null,
+                constants.Sas.EncryptionScope,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,
