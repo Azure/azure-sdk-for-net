@@ -59,7 +59,7 @@ stages:
                     Write-Host "NuGet Cache list:"
                     nuget locals all -list
                     Write-Host "Clearing NuGet package cache"
-                    dotnet nuget locals all -clear
+                    dotnet nuget locals all --clear
                     Write-Host "Restoring dependencies"
                     dotnet restore
                   displayName: Blank Slate Installation
