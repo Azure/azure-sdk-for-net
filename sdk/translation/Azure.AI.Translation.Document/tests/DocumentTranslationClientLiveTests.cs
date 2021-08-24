@@ -74,7 +74,7 @@ namespace Azure.AI.Translation.Document.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetAllTranslationStatusesTest(bool usetokenCredential)
+        public async Task GetTranslationStatusesTest(bool usetokenCredential)
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
             Uri target = await CreateTargetContainerAsync();
@@ -84,13 +84,13 @@ namespace Azure.AI.Translation.Document.Tests
             var input = new DocumentTranslationInput(source, target, "fr");
             await client.StartTranslationAsync(input);
 
-            List<TranslationStatus> translations = await client.GetAllTranslationStatusesAsync().ToEnumerableAsync();
+            List<TranslationStatus> translations = await client.GetTranslationStatusesAsync().ToEnumerableAsync();
 
             Assert.GreaterOrEqual(translations.Count, 1);
             TranslationStatus oneTranslation = translations[0];
             Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.CreatedOn);
             Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.LastModified);
-            Assert.GreaterOrEqual(oneTranslation.DocumentsCancelled, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsCanceled, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsFailed, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsInProgress, 0);
             Assert.GreaterOrEqual(oneTranslation.DocumentsNotStarted, 0);

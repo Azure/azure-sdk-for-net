@@ -9,7 +9,7 @@ Azure Schema Registry is a schema repository service hosted by Azure Event Hubs,
 Install the Azure Schema Registry client library for .NET with [NuGet][nuget]:
 
 ```bash
-dotnet add package Azure.Data.SchemaRegistry --version 1.0.0-beta.1
+dotnet add package --prerelease Azure.Data.SchemaRegistry
 ```
 
 ### Prerequisites
@@ -78,7 +78,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-The following shows examples of what is available through the SchemaRegistryClient. There are both sync and async methods available for these client operations.
+The following shows examples of what is available through the `SchemaRegistryClient`. There are both sync and async methods available for these client operations.
 
 * [Register a schema](#register-a-schema)
 * [Retrieve a schema ID](#retrieve-a-schema-id)
@@ -86,7 +86,7 @@ The following shows examples of what is available through the SchemaRegistryClie
 
 ### Register a schema
 
-Register a schema to be stored in the Azure Schema Registry.
+Register a schema to be stored in the Azure Schema Registry. When registering a schema, the `SchemaProperties` will be cached in the `SchemaRegistryClient` instance, so that any subsequent calls to `GetSchemaId` and `GetSchema` corresponding to the same schema can use the cached value rather than going to the service.
 
 ```C# Snippet:SchemaRegistryRegisterSchema
 string schemaName = "employeeSample";
@@ -108,7 +108,7 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, s
 
 ### Retrieve a schema ID
 
-Retrieve a previously registered schema ID from the Azure Schema Registry.
+Retrieve a previously registered schema ID from the Azure Schema Registry. When looking up the schema Id, the `SchemaProperties` will be cached in the `SchemaRegistryClient` instance, so that subsequent requests for this schema do not need to go the service.
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaId
 string schemaName = "employeeSample";
@@ -125,17 +125,17 @@ string schemaContent = @"
     ]
 }";
 
-Response<SchemaProperties> schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
-string schemaId = schemaProperties.Value.Id;
+SchemaProperties schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
+string schemaId = schemaProperties.Id;
 ```
 
 ### Retrieve a schema
 
-Retrieve a previously registered schema's content from the Azure Schema Registry.
+Retrieve a previously registered schema's content from the Azure Schema Registry. When looking up the schema content by schema ID, the `SchemaProperties` will be cached in the `SchemaRegistryClient` instance so that subsequent requests for this schema ID do not need to go the service.
 
 ```C# Snippet:SchemaRegistryRetrieveSchema
-Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);
-string schemaContent = schemaProperties.Value.Content;
+SchemaProperties schemaProperties = client.GetSchema(schemaId);
+string schemaContent = schemaProperties.Content;
 ```
 
 ## Troubleshooting

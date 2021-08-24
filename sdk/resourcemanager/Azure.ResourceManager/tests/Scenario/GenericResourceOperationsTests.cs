@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Tests
             var rgName = Recording.GenerateAssetName("testrg");
             _ = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/availabilitySets/testavset";
-            var genericResourceOperations = Client.GetGenericResourceOperations(asetid);
+            var genericResourceOperations = Client.GetGenericResource(asetid);
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
             Assert.AreEqual(404, exception.Status);
             Assert.True(exception.Message.Contains("ResourceNotFound"));
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Tests
             var rgName = Recording.GenerateAssetName("testrg");
             _ = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.NotAValidNameSpace123/availabilitySets/testavset";
-            var genericResourceOperations = Client.GetGenericResourceOperations(asetid);
+            var genericResourceOperations = Client.GetGenericResource(asetid);
             InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await genericResourceOperations.GetAsync());
             Assert.IsTrue(exception.Message.Equals($"An invalid resouce id was given {asetid}"));
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Tests
             ArmClientOptions options = new ArmClientOptions();
             options.ApiVersions.SetApiVersion(rg.Id.ResourceType, "1500-10-10");
             var client = GetArmClient(options);
-            var genericResourceOperations = client.GetGenericResourceOperations(rg.Id);
+            var genericResourceOperations = client.GetGenericResource(rg.Id);
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
             Assert.IsTrue(exception.Message.Contains("InvalidApiVersionParameter"));
         }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Tests
         {
             var rgName = Recording.GenerateAssetName("testrg");
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
-            var genericResourceOperations = Client.GetGenericResourceOperations(rg.Id);
+            var genericResourceOperations = Client.GetGenericResource(rg.Id);
             var genericResource = await genericResourceOperations.GetAsync();
             Assert.IsNotNull(genericResource.Value);
             Assert.IsTrue(genericResource.Value.Data.Name.Equals(rgName));
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Tests
 
             AssertAreEqual(aset, aset2);
 
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetGenericResourceOperations(aset2.Id + "x").GetAsync());
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetGenericResource(aset2.Id + "x").GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
 

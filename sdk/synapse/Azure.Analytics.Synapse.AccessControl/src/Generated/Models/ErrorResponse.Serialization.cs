@@ -15,10 +15,11 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            string code = default;
-            string message = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<ErrorDetail>> details = default;
+            Optional<IReadOnlyList<ErrorResponse>> details = default;
+            Optional<IReadOnlyList<ErrorAdditionalInfo>> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -43,16 +44,31 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ErrorDetail> array = new List<ErrorDetail>();
+                    List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorDetail.DeserializeErrorDetail(item));
+                        array.Add(DeserializeErrorResponse(item));
                     }
                     details = array;
                     continue;
                 }
+                if (property.NameEquals("additionalInfo"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
+                    }
+                    additionalInfo = array;
+                    continue;
+                }
             }
-            return new ErrorResponse(code, message, target.Value, Optional.ToList(details));
+            return new ErrorResponse(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
         }
     }
 }

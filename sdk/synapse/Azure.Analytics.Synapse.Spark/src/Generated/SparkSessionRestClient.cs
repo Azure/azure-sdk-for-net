@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/sessions", false);
             if (@from != null)
             {
@@ -128,10 +128,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/sessions", false);
             if (detailed != null)
             {
@@ -209,10 +209,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             if (detailed != null)
@@ -275,10 +275,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             request.Uri = uri;
@@ -324,10 +324,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/reset-timeout", false);
@@ -374,10 +374,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/statements", false);
@@ -435,10 +435,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/statements", false);
@@ -514,10 +514,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/statements/", false);
@@ -578,10 +578,10 @@ namespace Azure.Analytics.Synapse.Spark
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(endpoint);
-            uri.AppendRaw("/livyApi/versions/", false);
-            uri.AppendRaw(livyApiVersion, false);
-            uri.AppendRaw("/sparkPools/", false);
-            uri.AppendRaw(sparkPoolName, false);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(sparkPoolName, false);
             uri.AppendPath("/sessions/", false);
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/statements/", false);
