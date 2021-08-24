@@ -34,7 +34,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="options"><see cref="HttpPipelineTransportOptions"/> that affect how the transport is configured.</param>
         /// <returns></returns>
-        public static HttpPipelineTransport Create(HttpPipelineTransportOptions? options = null)
+        internal static HttpPipelineTransport Create(HttpPipelineTransportOptions? options = null)
         {
 #if NETFRAMEWORK
             if (!AppContextSwitchHelper.GetConfigValue(

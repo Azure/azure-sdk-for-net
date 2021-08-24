@@ -37,30 +37,22 @@ namespace Azure.Security.ConfidentialLedger
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            var transport = GetIdentityServerTlsCertAndTrust(ledgerUri);
-            if (options == null)
-            {
-                // No options were provided. Create then with the transport set.
-                options = new ConfidentialLedgerClientOptions { Transport = transport };
-            }
-            else if (options.Transport == HttpPipelineTransport.Create())
-            {
-                // The default Transport is in place, so it is safe to replace with the ones from GetIdentityServerTlsCertAndTrust.
-                options.Transport = transport;
-            }
-            _clientDiagnostics = new ClientDiagnostics(options);
+            var transportOptions = GetIdentityServerTlsCertAndTrust(ledgerUri);
+
+            _clientDiagnostics = new ClientDiagnostics(options ??= new ConfidentialLedgerClientOptions());
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             Pipeline = HttpPipelineBuilder.Build(
                 options,
                 new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
                 new HttpPipelinePolicy[] { authPolicy },
-                new ResponseClassifier());
+                new ResponseClassifier(),
+                transportOptions);
             this.ledgerUri = ledgerUri;
             apiVersion = options.Version;
         }
 
-        internal HttpPipelineTransport GetIdentityServerTlsCertAndTrust(Uri ledgerUri)
+        internal HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(Uri ledgerUri)
         {
             var identityClient = new ConfidentialLedgerIdentityServiceClient(new Uri("https://identity.accledger.azure.com"));
 
@@ -96,10 +88,10 @@ namespace Azure.Security.ConfidentialLedger
                     .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
                 return isCertSignedByTheTlsCert;
             }
-            return HttpPipelineTransport.Create(new HttpPipelineTransportOptions
+            return new HttpPipelineTransportOptions
             {
                 ServerCertificateCustomValidationCallback = certificate2 => CertValidationCheck(null, certificate2, certificateChain, SslPolicyErrors.None)
-            });
+            };
         }
     }
 }

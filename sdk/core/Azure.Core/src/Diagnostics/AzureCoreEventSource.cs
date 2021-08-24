@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Diagnostics.Tracing;
 
 namespace Azure.Core.Diagnostics
@@ -10,26 +11,27 @@ namespace Azure.Core.Diagnostics
     {
         private const string EventSourceName = "Azure-Core";
 
-        private const int BackgroundRefreshFailedEvent = 19;
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
-        private const int RequestContentTextEvent = 17;
-        private const int RequestRedirectEvent = 20;
-        private const int RequestRedirectBlockedEvent = 21;
-        private const int RequestRedirectCountExceededEvent = 22;
         private const int ResponseEvent = 5;
         private const int ResponseContentEvent = 6;
         private const int ResponseDelayEvent = 7;
-        private const int ResponseContentTextEvent = 13;
-        private const int ResponseContentBlockEvent = 11;
-        private const int ResponseContentTextBlockEvent = 15;
         private const int ErrorResponseEvent = 8;
         private const int ErrorResponseContentEvent = 9;
-        private const int ErrorResponseContentTextEvent = 14;
-        private const int ErrorResponseContentBlockEvent = 12;
-        private const int ErrorResponseContentTextBlockEvent = 16;
         private const int RequestRetryingEvent = 10;
+        private const int ResponseContentBlockEvent = 11;
+        private const int ErrorResponseContentBlockEvent = 12;
+        private const int ResponseContentTextEvent = 13;
+        private const int ErrorResponseContentTextEvent = 14;
+        private const int ResponseContentTextBlockEvent = 15;
+        private const int ErrorResponseContentTextBlockEvent = 16;
+        private const int RequestContentTextEvent = 17;
         private const int ExceptionResponseEvent = 18;
+        private const int BackgroundRefreshFailedEvent = 19;
+        private const int RequestRedirectEvent = 20;
+        private const int RequestRedirectBlockedEvent = 21;
+        private const int RequestRedirectCountExceededEvent = 22;
+        private const int PipelineTransportOptionsNotAppliedEvent = 23;
 
         private AzureCoreEventSource() : base(EventSourceName) { }
 
@@ -153,6 +155,14 @@ namespace Azure.Core.Diagnostics
         public void RequestRedirectCountExceeded(string requestId, string from, string to)
         {
             WriteEvent(RequestRedirectCountExceededEvent, requestId, from, to);
+        }
+
+        [Event(
+            PipelineTransportOptionsNotAppliedEvent,
+            Level = EventLevel.Warning, Message = "PipelineTransportOptions where provided for options type [{0}] but were not applied because a custom Transport has already been set.")]
+        public void PipelineTransportOptionsNotApplied(Type optionsType)
+        {
+            WriteEvent(PipelineTransportOptionsNotAppliedEvent, optionsType.FullName);
         }
     }
 }

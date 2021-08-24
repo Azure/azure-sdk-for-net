@@ -691,7 +691,6 @@ namespace Azure.Core.Pipeline
     {
         public static readonly Azure.Core.Pipeline.HttpClientTransport Shared;
         public HttpClientTransport() { }
-        public HttpClientTransport(Azure.Core.Pipeline.HttpPipelineTransportOptions? options = null) { }
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
         public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
@@ -715,6 +714,7 @@ namespace Azure.Core.Pipeline
     {
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, params Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies) { throw null; }
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier responseClassifier) { throw null; }
+        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier responseClassifier, Azure.Core.Pipeline.HttpPipelineTransportOptions? pipelineTransportOptions = null) { throw null; }
     }
     public abstract partial class HttpPipelinePolicy
     {
@@ -735,7 +735,6 @@ namespace Azure.Core.Pipeline
     public abstract partial class HttpPipelineTransport
     {
         protected HttpPipelineTransport() { }
-        public static Azure.Core.Pipeline.HttpPipelineTransport Create(Azure.Core.Pipeline.HttpPipelineTransportOptions? options = null) { throw null; }
         public abstract Azure.Core.Request CreateRequest();
         public abstract void Process(Azure.Core.HttpMessage message);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message);
