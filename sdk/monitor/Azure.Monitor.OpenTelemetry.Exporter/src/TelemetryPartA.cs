@@ -65,15 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var httpMethod = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpMethod)?.ToString();
             if (!string.IsNullOrWhiteSpace(httpMethod))
             {
-                if (activity.DisplayName.StartsWith("/", System.StringComparison.OrdinalIgnoreCase))
-                {
-                    return $"{httpMethod} {activity.DisplayName}";
-                }
-                var httpTarget = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpTarget)?.ToString();
-                if (!string.IsNullOrWhiteSpace(httpTarget))
-                {
-                    return $"{httpMethod} {httpTarget}";
-                }
+                return $"{httpMethod} {activity.DisplayName}";
             }
 
             return activity.DisplayName;

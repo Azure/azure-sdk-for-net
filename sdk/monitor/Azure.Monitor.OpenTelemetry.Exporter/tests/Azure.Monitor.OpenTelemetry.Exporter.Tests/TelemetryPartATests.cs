@@ -194,7 +194,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 startTime: DateTime.UtcNow);
             var resource = CreateTestResource();
 
-            activity.DisplayName = "/target";
+            activity.DisplayName = "/getaction";
 
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
 
@@ -202,53 +202,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
-            Assert.Equal("GET /target", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
-        }
-
-        [Fact]
-        public void HttpMethodAndHttpTargetIsUsedForHttpRequestOperationName()
-        {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
-            using var activity = activitySource.StartActivity(
-                ActivityName,
-                ActivityKind.Server,
-                null,
-                startTime: DateTime.UtcNow);
-            var resource = CreateTestResource();
-
-            activity.DisplayName = "target";
-
-            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
-            activity.SetTag(SemanticConventions.AttributeHttpTarget, "/target");
-
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
-
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
-
-            Assert.Equal("GET /target", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
-        }
-
-        [Fact]
-        public void ActivityNameTakesPrecedenceOverHttpTargetForHttpRequestOperationName()
-        {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
-            using var activity = activitySource.StartActivity(
-                ActivityName,
-                ActivityKind.Server,
-                null,
-                startTime: DateTime.UtcNow);
-            var resource = CreateTestResource();
-
-            activity.DisplayName = "/displayname";
-
-            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
-            activity.SetTag(SemanticConventions.AttributeHttpTarget, "/target");
-
-            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
-
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
-
-            Assert.Equal("GET /displayname", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+            Assert.Equal("GET /getaction", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
         }
 
         [Fact]
