@@ -64,10 +64,10 @@ namespace Azure.Identity.Tests
                 Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) })));
             }
         }
-        // This RecordMatcher updates the authentication challange returned from Arc MI endpoint. In this case the auth challange header contains a path to a file on the local disk.
+        // This RecordMatcher updates the authentication challenge returned from Arc MI endpoint. In this case the auth challenge header contains a path to a file on the local disk.
         // When we run in playback we replace the path the service returned for when playing back the test, with the path to a static file binplaced when we build the tests.
         // This path differs depending on the machine your running the tests on, so it can't updated it in the recording scrubber. I originally tried to update the header in the scrubber
-        // to be a relative path, but this introduces failures depending on how the tests are run and the working directly. Also, I tried to implement on a pipeline policy which woud only
+        // to be a relative path, but this introduces failures depending on how the tests are run and the working directly. Also, I tried to implement on a pipeline policy which would only
         // be added on playback, but ResponseHeaders is immutable so a policy cannot update them.
         private class ArcMiRecordedTestMatcher : RecordMatcher
         {
