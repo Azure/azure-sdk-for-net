@@ -15,26 +15,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Input to create vault setting.
+    /// Disk input for update.
     /// </summary>
-    public partial class VaultSettingCreationInput
+    public partial class UpdateDiskInput
     {
         /// <summary>
-        /// Initializes a new instance of the VaultSettingCreationInput class.
+        /// Initializes a new instance of the UpdateDiskInput class.
         /// </summary>
-        public VaultSettingCreationInput()
+        public UpdateDiskInput()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VaultSettingCreationInput class.
+        /// Initializes a new instance of the UpdateDiskInput class.
         /// </summary>
-        /// <param name="properties">Vault setting creation input
-        /// properties.</param>
-        public VaultSettingCreationInput(VaultSettingCreationInputProperties properties)
+        /// <param name="diskId">The disk Id.</param>
+        /// <param name="targetDiskName">The target disk name.</param>
+        public UpdateDiskInput(string diskId, string targetDiskName = default(string))
         {
-            Properties = properties;
+            DiskId = diskId;
+            TargetDiskName = targetDiskName;
             CustomInit();
         }
 
@@ -44,10 +45,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets vault setting creation input properties.
+        /// Gets or sets the disk Id.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public VaultSettingCreationInputProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "diskId")]
+        public string DiskId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target disk name.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetDiskName")]
+        public string TargetDiskName { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -57,9 +64,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Properties == null)
+            if (DiskId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+                throw new ValidationException(ValidationRules.CannotBeNull, "DiskId");
             }
         }
     }

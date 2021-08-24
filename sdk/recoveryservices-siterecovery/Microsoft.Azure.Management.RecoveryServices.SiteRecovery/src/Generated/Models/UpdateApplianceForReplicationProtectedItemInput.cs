@@ -15,24 +15,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Input to create vault setting.
+    /// Update appliance for replication protected item input.
     /// </summary>
-    public partial class VaultSettingCreationInput
+    public partial class UpdateApplianceForReplicationProtectedItemInput
     {
         /// <summary>
-        /// Initializes a new instance of the VaultSettingCreationInput class.
+        /// Initializes a new instance of the
+        /// UpdateApplianceForReplicationProtectedItemInput class.
         /// </summary>
-        public VaultSettingCreationInput()
+        public UpdateApplianceForReplicationProtectedItemInput()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VaultSettingCreationInput class.
+        /// Initializes a new instance of the
+        /// UpdateApplianceForReplicationProtectedItemInput class.
         /// </summary>
-        /// <param name="properties">Vault setting creation input
-        /// properties.</param>
-        public VaultSettingCreationInput(VaultSettingCreationInputProperties properties)
+        /// <param name="properties">Update appliance replication protected
+        /// item properties.</param>
+        public UpdateApplianceForReplicationProtectedItemInput(UpdateApplianceForReplicationProtectedItemInputProperties properties)
         {
             Properties = properties;
             CustomInit();
@@ -44,10 +46,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets vault setting creation input properties.
+        /// Gets or sets update appliance replication protected item
+        /// properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public VaultSettingCreationInputProperties Properties { get; set; }
+        public UpdateApplianceForReplicationProtectedItemInputProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -60,6 +63,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             if (Properties == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (Properties != null)
+            {
+                Properties.Validate();
             }
         }
     }
