@@ -2149,7 +2149,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class SystemData
     {
-        internal SystemData() { }
+        public SystemData() { }
         public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.CreatedByType? CreatedByType { get { throw null; } }

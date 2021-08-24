@@ -7,12 +7,20 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class SystemData
+    [JsonConverter(typeof(SystemDataConverter))]
+    public partial class SystemData : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+        }
+
         internal static SystemData DeserializeSystemData(JsonElement element)
         {
             Optional<string> createdBy = default;
@@ -75,6 +83,19 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             return new SystemData(createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+        }
+
+        internal partial class SystemDataConverter : JsonConverter<SystemData>
+        {
+            public override void Write(Utf8JsonWriter writer, SystemData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SystemData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSystemData(document.RootElement);
+            }
         }
     }
 }
