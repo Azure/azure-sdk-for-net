@@ -382,9 +382,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             Response<PathInfo> response = await sasDirectoryClient.CreateAsync();
-
-            // Assert
-            // TODO
         }
 
         [RecordedTest]
@@ -415,7 +412,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // TODO
         }
 
-        [Ignore("TODO, waiting for working test account.")]
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
         public async Task CreateAsync_EncryptionScopeIdentitySas()
@@ -447,9 +443,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             await sasDirectoryClient.CreateAsync();
-
-            // Assert
-            // TODO
         }
 
         [RecordedTest]

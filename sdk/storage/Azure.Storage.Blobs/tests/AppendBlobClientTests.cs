@@ -406,6 +406,26 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
+        public async Task CreateAsync_EncryptionScopeSAS_GenerateSasUri()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blobClient = InstrumentClient(
+                test.Container.GetAppendBlobClient(GetNewBlobName()).WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            Uri sasUri = blobClient.GenerateSasUri(
+                BlobSasPermissions.All,
+                Recording.UtcNow.AddDays(1));
+            AppendBlobClient sasBlob = InstrumentClient(new AppendBlobClient(sasUri, GetOptions()));
+
+            // Act
+            Response<BlobContentInfo> response = await sasBlob.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_12_06)]
         public async Task CreateAsync_EncryptionScopeAccountSAS()
         {
             // Arrange
@@ -432,7 +452,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
-        [Ignore("TODO, waiting for working test account.")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
         public async Task CreateAsync_EncryptionScopeIdentitySAS()
