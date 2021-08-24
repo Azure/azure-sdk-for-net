@@ -69,8 +69,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// However, if singlePlacementGroup is false, it may not be modified
         /// to true.</param>
         /// <param name="zoneBalance">Whether to force strictly even Virtual
-        /// Machine distribution cross x-zones in case there is zone
-        /// outage.</param>
+        /// Machine distribution cross x-zones in case there is zone outage.
+        /// zoneBalance property can only be set if the zones property of the
+        /// scale set contains more than one zone. If there are no zones or
+        /// only one zone specified, then zoneBalance property should not be
+        /// set.</param>
         /// <param name="platformFaultDomainCount">Fault Domain count for each
         /// placement group.</param>
         /// <param name="proximityPlacementGroup">Specifies information about
@@ -209,6 +212,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets whether to force strictly even Virtual Machine
         /// distribution cross x-zones in case there is zone outage.
+        /// zoneBalance property can only be set if the zones property of the
+        /// scale set contains more than one zone. If there are no zones or
+        /// only one zone specified, then zoneBalance property should not be
+        /// set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.zoneBalance")]
         public bool? ZoneBalance { get; set; }
