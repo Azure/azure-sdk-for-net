@@ -191,29 +191,46 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void LogWhenTransportOptionsProvidedWhenCustomTransportIsSet()
+        public void SetTransportOptions([Values(true, false)] bool isCustomTransportSet)
         {
+            using var testListener = new TestEventListener();
+            testListener.EnableEvents(AzureCoreEventSource.Singleton, EventLevel.Verbose);
+
             var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
-            var options = new TestOptions
+            var options = new TestOptions();
+            if (isCustomTransportSet)
             {
-                Transport = transport
-            };
+                options.Transport = transport;
+            }
 
             List<EventWrittenEventArgs> events = new();
 
-            using var listener = new AzureEventSourceListener((args, s) =>
-            {
-                events.Add(args);
-            }, EventLevel.Verbose);
+            using var listener = new AzureEventSourceListener(
+                (args, s) =>
+                {
+                    events.Add(args);
+                },
+                EventLevel.Verbose);
 
-            HttpPipelineBuilder.Build(
+            var pipeline = HttpPipelineBuilder.Build(
                 options,
                 Array.Empty<HttpPipelinePolicy>(),
                 Array.Empty<HttpPipelinePolicy>(),
                 new ResponseClassifier(),
                 new HttpPipelineTransportOptions());
 
-            Assert.That(events.Any(e => e.EventId == 23 && e.EventName == "PipelineTransportOptionsNotApplied"));
+            if (isCustomTransportSet)
+            {
+                Assert.That(GetTransport(pipeline), Is.TypeOf<MockTransport>());
+                events.Any(
+                    e => e.EventId == 23 &&
+                         e.EventName == "PipelineTransportOptionsNotApplied" &&
+                         e.GetProperty<string>("optionsType") == options.GetType().FullName);
+            }
+            else
+            {
+                Assert.That(GetTransport(pipeline), Is.Not.TypeOf<MockTransport>());
+            }
         }
 
         private class TestOptions : ClientOptions
@@ -247,6 +264,11 @@ namespace Azure.Core.Tests
             {
                 _message(message);
             }
+        }
+
+        private static HttpPipelineTransport GetTransport(HttpPipeline pipeline)
+        {
+            return typeof(HttpPipeline).GetField("_transport", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(pipeline) as HttpPipelineTransport;
         }
     }
 }

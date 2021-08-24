@@ -49,9 +49,9 @@ namespace Azure.Core.Pipeline
         /// <param name="perCallPolicies">Client provided per-call policies.</param>
         /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
         /// <param name="responseClassifier">The client provided response classifier.</param>
-        /// <param name="pipelineTransportOptions">The customer provided transport options.</param>
+        /// <param name="defaultTransportOptions">The customer provided transport options which will be applied to the default transport.</param>
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
-        public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier responseClassifier, HttpPipelineTransportOptions? pipelineTransportOptions = null)
+        public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier responseClassifier, HttpPipelineTransportOptions? defaultTransportOptions = null)
         {
             if (perCallPolicies == null)
             {
@@ -125,19 +125,19 @@ namespace Azure.Core.Pipeline
 
             // Override the provided Transport with the provided transport options if the transport has not been set after default construction and options are not null.
             HttpPipelineTransport transport = options.Transport;
-            if (pipelineTransportOptions != null)
+            if (defaultTransportOptions != null)
             {
                 if (options.IsCustomTransportSet)
                 {
                     if (AzureCoreEventSource.Singleton.IsEnabled())
                     {
                         // Log that we were unable to override the custom transport
-                        AzureCoreEventSource.Singleton.PipelineTransportOptionsNotApplied(options.GetType());
+                        AzureCoreEventSource.Singleton.PipelineTransportOptionsNotApplied(options?.GetType().FullName ?? String.Empty);
                     }
                 }
                 else
                 {
-                    transport = HttpPipelineTransport.Create(pipelineTransportOptions);
+                    transport = HttpPipelineTransport.Create(defaultTransportOptions);
                 }
             }
 

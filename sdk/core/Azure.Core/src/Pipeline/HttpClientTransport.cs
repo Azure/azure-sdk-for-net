@@ -156,7 +156,7 @@ namespace Azure.Core.Pipeline
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
-                return ApplyOptionsToHandler(new HttpClientHandler(), options);
+                return new HttpClientHandler();
             }
 
 #if NETCOREAPP

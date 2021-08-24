@@ -157,12 +157,10 @@ namespace Azure.Core.Diagnostics
             WriteEvent(RequestRedirectCountExceededEvent, requestId, from, to);
         }
 
-        [Event(
-            PipelineTransportOptionsNotAppliedEvent,
-            Level = EventLevel.Warning, Message = "PipelineTransportOptions where provided for options type [{0}] but were not applied because a custom Transport has already been set.")]
-        public void PipelineTransportOptionsNotApplied(Type optionsType)
+        [Event(PipelineTransportOptionsNotAppliedEvent, Level = EventLevel.Informational, Message = "The client requires transport configuration but it was not applied because custom transport was provided. Type: {0}")]
+        public void PipelineTransportOptionsNotApplied(string optionsType)
         {
-            WriteEvent(PipelineTransportOptionsNotAppliedEvent, optionsType.FullName);
+            WriteEvent(PipelineTransportOptionsNotAppliedEvent, optionsType);
         }
     }
 }

@@ -928,7 +928,8 @@ namespace Azure.Core.Tests
                 {
                     byte[] buffer = Encoding.UTF8.GetBytes("Hello");
                     await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
-                }, true))
+                },
+                true))
             {
                 bool certValidationCalled = false;
                 var options = new HttpPipelineTransportOptions();
@@ -948,7 +949,11 @@ namespace Azure.Core.Tests
 
                 try
                 {
-                    Response response = await ExecuteRequest(request, transport);
+                    await ExecuteRequest(request, transport);
+                    if (setCertCallback)
+                    {
+                        Assert.IsTrue(isValidCert);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -962,6 +967,10 @@ namespace Azure.Core.Tests
                         throw;
                     }
                     Assert.That(ex.Message.Contains("certificate"));
+                    if (setCertCallback)
+                    {
+                        Assert.IsFalse(isValidCert);
+                    }
                 }
                 finally
                 {

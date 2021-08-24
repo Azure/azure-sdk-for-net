@@ -97,7 +97,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void IsCustomTransportTrueWhenTransportAfterCallingTransportSetter()
+        public void IsCustomTransportSetIsTrueAfterCallingTransportSetter()
         {
             var options = new TestClientOptions();
             options.Transport = new MockTransport();
@@ -141,7 +141,7 @@ namespace Azure.Core.Tests
                 var options = new TestClientOptions();
 
                 Assert.IsInstanceOf<HttpClientTransport>(options.Transport);
-            Assert.IsFalse(options.IsCustomTransportSet);
+                Assert.IsFalse(options.IsCustomTransportSet);
             }
             finally
             {

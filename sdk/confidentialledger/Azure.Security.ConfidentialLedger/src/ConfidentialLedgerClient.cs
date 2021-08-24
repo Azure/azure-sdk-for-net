@@ -37,9 +37,9 @@ namespace Azure.Security.ConfidentialLedger
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            var transportOptions = GetIdentityServerTlsCertAndTrust(ledgerUri);
-
-            _clientDiagnostics = new ClientDiagnostics(options ??= new ConfidentialLedgerClientOptions());
+            var actualOptions = options ?? new ConfidentialLedgerClientOptions();
+            var transportOptions = GetIdentityServerTlsCertAndTrust(ledgerUri, actualOptions);
+            _clientDiagnostics = new ClientDiagnostics(actualOptions);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             Pipeline = HttpPipelineBuilder.Build(
@@ -52,9 +52,9 @@ namespace Azure.Security.ConfidentialLedger
             apiVersion = options.Version;
         }
 
-        internal HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(Uri ledgerUri)
+        internal HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(Uri ledgerUri, ConfidentialLedgerClientOptions options)
         {
-            var identityClient = new ConfidentialLedgerIdentityServiceClient(new Uri("https://identity.accledger.azure.com"));
+            var identityClient = new ConfidentialLedgerIdentityServiceClient(new Uri("https://identity.accledger.azure.com"), options);
 
             // Get the ledger's  TLS certificate for our ledger.
             var ledgerId = ledgerUri.Host.Substring(0, ledgerUri.Host.IndexOf('.'));
