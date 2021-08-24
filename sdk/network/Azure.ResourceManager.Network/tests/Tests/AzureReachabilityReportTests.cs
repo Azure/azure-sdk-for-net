@@ -25,12 +25,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         [Test]
         [Ignore("Track2: The NetworkWathcer is involved, so disable the test")]
         public async Task AzureReachabilityReportCountryLevelAggregationTest()

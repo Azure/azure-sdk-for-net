@@ -73,13 +73,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             })).Value;
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            //await CleanupResourceGroupsAsync();
-            await CleanUpVirtualNetwork();
-        }
-
         private async Task CleanUpVirtualNetwork()
         {
             if (virtualNetwork != null)

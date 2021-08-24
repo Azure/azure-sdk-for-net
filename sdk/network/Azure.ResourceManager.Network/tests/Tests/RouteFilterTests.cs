@@ -30,12 +30,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         private const string Filter_Commmunity = "12076:51006";
 
         private async Task<RouteFilterContainer> GetContainer()

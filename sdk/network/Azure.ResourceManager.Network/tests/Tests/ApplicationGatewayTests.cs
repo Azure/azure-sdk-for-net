@@ -31,12 +31,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         private static string GetChildAppGwResourceId(string subscriptionId,
                                                 string resourceGroupName,
                                                 string appGwname,

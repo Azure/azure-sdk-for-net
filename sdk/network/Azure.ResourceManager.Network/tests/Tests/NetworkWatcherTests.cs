@@ -37,12 +37,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         private async Task<NetworkWatcherContainer> GetContainer()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("nw"));

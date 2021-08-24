@@ -30,12 +30,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         public const string MS_PrimaryPrefix = "199.168.200.0/30";
         public const string MS_SecondaryPrefix = "199.168.202.0/30";
         public const string MS_PeerASN = "1000";

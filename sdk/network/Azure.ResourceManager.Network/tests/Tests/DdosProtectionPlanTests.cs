@@ -33,19 +33,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName(NamePrefix));
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            //await CleanupResourceGroupsAsync();
-
-            // need to cleanup created plans, since only one plan is allowed per location
-            var ddosProtectionPlans = await GetContainer().GetAllAsync().ToEnumerableAsync();
-            foreach (var plan in ddosProtectionPlans)
-            {
-                await plan.DeleteAsync();
-            }
-        }
-
         public DdosProtectionPlanContainer GetContainer()
         {
             return resourceGroup.GetDdosProtectionPlans();

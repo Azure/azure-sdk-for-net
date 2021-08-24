@@ -23,12 +23,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         [Test]
         [Ignore("Track2: Nunit cannot implement this test")]
         public void FirewallPolicyRuleGroupDeserializationTest()

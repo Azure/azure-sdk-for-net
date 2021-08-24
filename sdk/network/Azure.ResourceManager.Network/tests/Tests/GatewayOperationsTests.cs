@@ -32,12 +32,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    //await CleanupResourceGroupsAsync();
-        //}
-
         private enum TestEnvironmentSettings
         {
             ClientRootCertName,

@@ -29,12 +29,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
-
         private static string GetNameById(string Id, string resourceType)
         {
             string name = Id.Substring(Id.IndexOf(resourceType + '/') + resourceType.Length + 1);

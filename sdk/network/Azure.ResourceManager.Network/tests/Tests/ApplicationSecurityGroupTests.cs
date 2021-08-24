@@ -29,12 +29,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         public async Task<ApplicationSecurityGroupContainer> GetContainer()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("test_application_security_group_"));
