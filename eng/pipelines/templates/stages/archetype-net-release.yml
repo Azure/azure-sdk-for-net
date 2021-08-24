@@ -49,17 +49,21 @@ stages:
               steps:
                 - download: current
                   artifact: ${{parameters.ArtifactName}}-signed
+                - pwsh:
+                    mkdir InstallationCheck
                 - pwsh: |
                     Write-Host "Create new console"
-                    dotnet new console
+                    dotnet new console -n "Installation.Check"
                     Write-Host "Adding package dependency for ${{artifact.name}}"
                     dotnet add package ${{artifact.name}}
                     Write-Host "NuGet Cache list:"
                     nuget locals all -list
                     Write-Host "Clearing NuGet package cache"
-                    nuget locals all -clear
+                    dotnet nuget locals all -clear
                     Write-Host "Restoring dependencies"
                     dotnet restore
+                  displayName: Blank Slate Installation
+                  workingDirectory: $(System.DefaultWorkingDirectory)/InstallationCheck
           - deployment: TagRepository
             displayName: "Create release tag"
             condition: ne(variables['Skip.TagRepository'], 'true')
