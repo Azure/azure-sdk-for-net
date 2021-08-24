@@ -1,0 +1,15 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+- azure-resource-manager
+name: Azure.ResourceManager.Storage samples for .NET
+description: Samples for the Azure.ResourceManager.Storage client library
+---
+
+# Azure.ResourceManager.Storage Samples
+
+- [Managing Storage Accounts](https://github.com/yukun-dong/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/storage/Azure.ResourceManager.Storage/samples/Sample1_ManagingStorageAccounts.md)
+- [Managing Blob Containers](https://github.com/yukun-dong/azure-sdk-for-net/blob/feature/mgmt-track2-storage/sdk/storage/Azure.ResourceManager.Storage/samples/Sample2_ManagingBlobContainers.md)

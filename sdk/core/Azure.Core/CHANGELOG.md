@@ -2,6 +2,8 @@
 
 ## 1.19.0-beta.1 (Unreleased)
 
+- Added `HttpAuthorization` to represent authentication information in Authorization, ProxyAuthorization, WWW-Authenticate, and Proxy-Authenticate header values.
+
 ### Features Added
 
 ### Breaking Changes
@@ -11,6 +13,7 @@
 ### Other Changes
 
 ## 1.18.0 (2021-08-18)
+
 
 ### Bugs Fixed
 
