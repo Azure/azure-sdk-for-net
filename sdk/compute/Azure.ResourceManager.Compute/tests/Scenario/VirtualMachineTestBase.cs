@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 } }
             };
             var subnets = new List<object>() { subnet };
-            var input = new GenericResourceData()
+            var input = new GenericResourceData(DefaultLocation)
             {
-                Location = DefaultLocation,
                 Properties = new Dictionary<string, object>()
                 {
                     { "addressSpace", addressSpaces },
@@ -73,9 +72,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var subnetName = Recording.GenerateAssetName("testSubnet-");
             ResourceIdentifier subnetId = $"{vnetId}/subnets/{subnetName}";
-            var input = new GenericResourceData()
+            var input = new GenericResourceData(DefaultLocation)
             {
-                Location = DefaultLocation,
                 Properties = new Dictionary<string, object>()
                 {
                     { "addressPrefixes", new List<string>() { "10.0.2.0/24" } }
@@ -88,9 +86,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var nicName = Recording.GenerateAssetName("testNic-");
             ResourceIdentifier nicId = $"{_resourceGroup.Id}/providers/Microsoft.Network/networkInterfaces/{nicName}";
-            var input = new GenericResourceData()
+            var input = new GenericResourceData(DefaultLocation)
             {
-                Location = DefaultLocation,
                 Properties = new Dictionary<string, object>()
                 {
                     { "ipConfigurations", new List<object>()
