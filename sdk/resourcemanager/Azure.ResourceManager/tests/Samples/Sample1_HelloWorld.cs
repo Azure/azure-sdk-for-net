@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests.Samples
             string subscriptionId = "your-subscription-id";
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.GetSubscriptions().Get(subscriptionId);
-            Console.WriteLine("Got subscription: " + subscription.Data.DisplayName);
+            Console.WriteLine($"Got subscription: {subscription.Data.DisplayName}");
             #endregion Snippet:Hello_World_SpecificSubscription
         }
 

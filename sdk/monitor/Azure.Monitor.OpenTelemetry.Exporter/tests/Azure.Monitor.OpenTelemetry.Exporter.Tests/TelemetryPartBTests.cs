@@ -47,7 +47,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in HttpHelperTests.
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, null);
-            var requestData = TelemetryPartB.GetRequestData(activity);
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var requestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
 
             Assert.Equal(activity.DisplayName, requestData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), requestData.Id);
@@ -75,7 +78,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             var httpResponsCode = httpStatusCode ?? "0";
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
-            var requestData = TelemetryPartB.GetRequestData(activity);
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var requestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
 
             Assert.Equal(httpResponsCode, requestData.ResponseCode);
         }
@@ -106,9 +112,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 activity.SetStatus(Status.Unset);
             }
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
-            var requestData = TelemetryPartB.GetRequestData(activity);
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var requestData = TelemetryPartB.GetRequestData(activity, ref monitorTags);
 
             Assert.Equal(activity.GetStatus() != Status.Error, requestData.Success);
+        }
+
+        [Theory]
+        [InlineData("mssql")]
+        [InlineData("redis")]
+        public void ValidateDBDependencyType(string dbSystem)
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+
+            activity.SetTag(SemanticConventions.AttributeDbSystem, dbSystem);
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var remoteDependencyDataType = TelemetryPartB.GetRemoteDependencyData(activity, ref monitorTags).Type;
+            var expectedType = TelemetryPartB.SqlDbs.Contains(dbSystem) ? "SQL" : dbSystem;
+
+            Assert.Equal(expectedType, remoteDependencyDataType);
         }
     }
 }

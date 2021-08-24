@@ -1,0 +1,106 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.1/model",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/octet-stream",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-ea5b816552290444b10cd30aba31e21a-e15c75a5419efa4d-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "44ddce88136516921a7dec82c13d0833",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "cc10f1d5-d035-4a37-98ab-f314d6b241ee",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "0",
+        "Date": "Thu, 05 Aug 2021 20:59:11 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "58"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.1/model/properties",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-c1cb56a47d6451499510c223565573b7-720ebd7c99b18c49-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "3aa331e1c6475d535a9fe1883413099d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6f109a12-4228-4476-8353-871f2620857e",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "91",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 05 Aug 2021 20:59:11 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "93"
+      },
+      "ResponseBody": {
+        "creationTime": "2021-08-05T13:55:04-07:00",
+        "lastModifiedTime": "2021-08-05T13:55:04-07:00"
+      }
+    },
+    {
+      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.1/model",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-daf776d2681f8647ac73b0879270f912-f88b681397d1c745-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/2.0.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "5d19677d0ecc34ab08f6f1fd3c95c071",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "apim-request-id": "39f058a9-2a12-4542-aa63-27c239b32bad",
+        "Cache-Control": [
+          "no-cache",
+          "no-store",
+          "must-revalidate"
+        ],
+        "Content-Length": "0",
+        "Date": "Thu, 05 Aug 2021 20:59:27 GMT",
+        "Expires": "0",
+        "pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "timing-allow-origin": "*",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "14894"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "PERSONALIZER_API_KEY_SINGLE_SLOT": "Sanitized",
+    "PERSONALIZER_ENDPOINT_SINGLE_SLOT": "https://singleslotrecordsdktests.cognitiveservices.azure.com/",
+    "RandomSeed": "663464005"
+  }
+}
