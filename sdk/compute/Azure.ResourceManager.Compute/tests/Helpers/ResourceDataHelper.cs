@@ -411,5 +411,26 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             return data;
         }
         #endregion
+
+        #region Snapshot
+        public static void AssertSnapshot(SnapshotData ss1, SnapshotData ss2)
+        {
+            Assert.AreEqual(ss1.Id, ss2.Id);
+            Assert.AreEqual(ss1.Name, ss2.Name);
+        }
+
+        public static SnapshotData GetBasicSnapshotData(Location location , string createOption)
+        {
+            return new SnapshotData(location)
+            {
+                CreationData = new CreationData()
+                {
+                    CreateOption = new DiskCreateOption(createOption)
+                    {
+                    }
+                }
+            };
+        }
+        #endregion
     }
 }
