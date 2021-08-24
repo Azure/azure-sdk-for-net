@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new PolicyExemptionData(id, name, type, systemData.Value, policyAssignmentId, Optional.ToList(policyDefinitionReferenceIds), exemptionCategory, Optional.ToNullable(expiresOn), displayName.Value, description.Value, metadata.Value);
+            return new PolicyExemptionData(id, name, type, systemData, policyAssignmentId, Optional.ToList(policyDefinitionReferenceIds), exemptionCategory, Optional.ToNullable(expiresOn), displayName.Value, description.Value, metadata.Value);
         }
     }
 }

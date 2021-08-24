@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources
         internal static PolicyAssignmentData DeserializePolicyAssignmentData(JsonElement element)
         {
             Optional<string> location = default;
-            Optional<Identity> identity = default;
+            Optional<PolicyAssignmentIdentity> identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = Identity.DeserializeIdentity(property.Value);
+                    identity = PolicyAssignmentIdentity.DeserializePolicyAssignmentIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

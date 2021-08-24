@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class Identity : IUtf8JsonSerializable
+    public partial class PolicyAssignmentIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static Identity DeserializeIdentity(JsonElement element)
+        internal static PolicyAssignmentIdentity DeserializePolicyAssignmentIdentity(JsonElement element)
         {
             Optional<string> principalId = default;
             Optional<string> tenantId = default;
-            Optional<ResourceIdentityType> type = default;
+            Optional<PolicyAssignmentIdentityType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString().ToResourceIdentityType();
+                    type = property.Value.GetString().ToPolicyAssignmentIdentityType();
                     continue;
                 }
             }
-            return new Identity(principalId.Value, tenantId.Value, Optional.ToNullable(type));
+            return new PolicyAssignmentIdentity(principalId.Value, tenantId.Value, Optional.ToNullable(type));
         }
     }
 }

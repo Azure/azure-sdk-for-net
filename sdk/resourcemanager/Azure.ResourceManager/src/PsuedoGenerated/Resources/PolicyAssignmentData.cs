@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </param>
         /// <param name="nonComplianceMessages"> The messages that describe why a resource is non-compliant with the policy. </param>
-        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType type, string location, Identity identity, string displayName, string policyDefinitionId, string scope, IList<string> notScopes, IDictionary<string, ParameterValuesValue> parameters, string description, object metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages) : base(id, name, type)
+        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType type, string location, PolicyAssignmentIdentity identity, string displayName, string policyDefinitionId, string scope, IList<string> notScopes, IDictionary<string, ParameterValuesValue> parameters, string description, object metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages) : base(id, name, type)
         {
             Location = location;
             Identity = identity;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
         public string Location { get; set; }
         /// <summary> The managed identity associated with the policy assignment. </summary>
-        public Identity Identity { get; set; }
+        public PolicyAssignmentIdentity Identity { get; set; }
         /// <summary> The display name of the policy assignment. </summary>
         public string DisplayName { get; set; }
         /// <summary> The ID of the policy definition or policy set definition being assigned. </summary>

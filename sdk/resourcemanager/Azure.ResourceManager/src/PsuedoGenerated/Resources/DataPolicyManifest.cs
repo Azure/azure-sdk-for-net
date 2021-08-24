@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async virtual Task<Response<DataPolicyManifest>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifest.GetByPolicyMode");
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifest.Get");
             scope.Start();
             try
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataPolicyManifest> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifest.GetByPolicyMode");
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifest.Get");
             scope.Start();
             try
             {

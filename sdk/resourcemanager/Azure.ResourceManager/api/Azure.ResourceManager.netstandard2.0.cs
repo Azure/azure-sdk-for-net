@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Resources
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.EnforcementMode? EnforcementMode { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.Identity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.PolicyAssignmentIdentity Identity { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
         public object Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.NonComplianceMessage> NonComplianceMessages { get { throw null; } }
@@ -1339,13 +1339,6 @@ namespace Azure.ResourceManager.Resources.Models
         internal FeatureProperties() { }
         public string State { get { throw null; } }
     }
-    public partial class Identity
-    {
-        public Identity() { }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ResourceIdentityType? Type { get { throw null; } set { } }
-    }
     public partial class KeyVaultProperties
     {
         public KeyVaultProperties() { }
@@ -1590,6 +1583,18 @@ namespace Azure.ResourceManager.Resources.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.PolicyAssignmentData>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.PolicyAssignmentData>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PolicyAssignmentIdentity
+    {
+        public PolicyAssignmentIdentity() { }
+        public string PrincipalId { get { throw null; } }
+        public string TenantId { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.PolicyAssignmentIdentityType? Type { get { throw null; } set { } }
+    }
+    public enum PolicyAssignmentIdentityType
+    {
+        SystemAssigned = 0,
+        None = 1,
     }
     public partial class PolicyDefinitionCreateOrUpdateAtManagementGroupOperation : Azure.Operation<Azure.ResourceManager.Resources.PolicyDefinition>
     {

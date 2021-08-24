@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Identity for the resource. </summary>
-    public partial class Identity
+    public partial class PolicyAssignmentIdentity
     {
-        /// <summary> Initializes a new instance of Identity. </summary>
-        public Identity()
+        /// <summary> Initializes a new instance of PolicyAssignmentIdentity. </summary>
+        public PolicyAssignmentIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of Identity. </summary>
+        /// <summary> Initializes a new instance of PolicyAssignmentIdentity. </summary>
         /// <param name="principalId"> The principal ID of the resource identity. </param>
         /// <param name="tenantId"> The tenant ID of the resource identity. </param>
         /// <param name="type"> The identity type. This is the only required field when adding a system assigned identity to a resource. </param>
-        internal Identity(string principalId, string tenantId, ResourceIdentityType? type)
+        internal PolicyAssignmentIdentity(string principalId, string tenantId, PolicyAssignmentIdentityType? type)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The tenant ID of the resource identity. </summary>
         public string TenantId { get; }
         /// <summary> The identity type. This is the only required field when adding a system assigned identity to a resource. </summary>
-        public ResourceIdentityType? Type { get; set; }
+        public PolicyAssignmentIdentityType? Type { get; set; }
     }
 }
