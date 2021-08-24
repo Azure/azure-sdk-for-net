@@ -59,7 +59,7 @@ stages:
                     $nupkg = Get-ChildItem -Path "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}/*.nupkg" -Exclude "*.symbols.nupkg"
                     nuget add "$($nupkg)" -Source ./packages
                     Write-Host "Adding package dependency for ${{artifact.name}}"
-                    dotnet add package ${{artifact.name}} -s ./packages
+                    dotnet add package ${{artifact.name}} --prerelease -s ./packages
                     Write-Host "NuGet Cache list:"
                     nuget locals all -list
                     Write-Host "Clearing NuGet package cache"
