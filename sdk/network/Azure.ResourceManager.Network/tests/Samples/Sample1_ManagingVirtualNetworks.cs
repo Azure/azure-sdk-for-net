@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         }
 
         [SetUp]
-        private async Task initialize()
+        protected async Task initialize()
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
