@@ -52,12 +52,12 @@ stages:
                 - pwsh:
                     mkdir InstallationCheck
                 - pwsh: |
-                    dir
-                    tree /F
                     Write-Host "Create new console"
                     dotnet new console -n "Installation.Check"
                     Write-Host "Adding package dependency for ${{artifact.name}}"
-                    dotnet add package ${{artifact.name}}
+                    dir
+                    tree /F
+                    dotnet add "Installation.Check" package ${{artifact.name}}
                     Write-Host "NuGet Cache list:"
                     nuget locals all -list
                     Write-Host "Clearing NuGet package cache"
