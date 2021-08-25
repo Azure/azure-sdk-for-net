@@ -89,7 +89,6 @@
       $(NoWarn);
       CA1812;  <!-- Avoid uninstantiated internal classes. (Result from below including the Azure.Core source) -->
       AZC0012; <!-- Single word class names -->
-      AZC0008;
     </NoWarn>
   </PropertyGroup>
 

@@ -11,7 +11,7 @@ using System.Text.Json.Serialization;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(CheckNameAvailabilityRequestConverter))]
     public partial class CheckNameAvailabilityRequest : IUtf8JsonSerializable

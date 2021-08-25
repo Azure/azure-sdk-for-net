@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Resources
             : base(clientContext,  id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
-            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Resources
             _data = subscriptionData;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
-            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new SubscriptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _featuresRestOperations = new FeaturesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary>
