@@ -284,7 +284,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
-            Assert.Equal(userAgent, telemetryItem.Tags[ContextTagKeys.AiUserAgent.ToString()]);
+            Assert.Equal(userAgent, telemetryItem.Tags["ai.user.userAgent"]);
         }
 
         [Fact]
@@ -320,7 +320,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
-            Assert.Null(telemetryItem.Tags[ContextTagKeys.AiUserAgent.ToString()]);
+            Assert.Null(telemetryItem.Tags["ai.user.userAgent"]);
         }
 
         /// <summary>

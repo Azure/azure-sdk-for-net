@@ -48,7 +48,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = RoleName;
             telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
             telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
-            telemetryItem.Tags[ContextTagKeys.AiUserAgent.ToString()] = AzMonList.GetTagValue(ref monitorTags.PartCTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+            // todo: update swagger to include this key.
+            telemetryItem.Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.PartCTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
 
             // we only have mapping for server spans
             // todo: non-server spans
