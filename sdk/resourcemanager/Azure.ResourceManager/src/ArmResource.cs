@@ -168,14 +168,5 @@ namespace Azure.ResourceManager.Core
             return new ManagementLockObjectContainer(this);
         }
         #endregion
-
-        #region ResourceLink
-        /// <summary> Gets an object representing a ResourceLinkContainer along with the instance operations that can be performed on it. </summary>
-        /// <returns> Returns a <see cref="ResourceLinkContainer" /> object. </returns>
-        public virtual ResourceLinkContainer GetResourceLinks()
-        {
-            return new ResourceLinkContainer(this);
-        }
-        #endregion
     }
 }

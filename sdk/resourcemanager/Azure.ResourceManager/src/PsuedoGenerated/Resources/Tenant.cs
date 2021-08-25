@@ -268,6 +268,13 @@ namespace Azure.ResourceManager.Resources
             return new DataPolicyManifestContainer(this);
         }
 
+        /// <summary> Gets the resource link container for this tenant. </summary>
+        /// <returns> Returns a <see cref="ResourceLinkContainer" /> object. </returns>
+        public virtual ResourceLinkContainer GetResourceLinks()
+        {
+            return new ResourceLinkContainer(this);
+        }
+
         /// <summary>
         /// This operation retrieves a list of all the built-in policy definitions that match the optional given $filter. If $filter='policyType -eq {value}' is provided, the returned list only includes all built-in policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all built-in policy definitions whose category match the {value}.
         /// </summary>

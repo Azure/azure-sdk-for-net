@@ -19,12 +19,9 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task List()
         {
-            await foreach(var tempTenant in Client.GetTenants().GetAllAsync())
+            await foreach(var tempDataPolicyManifest in Client.GetDataPolicyManifests().GetAllAsync())
             {
-                await foreach(var tempDataPolicyManifest in tempTenant.GetDataPolicyManifests().GetAllAsync())
-                {
-                    Assert.AreEqual(tempDataPolicyManifest.Data.Type, "Microsoft.Authorization/dataPolicyManifests");
-                }
+                Assert.AreEqual(tempDataPolicyManifest.Data.Type, "Microsoft.Authorization/dataPolicyManifests");
             }
         }
         
@@ -32,12 +29,9 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Get()
         {
-            await foreach (var tempTenant in Client.GetTenants().GetAllAsync())
-            {
-                DataPolicyManifest dataPolicyManifest = await tempTenant.GetDataPolicyManifests().GetAsync("Microsoft.Network.Data");
-                Assert.AreEqual(dataPolicyManifest.Data.Type, "Microsoft.Authorization/dataPolicyManifests");
-                Assert.AreEqual(dataPolicyManifest.Data.PolicyMode, "Microsoft.Network.Data");
-            }
+             DataPolicyManifest dataPolicyManifest = await Client.GetDataPolicyManifests().GetAsync("Microsoft.Network.Data");
+             Assert.AreEqual(dataPolicyManifest.Data.Type, "Microsoft.Authorization/dataPolicyManifests");
+             Assert.AreEqual(dataPolicyManifest.Data.PolicyMode, "Microsoft.Network.Data");
         }
     }
 }

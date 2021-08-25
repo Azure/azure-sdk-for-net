@@ -346,5 +346,17 @@ namespace Azure.ResourceManager
         /// <param name="id"> The id of the management group operations. </param>
         /// <returns> A client to perform operations on the management group. </returns>
         public virtual ManagementGroup GetManagementGroup(ResourceIdentifier id) => _tenant.GetManagementGroup(id);
+
+        /// <summary>
+        /// Gets the data policy manifest container for this tenant.
+        /// </summary>
+        /// <returns> A container of the data policy manifest. </returns>
+        public virtual DataPolicyManifestContainer GetDataPolicyManifests() => _tenant.GetDataPolicyManifests();
+
+        /// <summary>
+        /// Gets the resource link container for this tenant.
+        /// </summary>
+        /// <returns> Returns a <see cref="ResourceLinkContainer" /> object. </returns>
+        public virtual ResourceLinkContainer GetResourceLinks() => _tenant.GetResourceLinks();
     }
 }

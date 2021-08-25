@@ -37,12 +37,6 @@ namespace Azure.ResourceManager.Resources
             _restClient = new ResourceLinksRestOperations(_clientDiagnostics, Pipeline, BaseUri);
         }
 
-        /// <summary> Verify that the input resource Id is a valid container for this type. </summary>
-        /// <param name="identifier"> The input resource Id to check. </param>
-        protected override void ValidateResourceType(ResourceIdentifier identifier)
-        {
-        }
-
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
 
@@ -261,9 +255,10 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets a list of resource links at and below the specified source scope. </summary>
+        /// <param name="linkScope"> The scope of the resource link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceLink> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceLink> GetAll(ResourceIdentifier linkScope, CancellationToken cancellationToken = default)
         {
             Page<ResourceLink> FirstPageFunc(int? pageSizeHint)
             {
@@ -271,7 +266,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAtSourceScope(Id, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAtSourceScope(linkScope, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -286,7 +281,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetAtSourceScopeNextPage(nextLink, Id, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAtSourceScopeNextPage(nextLink, linkScope, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -299,9 +294,10 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets a list of resource links at and below the specified source scope. </summary>
+        /// <param name="linkScope"> The scope of the resource link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceLink> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceLink> GetAllAsync(ResourceIdentifier linkScope, CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceLink>> FirstPageFunc(int? pageSizeHint)
             {
@@ -309,7 +305,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAtSourceScopeAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAtSourceScopeAsync(linkScope, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,7 +320,7 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetAtSourceScopeNextPageAsync(nextLink, Id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAtSourceScopeNextPageAsync(nextLink, linkScope, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

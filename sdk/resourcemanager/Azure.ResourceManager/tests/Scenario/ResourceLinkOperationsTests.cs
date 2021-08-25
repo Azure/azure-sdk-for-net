@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Tests
             string resourceLinkName = Recording.GenerateAssetName("link-D-");
             ResourceIdentifier resourceLinkId = vnId1 + "/providers/Microsoft.Resources/links/" + resourceLinkName;
             ResourceLinkProperties properties = new ResourceLinkProperties(vnId2);
-            ResourceLink resourceLink = (await vn1.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId, properties)).Value;
+            ResourceLink resourceLink = (await Client.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId, properties)).Value;
             await resourceLink.DeleteAsync();
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await resourceLink.GetAsync());
             Assert.AreEqual(404, ex.Status);
