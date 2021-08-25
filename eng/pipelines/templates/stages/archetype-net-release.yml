@@ -55,8 +55,8 @@ stages:
                     Write-Host "Create new console"
                     dotnet new console
                     Write-Host "Installing .nupkg into package source"
-                    $nupkg = Get-ChildItem -Path "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}/*.nupkg" -Exclude "*.symbols.nupkg"
-                    dotnet nuget add source "$($nupkg)"
+                    #$nupkg = Get-ChildItem -Path "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}/*.nupkg" -Exclude "*.symbols.nupkg"
+                    dotnet nuget add source "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}/"
                     Write-Host "Adding package dependency for ${{artifact.name}}"
                     dotnet add package ${{artifact.name}} --prerelease
                     # Check exit code, exit if needed
