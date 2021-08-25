@@ -190,22 +190,6 @@ namespace Azure.Containers.ContainerRegistry
         public int TagCount { get { throw null; } }
         public bool? TeleportEnabled { get { throw null; } set { } }
     }
-    public partial class PullOptions
-    {
-        public PullOptions() { }
-    }
-    public partial class PullResult
-    {
-        public PullResult() { }
-    }
-    public partial class PushOptions
-    {
-        public PushOptions() { }
-    }
-    public partial class PushResult
-    {
-        public PushResult() { }
-    }
     public partial class RegistryArtifact
     {
         protected RegistryArtifact() { }
@@ -222,8 +206,6 @@ namespace Azure.Containers.ContainerRegistry
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties>> GetTagPropertiesAsync(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Containers.ContainerRegistry.ArtifactTagProperties> GetTagPropertiesCollection(Azure.Containers.ContainerRegistry.ArtifactTagOrderBy orderBy = Azure.Containers.ContainerRegistry.ArtifactTagOrderBy.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Containers.ContainerRegistry.ArtifactTagProperties> GetTagPropertiesCollectionAsync(Azure.Containers.ContainerRegistry.ArtifactTagOrderBy orderBy = Azure.Containers.ContainerRegistry.ArtifactTagOrderBy.None, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.PullResult>> PullAsync(string directory, Azure.Containers.ContainerRegistry.PullOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.PushResult>> PushAsync(string directory, Azure.Containers.ContainerRegistry.PushOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactManifestProperties> UpdateManifestProperties(Azure.Containers.ContainerRegistry.ArtifactManifestProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.ArtifactManifestProperties>> UpdateManifestPropertiesAsync(Azure.Containers.ContainerRegistry.ArtifactManifestProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.ArtifactTagProperties> UpdateTagProperties(string tag, Azure.Containers.ContainerRegistry.ArtifactTagProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
