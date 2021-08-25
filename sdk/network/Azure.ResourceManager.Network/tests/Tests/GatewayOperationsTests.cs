@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Response<VirtualNetworkGateway> getVirtualNetworkGateway1 = await virtualNetworkGatewayContainer1.GetAsync(virtualNetworkGatewayName1);
             Response<VirtualNetworkGateway> getVirtualNetworkGateway2 = await virtualNetworkGatewayContainer2.GetAsync(virtualNetworkGatewayName2);
 
-            string ConnectionName1 = Recording.GenerateAssetName("azsmnet");
+            string ConnectionName1 = Recording.GenerateAssetName("V1toV2");
             var virtualNetworkGatewayConneciton1 = new VirtualNetworkGatewayConnectionData(getVirtualNetworkGateway1.Value.Data, VirtualNetworkGatewayConnectionType.Vnet2Vnet)
             {
                 Location = location1,
@@ -401,24 +401,24 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual("abc123", getVirtualNetworkGatewayConnectionResponse1.Value.Data.SharedKey);
             Assert.AreEqual(getVirtualNetworkGateway2.Value.Id.ToString(), getVirtualNetworkGatewayConnectionResponse1.Value.Data.VirtualNetworkGateway2.Id.ToString());
 
-            string ConnectionName2 = Recording.GenerateAssetName("azsmnet");
-            var virtualNetworkGatewayConneciton2 = new VirtualNetworkGatewayConnectionData(getVirtualNetworkGateway1.Value.Data, VirtualNetworkGatewayConnectionType.Vnet2Vnet)
+            string ConnectionName2 = Recording.GenerateAssetName("V2toV1");
+            var virtualNetworkGatewayConneciton2 = new VirtualNetworkGatewayConnectionData(getVirtualNetworkGateway2.Value.Data, VirtualNetworkGatewayConnectionType.Vnet2Vnet)
             {
-                Location = location1,
+                Location = location2,
                 RoutingWeight = 3,
-                VirtualNetworkGateway1 = getVirtualNetworkGateway1.Value.Data,
-                VirtualNetworkGateway2 = getVirtualNetworkGateway2.Value.Data,
+                VirtualNetworkGateway1 = getVirtualNetworkGateway2.Value.Data,
+                VirtualNetworkGateway2 = getVirtualNetworkGateway1.Value.Data,
                 SharedKey = "abc123"
             };
 
-            var virtualNetworkGatewayConnectionContainer2 = resourceGroup1.GetVirtualNetworkGatewayConnections();
+            var virtualNetworkGatewayConnectionContainer2 = resourceGroup2.GetVirtualNetworkGatewayConnections();
             var putVirtualNetworkGatewayConnectionResponseOperation2 = await virtualNetworkGatewayConnectionContainer2.CreateOrUpdateAsync(ConnectionName2, virtualNetworkGatewayConneciton2);
             Response<VirtualNetworkGatewayConnection> putVirtualNetworkGatewayConnectionResponse2 = await putVirtualNetworkGatewayConnectionResponseOperation2.WaitForCompletionAsync();
-            Response<VirtualNetworkGatewayConnection> getVirtualNetworkGatewayConnectionResponse2 = await virtualNetworkGatewayConnectionContainer2.GetAsync(ConnectionName1);
+            Response<VirtualNetworkGatewayConnection> getVirtualNetworkGatewayConnectionResponse2 = await virtualNetworkGatewayConnectionContainer2.GetAsync(ConnectionName2);
             Assert.AreEqual(ConnectionName2, getVirtualNetworkGatewayConnectionResponse2.Value.Data.Name);
-            Assert.AreEqual("Vnet2Vnet", getVirtualNetworkGatewayConnectionResponse1.Value.Data.ConnectionType.ToString());
-            Assert.AreEqual("abc123", getVirtualNetworkGatewayConnectionResponse1.Value.Data.SharedKey);
-            Assert.AreEqual(getVirtualNetworkGateway1.Value.Id.ToString(), getVirtualNetworkGatewayConnectionResponse1.Value.Data.VirtualNetworkGateway2.Id.ToString());
+            Assert.AreEqual("Vnet2Vnet", getVirtualNetworkGatewayConnectionResponse2.Value.Data.ConnectionType.ToString());
+            Assert.AreEqual("abc123", getVirtualNetworkGatewayConnectionResponse2.Value.Data.SharedKey);
+            Assert.AreEqual(getVirtualNetworkGateway1.Value.Id.ToString(), getVirtualNetworkGatewayConnectionResponse2.Value.Data.VirtualNetworkGateway2.Id.ToString());
         }
 
         // Tests Resource:-VirtualNetworkGateway 6 APIs:-
