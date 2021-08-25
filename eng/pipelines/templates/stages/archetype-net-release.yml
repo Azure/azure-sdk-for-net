@@ -55,11 +55,11 @@ stages:
                     Write-Host "Create new console"
                     dotnet new console
                     Write-Host "Installing .nupkg into package source"
-                    $localFeed = "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}/"
+                    $localFeed = "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}"
                     dotnet nuget add source $localFeed
 
-                    Write-Host "Adding package dependency for ${{artifact.name}}"
-                    $version = (Get-ChildItem "$($localFeed)*.nupkg" -Exclude "*.symbols.nupkg" -Name).replace(".nupkg","").replace("${{artifact.name}}.","")
+                    $version = (Get-ChildItem "$($localFeed)/*.nupkg" -Exclude "*.symbols.nupkg" -Name).replace(".nupkg","").replace("${{artifact.name}}.","")
+                    Write-Host "Adding package dependency for ${{artifact.name}} version $($version)"
                     dotnet add package ${{artifact.name}} --version $version --no-restore 
                     if ($LASTEXITCODE) {
                       exit $LASTEXITCODE
