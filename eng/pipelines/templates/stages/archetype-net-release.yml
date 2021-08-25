@@ -59,7 +59,7 @@ stages:
                     dotnet nuget add source $localFeed
 
                     Write-Host "Adding package dependency for ${{artifact.name}}"
-                    $version = (Get-ChildItem "$($localFeed)*.nupkg" -Exclude "*.symbols.nupkg" -Name).replace(".nupkg","").replace(${{artifact.name}},"")
+                    $version = (Get-ChildItem "$($localFeed)*.nupkg" -Exclude "*.symbols.nupkg" -Name).replace(".nupkg","").replace("${{artifact.name}}.","")
                     dotnet add package ${{artifact.name}} --version $version --no-restore 
                     if ($LASTEXITCODE) {
                       exit $LASTEXITCODE
