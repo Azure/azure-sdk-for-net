@@ -40,17 +40,42 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// <param name="aggregationType">Only provide one value for this
         /// field. Valid values: Average, Minimum, Maximum, Total,
         /// Count.</param>
+        /// <param name="supportedAggregationTypes">Supported aggregation
+        /// types. Valid values: Average, Minimum, Maximum, Total,
+        /// Count.</param>
+        /// <param name="supportedTimeGrainTypes">Supported time grains. Valid
+        /// values: PT1M, PT5M, PT15M, PT30M, PT1H, PT6H, PT12H, P1D</param>
+        /// <param name="enableRegionalMdmAccount">Flag to indicate use of
+        /// regional Mdm accounts</param>
+        /// <param name="sourceMdmAccount">Source mdm account</param>
+        /// <param name="sourceMdmNamespace">Source mdm namespace</param>
+        /// <param name="metricFilterPattern">Metric filter regex
+        /// pattern</param>
+        /// <param name="fillGapWithZero">Flag to determine is Zero is returned
+        /// for time duration where no metric is emitted</param>
+        /// <param name="category">Metric category</param>
         /// <param name="internalMetricName">Internal metric name.</param>
         /// <param name="dimensions">Dimensions of the metric</param>
-        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string aggregationType = default(string), string internalMetricName = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+        /// <param name="lockedAggregationType">Locked aggregation type of the
+        /// metric</param>
+        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string aggregationType = default(string), IList<string> supportedAggregationTypes = default(IList<string>), IList<string> supportedTimeGrainTypes = default(IList<string>), bool? enableRegionalMdmAccount = default(bool?), string sourceMdmAccount = default(string), string sourceMdmNamespace = default(string), string metricFilterPattern = default(string), bool? fillGapWithZero = default(bool?), string category = default(string), string internalMetricName = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), string lockedAggregationType = default(string))
         {
             Name = name;
             DisplayName = displayName;
             DisplayDescription = displayDescription;
             Unit = unit;
             AggregationType = aggregationType;
+            SupportedAggregationTypes = supportedAggregationTypes;
+            SupportedTimeGrainTypes = supportedTimeGrainTypes;
+            EnableRegionalMdmAccount = enableRegionalMdmAccount;
+            SourceMdmAccount = sourceMdmAccount;
+            SourceMdmNamespace = sourceMdmNamespace;
+            MetricFilterPattern = metricFilterPattern;
+            FillGapWithZero = fillGapWithZero;
+            Category = category;
             InternalMetricName = internalMetricName;
             Dimensions = dimensions;
+            LockedAggregationType = lockedAggregationType;
             CustomInit();
         }
 
@@ -91,6 +116,57 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         public string AggregationType { get; set; }
 
         /// <summary>
+        /// Gets or sets supported aggregation types. Valid values: Average,
+        /// Minimum, Maximum, Total, Count.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedAggregationTypes")]
+        public IList<string> SupportedAggregationTypes { get; set; }
+
+        /// <summary>
+        /// Gets or sets supported time grains. Valid values: PT1M, PT5M,
+        /// PT15M, PT30M, PT1H, PT6H, PT12H, P1D
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedTimeGrainTypes")]
+        public IList<string> SupportedTimeGrainTypes { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to indicate use of regional Mdm accounts
+        /// </summary>
+        [JsonProperty(PropertyName = "enableRegionalMdmAccount")]
+        public bool? EnableRegionalMdmAccount { get; set; }
+
+        /// <summary>
+        /// Gets or sets source mdm account
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceMdmAccount")]
+        public string SourceMdmAccount { get; set; }
+
+        /// <summary>
+        /// Gets or sets source mdm namespace
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceMdmNamespace")]
+        public string SourceMdmNamespace { get; set; }
+
+        /// <summary>
+        /// Gets or sets metric filter regex pattern
+        /// </summary>
+        [JsonProperty(PropertyName = "metricFilterPattern")]
+        public string MetricFilterPattern { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to determine is Zero is returned for time
+        /// duration where no metric is emitted
+        /// </summary>
+        [JsonProperty(PropertyName = "fillGapWithZero")]
+        public bool? FillGapWithZero { get; set; }
+
+        /// <summary>
+        /// Gets or sets metric category
+        /// </summary>
+        [JsonProperty(PropertyName = "category")]
+        public string Category { get; set; }
+
+        /// <summary>
         /// Gets or sets internal metric name.
         /// </summary>
         [JsonProperty(PropertyName = "internalMetricName")]
@@ -101,6 +177,12 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// </summary>
         [JsonProperty(PropertyName = "dimensions")]
         public IList<MetricDimension> Dimensions { get; set; }
+
+        /// <summary>
+        /// Gets or sets locked aggregation type of the metric
+        /// </summary>
+        [JsonProperty(PropertyName = "lockedAggregationType")]
+        public string LockedAggregationType { get; set; }
 
     }
 }
