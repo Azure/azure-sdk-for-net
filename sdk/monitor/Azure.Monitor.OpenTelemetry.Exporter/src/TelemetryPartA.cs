@@ -49,14 +49,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
             telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
             // todo: update swagger to include this key.
-            telemetryItem.Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.PartCTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+            telemetryItem.Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
 
             // we only have mapping for server spans
             // todo: non-server spans
             if (activity.Kind == ActivityKind.Server)
             {
                 telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()] = GetOperationName(activity, ref monitorTags.PartBTags);
-                telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()] = GetLocationIp(ref monitorTags);
+                telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()] = GetLocationIp(ref monitorTags.PartBTags);
             }
 
             telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
@@ -75,16 +75,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return activity.DisplayName;
         }
 
-        private static string GetLocationIp(ref TagEnumerationState monitorTags)
+        private static string GetLocationIp(ref AzMonList partBTags)
         {
-            var httpMethod = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpMethod)?.ToString();
-            var httpClientIp = AzMonList.GetTagValue(ref monitorTags.PartCTags, SemanticConventions.AttributeHttpClientIP)?.ToString();
-            if (!string.IsNullOrWhiteSpace(httpMethod) && !string.IsNullOrWhiteSpace(httpClientIp))
+            var httpClientIp = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpClientIP)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpClientIp))
             {
                 return httpClientIp;
             }
 
-            return AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeNetPeerIp)?.ToString();
+            return AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeNetPeerIp)?.ToString();
         }
 
         internal static TelemetryItem GetTelemetryItem(LogRecord logRecord, string instrumentationKey)

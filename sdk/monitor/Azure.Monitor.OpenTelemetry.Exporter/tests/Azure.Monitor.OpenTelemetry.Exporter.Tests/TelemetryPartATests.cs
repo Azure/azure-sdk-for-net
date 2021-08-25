@@ -236,7 +236,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 startTime: DateTime.UtcNow);
             var resource = CreateTestResource();
 
-            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpClientIP, "127.0.0.1");
 
             var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
