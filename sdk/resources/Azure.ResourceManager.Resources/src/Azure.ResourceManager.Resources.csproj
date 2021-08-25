@@ -10,13 +10,8 @@
     <PackageId>Azure.ResourceManager.Resources</PackageId>
     <PackageTags>azure;management;resources</PackageTags>
     <NoWarn>$(NoWarn);AZC0008;AZC0001;AZC0107;CA2214;CA1036;CA1067;CA1065;SA1028;CS1591;CS1587</NoWarn>
-    <!-- <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode> -->
-    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Core" VersionOverride="1.0.0-alpha.20210730.2" />
-    <PackageReference Include="Azure.Core" VersionOverride="1.16.0" />
-  </ItemGroup>
 </Project>

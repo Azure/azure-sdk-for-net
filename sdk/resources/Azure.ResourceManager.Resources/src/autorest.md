@@ -3,25 +3,24 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-version: 3.4.5
-use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
 azure-arm: true
-title: ResourceManagementClient
+csharp: true
 library-name: Resources
-input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
-save-inputs: true
-clear-output-folder: true
 namespace: Azure.ResourceManager.Resources
+title: ResourceManagementClient
+tag: package-track2-preview
+
+output-folder: Generated/
+clear-output-folder: true
+
 modelerfour:
     lenient-model-deduplication: true
 skip-csproj: true
-model-namespace: false
+model-namespace: true
 public-clients: false
 head-as-boolean: false
 payload-flattening-threshold: 2
+
 operation-group-to-resource-type:
   DeploymentOperations: Microsoft.Resources/deployments/operations
   Deployments: Microsoft.Resources/deployments
@@ -115,4 +114,15 @@ directive:
     where: $.definitions.DeploymentOperationProperties
     transform: >
       $.properties.statusMessage["x-nullable"] = true;
+```
+
+### Tag: package-track2-preview
+
+These settings apply only when `--tag=package-track2-preview` is specified on the command line.
+
+```yaml $(tag) == 'package-track2-preview'
+input-file:
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
 ```
