@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Communication.Tests;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer.Tests
@@ -26,41 +27,46 @@ namespace Azure.Communication.CallingServer.Tests
         }
 
         [Test]
-        public async Task RunAllRecordingFunctionsScenarioTests()
+        [TestCase(AuthMethod.ConnectionString, TestName = "RunAllRecordingFunctionsWithConnectionString")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "RunAllRecordingFunctionsWithTokenCredential")]
+        public async Task RunAllRecordingFunctionsScenarioTests(AuthMethod authMethod)
         {
-            CallingServerClient[] callingServerClients = new CallingServerClient[] { CreateInstrumentedCallingServerClient(), CreateInstrumentedCallingServerClientWithToken() };
+            CallingServerClient callingServerClient = authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateInstrumentedCallingServerClientWithConnectionString(),
+                AuthMethod.TokenCredential => CreateInstrumentedCallingServerClientWithToken(),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+
             var groupId = GetGroupId();
             try
             {
-                foreach (CallingServerClient callingServerClient in callingServerClients)
-                {
-                    // Establish a Call
-                    var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
-                    var serverCall = callingServerClient.InitializeServerCall(groupId);
+                // Establish a Call
+                var callConnections = await CreateGroupCallOperation(callingServerClient, groupId, GetFromUserId(), GetToUserId(), TestEnvironment.AppCallbackUrl).ConfigureAwait(false);
+                var serverCall = callingServerClient.InitializeServerCall(groupId);
 
-                    // Start Recording
-                    StartCallRecordingResult startCallRecordingResult = await serverCall.StartRecordingAsync(new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
-                    var recordingId = startCallRecordingResult.RecordingId;
-                    await ValidateCallRecordingStateAsync(serverCall, recordingId, CallRecordingState.Active).ConfigureAwait(false);
+                // Start Recording
+                StartCallRecordingResult startCallRecordingResult = await serverCall.StartRecordingAsync(new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
+                var recordingId = startCallRecordingResult.RecordingId;
+                await ValidateCallRecordingStateAsync(serverCall, recordingId, CallRecordingState.Active).ConfigureAwait(false);
 
-                    // Pause Recording
-                    await serverCall.PauseRecordingAsync(recordingId).ConfigureAwait(false);
-                    await ValidateCallRecordingStateAsync(serverCall, recordingId, CallRecordingState.Inactive).ConfigureAwait(false);
+                // Pause Recording
+                await serverCall.PauseRecordingAsync(recordingId).ConfigureAwait(false);
+                await ValidateCallRecordingStateAsync(serverCall, recordingId, CallRecordingState.Inactive).ConfigureAwait(false);
 
-                    // Resume Recording
-                    await serverCall.ResumeRecordingAsync(recordingId).ConfigureAwait(false);
-                    await ValidateCallRecordingStateAsync(serverCall, recordingId, CallRecordingState.Active).ConfigureAwait(false);
+                // Resume Recording
+                await serverCall.ResumeRecordingAsync(recordingId).ConfigureAwait(false);
+                await ValidateCallRecordingStateAsync(serverCall, recordingId, CallRecordingState.Active).ConfigureAwait(false);
 
-                    // Stop Recording
-                    await serverCall.StopRecordingAsync(recordingId).ConfigureAwait(false);
+                // Stop Recording
+                await serverCall.StopRecordingAsync(recordingId).ConfigureAwait(false);
 
-                    // Get Recording StateAsync
-                    Assert.ThrowsAsync<RequestFailedException>(async () => await serverCall.GetRecordingStateAsync(recordingId).ConfigureAwait(false));
+                // Get Recording StateAsync
+                Assert.ThrowsAsync<RequestFailedException>(async () => await serverCall.GetRecordingStateAsync(recordingId).ConfigureAwait(false));
 
-                    // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
-                    await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
-                    await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
-                }
+                // Hang up the Call, there is one call leg in this test case, hangup the call will also delete the call as the result.
+                await SleepIfNotInPlaybackModeAsync().ConfigureAwait(false);
+                await CleanUpConnectionsAsync(callConnections).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
@@ -76,7 +82,7 @@ namespace Azure.Communication.CallingServer.Tests
         [Test]
         public async Task RunCreatePlayCancelHangupScenarioTests()
         {
-            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
+            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClientWithConnectionString();
             var groupId = GetGroupId();
             try
             {
@@ -113,7 +119,7 @@ namespace Azure.Communication.CallingServer.Tests
             if (SkipCallingServerInteractionLiveTests)
                 Assert.Ignore("Skip callingserver interaction live tests flag is on.");
 
-            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClient();
+            CallingServerClient callingServerClient = CreateInstrumentedCallingServerClientWithConnectionString();
             var groupId = GetGroupId();
             try
             {

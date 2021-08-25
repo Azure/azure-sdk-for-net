@@ -104,7 +104,7 @@ namespace Azure.Communication.CallingServer.Tests
         /// Creates a <see cref="CallingServerClient" />
         /// </summary>
         /// <returns>The instrumented <see cref="CallingServerClient" />.</returns>
-        protected CallingServerClient CreateInstrumentedCallingServerClient()
+        protected CallingServerClient CreateInstrumentedCallingServerClientWithConnectionString()
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
             CallingServerClient callingServerClient = new CallingServerClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
@@ -132,13 +132,11 @@ namespace Azure.Communication.CallingServer.Tests
             }
             else
             {
-                #region Snippet:Azure_Communication_CallingServer_Tests_Samples_CreateCallingServerClientWithToken
-                //@@ string endpoint = "<endpoint_url>";
-                //@@ string userAssignedClientId = "<your managed identity client Id>";
-                //@@ var tokenCredential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
-                /*@@*/
                 tokenCredential = new DefaultAzureCredential();
-                //@@ CallingServerClient client = new CallingServerClient(new Uri(endpoint), tokenCredential);
+                #region Snippet:Azure_Communication_CallingServer_Tests_Samples_CreateCallingServerClientWithToken
+                //@@ var endpoint = new Uri("https://my-resource.communication.azure.com");
+                //@@ TokenCredential tokenCredential = new DefaultAzureCredential();
+                //@@ var client = new CallingServerClient(endpoint, tokenCredential);
                 #endregion Snippet:Azure_Communication_CallingServer_Tests_Samples_CreateCallingServerClientWithToken
             }
 
