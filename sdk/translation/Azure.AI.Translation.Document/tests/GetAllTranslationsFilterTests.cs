@@ -38,7 +38,29 @@ namespace Azure.AI.Translation.Document.Tests
                 else if (jobTerminalStatus == DocumentTranslationStatus.Canceled)
                 {
                     await translationOp.CancelAsync(default);
-                    Thread.Sleep(6000); // wait for cancel status to propagate!
+                }
+            }
+
+            //ensure that cancel status has propagated before returning
+            if (jobTerminalStatus == DocumentTranslationStatus.Canceled)
+            {
+                var options = new GetTranslationStatusesOptions();
+
+                foreach (var result in resultIds)
+                {
+                    options.Ids.Add(result);
+                }
+
+                bool cancellationHasPropagated = false; // flag for successful cancelling
+                int watchdogCounter = 0;                // counter to return in case of long term service failure
+
+                while (!cancellationHasPropagated && watchdogCounter < 100)
+                {
+                    Thread.Sleep(5000); // wait for cancel status to propagate!
+                    watchdogCounter++;
+
+                    var statuses =  await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
+                    cancellationHasPropagated = statuses.TrueForAll(status => status.Status == DocumentTranslationStatus.Canceled);
                 }
             }
 
@@ -50,7 +72,6 @@ namespace Azure.AI.Translation.Document.Tests
         {
             // create client
             var client = GetClient();
-
             // create test jobs
             await CreateTranslationJobsAsync(client, jobsCount: 1, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
             var canceledIds = await CreateTranslationJobsAsync(client, jobsCount: 1, jobTerminalStatus: DocumentTranslationStatus.Canceled);
