@@ -80,8 +80,7 @@ namespace Azure.ResourceManager.Resources.Tests.ScenarioTests
 
             // Make sure our object returned from GET is equal to the one which was returned from the creation.
             var templateSpecFromGet = (await TemplateSpecsOperations.GetAsync(resourceGroupName, templateSpecName)).Value;
-            JsonSerializer.Serialize(createdTemplateSpec)
-                .Should().Be(JsonSerializer.Serialize(templateSpecFromGet));
+            createdTemplateSpec.Should().BeEquivalentTo(templateSpecFromGet);
 
             // Validate we can perform an update on the existing template spec.
             var templateSpecToUpdate = templateSpecToCreate;
@@ -173,8 +172,7 @@ namespace Azure.ResourceManager.Resources.Tests.ScenarioTests
 
             // Make sure our object returned from GET is equal to the one which was returned from the creation.
             var templateSpecVersionFromGet = (await TemplateSpecVersionsOperations.GetAsync(resourceGroupName, templateSpecName, version)).Value;
-            JsonSerializer.Serialize(createdTemplateSpecVersion)
-                .Should().Be(JsonSerializer.Serialize(templateSpecVersionFromGet));
+            createdTemplateSpecVersion.Should().BeEquivalentTo(templateSpecVersionFromGet, opt => opt.ComparingByMembers<JsonElement>());
 
             // Validate we can perform an update on the existing version.
             var templateSpecVersionUpdate = templateSpecVersionToCreate;
