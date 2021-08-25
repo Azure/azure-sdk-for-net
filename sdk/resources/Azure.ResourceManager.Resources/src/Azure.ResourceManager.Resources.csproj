@@ -2,16 +2,19 @@
 
   <PropertyGroup>
     <Version>1.0.0-beta.1</Version>
-    <!-- <TargetFramework>net5.0</TargetFramework> -->
+    <PackageId>Azure.ResourceManager.Resources</PackageId>
     <Description>
       Azure management client SDK for Azure resource provider Resources.
       This is the first beta preview version, so expect incompatible changes in subsequent releases as we improve the product.
     </Description>
-    <PackageId>Azure.ResourceManager.Resources</PackageId>
     <PackageTags>azure;management;resources</PackageTags>
-    <NoWarn>$(NoWarn);AZC0008;AZC0001;AZC0107;CA2214;CA1036;CA1067;CA1065;SA1028;CS1591;CS1587</NoWarn>
+    <NoWarn>$(NoWarn);AZC0008;</NoWarn>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager" VersionOverride="1.0.0-alpha.20210824.1" />
+    <PackageReference Include="Azure.Core" VersionOverride="1.18.0" />
+  </ItemGroup>
 </Project>
