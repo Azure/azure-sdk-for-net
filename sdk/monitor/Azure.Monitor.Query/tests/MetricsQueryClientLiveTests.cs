@@ -57,7 +57,7 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions()
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, duration)
+                    TimeRange = new DateTimeRange(_testData.StartTime, duration)
                 });
 
             var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
@@ -80,7 +80,7 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, _testData.StartTime.Add(_testData.Duration)),
+                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.StartTime.Add(_testData.Duration)),
                     Aggregations =
                     {
                         MetricAggregationType.Average,
@@ -113,7 +113,7 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
+                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.EndTime),
                 });
 
             var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
@@ -133,7 +133,7 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, _testData.Duration)
+                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.Duration)
                 });
 
             var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
@@ -153,7 +153,7 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.Duration, _testData.EndTime)
+                    TimeRange = new DateTimeRange(_testData.Duration, _testData.EndTime)
                 });
 
             var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
@@ -190,8 +190,8 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
-                    Interval = TimeSpan.FromMinutes(5)
+                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.EndTime),
+                    Granularity = TimeSpan.FromMinutes(5)
                 });
 
             var timeSeriesData = results.Value.Metrics[0].TimeSeries[0].Data;
@@ -211,7 +211,7 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
+                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.EndTime),
                     Filter = $"Name eq '{_testData.Name1}'",
                     Aggregations =
                     {
@@ -234,7 +234,7 @@ namespace Azure.Monitor.Query.Tests
                 new MetricsQueryOptions
                 {
                     MetricNamespace = _testData.MetricNamespace,
-                    TimeSpan = new DateTimeRange(_testData.StartTime, _testData.EndTime),
+                    TimeRange = new DateTimeRange(_testData.StartTime, _testData.EndTime),
                     Filter = $"Name eq '*'",
                     Top = 1,
                     Aggregations =
