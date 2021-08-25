@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 library-name: Resources
+c-sharp: true
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 tag: package-track2-preview
