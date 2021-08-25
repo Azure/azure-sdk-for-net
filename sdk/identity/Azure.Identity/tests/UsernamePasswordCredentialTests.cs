@@ -23,6 +23,8 @@ namespace Azure.Identity.Tests
         private MockMsalPublicClient mockMsal;
         private DeviceCodeResult deviceCodeResult;
         private string expectedTenantId;
+        private bool interactiveCalled;
+        private bool silentCalled;
 
         public UsernamePasswordCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -60,7 +62,14 @@ namespace Azure.Identity.Tests
             var clientId = Guid.NewGuid().ToString();
             var tenantId = Guid.NewGuid().ToString();
 
-            var credential = new UsernamePasswordCredential(username, password, clientId, tenantId, new TokenCredentialOptions{ IsLoggingPIIEnabled = isLoggingPIIEnabled}, default, null);
+            var credential = new UsernamePasswordCredential(
+                username,
+                password,
+                clientId,
+                tenantId,
+                new TokenCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled },
+                default,
+                null);
 
             Assert.NotNull(credential.Client);
             Assert.AreEqual(isLoggingPIIEnabled, credential.Client.LogPII);
@@ -82,8 +91,37 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expiresOn, token.ExpiresOn);
         }
 
+        [Test]
+        public async Task CallsGetAzquireTokenSilentAfterFirstTokenAcquired(
+            [Values(null, TenantIdHint)] string tenantId,
+            [Values(true)] bool allowMultiTenantAuthentication)
+        {
+            TestSetup();
+            var options = new UsernamePasswordCredentialOptions { AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
+
+            var credential = InstrumentClient(new UsernamePasswordCredential("user", "password", TenantId, ClientId, options, null, mockMsal));
+
+            AccessToken token = await credential.GetTokenAsync(context);
+
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expiresOn, token.ExpiresOn);
+            Assert.True(interactiveCalled);
+            Assert.False(silentCalled);
+
+            // Second call should acquireSilent
+            token = await credential.GetTokenAsync(context);
+
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expiresOn, token.ExpiresOn);
+            Assert.True(silentCalled);
+        }
+
         public void TestSetup()
         {
+            interactiveCalled = false;
+            silentCalled = false;
             expectedTenantId = null;
             expectedCode = Guid.NewGuid().ToString();
             expectedToken = Guid.NewGuid().ToString();
@@ -106,6 +144,14 @@ namespace Azure.Identity.Tests
                 "Bearer");
             mockMsal.UserPassAuthFactory = (_, tenant) =>
             {
+                interactiveCalled = true;
+                Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
+                return result;
+            };
+
+            mockMsal.SilentAuthFactory = (_, tenant) =>
+            {
+                silentCalled = true;
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;
             };
