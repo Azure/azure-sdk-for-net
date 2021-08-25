@@ -21,7 +21,7 @@ namespace Azure.Identity
 
         protected MsalClientBase(CredentialPipeline pipeline, string tenantId, string clientId, ITokenCacheOptions cacheOptions)
         {
-            // This validation is preformed as a backstop. Validation in TokenCredentialOptions.AuthorityHost prevents users from explicitly
+            // This validation is performed as a backstop. Validation in TokenCredentialOptions.AuthorityHost prevents users from explicitly
             // setting AuthorityHost to a non TLS endpoint. However, the AuthorityHost can also be set by the AZURE_AUTHORITY_HOST environment
             // variable rather than in code. In this case we need to validate the endpoint before we use it. However, we can't validate in
             // CredentialPipeline as this is also used by the ManagedIdentityCredential which allows non TLS endpoints. For this reason

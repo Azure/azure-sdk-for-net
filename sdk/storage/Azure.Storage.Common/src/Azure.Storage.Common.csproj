@@ -18,12 +18,13 @@
     </Description>
     <RootNamespace>Azure.Storage</RootNamespace>
   </PropertyGroup>
-  <PropertyGroup>
-    <!-- TODO: Remove this after HttpAuthorization moves to Core https://github.com/Azure/azure-sdk-for-net/issues/21875 -->
-    <NoWarn>$(NoWarn);AZC0001;</NoWarn>
-  </PropertyGroup>
   <ItemGroup>
+    <!-- TODO https://github.com/Azure/azure-sdk-for-net/issues/21875 - uncomment when Azure.Core ships 
     <PackageReference Include="Azure.Core" />
+    end TODO -->
+    <!-- TODOhttps://github.com/Azure/azure-sdk-for-net/issues/21875 - revert when Azure.Core ships -->
+      <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <!--  end TODO-->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />

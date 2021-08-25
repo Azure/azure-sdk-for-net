@@ -64,6 +64,7 @@ namespace Azure.Communication.CallingServer
         protected CallingServerClient() { }
         public CallingServerClient(string connectionString) { }
         public CallingServerClient(string connectionString, Azure.Communication.CallingServer.CallingServerClientOptions options) { }
+        public CallingServerClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.CallingServer.CallingServerClientOptions options = null) { }
         public virtual Azure.Response<Azure.Communication.CallingServer.CallConnection> CreateCallConnection(Azure.Communication.CommunicationIdentifier source, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, Azure.Communication.CallingServer.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.CallConnection>> CreateCallConnectionAsync(Azure.Communication.CommunicationIdentifier source, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, Azure.Communication.CallingServer.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.IO.Stream> DownloadStreaming(System.Uri sourceEndpoint, Azure.HttpRange range = default(Azure.HttpRange), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -79,7 +80,7 @@ namespace Azure.Communication.CallingServer
     }
     public partial class CallingServerClientOptions : Azure.Core.ClientOptions
     {
-        public CallingServerClientOptions(Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion version = Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion.V2021_06_15_Preview, bool allowAutoRedirect = false) { }
+        public CallingServerClientOptions(Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion version = Azure.Communication.CallingServer.CallingServerClientOptions.ServiceVersion.V2021_06_15_Preview) { }
         public enum ServiceVersion
         {
             V2021_06_15_Preview = 1,

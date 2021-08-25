@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             _ = await CreateGenericAvailabilitySetAsync(rg.Id);
 
-            ResourceGroupOperations rgOp = Client.GetResourceGroupOperations(rg.Id);
+            ResourceGroup rgOp = Client.GetResourceGroup(rg.Id);
             var result = 0;
             var pageable = ResourceListOperations.GetAtContextAsync(rgOp);
             await foreach (var resource in pageable)

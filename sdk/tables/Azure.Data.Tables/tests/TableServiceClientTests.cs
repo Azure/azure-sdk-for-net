@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables.Sas;
@@ -17,14 +18,14 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// The table account name.
         /// </summary>
-        private readonly string _accountName = "someaccount";
+        private static string AccountName = "someaccount";
 
         private const string Secret = "Kg==";
 
         /// <summary>
         /// The table endpoint.
         /// </summary>
-        private readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
+        private static readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
 
         private readonly Uri _urlHttp = new Uri($"http://someaccount.table.core.windows.net");
 
@@ -43,7 +44,7 @@ namespace Azure.Data.Tables.Tests
         public void ConstructorValidatesArguments()
         {
             Assert.That(
-                () => new TableServiceClient(null, new TableSharedKeyCredential(_accountName, string.Empty)),
+                () => new TableServiceClient(null, new TableSharedKeyCredential(AccountName, string.Empty)),
                 Throws.InstanceOf<ArgumentNullException>(),
                 "The constructor should validate the url.");
 
@@ -63,12 +64,12 @@ namespace Azure.Data.Tables.Tests
                 "The constructor should not accept a null credential");
 
             Assert.That(
-                () => new TableServiceClient(_url, new TableSharedKeyCredential(_accountName, string.Empty)),
+                () => new TableServiceClient(_url, new TableSharedKeyCredential(AccountName, string.Empty)),
                 Throws.Nothing,
                 "The constructor should accept valid arguments.");
 
             Assert.That(
-                () => new TableServiceClient(_urlHttp, new TableSharedKeyCredential(_accountName, string.Empty)),
+                () => new TableServiceClient(_urlHttp, new TableSharedKeyCredential(AccountName, string.Empty)),
                 Throws.Nothing,
                 "The constructor should accept an http url.");
 
@@ -102,8 +103,8 @@ namespace Azure.Data.Tables.Tests
         public void AccountNameCorrectlyReturned()
         {
             Assert.That(
-                () => new TableServiceClient(_url, new TableSharedKeyCredential(_accountName, string.Empty)).AccountName,
-                Is.EqualTo(_accountName));
+                () => new TableServiceClient(_url, new TableSharedKeyCredential(AccountName, string.Empty)).AccountName,
+                Is.EqualTo(AccountName));
 
             Assert.That(
                 () => new TableServiceClient("UseDevelopmentStorage=true").AccountName,
@@ -138,15 +139,21 @@ namespace Azure.Data.Tables.Tests
             Assert.That(sas.ResourceTypes, Is.EqualTo(resourceTypes));
         }
 
-        [Test]
-        public void GenerateSasUri()
+        private static IEnumerable<object[]> TableServiceClients()
+        {
+            var cred = new TableSharedKeyCredential(AccountName, Secret);
+            var sharedKeyClient = new TableServiceClient(_url, cred);
+            var connStringClient = new TableServiceClient($"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;");
+            yield return new object[] { sharedKeyClient, cred };
+            yield return new object[] { connStringClient, cred };
+        }
+
+        [TestCaseSource(nameof(TableServiceClients))]
+        public void GenerateSasUri(TableServiceClient client, TableSharedKeyCredential cred)
         {
             TableAccountSasPermissions permissions = TableAccountSasPermissions.Add;
             TableAccountSasResourceTypes resourceTypes = TableAccountSasResourceTypes.Container;
             var expires = DateTime.Now.AddDays(1);
-            var cred = new TableSharedKeyCredential(_accountName, Secret);
-            var client = new TableServiceClient(_url, cred);
-
             var expectedSas = new TableAccountSasBuilder(permissions, resourceTypes, expires).Sign(cred);
 
             var actualSas = client.GenerateSasUri(permissions, resourceTypes, expires);
@@ -166,6 +173,29 @@ namespace Azure.Data.Tables.Tests
             var service = InstrumentClient(new TableServiceClient(_url, new AzureSasCredential("sig"), new TableClientOptions { Transport = mockTransport }));
 
             await service.GetStatisticsAsync();
+        }
+
+        public static IEnumerable<object[]> ValidConnStrings()
+        {
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.cosmos.azure.com:443/;" };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret};EndpointSuffix=core.windows.net" };
+            yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret}" };
+            yield return new object[] { $"AccountName={AccountName};AccountKey={Secret}" };
+        }
+
+        [Test]
+        [TestCaseSource(nameof(ValidConnStrings))]
+        public void AccountNameAndNameForConnStringCtor(string connString)
+        {
+            var client = new TableServiceClient(connString, new TableClientOptions());
+
+            Assert.AreEqual(AccountName, client.AccountName);
+
+            var tableClient = client.GetTableClient("someTable");
+
+            Assert.AreEqual(AccountName, tableClient.AccountName);
         }
     }
 }

@@ -24,7 +24,7 @@ It's possible to get a specific subscription as follows:
 string subscriptionId = "your-subscription-id";
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.GetSubscriptions().Get(subscriptionId);
-Console.WriteLine("Got subscription: " + subscription.Data.DisplayName);
+Console.WriteLine($"Got subscription: {subscription.Data.DisplayName}");
 ```
 
 From here, it is possible to get the resource groups from the retrieved subscription:

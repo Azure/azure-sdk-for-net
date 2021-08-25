@@ -121,7 +121,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var resource = CreateTestResource();
 
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
@@ -144,7 +146,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 
             var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
 
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
@@ -166,7 +170,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
                 startTime: DateTime.UtcNow);
             var resource = CreateTestResource();
 
-            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
@@ -177,7 +183,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             Assert.Equal(activity.ParentSpanId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
         }
 
-        // TODO: GeneratePartAEnvelope_WithActivityParent
+        [Fact]
+        public void HttpMethodAndActivityNameIsUsedForHttpRequestOperationName()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            activity.DisplayName = "/getaction";
+
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal("GET /getaction", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
+
+        [Fact]
+        public void ActivityNameIsUsedByDefaultForRequestOperationName()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            activity.DisplayName = "displayname";
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal("displayname", telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()]);
+        }
 
         /// <summary>
         /// If SERVICE.NAME is not defined, it will fall-back to "unknown_service".

@@ -58,14 +58,14 @@ namespace Microsoft.Azure.Management.Security.Models
         /// 'Low', 'Moderate', 'High'</param>
         /// <param name="preview">True if this assessment is in preview release
         /// status</param>
-        public SecurityAssessmentMetadata(string displayName, string severity, string assessmentType, string id = default(string), string name = default(string), string type = default(string), string policyDefinitionId = default(string), string description = default(string), string remediationDescription = default(string), IList<string> category = default(IList<string>), string userImpact = default(string), string implementationEffort = default(string), IList<string> threats = default(IList<string>), bool? preview = default(bool?), SecurityAssessmentMetadataPartnerData partnerData = default(SecurityAssessmentMetadataPartnerData))
+        public SecurityAssessmentMetadata(string displayName, string severity, string assessmentType, string id = default(string), string name = default(string), string type = default(string), string policyDefinitionId = default(string), string description = default(string), string remediationDescription = default(string), IList<string> categories = default(IList<string>), string userImpact = default(string), string implementationEffort = default(string), IList<string> threats = default(IList<string>), bool? preview = default(bool?), SecurityAssessmentMetadataPartnerData partnerData = default(SecurityAssessmentMetadataPartnerData))
             : base(id, name, type)
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
             Description = description;
             RemediationDescription = remediationDescription;
-            Category = category;
+            Categories = categories;
             Severity = severity;
             UserImpact = userImpact;
             ImplementationEffort = implementationEffort;
@@ -109,8 +109,8 @@ namespace Microsoft.Azure.Management.Security.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.category")]
-        public IList<string> Category { get; set; }
+        [JsonProperty(PropertyName = "properties.categories")]
+        public IList<string> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the severity level of the assessment. Possible values
