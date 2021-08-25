@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             VerifyAccountProperties(account1, false);
             Assert.AreEqual(Kind.BlockBlobStorage, account1.Data.Kind);
             Assert.AreEqual(SkuName.PremiumLRS, account1.Data.Sku.Name);
-            //this storage account should onlu have endpoints on blob and dfs
+            //this storage account should only have endpoints on blob and dfs
             Assert.NotNull(account1.Data.PrimaryEndpoints.Blob);
             Assert.NotNull(account1.Data.PrimaryEndpoints.Dfs);
             Assert.IsNull(account1.Data.PrimaryEndpoints.File);
@@ -319,12 +319,115 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             VerifyAccountProperties(account1, false);
             Assert.AreEqual(Kind.FileStorage, account1.Data.Kind);
             Assert.AreEqual(SkuName.PremiumLRS, account1.Data.Sku.Name);
-            //this storage account should onlu have endpoints on blob and dfs
+            //this storage account should only have endpoints on file
             Assert.IsNull(account1.Data.PrimaryEndpoints.Blob);
             Assert.IsNull(account1.Data.PrimaryEndpoints.Dfs);
             Assert.NotNull(account1.Data.PrimaryEndpoints.File);
             Assert.IsNull(account1.Data.PrimaryEndpoints.Table);
             Assert.IsNull(account1.Data.PrimaryEndpoints.Queue);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task CreateStorageAccountWithEncrpytion()
+        {
+            //create storage account with encryption settings
+            string accountName = Recording.GenerateAssetName("storage");
+            resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
+            parameters.Encryption = new Encryption(KeySource.MicrosoftStorage)
+            {
+                Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } }
+            };
+            StorageAccount account= (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+            VerifyAccountProperties(account, true);
+
+            //verify encryption settings
+            Assert.NotNull(account.Data.Encryption);
+            Assert.NotNull(account.Data.Encryption.Services.Blob);
+            Assert.True(account.Data.Encryption.Services.Blob.Enabled);
+            Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledTime);
+            Assert.NotNull(account.Data.Encryption.Services.File);
+            Assert.NotNull(account.Data.Encryption.Services.File.Enabled);
+            Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledTime);
+            if (null != account.Data.Encryption.Services.Table)
+            {
+                if (account.Data.Encryption.Services.Table.Enabled.HasValue)
+                {
+                    Assert.False(account.Data.Encryption.Services.Table.LastEnabledTime.HasValue);
+                }
+            }
+
+            if (null != account.Data.Encryption.Services.Queue)
+            {
+                if (account.Data.Encryption.Services.Queue.Enabled.HasValue)
+                {
+                    Assert.False(account.Data.Encryption.Services.Queue.LastEnabledTime.HasValue);
+                }
+            }
+        }
+        [Test]
+        [RecordedTest]
+        public async Task CreateStorageAccountWithAccessTier()
+        {
+            //create storage account with accesstier hot
+            string accountName1 = Recording.GenerateAssetName("storage");
+            resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(kind:Kind.BlobStorage);
+            parameters.AccessTier = AccessTier.Hot;
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName1, parameters)).Value;
+
+            //validate
+            VerifyAccountProperties(account, false);
+            Assert.AreEqual(AccessTier.Hot, account.Data.AccessTier);
+            Assert.AreEqual(Kind.BlobStorage, account.Data.Kind);
+
+            //create storage account with accesstier cool
+            string accountName2 = Recording.GenerateAssetName("storage");
+            resourceGroup = await CreateResourceGroupAsync();
+            parameters.AccessTier = AccessTier.Cool;
+            account = (await storageAccountContainer.CreateOrUpdateAsync(accountName2, parameters)).Value;
+
+            //validate
+            VerifyAccountProperties(account, false);
+            Assert.AreEqual(AccessTier.Cool, account.Data.AccessTier);
+            Assert.AreEqual(Kind.BlobStorage, account.Data.Kind);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task GetStorageAccountLastSyncTime()
+        {
+            //create storage account
+            string accountName1 = Recording.GenerateAssetName("storage");
+            resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            Sku sku = new Sku(SkuName.StandardRagrs);
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters(sku:sku,kind: Kind.StorageV2);
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName1, parameters)).Value;
+            Assert.AreEqual(SkuName.StandardRagrs, account.Data.Sku.Name);
+            Assert.Null(account.Data.GeoReplicationStats);
+
+            //expand
+            account = await account.GetAsync( StorageAccountExpand.GeoReplicationStats);
+            Assert.NotNull(account.Data.GeoReplicationStats);
+            Assert.NotNull(account.Data.GeoReplicationStats.Status);
+            Assert.NotNull(account.Data.GeoReplicationStats.LastSyncTime);
+            Assert.NotNull(account.Data.GeoReplicationStats.CanFailover);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountRevokeUserDelegationKeys()
+        {
+            //create storage account
+            string accountName = Recording.GenerateAssetName("storage");
+            resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+
+            //revoke user delegation keys
+            await account.RevokeUserDelegationKeysAsync();
         }
     }
 }
