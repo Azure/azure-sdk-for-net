@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
@@ -10,26 +10,20 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    public class SnapshotContainerTests : ComputeTestBase
+    public class SnapshotOperationsTests : ComputeTestBase
     {
-        public SnapshotContainerTests(bool isAsync)
-    : base(isAsync, RecordedTestMode.Record)
+        public SnapshotOperationsTests(bool isAsync)
+            : base(isAsync, RecordedTestMode.Record)
         {
-        }
-
-        private async Task<SnapshotContainer> GetSnapshotContainerAsync()
-        {
-            var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetSnapshots();
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task Delete()
         {
-            var container = await GetSnapshotContainerAsync();
-            var ssName = Recording.GenerateAssetName("testSnapshot-");
             var _resourceGroup = await CreateResourceGroupAsync();
+            var container = _resourceGroup.GetSnapshots();
+            var ssName = Recording.GenerateAssetName("testSnapshot-");
             var diskContainer = _resourceGroup.GetDisks();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
@@ -37,19 +31,19 @@ namespace Azure.ResourceManager.Compute.Tests
             Disk _disk = Iro_disk.Value;
             var diskID = _disk.Id;
             var createoption = new DiskCreateOption("copy");
-            var input =  ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
+            var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
             var lro = await container.CreateOrUpdateAsync(ssName, input);
             Snapshot ss = lro.Value;
-            Assert.AreEqual(ssName, ss.Data.Name);
+            await ss.DeleteAsync();
         }
 
         [TestCase]
         [RecordedTest]
         public async Task Get()
         {
-            var container = await GetSnapshotContainerAsync();
-            var ssName = Recording.GenerateAssetName("testSnapshot-");
             var _resourceGroup = await CreateResourceGroupAsync();
+            var container = _resourceGroup.GetSnapshots();
+            var ssName = Recording.GenerateAssetName("testSnapshot-");
             var diskContainer = _resourceGroup.GetDisks();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
@@ -60,17 +54,18 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
             var lro = await container.CreateOrUpdateAsync(ssName, input);
             Snapshot ss1 = lro.Value;
-            Snapshot ss2 = await container.GetAsync(ssName);
+            Snapshot ss2 = await ss1.GetAsync();
+
             ResourceDataHelper.AssertSnapshot(ss1.Data, ss2.Data);
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task CheckIfExistsAsync()
+        public async Task Update()
         {
-            var container = await GetSnapshotContainerAsync();
-            var ssName = Recording.GenerateAssetName("testSnapshot-");
             var _resourceGroup = await CreateResourceGroupAsync();
+            var container = _resourceGroup.GetSnapshots();
+            var ssName = Recording.GenerateAssetName("testSnapshot-");
             var diskContainer = _resourceGroup.GetDisks();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
@@ -81,34 +76,16 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
             var lro = await container.CreateOrUpdateAsync(ssName, input);
             Snapshot ss = lro.Value;
-            Assert.IsTrue(await container.CheckIfExistsAsync(ssName));
-            Assert.IsFalse(await container.CheckIfExistsAsync(ssName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            var container = await GetSnapshotContainerAsync();
-            var _resourceGroup = await CreateResourceGroupAsync();
-            var diskContainer = _resourceGroup.GetDisks();
-            var diskName = Recording.GenerateAssetName("testDisk-");
-            var diskInput = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
-            var Iro_disk = await diskContainer.CreateOrUpdateAsync(diskName, diskInput);
-            Disk _disk = Iro_disk.Value;
-            var diskID = _disk.Id;
-            var createoption = new DiskCreateOption("copy");
-            var input = ResourceDataHelper.GetBasicSnapshotData(DefaultLocation, createoption, diskID);
-            _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testSnapshot-"), input);
-            _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testSnapshot-"), input);
-            int count = 0;
-            await foreach (var snapshot in container.GetAllAsync())
+            var newDiskSize = 20;
+            var snapupdate = new SnapshotUpdate()
             {
-                count++;
-            }
-            Assert.GreaterOrEqual(count, 2);
+                DiskSizeGB = newDiskSize
+            };
+            var lro_update = await ss.UpdateAsync(snapupdate);
+            Snapshot updatedss = lro_update.Value;
+
+            Assert.AreEqual(newDiskSize, updatedss.Data.DiskSizeGB);
         }
     }
 }

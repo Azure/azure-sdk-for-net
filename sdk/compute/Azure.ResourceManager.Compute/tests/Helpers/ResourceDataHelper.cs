@@ -419,15 +419,13 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(ss1.Name, ss2.Name);
         }
 
-        public static SnapshotData GetBasicSnapshotData(Location location , string createOption)
+        public static SnapshotData GetBasicSnapshotData(Location location, DiskCreateOption createOption, string diskID)
         {
             return new SnapshotData(location)
             {
-                CreationData = new CreationData()
+                CreationData = new CreationData(createOption)
                 {
-                    CreateOption = new DiskCreateOption(createOption)
-                    {
-                    }
+                    SourceUri = diskID,
                 }
             };
         }
