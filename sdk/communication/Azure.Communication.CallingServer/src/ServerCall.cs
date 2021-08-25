@@ -505,7 +505,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="participantId">The participant id. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
+        /// <returns>The <see cref="CallParticipant"/>.</returns>
         public virtual async Task<Response<CallParticipant>> GetParticipantAsync(string participantId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(GetParticipantAsync)}");
@@ -531,10 +531,10 @@ namespace Azure.Communication.CallingServer
         /// <param name="participantId">The participant id. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
+        /// <returns>The <see cref="CallParticipant"/>.</returns>
         public virtual Response<CallParticipant> GetParticipant(string participantId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(GetParticipantAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ServerCall)}.{nameof(GetParticipant)}");
             scope.Start();
             try
             {
@@ -544,6 +544,57 @@ namespace Azure.Communication.CallingServer
                                         cancellationToken: cancellationToken);
 
                 return Response.FromValue(new CallParticipant(callParticipantInternal.Value), callParticipantInternal.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Get participant from the call using <see cref="CommunicationIdentifier"/>. </summary>
+        /// <param name="participant"> The identifier of the participant. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
+        public virtual async Task<Response<IEnumerable<CallParticipant>>> GetParticipantByIdAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipantByIdAsync)}");
+            scope.Start();
+            try
+            {
+                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = await RestClient.GetParticipantByIdAsync(
+                                        serverCallId: ServerCallId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        cancellationToken: cancellationToken
+                                        ).ConfigureAwait(false);
+
+                return Response.FromValue(callParticipantsInternal.Value.Select(c => new CallParticipant(c)), callParticipantsInternal.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Get participant from the call using <see cref="CommunicationIdentifier"/>. </summary>
+        /// <param name="participant"> The identifier of the participant. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
+        public virtual Response<IEnumerable<CallParticipant>> GetParticipantById(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipantById)}");
+            scope.Start();
+            try
+            {
+                Response<IReadOnlyList<CallParticipantInternal>> callParticipantsInternal = RestClient.GetParticipantById(
+                                        serverCallId: ServerCallId,
+                                        identifier: CommunicationIdentifierSerializer.Serialize(participant),
+                                        cancellationToken: cancellationToken);
+
+                return Response.FromValue(callParticipantsInternal.Value.Select(c => new CallParticipant(c)), callParticipantsInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -750,7 +801,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Play audio to a participant </summary>
+        /// <summary> Play audio to a participant. </summary>
         /// <param name="participantId">The participant id.</param>
         /// <param name="audioFileUri"> The uri of the audio file. </param>
         /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>
@@ -780,7 +831,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Play audio to a participant </summary>
+        /// <summary> Play audio to a participant. </summary>
         /// <param name="participantId">The participant id.</param>
         /// <param name="audioFileUri"> The uri of the audio file. </param>
         /// <param name="audioFileId">Tne id for the media in the AudioFileUri, using which we cache the media resource. </param>

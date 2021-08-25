@@ -10,13 +10,13 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The remove participant by identifier request. </summary>
-    internal partial class RemoveParticipantByIdRequest
+    /// <summary> The get participant by identifier request. </summary>
+    internal partial class GetParticipantByIdRequest
     {
-        /// <summary> Initializes a new instance of RemoveParticipantByIdRequest. </summary>
-        /// <param name="identifier"> The identifier of the participant to be removed from the call. </param>
+        /// <summary> Initializes a new instance of GetParticipantByIdRequest. </summary>
+        /// <param name="identifier"> The identifier of the participant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
-        public RemoveParticipantByIdRequest(CommunicationIdentifierModel identifier)
+        public GetParticipantByIdRequest(CommunicationIdentifierModel identifier)
         {
             if (identifier == null)
             {
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer
             Identifier = identifier;
         }
 
-        /// <summary> The identifier of the participant to be removed from the call. </summary>
+        /// <summary> The identifier of the participant. </summary>
         public CommunicationIdentifierModel Identifier { get; }
     }
 }
