@@ -55,17 +55,23 @@ stages:
                     Write-Host "Create new console"
                     dotnet new console
                     Write-Host "Installing .nupkg into package source"
-                    #$nupkg = Get-ChildItem -Path "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}/*.nupkg" -Exclude "*.symbols.nupkg"
-                    dotnet nuget add source "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}/"
+                    $localFeed = "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}/"
+                    dotnet nuget add source $localFeed
+
                     Write-Host "Adding package dependency for ${{artifact.name}}"
-                    dotnet add package ${{artifact.name}} --prerelease
-                    # Check exit code, exit if needed
+                    $version = (Get-ChildItem "$($localFeed)*.nupkg" -Exclude "*.symbols.nupkg" -Name).replace(".nupkg","").replace(${{artifact.name}},"")
+                    dotnet add package ${{artifact.name}} --version $version --no-restore 
+                    if ($LASTEXITCODE) {
+                      exit $LASTEXITCODE
+                    }
+
                     Write-Host "NuGet Cache list:"
                     nuget locals all -list
                     Write-Host "Clearing NuGet package cache"
                     dotnet nuget locals all --clear
+
                     Write-Host "Restoring dependencies"
-                    dotnet restore
+                    dotnet restore -S $localFeed -S https://api.nuget.org/v3/index.json --no-cache
                   displayName: Blank Slate Installation
                   workingDirectory: $(System.DefaultWorkingDirectory)/InstallationCheck
           - deployment: TagRepository
