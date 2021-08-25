@@ -2,21 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Resources.Tests;
+using Azure.ResourceManager.Resources.Tests.Helpers;
 using NUnit.Framework;
 
-namespace ResourceGroups.Tests
+namespace Azure.ResourceManager.Resources.Tests.ScenarioTests
 {
     public class LiveDeploymentTests : ResourceOperationsTestsBase
     {
@@ -51,8 +48,8 @@ namespace ResourceGroups.Tests
         [Test]
         public async Task CreateDeploymentWithStringTemplateAndParameters()
         {
-            var templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ScenarioTests", "simple-storage-account.json"));
-            var parameterString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ScenarioTests", "simple-storage-account-parameters.json"));
+            var templateString = TemplateLoader.LoadTemplateContents("simple-storage-account");
+            var parameterString = TemplateLoader.LoadTemplateContents("simple-storage-account-parameters");
 
             JsonElement jsonParameter = JsonSerializer.Deserialize<JsonElement>(parameterString);
             if (!jsonParameter.TryGetProperty("parameters", out JsonElement parameter))
@@ -212,7 +209,7 @@ namespace ResourceGroups.Tests
             string groupName = "SDK-test";
             string deploymentName = Recording.GenerateAssetName("csmd");
             string resourceName = Recording.GenerateAssetName("csmr");
-            var templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ScenarioTests", "subscription_level_template.json"));
+            var templateString = TemplateLoader.LoadTemplateContents("subscription_level_template");
 
             var parameters = new Deployment
             (
@@ -252,7 +249,7 @@ namespace ResourceGroups.Tests
         {
             string groupId = "tag-mg1";
             string deploymentName = Recording.GenerateAssetName("csharpsdktest");
-            var templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ScenarioTests", "management_group_level_template.json"));
+            var templateString = TemplateLoader.LoadTemplateContents("management_group_level_template");
 
             var parameters = new ScopedDeployment
             (
@@ -290,7 +287,7 @@ namespace ResourceGroups.Tests
         public async Task TenantLevelDeployment()
         {
             string deploymentName = Recording.GenerateAssetName("csharpsdktest");
-            var templateString  = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ScenarioTests", "tenant_level_template.json"));
+            var templateString = TemplateLoader.LoadTemplateContents("tenant_level_template");
 
             var parameters = new ScopedDeployment
             (
@@ -331,7 +328,7 @@ namespace ResourceGroups.Tests
         public async Task DeploymentWithScope_AtTenant()
         {
             string deploymentName = Recording.GenerateAssetName("csharpsdktest");
-            var templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ScenarioTests", "tenant_level_template.json"));
+            var templateString = TemplateLoader.LoadTemplateContents("tenant_level_template");
 
             var parameters = new Deployment
             (
@@ -373,8 +370,7 @@ namespace ResourceGroups.Tests
             string groupId = "tag-mg1";
             string deploymentName = Recording.GenerateAssetName("csharpsdktest");
             string accountName = Recording.GenerateAssetName("tagsa");
-            var templateString =
-File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ScenarioTests", "management_group_level_template.json"));
+            var templateString = TemplateLoader.LoadTemplateContents("management_group_level_template");
 
             var parameters = new Deployment
             (
@@ -417,7 +413,7 @@ File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembl
         {
             string groupName = "SDK-test";
             string deploymentName = Recording.GenerateAssetName("csmd");
-            var templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ScenarioTests", "subscription_level_template.json"));
+            var templateString = TemplateLoader.LoadTemplateContents("subscription_level_template");
 
             var parameters = new Deployment
             (
@@ -463,7 +459,7 @@ File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembl
             string groupName = "SDK-test-01";
             string deploymentName = Recording.GenerateAssetName("csmd");
             string accountName = Recording.GenerateAssetName("sdktestaccount");
-            var templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ScenarioTests", "simple-storage-account.json"));
+            var templateString = TemplateLoader.LoadTemplateContents("simple-storage-account");
 
             var parameters = new Deployment
             (

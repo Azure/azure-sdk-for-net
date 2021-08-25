@@ -12,7 +12,7 @@
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="ScenarioTests\*.json">
+    <None Update="ScenarioTests\DeploymentTemplates\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

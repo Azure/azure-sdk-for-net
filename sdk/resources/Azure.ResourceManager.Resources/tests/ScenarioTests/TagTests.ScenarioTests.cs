@@ -2,17 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Resources.Tests;
 using NUnit.Framework;
 
-namespace ResourceGroups.Tests
+namespace Azure.ResourceManager.Resources.Tests.ScenarioTests
 {
     public class LiveTagsTests : ResourceOperationsTestsBase
     {
@@ -45,7 +42,7 @@ namespace ResourceGroups.Tests
             var createResult = (await TagsOperations.CreateOrUpdateAsync(tagName)).Value;
             Assert.AreEqual(tagName, createResult.TagName);
 
-            var listResult =await TagsOperations.ListAsync().ToEnumerableAsync();
+            var listResult = await TagsOperations.ListAsync().ToEnumerableAsync();
             Assert.True(listResult.Count() > 0);
 
             await TagsOperations.DeleteAsync(tagName);
@@ -62,7 +59,7 @@ namespace ResourceGroups.Tests
             Assert.AreEqual(tagName, createNameResult.Value.TagName);
             Assert.AreEqual(tagValue, createValueResult.Value.TagValueValue);
 
-            var listResult =await TagsOperations.ListAsync().ToEnumerableAsync();
+            var listResult = await TagsOperations.ListAsync().ToEnumerableAsync();
             Assert.True(listResult.Count() > 0);
 
             await TagsOperations.DeleteValueAsync(tagName, tagValue);
@@ -101,7 +98,7 @@ namespace ResourceGroups.Tests
             resourceScope = subscriptionScope + resourceScope;
 
             // test creating tags for resources
-            var putResponse =(await TagsOperations.CreateOrUpdateAtScopeAsync(resourceScope, tagsResource)).Value;
+            var putResponse = (await TagsOperations.CreateOrUpdateAtScopeAsync(resourceScope, tagsResource)).Value;
             Assert.AreEqual(putResponse.Properties.TagsValue.Count(), tagsResource.Properties.TagsValue.Count());
             Assert.IsTrue(CompareTagsResource(tagsResource, putResponse));
         }
@@ -110,7 +107,7 @@ namespace ResourceGroups.Tests
         /// Put request for Tags Operation within tracked resources
         /// </summary>
         [Test]
-        public void  CreateTagsWithTrackedResourcesTest()
+        public void CreateTagsWithTrackedResourcesTest()
         {
             // test tags for tracked resources
             string resourceScope = "/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
@@ -146,7 +143,7 @@ namespace ResourceGroups.Tests
             );
             await TagsOperations.CreateOrUpdateAtScopeAsync(resourceScope, tagsResource);
 
-            SleepInTest(3*1000);
+            SleepInTest(3 * 1000);
 
             var putTags = new Tags()
             {
@@ -158,7 +155,7 @@ namespace ResourceGroups.Tests
             // test for Merge operation
             {
                 var tagPatchRequest = new TagsPatchResource() { Operation = TagsPatchResourceOperation.Merge, Properties = putTags };
-                var patchResponse =(await TagsOperations.UpdateAtScopeAsync(resourceScope, tagPatchRequest)).Value;
+                var patchResponse = (await TagsOperations.UpdateAtScopeAsync(resourceScope, tagPatchRequest)).Value;
 
                 var expectedResponse = new TagsResource(new Tags()
                 {
@@ -170,7 +167,7 @@ namespace ResourceGroups.Tests
                 }
                 );
                 Assert.AreEqual(patchResponse.Properties.TagsValue.Count(), expectedResponse.Properties.TagsValue.Count());
-                Assert.IsTrue(this.CompareTagsResource(expectedResponse, patchResponse));
+                Assert.IsTrue(CompareTagsResource(expectedResponse, patchResponse));
             }
             // test for Replace operation
             {
@@ -179,7 +176,7 @@ namespace ResourceGroups.Tests
 
                 var expectedResponse = new TagsResource(putTags);
                 Assert.AreEqual(patchResponse.Properties.TagsValue.Count(), expectedResponse.Properties.TagsValue.Count());
-                Assert.IsTrue(this.CompareTagsResource(expectedResponse, patchResponse));
+                Assert.IsTrue(CompareTagsResource(expectedResponse, patchResponse));
             }
             // test for Delete operation
             {
@@ -228,12 +225,12 @@ namespace ResourceGroups.Tests
             });
             await TagsOperations.CreateOrUpdateAtScopeAsync(resourceScope, tagsResource);
             if (Mode == RecordedTestMode.Record)
-                Thread.Sleep(3*1000);
+                Thread.Sleep(3 * 1000);
 
             // get request should return created TagsResource
             var getResponse = (await TagsOperations.GetAtScopeAsync(resourceScope)).Value;
             Assert.AreEqual(getResponse.Properties.TagsValue.Count(), tagsResource.Properties.TagsValue.Count());
-            Assert.IsTrue(this.CompareTagsResource(tagsResource, getResponse));
+            Assert.IsTrue(CompareTagsResource(tagsResource, getResponse));
         }
 
         /// <summary>
@@ -242,9 +239,9 @@ namespace ResourceGroups.Tests
         [Test]
         public void GetTagsWithTrackedResourcesTest()
         {
-             // test tags for tracked resources
-             string resourceScope = "/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
-             GetTagsTest(resourceScope: resourceScope);
+            // test tags for tracked resources
+            string resourceScope = "/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
+            GetTagsTest(resourceScope: resourceScope);
         }
 
         /// <summary>
@@ -275,15 +272,16 @@ namespace ResourceGroups.Tests
             });
             await TagsOperations.CreateOrUpdateAtScopeAsync(resourceScope, tagsResource);
             if (Mode == RecordedTestMode.Record)
-                Thread.Sleep(3*1000);
+                Thread.Sleep(3 * 1000);
 
             // try to delete existing tags
             await TagsOperations.DeleteAtScopeAsync(resourceScope);
             if (Mode == RecordedTestMode.Record)
-                Thread.Sleep(15*1000);
+                Thread.Sleep(15 * 1000);
 
             // after deletion, Get request should get 0 tags back
-            var result = (await TagsOperations.GetAtScopeAsync(resourceScope)).Value; ;
+            var result = (await TagsOperations.GetAtScopeAsync(resourceScope)).Value;
+            ;
             return result;
         }
 
@@ -316,11 +314,11 @@ namespace ResourceGroups.Tests
         /// <returns> boolean to show whether two objects are the same</returns>
         private bool CompareTagsResource(TagsResource tag1, TagsResource tag2)
         {
-            if ((tag1 == null && tag2 == null) || (tag1.Properties.TagsValue.Count == 0 && tag2.Properties.TagsValue.Count == 0))
+            if (tag1 == null && tag2 == null || tag1.Properties.TagsValue.Count == 0 && tag2.Properties.TagsValue.Count == 0)
             {
                 return true;
             }
-            if ((tag1 == null || tag2 == null) || (tag1.Properties.TagsValue.Count == 0 || tag2.Properties.TagsValue.Count == 0))
+            if (tag1 == null || tag2 == null || tag1.Properties.TagsValue.Count == 0 || tag2.Properties.TagsValue.Count == 0)
             {
                 return false;
             }

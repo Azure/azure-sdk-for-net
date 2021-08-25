@@ -4,11 +4,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Tests;
 using NUnit.Framework;
 
-namespace ResourceGroups.Tests
+namespace Azure.ResourceManager.Resources.Tests.ScenarioTests
 {
     public class LiveSubscriptionTests : ResourceOperationsTestsBase
     {

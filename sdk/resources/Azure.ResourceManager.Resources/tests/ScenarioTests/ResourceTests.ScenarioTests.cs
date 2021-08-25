@@ -7,12 +7,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Resources.Tests;
 using NUnit.Framework;
 
-namespace ResourceGroups.Tests
+namespace Azure.ResourceManager.Resources.Tests.ScenarioTests
 {
     public class LiveResourceTests : ResourceOperationsTestsBase
     {
@@ -102,7 +100,7 @@ namespace ResourceGroups.Tests
             string resourceName = Recording.GenerateAssetName("csmr");
             string location = GetWebsiteLocation();
 
-            await ResourceGroupsOperations.CreateOrUpdateAsync(groupName, new ResourceGroup(this.ResourceGroupLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(groupName, new ResourceGroup(ResourceGroupLocation));
             var rawCreateOrUpdateResult = await ResourcesOperations.StartCreateOrUpdateAsync(groupName, "Microsoft.Web", "", "serverFarms", resourceName, WebResourceProviderVersion,
                 new GenericResource()
                 {
@@ -151,7 +149,7 @@ namespace ResourceGroups.Tests
             string location = GetWebsiteLocation();
             string filter = "tagName eq '" + tagName + "'";
 
-            await ResourceGroupsOperations.CreateOrUpdateAsync(groupName, new ResourceGroup(this.ResourceGroupLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(groupName, new ResourceGroup(ResourceGroupLocation));
             await ResourcesOperations.StartCreateOrUpdateAsync(
                 groupName,
                 "Microsoft.Web",
@@ -219,7 +217,7 @@ namespace ResourceGroups.Tests
             string location = GetWebsiteLocation();
             string filter = "tagName eq '" + tagName + "' and tagValue eq '" + tagValue + "'";
 
-            await ResourceGroupsOperations.CreateOrUpdateAsync(groupName, new ResourceGroup(this.ResourceGroupLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(groupName, new ResourceGroup(ResourceGroupLocation));
             await ResourcesOperations.StartCreateOrUpdateAsync(
                 groupName,
                 "Microsoft.Web",
@@ -284,7 +282,7 @@ namespace ResourceGroups.Tests
             string groupName = Recording.GenerateAssetName("csmrg");
             string resourceName = Recording.GenerateAssetName("csmr");
 
-            string location = this.GetWebsiteLocation();
+            string location = GetWebsiteLocation();
             await ResourceGroupsOperations.CreateOrUpdateAsync(groupName, new ResourceGroup(location));
             var createOrUpdateResult = await ResourcesOperations.StartCreateOrUpdateAsync(
                 groupName,
@@ -324,7 +322,7 @@ namespace ResourceGroups.Tests
             string groupName = Recording.GenerateAssetName("csmrg");
             string resourceName = Recording.GenerateAssetName("csmr");
 
-            string location = this.GetWebsiteLocation();
+            string location = GetWebsiteLocation();
 
             string resourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/serverFarms/{2}", subscriptionId, groupName, resourceName);
             await ResourceGroupsOperations.CreateOrUpdateAsync(groupName, new ResourceGroup(location));
@@ -355,7 +353,7 @@ namespace ResourceGroups.Tests
         {
             string groupName = Recording.GenerateAssetName("csmrg");
             string resourceName = Recording.GenerateAssetName("csmr");
-            string location = this.GetWebsiteLocation();
+            string location = GetWebsiteLocation();
             await ResourceGroupsOperations.CreateOrUpdateAsync(groupName, new ResourceGroup(location));
             var createOrUpdateResult = await ResourcesOperations.StartCreateOrUpdateAsync(
                 groupName,

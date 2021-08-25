@@ -1,23 +1,34 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Resources.Tests;
+using Azure.ResourceManager.Resources.Tests.Helpers;
 using NUnit.Framework;
 
-namespace ResourceGroups.Tests
+namespace Azure.ResourceManager.Resources.Tests.ScenarioTests
 {
     public class LiveDeploymentWhatIfTests : ResourceOperationsTestsBase
     {
+        private static readonly ResourceGroup ResourceGroup = new ResourceGroup("westus");
+
+        private static readonly string BlankTemplate = TemplateLoader.LoadTemplateContents("blank_template");
+
+        private static readonly string ResourceGroupTemplate = TemplateLoader.LoadTemplateContents("simple-storage-account");
+
+        private static readonly string ResourceGroupTemplateGRS = TemplateLoader.LoadTemplateContents("simple-storage-account-GRS");
+
+        private static readonly string ResourceGroupTemplateParameters = TemplateLoader.LoadTemplateContents("simple-storage-account-parameters");
+
+        private static readonly string SubscriptionTemplate = TemplateLoader.LoadTemplateContents("subscription_level_template");
+
+        private static readonly string SubscriptionTemplateWestEurope = TemplateLoader.LoadTemplateContents("subscription_level_template_westeurope");
+
         public LiveDeploymentWhatIfTests(bool isAsync)
             : base(isAsync)
         {
@@ -39,14 +50,6 @@ namespace ResourceGroups.Tests
         {
             await CleanupResourceGroupsAsync();
         }
-
-        private static readonly ResourceGroup ResourceGroup = new ResourceGroup("westus");
-        private static readonly string BlankTemplate = LoadTemplateContent("blank_template.json");
-        private static readonly string ResourceGroupTemplate = LoadTemplateContent("simple-storage-account.json");
-        private static readonly string ResourceGroupTemplateGRS = LoadTemplateContent("simple-storage-account-GRS.json");
-        private static readonly string ResourceGroupTemplateParameters = LoadTemplateContent("simple-storage-account-parameters.json");
-        private static readonly string SubscriptionTemplate = LoadTemplateContent("subscription_level_template.json");
-        private static readonly string SubscriptionTemplateWestEurope = LoadTemplateContent("subscription_level_template_westeurope.json");
 
         [Test]
         public async Task WhatIf_BlankTemplate_ReturnsNoChange()
@@ -429,9 +432,6 @@ namespace ResourceGroups.Tests
             Assert.AreEqual("northeurope", policyRuleChange.Before);
             Assert.AreEqual("westeurope", policyRuleChange.After);
         }
-
-        private static string LoadTemplateContent(string filePath)
-            => File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ScenarioTests", filePath));
 
         private string NewResourceGroupName() => Recording.GenerateAssetName("csmd");
 

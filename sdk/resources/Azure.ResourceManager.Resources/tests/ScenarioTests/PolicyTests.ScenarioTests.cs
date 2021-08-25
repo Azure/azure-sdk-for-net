@@ -8,12 +8,10 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Resources.Tests;
 using NUnit.Framework;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Policy.Tests
+namespace Azure.ResourceManager.Resources.Tests.ScenarioTests
 {
     public class LivePolicyTests : ResourceOperationsTestsBase
     {
@@ -1064,7 +1062,7 @@ namespace Policy.Tests
         };
 
         // create a resource in the given resource group
-        private async Task<Resource> CreateResource(ResourceGroup resourceGroup, string resourceName)
+        private async Task<Models.Resource> CreateResource(ResourceGroup resourceGroup, string resourceName)
         {
             var result = await ResourcesOperations.StartCreateOrUpdateAsync(
                 resourceGroup.Name,
@@ -1488,7 +1486,7 @@ namespace Policy.Tests
         private string ResourceGroupScope(ResourceGroup resourceGroup) => $"{resourceGroup.Id}";
 
         // get resource scope of the given client and resource
-        private string ResourceScope(Resource resource) => $"{resource.Id}";
+        private string ResourceScope(Models.Resource resource) => $"{resource.Id}";
 
         // get management group scope of the given client and management group
         //private string ManagementGroupScope(ManagementGroup managementGroup) => $"{managementGroup.Id}";

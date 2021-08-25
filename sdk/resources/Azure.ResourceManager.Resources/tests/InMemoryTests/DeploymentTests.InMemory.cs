@@ -9,16 +9,13 @@ using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Resources.Tests;
 using NUnit.Framework;
 
-namespace ResourceGroups.Tests
+namespace Azure.ResourceManager.Resources.Tests.InMemoryTests
 {
     public class InMemoryDeploymentTests : ResourceOperationsTestsBase
     {
@@ -151,7 +148,7 @@ namespace ResourceGroups.Tests
         public async Task DeploymentTestsTemplateAsJsonString()
         {
             List<string> dividedCases = new List<string> {
-            (@"{
+            @"{
                 '$schema': 'http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#',
                 'contentVersion': '1.0.0.0',
                 'parameters': {
@@ -159,17 +156,17 @@ namespace ResourceGroups.Tests
 		                'value': 'tianotest04'
 	                }
                 }
-            }").Replace("'", "\""),
-            (@"{
+            }".Replace("'", "\""),
+            @"{
                 'storageAccountName': {
 		            'value': 'tianotest04'
 	            }
-            }").Replace("'", "\"")
+            }".Replace("'", "\"")
             };
             foreach (var parameterString in dividedCases)
             {
                 var mockResponse = new MockResponse((int)HttpStatusCode.Created);
-                var responseBody = (@"{
+                var responseBody = @"{
                     'id': 'foo',
                     'name': 'test-release-3',
                     'properties': {
@@ -185,10 +182,10 @@ namespace ResourceGroups.Tests
 		                'duration': 'PT0.5966357S',
 		                'correlationId': 'c0d728d5-5b97-41b9-b79a-abcd9eb5fe4a'
 	                }
-                }").Replace("'", "\"");
+                }".Replace("'", "\"");
                 mockResponse.SetContent(responseBody);
 
-                var templateString = (@"{
+                var templateString = @"{
                     '$schema': 'http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#',
                     'contentVersion': '1.0.0.0',
                     'parameters': {
@@ -199,7 +196,7 @@ namespace ResourceGroups.Tests
                     'resources': [
                     ],
                     'outputs': {  }
-                }").Replace("'", "\"");
+                }".Replace("'", "\"");
 
                 JsonElement jsonParameter = JsonSerializer.Deserialize<JsonElement>(parameterString);
                 if (!jsonParameter.TryGetProperty("parameters", out JsonElement parameter))
@@ -250,7 +247,7 @@ namespace ResourceGroups.Tests
         public async Task ListDeploymentOperationsReturnsMultipleObjects()
         {
             var mockResponse = new MockResponse((int)HttpStatusCode.OK);
-            var content = (@"{
+            var content = @"{
                     'value': [
                           {
                         'subscriptionId':'mysubid',
@@ -271,7 +268,7 @@ namespace ResourceGroups.Tests
                           }
                        }
                     ]}
-            ").Replace("'","\"");
+            ".Replace("'", "\"");
             mockResponse.SetContent(content);
 
             var mockTransport = new MockTransport(mockResponse);
@@ -538,7 +535,7 @@ namespace ResourceGroups.Tests
                     {
                         ContentVersion = "1.0.0.0",
                     },
-                    });
+                });
 
             var mockTransport = new MockTransport(mockResponse);
             var client = GetResourceManagementClient(mockTransport);
@@ -576,7 +573,7 @@ namespace ResourceGroups.Tests
                           } 
                         ]
                       }
-                    }".Replace("'","\"");
+                    }".Replace("'", "\"");
             var header = new HttpHeader("Content-Type", "application/json");
             mockResponse.AddHeader(header);
             mockResponse.SetContent(content);

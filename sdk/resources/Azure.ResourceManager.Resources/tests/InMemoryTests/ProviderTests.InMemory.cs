@@ -10,11 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Tests;
 using NUnit.Framework;
 
-namespace ResourceGroups.Tests
+namespace Azure.ResourceManager.Resources.Tests.InMemoryTests
 {
     public class InMemoryProviderTests : ResourceOperationsTestsBase
     {

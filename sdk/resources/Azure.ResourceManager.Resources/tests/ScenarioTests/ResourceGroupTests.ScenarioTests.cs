@@ -2,16 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Resources.Tests;
 using NUnit.Framework;
 
-namespace ResourceGroups.Tests
+namespace Azure.ResourceManager.Resources.Tests.ScenarioTests
 {
     public class LiveResourceGroupTests : ResourceOperationsTestsBase
     {
@@ -78,7 +75,8 @@ namespace ResourceGroups.Tests
         [Test]
         public async Task CheckExistenceReturnsCorrectValue()
         {
-            string groupName = Recording.GenerateAssetName("csmrg");;
+            string groupName = Recording.GenerateAssetName("csmrg");
+            ;
 
             var checkExistenceFirst = await ResourceGroupsOperations.CheckExistenceAsync(groupName);
             Assert.AreEqual(false, checkExistenceFirst.Value);
