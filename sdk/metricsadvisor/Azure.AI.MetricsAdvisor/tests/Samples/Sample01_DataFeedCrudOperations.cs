@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -25,52 +24,64 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
+            #region Snippet:CreateDataFeedAsync
+#if SNIPPET
+            string sqlServerConnectionString = "<connectionString>";
+            string sqlServerQuery = "<query>";
+#else
             string sqlServerConnectionString = SqlServerConnectionString;
             string sqlServerQuery = SqlServerQuery;
+#endif
 
-            #region Snippet:CreateDataFeedAsync
-            //@@ string sqlServerConnectionString = "<connectionString>";
-            //@@ string sqlServerQuery = "<query>";
+            var dataFeed = new DataFeed();
 
-            var dataFeedName = "Sample data feed";
-            var dataFeedSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
-            var dataFeedGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
+#if SNIPPET
+            dataFeed.Name = "<dataFeedName>";
+#else
+            dataFeed.Name = GetUniqueName();
+#endif
+            dataFeed.DataSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
+            dataFeed.Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
-            var dataFeedMetrics = new List<DataFeedMetric>()
+            dataFeed.Schema = new DataFeedSchema();
+            dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("cost"));
+            dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("revenue"));
+            dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("category"));
+            dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("city"));
+
+            dataFeed.IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.Parse("2020-01-01T00:00:00Z"));
+
+            Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeed);
+
+            DataFeed createdDataFeed = response.Value;
+
+            Console.WriteLine($"Data feed ID: {createdDataFeed.Id}");
+            Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
+            Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedOn.Value}");
+
+            Console.WriteLine($"Data feed administrators:");
+            foreach (string admin in createdDataFeed.Administrators)
             {
-                new DataFeedMetric("cost"),
-                new DataFeedMetric("revenue")
-            };
-            var dataFeedDimensions = new List<DataFeedDimension>()
+                Console.WriteLine($" - {admin}");
+            }
+
+            Console.WriteLine($"Metric IDs:");
+            foreach (DataFeedMetric metric in createdDataFeed.Schema.MetricColumns)
             {
-                new DataFeedDimension("category"),
-                new DataFeedDimension("city")
-            };
-            var dataFeedSchema = new DataFeedSchema(dataFeedMetrics)
+                Console.WriteLine($" - {metric.Name}: {metric.Id}");
+            }
+
+            Console.WriteLine($"Dimensions:");
+            foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
             {
-                DimensionColumns = dataFeedDimensions
-            };
-
-            var ingestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var dataFeedIngestionSettings = new DataFeedIngestionSettings(ingestionStartTime);
-
-            var dataFeed = new DataFeed(dataFeedName, dataFeedSource, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings);
-
-            Response<string> response = await adminClient.CreateDataFeedAsync(dataFeed);
-
-            string dataFeedId = response.Value;
-
-            Console.WriteLine($"Data feed ID: {dataFeedId}");
+                Console.WriteLine($" - {dimension.Name}");
+            }
             #endregion
-
-            // Only the ID of the data feed is known at this point. You can perform another service
-            // call to GetDataFeedAsync or GetDataFeed to get more information, such as status, created
-            // time, the list of administrators, or the metric IDs.
 
             // Delete the created data feed to clean up the Metrics Advisor resource. Do not perform this
             // step if you intend to keep using the data feed.
 
-            await adminClient.DeleteDataFeedAsync(dataFeedId);
+            await adminClient.DeleteDataFeedAsync(createdDataFeed.Id);
         }
 
         [Test]
@@ -85,15 +96,12 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string dataFeedId = DataFeedId;
 
-            #region Snippet:GetDataFeedAsync
-            //@@ string dataFeedId = "<dataFeedId>";
-
             Response<DataFeed> response = await adminClient.GetDataFeedAsync(dataFeedId);
 
             DataFeed dataFeed = response.Value;
 
             Console.WriteLine($"Data feed status: {dataFeed.Status.Value}");
-            Console.WriteLine($"Data feed created time: {dataFeed.CreatedTime.Value}");
+            Console.WriteLine($"Data feed created time: {dataFeed.CreatedOn.Value}");
 
             Console.WriteLine($"Data feed administrators:");
             foreach (string admin in dataFeed.Administrators)
@@ -104,14 +112,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
             Console.WriteLine($"Metric IDs:");
             foreach (DataFeedMetric metric in dataFeed.Schema.MetricColumns)
             {
-                Console.WriteLine($" - {metric.MetricName}: {metric.MetricId}");
+                Console.WriteLine($" - {metric.Name}: {metric.Id}");
             }
-            #endregion
 
-            Console.WriteLine($"Dimension columns:");
+            Console.WriteLine($"Dimensions:");
             foreach (DataFeedDimension dimension in dataFeed.Schema.DimensionColumns)
             {
-                Console.WriteLine($" - {dimension.DimensionName}");
+                Console.WriteLine($" - {dimension.Name}");
             }
         }
 
@@ -133,13 +140,26 @@ namespace Azure.AI.MetricsAdvisor.Samples
             string originalDescription = dataFeed.Description;
             dataFeed.Description = "This description was generated by a sample.";
 
-            await adminClient.UpdateDataFeedAsync(dataFeedId, dataFeed);
+            // Some properties, such as IngestionStartOffset, can be reset to their default value
+            // when set to null during an Update operation. Check the API documentation to verify
+            // when a property supports this feature.
+
+            TimeSpan? originalStartOffset = dataFeed.IngestionSettings.IngestionStartOffset;
+            dataFeed.IngestionSettings.IngestionStartOffset = null;
+
+            response = await adminClient.UpdateDataFeedAsync(dataFeed);
+            DataFeed updatedDataFeed = response.Value;
+
+            Console.WriteLine($"Updated description: {updatedDataFeed.Description}");
+            Console.WriteLine($"Updated ingestion start offset: {updatedDataFeed.IngestionSettings.IngestionStartOffset}");
 
             // Undo the changes to leave the data feed unaltered. Skip this step if you intend to keep
             // the changes.
 
             dataFeed.Description = originalDescription;
-            await adminClient.UpdateDataFeedAsync(dataFeedId, dataFeed);
+            dataFeed.IngestionSettings.IngestionStartOffset = originalStartOffset;
+
+            await adminClient.UpdateDataFeedAsync(dataFeed);
         }
 
         [Test]
@@ -152,15 +172,15 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
-            var filter = new GetDataFeedsFilter()
+            var filter = new DataFeedFilter()
             {
                 Status = DataFeedStatus.Active,
                 GranularityType = DataFeedGranularityType.Daily
             };
             var options = new GetDataFeedsOptions()
             {
-                GetDataFeedsFilter = filter,
-                TopCount = 5
+                Filter = filter,
+                MaxPageSize = 5
             };
 
             int dataFeedCount = 0;

@@ -10,7 +10,7 @@ using System;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Integration runtime resource type. </summary>
-    public partial class IntegrationRuntimeResource : AzureEntityResource
+    public partial class IntegrationRuntimeResource : SubResource
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeResource. </summary>
         /// <param name="properties"> Integration runtime properties. </param>

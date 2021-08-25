@@ -17,13 +17,16 @@ namespace Azure.Communication.Chat
             writer.WriteStartObject();
             writer.WritePropertyName("topic");
             writer.WriteStringValue(Topic);
-            writer.WritePropertyName("members");
-            writer.WriteStartArray();
-            foreach (var item in Members)
+            if (Optional.IsCollectionDefined(Participants))
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("participants");
+                writer.WriteStartArray();
+                foreach (var item in Participants)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WriteEndObject();
         }
     }

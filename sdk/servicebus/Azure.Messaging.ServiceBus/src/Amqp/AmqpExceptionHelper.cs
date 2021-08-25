@@ -67,7 +67,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             object statusCodeValue = responseMessage?.ApplicationProperties.Map[ManagementConstants.Response.StatusCode];
             if (statusCodeValue is int && Enum.IsDefined(typeof(AmqpResponseStatusCode), statusCodeValue))
             {
-
                 amqpResponseStatusCode = (AmqpResponseStatusCode)statusCodeValue;
             }
 
@@ -185,10 +184,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public static Exception TranslateException(Exception exception, string referenceId = null, Exception innerException = null, bool connectionError = false)
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.AppendFormat(CultureInfo.InvariantCulture, exception.Message);
+            stringBuilder.Append(exception.Message);
             if (referenceId != null)
             {
-                stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $"Reference: {referenceId}, {DateTime.UtcNow}");
+                stringBuilder.Append($"Reference: {referenceId}, {DateTime.UtcNow}");
             }
 
             var message = stringBuilder.ToString();
@@ -197,13 +196,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             switch (exception)
             {
                 case SocketException _:
-                    message = stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {((SocketException)exception).SocketErrorCode}").ToString();
+                    message = stringBuilder.Append($" ErrorCode: {((SocketException)exception).SocketErrorCode}").ToString();
                     return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
 
                 case IOException _:
                     if (exception.InnerException is SocketException socketException)
                     {
-                        message = stringBuilder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {socketException.SocketErrorCode}").ToString();
+                        message = stringBuilder.Append($" ErrorCode: {socketException.SocketErrorCode}").ToString();
                     }
                     return new ServiceBusException(message, ServiceBusFailureReason.ServiceCommunicationProblem, innerException: aggregateException);
 

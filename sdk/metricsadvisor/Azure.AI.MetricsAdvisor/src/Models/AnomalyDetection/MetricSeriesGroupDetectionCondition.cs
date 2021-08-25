@@ -11,13 +11,14 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// of time series.
     /// </summary>
     [CodeGenModel("DimensionGroupConfiguration")]
+    [CodeGenSuppress(nameof(MetricSeriesGroupDetectionCondition), typeof(DimensionKey))]
     public partial class MetricSeriesGroupDetectionCondition : MetricWholeSeriesDetectionCondition
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MetricSeriesGroupDetectionCondition"/> class.
         /// </summary>
-        /// <param name="seriesGroupKey">The key that identifies the group of time series to which these conditions apply within a metric. A subset of the possible dimensions of the associated data feed must be set.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="seriesGroupKey"/> is null.</exception>
+        /// <param name="seriesGroupKey">The key that identifies the group of time series to which these conditions apply within a metric. Only a subset of dimensions must be assigned a value.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="seriesGroupKey"/> is <c>null</c>.</exception>
         public MetricSeriesGroupDetectionCondition(DimensionKey seriesGroupKey)
         {
             Argument.AssertNotNull(seriesGroupKey, nameof(seriesGroupKey));
@@ -27,9 +28,9 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The key that identifies the group of time series to which these conditions apply within a metric.
-        /// A subset of the possible dimensions of the associated data feed must be set.
+        /// Only a subset of dimensions must be assigned a value.
         /// </summary>
         [CodeGenMember("Group")]
-        public DimensionKey SeriesGroupKey { get; }
+        public DimensionKey SeriesGroupKey { get; set; }
     }
 }

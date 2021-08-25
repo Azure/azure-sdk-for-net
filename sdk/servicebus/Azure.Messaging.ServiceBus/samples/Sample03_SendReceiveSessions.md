@@ -44,9 +44,7 @@ BinaryData state = await receiver.GetSessionStateAsync();
 
 ```C# Snippet:ServiceBusReceiveFromSpecificSession
 // create a receiver specifying a particular session
-ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(
-    queueName,
-    "Session2");
+ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(queueName, "Session2");
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -57,4 +55,4 @@ Console.WriteLine(receivedMessage.SessionId);
 
 To see the full example source, see:
 
-* [Sample03_SendReceiveSessions.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample03_SendReceiveSessions.cs)
+* [Sample03_SendReceiveSessions.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample03_SendReceiveSessions.cs)

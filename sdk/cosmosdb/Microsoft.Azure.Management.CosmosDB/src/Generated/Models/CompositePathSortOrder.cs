@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     /// </summary>
     public static class CompositePathSortOrder
     {
-        public const string Ascending = "Ascending";
-        public const string Descending = "Descending";
+        public const string Ascending = "ascending";
+        public const string Descending = "descending";
     }
 }

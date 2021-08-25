@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachinesPerformMaintenanceOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of VirtualMachinesPerformMaintenanceOperation for mocking. </summary>
+        protected VirtualMachinesPerformMaintenanceOperation()
+        {
+        }
+
         internal VirtualMachinesPerformMaintenanceOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachinesPerformMaintenanceOperation");

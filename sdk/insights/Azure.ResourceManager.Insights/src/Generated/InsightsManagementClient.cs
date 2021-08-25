@@ -13,7 +13,7 @@ using Azure.ResourceManager.Insights;
 namespace Azure.ResourceManager.Insights
 {
     /// <summary> Insights service management client. </summary>
-    public class InsightsManagementClient
+    public partial class InsightsManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

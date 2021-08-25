@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> AuthenticationType to be used for connection. </summary>
+    /// <summary> AuthenticationType to be used for connection. It is mutually exclusive with connectionString property. </summary>
     public readonly partial struct Db2AuthenticationType : IEquatable<Db2AuthenticationType>
     {
         private readonly string _value;

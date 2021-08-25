@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Job scheduled event data. </summary>
+    /// <summary> Job scheduled event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobScheduled event. </summary>
     public partial class MediaJobScheduledEventData : MediaJobStateChangeEventData
     {
         /// <summary> Initializes a new instance of MediaJobScheduledEventData. </summary>

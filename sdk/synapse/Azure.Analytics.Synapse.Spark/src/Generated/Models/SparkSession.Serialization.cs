@@ -152,6 +152,11 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("appId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        appId = null;
+                        continue;
+                    }
                     appId = property.Value.GetString();
                     continue;
                 }
@@ -159,7 +164,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        appInfo = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -179,7 +184,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        log = null;
                         continue;
                     }
                     List<string> array = new List<string>();

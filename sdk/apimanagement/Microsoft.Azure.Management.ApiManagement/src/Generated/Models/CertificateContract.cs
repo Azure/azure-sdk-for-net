@@ -42,12 +42,15 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
         /// resource.</param>
-        public CertificateContract(string subject, string thumbprint, System.DateTime expirationDate, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="keyVault">KeyVault location details of the
+        /// certificate.</param>
+        public CertificateContract(string subject, string thumbprint, System.DateTime expirationDate, string id = default(string), string name = default(string), string type = default(string), KeyVaultContractProperties keyVault = default(KeyVaultContractProperties))
             : base(id, name, type)
         {
             Subject = subject;
             Thumbprint = thumbprint;
             ExpirationDate = expirationDate;
+            KeyVault = keyVault;
             CustomInit();
         }
 
@@ -76,6 +79,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.expirationDate")]
         public System.DateTime ExpirationDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets keyVault location details of the certificate.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVault")]
+        public KeyVaultContractProperties KeyVault { get; set; }
 
         /// <summary>
         /// Validate the object.

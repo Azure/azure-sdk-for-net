@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class LogicalServerSecurityAlertPolicyListResult
+    internal partial class LogicalServerSecurityAlertPolicyListResult
     {
         internal static LogicalServerSecurityAlertPolicyListResult DeserializeLogicalServerSecurityAlertPolicyListResult(JsonElement element)
         {

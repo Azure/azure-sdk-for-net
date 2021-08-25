@@ -13,7 +13,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Network service management client. </summary>
-    public class NetworkManagementClient
+    public partial class NetworkManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

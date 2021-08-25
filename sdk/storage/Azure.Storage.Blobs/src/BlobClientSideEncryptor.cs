@@ -37,21 +37,21 @@ namespace Azure.Storage.Blobs
         /// Cancellation token.
         /// </param>
         /// <returns>Transformed content stream and metadata.</returns>
-        public async Task<(Stream, Metadata)> ClientSideEncryptInternal(
+        public async Task<(Stream NonSeekableCiphertext, Metadata Metadata)> ClientSideEncryptInternal(
             Stream content,
             Metadata metadata,
             bool async,
             CancellationToken cancellationToken)
         {
-            (Stream nonSeekableCiphertext, EncryptionData encryptionData) = await _encryptor.EncryptInternal(
+            (Stream NonSeekableCiphertext, EncryptionData EncryptionData) = await _encryptor.EncryptInternal(
                 content,
                 async,
                 cancellationToken).ConfigureAwait(false);
 
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            metadata[Constants.ClientSideEncryption.EncryptionDataKey] = EncryptionDataSerializer.Serialize(encryptionData);
+            metadata[Constants.ClientSideEncryption.EncryptionDataKey] = EncryptionDataSerializer.Serialize(EncryptionData);
 
-            return (nonSeekableCiphertext, metadata);
+            return (NonSeekableCiphertext, metadata);
         }
     }
 }

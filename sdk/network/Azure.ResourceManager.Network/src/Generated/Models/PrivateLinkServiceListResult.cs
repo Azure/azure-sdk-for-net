@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListPrivateLinkService API service call. </summary>
-    public partial class PrivateLinkServiceListResult
+    internal partial class PrivateLinkServiceListResult
     {
         /// <summary> Initializes a new instance of PrivateLinkServiceListResult. </summary>
         internal PrivateLinkServiceListResult()

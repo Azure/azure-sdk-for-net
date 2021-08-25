@@ -7,10 +7,6 @@ namespace Microsoft.Extensions.Azure.WebJobs.Tests
 {
     public class WebJobsTestEnvironment : TestEnvironment
     {
-        public WebJobsTestEnvironment() : base("extensions")
-        {
-        }
-
         public string KeyVaultUrl => GetRecordedVariable("AZURE_KEYVAULT_URL");
     }
 }

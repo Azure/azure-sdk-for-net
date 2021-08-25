@@ -36,17 +36,17 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// name.</param>
         /// <param name="domainNameLabel">Gets or sets the domain name
         /// label.</param>
-        /// <param name="fQDN">Gets or sets the fully qualified domain
+        /// <param name="fqdn">Gets or sets the fully qualified domain
         /// name.</param>
         /// <param name="publicIpAllocationMethod">Gets or sets public IP
         /// allocation method.</param>
         /// <param name="sku">Gets or sets public IP sku.</param>
         /// <param name="zones">Gets or sets public IP zones.</param>
-        public PublicIPAddressResourceSettings(string targetResourceName, string domainNameLabel = default(string), string fQDN = default(string), string publicIpAllocationMethod = default(string), string sku = default(string), string zones = default(string))
+        public PublicIPAddressResourceSettings(string targetResourceName, string domainNameLabel = default(string), string fqdn = default(string), string publicIpAllocationMethod = default(string), string sku = default(string), string zones = default(string))
             : base(targetResourceName)
         {
             DomainNameLabel = domainNameLabel;
-            FQDN = fQDN;
+            Fqdn = fqdn;
             PublicIpAllocationMethod = publicIpAllocationMethod;
             Sku = sku;
             Zones = zones;
@@ -67,8 +67,8 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// <summary>
         /// Gets or sets the fully qualified domain name.
         /// </summary>
-        [JsonProperty(PropertyName = "fQDN")]
-        public string FQDN { get; set; }
+        [JsonProperty(PropertyName = "fqdn")]
+        public string Fqdn { get; set; }
 
         /// <summary>
         /// Gets or sets public IP allocation method.

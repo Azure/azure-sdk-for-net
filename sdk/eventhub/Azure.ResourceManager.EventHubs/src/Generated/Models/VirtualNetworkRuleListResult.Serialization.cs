@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class VirtualNetworkRuleListResult
+    internal partial class VirtualNetworkRuleListResult
     {
         internal static VirtualNetworkRuleListResult DeserializeVirtualNetworkRuleListResult(JsonElement element)
         {

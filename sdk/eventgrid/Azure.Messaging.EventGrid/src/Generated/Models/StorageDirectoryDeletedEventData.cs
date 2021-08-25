@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.DirectoryDeleted event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.DirectoryDeleted event. </summary>
     public partial class StorageDirectoryDeletedEventData
     {
         /// <summary> Initializes a new instance of StorageDirectoryDeletedEventData. </summary>

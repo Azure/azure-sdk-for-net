@@ -36,6 +36,7 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.TryAddSingleton<ISharedContextProvider, SharedContextProvider>();
 
             builder.Services.TryAddSingleton<QueueServiceClientProvider>();
+            builder.Services.TryAddSingleton<QueueCausalityManager>();
 
             builder.Services.TryAddSingleton<IContextSetter<IMessageEnqueuedWatcher>>((p) => new ContextAccessor<IMessageEnqueuedWatcher>());
             builder.Services.TryAddSingleton((p) => p.GetService<IContextSetter<IMessageEnqueuedWatcher>>() as IContextGetter<IMessageEnqueuedWatcher>);
@@ -54,7 +55,7 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.AddOptions<QueuesOptions>()
                 .Configure<IHostingEnvironment>((options, env) =>
                 {
-                    if (env.IsDevelopment())
+                    if (env.IsDevelopment() && options.MaxPollingInterval == QueuePollingIntervals.DefaultMaximum)
                     {
                         options.MaxPollingInterval = TimeSpan.FromSeconds(2);
                     }

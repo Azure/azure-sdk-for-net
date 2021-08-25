@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedInstanceKeysCreateOrUpdateOperation : Operation<ManagedInstanceKey>, IOperationSource<ManagedInstanceKey>
     {
         private readonly ArmOperationHelpers<ManagedInstanceKey> _operation;
+
+        /// <summary> Initializes a new instance of ManagedInstanceKeysCreateOrUpdateOperation for mocking. </summary>
+        protected ManagedInstanceKeysCreateOrUpdateOperation()
+        {
+        }
+
         internal ManagedInstanceKeysCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ManagedInstanceKey>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedInstanceKeysCreateOrUpdateOperation");

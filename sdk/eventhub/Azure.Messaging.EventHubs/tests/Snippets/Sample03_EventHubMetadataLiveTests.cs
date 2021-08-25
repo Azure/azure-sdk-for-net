@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
@@ -19,34 +18,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample03_EventHubMetadataLiveTests
     {
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        private EventHubScope _scope;
-
-        /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
-        /// </summary>
-        ///
-        [OneTimeSetUp]
-        public async Task FixtureSetUp()
-        {
-            _scope = await EventHubScope.CreateAsync(2);
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
-        /// </summary>
-        ///
-        [OneTimeTearDown]
-        public async Task FixtureTearDown()
-        {
-            await _scope.DisposeAsync();
-        }
-
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -54,13 +27,17 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task InspectHub()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample03_InspectHub
 
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
+#endif
 
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
@@ -88,13 +65,17 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task QueryPartitions()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample03_QueryPartitions
 
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
+#endif
 
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
@@ -118,14 +99,18 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task InspectPartition()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample03_InspectPartition
 
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
+#endif
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
 
             var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName);
 

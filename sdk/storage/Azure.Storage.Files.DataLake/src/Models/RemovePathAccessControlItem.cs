@@ -65,7 +65,7 @@ namespace Azure.Storage.Files.DataLake.Models
             stringBuilder.Append(AccessControlType.ToString().ToLowerInvariant());
             if (!string.IsNullOrWhiteSpace(EntityId))
             {
-                stringBuilder.Append(":");
+                stringBuilder.Append(':');
                 stringBuilder.Append(EntityId);
             }
 

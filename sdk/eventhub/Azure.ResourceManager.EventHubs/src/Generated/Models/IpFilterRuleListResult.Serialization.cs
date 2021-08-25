@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class IpFilterRuleListResult
+    internal partial class IpFilterRuleListResult
     {
         internal static IpFilterRuleListResult DeserializeIpFilterRuleListResult(JsonElement element)
         {

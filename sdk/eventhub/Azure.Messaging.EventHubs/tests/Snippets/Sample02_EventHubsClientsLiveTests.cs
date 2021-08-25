@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using System.Net.Http;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
@@ -20,34 +22,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample02_EventHubsClientsLiveTests
     {
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        private EventHubScope _scope;
-
-        /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
-        /// </summary>
-        ///
-        [OneTimeSetUp]
-        public async Task FixtureSetUp()
-        {
-            _scope = await EventHubScope.CreateAsync(2);
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
-        /// </summary>
-        ///
-        [OneTimeTearDown]
-        public async Task FixtureTearDown()
-        {
-            await _scope.DisposeAsync();
-        }
-
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -57,11 +33,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Sample02_ProducerTransportFullConnectionOptions
 
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fake";
+#endif
 
             var producerOptions = new EventHubProducerClientOptions
             {
@@ -93,11 +71,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Sample02_ProducerTransportProperty
 
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fake";
+#endif
 
             var producerOptions = new EventHubProducerClientOptions();
             producerOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
@@ -124,11 +104,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Sample02_ProducerProxyFullConnectionOptions
 
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fake";
+#endif
 
             var producerOptions = new EventHubProducerClientOptions
             {
@@ -161,11 +143,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Sample02_ProducerProxyProperty
 
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fake";
+#endif
 
             var producerOptions = new EventHubProducerClientOptions();
             producerOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
@@ -189,16 +173,101 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
+        public async Task ConfigureCustomEndpointAddress()
+        {
+            #region Snippet:EventHubs_Sample02_ConnectionOptionsCustomEndpoint
+
+#if SNIPPET
+            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fake";
+#endif
+
+            var producerOptions = new EventHubProducerClientOptions();
+            producerOptions.ConnectionOptions.CustomEndpointAddress = new Uri("amqps://app-gateway.mycompany.com");
+
+            var producer = new EventHubProducerClient(
+                connectionString,
+                eventHubName,
+                producerOptions);
+
+            #endregion
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            await producer.CloseAsync(cancellationSource.Token).IgnoreExceptions();
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConfigureRemoteCertificateValidationCallback()
+        {
+            #region Snippet:EventHubs_Sample02_RemoteCertificateValidationCallback
+
+#if SNIPPET
+            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fake";
+#endif
+
+            static bool ValidateServerCertificate(
+                  object sender,
+                  X509Certificate certificate,
+                  X509Chain chain,
+                  SslPolicyErrors sslPolicyErrors)
+            {
+                if ((sslPolicyErrors == SslPolicyErrors.None)
+                    || (certificate.Issuer == "My Company CA"))
+                {
+                     return true;
+                }
+
+                // Do not allow communication with unauthorized servers.
+
+                return false;
+            }
+
+            var producerOptions = new EventHubProducerClientOptions();
+            producerOptions.ConnectionOptions.CertificateValidationCallback = ValidateServerCertificate;
+
+            var producer = new EventHubProducerClient(
+                connectionString,
+                eventHubName,
+                producerOptions);
+
+            #endregion
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            await producer.CloseAsync(cancellationSource.Token).IgnoreExceptions();
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
         public async Task ConfigureConsumerRetryWithFullOptions()
         {
             #region Snippet:EventHubs_Sample02_ConsumerRetryWithFullOptions
 
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fake";
+#endif
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
 
             var consumerOptions = new EventHubConsumerClientOptions
             {
@@ -234,12 +303,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Sample02_ConsumerRetryByProperty
 
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fake";
+#endif
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
 
             var consumerOptions = new EventHubConsumerClientOptions();
             consumerOptions.RetryOptions.Mode = EventHubsRetryMode.Fixed;
@@ -297,7 +368,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             Assert.That(options, Is.Not.Null);
         }
 
-#if NETCOREAPP3_1 || NET5
+#if NETCOREAPP || SNIPPET
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>

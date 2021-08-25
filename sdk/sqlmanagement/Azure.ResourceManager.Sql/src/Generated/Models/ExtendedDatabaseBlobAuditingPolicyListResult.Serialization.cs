@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ExtendedDatabaseBlobAuditingPolicyListResult
+    internal partial class ExtendedDatabaseBlobAuditingPolicyListResult
     {
         internal static ExtendedDatabaseBlobAuditingPolicyListResult DeserializeExtendedDatabaseBlobAuditingPolicyListResult(JsonElement element)
         {

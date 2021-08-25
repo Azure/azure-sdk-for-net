@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
@@ -347,10 +348,7 @@ namespace Azure.Security.KeyVault.Keys
                 rsaParameters.InverseQ = ForceBufferLength(nameof(QI), QI, byteLength);
             }
 
-            RSA rsa = RSA.Create();
-            rsa.ImportParameters(rsaParameters);
-
-            return rsa;
+            return CreateRSAProvider(rsaParameters);
         }
 
         internal bool SupportsOperation(KeyOperation operation)
@@ -502,6 +500,33 @@ namespace Azure.Security.KeyVault.Keys
         void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
+
+        private static Func<RSAParameters, RSA> s_rsaFactory;
+        private static RSA CreateRSAProvider(RSAParameters parameters)
+        {
+            if (s_rsaFactory is null)
+            {
+                // On Framework 4.7.2 and newer, to create the CNG implementation of RSA that supports RSA-OAEP-256, we need to create it with RSAParameters.
+                MethodInfo createMethod = typeof(RSA).GetMethod(nameof(RSA.Create), BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(RSAParameters) }, null);
+                if (createMethod != null)
+                {
+                    s_rsaFactory = (Func<RSAParameters, RSA>)createMethod.CreateDelegate(typeof(Func<RSAParameters, RSA>));
+                }
+                else
+                {
+                    s_rsaFactory = p =>
+                    {
+                        // On Framework, this will not support RSA-OAEP-256 padding.
+                        RSA rsa = RSA.Create();
+                        rsa.ImportParameters(parameters);
+
+                        return rsa;
+                    };
+                }
+            }
+
+            return s_rsaFactory(parameters);
+        }
 
         private static byte[] ForceBufferLength(string name, byte[] value, int requiredLengthInBytes)
         {

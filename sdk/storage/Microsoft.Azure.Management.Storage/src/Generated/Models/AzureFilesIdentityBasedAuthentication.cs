@@ -37,10 +37,17 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'AD'</param>
         /// <param name="activeDirectoryProperties">Required if choose
         /// AD.</param>
-        public AzureFilesIdentityBasedAuthentication(string directoryServiceOptions, ActiveDirectoryProperties activeDirectoryProperties = default(ActiveDirectoryProperties))
+        /// <param name="defaultSharePermission">Default share permission for
+        /// users using Kerberos authentication if RBAC role is not assigned.
+        /// Possible values include: 'None', 'StorageFileDataSmbShareReader',
+        /// 'StorageFileDataSmbShareContributor',
+        /// 'StorageFileDataSmbShareElevatedContributor',
+        /// 'StorageFileDataSmbShareOwner'</param>
+        public AzureFilesIdentityBasedAuthentication(string directoryServiceOptions, ActiveDirectoryProperties activeDirectoryProperties = default(ActiveDirectoryProperties), string defaultSharePermission = default(string))
         {
             DirectoryServiceOptions = directoryServiceOptions;
             ActiveDirectoryProperties = activeDirectoryProperties;
+            DefaultSharePermission = defaultSharePermission;
             CustomInit();
         }
 
@@ -61,6 +68,17 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "activeDirectoryProperties")]
         public ActiveDirectoryProperties ActiveDirectoryProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets default share permission for users using Kerberos
+        /// authentication if RBAC role is not assigned. Possible values
+        /// include: 'None', 'StorageFileDataSmbShareReader',
+        /// 'StorageFileDataSmbShareContributor',
+        /// 'StorageFileDataSmbShareElevatedContributor',
+        /// 'StorageFileDataSmbShareOwner'
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultSharePermission")]
+        public string DefaultSharePermission { get; set; }
 
         /// <summary>
         /// Validate the object.

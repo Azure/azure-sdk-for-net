@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DatabricksSparkPythonActivityConverter))]
     public partial class DatabricksSparkPythonActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -231,6 +234,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DatabricksSparkPythonActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, pythonFile, Optional.ToList(parameters), Optional.ToList(libraries));
+        }
+
+        internal partial class DatabricksSparkPythonActivityConverter : JsonConverter<DatabricksSparkPythonActivity>
+        {
+            public override void Write(Utf8JsonWriter writer, DatabricksSparkPythonActivity model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DatabricksSparkPythonActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDatabricksSparkPythonActivity(document.RootElement);
+            }
         }
     }
 }

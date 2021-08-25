@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    internal static class ResultTypeExtensions
+    internal static partial class ResultTypeExtensions
     {
         public static string ToSerialString(this ResultType value) => value switch
         {

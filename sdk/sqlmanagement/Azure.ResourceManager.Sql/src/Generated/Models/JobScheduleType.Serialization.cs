@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class JobScheduleTypeExtensions
+    internal static partial class JobScheduleTypeExtensions
     {
         public static string ToSerialString(this JobScheduleType value) => value switch
         {

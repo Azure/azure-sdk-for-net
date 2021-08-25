@@ -74,7 +74,6 @@ namespace Azure.Core.Http.Multipart
                 // Note that the RFC requires decimal '.' regardless of the culture. I.e. using ',' as decimal
                 // separator is considered invalid (even if the current culture would allow it).
                 if (TryParseQualityDouble(qualityParameter.Value, 0, out var qualityValue, out var length))
-
                 {
                     return qualityValue;
                 }

@@ -15,39 +15,81 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString");
-            writer.WriteStringValue(ConnectionString);
-            writer.WritePropertyName("database");
-            writer.WriteStringValue(Database);
-            writer.WritePropertyName("command");
-            writer.WriteStringValue(Command);
+            if (Optional.IsDefined(ConnectionString))
+            {
+                if (ConnectionString != null)
+                {
+                    writer.WritePropertyName("connectionString");
+                    writer.WriteStringValue(ConnectionString);
+                }
+                else
+                {
+                    writer.WriteNull("connectionString");
+                }
+            }
+            if (Optional.IsDefined(Database))
+            {
+                if (Database != null)
+                {
+                    writer.WritePropertyName("database");
+                    writer.WriteStringValue(Database);
+                }
+                else
+                {
+                    writer.WriteNull("database");
+                }
+            }
+            if (Command != null)
+            {
+                writer.WritePropertyName("command");
+                writer.WriteStringValue(Command);
+            }
+            else
+            {
+                writer.WriteNull("command");
+            }
             writer.WriteEndObject();
         }
 
         internal static MongoDBParameter DeserializeMongoDBParameter(JsonElement element)
         {
-            string connectionString = default;
-            string database = default;
+            Optional<string> connectionString = default;
+            Optional<string> database = default;
             string command = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionString"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        connectionString = null;
+                        continue;
+                    }
                     connectionString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("database"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        database = null;
+                        continue;
+                    }
                     database = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("command"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        command = null;
+                        continue;
+                    }
                     command = property.Value.GetString();
                     continue;
                 }
             }
-            return new MongoDBParameter(connectionString, database, command);
+            return new MongoDBParameter(connectionString.Value, database.Value, command);
         }
     }
 }

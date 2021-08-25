@@ -20,5 +20,6 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public const string RequestCookieNames = "RequestCookieNames";
         public const string QueryStringArgNames = "QueryStringArgNames";
         public const string RequestBodyPostArgNames = "RequestBodyPostArgNames";
+        public const string RequestBodyJsonArgNames = "RequestBodyJsonArgNames";
     }
 }

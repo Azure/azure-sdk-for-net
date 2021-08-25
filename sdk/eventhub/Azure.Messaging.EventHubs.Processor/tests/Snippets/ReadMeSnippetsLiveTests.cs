@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,7 +9,6 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
 
@@ -24,43 +22,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class ReadMeSnippetsLiveTests
-
     {
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        private EventHubScope _eventHubScope;
-
-        /// <summary>The active Blob storage resource scope for the test fixture.</summary>
-        private StorageScope _storageScope;
-
-        /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
-        /// </summary>
-        ///
-        [OneTimeSetUp]
-        public async Task FixtureSetUp()
-        {
-            _eventHubScope = await EventHubScope.CreateAsync(2);
-            _storageScope = await StorageScope.CreateAsync();
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
-        /// </summary>
-        ///
-        [OneTimeTearDown]
-        public async Task FixtureTearDown()
-        {
-            await Task.WhenAll
-            (
-                _eventHubScope.DisposeAsync().AsTask(),
-                _storageScope.DisposeAsync().AsTask()
-            );
-        }
-
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -70,23 +33,24 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Processor_ReadMe_Create
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = "not-real";
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fakeHub";
+            var consumerGroup = "fakeConsumer";
+#endif
 
-            BlobContainerClient storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
+            var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
 
-            EventProcessorClient processor = new EventProcessorClient
+            var processor = new EventProcessorClient
             (
                 storageClient,
                 consumerGroup,
@@ -106,19 +70,20 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Processor_ReadMe_ConfigureHandlers
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = "not-real";
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = "fakeHub";
+            var consumerGroup = "fakeConsumer";
+#endif
 
             async Task processEventHandler(ProcessEventArgs eventArgs)
             {
@@ -126,6 +91,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 {
                     // Perform the application-specific processing for an event.  This method
                     // is intended for illustration and is not defined in this snippet.
+
                     await DoSomethingWithTheEvent(eventArgs.Partition, eventArgs.Data);
                 }
                 catch
@@ -140,6 +106,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 {
                     // Perform the application-specific processing for an error.  This method
                     // is intended for illustration and is not defined in this snippet.
+
                     await DoSomethingWithTheError(eventArgs.Exception);
                 }
                 catch
@@ -167,24 +134,28 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ProcessUntilCanceled()
         {
+            await using var eventHubScope = await EventHubScope.CreateAsync(2);
+            await using var storageScope = await StorageScope.CreateAsync();
+
             #region Snippet:EventHubs_Processor_ReadMe_ProcessUntilCanceled
 
             var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = eventHubScope.EventHubName;
+            var consumerGroup = eventHubScope.ConsumerGroups.First();
+#endif
 
             Task processEventHandler(ProcessEventArgs eventArgs) => Task.CompletedTask;
             Task processErrorHandler(ProcessErrorEventArgs eventArgs) => Task.CompletedTask;
@@ -201,6 +172,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             {
                 // The processor performs its work in the background; block until cancellation
                 // to allow processing to take place.
+
                 await Task.Delay(Timeout.Infinite, cancellationSource.Token);
             }
             catch (TaskCanceledException)
@@ -215,6 +187,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             finally
             {
                 // To prevent leaks, the handlers should be removed when processing is complete.
+
                 processor.ProcessEventAsync -= processEventHandler;
                 processor.ProcessErrorAsync -= processErrorHandler;
             }
@@ -231,23 +204,24 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Processor_ReadMe_CreateWithIdentity
 
-            TokenCredential credential = new DefaultAzureCredential();
-            /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
-
-            string blobStorageUrl ="<< FULLY-QUALIFIED CONTAINER URL (like https://myaccount.blob.core.windows.net/mycontainer) >>";
-            /*@@*/ blobStorageUrl = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.{ StorageTestEnvironment.Instance.StorageEndpointSuffix }/{ _storageScope.ContainerName }";
-            /*@@*/
-            BlobContainerClient storageClient = new BlobContainerClient(new Uri(blobStorageUrl), credential);
+#if SNIPPET
+            var credential = new DefaultAzureCredential();
+            var blobStorageUrl ="<< FULLY-QUALIFIED CONTAINER URL (like https://myaccount.blob.core.windows.net/mycontainer) >>";
 
             var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+#else
+            var credential = EventHubsTestEnvironment.Instance.Credential;
+            var blobStorageUrl = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.{ StorageTestEnvironment.Instance.StorageEndpointSuffix }/{ "fake-container" }";
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = "fakeHub";
+            var consumerGroup = "fakeConsumer";
+#endif
 
-            EventProcessorClient processor = new EventProcessorClient
+            var storageClient = new BlobContainerClient(new Uri(blobStorageUrl), credential);
+
+            var processor = new EventProcessorClient
             (
                 storageClient,
                 consumerGroup,

@@ -70,6 +70,11 @@ namespace Microsoft.Azure.Management.StorageCache
         public virtual IUsageModels UsageModels { get; private set; }
 
         /// <summary>
+        /// Gets the IAscOperations.
+        /// </summary>
+        public virtual IAscOperations AscOperations { get; private set; }
+
+        /// <summary>
         /// Gets the ICaches.
         /// </summary>
         public virtual ICaches Caches { get; private set; }
@@ -323,6 +328,7 @@ namespace Microsoft.Azure.Management.StorageCache
             Operations = new Operations(this);
             Skus = new Skus(this);
             UsageModels = new UsageModels(this);
+            AscOperations = new AscOperations(this);
             Caches = new Caches(this);
             StorageTargets = new StorageTargets(this);
             BaseUri = new System.Uri("https://management.azure.com");
@@ -352,8 +358,6 @@ namespace Microsoft.Azure.Management.StorageCache
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StorageTargetProperties>("targetBaseType"));
-            DeserializationSettings.Converters.Add(new  PolymorphicDeserializeJsonConverter<StorageTargetProperties>("targetBaseType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
         }

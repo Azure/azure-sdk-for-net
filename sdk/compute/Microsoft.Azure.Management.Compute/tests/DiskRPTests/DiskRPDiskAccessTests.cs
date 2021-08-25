@@ -27,6 +27,12 @@ namespace Compute.Tests.DiskRPTests
         }
 
         [Fact]
+        public void DiskAccess_WithPrivateEndpoint_Manual_CRUD()
+        {
+            DiskAccess_WithPrivateEndpoint_CRUD_Execute("DiskAccess_WithPrivateEndpoint_Manual_CRUD", location: supportedZoneLocation, manualApproval: true);
+        }
+
+        [Fact]
         public void DiskAccess_List()
         {
             DiskAccess_List_Execute("DiskAccess_List", location: supportedZoneLocation);

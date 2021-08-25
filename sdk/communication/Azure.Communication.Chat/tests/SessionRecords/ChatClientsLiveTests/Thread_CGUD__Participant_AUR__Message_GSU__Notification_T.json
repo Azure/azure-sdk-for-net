@@ -1,0 +1,3745 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "traceparent": "00-d0d2af845f3718499d0f2e8d2aedae85-3b9b983200064743-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "795924a282ed4f2d119112dabaf9a663",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 19 Aug 2021 05:24:51 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:52 GMT",
+        "MS-CV": "G8W99fMfiECRqNAr\u002B\u002BnByg.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0JOsdYQAAAAAP4ibsVJtATKMx1dSf727jV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "795924a282ed4f2d119112dabaf9a663",
+        "X-Processing-Time": "92ms"
+      },
+      "ResponseBody": {
+        "identity": {
+          "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/identities/8%3Aacs%3Ae4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8/:issueAccessToken?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "19",
+        "Content-Type": "application/json",
+        "traceparent": "00-a97f01fe40b6b444a7e38e71fd9712f8-d9350b20171bbe46-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "b72ad57cd46dfb6c8a1ab50d5d60418e",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 19 Aug 2021 05:24:51 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "scopes": [
+          "chat"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:52 GMT",
+        "MS-CV": "Ceu//\u002B37\u002Bk666n6dFiwAZQ.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0JOsdYQAAAAA7ikD4DJe2Qq0uyg3b\u002BJYwV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "b72ad57cd46dfb6c8a1ab50d5d60418e",
+        "X-Processing-Time": "162ms"
+      },
+      "ResponseBody": {
+        "token": "Sanitized",
+        "expiresOn": "2021-08-20T05:24:52.9818342\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "traceparent": "00-ece0676639ba644da35e9fce40cbc8d2-5bfe3a14527b5345-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "8054cedf3ae502023ec7acb5f8344775",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 19 Aug 2021 05:24:51 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:52 GMT",
+        "MS-CV": "geO3OKxahUODzYkBw0pneg.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0JesdYQAAAAA6IFco1bfbQbDslvi1M\u002B9BV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "8054cedf3ae502023ec7acb5f8344775",
+        "X-Processing-Time": "90ms"
+      },
+      "ResponseBody": {
+        "identity": {
+          "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/identities/8%3Aacs%3Ae4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9/:issueAccessToken?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "19",
+        "Content-Type": "application/json",
+        "traceparent": "00-d1407d948c344a48b18450036bb06620-36b862058976a64a-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "7d69ae18912cceadb75eeed3cc20f1b0",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 19 Aug 2021 05:24:52 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "scopes": [
+          "chat"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:53 GMT",
+        "MS-CV": "3d6Zmt/k4Uevp/SrYKz4RQ.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0JesdYQAAAAAMG2U8M5FtRp2T6ouvvXeFV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "7d69ae18912cceadb75eeed3cc20f1b0",
+        "X-Processing-Time": "164ms"
+      },
+      "ResponseBody": {
+        "token": "Sanitized",
+        "expiresOn": "2021-08-20T05:24:53.3917183\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "traceparent": "00-e603e8c01817c346b58c4d2f0006d2e8-b00d23a250246541-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "ecfb835025a4427dd22779a527b70356",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 19 Aug 2021 05:24:52 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:53 GMT",
+        "MS-CV": "sKfQ/hwSjkS\u002B7A5xGhCgbQ.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0JesdYQAAAACOHP1wAZXMRqjuUpRxJqZ2V1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "ecfb835025a4427dd22779a527b70356",
+        "X-Processing-Time": "91ms"
+      },
+      "ResponseBody": {
+        "identity": {
+          "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/identities/8%3Aacs%3Ae4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa/:issueAccessToken?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "19",
+        "Content-Type": "application/json",
+        "traceparent": "00-6e8ea1a5ab47a94f815eddc496175567-cada6ba02ae4504f-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "aff440d2c3f74d622086c8874b2e351d",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 19 Aug 2021 05:24:52 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "scopes": [
+          "chat"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:53 GMT",
+        "MS-CV": "XM6FM3w6OkGgaGLD0oYpxg.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0JesdYQAAAADxHH37Z\u002BT8TLoZbY0i1tY\u002BV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "aff440d2c3f74d622086c8874b2e351d",
+        "X-Processing-Time": "156ms"
+      },
+      "ResponseBody": {
+        "token": "Sanitized",
+        "expiresOn": "2021-08-20T05:24:53.7962495\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "traceparent": "00-17e5b0b1bfbd2b418b979cc935e3cba2-79f6e3d3b70d4c45-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "7465fcd55a39f2d03027aa051707a700",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 19 Aug 2021 05:24:52 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:53 GMT",
+        "MS-CV": "fQjcz5bg\u002Bk\u002BmqIStwzh3bw.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0JesdYQAAAADWm6OXt8m6QoPV5WTLH7jGV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "7465fcd55a39f2d03027aa051707a700",
+        "X-Processing-Time": "90ms"
+      },
+      "ResponseBody": {
+        "identity": {
+          "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/identities/8%3Aacs%3Ae4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab/:issueAccessToken?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "19",
+        "Content-Type": "application/json",
+        "traceparent": "00-5cf0025c4edb3544878955fe9abb7a6f-5c3ea3c1d63ac743-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "8c00975a422b8cb821adcc1e5cf6f6a3",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 19 Aug 2021 05:24:52 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "scopes": [
+          "chat"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:53 GMT",
+        "MS-CV": "u0HZHZOwWE\u002BvQ055S4GMCA.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0JusdYQAAAAC6qEdGP9ryT5djIhq1A1sqV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "8c00975a422b8cb821adcc1e5cf6f6a3",
+        "X-Processing-Time": "156ms"
+      },
+      "ResponseBody": {
+        "token": "Sanitized",
+        "expiresOn": "2021-08-20T05:24:54.1922393\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "traceparent": "00-ef4f34c6a4ea6f45bbe08251523cf824-bfe574e74f0f4948-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "2acf5cf18f51781d6f027ed0195d3519",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 19 Aug 2021 05:24:53 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:54 GMT",
+        "MS-CV": "LZhbu8pPYkiTLOERDOpvzA.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0JusdYQAAAAAFhtDhPmH7R57CumW03lw6V1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "2acf5cf18f51781d6f027ed0195d3519",
+        "X-Processing-Time": "91ms"
+      },
+      "ResponseBody": {
+        "identity": {
+          "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/identities/8%3Aacs%3Ae4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac/:issueAccessToken?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "19",
+        "Content-Type": "application/json",
+        "traceparent": "00-90fa6829bb83254dba90950db5f10d31-728d343019d4e44c-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "b32cc8dfa82e93f143d9528b8eb2963a",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 19 Aug 2021 05:24:53 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "scopes": [
+          "chat"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:54 GMT",
+        "MS-CV": "izwe9HHPB0eRDsyJ881HSg.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0JusdYQAAAAA\u002Bf4ulxbX4TLCKU98BfMnRV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "b32cc8dfa82e93f143d9528b8eb2963a",
+        "X-Processing-Time": "161ms"
+      },
+      "ResponseBody": {
+        "token": "Sanitized",
+        "expiresOn": "2021-08-20T05:24:54.5957689\u002B00:00"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "536",
+        "Content-Type": "application/json",
+        "repeatability-request-id": "contoso-C0A747F1-6245-4307-8267-B974340677DC",
+        "traceparent": "00-1dad537e7bee3444b239f172ef2549a0-9b0ec48c5305e849-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "bb1306307c37cbae7a881d29c3e872c4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "topic": "Thread async from C# sdk",
+        "participants": [
+          {
+            "communicationIdentifier": {
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            },
+            "displayName": "user1"
+          },
+          {
+            "communicationIdentifier": {
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+              }
+            },
+            "displayName": "user2"
+          },
+          {
+            "communicationIdentifier": {
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            },
+            "displayName": "user3"
+          }
+        ]
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:54 GMT",
+        "Location": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2",
+        "MS-CV": "kWvDRF565kSmI\u002BU9ijAiLQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0JusdYQAAAABCZB6OPD2NQLmlZ3zrNxDdV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "bb1306307c37cbae7a881d29c3e872c4",
+        "X-Processing-Time": "472ms"
+      },
+      "ResponseBody": {
+        "chatThread": {
+          "id": "19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2",
+          "topic": "Thread async from C# sdk",
+          "createdOn": "2021-08-19T05:24:54Z",
+          "createdByCommunicationIdentifier": {
+            "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+            "communicationUser": {
+              "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+            }
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "536",
+        "Content-Type": "application/json",
+        "repeatability-request-id": "contoso-D0A747F1-6245-4307-8267-B974340677DD",
+        "traceparent": "00-663140975e44ba4483ff11454ab65e6d-c11100e4ddd0c345-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "933eb37743c948756a3ce6783c91e9bd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "topic": "Thread async from C# sdk",
+        "participants": [
+          {
+            "communicationIdentifier": {
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            },
+            "displayName": "user1"
+          },
+          {
+            "communicationIdentifier": {
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+              }
+            },
+            "displayName": "user2"
+          },
+          {
+            "communicationIdentifier": {
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            },
+            "displayName": "user3"
+          }
+        ]
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:55 GMT",
+        "Location": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3ALyFch5w4JqrQ7wRa7xkFSP7wfMvzxP3NmEpqDwqWnN01@thread.v2",
+        "MS-CV": "rAgijV0ta0KDdLFk09\u002BEGA.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0J\u002BsdYQAAAABHYrwbWzA9SJ2TpZ5z7dsOV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "933eb37743c948756a3ce6783c91e9bd",
+        "X-Processing-Time": "351ms"
+      },
+      "ResponseBody": {
+        "chatThread": {
+          "id": "19:LyFch5w4JqrQ7wRa7xkFSP7wfMvzxP3NmEpqDwqWnN01@thread.v2",
+          "topic": "Thread async from C# sdk",
+          "createdOn": "2021-08-19T05:24:55Z",
+          "createdByCommunicationIdentifier": {
+            "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+            "communicationUser": {
+              "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+            }
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/participants?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-178bf5aad2d7f14787f7bcc5207df5b1-1bbeec5c1ee90a42-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "129f446b7a4a62e1196139a68bc7cf5b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:55 GMT",
+        "MS-CV": "3A0L2slEuEuig3qSRgqBdQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0J\u002BsdYQAAAADrjZ16ymWCSJmK40PkYDhlV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "129f446b7a4a62e1196139a68bc7cf5b",
+        "X-Processing-Time": "89ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            },
+            "displayName": "user1",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+              }
+            },
+            "displayName": "user2",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            },
+            "displayName": "user3",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2?api-version=2021-04-05-preview6",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "34",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-0584d53718ec5c4ab4fa9f538321b9fa-1856f35e3b004845-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "db148e660273ed7191ca50fb95368ee8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "topic": "Updated topic - C# sdk"
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Date": "Thu, 19 Aug 2021 05:24:55 GMT",
+        "MS-CV": "Ax/Xtd23LkGU3u6NlRR01A.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "0J\u002BsdYQAAAABgImK7nK56SYbXrhsHGahnV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "db148e660273ed7191ca50fb95368ee8",
+        "X-Processing-Time": "146ms"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-1fa01013de246443a3776d33d3edd31b-4e8ca44b0f4a484e-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "7fbd609e6048fc7ad1dc7a6709cebda2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:55 GMT",
+        "MS-CV": "s\u002Bof6Izflke7BR2uwSr/iQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0J\u002BsdYQAAAADDb8oZ4\u002BBZRaGLq/AcPNBkV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "7fbd609e6048fc7ad1dc7a6709cebda2",
+        "X-Processing-Time": "90ms"
+      },
+      "ResponseBody": {
+        "id": "19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2",
+        "topic": "Updated topic - C# sdk",
+        "createdOn": "2021-08-19T05:24:54Z",
+        "createdByCommunicationIdentifier": {
+          "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+          "communicationUser": {
+            "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "100",
+        "Content-Type": "application/json",
+        "traceparent": "00-68215821c0bd3c46b54d588b1e795e56-7bc9ec71f22e3c49-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "ae128b6c0d7c6949d3b2807f29e6cde3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "Content for message 1",
+        "senderDisplayName": "DisplayName sender message 1",
+        "type": "text"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:55 GMT",
+        "Location": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages/1629350696080",
+        "MS-CV": "dnMhOQ9IBUiHvVijDgYh7Q.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KOsdYQAAAAAKCjvk6emYQLK70uhjodqXV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "ae128b6c0d7c6949d3b2807f29e6cde3",
+        "X-Processing-Time": "123ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696080"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3ALyFch5w4JqrQ7wRa7xkFSP7wfMvzxP3NmEpqDwqWnN01%40thread.v2/messages?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "100",
+        "Content-Type": "application/json",
+        "traceparent": "00-a43533cdab7cdf43a1ca211acce1e9e1-e662259122887148-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "2b0750d3500a051213170a978809e3c2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "Content for message 2",
+        "senderDisplayName": "DisplayName sender message 1",
+        "type": "html"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:55 GMT",
+        "Location": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3ALyFch5w4JqrQ7wRa7xkFSP7wfMvzxP3NmEpqDwqWnN01@thread.v2/messages/1629350696240",
+        "MS-CV": "e86QVQVcvUGPdXiNt6q3aA.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KOsdYQAAAADtGrYkVQpLTJgHHtbkcLHnV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "2b0750d3500a051213170a978809e3c2",
+        "X-Processing-Time": "127ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696240"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "100",
+        "Content-Type": "application/json",
+        "traceparent": "00-c94eefd3f18d2c44b2aa85955469ebcc-a642e9c60dbec248-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "098ead0cdf24916b1654ac95dffad2eb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "Content for message 3",
+        "senderDisplayName": "DisplayName sender message 1",
+        "type": "text"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:56 GMT",
+        "Location": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages/1629350696405",
+        "MS-CV": "Poq8rZltQEugjw7aVvF\u002Bng.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KOsdYQAAAADPa/wWwUZlTJKn4uxpRgrYV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "098ead0cdf24916b1654ac95dffad2eb",
+        "X-Processing-Time": "129ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696405"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "100",
+        "Content-Type": "application/json",
+        "traceparent": "00-be9989c03efc1747b5dc8fc224ec3987-cef73575cabd6544-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "b893970e91c71c98780c9a6503b2e1c9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "Content for message 4",
+        "senderDisplayName": "DisplayName sender message 1",
+        "type": "html"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:56 GMT",
+        "Location": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages/1629350696565",
+        "MS-CV": "mMBLnPjrWk65goqCuAzddw.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KOsdYQAAAADVKcYliVYrQ4mE0Uu9VVUeV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "b893970e91c71c98780c9a6503b2e1c9",
+        "X-Processing-Time": "131ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696565"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "100",
+        "Content-Type": "application/json",
+        "traceparent": "00-d80b65c61a38e34f963bba66321c9de7-008415b9d23e1341-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "7c72becfc357f3bee57614b5a47c2619",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "Content for message 5",
+        "senderDisplayName": "DisplayName sender message 1",
+        "type": "text"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:56 GMT",
+        "Location": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages/1629350696731",
+        "MS-CV": "hKAwtuwnqkSZgRK7uU/krQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KOsdYQAAAADfa6jRBXxATrdgjZX1SMM8V1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "7c72becfc357f3bee57614b5a47c2619",
+        "X-Processing-Time": "123ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696731"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "100",
+        "Content-Type": "application/json",
+        "traceparent": "00-b7607cb6c9edc547ada524a1416329a3-91aa250449a2d84a-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "f0881e452a757bfb1572911845068d64",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "Content for message 6",
+        "senderDisplayName": "DisplayName sender message 1",
+        "type": "html"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:56 GMT",
+        "Location": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages/1629350696891",
+        "MS-CV": "LIbSZYjkREyTo81jFtzxGg.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KOsdYQAAAAB7pbfSTWhqRaf0sqLsifhVV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "f0881e452a757bfb1572911845068d64",
+        "X-Processing-Time": "136ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696891"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "325",
+        "Content-Type": "application/json",
+        "traceparent": "00-9c90a8a1596bf341b29ab6226813aec2-c8ba76af9f299143-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "21c6e27356874a93d89fd3517ce277fc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "Content for message 7",
+        "senderDisplayName": "DisplayName sender message options message 7",
+        "type": "html",
+        "metadata": {
+          "tags": "tag value",
+          "deliveryMode": "deliveryMode value",
+          "onedriveReferences": "onedriveReferences value",
+          "amsreferences": "[\u0022test url file 1\u0022,\u0022test url file2\u0022]",
+          "key": "value key"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:56 GMT",
+        "Location": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages/1629350697068",
+        "MS-CV": "8Xu7n\u002BRMJ0yfRGFtSE8KEg.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KOsdYQAAAACEFxo/RikrTYvrmEvOiG7AV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "21c6e27356874a93d89fd3517ce277fc",
+        "X-Processing-Time": "122ms"
+      },
+      "ResponseBody": {
+        "id": "1629350697068"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages/1629350696080?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-4d4f48a79b1bea489c16d69c4540ac08-18f951c2760f9449-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "e41f81e5f029a453c2f766e532a6aede",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:56 GMT",
+        "MS-CV": "jvfTf66I2UWOJA3aa2EQiA.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KesdYQAAAAB\u002BRpwMHRDYTJS1APbiFwrMV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "e41f81e5f029a453c2f766e532a6aede",
+        "X-Processing-Time": "109ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696080",
+        "type": "text",
+        "sequenceId": "4",
+        "version": "1629350696080",
+        "content": {
+          "message": "Content for message 1"
+        },
+        "senderDisplayName": "DisplayName sender message 1",
+        "createdOn": "2021-08-19T05:24:56Z",
+        "senderCommunicationIdentifier": {
+          "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+          "communicationUser": {
+            "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3ALyFch5w4JqrQ7wRa7xkFSP7wfMvzxP3NmEpqDwqWnN01%40thread.v2/messages/1629350696240?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-51913e57fcc0594da29ad41a6ef09011-0c0667e66105be42-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "c242b0e804b6ee918a3e18d557a9fe32",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:57 GMT",
+        "MS-CV": "K8lXrviT4U6kZ4WlhLK3Rg.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KesdYQAAAABAHOXgrky6SZMsKbjKjyE5V1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "c242b0e804b6ee918a3e18d557a9fe32",
+        "X-Processing-Time": "86ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696240",
+        "type": "html",
+        "sequenceId": "3",
+        "version": "1629350696240",
+        "content": {
+          "message": "Content for message 2"
+        },
+        "senderDisplayName": "DisplayName sender message 1",
+        "createdOn": "2021-08-19T05:24:56Z",
+        "senderCommunicationIdentifier": {
+          "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+          "communicationUser": {
+            "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages/1629350696405?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-9a945fe4502b92429960cf66bab9c89c-cdda44b3b98ee448-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "c33294faa9e6823b8e225e8fefae1831",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:57 GMT",
+        "MS-CV": "l4LmP27H7UKpRpkCWlvTYw.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KesdYQAAAAB6/u3ktmEXTKDtiqgdaF0jV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "c33294faa9e6823b8e225e8fefae1831",
+        "X-Processing-Time": "89ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696405",
+        "type": "text",
+        "sequenceId": "5",
+        "version": "1629350696405",
+        "content": {
+          "message": "Content for message 3"
+        },
+        "senderDisplayName": "DisplayName sender message 1",
+        "createdOn": "2021-08-19T05:24:56Z",
+        "senderCommunicationIdentifier": {
+          "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+          "communicationUser": {
+            "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages/1629350696565?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-1cb4b08228bc644798ba861e84459653-644f1c660e3eab4e-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "cc69f4f1b5a0e145ef3159ead87d4c19",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:57 GMT",
+        "MS-CV": "yGF9VdevK0eKORI/eA2\u002B/w.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KesdYQAAAADcwPaUFFIeR5f8tbaUlljFV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "cc69f4f1b5a0e145ef3159ead87d4c19",
+        "X-Processing-Time": "89ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696565",
+        "type": "html",
+        "sequenceId": "6",
+        "version": "1629350696565",
+        "content": {
+          "message": "Content for message 4"
+        },
+        "senderDisplayName": "DisplayName sender message 1",
+        "createdOn": "2021-08-19T05:24:56Z",
+        "senderCommunicationIdentifier": {
+          "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+          "communicationUser": {
+            "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages/1629350696731?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-92bdce16ce78fe4da11a0b7eca955a54-ae43a4caf2e1d54a-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "9dea34f9ea743ff874c03394a502fedc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:57 GMT",
+        "MS-CV": "DU7faNy9LU\u002BA79c8eC7BzA.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KesdYQAAAADNXIQN7B/2TqQTDXQHFsjqV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "9dea34f9ea743ff874c03394a502fedc",
+        "X-Processing-Time": "90ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696731",
+        "type": "text",
+        "sequenceId": "7",
+        "version": "1629350696731",
+        "content": {
+          "message": "Content for message 5"
+        },
+        "senderDisplayName": "DisplayName sender message 1",
+        "createdOn": "2021-08-19T05:24:56Z",
+        "senderCommunicationIdentifier": {
+          "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+          "communicationUser": {
+            "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages/1629350696891?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-646b1a39bdcbe8409b1de2c795da4b8c-210175a07e0c5e46-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "63e4e625323f45914f51d4b44f50aa10",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:57 GMT",
+        "MS-CV": "Hu1ORmwPN0mxM1uzfwAyUg.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KesdYQAAAACfqI\u002BiU1BfSbcCB6nt5TRKV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "63e4e625323f45914f51d4b44f50aa10",
+        "X-Processing-Time": "91ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696891",
+        "type": "html",
+        "sequenceId": "8",
+        "version": "1629350696891",
+        "content": {
+          "message": "Content for message 6"
+        },
+        "senderDisplayName": "DisplayName sender message 1",
+        "createdOn": "2021-08-19T05:24:56Z",
+        "senderCommunicationIdentifier": {
+          "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+          "communicationUser": {
+            "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages/1629350697068?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-88a7f4c8f1559149a291606b3d4a3ec6-a32a33b7c92b0d44-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "ba9645d57ac306bdfc2a57e082b13bed",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:57 GMT",
+        "MS-CV": "YEM3BbC5j0GRMxFe6ZOmKQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KesdYQAAAADVabSfxQvtTZkN2Ht\u002BsgxNV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "ba9645d57ac306bdfc2a57e082b13bed",
+        "X-Processing-Time": "91ms"
+      },
+      "ResponseBody": {
+        "id": "1629350697068",
+        "type": "html",
+        "sequenceId": "9",
+        "version": "1629350697068",
+        "content": {
+          "message": "Content for message 7"
+        },
+        "senderDisplayName": "DisplayName sender message options message 7",
+        "createdOn": "2021-08-19T05:24:57Z",
+        "senderCommunicationIdentifier": {
+          "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+          "communicationUser": {
+            "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+          }
+        },
+        "metadata": {
+          "tags": "tag value",
+          "deliveryMode": "deliveryMode value",
+          "onedriveReferences": "onedriveReferences value",
+          "key": "value key",
+          "amsreferences": "[\u0022test url file 1\u0022,\u0022test url file2\u0022]"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-b756d1653757644b9e79f5a7b542d704-7e3339469c332a42-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "f1c57d33e999c7d9a3a54e221643ef24",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:57 GMT",
+        "MS-CV": "0T3OhaUIKkST9DfTKF29fw.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KusdYQAAAADcjPXu6\u002B4YQpLkOK5Ai/XlV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "f1c57d33e999c7d9a3a54e221643ef24",
+        "X-Processing-Time": "102ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "1629350697068",
+            "type": "html",
+            "sequenceId": "9",
+            "version": "1629350697068",
+            "content": {
+              "message": "Content for message 7"
+            },
+            "senderDisplayName": "DisplayName sender message options message 7",
+            "createdOn": "2021-08-19T05:24:57Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            },
+            "metadata": {
+              "tags": "tag value",
+              "deliveryMode": "deliveryMode value",
+              "onedriveReferences": "onedriveReferences value",
+              "key": "value key",
+              "amsreferences": "[\u0022test url file 1\u0022,\u0022test url file2\u0022]"
+            }
+          },
+          {
+            "id": "1629350696891",
+            "type": "html",
+            "sequenceId": "8",
+            "version": "1629350696891",
+            "content": {
+              "message": "Content for message 6"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696731",
+            "type": "text",
+            "sequenceId": "7",
+            "version": "1629350696731",
+            "content": {
+              "message": "Content for message 5"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696565",
+            "type": "html",
+            "sequenceId": "6",
+            "version": "1629350696565",
+            "content": {
+              "message": "Content for message 4"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696405",
+            "type": "text",
+            "sequenceId": "5",
+            "version": "1629350696405",
+            "content": {
+              "message": "Content for message 3"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696080",
+            "type": "text",
+            "sequenceId": "4",
+            "version": "1629350696080",
+            "content": {
+              "message": "Content for message 1"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            }
+          },
+          {
+            "id": "1629350695800",
+            "type": "topicUpdated",
+            "sequenceId": "3",
+            "version": "1629350695800",
+            "content": {
+              "topic": "Updated topic - C# sdk",
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:55Z"
+          },
+          {
+            "id": "1629350694939",
+            "type": "topicUpdated",
+            "sequenceId": "2",
+            "version": "1629350694939",
+            "content": {
+              "topic": "Thread async from C# sdk",
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:54Z"
+          },
+          {
+            "id": "1629350694914",
+            "type": "participantAdded",
+            "sequenceId": "1",
+            "version": "1629350694914",
+            "content": {
+              "participants": [
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                    }
+                  },
+                  "displayName": "user1",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+                    }
+                  },
+                  "displayName": "user2",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+                    }
+                  },
+                  "displayName": "user3",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                }
+              ],
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:54Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3ALyFch5w4JqrQ7wRa7xkFSP7wfMvzxP3NmEpqDwqWnN01%40thread.v2/messages?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-fd5b2f2e9deda948b0a1a0b59cddc997-1db581fde786dc4f-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "60bf2215436bab1828de6715dab1c29d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:57 GMT",
+        "MS-CV": "qL9FPWhoYEqcpuMLAY5Oaw.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KusdYQAAAABeCEc3ce/SRafWEP7e51FnV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "60bf2215436bab1828de6715dab1c29d",
+        "X-Processing-Time": "107ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "1629350696240",
+            "type": "html",
+            "sequenceId": "3",
+            "version": "1629350696240",
+            "content": {
+              "message": "Content for message 2"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            }
+          },
+          {
+            "id": "1629350695380",
+            "type": "topicUpdated",
+            "sequenceId": "2",
+            "version": "1629350695380",
+            "content": {
+              "topic": "Thread async from C# sdk",
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:55Z"
+          },
+          {
+            "id": "1629350695345",
+            "type": "participantAdded",
+            "sequenceId": "1",
+            "version": "1629350695345",
+            "content": {
+              "participants": [
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                    }
+                  },
+                  "displayName": "user1",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+                    }
+                  },
+                  "displayName": "user2",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+                    }
+                  },
+                  "displayName": "user3",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                }
+              ],
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:55Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages?maxPageSize=2\u0026api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-6b14840cfb428b4d8d82306603ec1529-3b42d28db01b0244-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "d281e716b88beb776bcf171e2c9befb8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:58 GMT",
+        "MS-CV": "vyqlGJVhq0SHJYlV41ITwA.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KusdYQAAAAACZtp6N\u002BytSa9JC/Dgl9/mV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "d281e716b88beb776bcf171e2c9befb8",
+        "X-Processing-Time": "89ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "1629350697068",
+            "type": "html",
+            "sequenceId": "9",
+            "version": "1629350697068",
+            "content": {
+              "message": "Content for message 7"
+            },
+            "senderDisplayName": "DisplayName sender message options message 7",
+            "createdOn": "2021-08-19T05:24:57Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            },
+            "metadata": {
+              "tags": "tag value",
+              "deliveryMode": "deliveryMode value",
+              "onedriveReferences": "onedriveReferences value",
+              "key": "value key",
+              "amsreferences": "[\u0022test url file 1\u0022,\u0022test url file2\u0022]"
+            }
+          },
+          {
+            "id": "1629350696891",
+            "type": "html",
+            "sequenceId": "8",
+            "version": "1629350696891",
+            "content": {
+              "message": "Content for message 6"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          }
+        ],
+        "nextLink": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages?syncState=3e3900000031393a4748537557534572486e45776835776c6841463748663053783841325a6a7079664165594a3758707a597731407468726561642e763201bb97de5c7b0100006c98de5c7b010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2021-04-05-preview6"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages?syncState=3e3900000031393a4748537557534572486e45776835776c6841463748663053783841325a6a7079664165594a3758707a597731407468726561642e763201bb97de5c7b0100006c98de5c7b010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-7ce288ed207bc94c8ff9b48d2359b40e-f1e4623f9c85e248-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "5fca333adaf2f081641ac9ba82c3ecf1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:58 GMT",
+        "MS-CV": "ya6HIKSYkE6n26VS94fW4w.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KusdYQAAAACYm3MMg8VbRZg4iVEVXSWDV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "5fca333adaf2f081641ac9ba82c3ecf1",
+        "X-Processing-Time": "107ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "1629350696731",
+            "type": "text",
+            "sequenceId": "7",
+            "version": "1629350696731",
+            "content": {
+              "message": "Content for message 5"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696565",
+            "type": "html",
+            "sequenceId": "6",
+            "version": "1629350696565",
+            "content": {
+              "message": "Content for message 4"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          }
+        ],
+        "nextLink": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages?syncState=3e3900000031393a4748537557534572486e45776835776c6841463748663053783841325a6a7079664165594a3758707a597731407468726561642e7632017596de5c7b0100006c98de5c7b010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2021-04-05-preview6"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages?syncState=3e3900000031393a4748537557534572486e45776835776c6841463748663053783841325a6a7079664165594a3758707a597731407468726561642e7632017596de5c7b0100006c98de5c7b010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-fdf322bc47ae5141bacb2f2fa4a4ff38-dcfc488092f2d147-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "2e0cb0e21dc25d98abd3f49b2bfa7e8d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:58 GMT",
+        "MS-CV": "TkUKdBWcJEKemul\u002Bv6DuWw.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KusdYQAAAADp4icZIj/HSbxFlAy2dFpaV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "2e0cb0e21dc25d98abd3f49b2bfa7e8d",
+        "X-Processing-Time": "108ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "1629350696405",
+            "type": "text",
+            "sequenceId": "5",
+            "version": "1629350696405",
+            "content": {
+              "message": "Content for message 3"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696080",
+            "type": "text",
+            "sequenceId": "4",
+            "version": "1629350696080",
+            "content": {
+              "message": "Content for message 1"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            }
+          }
+        ],
+        "nextLink": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages?syncState=3e3900000031393a4748537557534572486e45776835776c6841463748663053783841325a6a7079664165594a3758707a597731407468726561642e7632019094de5c7b0100006c98de5c7b010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2021-04-05-preview6"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages?syncState=3e3900000031393a4748537557534572486e45776835776c6841463748663053783841325a6a7079664165594a3758707a597731407468726561642e7632019094de5c7b0100006c98de5c7b010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-62804fe54fb87f4e907b6404858a2ac0-fd56cfc97941ed4c-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "a7daaeef63e73bab66916d71efbd68a7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:58 GMT",
+        "MS-CV": "VuJb3In6PEi\u002BJQMgIhLw7g.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KusdYQAAAAALz1JsXUQIQpSLf9VzanD0V1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "a7daaeef63e73bab66916d71efbd68a7",
+        "X-Processing-Time": "119ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "1629350695800",
+            "type": "topicUpdated",
+            "sequenceId": "3",
+            "version": "1629350695800",
+            "content": {
+              "topic": "Updated topic - C# sdk",
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:55Z"
+          },
+          {
+            "id": "1629350694939",
+            "type": "topicUpdated",
+            "sequenceId": "2",
+            "version": "1629350694939",
+            "content": {
+              "topic": "Thread async from C# sdk",
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:54Z"
+          }
+        ],
+        "nextLink": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages?syncState=3e3900000031393a4748537557534572486e45776835776c6841463748663053783841325a6a7079664165594a3758707a597731407468726561642e7632011b90de5c7b0100006c98de5c7b010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2021-04-05-preview6"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages?syncState=3e3900000031393a4748537557534572486e45776835776c6841463748663053783841325a6a7079664165594a3758707a597731407468726561642e7632011b90de5c7b0100006c98de5c7b010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=2\u0026api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-b3477a9c6df6c04783e06a9b9c2f11ab-65ee75d1486c6944-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "7b3b26e2c18e1df69a6cb31ee5e5c46a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:58 GMT",
+        "MS-CV": "\u002BXFOFt\u002BovEaMMzw8yA4d6A.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KusdYQAAAAC\u002BLBYqx8ymTayX9BedzG0PV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "7b3b26e2c18e1df69a6cb31ee5e5c46a",
+        "X-Processing-Time": "105ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "1629350694914",
+            "type": "participantAdded",
+            "sequenceId": "1",
+            "version": "1629350694914",
+            "content": {
+              "participants": [
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                    }
+                  },
+                  "displayName": "user1",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+                    }
+                  },
+                  "displayName": "user2",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+                    }
+                  },
+                  "displayName": "user3",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                }
+              ],
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:54Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages/1629350696080?api-version=2021-04-05-preview6",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "47",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-e8b8a34f48fd2e4f8ae8104040b82d96-d0233cbeada40b47-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "d4cb3b9b45e97e0a05d0c830b0276eee",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "This is message 1 content updated"
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Date": "Thu, 19 Aug 2021 05:24:58 GMT",
+        "MS-CV": "GnxPGuxX/0CLQuyKs6t/7w.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "0K\u002BsdYQAAAAA9mWA/eAWKTLiMl1ZhpH3JV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "d4cb3b9b45e97e0a05d0c830b0276eee",
+        "X-Processing-Time": "225ms"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages/1629350696080?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-0f15ce6bf39462408dcfe06deff21c8e-9725be6f343cfb47-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "05b94d6a03be2dfeb8bd0c7ab08c5680",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:59 GMT",
+        "MS-CV": "uxeOYNc\u002Bj0uVIFIhUxUWqA.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0K\u002BsdYQAAAAC9Qk7UX0hOT4jQKVNjOO1fV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "05b94d6a03be2dfeb8bd0c7ab08c5680",
+        "X-Processing-Time": "86ms"
+      },
+      "ResponseBody": {
+        "id": "1629350696080",
+        "type": "text",
+        "sequenceId": "10",
+        "version": "1629350699163",
+        "content": {
+          "message": "This is message 1 content updated"
+        },
+        "senderDisplayName": "DisplayName sender message 1",
+        "createdOn": "2021-08-19T05:24:56Z",
+        "senderCommunicationIdentifier": {
+          "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+          "communicationUser": {
+            "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+          }
+        },
+        "editedOn": "2021-08-19T05:24:59Z"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages/1629350696080?api-version=2021-04-05-preview6",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-ba566b142343e94390b1bf24b5216c65-6ee375de0dc1ba44-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "b3d502cc94f19dbe1bbc76bef8c56c72",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Date": "Thu, 19 Aug 2021 05:24:59 GMT",
+        "MS-CV": "I1e6T4NFV0mVnaGsvpLANA.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "0K\u002BsdYQAAAACvv22CNWAqSrlyVfw8xXM\u002BV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "b3d502cc94f19dbe1bbc76bef8c56c72",
+        "X-Processing-Time": "127ms"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages/1629350697068?api-version=2021-04-05-preview6",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "238",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-e45a3a137b41294688ad3d707c88f4a4-87ca33350852364c-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "98b3c4febe2c98ab3d9d1c2b388fce78",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "Content for message 7 - updated",
+        "metadata": {
+          "tags": "",
+          "deliveryMode": "deliveryMode value - updated",
+          "onedriveReferences": "onedriveReferences value - updated",
+          "amsreferences": "[\u0022test url file 3\u0022]",
+          "key": "value key"
+        }
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Date": "Thu, 19 Aug 2021 05:24:59 GMT",
+        "MS-CV": "s8a9BkEftkKqCULPS9QbpQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "0K\u002BsdYQAAAAAVPsAdBvDRRpIWcQy1YRLfV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "98b3c4febe2c98ab3d9d1c2b388fce78",
+        "X-Processing-Time": "218ms"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages/1629350697068?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-00586f7ef5003f489f57ffda3f4f1a53-000d9d0d050ce44c-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "ad63477abb51d6fc8e1ce9018c4035f2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:59 GMT",
+        "MS-CV": "9mrMZTM\u002BZkGmZMkUoTd06Q.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0K\u002BsdYQAAAACJ9Dt8tAHlSK8aB9hUOQ9zV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "ad63477abb51d6fc8e1ce9018c4035f2",
+        "X-Processing-Time": "86ms"
+      },
+      "ResponseBody": {
+        "id": "1629350697068",
+        "type": "html",
+        "sequenceId": "12",
+        "version": "1629350699718",
+        "content": {
+          "message": "Content for message 7 - updated"
+        },
+        "senderDisplayName": "DisplayName sender message options message 7",
+        "createdOn": "2021-08-19T05:24:57Z",
+        "senderCommunicationIdentifier": {
+          "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+          "communicationUser": {
+            "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+          }
+        },
+        "editedOn": "2021-08-19T05:24:59Z",
+        "metadata": {
+          "deliveryMode": "deliveryMode value - updated",
+          "onedriveReferences": "onedriveReferences value - updated",
+          "key": "value key",
+          "amsreferences": "[\u0022test url file 3\u0022]"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-622a041df0c64141a8a249396ab06569-33bd6f218ae8934c-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "eb7c9a51bed80e54573d75547893648c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:59 GMT",
+        "MS-CV": "p9EQiZIGGkKu4QW\u002BWm4B3w.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0K\u002BsdYQAAAACof2vrXmAWR4JAq\u002Bmvr3CyV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "eb7c9a51bed80e54573d75547893648c",
+        "X-Processing-Time": "101ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "1629350697068",
+            "type": "html",
+            "sequenceId": "12",
+            "version": "1629350699718",
+            "content": {
+              "message": "Content for message 7 - updated"
+            },
+            "senderDisplayName": "DisplayName sender message options message 7",
+            "createdOn": "2021-08-19T05:24:57Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            },
+            "editedOn": "2021-08-19T05:24:59Z",
+            "metadata": {
+              "deliveryMode": "deliveryMode value - updated",
+              "onedriveReferences": "onedriveReferences value - updated",
+              "key": "value key",
+              "amsreferences": "[\u0022test url file 3\u0022]"
+            }
+          },
+          {
+            "id": "1629350696080",
+            "type": "text",
+            "sequenceId": "11",
+            "version": "1629350699474",
+            "content": {
+              "message": ""
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            },
+            "deletedOn": "2021-08-19T05:24:59Z"
+          },
+          {
+            "id": "1629350696891",
+            "type": "html",
+            "sequenceId": "8",
+            "version": "1629350696891",
+            "content": {
+              "message": "Content for message 6"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696731",
+            "type": "text",
+            "sequenceId": "7",
+            "version": "1629350696731",
+            "content": {
+              "message": "Content for message 5"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696565",
+            "type": "html",
+            "sequenceId": "6",
+            "version": "1629350696565",
+            "content": {
+              "message": "Content for message 4"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696405",
+            "type": "text",
+            "sequenceId": "5",
+            "version": "1629350696405",
+            "content": {
+              "message": "Content for message 3"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350695800",
+            "type": "topicUpdated",
+            "sequenceId": "3",
+            "version": "1629350695800",
+            "content": {
+              "topic": "Updated topic - C# sdk",
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:55Z"
+          },
+          {
+            "id": "1629350694939",
+            "type": "topicUpdated",
+            "sequenceId": "2",
+            "version": "1629350694939",
+            "content": {
+              "topic": "Thread async from C# sdk",
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:54Z"
+          },
+          {
+            "id": "1629350694914",
+            "type": "participantAdded",
+            "sequenceId": "1",
+            "version": "1629350694914",
+            "content": {
+              "participants": [
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                    }
+                  },
+                  "displayName": "user1",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+                    }
+                  },
+                  "displayName": "user2",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+                    }
+                  },
+                  "displayName": "user3",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                }
+              ],
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:54Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/participants?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-c5d3d19bb22f2c41af1a3b40fa5740ea-878c8b40b5c67a4b-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "b044feeebf614220c8dd090fd5a90bfd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:24:59 GMT",
+        "MS-CV": "xUfMLslly0eEV6ld\u002BJyKxQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LOsdYQAAAAALba1iwme8RaW11uQpOmNxV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "b044feeebf614220c8dd090fd5a90bfd",
+        "X-Processing-Time": "98ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            },
+            "displayName": "user1",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+              }
+            },
+            "displayName": "user2",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            },
+            "displayName": "user3",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/participants/:add?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "179",
+        "Content-Type": "application/json",
+        "traceparent": "00-da9c72a32a361c4bb35c7e67be39b13b-2cad80b8be953f43-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "9eda2968e313bb9ff355561345a85dfb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "participants": [
+          {
+            "communicationIdentifier": {
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab"
+              }
+            },
+            "displayName": "user4"
+          }
+        ]
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:00 GMT",
+        "MS-CV": "YYCMBSlh2ESlgVipx1FlWQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LOsdYQAAAACz9IPXyvglTrXntIZYyI4tV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "9eda2968e313bb9ff355561345a85dfb",
+        "X-Processing-Time": "141ms"
+      },
+      "ResponseBody": {}
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/participants/:add?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "179",
+        "Content-Type": "application/json",
+        "traceparent": "00-7326316d56f8984ab90b30951ed93943-2411eaadad0f7648-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "8e135db884fb9190793923fbb44438ad",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "participants": [
+          {
+            "communicationIdentifier": {
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac"
+              }
+            },
+            "displayName": "user5"
+          }
+        ]
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:00 GMT",
+        "MS-CV": "1N\u002B6p6GKDU2m5MkCq89YGQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LOsdYQAAAADGfdjt1Ha/SqG9lI0g/7oYV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "8e135db884fb9190793923fbb44438ad",
+        "X-Processing-Time": "179ms"
+      },
+      "ResponseBody": {}
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/participants?maxPageSize=2\u0026api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-4866ea757d262c4e95d582be80eec5ce-42a16dd32e90ae41-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "4feb7832c5b90a795e88bc0b690cfd1f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:00 GMT",
+        "MS-CV": "A3ELBhhRT0\u002B\u002BbdVF7yViWw.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LOsdYQAAAAAFt4WcyZBZToIxhFUS6GH7V1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "4feb7832c5b90a795e88bc0b690cfd1f",
+        "X-Processing-Time": "103ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            },
+            "displayName": "user1",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+              }
+            },
+            "displayName": "user2",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          }
+        ],
+        "nextLink": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/participants?skip=2\u0026maxPageSize=2\u0026api-version=2021-04-05-preview6"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/participants?skip=2\u0026maxPageSize=2\u0026api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-501372f41d8f3f4eb1758287e54ec28d-33cfe547259a284d-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "77570e807d95e301984825d9c0a407af",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:00 GMT",
+        "MS-CV": "H/PCOZ9290uBSLTOFklNMQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LOsdYQAAAAAq7T3pGhcXTLJnv7hwzL26V1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "77570e807d95e301984825d9c0a407af",
+        "X-Processing-Time": "88ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            },
+            "displayName": "user3",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab"
+              }
+            },
+            "displayName": "user4",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          }
+        ],
+        "nextLink": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/participants?skip=4\u0026maxPageSize=2\u0026api-version=2021-04-05-preview6"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/participants?skip=4\u0026maxPageSize=2\u0026api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-4b27ade37d42ea43a0414ff7ebcbbdab-e439131e58414040-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "cde1a81c0ebdf341e4092f73c784286c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:00 GMT",
+        "MS-CV": "6h1fHKoQqUWNU1CQXuXmOQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LOsdYQAAAAA\u002ByiSQvVKcSaF/UATBWtUaV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "cde1a81c0ebdf341e4092f73c784286c",
+        "X-Processing-Time": "87ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac"
+              }
+            },
+            "displayName": "user5",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/participants?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-91e84826afcca642822cb20f7ff4b507-672ae4d13ef5864b-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "a57a043cc0ecb4177607b6719f9f4aba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:00 GMT",
+        "MS-CV": "T595Q1qMoUuxQ/3rYC5uHw.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LOsdYQAAAAAtV8jXSBdWS5LKQkn2aGnLV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "a57a043cc0ecb4177607b6719f9f4aba",
+        "X-Processing-Time": "86ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            },
+            "displayName": "user1",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+              }
+            },
+            "displayName": "user2",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            },
+            "displayName": "user3",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab"
+              }
+            },
+            "displayName": "user4",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac"
+              }
+            },
+            "displayName": "user5",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-affced975dab524390a3edbec5375be9-3feac46d1b4b9548-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "c0ee0d802f2b7262cd64938c4d8e1c14",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:00 GMT",
+        "MS-CV": "3ERFUyoPPUy4FVo7vS/YAQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LesdYQAAAADXsSn4T1kCTJ2woumQlxaFV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "c0ee0d802f2b7262cd64938c4d8e1c14",
+        "X-Processing-Time": "99ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "1629350700495",
+            "type": "participantAdded",
+            "sequenceId": "14",
+            "version": "1629350700495",
+            "content": {
+              "participants": [
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac"
+                    }
+                  },
+                  "displayName": "user5",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                }
+              ],
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:25:00Z"
+          },
+          {
+            "id": "1629350700294",
+            "type": "participantAdded",
+            "sequenceId": "13",
+            "version": "1629350700294",
+            "content": {
+              "participants": [
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab"
+                    }
+                  },
+                  "displayName": "user4",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                }
+              ],
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:25:00Z"
+          },
+          {
+            "id": "1629350697068",
+            "type": "html",
+            "sequenceId": "12",
+            "version": "1629350699718",
+            "content": {
+              "message": "Content for message 7 - updated"
+            },
+            "senderDisplayName": "DisplayName sender message options message 7",
+            "createdOn": "2021-08-19T05:24:57Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            },
+            "editedOn": "2021-08-19T05:24:59Z",
+            "metadata": {
+              "deliveryMode": "deliveryMode value - updated",
+              "onedriveReferences": "onedriveReferences value - updated",
+              "key": "value key",
+              "amsreferences": "[\u0022test url file 3\u0022]"
+            }
+          },
+          {
+            "id": "1629350696080",
+            "type": "text",
+            "sequenceId": "11",
+            "version": "1629350699474",
+            "content": {
+              "message": ""
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            },
+            "deletedOn": "2021-08-19T05:24:59Z"
+          },
+          {
+            "id": "1629350696891",
+            "type": "html",
+            "sequenceId": "8",
+            "version": "1629350696891",
+            "content": {
+              "message": "Content for message 6"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696731",
+            "type": "text",
+            "sequenceId": "7",
+            "version": "1629350696731",
+            "content": {
+              "message": "Content for message 5"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696565",
+            "type": "html",
+            "sequenceId": "6",
+            "version": "1629350696565",
+            "content": {
+              "message": "Content for message 4"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696405",
+            "type": "text",
+            "sequenceId": "5",
+            "version": "1629350696405",
+            "content": {
+              "message": "Content for message 3"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350695800",
+            "type": "topicUpdated",
+            "sequenceId": "3",
+            "version": "1629350695800",
+            "content": {
+              "topic": "Updated topic - C# sdk",
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:55Z"
+          },
+          {
+            "id": "1629350694939",
+            "type": "topicUpdated",
+            "sequenceId": "2",
+            "version": "1629350694939",
+            "content": {
+              "topic": "Thread async from C# sdk",
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:54Z"
+          }
+        ],
+        "nextLink": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages?syncState=3e3900000031393a4748537557534572486e45776835776c6841463748663053783841325a6a7079664165594a3758707a597731407468726561642e7632011b90de5c7b010000cfa5de5c7b010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=10\u0026api-version=2021-04-05-preview6"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages?syncState=3e3900000031393a4748537557534572486e45776835776c6841463748663053783841325a6a7079664165594a3758707a597731407468726561642e7632011b90de5c7b010000cfa5de5c7b010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=10\u0026api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-f289fec1b762f04b92a01a512c7867ae-7803b4669c07af49-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "bb9db91f62295cc3912c57b557d05344",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:01 GMT",
+        "MS-CV": "51biquMxLkSLQvoqwxOKbA.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LesdYQAAAADgYaLZ6roISZDWHGZ5xkToV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "bb9db91f62295cc3912c57b557d05344",
+        "X-Processing-Time": "119ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "1629350694914",
+            "type": "participantAdded",
+            "sequenceId": "1",
+            "version": "1629350694914",
+            "content": {
+              "participants": [
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                    }
+                  },
+                  "displayName": "user1",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+                    }
+                  },
+                  "displayName": "user2",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+                    }
+                  },
+                  "displayName": "user3",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                }
+              ],
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:54Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/participants/:remove?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "110",
+        "Content-Type": "application/json",
+        "traceparent": "00-5edb819e95f5af4cb8d515faa75ee555-626457468bb8444d-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "baf274be68950c41a208d8872d8a66e7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "communicationUser": {
+          "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab"
+        }
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Date": "Thu, 19 Aug 2021 05:25:01 GMT",
+        "MS-CV": "u1XWrFOvXEyH3wSYqGb\u002BJQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "0LesdYQAAAAA6DTWSOuXTRKSbDkzrQEpCV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "baf274be68950c41a208d8872d8a66e7",
+        "X-Processing-Time": "177ms"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/participants?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-bdad0be2a120de43856f1ac45595247c-a0e97673a1af3e4a-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "e651a2eb8e021e904a922ffed8ac1afc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:01 GMT",
+        "MS-CV": "1msy2t/glkOQNaFhL1YQxg.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LesdYQAAAAAUvW1N5gYKR4YaX\u002BB2oqDYV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "e651a2eb8e021e904a922ffed8ac1afc",
+        "X-Processing-Time": "84ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            },
+            "displayName": "user1",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+              }
+            },
+            "displayName": "user2",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            },
+            "displayName": "user3",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          },
+          {
+            "communicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac"
+              }
+            },
+            "displayName": "user5",
+            "shareHistoryTime": "1970-01-01T00:00:00Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-5aca0fd785607c4eac850c85092e818a-ccac6c377c6e7b48-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "d9ce4e11619cb67e789019218a3b2e06",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:01 GMT",
+        "MS-CV": "tdejQN9VLUePwcvsEGJyBw.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LesdYQAAAABysga/rhiBTqAkWW5I56B8V1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "d9ce4e11619cb67e789019218a3b2e06",
+        "X-Processing-Time": "97ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "1629350701445",
+            "type": "participantRemoved",
+            "sequenceId": "15",
+            "version": "1629350701445",
+            "content": {
+              "participants": [
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab"
+                    }
+                  },
+                  "displayName": "user4",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                }
+              ],
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:25:01Z"
+          },
+          {
+            "id": "1629350700495",
+            "type": "participantAdded",
+            "sequenceId": "14",
+            "version": "1629350700495",
+            "content": {
+              "participants": [
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-318c-3ef0-8b3a0d0032ac"
+                    }
+                  },
+                  "displayName": "user5",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                }
+              ],
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:25:00Z"
+          },
+          {
+            "id": "1629350700294",
+            "type": "participantAdded",
+            "sequenceId": "13",
+            "version": "1629350700294",
+            "content": {
+              "participants": [
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab"
+                    }
+                  },
+                  "displayName": "user4",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                }
+              ],
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:25:00Z"
+          },
+          {
+            "id": "1629350697068",
+            "type": "html",
+            "sequenceId": "12",
+            "version": "1629350699718",
+            "content": {
+              "message": "Content for message 7 - updated"
+            },
+            "senderDisplayName": "DisplayName sender message options message 7",
+            "createdOn": "2021-08-19T05:24:57Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            },
+            "editedOn": "2021-08-19T05:24:59Z",
+            "metadata": {
+              "deliveryMode": "deliveryMode value - updated",
+              "onedriveReferences": "onedriveReferences value - updated",
+              "key": "value key",
+              "amsreferences": "[\u0022test url file 3\u0022]"
+            }
+          },
+          {
+            "id": "1629350696080",
+            "type": "text",
+            "sequenceId": "11",
+            "version": "1629350699474",
+            "content": {
+              "message": ""
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+              }
+            },
+            "deletedOn": "2021-08-19T05:24:59Z"
+          },
+          {
+            "id": "1629350696891",
+            "type": "html",
+            "sequenceId": "8",
+            "version": "1629350696891",
+            "content": {
+              "message": "Content for message 6"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696731",
+            "type": "text",
+            "sequenceId": "7",
+            "version": "1629350696731",
+            "content": {
+              "message": "Content for message 5"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696565",
+            "type": "html",
+            "sequenceId": "6",
+            "version": "1629350696565",
+            "content": {
+              "message": "Content for message 4"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350696405",
+            "type": "text",
+            "sequenceId": "5",
+            "version": "1629350696405",
+            "content": {
+              "message": "Content for message 3"
+            },
+            "senderDisplayName": "DisplayName sender message 1",
+            "createdOn": "2021-08-19T05:24:56Z",
+            "senderCommunicationIdentifier": {
+              "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+              "communicationUser": {
+                "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+              }
+            }
+          },
+          {
+            "id": "1629350695800",
+            "type": "topicUpdated",
+            "sequenceId": "3",
+            "version": "1629350695800",
+            "content": {
+              "topic": "Updated topic - C# sdk",
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:55Z"
+          }
+        ],
+        "nextLink": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages?syncState=3e3900000031393a4748537557534572486e45776835776c6841463748663053783841325a6a7079664165594a3758707a597731407468726561642e7632017893de5c7b01000085a9de5c7b010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=10\u0026api-version=2021-04-05-preview6"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2/messages?syncState=3e3900000031393a4748537557534572486e45776835776c6841463748663053783841325a6a7079664165594a3758707a597731407468726561642e7632017893de5c7b01000085a9de5c7b010000\u0026startTime=1%2F1%2F1970%2012%3A00%3A00%20AM%20%2B00%3A00\u0026maxPageSize=10\u0026api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-e1598b27bc6842448aa4ce22ecf896cc-a8382687387f7443-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "b5c96fc56d7f2f42e3d36f02394234f5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:01 GMT",
+        "MS-CV": "X89aEY4BGEiUtrh1RxZ0XA.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LesdYQAAAACdCl03JfK/TZz2daYw/i50V1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "b5c96fc56d7f2f42e3d36f02394234f5",
+        "X-Processing-Time": "115ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "1629350694939",
+            "type": "topicUpdated",
+            "sequenceId": "2",
+            "version": "1629350694939",
+            "content": {
+              "topic": "Thread async from C# sdk",
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:54Z"
+          },
+          {
+            "id": "1629350694914",
+            "type": "participantAdded",
+            "sequenceId": "1",
+            "version": "1629350694914",
+            "content": {
+              "participants": [
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                    }
+                  },
+                  "displayName": "user1",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2cd3-3ef0-8b3a0d0032a9"
+                    }
+                  },
+                  "displayName": "user2",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                },
+                {
+                  "communicationIdentifier": {
+                    "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa",
+                    "communicationUser": {
+                      "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2e72-3ef0-8b3a0d0032aa"
+                    }
+                  },
+                  "displayName": "user3",
+                  "shareHistoryTime": "1970-01-01T00:00:00Z"
+                }
+              ],
+              "initiatorCommunicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+                }
+              }
+            },
+            "createdOn": "2021-08-19T05:24:54Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/messages/1629350701445?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-8fe97cfff0a8cd4db135baf4a27eeb26-96ce1bb7bef49846-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "de76dbed8dbc894a249a6e72746f940e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:01 GMT",
+        "MS-CV": "6vHCi9Zmp0q15SfcpPWajw.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LesdYQAAAADF8XKvPBIiT6hYWvcD97\u002BfV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "de76dbed8dbc894a249a6e72746f940e",
+        "X-Processing-Time": "85ms"
+      },
+      "ResponseBody": {
+        "id": "1629350701445",
+        "type": "participantRemoved",
+        "sequenceId": "15",
+        "version": "1629350701445",
+        "content": {
+          "participants": [
+            {
+              "communicationIdentifier": {
+                "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab",
+                "communicationUser": {
+                  "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2fff-3ef0-8b3a0d0032ab"
+                }
+              },
+              "displayName": "user4",
+              "shareHistoryTime": "1970-01-01T00:00:00Z"
+            }
+          ],
+          "initiatorCommunicationIdentifier": {
+            "rawId": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8",
+            "communicationUser": {
+              "id": "8:acs:e4be8c6e-36c9-4f85-a762-3d63edd98738_0000000b-fcc0-2b2b-3ef0-8b3a0d0032a8"
+            }
+          }
+        },
+        "createdOn": "2021-08-19T05:25:01Z"
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/typing?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "traceparent": "00-e7ff3cd4502f4446a5c4505edfa1b902-53c809b6110b6c4e-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "6838286465e3a47d0c9ef5c9f17b7d35",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-05-preview6",
+        "Content-Length": "0",
+        "Date": "Thu, 19 Aug 2021 05:25:01 GMT",
+        "MS-CV": "jUOIb\u002BEEIE2sdW3jo3yf7Q.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "0LusdYQAAAACzh1idySXkTIBTmXdvYe6dV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "6838286465e3a47d0c9ef5c9f17b7d35",
+        "X-Processing-Time": "98ms"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2/typing?api-version=2021-04-05-preview6",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Content-Length": "42",
+        "Content-Type": "application/json",
+        "traceparent": "00-096f46475d6a584e82001713ce285d7b-b3c8693e94900f41-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "ae34245b4fc4384a253f91e4fecfba74",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "senderDisplayName": "sender diplay name"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-05-preview6",
+        "Content-Length": "0",
+        "Date": "Thu, 19 Aug 2021 05:25:02 GMT",
+        "MS-CV": "ewS3txcNmki10D6Pe0009g.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "0LusdYQAAAAAWhRYnnZWgQKbWIM\u002BRO0ncV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "ae34245b4fc4384a253f91e4fecfba74",
+        "X-Processing-Time": "106ms"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads?api-version=2021-04-05-preview6",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-85817cf4a2798340be932ff6f9c7773b-e1a74a7d6625aa4d-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "109e603fcc0988115ed2d21d988197a8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Aug 2021 05:25:02 GMT",
+        "MS-CV": "bsckE6ybuUOsFLqAF5jfiQ.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0LusdYQAAAABkNewahS3lQYCnHJHHzxRZV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "109e603fcc0988115ed2d21d988197a8",
+        "X-Processing-Time": "90ms"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "19:GHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1@thread.v2",
+            "topic": "Updated topic - C# sdk",
+            "lastMessageReceivedOn": "2021-08-19T05:25:00Z"
+          },
+          {
+            "id": "19:LyFch5w4JqrQ7wRa7xkFSP7wfMvzxP3NmEpqDwqWnN01@thread.v2",
+            "topic": "Thread async from C# sdk",
+            "lastMessageReceivedOn": "2021-08-19T05:24:56Z"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://nibhaticommunication-communication.communication.azure.com/chat/threads/19%3AGHSuWSErHnEwh5wlhAF7Hf0Sx8A2ZjpyfAeYJ7XpzYw1%40thread.v2?api-version=2021-04-05-preview6",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "traceparent": "00-76cdf0c7198131479c4a113e364a9020-8cd32c82296a8640-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Chat/1.1.0-alpha.20210818.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "4f17381de63a144ade0043a3d499a53c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-09-21-preview2, 2020-11-01-preview3, 2021-01-27-preview4, 2021-03-01-preview5, 2021-03-07, 2021-04-05-preview6",
+        "Date": "Thu, 19 Aug 2021 05:25:02 GMT",
+        "MS-CV": "xvQaKVpmEkuckJoot1uuFA.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "0LusdYQAAAACZXTEt0L5mTKRgi8vuXlKKV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "4f17381de63a144ade0043a3d499a53c",
+        "X-Processing-Time": "124ms"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://nibhaticommunication-communication.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "2070161718"
+  }
+}

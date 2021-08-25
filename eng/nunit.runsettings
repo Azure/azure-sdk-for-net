@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+    <NUnit>
+        <ConsoleOut>0</ConsoleOut>
+    </NUnit>
+    <RunConfiguration>
+        <TargetPlatform>x64</TargetPlatform>
+    </RunConfiguration>
+    
+    <TestRunParameters>
+        <!-- Controls which service versions are running in live mode  -->
+        <!-- <Parameter name="LiveTestServiceVersions" value="V2019_02_02" /> -->
+
+        <!-- Disables auto recording when using [RecordedTest] attribute -->
+        <!-- <Parameter name="DisableAutoRecording" value="true" /> -->
+
+        <!-- Change the test mode -->
+        <!-- <Parameter name="TestMode" value="Record" /> -->
+    </TestRunParameters>
+
+</RunSettings>

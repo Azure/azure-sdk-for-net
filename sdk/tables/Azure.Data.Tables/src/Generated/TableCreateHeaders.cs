@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class TableCreateHeaders
+    internal partial class TableCreateHeaders
     {
         private readonly Response _response;
         public TableCreateHeaders(Response response)

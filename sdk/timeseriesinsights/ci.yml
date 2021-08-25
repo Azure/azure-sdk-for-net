@@ -2,7 +2,7 @@
 trigger:
   branches:
     include:
-    - master
+    - main
     - hotfix/*
     - release/*
   paths:
@@ -12,7 +12,7 @@ trigger:
 pr:
   branches:
     include:
-    - master
+    - main
     - feature/*
     - hotfix/*
     - release/*
@@ -25,7 +25,6 @@ extends:
   parameters:
     ServiceDirectory: timeseriesinsights
     ArtifactName: packages
-    TestPipeline: true
     Artifacts:
-    - name: Azure.Iot.TimeSeriesInsights
+    - name: Azure.IoT.TimeSeriesInsights
       safeName: AzureTimeSeriesInsights

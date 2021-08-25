@@ -22,6 +22,13 @@ namespace Azure.Messaging.EventHubs.Producer
         private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
         /// <summary>
+        ///   A unique name used to identify the consumer.  If <c>null</c> or empty, a GUID will be used as the
+        ///   identifier.
+        /// </summary>
+        ///
+        public string Identifier { get; set; }
+
+        /// <summary>
         ///   Indicates whether or not the producer should enable idempotent publishing to the Event Hub partitions.  If
         ///   enabled, the producer will only be able to publish directly to partitions; it will not be able to publish to
         ///   the Event Hubs gateway for automatic partition routing nor using a partition key.
@@ -29,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <value><c>true</c> if the producer should enable idempotent partition publishing; otherwise, <c>false</c>.</value>
         ///
-        public bool EnableIdempotentPartitions { get; set; }
+        internal bool EnableIdempotentPartitions { get; set; }
 
         /// <summary>
         ///   The set of options that can be specified to influence publishing behavior specific to the configured Event Hub partition.  These
@@ -44,7 +51,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   These options are ignored when publishing to the Event Hubs gateway for automatic routing or when using a partition key.
         /// </remarks>
         ///
-        public Dictionary<string, PartitionPublishingOptions> PartitionOptions { get; } = new Dictionary<string, PartitionPublishingOptions>();
+        internal Dictionary<string, PartitionPublishingOptions> PartitionOptions { get; } = new Dictionary<string, PartitionPublishingOptions>();
 
         /// <summary>
         ///   The options used for configuring the connection to the Event Hubs service.
@@ -115,6 +122,7 @@ namespace Azure.Messaging.EventHubs.Producer
         {
             var copiedOptions = new EventHubProducerClientOptions
             {
+                Identifier = Identifier,
                 EnableIdempotentPartitions = EnableIdempotentPartitions,
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone()

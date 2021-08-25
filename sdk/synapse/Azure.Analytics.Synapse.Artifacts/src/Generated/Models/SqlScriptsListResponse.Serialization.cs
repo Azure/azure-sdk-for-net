@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class SqlScriptsListResponse
+    [JsonConverter(typeof(SqlScriptsListResponseConverter))]
+    internal partial class SqlScriptsListResponse
     {
         internal static SqlScriptsListResponse DeserializeSqlScriptsListResponse(JsonElement element)
         {
@@ -36,6 +39,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SqlScriptsListResponse(value, nextLink.Value);
+        }
+
+        internal partial class SqlScriptsListResponseConverter : JsonConverter<SqlScriptsListResponse>
+        {
+            public override void Write(Utf8JsonWriter writer, SqlScriptsListResponse model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SqlScriptsListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSqlScriptsListResponse(document.RootElement);
+            }
         }
     }
 }

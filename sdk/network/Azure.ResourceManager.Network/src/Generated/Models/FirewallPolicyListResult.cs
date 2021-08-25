@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListFirewallPolicies API service call. </summary>
-    public partial class FirewallPolicyListResult
+    internal partial class FirewallPolicyListResult
     {
         /// <summary> Initializes a new instance of FirewallPolicyListResult. </summary>
         internal FirewallPolicyListResult()

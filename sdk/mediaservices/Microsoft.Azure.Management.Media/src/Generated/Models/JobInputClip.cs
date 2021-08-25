@@ -47,12 +47,16 @@ namespace Microsoft.Azure.Management.Media.Models
         /// video before it is encoded. When submitting a Job, exactly one of
         /// the JobInputs should be the image file, and it should have the
         /// label 'xyz'.</param>
-        public JobInputClip(IList<string> files = default(IList<string>), ClipTime start = default(ClipTime), ClipTime end = default(ClipTime), string label = default(string))
+        /// <param name="inputDefinitions">Defines a list of InputDefinitions.
+        /// For each InputDefinition, it defines a list of track selections and
+        /// related metadata.</param>
+        public JobInputClip(IList<string> files = default(IList<string>), ClipTime start = default(ClipTime), ClipTime end = default(ClipTime), string label = default(string), IList<InputDefinition> inputDefinitions = default(IList<InputDefinition>))
         {
             Files = files;
             Start = start;
             End = end;
             Label = label;
+            InputDefinitions = inputDefinitions;
             CustomInit();
         }
 
@@ -93,6 +97,14 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "label")]
         public string Label { get; set; }
+
+        /// <summary>
+        /// Gets or sets defines a list of InputDefinitions. For each
+        /// InputDefinition, it defines a list of track selections and related
+        /// metadata.
+        /// </summary>
+        [JsonProperty(PropertyName = "inputDefinitions")]
+        public IList<InputDefinition> InputDefinitions { get; set; }
 
     }
 }

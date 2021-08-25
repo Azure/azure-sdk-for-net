@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SqlPoolConverter))]
     public partial class SqlPool : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -70,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInTime.Value, "O");
+                writer.WriteStringValue(RestorePointInTime);
             }
             if (Optional.IsDefined(CreateMode))
             {
@@ -100,7 +102,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> recoverableDatabaseId = default;
             Optional<string> provisioningState = default;
             Optional<string> status = default;
-            Optional<DateTimeOffset> restorePointInTime = default;
+            Optional<string> restorePointInTime = default;
             Optional<string> createMode = default;
             Optional<DateTimeOffset> creationDate = default;
             foreach (var property in element.EnumerateObject())
@@ -196,12 +198,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("restorePointInTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            restorePointInTime = property0.Value.GetDateTimeOffset("O");
+                            restorePointInTime = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("createMode"))
@@ -223,7 +220,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlPool(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, Optional.ToNullable(restorePointInTime), createMode.Value, Optional.ToNullable(creationDate));
+            return new SqlPool(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, restorePointInTime.Value, createMode.Value, Optional.ToNullable(creationDate));
+        }
+
+        internal partial class SqlPoolConverter : JsonConverter<SqlPool>
+        {
+            public override void Write(Utf8JsonWriter writer, SqlPool model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SqlPool Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSqlPool(document.RootElement);
+            }
         }
     }
 }

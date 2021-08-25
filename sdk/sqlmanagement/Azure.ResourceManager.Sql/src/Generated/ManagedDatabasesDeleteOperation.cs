@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedDatabasesDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of ManagedDatabasesDeleteOperation for mocking. </summary>
+        protected ManagedDatabasesDeleteOperation()
+        {
+        }
+
         internal ManagedDatabasesDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedDatabasesDeleteOperation");

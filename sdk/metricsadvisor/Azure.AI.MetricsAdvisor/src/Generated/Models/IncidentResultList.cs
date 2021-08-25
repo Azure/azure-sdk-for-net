@@ -15,27 +15,21 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class IncidentResultList
     {
         /// <summary> Initializes a new instance of IncidentResultList. </summary>
-        /// <param name="nextLink"> . </param>
-        /// <param name="value"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="value"/> is null. </exception>
-        internal IncidentResultList(string nextLink, IEnumerable<AnomalyIncident> value)
+        /// <param name="value"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal IncidentResultList(IEnumerable<AnomalyIncident> value)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            NextLink = nextLink;
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of IncidentResultList. </summary>
-        /// <param name="nextLink"> . </param>
-        /// <param name="value"> . </param>
+        /// <param name="nextLink"></param>
+        /// <param name="value"></param>
         internal IncidentResultList(string nextLink, IReadOnlyList<AnomalyIncident> value)
         {
             NextLink = nextLink;

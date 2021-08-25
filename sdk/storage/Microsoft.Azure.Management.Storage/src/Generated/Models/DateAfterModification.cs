@@ -15,7 +15,9 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// Object to define the number of days after last modification.
+    /// Object to define the number of days after object last modification Or
+    /// last access. Properties daysAfterModificationGreaterThan and
+    /// daysAfterLastAccessTimeGreaterThan are mutually exclusive.
     /// </summary>
     public partial class DateAfterModification
     {

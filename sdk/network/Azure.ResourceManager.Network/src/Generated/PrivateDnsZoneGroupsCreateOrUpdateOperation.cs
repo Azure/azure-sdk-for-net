@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class PrivateDnsZoneGroupsCreateOrUpdateOperation : Operation<PrivateDnsZoneGroup>, IOperationSource<PrivateDnsZoneGroup>
     {
         private readonly ArmOperationHelpers<PrivateDnsZoneGroup> _operation;
+
+        /// <summary> Initializes a new instance of PrivateDnsZoneGroupsCreateOrUpdateOperation for mocking. </summary>
+        protected PrivateDnsZoneGroupsCreateOrUpdateOperation()
+        {
+        }
+
         internal PrivateDnsZoneGroupsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<PrivateDnsZoneGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PrivateDnsZoneGroupsCreateOrUpdateOperation");

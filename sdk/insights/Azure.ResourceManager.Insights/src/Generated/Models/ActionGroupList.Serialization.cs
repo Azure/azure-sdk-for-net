@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class ActionGroupList
+    internal partial class ActionGroupList
     {
         internal static ActionGroupList DeserializeActionGroupList(JsonElement element)
         {

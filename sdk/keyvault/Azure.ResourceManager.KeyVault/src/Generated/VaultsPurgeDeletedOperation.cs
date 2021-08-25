@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.KeyVault
     public partial class VaultsPurgeDeletedOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of VaultsPurgeDeletedOperation for mocking. </summary>
+        protected VaultsPurgeDeletedOperation()
+        {
+        }
+
         internal VaultsPurgeDeletedOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VaultsPurgeDeletedOperation");

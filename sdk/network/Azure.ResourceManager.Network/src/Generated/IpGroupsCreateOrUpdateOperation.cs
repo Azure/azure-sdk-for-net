@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class IpGroupsCreateOrUpdateOperation : Operation<IpGroup>, IOperationSource<IpGroup>
     {
         private readonly ArmOperationHelpers<IpGroup> _operation;
+
+        /// <summary> Initializes a new instance of IpGroupsCreateOrUpdateOperation for mocking. </summary>
+        protected IpGroupsCreateOrUpdateOperation()
+        {
+        }
+
         internal IpGroupsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<IpGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "IpGroupsCreateOrUpdateOperation");

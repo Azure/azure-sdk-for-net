@@ -1,0 +1,907 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "1944",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-2e253f6686388d4d858e7fba265569e3-448c3f892ac9194c-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "5a3d6c2348d829c15de122829c1d2254",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "1",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "2",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "3",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "4",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "5",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "6",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "7",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "8",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "9",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "10",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "11",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "12",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "13",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "14",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "15",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "16",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "17",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "18",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "19",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "20",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "21",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "22",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            }
+          ]
+        },
+        "tasks": {
+          "keyPhraseExtractionTasks": [
+            {
+              "parameters": {}
+            }
+          ]
+        },
+        "displayName": "AnalyzeOperationWithPagination"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "2f631936-1342-4bf9-a7fa-cbcf4f566bf8",
+        "Date": "Fri, 06 Aug 2021 01:44:36 GMT",
+        "operation-location": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "634"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "4d5c3f1f260ea429f32258bc15d3c165",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "53dfaebd-b57c-4e05-a023-f9be67819073",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:44:36 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "12"
+      },
+      "ResponseBody": {
+        "jobId": "cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "lastUpdateDateTime": "2021-08-06T01:44:36Z",
+        "createdDateTime": "2021-08-06T01:44:35Z",
+        "expirationDateTime": "2021-08-07T01:44:35Z",
+        "status": "notStarted",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithPagination",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "0814b8f9ff4d9a0118a1c7a3b4ca2d52",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "fa7b3d9e-b3bf-4c30-9fd2-73e69ab3806d",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:44:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "lastUpdateDateTime": "2021-08-06T01:44:36Z",
+        "createdDateTime": "2021-08-06T01:44:35Z",
+        "expirationDateTime": "2021-08-07T01:44:35Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithPagination",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "e5bd681a9611fd57429866b6f0041489",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9cd55be7-66cc-4889-85f9-015afdb826d3",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:44:38 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "lastUpdateDateTime": "2021-08-06T01:44:36Z",
+        "createdDateTime": "2021-08-06T01:44:35Z",
+        "expirationDateTime": "2021-08-07T01:44:35Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithPagination",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "e389bc1f1a0820073dc2346c5e86f029",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8fe8d1bb-48fd-484e-9d75-9a5653564c7b",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:44:39 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "lastUpdateDateTime": "2021-08-06T01:44:36Z",
+        "createdDateTime": "2021-08-06T01:44:35Z",
+        "expirationDateTime": "2021-08-07T01:44:35Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithPagination",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "aca106f5dc1663546016c5b4984baa13",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "47bcddef-9c26-4da6-aa94-58dce11fef92",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:44:40 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
+      },
+      "ResponseBody": {
+        "jobId": "cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "lastUpdateDateTime": "2021-08-06T01:44:36Z",
+        "createdDateTime": "2021-08-06T01:44:35Z",
+        "expirationDateTime": "2021-08-07T01:44:35Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithPagination",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "f7833e8d4940ff49619da74f61ea9fbc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e3d7264e-f4ae-45e2-a454-045fe83b4f5c",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:44:41 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
+      },
+      "ResponseBody": {
+        "jobId": "cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "lastUpdateDateTime": "2021-08-06T01:44:36Z",
+        "createdDateTime": "2021-08-06T01:44:35Z",
+        "expirationDateTime": "2021-08-07T01:44:35Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithPagination",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "eac03ca867624373682682f2555287f2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "f1288ea0-0292-455c-bbcb-74fef33130e0",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:44:42 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "lastUpdateDateTime": "2021-08-06T01:44:36Z",
+        "createdDateTime": "2021-08-06T01:44:35Z",
+        "expirationDateTime": "2021-08-07T01:44:35Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithPagination",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "20de2017f802ace8bda24b7834050176",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2c683fcf-c63b-450c-899e-249ef744ed28",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:44:43 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
+      },
+      "ResponseBody": {
+        "jobId": "cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "lastUpdateDateTime": "2021-08-06T01:44:36Z",
+        "createdDateTime": "2021-08-06T01:44:35Z",
+        "expirationDateTime": "2021-08-07T01:44:35Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithPagination",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "5b0b0877bf8a26b0ca408f1ac657aa0e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ee11d95a-b9ac-4a0d-9197-4b553d0cd13a",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:44:44 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "lastUpdateDateTime": "2021-08-06T01:44:43Z",
+        "createdDateTime": "2021-08-06T01:44:35Z",
+        "expirationDateTime": "2021-08-07T01:44:35Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithPagination",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "4037b5167f0cafba54142dc01cfa0e62",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "0d7bff2f-7e82-4a58-8566-9255954bb55a",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:44:45 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "184"
+      },
+      "ResponseBody": {
+        "jobId": "cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "lastUpdateDateTime": "2021-08-06T01:44:45Z",
+        "createdDateTime": "2021-08-06T01:44:35Z",
+        "expirationDateTime": "2021-08-07T01:44:35Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithPagination",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "keyPhraseExtractionTasks": [
+            {
+              "lastUpdateDateTime": "2021-08-06T01:44:45.5707107Z",
+              "taskName": "KeyPhraseExtraction_latest",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "3",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "4",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "5",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "6",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "7",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "8",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "9",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "10",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "11",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "12",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "13",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "14",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "15",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "16",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "17",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "18",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "19",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            }
+          ]
+        },
+        "@nextLink": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8?$skip=20\u0026$top=3\u0026showStats=False"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8?$skip=20\u0026$top=3\u0026showStats=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "4c7a0c252b4757676fb855c169cee566",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "84dd73d9-9c77-4680-938d-24c4f6797f4e",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:44:45 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "77"
+      },
+      "ResponseBody": {
+        "jobId": "cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "lastUpdateDateTime": "2021-08-06T01:44:45Z",
+        "createdDateTime": "2021-08-06T01:44:35Z",
+        "expirationDateTime": "2021-08-07T01:44:35Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithPagination",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "keyPhraseExtractionTasks": [
+            {
+              "lastUpdateDateTime": "2021-08-06T01:44:45.5707107Z",
+              "taskName": "KeyPhraseExtraction_latest",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "20",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "21",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "22",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/analyze/jobs/cef9c720-8c17-4977-92c5-3a42f9bca9f8?$skip=20\u0026$top=3\u0026showStats=False",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210805.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "7f623cf7c0cef86a4e5b077692f00ad0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ea4b8b35-d98f-4fa2-8f56-5d3c15df93bf",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Aug 2021 01:44:45 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "77"
+      },
+      "ResponseBody": {
+        "jobId": "cef9c720-8c17-4977-92c5-3a42f9bca9f8",
+        "lastUpdateDateTime": "2021-08-06T01:44:45Z",
+        "createdDateTime": "2021-08-06T01:44:35Z",
+        "expirationDateTime": "2021-08-07T01:44:35Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "AnalyzeOperationWithPagination",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "keyPhraseExtractionTasks": [
+            {
+              "lastUpdateDateTime": "2021-08-06T01:44:45.5707107Z",
+              "taskName": "KeyPhraseExtraction_latest",
+              "state": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "20",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "21",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "22",
+                    "keyPhrases": [
+                      "Elon Musk",
+                      "CEO",
+                      "SpaceX",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-06-01"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "275027038",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com"
+  }
+}

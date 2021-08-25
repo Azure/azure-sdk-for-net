@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
     using System.Net.Http;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Index = Microsoft.Azure.Search.Models.Index;
 
     public class IndexFixture : SearchServiceFixture
     {
@@ -90,8 +91,8 @@ namespace Microsoft.Azure.Search.Tests.Utilities
         }
 
         public SearchIndexClient GetSearchIndexClient(
-            string indexName = null, 
-            bool? useHttpGet = null, 
+            string indexName = null,
+            bool? useHttpGet = null,
             params DelegatingHandler[] handlers)
         {
             indexName = indexName ?? IndexName;
@@ -99,7 +100,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
         }
 
         public SearchIndexClient GetSearchIndexClientForQuery(
-            string indexName = null, 
+            string indexName = null,
             bool? useHttpGet = null,
             params DelegatingHandler[] handlers)
         {
@@ -108,8 +109,8 @@ namespace Microsoft.Azure.Search.Tests.Utilities
         }
 
         private SearchIndexClient GetSearchIndexClientForKey(
-            string indexName, 
-            string apiKey, 
+            string indexName,
+            string apiKey,
             bool? useHttpGet,
             params DelegatingHandler[] handlers)
         {

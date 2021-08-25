@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ReplicationLinkListResult
+    internal partial class ReplicationLinkListResult
     {
         internal static ReplicationLinkListResult DeserializeReplicationLinkListResult(JsonElement element)
         {

@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    /// <inheritdoc />
     [CodeGenModel("DigitalTwinsModelData")]
     public partial class DigitalTwinsModelData
     {
@@ -20,7 +19,9 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// The model definition that conforms to Digital Twins Definition Language (DTDL) v2.
         /// </summary>
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models"/>
+        /// <remarks>
+        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models">Understand twin models in Azure Digital Twins</see>.
+        /// </remarks>
         [CodeGenMember("Model")]
         public string DtdlModel { get; }
 

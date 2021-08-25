@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class KeyPhrasesTask : IUtf8JsonSerializable
+    internal partial class KeyPhrasesTask : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +19,11 @@ namespace Azure.AI.TextAnalytics
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteObjectValue(Parameters);
+            }
+            if (Optional.IsDefined(TaskName))
+            {
+                writer.WritePropertyName("taskName");
+                writer.WriteStringValue(TaskName);
             }
             writer.WriteEndObject();
         }

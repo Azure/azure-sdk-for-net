@@ -1,4 +1,11 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(RepoEngPath)\mgmt\Directory.Build.Mgmt.targets" Condition="'$(IsDataPlaneProject)' != 'true'" />
-  <Import Project="$(RepoEngPath)\Directory.Build.Data.targets" Condition="'$(IsDataPlaneProject)' == 'true'" />
+  <ItemGroup Condition="'$(IsTestProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>SourcePath</_Parameter1>
+      <_Parameter2>$(MSBuildProjectDirectory)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <Import Project="$(RepoEngPath)\mgmt\Directory.Build.Mgmt.targets" Condition="'$(IsLegacyMgmtProject)' == 'true'" />
+  <Import Project="$(RepoEngPath)\Directory.Build.Common.targets" Condition="'$(ImportRepoCommonSettings)' == 'true'" />
 </Project>

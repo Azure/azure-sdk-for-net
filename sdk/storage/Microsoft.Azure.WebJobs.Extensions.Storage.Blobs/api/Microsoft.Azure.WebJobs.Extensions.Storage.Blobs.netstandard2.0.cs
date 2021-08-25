@@ -22,6 +22,12 @@ namespace Microsoft.Azure.WebJobs
         public BlobTriggerAttribute(string blobPath) { }
         public string BlobPath { get { throw null; } }
         public string Connection { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.BlobTriggerSource Source { get { throw null; } set { } }
+    }
+    public enum BlobTriggerSource
+    {
+        LogsAndContainerScan = 0,
+        EventGrid = 1,
     }
 }
 namespace Microsoft.Azure.WebJobs.Extensions.Storage
@@ -38,7 +44,8 @@ namespace Microsoft.Azure.WebJobs.Host
     {
         public BlobsOptions() { }
         public int MaxDegreeOfParallelism { get { throw null; } set { } }
-        public string Format() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
     }
 }
 namespace Microsoft.Extensions.Hosting

@@ -60,6 +60,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 return false;
             }
 
+            // Verify that the stand-alone system properties are equivalent.
+
+            if ((considerSystemProperties)
+                && ((instance.Offset != other.Offset)
+                    || (instance.EnqueuedTime != other.EnqueuedTime)
+                    || (instance.PartitionKey != other.PartitionKey)
+                    || (instance.SequenceNumber != other.SequenceNumber)))
+            {
+                return false;
+            }
+
             // Verify the system properties are equivalent, unless they're the same reference.
 
             if ((considerSystemProperties) && (!Object.ReferenceEquals(instance.SystemProperties, other.SystemProperties)))
@@ -70,14 +81,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 if (instance.SystemProperties.Count != other.SystemProperties.Count)
-                {
-                    return false;
-                }
-
-                if ((instance.Offset != other.Offset)
-                    || (instance.EnqueuedTime != other.EnqueuedTime)
-                    || (instance.PartitionKey != other.PartitionKey)
-                    || (instance.SequenceNumber != other.SequenceNumber))
                 {
                     return false;
                 }

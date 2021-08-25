@@ -7,22 +7,34 @@ using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity.Tests
 {
     public class UsernamePasswordCredentialTests : ClientTestBase
     {
-        public UsernamePasswordCredentialTests(bool isAsync) : base(isAsync)
-        {
-        }
+        private string TenantId = "a0287521-e002-0026-7112-207c0c000000";
+        private const string TenantIdHint = "a0287521-e002-0026-7112-207c0c001234";
+        private const string Scope = "https://vault.azure.net/.default";
+        private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
+        private string expectedCode;
+        private string expectedToken;
+        private DateTimeOffset expiresOn;
+        private MockMsalPublicClient mockMsal;
+        private DeviceCodeResult deviceCodeResult;
+        private string expectedTenantId;
+        private bool interactiveCalled;
+        private bool silentCalled;
 
+        public UsernamePasswordCredentialTests(bool isAsync) : base(isAsync)
+        { }
 
         [Test]
         public async Task VerifyMsalClientExceptionAsync()
         {
             string expInnerExMessage = Guid.NewGuid().ToString();
 
-            var mockMsalClient = new MockMsalPublicClient() { UserPassAuthFactory = (_) => { throw new MockClientException(expInnerExMessage); } };
+            var mockMsalClient = new MockMsalPublicClient() { UserPassAuthFactory = (_, _) => { throw new MockClientException(expInnerExMessage); } };
 
             var username = Guid.NewGuid().ToString();
             var password = Guid.NewGuid().ToString();
@@ -42,5 +54,107 @@ namespace Azure.Identity.Tests
             await Task.CompletedTask;
         }
 
+        [Test]
+        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
+        {
+            var username = Guid.NewGuid().ToString();
+            var password = Guid.NewGuid().ToString();
+            var clientId = Guid.NewGuid().ToString();
+            var tenantId = Guid.NewGuid().ToString();
+
+            var credential = new UsernamePasswordCredential(
+                username,
+                password,
+                clientId,
+                tenantId,
+                new TokenCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled },
+                default,
+                null);
+
+            Assert.NotNull(credential.Client);
+            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.LogPII);
+        }
+
+        [Test]
+        public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
+        {
+            TestSetup();
+            var options = new UsernamePasswordCredentialOptions { AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
+
+            var credential = InstrumentClient(new UsernamePasswordCredential("user", "password", TenantId, ClientId, options, null, mockMsal));
+
+            AccessToken token = await credential.GetTokenAsync(context);
+
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expiresOn, token.ExpiresOn);
+        }
+
+        [Test]
+        public async Task CallsGetAzquireTokenSilentAfterFirstTokenAcquired(
+            [Values(null, TenantIdHint)] string tenantId,
+            [Values(true)] bool allowMultiTenantAuthentication)
+        {
+            TestSetup();
+            var options = new UsernamePasswordCredentialOptions { AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
+
+            var credential = InstrumentClient(new UsernamePasswordCredential("user", "password", TenantId, ClientId, options, null, mockMsal));
+
+            AccessToken token = await credential.GetTokenAsync(context);
+
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expiresOn, token.ExpiresOn);
+            Assert.True(interactiveCalled);
+            Assert.False(silentCalled);
+
+            // Second call should acquireSilent
+            token = await credential.GetTokenAsync(context);
+
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expiresOn, token.ExpiresOn);
+            Assert.True(silentCalled);
+        }
+
+        public void TestSetup()
+        {
+            interactiveCalled = false;
+            silentCalled = false;
+            expectedTenantId = null;
+            expectedCode = Guid.NewGuid().ToString();
+            expectedToken = Guid.NewGuid().ToString();
+            expiresOn = DateTimeOffset.Now.AddHours(1);
+            mockMsal = new MockMsalPublicClient();
+            deviceCodeResult = MockMsalPublicClient.GetDeviceCodeResult(deviceCode: expectedCode);
+            mockMsal.DeviceCodeResult = deviceCodeResult;
+            var result = new AuthenticationResult(
+                expectedToken,
+                false,
+                null,
+                expiresOn,
+                expiresOn,
+                TenantId,
+                new MockAccount("username"),
+                null,
+                new[] { Scope },
+                Guid.NewGuid(),
+                null,
+                "Bearer");
+            mockMsal.UserPassAuthFactory = (_, tenant) =>
+            {
+                interactiveCalled = true;
+                Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
+                return result;
+            };
+
+            mockMsal.SilentAuthFactory = (_, tenant) =>
+            {
+                silentCalled = true;
+                Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
+                return result;
+            };
+        }
     }
 }

@@ -121,10 +121,12 @@
             Models.PoolInformation modelPoolInformation = this.propertyContainer.PoolInformationProperty.
                 GetTransportObjectIfChanged<PoolInformation, Models.PoolInformation>();
             int? priority = this.propertyContainer.PriorityProperty.GetIfChangedOrNull();
+            int? maxParallelTasks = this.propertyContainer.MaxParallelTasksProperty.GetIfChangedOrNull();
 
             Task asyncTask = this.parentBatchClient.ProtocolLayer.PatchJob(
                 this.Id,
                 priority,
+                maxParallelTasks,
                 UtilitiesInternal.MapNullableEnum<Common.OnAllTasksComplete, Models.OnAllTasksComplete>(this.OnAllTasksComplete),
                 modelPoolInformation,
                 modelJobConstraints,

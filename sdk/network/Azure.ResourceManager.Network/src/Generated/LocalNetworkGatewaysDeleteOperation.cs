@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network
     public partial class LocalNetworkGatewaysDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of LocalNetworkGatewaysDeleteOperation for mocking. </summary>
+        protected LocalNetworkGatewaysDeleteOperation()
+        {
+        }
+
         internal LocalNetworkGatewaysDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LocalNetworkGatewaysDeleteOperation");

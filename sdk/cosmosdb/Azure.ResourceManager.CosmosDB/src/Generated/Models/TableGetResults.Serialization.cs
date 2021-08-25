@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("resource");
                 writer.WriteObjectValue(Resource);
             }
+            if (Optional.IsDefined(Options))
+            {
+                writer.WritePropertyName("options");
+                writer.WriteObjectValue(Options);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<TableGetPropertiesResource> resource = default;
-            Optional<OptionsResource> options = default;
+            Optional<TableGetPropertiesOptions> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -115,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            options = OptionsResource.DeserializeOptionsResource(property0.Value);
+                            options = TableGetPropertiesOptions.DeserializeTableGetPropertiesOptions(property0.Value);
                             continue;
                         }
                     }

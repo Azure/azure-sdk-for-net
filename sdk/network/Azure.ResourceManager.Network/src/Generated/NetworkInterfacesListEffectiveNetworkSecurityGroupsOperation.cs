@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation : Operation<EffectiveNetworkSecurityGroupListResult>, IOperationSource<EffectiveNetworkSecurityGroupListResult>
     {
         private readonly ArmOperationHelpers<EffectiveNetworkSecurityGroupListResult> _operation;
+
+        /// <summary> Initializes a new instance of NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation for mocking. </summary>
+        protected NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation()
+        {
+        }
+
         internal NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<EffectiveNetworkSecurityGroupListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation");

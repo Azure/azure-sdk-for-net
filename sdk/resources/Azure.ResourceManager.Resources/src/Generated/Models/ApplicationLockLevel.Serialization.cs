@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal static class ApplicationLockLevelExtensions
+    internal static partial class ApplicationLockLevelExtensions
     {
         public static string ToSerialString(this ApplicationLockLevel value) => value switch
         {

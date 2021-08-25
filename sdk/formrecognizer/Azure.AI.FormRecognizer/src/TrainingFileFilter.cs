@@ -13,7 +13,9 @@ namespace Azure.AI.FormRecognizer.Training
     public partial class TrainingFileFilter
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrainingFileFilter"/> class.
+        /// Initializes a new instance of the <see cref="TrainingFileFilter"/> class which is
+        /// used by the <see cref="FormTrainingClient"/> to filter the documents by name in the
+        /// source path provided for training.
         /// </summary>
         public TrainingFileFilter()
         {

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class AdministratorListResult
+    internal partial class AdministratorListResult
     {
         internal static AdministratorListResult DeserializeAdministratorListResult(JsonElement element)
         {

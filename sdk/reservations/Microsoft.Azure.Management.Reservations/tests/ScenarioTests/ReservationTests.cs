@@ -137,9 +137,10 @@ namespace Reservations.Tests.ScenarioTests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
-                var scope = new ScopeProperties($"/subscriptions/{Common.SubscriptionId}");
-                var body = new SubscriptionScopeProperties(scope);
+                var scopeList = new List<string>();
+                scopeList.Add($"/subscriptions/{Common.SubscriptionId}");
+                var requestProperties = new AvailableScopeRequestProperties(scopeList);
+                var body = new AvailableScopeRequest(requestProperties);
                 var res = reservationsClient.Reservation.AvailableScopes(reservationOrderId, reservationId, body);
             }
         }

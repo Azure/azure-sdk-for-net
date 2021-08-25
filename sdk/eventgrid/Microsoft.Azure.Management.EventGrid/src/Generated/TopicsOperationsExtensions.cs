@@ -650,6 +650,58 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
+            /// Regenerate key for a topic.
+            /// </summary>
+            /// <remarks>
+            /// Regenerate a shared access key for a topic.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='topicName'>
+            /// Name of the topic.
+            /// </param>
+            /// <param name='keyName'>
+            /// Key name to regenerate key1 or key2
+            /// </param>
+            public static TopicSharedAccessKeys BeginRegenerateKey(this ITopicsOperations operations, string resourceGroupName, string topicName, string keyName)
+            {
+                return operations.BeginRegenerateKeyAsync(resourceGroupName, topicName, keyName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Regenerate key for a topic.
+            /// </summary>
+            /// <remarks>
+            /// Regenerate a shared access key for a topic.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='topicName'>
+            /// Name of the topic.
+            /// </param>
+            /// <param name='keyName'>
+            /// Key name to regenerate key1 or key2
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TopicSharedAccessKeys> BeginRegenerateKeyAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, string keyName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRegenerateKeyWithHttpMessagesAsync(resourceGroupName, topicName, keyName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List topics under an Azure subscription.
             /// </summary>
             /// <remarks>

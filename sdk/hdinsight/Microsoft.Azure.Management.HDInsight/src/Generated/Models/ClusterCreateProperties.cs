@@ -47,7 +47,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="minSupportedTlsVersion">The minimal supported tls
         /// version.</param>
         /// <param name="networkProperties">The network properties.</param>
-        public ClusterCreateProperties(string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), ClusterDefinition clusterDefinition = default(ClusterDefinition), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), StorageProfile storageProfile = default(StorageProfile), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), string minSupportedTlsVersion = default(string), NetworkProperties networkProperties = default(NetworkProperties))
+        /// <param name="computeIsolationProperties">The compute isolation
+        /// properties.</param>
+        public ClusterCreateProperties(string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), ClusterDefinition clusterDefinition = default(ClusterDefinition), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), StorageProfile storageProfile = default(StorageProfile), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), string minSupportedTlsVersion = default(string), NetworkProperties networkProperties = default(NetworkProperties), ComputeIsolationProperties computeIsolationProperties = default(ComputeIsolationProperties))
         {
             ClusterVersion = clusterVersion;
             OsType = osType;
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             EncryptionInTransitProperties = encryptionInTransitProperties;
             MinSupportedTlsVersion = minSupportedTlsVersion;
             NetworkProperties = networkProperties;
+            ComputeIsolationProperties = computeIsolationProperties;
             CustomInit();
         }
 
@@ -142,6 +145,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "networkProperties")]
         public NetworkProperties NetworkProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the compute isolation properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "computeIsolationProperties")]
+        public ComputeIsolationProperties ComputeIsolationProperties { get; set; }
 
     }
 }

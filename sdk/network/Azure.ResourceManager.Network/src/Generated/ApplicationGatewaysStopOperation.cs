@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network
     public partial class ApplicationGatewaysStopOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of ApplicationGatewaysStopOperation for mocking. </summary>
+        protected ApplicationGatewaysStopOperation()
+        {
+        }
+
         internal ApplicationGatewaysStopOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ApplicationGatewaysStopOperation");

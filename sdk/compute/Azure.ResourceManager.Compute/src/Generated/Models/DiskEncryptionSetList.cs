@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List disk encryption set operation response. </summary>
-    public partial class DiskEncryptionSetList
+    internal partial class DiskEncryptionSetList
     {
         /// <summary> Initializes a new instance of DiskEncryptionSetList. </summary>
         /// <param name="value"> A list of disk encryption sets. </param>

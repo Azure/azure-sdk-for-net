@@ -93,7 +93,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationHeaderResponse<SnapshotTakeHeaders>> TakeWithHttpMessagesAsync(SnapshotObjectType type, string objectId, IList<System.Guid?> applyScope, string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<SnapshotTakeHeaders>> TakeWithHttpMessagesAsync(SnapshotObjectType type, string objectId, IList<System.Guid> applyScope, string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all accessible snapshots with related information, including
         /// snapshots that were taken by the user, or snapshots to be applied
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<Snapshot>>> ListWithHttpMessagesAsync(SnapshotObjectType? type = default(SnapshotObjectType?), IList<System.Guid?> applyScope = default(IList<System.Guid?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<Snapshot>>> ListWithHttpMessagesAsync(SnapshotObjectType? type = default(SnapshotObjectType?), IList<System.Guid> applyScope = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve information about a snapshot. Snapshot is only accessible
         /// to the source subscription who took it, and target subscriptions
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(System.Guid snapshotId, IList<System.Guid?> applyScope = default(IList<System.Guid?>), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(System.Guid snapshotId, IList<System.Guid> applyScope = default(IList<System.Guid>), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an existing snapshot according to the snapshotId. All object
         /// data and information in the snapshot will also be deleted. Only the

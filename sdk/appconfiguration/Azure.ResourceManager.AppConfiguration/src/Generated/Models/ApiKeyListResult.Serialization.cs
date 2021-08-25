@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class ApiKeyListResult
+    internal partial class ApiKeyListResult
     {
         internal static ApiKeyListResult DeserializeApiKeyListResult(JsonElement element)
         {

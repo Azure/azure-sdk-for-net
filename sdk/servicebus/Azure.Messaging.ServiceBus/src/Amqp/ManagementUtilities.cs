@@ -15,14 +15,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
     /// </summary>
     internal static class ManagementUtilities
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="connectionScope"></param>
-        /// <param name="managementLink"></param>
-        /// <param name="amqpRequestMessage"></param>
-        /// <param name="timeout"></param>
-        /// <returns></returns>
         internal static async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(
            AmqpConnectionScope connectionScope,
            FaultTolerantAmqpObject<RequestResponseAmqpLink> managementLink,

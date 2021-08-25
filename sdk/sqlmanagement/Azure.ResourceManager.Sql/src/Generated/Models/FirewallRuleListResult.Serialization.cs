@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class FirewallRuleListResult
+    internal partial class FirewallRuleListResult
     {
         internal static FirewallRuleListResult DeserializeFirewallRuleListResult(JsonElement element)
         {

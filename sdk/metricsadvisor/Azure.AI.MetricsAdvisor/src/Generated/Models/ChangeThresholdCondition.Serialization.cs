@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("shiftPoint");
             writer.WriteNumberValue(ShiftPoint);
             writer.WritePropertyName("withinRange");
-            writer.WriteBooleanValue(IsWithinRange);
+            writer.WriteBooleanValue(WithinRange);
             writer.WritePropertyName("anomalyDetectorDirection");
             writer.WriteStringValue(AnomalyDetectorDirection.ToString());
             writer.WritePropertyName("suppressCondition");

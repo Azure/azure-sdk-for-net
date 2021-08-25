@@ -6,10 +6,10 @@ using System.Diagnostics;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Host;
 
 namespace Microsoft.Azure.WebJobs
 {
-
 #pragma warning disable CA1200 // Avoid using cref tags with a prefix
     /// <summary>
     /// Attribute used to bind a parameter to an Azure Queue.
@@ -21,10 +21,22 @@ namespace Microsoft.Azure.WebJobs
     /// <item><description><see cref="QueueMessage"/> (out parameter)</description></item>
     /// <item><description><see cref="string"/> (out parameter)</description></item>
     /// <item><description><see cref="T:byte[]"/> (out parameter)</description></item>
+    /// <item><description><see cref="BinaryData"/> (out parameter)</description></item>
     /// <item><description>A user-defined type (out parameter, serialized as JSON)</description></item>
     /// <item><description><see cref="ICollector{T}"/> of these types (to enqueue multiple messages via <see cref="ICollector{T}.Add"/></description></item>
     /// <item><description><see cref="IAsyncCollector{T}"/> of these types (to enqueue multiple messages via <see cref="IAsyncCollector{T}.AddAsync(T, System.Threading.CancellationToken)"/></description></item>
     /// </list>
+    ///
+    /// By default the extension Base64-encodes outgoing messages.
+    /// This behavior can be changed by setting <see cref="QueuesOptions.MessageEncoding"/>.
+    /// For example, to configure Azure Functions to perform no base64 encoding/decoding, specify the following in host.json.
+    /// <code>
+    /// "extensions": {
+    ///   "queues": {
+    ///     "messageEncoding": "none"
+    ///   }
+    /// }
+    /// </code>
     /// </remarks>
 #pragma warning restore CA1200 // Avoid using cref tags with a prefix
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1813:AvoidUnsealedAttributes")]

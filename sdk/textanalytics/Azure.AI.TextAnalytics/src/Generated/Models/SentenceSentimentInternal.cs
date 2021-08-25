@@ -21,10 +21,10 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
         /// <param name="offset"> The sentence offset from the start of the document. </param>
         /// <param name="length"> The length of the sentence. </param>
-        /// <param name="aspects"> The array of aspect object for the sentence. </param>
-        /// <param name="opinions"> The array of opinion object for the sentence. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="sentiment"/>, <paramref name="confidenceScores"/>, <paramref name="aspects"/>, or <paramref name="opinions"/> is null. </exception>
-        internal SentenceSentimentInternal(string text, string sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IEnumerable<SentenceAspect> aspects, IEnumerable<SentenceOpinion> opinions)
+        /// <param name="targets"> The array of sentence targets for the sentence. </param>
+        /// <param name="assessments"> The array of assessments for the sentence. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="sentiment"/>, <paramref name="confidenceScores"/>, <paramref name="targets"/>, or <paramref name="assessments"/> is null. </exception>
+        internal SentenceSentimentInternal(string text, string sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IEnumerable<SentenceTarget> targets, IEnumerable<SentenceAssessment> assessments)
         {
             if (text == null)
             {
@@ -38,13 +38,13 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 throw new ArgumentNullException(nameof(confidenceScores));
             }
-            if (aspects == null)
+            if (targets == null)
             {
-                throw new ArgumentNullException(nameof(aspects));
+                throw new ArgumentNullException(nameof(targets));
             }
-            if (opinions == null)
+            if (assessments == null)
             {
-                throw new ArgumentNullException(nameof(opinions));
+                throw new ArgumentNullException(nameof(assessments));
             }
 
             Text = text;
@@ -52,8 +52,8 @@ namespace Azure.AI.TextAnalytics.Models
             ConfidenceScores = confidenceScores;
             Offset = offset;
             Length = length;
-            Aspects = aspects.ToList();
-            Opinions = opinions.ToList();
+            Targets = targets.ToList();
+            Assessments = assessments.ToList();
         }
 
         /// <summary> Initializes a new instance of SentenceSentimentInternal. </summary>
@@ -62,17 +62,17 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
         /// <param name="offset"> The sentence offset from the start of the document. </param>
         /// <param name="length"> The length of the sentence. </param>
-        /// <param name="aspects"> The array of aspect object for the sentence. </param>
-        /// <param name="opinions"> The array of opinion object for the sentence. </param>
-        internal SentenceSentimentInternal(string text, string sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IReadOnlyList<SentenceAspect> aspects, IReadOnlyList<SentenceOpinion> opinions)
+        /// <param name="targets"> The array of sentence targets for the sentence. </param>
+        /// <param name="assessments"> The array of assessments for the sentence. </param>
+        internal SentenceSentimentInternal(string text, string sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IReadOnlyList<SentenceTarget> targets, IReadOnlyList<SentenceAssessment> assessments)
         {
             Text = text;
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;
             Offset = offset;
             Length = length;
-            Aspects = aspects;
-            Opinions = opinions;
+            Targets = targets;
+            Assessments = assessments;
         }
     }
 }

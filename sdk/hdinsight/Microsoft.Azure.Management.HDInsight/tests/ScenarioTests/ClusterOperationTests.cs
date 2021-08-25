@@ -667,6 +667,9 @@ namespace Management.HDInsight.Tests
             var networkProperties = new NetworkProperties(ResourceProviderConnection.Outbound, PrivateLink.Enabled);
             createParams.Properties.NetworkProperties = networkProperties;
 
+            string storageAccountResourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Storage/storageAccounts/{2}", CommonData.SubscriptionId, CommonData.ResourceGroupName, CommonData.StorageAccountName);
+            createParams.Properties.StorageProfile.Storageaccounts[0].ResourceId = storageAccountResourceId;
+
             string vnetId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet";
             string subnetId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet/subnets/default";
 
@@ -679,6 +682,7 @@ namespace Management.HDInsight.Tests
 
             var result = HDInsightClient.Clusters.Get(CommonData.ResourceGroupName, clusterName);
             ValidateCluster(clusterName, createParams, result);
+            Assert.NotNull(result.Properties.ConnectivityEndpoints.First().PrivateIPAddress);
         }
 
         [Fact]

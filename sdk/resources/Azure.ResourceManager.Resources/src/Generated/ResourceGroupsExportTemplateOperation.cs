@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Resources
     public partial class ResourceGroupsExportTemplateOperation : Operation<ResourceGroupExportResult>, IOperationSource<ResourceGroupExportResult>
     {
         private readonly ArmOperationHelpers<ResourceGroupExportResult> _operation;
+
+        /// <summary> Initializes a new instance of ResourceGroupsExportTemplateOperation for mocking. </summary>
+        protected ResourceGroupsExportTemplateOperation()
+        {
+        }
+
         internal ResourceGroupsExportTemplateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ResourceGroupExportResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourceGroupsExportTemplateOperation");

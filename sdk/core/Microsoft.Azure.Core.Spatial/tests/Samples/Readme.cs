@@ -59,7 +59,9 @@ namespace Microsoft.Azure.Core.Spatial.Tests.Samples
 
             SearchClientOptions clientOptions = new SearchClientOptions
             {
-                /*@@*/ Transport = new MockTransport(response),
+#if !SNIPPET
+                Transport = new MockTransport(response),
+#endif
                 Serializer = new JsonObjectSerializer(serializerOptions)
             };
 

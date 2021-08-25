@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/languages?showStats=false",
+      "RequestUri": "https://tacanaryjava.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/languages?showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,10 +11,10 @@
         "Content-Length": "156",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-918794844f60144ca31b98502cb34754-073de0cf2367f347-00",
+        "traceparent": "00-91428c5de2bfb24aafc584f429365b12-8ffae9bfab3b524b-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201105.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210803.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "51807d44b190171f3639086e14582723",
         "x-ms-return-client-request-id": "true"
@@ -40,14 +40,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c1b9e680-1e13-4d5b-a45b-cf3ae4895ae0",
+        "apim-request-id": "64f85d7c-5c94-4eb2-b9be-7ed8f01adb82",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Thu, 05 Nov 2020 20:52:29 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
+        "Date": "Tue, 03 Aug 2021 18:39:42 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "7"
+        "x-envoy-upstream-service-time": "26"
       },
       "ResponseBody": {
         "documents": [
@@ -56,15 +56,15 @@
             "detectedLanguage": {
               "name": "English",
               "iso6391Name": "en",
-              "confidenceScore": 0.92
+              "confidenceScore": 0.81
             },
             "warnings": []
           },
           {
             "id": "2",
             "detectedLanguage": {
-              "name": "Spanish",
-              "iso6391Name": "es",
+              "name": "English",
+              "iso6391Name": "en",
               "confidenceScore": 1.0
             },
             "warnings": []
@@ -83,13 +83,13 @@
             }
           }
         ],
-        "modelVersion": "2020-09-01"
+        "modelVersion": "2021-01-05"
       }
     }
   ],
   "Variables": {
     "RandomSeed": "1902435763",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://tacanaryjava.cognitiveservices.azure.com/"
   }
 }

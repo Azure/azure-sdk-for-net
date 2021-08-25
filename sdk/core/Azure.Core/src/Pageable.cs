@@ -13,7 +13,9 @@ namespace Azure
     /// iterate over.
     /// </summary>
     /// <typeparam name="T">The type of the values.</typeparam>
+#pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Pageable<T> : IEnumerable<T> where T : notnull
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
         /// Gets a <see cref="CancellationToken"/> used for requests made while
@@ -65,7 +67,7 @@ namespace Azure
         /// A string representation of an <see cref="Pageable{T}"/>.
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override string? ToString() => base.ToString();
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -113,7 +115,7 @@ namespace Azure
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
-        private class StaticPageable: Pageable<T>
+        private class StaticPageable : Pageable<T>
         {
             private readonly IEnumerable<Page<T>> _pages;
 
@@ -124,7 +126,22 @@ namespace Azure
 
             public override IEnumerable<Page<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
             {
-                return _pages;
+                var shouldReturnPages = continuationToken == null;
+
+                foreach (var page in _pages)
+                {
+                    if (shouldReturnPages)
+                    {
+                        yield return page;
+                    }
+                    else
+                    {
+                        if (continuationToken == page.ContinuationToken)
+                        {
+                            shouldReturnPages = true;
+                        }
+                    }
+                }
             }
         }
     }

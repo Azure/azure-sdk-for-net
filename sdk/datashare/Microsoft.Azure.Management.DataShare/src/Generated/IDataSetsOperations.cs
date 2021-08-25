@@ -143,6 +143,12 @@ namespace Microsoft.Azure.Management.DataShare
         /// <param name='skipToken'>
         /// continuation token
         /// </param>
+        /// <param name='filter'>
+        /// Filters the results using OData syntax.
+        /// </param>
+        /// <param name='orderby'>
+        /// Sorts the results using OData syntax.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -158,7 +164,7 @@ namespace Microsoft.Azure.Management.DataShare
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<DataSet>>> ListByShareWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DataSet>>> ListByShareWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string skipToken = default(string), string filter = default(string), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete DataSet in a share.
         /// </summary>

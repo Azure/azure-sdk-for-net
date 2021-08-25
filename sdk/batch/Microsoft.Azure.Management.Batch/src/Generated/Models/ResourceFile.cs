@@ -42,7 +42,10 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// directory.</param>
         /// <param name="fileMode">The file permission mode attribute in octal
         /// format.</param>
-        public ResourceFile(string autoStorageContainerName = default(string), string storageContainerUrl = default(string), string httpUrl = default(string), string blobPrefix = default(string), string filePath = default(string), string fileMode = default(string))
+        /// <param name="identityReference">The reference to the user assigned
+        /// identity to use to access Azure Blob Storage specified by
+        /// storageContainerUrl or httpUrl</param>
+        public ResourceFile(string autoStorageContainerName = default(string), string storageContainerUrl = default(string), string httpUrl = default(string), string blobPrefix = default(string), string filePath = default(string), string fileMode = default(string), ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference))
         {
             AutoStorageContainerName = autoStorageContainerName;
             StorageContainerUrl = storageContainerUrl;
@@ -50,6 +53,7 @@ namespace Microsoft.Azure.Management.Batch.Models
             BlobPrefix = blobPrefix;
             FilePath = filePath;
             FileMode = fileMode;
+            IdentityReference = identityReference;
             CustomInit();
         }
 
@@ -77,12 +81,12 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <remarks>
         /// The autoStorageContainerName, storageContainerUrl and httpUrl
         /// properties are mutually exclusive and one of them must be
-        /// specified. This URL must be readable and listable using anonymous
-        /// access; that is, the Batch service does not present any credentials
-        /// when downloading the blob. There are two ways to get such a URL for
-        /// a blob in Azure storage: include a Shared Access Signature (SAS)
-        /// granting read and list permissions on the blob, or set the ACL for
-        /// the blob or its container to allow public access.
+        /// specified. This URL must be readable and listable from compute
+        /// nodes. There are three ways to get such a URL for a container in
+        /// Azure storage: include a Shared Access Signature (SAS) granting
+        /// read and list permissions on the container, use a managed identity
+        /// with read and list permissions, or set the ACL for the container to
+        /// allow public access.
         /// </remarks>
         [JsonProperty(PropertyName = "storageContainerUrl")]
         public string StorageContainerUrl { get; set; }
@@ -93,12 +97,12 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <remarks>
         /// The autoStorageContainerName, storageContainerUrl and httpUrl
         /// properties are mutually exclusive and one of them must be
-        /// specified. If the URL is Azure Blob Storage, it must be readable
-        /// using anonymous access; that is, the Batch service does not present
-        /// any credentials when downloading the blob. There are two ways to
-        /// get such a URL for a blob in Azure storage: include a Shared Access
-        /// Signature (SAS) granting read permissions on the blob, or set the
-        /// ACL for the blob or its container to allow public access.
+        /// specified. If the URL points to Azure Blob Storage, it must be
+        /// readable from compute nodes. There are three ways to get such a URL
+        /// for a blob in Azure storage: include a Shared Access Signature
+        /// (SAS) granting read permissions on the blob, use a managed identity
+        /// with read permission, or set the ACL for the blob or its container
+        /// to allow public access.
         /// </remarks>
         [JsonProperty(PropertyName = "httpUrl")]
         public string HttpUrl { get; set; }
@@ -148,6 +152,14 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </remarks>
         [JsonProperty(PropertyName = "fileMode")]
         public string FileMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference to the user assigned identity to use to
+        /// access Azure Blob Storage specified by storageContainerUrl or
+        /// httpUrl
+        /// </summary>
+        [JsonProperty(PropertyName = "identityReference")]
+        public ComputeNodeIdentityReference IdentityReference { get; set; }
 
     }
 }

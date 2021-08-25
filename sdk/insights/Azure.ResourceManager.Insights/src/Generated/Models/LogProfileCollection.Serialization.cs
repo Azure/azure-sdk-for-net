@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class LogProfileCollection
+    internal partial class LogProfileCollection
     {
         internal static LogProfileCollection DeserializeLogProfileCollection(JsonElement element)
         {

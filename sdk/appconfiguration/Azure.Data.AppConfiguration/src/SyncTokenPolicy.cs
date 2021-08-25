@@ -34,23 +34,28 @@ namespace Azure.Data.AppConfiguration
             {
                 foreach (string fullRawToken in rawSyncTokens)
                 {
-                    // Handle multiple header values.
-                    string[] rawTokens = fullRawToken.Split(',');
-                    foreach (string rawToken in rawTokens)
-                    {
-                        if (SyncTokenUtils.TryParse(rawToken, out SyncToken token))
-                        {
-                            _syncTokens.AddOrUpdate(token.Id, token, (key, existing) =>
-                            {
-                                if (existing.SequenceNumber < token.SequenceNumber)
-                                {
-                                    return token;
-                                }
+                    AddToken(fullRawToken);
+                }
+            }
+        }
 
-                                return existing;
-                            });
+        public void AddToken(string fullRawToken)
+        {
+            // Handle multiple header values.
+            string[] rawTokens = fullRawToken.Split(',');
+            foreach (string rawToken in rawTokens)
+            {
+                if (SyncTokenUtils.TryParse(rawToken, out SyncToken token))
+                {
+                    _syncTokens.AddOrUpdate(token.Id, token, (key, existing) =>
+                    {
+                        if (existing.SequenceNumber < token.SequenceNumber)
+                        {
+                            return token;
                         }
-                    }
+
+                        return existing;
+                    });
                 }
             }
         }

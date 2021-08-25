@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class SecurityRuleListResult
+    internal partial class SecurityRuleListResult
     {
         internal static SecurityRuleListResult DeserializeSecurityRuleListResult(JsonElement element)
         {

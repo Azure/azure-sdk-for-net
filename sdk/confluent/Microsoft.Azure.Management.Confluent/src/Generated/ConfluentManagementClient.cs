@@ -72,6 +72,11 @@ namespace Microsoft.Azure.Management.Confluent
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IMarketplaceAgreementsOperations.
+        /// </summary>
+        public virtual IMarketplaceAgreementsOperations MarketplaceAgreements { get; private set; }
+
+        /// <summary>
         /// Gets the IOrganizationOperations.
         /// </summary>
         public virtual IOrganizationOperations OrganizationOperations { get; private set; }
@@ -80,6 +85,11 @@ namespace Microsoft.Azure.Management.Confluent
         /// Gets the IOrganizationOperationsOperations.
         /// </summary>
         public virtual IOrganizationOperationsOperations Organization { get; private set; }
+
+        /// <summary>
+        /// Gets the IValidationsOperations.
+        /// </summary>
+        public virtual IValidationsOperations Validations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ConfluentManagementClient class.
@@ -322,10 +332,12 @@ namespace Microsoft.Azure.Management.Confluent
         /// </summary>
         private void Initialize()
         {
+            MarketplaceAgreements = new MarketplaceAgreementsOperations(this);
             OrganizationOperations = new OrganizationOperations(this);
             Organization = new OrganizationOperationsOperations(this);
+            Validations = new ValidationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-03-01-preview";
+            ApiVersion = "2021-03-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

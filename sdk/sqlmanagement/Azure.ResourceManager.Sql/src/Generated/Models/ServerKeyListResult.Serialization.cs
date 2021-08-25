@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ServerKeyListResult
+    internal partial class ServerKeyListResult
     {
         internal static ServerKeyListResult DeserializeServerKeyListResult(JsonElement element)
         {

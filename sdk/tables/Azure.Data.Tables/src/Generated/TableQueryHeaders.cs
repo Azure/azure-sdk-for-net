@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class TableQueryHeaders
+    internal partial class TableQueryHeaders
     {
         private readonly Response _response;
         public TableQueryHeaders(Response response)

@@ -1,8 +1,0 @@
-trigger: none
-
-extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
-  parameters:
-    ServiceDirectory: communication
-    EnvVars:
-      AZURE_COMMUNICATION_TEST_MODE: Record

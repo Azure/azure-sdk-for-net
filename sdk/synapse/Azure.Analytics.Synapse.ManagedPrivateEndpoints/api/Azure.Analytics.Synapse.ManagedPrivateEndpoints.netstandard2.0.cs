@@ -3,23 +3,23 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
     public partial class ManagedPrivateEndpointsClient
     {
         protected ManagedPrivateEndpointsClient() { }
-        public ManagedPrivateEndpointsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public ManagedPrivateEndpointsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.ManagedPrivateEndpoints.ManagedPrivateEndpointsClientOptions options) { }
-        public virtual Azure.Response<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint> Create(string managedVirtualNetworkName, string managedPrivateEndpointName, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint managedPrivateEndpoint, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint>> CreateAsync(string managedVirtualNetworkName, string managedPrivateEndpointName, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint managedPrivateEndpoint, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Delete(string managedVirtualNetworkName, string managedPrivateEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string managedVirtualNetworkName, string managedPrivateEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint> Get(string managedVirtualNetworkName, string managedPrivateEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint>> GetAsync(string managedVirtualNetworkName, string managedPrivateEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint> List(string managedVirtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint> ListAsync(string managedVirtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public ManagedPrivateEndpointsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.ManagedPrivateEndpoints.ManagedPrivateEndpointsClientOptions options = null) { }
+        public virtual Azure.Response<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint> Create(string managedPrivateEndpointName, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName = "default", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint>> CreateAsync(string managedPrivateEndpointName, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName = "default", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Delete(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint> Get(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint>> GetAsync(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint> List(string managedVirtualNetworkName = "default", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint> ListAsync(string managedVirtualNetworkName = "default", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ManagedPrivateEndpointsClientOptions : Azure.Core.ClientOptions
     {
-        public ManagedPrivateEndpointsClientOptions(Azure.Analytics.Synapse.ManagedPrivateEndpoints.ManagedPrivateEndpointsClientOptions.ServiceVersion serviceVersion = Azure.Analytics.Synapse.ManagedPrivateEndpoints.ManagedPrivateEndpointsClientOptions.ServiceVersion.V2019_06_01_preview) { }
+        public ManagedPrivateEndpointsClientOptions(Azure.Analytics.Synapse.ManagedPrivateEndpoints.ManagedPrivateEndpointsClientOptions.ServiceVersion version = Azure.Analytics.Synapse.ManagedPrivateEndpoints.ManagedPrivateEndpointsClientOptions.ServiceVersion.V2021_06_01_Preview) { }
         public enum ServiceVersion
         {
-            V2019_06_01_preview = 1,
+            V2020_12_01 = 1,
+            V2021_06_01_Preview = 2,
         }
     }
 }
@@ -40,19 +40,22 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         public string Description { get { throw null; } set { } }
         public string Status { get { throw null; } }
     }
-    public partial class ManagedPrivateEndpointListResponse
-    {
-        internal ManagedPrivateEndpointListResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint> Value { get { throw null; } }
-    }
     public partial class ManagedPrivateEndpointProperties
     {
         public ManagedPrivateEndpointProperties() { }
         public Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointConnectionState ConnectionState { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Fqdns { get { throw null; } }
         public string GroupId { get { throw null; } set { } }
+        public bool? IsCompliant { get { throw null; } set { } }
         public bool? IsReserved { get { throw null; } }
+        public string Name { get { throw null; } set { } }
         public string PrivateLinkResourceId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+    }
+    public static partial class ManagedPrivateEndpointsModelFactory
+    {
+        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint ManagedPrivateEndpoint(string id = null, string name = null, string type = null, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointProperties properties = null) { throw null; }
+        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointConnectionState ManagedPrivateEndpointConnectionState(string status = null, string description = null, string actionsRequired = null) { throw null; }
+        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointProperties ManagedPrivateEndpointProperties(string name = null, string privateLinkResourceId = null, string groupId = null, string provisioningState = null, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpointConnectionState connectionState = null, bool? isReserved = default(bool?), System.Collections.Generic.IEnumerable<string> fqdns = null, bool? isCompliant = default(bool?)) { throw null; }
     }
 }

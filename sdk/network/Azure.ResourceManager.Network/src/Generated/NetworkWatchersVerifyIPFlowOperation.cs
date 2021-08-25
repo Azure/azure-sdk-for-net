@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkWatchersVerifyIPFlowOperation : Operation<VerificationIPFlowResult>, IOperationSource<VerificationIPFlowResult>
     {
         private readonly ArmOperationHelpers<VerificationIPFlowResult> _operation;
+
+        /// <summary> Initializes a new instance of NetworkWatchersVerifyIPFlowOperation for mocking. </summary>
+        protected NetworkWatchersVerifyIPFlowOperation()
+        {
+        }
+
         internal NetworkWatchersVerifyIPFlowOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VerificationIPFlowResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersVerifyIPFlowOperation");

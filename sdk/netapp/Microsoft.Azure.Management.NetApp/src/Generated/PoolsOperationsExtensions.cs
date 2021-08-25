@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.NetApp
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -38,7 +36,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='accountName'>
             /// The name of the NetApp account
             /// </param>
-            public static IEnumerable<CapacityPool> List(this IPoolsOperations operations, string resourceGroupName, string accountName)
+            public static IPage<CapacityPool> List(this IPoolsOperations operations, string resourceGroupName, string accountName)
             {
                 return operations.ListAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
@@ -61,7 +59,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<CapacityPool>> ListAsync(this IPoolsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<CapacityPool>> ListAsync(this IPoolsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -449,6 +447,46 @@ namespace Microsoft.Azure.Management.NetApp
             public static async Task BeginDeleteAsync(this IPoolsOperations operations, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, poolName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Describe all Capacity Pools
+            /// </summary>
+            /// <remarks>
+            /// List all capacity pools in the NetApp Account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<CapacityPool> ListNext(this IPoolsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Describe all Capacity Pools
+            /// </summary>
+            /// <remarks>
+            /// List all capacity pools in the NetApp Account
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CapacityPool>> ListNextAsync(this IPoolsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

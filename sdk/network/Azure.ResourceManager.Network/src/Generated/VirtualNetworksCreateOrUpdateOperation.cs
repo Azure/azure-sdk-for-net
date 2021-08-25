@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworksCreateOrUpdateOperation : Operation<VirtualNetwork>, IOperationSource<VirtualNetwork>
     {
         private readonly ArmOperationHelpers<VirtualNetwork> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworksCreateOrUpdateOperation for mocking. </summary>
+        protected VirtualNetworksCreateOrUpdateOperation()
+        {
+        }
+
         internal VirtualNetworksCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VirtualNetwork>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworksCreateOrUpdateOperation");

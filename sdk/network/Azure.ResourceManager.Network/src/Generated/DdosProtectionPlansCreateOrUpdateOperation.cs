@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class DdosProtectionPlansCreateOrUpdateOperation : Operation<DdosProtectionPlan>, IOperationSource<DdosProtectionPlan>
     {
         private readonly ArmOperationHelpers<DdosProtectionPlan> _operation;
+
+        /// <summary> Initializes a new instance of DdosProtectionPlansCreateOrUpdateOperation for mocking. </summary>
+        protected DdosProtectionPlansCreateOrUpdateOperation()
+        {
+        }
+
         internal DdosProtectionPlansCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<DdosProtectionPlan>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DdosProtectionPlansCreateOrUpdateOperation");

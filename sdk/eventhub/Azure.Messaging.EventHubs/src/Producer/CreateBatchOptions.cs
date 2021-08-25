@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Producer
     public class CreateBatchOptions : SendEventOptions
     {
         /// <summary>The requested maximum size to allow for the batch, in bytes.</summary>
-        private long? _maximumSizeInBytes = null;
+        private long? _maximumSizeInBytes;
 
         /// <summary>
         ///   The maximum size to allow for a single batch of events, in bytes.
@@ -24,6 +25,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The desired limit, in bytes, for the size of the associated event batch.  If <c>null</c>,
         ///   the maximum size allowed by the active transport will be used.
         /// </value>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested size is less than 24.</exception>
         ///
         public long? MaximumSizeInBytes
         {

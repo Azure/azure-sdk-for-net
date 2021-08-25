@@ -21,10 +21,6 @@ namespace Microsoft.Azure.Management.ResourceManager
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// To manage and control access to your resources, you can define
-    /// customized policies and assign them at a scope.
-    /// </summary>
     public partial class PolicyClient : ServiceClient<PolicyClient>, IPolicyClient, IAzureClient
     {
         /// <summary>
@@ -53,11 +49,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The API version to use for the operation.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -76,6 +67,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IDataPolicyManifestsOperations.
+        /// </summary>
+        public virtual IDataPolicyManifestsOperations DataPolicyManifests { get; private set; }
+
+        /// <summary>
         /// Gets the IPolicyAssignmentsOperations.
         /// </summary>
         public virtual IPolicyAssignmentsOperations PolicyAssignments { get; private set; }
@@ -89,6 +85,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets the IPolicySetDefinitionsOperations.
         /// </summary>
         public virtual IPolicySetDefinitionsOperations PolicySetDefinitions { get; private set; }
+
+        /// <summary>
+        /// Gets the IPolicyExemptionsOperations.
+        /// </summary>
+        public virtual IPolicyExemptionsOperations PolicyExemptions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the PolicyClient class.
@@ -331,11 +332,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         private void Initialize()
         {
+            DataPolicyManifests = new DataPolicyManifestsOperations(this);
             PolicyAssignments = new PolicyAssignmentsOperations(this);
             PolicyDefinitions = new PolicyDefinitionsOperations(this);
             PolicySetDefinitions = new PolicySetDefinitionsOperations(this);
+            PolicyExemptions = new PolicyExemptionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

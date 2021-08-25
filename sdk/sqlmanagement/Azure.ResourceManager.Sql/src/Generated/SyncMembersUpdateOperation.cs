@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class SyncMembersUpdateOperation : Operation<SyncMember>, IOperationSource<SyncMember>
     {
         private readonly ArmOperationHelpers<SyncMember> _operation;
+
+        /// <summary> Initializes a new instance of SyncMembersUpdateOperation for mocking. </summary>
+        protected SyncMembersUpdateOperation()
+        {
+        }
+
         internal SyncMembersUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<SyncMember>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SyncMembersUpdateOperation");

@@ -49,7 +49,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
 </Project>

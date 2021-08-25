@@ -169,7 +169,6 @@ namespace Azure.Core
             return ordered;
         }
 
-
         /// <summary>
         /// Read the next line of text.
         /// </summary>

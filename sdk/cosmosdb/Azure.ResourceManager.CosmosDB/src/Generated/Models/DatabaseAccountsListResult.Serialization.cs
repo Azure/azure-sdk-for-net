@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class DatabaseAccountsListResult
+    internal partial class DatabaseAccountsListResult
     {
         internal static DatabaseAccountsListResult DeserializeDatabaseAccountsListResult(JsonElement element)
         {

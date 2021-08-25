@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Azure Active Directory administrator. </summary>
-    public partial class ServerAzureADAdministrator : Resource
+    public partial class ServerAzureADAdministrator : ProxyResource
     {
         /// <summary> Initializes a new instance of ServerAzureADAdministrator. </summary>
         public ServerAzureADAdministrator()

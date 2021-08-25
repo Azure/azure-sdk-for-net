@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of long term retention backups. </summary>
-    public partial class RestorePointListResult
+    internal partial class RestorePointListResult
     {
         /// <summary> Initializes a new instance of RestorePointListResult. </summary>
         internal RestorePointListResult()

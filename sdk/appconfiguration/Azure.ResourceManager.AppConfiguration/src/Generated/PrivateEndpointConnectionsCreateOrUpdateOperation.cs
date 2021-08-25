@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class PrivateEndpointConnectionsCreateOrUpdateOperation : Operation<PrivateEndpointConnection>, IOperationSource<PrivateEndpointConnection>
     {
         private readonly ArmOperationHelpers<PrivateEndpointConnection> _operation;
+
+        /// <summary> Initializes a new instance of PrivateEndpointConnectionsCreateOrUpdateOperation for mocking. </summary>
+        protected PrivateEndpointConnectionsCreateOrUpdateOperation()
+        {
+        }
+
         internal PrivateEndpointConnectionsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<PrivateEndpointConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateEndpointConnectionsCreateOrUpdateOperation");

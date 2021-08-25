@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-1302682137?api-version=1.0",
+      "RequestUri": "https://pakrymappconfiguration-azconfig-net.azconfig.io/kv/key-349897522?api-version=1.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/vnd.microsoft.appconfig.kv\u002Bjson",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "Date": "Wed, 18 Sep 2019 21:33:02 GMT",
-        "traceparent": "00-7cfcfb9b614e6044bdb08102961dfd58-e20c1a6091e5b640-00",
+        "Date": "Mon, 08 Feb 2021 19:13:48 GMT",
+        "traceparent": "00-c76e65fec5369244acdd988cafcaccea-8a36ebb6facb3f4f-00",
         "User-Agent": [
-          "azsdk-net-Data.AppConfiguration/1.0.0-dev.20190918.1\u002B0c319f5fd30ac3e2e5bc2936122815be22444424",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.16299 )"
+          "azsdk-net-Data.AppConfiguration/1.1.0-alpha.20210208.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "3dbe2c44dfdd932a08d9a1d3088a2611",
+        "x-ms-client-request-id": "5c5a98197800e84a2983adccb6ac45a0",
         "x-ms-content-sha256": "47DEQpj8HBSa\u002B/TImW\u002B5JCeuQeRkm5NMpJWZG3hSuFU=",
         "x-ms-return-client-request-id": "true"
       },
@@ -21,24 +21,23 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Allow-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
-        "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
+        "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-useragent, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, retry-after-ms, x-ms-request-id, x-ms-client-session-id, x-ms-effective-locale, WWW-Authenticate",
         "Connection": "keep-alive",
         "Content-Length": "0",
-        "Date": "Wed, 18 Sep 2019 21:33:02 GMT",
-        "Server": "nginx/1.13.12",
+        "Date": "Mon, 08 Feb 2021 19:06:22 GMT",
+        "Server": "openresty/1.17.8.2",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "3dbe2c44dfdd932a08d9a1d3088a2611",
-        "x-ms-correlation-request-id": "20242d36-62d5-4d33-b351-48584557bd9d",
-        "x-ms-request-id": "20242d36-62d5-4d33-b351-48584557bd9d"
+        "x-ms-client-request-id": "5c5a98197800e84a2983adccb6ac45a0",
+        "x-ms-correlation-request-id": "a86e9376-7d20-468a-bbd8-0d212d72e790",
+        "x-ms-request-id": "a86e9376-7d20-468a-bbd8-0d212d72e790",
+        "x-ms-tenant-name": "pakrymappconfiguration-azconfig-net"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "APPCONFIGURATION_CONNECTION_STRING": "Endpoint=https://pakrym-azconfig-ui.azconfig.io;Id=0-l1-s0:h5pHKElA5IjSL3z\u002BFOYz;Secret=;",
-    "RandomSeed": "511919489"
+    "APPCONFIGURATION_CONNECTION_STRING": "Endpoint=https://pakrymappconfiguration-azconfig-net.azconfig.io;Id=HJQj-l2-s0:y/nolwTrxZa9soWjduE/;Secret=Kg==",
+    "RandomSeed": "1625405407"
   }
 }

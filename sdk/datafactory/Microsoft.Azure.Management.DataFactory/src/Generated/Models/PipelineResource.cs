@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="runDimensions">Dimensions emitted by Pipeline.</param>
         /// <param name="folder">The folder that this Pipeline is in. If not
         /// specified, Pipeline will appear at the root level.</param>
-        public PipelineResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<Activity> activities = default(IList<Activity>), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IDictionary<string, VariableSpecification> variables = default(IDictionary<string, VariableSpecification>), int? concurrency = default(int?), IList<object> annotations = default(IList<object>), IDictionary<string, object> runDimensions = default(IDictionary<string, object>), PipelineFolder folder = default(PipelineFolder))
+        public PipelineResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<Activity> activities = default(IList<Activity>), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IDictionary<string, VariableSpecification> variables = default(IDictionary<string, VariableSpecification>), int? concurrency = default(int?), IList<object> annotations = default(IList<object>), IDictionary<string, object> runDimensions = default(IDictionary<string, object>), PipelineFolder folder = default(PipelineFolder), PipelinePolicy policy = default(PipelinePolicy))
             : base(id, name, type, etag)
         {
             AdditionalProperties = additionalProperties;
@@ -63,6 +63,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Annotations = annotations;
             RunDimensions = runDimensions;
             Folder = folder;
+            Policy = policy;
             CustomInit();
         }
 
@@ -127,6 +128,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.folder")]
         public PipelineFolder Folder { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.policy")]
+        public PipelinePolicy Policy { get; set; }
 
         /// <summary>
         /// Validate the object.

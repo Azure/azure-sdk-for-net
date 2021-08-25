@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetListOSUpgradeHistory
+    internal partial class VirtualMachineScaleSetListOSUpgradeHistory
     {
         internal static VirtualMachineScaleSetListOSUpgradeHistory DeserializeVirtualMachineScaleSetListOSUpgradeHistory(JsonElement element)
         {

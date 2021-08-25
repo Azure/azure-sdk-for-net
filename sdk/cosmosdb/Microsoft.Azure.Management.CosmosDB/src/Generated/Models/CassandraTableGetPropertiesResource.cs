@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// updated timestamp of the resource.</param>
         /// <param name="_etag">A system generated property representing the
         /// resource etag required for optimistic concurrency control.</param>
-        public CassandraTableGetPropertiesResource(string id, int? defaultTtl = default(int?), CassandraSchema schema = default(CassandraSchema), int? analyticalStorageTtl = default(int?), string _rid = default(string), object _ts = default(object), string _etag = default(string))
+        public CassandraTableGetPropertiesResource(string id, int? defaultTtl = default(int?), CassandraSchema schema = default(CassandraSchema), int? analyticalStorageTtl = default(int?), string _rid = default(string), double? _ts = default(double?), string _etag = default(string))
         {
             Id = id;
             DefaultTtl = defaultTtl;
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// timestamp of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "_ts")]
-        public object _ts { get; private set; }
+        public double? _ts { get; private set; }
 
         /// <summary>
         /// Gets a system generated property representing the resource etag

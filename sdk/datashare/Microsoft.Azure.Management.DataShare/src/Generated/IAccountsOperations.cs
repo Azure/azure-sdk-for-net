@@ -24,6 +24,31 @@ namespace Microsoft.Azure.Management.DataShare
     public partial interface IAccountsOperations
     {
         /// <summary>
+        /// List Accounts in a subscription
+        /// </summary>
+        /// <remarks>
+        /// List Accounts in Subscription
+        /// </remarks>
+        /// <param name='skipToken'>
+        /// Continuation token
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DataShareErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<Account>>> ListBySubscriptionWithHttpMessagesAsync(string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get an account under a resource group
         /// </summary>
         /// <remarks>
@@ -141,31 +166,6 @@ namespace Microsoft.Azure.Management.DataShare
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<Account>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, AccountUpdateParameters accountUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// List Accounts in a subscription
-        /// </summary>
-        /// <remarks>
-        /// List Accounts in Subscription
-        /// </remarks>
-        /// <param name='skipToken'>
-        /// Continuation token
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DataShareErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Account>>> ListBySubscriptionWithHttpMessagesAsync(string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List Accounts in a resource group
         /// </summary>

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the MongoDB databases and their properties. </summary>
-    public partial class MongoDBDatabaseListResult
+    internal partial class MongoDBDatabaseListResult
     {
         /// <summary> Initializes a new instance of MongoDBDatabaseListResult. </summary>
         internal MongoDBDatabaseListResult()

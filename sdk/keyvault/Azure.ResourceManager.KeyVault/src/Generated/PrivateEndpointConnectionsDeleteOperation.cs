@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.KeyVault
     public partial class PrivateEndpointConnectionsDeleteOperation : Operation<PrivateEndpointConnection>, IOperationSource<PrivateEndpointConnection>
     {
         private readonly ArmOperationHelpers<PrivateEndpointConnection> _operation;
+
+        /// <summary> Initializes a new instance of PrivateEndpointConnectionsDeleteOperation for mocking. </summary>
+        protected PrivateEndpointConnectionsDeleteOperation()
+        {
+        }
+
         internal PrivateEndpointConnectionsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<PrivateEndpointConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateEndpointConnectionsDeleteOperation");

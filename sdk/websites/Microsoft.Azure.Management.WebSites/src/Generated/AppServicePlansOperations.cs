@@ -2921,6 +2921,10 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
             if (skipToken != null)
             {
                 _queryParameters.Add(string.Format("$skipToken={0}", System.Uri.EscapeDataString(skipToken)));
@@ -2932,10 +2936,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (top != null)
             {
                 _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(top)));
-            }
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3357,13 +3357,13 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", filter));
-            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", filter));
             }
             if (_queryParameters.Count > 0)
             {

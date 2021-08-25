@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListSubnets API service call. Retrieves all subnets that belong to a virtual network. </summary>
-    public partial class VirtualNetworkPeeringListResult
+    internal partial class VirtualNetworkPeeringListResult
     {
         /// <summary> Initializes a new instance of VirtualNetworkPeeringListResult. </summary>
         internal VirtualNetworkPeeringListResult()

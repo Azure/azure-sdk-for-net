@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceKeyListResult
+    internal partial class ManagedInstanceKeyListResult
     {
         internal static ManagedInstanceKeyListResult DeserializeManagedInstanceKeyListResult(JsonElement element)
         {

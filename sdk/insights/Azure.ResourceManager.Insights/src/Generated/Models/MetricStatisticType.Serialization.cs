@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    internal static class MetricStatisticTypeExtensions
+    internal static partial class MetricStatisticTypeExtensions
     {
         public static string ToSerialString(this MetricStatisticType value) => value switch
         {

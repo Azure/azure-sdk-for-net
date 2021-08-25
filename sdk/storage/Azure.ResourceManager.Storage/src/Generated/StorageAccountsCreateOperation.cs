@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Storage
     public partial class StorageAccountsCreateOperation : Operation<StorageAccount>, IOperationSource<StorageAccount>
     {
         private readonly ArmOperationHelpers<StorageAccount> _operation;
+
+        /// <summary> Initializes a new instance of StorageAccountsCreateOperation for mocking. </summary>
+        protected StorageAccountsCreateOperation()
+        {
+        }
+
         internal StorageAccountsCreateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<StorageAccount>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "StorageAccountsCreateOperation");

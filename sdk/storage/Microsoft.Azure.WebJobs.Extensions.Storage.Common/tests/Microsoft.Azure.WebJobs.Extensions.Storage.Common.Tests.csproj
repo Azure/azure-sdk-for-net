@@ -15,9 +15,4 @@
     <ProjectReference Include="..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="cert.pem" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
-
 </Project>

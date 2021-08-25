@@ -82,7 +82,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SnapshotTakeHeaders> TakeAsync(this ISnapshotOperations operations, SnapshotObjectType type, string objectId, IList<System.Guid?> applyScope, string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SnapshotTakeHeaders> TakeAsync(this ISnapshotOperations operations, SnapshotObjectType type, string objectId, IList<System.Guid> applyScope, string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.TakeWithHttpMessagesAsync(type, objectId, applyScope, userData, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Snapshot>> ListAsync(this ISnapshotOperations operations, SnapshotObjectType? type = default(SnapshotObjectType?), IList<System.Guid?> applyScope = default(IList<System.Guid?>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<Snapshot>> ListAsync(this ISnapshotOperations operations, SnapshotObjectType? type = default(SnapshotObjectType?), IList<System.Guid> applyScope = default(IList<System.Guid>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(type, applyScope, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this ISnapshotOperations operations, System.Guid snapshotId, IList<System.Guid?> applyScope = default(IList<System.Guid?>), string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this ISnapshotOperations operations, System.Guid snapshotId, IList<System.Guid> applyScope = default(IList<System.Guid>), string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.UpdateWithHttpMessagesAsync(snapshotId, applyScope, userData, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }

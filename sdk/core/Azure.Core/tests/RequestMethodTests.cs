@@ -35,6 +35,5 @@ namespace Azure.Core.Tests
         {
             Assert.AreSame(method.Method, RequestMethod.Parse(stringValue).Method);
         }
-
     }
 }

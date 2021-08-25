@@ -34,11 +34,10 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// 'AssignmentPending', 'PreparePending', 'PrepareInProgress',
         /// 'PrepareFailed', 'MovePending', 'MoveInProgress', 'MoveFailed',
         /// 'DiscardInProgress', 'DiscardFailed', 'CommitPending',
-        /// 'CommitInProgress', 'CommitFailed', 'Committed'</param>
-        /// <param name="targetId">Gets the Target ARM Id of the
-        /// resource.</param>
-        public MoveResourcePropertiesMoveStatus(string moveState = default(string), JobStatus jobStatus = default(JobStatus), MoveResourceError errors = default(MoveResourceError), string targetId = default(string))
-            : base(moveState, jobStatus, errors, targetId)
+        /// 'CommitInProgress', 'CommitFailed', 'Committed',
+        /// 'DeleteSourcePending', 'ResourceMoveCompleted'</param>
+        public MoveResourcePropertiesMoveStatus(string moveState = default(string), JobStatus jobStatus = default(JobStatus), MoveResourceError errors = default(MoveResourceError))
+            : base(moveState, jobStatus, errors)
         {
             CustomInit();
         }

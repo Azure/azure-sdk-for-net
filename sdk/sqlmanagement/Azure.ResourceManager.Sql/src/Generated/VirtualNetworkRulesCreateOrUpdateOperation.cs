@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class VirtualNetworkRulesCreateOrUpdateOperation : Operation<VirtualNetworkRule>, IOperationSource<VirtualNetworkRule>
     {
         private readonly ArmOperationHelpers<VirtualNetworkRule> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworkRulesCreateOrUpdateOperation for mocking. </summary>
+        protected VirtualNetworkRulesCreateOrUpdateOperation()
+        {
+        }
+
         internal VirtualNetworkRulesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VirtualNetworkRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkRulesCreateOrUpdateOperation");

@@ -72,9 +72,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='sourceControlConfigurationName'>
         /// Name of the Source Control Configuration.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to be used with the HTTP request.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -96,7 +93,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SourceControlConfiguration>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SourceControlConfiguration>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -122,9 +119,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlConfigurationName");
             }
-            if (apiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -138,7 +135,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 tracingParameters.Add("clusterResourceName", clusterResourceName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("sourceControlConfigurationName", sourceControlConfigurationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -152,9 +148,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{sourceControlConfigurationName}", System.Uri.EscapeDataString(sourceControlConfigurationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -298,9 +294,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='sourceControlConfigurationName'>
         /// Name of the Source Control Configuration.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to be used with the HTTP request.
-        /// </param>
         /// <param name='sourceControlConfiguration'>
         /// Properties necessary to Create KubernetesConfiguration.
         /// </param>
@@ -325,7 +318,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SourceControlConfiguration>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, SourceControlConfiguration sourceControlConfiguration, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SourceControlConfiguration>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, SourceControlConfiguration sourceControlConfiguration, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -351,9 +344,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlConfigurationName");
             }
-            if (apiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (sourceControlConfiguration == null)
             {
@@ -371,7 +364,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 tracingParameters.Add("clusterResourceName", clusterResourceName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("sourceControlConfigurationName", sourceControlConfigurationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("sourceControlConfiguration", sourceControlConfiguration);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
@@ -386,9 +378,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{sourceControlConfigurationName}", System.Uri.EscapeDataString(sourceControlConfigurationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -557,19 +549,16 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='sourceControlConfigurationName'>
         /// Name of the Source Control Configuration.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to be used with the HTTP request.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, apiVersion, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -592,9 +581,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to be used with the HTTP request.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -616,7 +602,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SourceControlConfiguration>>> ListWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SourceControlConfiguration>>> ListWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -638,9 +624,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
             }
-            if (apiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -653,7 +639,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 tracingParameters.Add("clusterRp", clusterRp);
                 tracingParameters.Add("clusterResourceName", clusterResourceName);
                 tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -666,9 +651,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clusterResourceName, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -813,9 +798,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='sourceControlConfigurationName'>
         /// Name of the Source Control Configuration.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to be used with the HTTP request.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -834,7 +816,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -860,9 +842,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlConfigurationName");
             }
-            if (apiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -876,7 +858,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 tracingParameters.Add("clusterResourceName", clusterResourceName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("sourceControlConfigurationName", sourceControlConfigurationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
@@ -890,9 +871,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{sourceControlConfigurationName}", System.Uri.EscapeDataString(sourceControlConfigurationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

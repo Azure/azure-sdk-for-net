@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns>The token to use for management operations against the Event Hubs Live test namespace.</returns>
         ///
-        public async Task<string> AquireManagementTokenAsync()
+        public async Task<string> AcquireManagementTokenAsync()
         {
             var token = s_managementToken;
             var authority = new Uri(new Uri(EventHubsTestEnvironment.Instance.AuthorityHostUrl), EventHubsTestEnvironment.Instance.TenantId).ToString();

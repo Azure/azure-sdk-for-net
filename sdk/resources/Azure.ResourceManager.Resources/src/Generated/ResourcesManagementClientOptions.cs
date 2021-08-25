@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Client options for Resources. </summary>
-    public class ResourcesManagementClientOptions : ClientOptions
+    public partial class ResourcesManagementClientOptions : ClientOptions
     {
     }
 }

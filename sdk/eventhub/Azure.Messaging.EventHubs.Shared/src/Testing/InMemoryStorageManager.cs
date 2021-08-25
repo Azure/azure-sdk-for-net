@@ -36,13 +36,13 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   The set of checkpoints held for this instance.
         /// </summary>
         ///
-        public Dictionary<(string, string, string, string), CheckpointData> Checkpoints { get; }
+        public Dictionary<(string FullyQualifiedNamespace, string EventHubName, string ConsumerGroup, string PartitionId), CheckpointData> Checkpoints { get; }
 
         /// <summary>
         ///   The set of stored ownership.
         /// </summary>
         ///
-        public Dictionary<(string, string, string, string), EventProcessorPartitionOwnership> Ownership { get; }
+        public Dictionary<(string FullyQualifiedNamespace, string EventHubName, string ConsumerGroup, string PartitionId), EventProcessorPartitionOwnership> Ownership { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="MockCheckPointStorage"/> class.
@@ -65,6 +65,18 @@ namespace Azure.Messaging.EventHubs.Tests
             Ownership = new Dictionary<(string, string, string, string), EventProcessorPartitionOwnership>();
             Checkpoints = new Dictionary<(string, string, string, string), CheckpointData>();
         }
+
+        /// <summary>
+        ///   The value to set the ownership LastModifiedTime to.
+        /// </summary>
+        ///
+        public DateTimeOffset LastModifiedTime { get; set; } = DateTimeOffset.Now;
+
+        /// <summary>
+        ///   The total lease renewals.
+        /// </summary>
+        ///
+        public int TotalRenewals { get; set; }
 
         /// <summary>
         ///   Retrieves a complete ownership list from the in-memory storage service.
@@ -130,7 +142,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     if (isClaimable)
                     {
                         ownership.Version = Guid.NewGuid().ToString();
-
+                        ownership.LastModifiedTime = LastModifiedTime;
+                        TotalRenewals++;
                         Ownership[key] = ownership;
                         claimedOwnership.Add(ownership);
 
@@ -210,6 +223,16 @@ namespace Azure.Messaging.EventHubs.Tests
             return Task.CompletedTask;
         }
 
+        public EventProcessorPartitionOwnership TryGetLatestOwnership(EventProcessorPartitionOwnership ownership)
+        {
+            var key = (ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.PartitionId);
+            if (Ownership.TryGetValue(key, out ownership))
+            {
+                return ownership;
+            }
+
+            return null;
+        }
         /// <summary>
         ///   Sends a log message to the current logger, if provided by the user.
         /// </summary>

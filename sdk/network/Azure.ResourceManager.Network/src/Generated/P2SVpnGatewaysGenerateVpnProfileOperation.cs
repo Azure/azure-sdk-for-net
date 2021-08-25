@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class P2SVpnGatewaysGenerateVpnProfileOperation : Operation<VpnProfileResponse>, IOperationSource<VpnProfileResponse>
     {
         private readonly ArmOperationHelpers<VpnProfileResponse> _operation;
+
+        /// <summary> Initializes a new instance of P2SVpnGatewaysGenerateVpnProfileOperation for mocking. </summary>
+        protected P2SVpnGatewaysGenerateVpnProfileOperation()
+        {
+        }
+
         internal P2SVpnGatewaysGenerateVpnProfileOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VpnProfileResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "P2SVpnGatewaysGenerateVpnProfileOperation");

@@ -5,7 +5,7 @@ using Azure.Storage.Tests.Shared;
 using Azure.Storage.Files.Shares.Models;
 using NUnit.Framework;
 
-namespace Azure.Storage.Files.Shares.Test
+namespace Azure.Storage.Files.Shares.Tests
 {
     public class UnitTests
     {

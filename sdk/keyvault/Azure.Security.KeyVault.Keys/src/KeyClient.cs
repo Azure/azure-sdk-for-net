@@ -5,7 +5,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,6 +19,7 @@ namespace Azure.Security.KeyVault.Keys
     {
         internal const string KeysPath = "/keys/";
         internal const string DeletedKeysPath = "/deletedkeys/";
+        internal const string RngPath = "/rng";
 
         private readonly KeyVaultPipeline _pipeline;
 
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new key in Key Vault. The create key operation can be used to create any key type in Azure Key Vault.
-        /// If the named key already exists, Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// If the named key already exists, Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="name">The name of the key.</param>
         /// <param name="keyType">The type of key to create. See <see cref="KeyType"/> for valid values.</param>
@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new key in Key Vault. The create key operation can be used to create any key type in Azure Key Vault.
-        /// If the named key already exists, Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// If the named key already exists, Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="name">The name of the key.</param>
         /// <param name="keyType">The type of key to create. See <see cref="KeyType"/> for valid values.</param>
@@ -144,7 +144,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new Elliptic Curve key in Key Vault. If the named key already exists,
-        /// Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="ecKeyOptions">The key options object containing information about the Elliptic Curve key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -173,7 +173,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new Elliptic Curve key in Key Vault. If the named key already exists,
-        /// Azure Key Vault creates a new version of the key. It requires the keys/create permission.
+        /// Azure Key Vault creates a new version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="ecKeyOptions">The key options object containing information about the Elliptic Curve key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -202,7 +202,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new RSA key in Key Vault. If the named key already exists, Azure Key Vault creates a new
-        /// version of the key. It requires the keys/create permission.
+        /// version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="rsaKeyOptions">The key options object containing information about the RSA key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -231,7 +231,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Creates and stores a new RSA key in Key Vault. If the named key already exists, Azure Key Vault creates a new
-        /// version of the key. It requires the keys/create permission.
+        /// version of the key. This operation requires the keys/create permission.
         /// </summary>
         /// <param name="rsaKeyOptions">The key options object containing information about the RSA key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -250,6 +250,64 @@ namespace Azure.Security.KeyVault.Keys
             try
             {
                 return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(rsaKeyOptions.Name), cancellationToken, KeysPath, rsaKeyOptions.Name, "/create").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and stores a new AES key in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="octKeyOptions">The key options object containing information about the AES key being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="octKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<KeyVaultKey> CreateOctKey(CreateOctKeyOptions octKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(octKeyOptions, nameof(octKeyOptions));
+
+            var parameters = new KeyRequestParameters(octKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOctKey)}");
+            scope.AddAttribute("key", octKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, parameters, () => new KeyVaultKey(octKeyOptions.Name), cancellationToken, KeysPath, octKeyOptions.Name, "/create");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and stores a new AES key in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="octKeyOptions">The key options object containing information about the AES key being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="octKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<KeyVaultKey>> CreateOctKeyAsync(CreateOctKeyOptions octKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(octKeyOptions, nameof(octKeyOptions));
+
+            var parameters = new KeyRequestParameters(octKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateOctKey)}");
+            scope.AddAttribute("key", octKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(octKeyOptions.Name), cancellationToken, KeysPath, octKeyOptions.Name, "/create").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1069,7 +1127,6 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-
                 return _pipeline.SendRequest(RequestMethod.Put, importKeyOptions, () => new KeyVaultKey(importKeyOptions.Name), cancellationToken, KeysPath, importKeyOptions.Name);
             }
             catch (Exception e)
@@ -1113,67 +1170,23 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Exports the latest version of a <see cref="KeyVaultKey"/> including the private key if originally created with <see cref="CreateKeyOptions.Exportable"/> set to true,
-        /// or imported with <see cref="KeyProperties.Exportable"/> in <see cref="ImportKeyOptions"/> set to true.
+        /// Get the requested number of bytes containing random values from a managed hardware security module (HSM).
         /// </summary>
-        /// <remarks>
-        /// Requires the <see cref="KeyOperation.Export"/> permission.
-        /// </remarks>
-        /// <param name="name">The name of the key to export.</param>
-        /// <param name="environment">The target environment assertion.</param>
+        /// <param name="count">The requested number of random bytes.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="KeyVaultKey"/> that was exported along with the private key if exportable.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="environment"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="environment"/> is null.</exception>
-        /// <seealso cref="ExportKey(string, string, string, CancellationToken)"/>
-        public virtual Response<KeyVaultKey> ExportKey(string name, string environment, CancellationToken cancellationToken = default) =>
-            ExportKey(name, null, environment, cancellationToken);
-
-
-        /// <summary>
-        /// Exports the latest version of a <see cref="KeyVaultKey"/> including the private key if originally created with <see cref="CreateKeyOptions.Exportable"/> set to true,
-        /// or imported with <see cref="KeyProperties.Exportable"/> in <see cref="ImportKeyOptions"/> set to true.
-        /// </summary>
-        /// <remarks>
-        /// Requires the <see cref="KeyOperation.Export"/> permission.
-        /// </remarks>
-        /// <param name="name">The name of the key to export.</param>
-        /// <param name="environment">The target environment assertion.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="KeyVaultKey"/> that was exported along with the private key if exportable.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="environment"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="environment"/> is null.</exception>
-        /// <seealso cref="ExportKeyAsync(string, string, string, CancellationToken)"/>
-        public virtual async Task<Response<KeyVaultKey>> ExportKeyAsync(string name, string environment, CancellationToken cancellationToken = default) =>
-            await ExportKeyAsync(name, null, environment, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Exports a specific version of a <see cref="KeyVaultKey"/> including the private key if originally created with <see cref="CreateKeyOptions.Exportable"/> set to true,
-        /// or imported with <see cref="KeyProperties.Exportable"/> in <see cref="ImportKeyOptions"/> set to true.
-        /// </summary>
-        /// <remarks>
-        /// Requires the <see cref="KeyOperation.Export"/> permission.
-        /// </remarks>
-        /// <param name="name">The name of the key to export.</param>
-        /// <param name="version">The optional version of the key to export.</param>
-        /// <param name="environment">The target environment assertion.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="KeyVaultKey"/> that was exported along with the private key if exportable.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="environment"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="environment"/> is null.</exception>
-        /// <seealso cref="ExportKey(string, string, CancellationToken)"/>
-        public virtual Response<KeyVaultKey> ExportKey(string name, string version, string environment, CancellationToken cancellationToken = default)
+        /// <returns><see cref="RandomBytes"/> containing random values from a managed hardware security module (HSM).</returns>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="count"/> is less than 0.</exception>
+        public virtual Response<RandomBytes> GetRandomBytes(int count, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(environment, nameof(environment));
+            // Service currently documents 1 to 128 inclusive but we must not tightly couple to service constraints.
+            Argument.AssertInRange(count, 1, int.MaxValue, nameof(count));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ExportKey)}");
-            scope.AddAttribute("key", name);
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetRandomBytes)}");
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, new KeyExportParameters(environment), () => new KeyVaultKey(name), cancellationToken, KeysPath, name, "/", version, "/export");
+                return _pipeline.SendRequest(RequestMethod.Post, new GetRandomBytesRequest(count), () => new RandomBytes(), cancellationToken, RngPath);
             }
             catch (Exception e)
             {
@@ -1183,32 +1196,137 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Exports a specific version of a <see cref="KeyVaultKey"/> including the private key if originally created with <see cref="CreateKeyOptions.Exportable"/> set to true,
-        /// or imported with <see cref="KeyProperties.Exportable"/> in <see cref="ImportKeyOptions"/> set to true.
+        /// Get the requested number of bytes containing random values from a managed hardware security module (HSM).
         /// </summary>
-        /// <remarks>
-        /// Requires the <see cref="KeyOperation.Export"/> permission.
-        /// </remarks>
-        /// <param name="name">The name of the key to export.</param>
-        /// <param name="version">The optional version of the key to export.</param>
-        /// <param name="environment">The target environment assertion.</param>
+        /// <param name="count">The requested number of random bytes.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="KeyVaultKey"/> that was exported along with the private key if exportable.</returns>
-        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="environment"/> is an empty string.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="environment"/> is null.</exception>
-        /// <seealso cref="ExportKeyAsync(string, string, CancellationToken)"/>
-        public virtual async Task<Response<KeyVaultKey>> ExportKeyAsync(string name, string version, string environment, CancellationToken cancellationToken = default)
+        /// <returns><see cref="RandomBytes"/> containing random values from a managed hardware security module (HSM).</returns>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="count"/> is less than 0.</exception>
+        public virtual async Task<Response<RandomBytes>> GetRandomBytesAsync(int count, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(environment, nameof(environment));
+            // Service currently documents 1 to 128 inclusive but we must not tightly couple to service constraints.
+            Argument.AssertInRange(count, 1, int.MaxValue, nameof(count));
 
-            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ExportKey)}");
-            scope.AddAttribute("key", name);
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetRandomBytes)}");
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, new KeyExportParameters(environment), () => new KeyVaultKey(name), cancellationToken, KeysPath, name, "/", version, "/export").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, new GetRandomBytesRequest(count), () => new RandomBytes(), cancellationToken, RngPath).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Releases the latest version of a key.
+        /// </summary>
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// The key must be exportable.
+        /// This operation requires the keys/release permission.
+        /// </remarks>
+        /// <returns>The key release result containing the released key.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default) =>
+            ReleaseKey(name, null, target, options, cancellationToken);
+
+        /// <summary>
+        /// Releases a key.
+        /// </summary>
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="version">Optional version of the key to release.</param>
+        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// The key must be exportable.
+        /// This operation requires the keys/release permission.
+        /// </remarks>
+        /// <returns>The key release result containing the released key.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string version, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(target, nameof(target));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
+            scope.AddAttribute("key", name);
+            scope.Start();
+
+            options ??= new();
+            options.Target = target;
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, options, () => new ReleaseKeyResult(), cancellationToken, KeysPath, name, "/", version, "/release");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Releases the latest version of a key.
+        /// </summary>
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// The key must be exportable.
+        /// This operation requires the keys/release permission.
+        /// </remarks>
+        /// <returns>The key release result containing the released key.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default) =>
+            ReleaseKeyAsync(name, null, target, options, cancellationToken);
+
+        /// <summary>
+        /// Releases a key.
+        /// </summary>
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="version">Optional version of the key to release.</param>
+        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// The key must be exportable.
+        /// This operation requires the keys/release permission.
+        /// </remarks>
+        /// <returns>The key release result containing the released key.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string version, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(target, nameof(target));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
+            scope.AddAttribute("key", name);
+            scope.Start();
+
+            options ??= new();
+            options.Target = target;
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, options, () => new ReleaseKeyResult(), cancellationToken, KeysPath, name, "/", version, "/release").ConfigureAwait(false);
             }
             catch (Exception e)
             {

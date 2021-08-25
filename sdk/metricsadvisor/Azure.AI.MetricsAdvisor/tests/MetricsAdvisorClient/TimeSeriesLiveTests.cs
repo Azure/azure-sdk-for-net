@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
@@ -16,33 +16,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetDimensionValues(bool populateOptionalMembers)
+        public async Task GetMetricDimensionValuesWithMinimumSetup(bool useTokenCredential)
         {
             const string dimensionName = "city";
-            const string filter = "ba";
 
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
-
-            var options = new GetDimensionValuesOptions();
-
-            if (populateOptionalMembers)
-            {
-                options.DimensionValueToFilter = filter;
-            }
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var valueCount = 0;
 
-            await foreach (string value in client.GetDimensionValuesAsync(MetricId, dimensionName, options))
+            await foreach (string value in client.GetMetricDimensionValuesAsync(MetricId, dimensionName))
             {
                 Assert.That(value, Is.Not.Null.And.Not.Empty);
-
-                if (populateOptionalMembers)
-                {
-                    Assert.That(value.ToLowerInvariant().Contains(filter));
-                }
 
                 if (++valueCount >= MaximumSamplesCount)
                 {
@@ -53,23 +40,43 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(valueCount, Is.GreaterThan(0));
         }
 
-        [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task GetMetricSeriesDefinitions(bool populateOptionalMembers)
+        [RecordedTest]
+        public async Task GetMetricDimensionValuesWithOptionalDimensionFilter()
         {
-            var cityFilter = new List<string>() { "Belo Horizonte", "Los Angeles", "Osaka" };
-            var categoryFilter = new List<string>() { "__SUM__", "Shoes Handbags & Sunglasses" };
+            const string dimensionName = "city";
+            const string filter = "ba";
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var options = new GetMetricSeriesDefinitionsOptions(SamplingStartTime);
-
-            if (populateOptionalMembers)
+            var options = new GetMetricDimensionValuesOptions()
             {
-                options.DimensionCombinationsToFilter.Add("city", cityFilter);
-                options.DimensionCombinationsToFilter.Add("category", categoryFilter);
+                DimensionValueFilter = filter
+            };
+
+            var valueCount = 0;
+
+            await foreach (string value in client.GetMetricDimensionValuesAsync(MetricId, dimensionName, options))
+            {
+                Assert.That(value, Is.Not.Null.And.Not.Empty);
+                Assert.That(value.ToLowerInvariant().Contains(filter));
+
+                if (++valueCount >= MaximumSamplesCount)
+                {
+                    break;
+                }
             }
+
+            Assert.That(valueCount, Is.GreaterThan(0));
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetMetricSeriesDefinitionsWithMinimumSetup(bool useTokenCredential)
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
+
+            var options = new GetMetricSeriesDefinitionsOptions(SamplingStartTime);
 
             var definitionCount = 0;
 
@@ -78,18 +85,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(definition, Is.Not.Null);
                 Assert.That(definition.MetricId, Is.EqualTo(MetricId));
 
-                ValidateDimensionKey(definition.SeriesKey);
-
-                if (populateOptionalMembers)
-                {
-                    Dictionary<string, string> dimensionColumns = definition.SeriesKey.AsDictionary();
-
-                    string city = dimensionColumns["city"];
-                    string category = dimensionColumns["category"];
-
-                    Assert.That(cityFilter.Contains(city));
-                    Assert.That(categoryFilter.Contains(category));
-                }
+                ValidateSeriesKey(definition.SeriesKey);
 
                 if (++definitionCount >= MaximumSamplesCount)
                 {
@@ -100,54 +96,111 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(definitionCount, Is.GreaterThan(0));
         }
 
-        [Test]
-        public async Task GetMetricSeriesData()
+        [RecordedTest]
+        public async Task GetMetricSeriesDefinitionsWithOptionalDimensionFilter()
         {
+            var cityFilter = new List<string>() { "Belo Horizonte", "Chennai", "Hong Kong" };
+            var categoryFilter = new List<string>() { "__SUM__", "Outdoors" };
+
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var seriesKey1 = new DimensionKey();
-            seriesKey1.AddDimensionColumn("city", "Delhi");
-            seriesKey1.AddDimensionColumn("category", "Handmade");
+            var options = new GetMetricSeriesDefinitionsOptions(SamplingStartTime);
 
-            var seriesKey2 = new DimensionKey();
-            seriesKey2.AddDimensionColumn("city", "Koltaka");
-            seriesKey2.AddDimensionColumn("category", "__SUM__");
+            options.DimensionCombinationsFilter.Add("city", cityFilter);
+            options.DimensionCombinationsFilter.Add("category", categoryFilter);
 
-            var seriesKeys = new List<DimensionKey>() { seriesKey1, seriesKey2 };
-            var returnedKeys = new List<DimensionKey>();
+            var definitionCount = 0;
 
-            var options = new GetMetricSeriesDataOptions(seriesKeys, SamplingStartTime, SamplingEndTime);
+            await foreach (MetricSeriesDefinition definition in client.GetMetricSeriesDefinitionsAsync(MetricId, options))
+            {
+                Assert.That(definition, Is.Not.Null);
+                Assert.That(definition.MetricId, Is.EqualTo(MetricId));
+
+                ValidateSeriesKey(definition.SeriesKey);
+
+                DimensionKey seriesKey = definition.SeriesKey;
+
+                Assert.That(seriesKey.TryGetValue("city", out string city));
+                Assert.That(seriesKey.TryGetValue("category", out string category));
+
+                Assert.That(cityFilter.Contains(city));
+                Assert.That(categoryFilter.Contains(category));
+
+                if (++definitionCount >= MaximumSamplesCount)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(definitionCount, Is.GreaterThan(0));
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetMetricSeriesData(bool useTokenCredential)
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
+
+            var dimensions = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
+            var seriesKey1 = new DimensionKey(dimensions);
+
+            dimensions = new Dictionary<string, string>() { { "city", "Kolkata" }, { "category", "__SUM__" } };
+            var seriesKey2 = new DimensionKey(dimensions);
+
+            var returnedKey1 = false;
+            var returnedKey2 = false;
+            var seriesDataCount = 0;
+
+            var options = new GetMetricSeriesDataOptions(SamplingStartTime, SamplingEndTime)
+            {
+                SeriesKeys = { seriesKey1, seriesKey2 }
+            };
 
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(MetricId, options))
             {
                 Assert.That(seriesData, Is.Not.Null);
-                Assert.That(seriesData.Definition, Is.Not.Null);
-                Assert.That(seriesData.Definition.SeriesKey, Is.Not.Null);
+                Assert.That(seriesData.SeriesKey, Is.Not.Null);
                 Assert.That(seriesData.Timestamps, Is.Not.Null);
-                Assert.That(seriesData.Values, Is.Not.Null);
+                Assert.That(seriesData.MetricValues, Is.Not.Null);
 
-                Assert.That(seriesData.Definition.MetricId, Is.EqualTo(MetricId));
+                Assert.That(seriesData.MetricId, Is.EqualTo(MetricId));
 
-                Assert.That(seriesData.Timestamps.Count, Is.EqualTo(seriesData.Values.Count));
+                Assert.That(seriesData.Timestamps.Count, Is.EqualTo(seriesData.MetricValues.Count));
 
                 foreach (DateTimeOffset timestamp in seriesData.Timestamps)
                 {
                     Assert.That(timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
                 }
 
-                returnedKeys.Add(seriesData.Definition.SeriesKey);
+                var seriesKey = seriesData.SeriesKey;
+
+                Assert.That(seriesKey.TryGetValue("city", out string city));
+                Assert.That(seriesKey.TryGetValue("category", out string category));
+
+                if (city == "Delhi" && category == "Handmade")
+                {
+                    returnedKey1 = true;
+                }
+                else if (city == "Kolkata" && category == "__SUM__")
+                {
+                    returnedKey2 = true;
+                }
+
+                seriesDataCount++;
             }
 
-            IEnumerable<List<KeyValuePair<string, string>>> expectedKvps = seriesKeys.Select(key => key.AsDictionary().ToList());
-            IEnumerable<List<KeyValuePair<string, string>>> returnedKvps = returnedKeys.Select(key => key.AsDictionary().ToList());
-
-            Assert.That(returnedKvps, Is.EquivalentTo(expectedKvps));
+            Assert.That(seriesDataCount, Is.EqualTo(2));
+            Assert.That(returnedKey1);
+            Assert.That(returnedKey2);
         }
 
-        [Test]
-        public async Task GetMetricEnrichmentStatuses()
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetMetricEnrichmentStatuses(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var options = new GetMetricEnrichmentStatusesOptions(SamplingStartTime, SamplingEndTime);
 

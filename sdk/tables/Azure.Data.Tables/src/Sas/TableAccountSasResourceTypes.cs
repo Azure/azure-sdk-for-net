@@ -17,25 +17,20 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// Indicates whether service-level APIs are accessible
         /// from this shared access signature (e.g., Get/Set Service
-        /// Properties, Get Service Stats, List Containers/Queues/Tables/
-        /// Shares).
+        /// Properties, Get Service Stats, List Tables).
         /// </summary>
         Service = 1,
 
         /// <summary>
-        /// Indicates whether blob container-level APIs are accessible
-        /// from this shared access signature (e.g., Create/Delete Container,
-        /// Create/Delete Queue, Create/Delete Table, Create/Delete Share, List
-        /// Blobs/Files and Directories).
+        /// Indicates whether table account-level APIs are accessible
+        /// from this shared access signature (e.g. Create/Delete/Query Table).
         /// </summary>
         Container = 2,
 
 #pragma warning disable CA1720 // Identifier contains type name
         /// <summary>
-        /// Indicates whether object-level APIs for blobs, queue
-        /// messages, and files are accessible from this shared access
-        /// signature (e.g. Put Blob, Query Entity, Get Messages, Create File,
-        /// etc.).
+        /// Indicates whether entity-level APIs are accessible from this shared access
+        /// signature (e.g. Query/Insert/Update/Delete entity).
         /// </summary>
         Object = 4,
 #pragma warning restore CA1720 // Identifier contains type name

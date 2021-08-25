@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateDnsZoneGroupListResult
+    internal partial class PrivateDnsZoneGroupListResult
     {
         internal static PrivateDnsZoneGroupListResult DeserializePrivateDnsZoneGroupListResult(JsonElement element)
         {

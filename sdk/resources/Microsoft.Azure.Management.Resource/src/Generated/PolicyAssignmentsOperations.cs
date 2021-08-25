@@ -104,10 +104,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -117,6 +114,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("policyAssignmentName", policyAssignmentName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -126,9 +124,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{policyAssignmentName}", System.Uri.EscapeDataString(policyAssignmentName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -315,14 +313,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -333,6 +324,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("policyAssignmentName", policyAssignmentName);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
@@ -342,9 +334,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{policyAssignmentName}", System.Uri.EscapeDataString(policyAssignmentName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -528,10 +520,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -541,6 +530,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("policyAssignmentName", policyAssignmentName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -550,9 +540,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{scope}", scope);
             _url = _url.Replace("{policyAssignmentName}", System.Uri.EscapeDataString(policyAssignmentName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -685,25 +675,38 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <remarks>
         /// This operation retrieves the list of all policy assignments associated with
         /// the given resource group in the given subscription that match the optional
-        /// given $filter. Valid values for $filter are: 'atScope()' or
-        /// 'policyDefinitionId eq '{value}''. If $filter is not provided, the
+        /// given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()'
+        /// or 'policyDefinitionId eq '{value}''. If $filter is not provided, the
         /// unfiltered list includes all policy assignments associated with the
         /// resource group, including those that apply directly or apply from
         /// containing scopes, as well as any applied to resources contained within the
         /// resource group. If $filter=atScope() is provided, the returned list
         /// includes all policy assignments that apply to the resource group, which is
         /// everything in the unfiltered list except those applied to resources
-        /// contained within the resource group. If $filter=policyDefinitionId eq
-        /// '{value}' is provided, the returned list includes all policy assignments of
-        /// the policy definition whose id is {value} that apply to the resource group.
+        /// contained within the resource group. If $filter=atExactScope() is provided,
+        /// the returned list only includes all policy assignments that at the resource
+        /// group. If $filter=policyDefinitionId eq '{value}' is provided, the returned
+        /// list includes all policy assignments of the policy definition whose id is
+        /// {value} that apply to the resource group.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains policy assignments.
         /// </param>
         /// <param name='filter'>
         /// The filter to apply on the operation. Valid values for $filter are:
-        /// 'atScope()' or 'policyDefinitionId eq '{value}''. If $filter is not
-        /// provided, no filtering is performed.
+        /// 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If
+        /// $filter is not provided, no filtering is performed. If $filter=atScope() is
+        /// provided, the returned list only includes all policy assignments that apply
+        /// to the scope, which is everything in the unfiltered list except those
+        /// applied to sub scopes contained within the given scope. If
+        /// $filter=atExactScope() is provided, the returned list only includes all
+        /// policy assignments that at the given scope. If $filter=policyDefinitionId
+        /// eq '{value}' is provided, the returned list includes all policy assignments
+        /// of the policy definition whose id is {value}.
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of records to return. When the $top filter is not provided,
+        /// it will return 500 records.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -726,7 +729,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -747,14 +750,19 @@ namespace Microsoft.Azure.Management.ResourceManager
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            if (Client.ApiVersion == null)
+            if (top > 1000)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 1000);
+            }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -764,6 +772,8 @@ namespace Microsoft.Azure.Management.ResourceManager
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("filter", filter);
+                tracingParameters.Add("top", top);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListForResourceGroup", tracingParameters);
             }
@@ -777,9 +787,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _queryParameters.Add(string.Format("$filter={0}", filter));
             }
-            if (Client.ApiVersion != null)
+            if (top != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
+            }
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -912,16 +926,18 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <remarks>
         /// This operation retrieves the list of all policy assignments associated with
         /// the specified resource in the given resource group and subscription that
-        /// match the optional given $filter. Valid values for $filter are: 'atScope()'
-        /// or 'policyDefinitionId eq '{value}''. If $filter is not provided, the
-        /// unfiltered list includes all policy assignments associated with the
-        /// resource, including those that apply directly or from all containing
-        /// scopes, as well as any applied to resources contained within the resource.
-        /// If $filter=atScope() is provided, the returned list includes all policy
-        /// assignments that apply to the resource, which is everything in the
-        /// unfiltered list except those applied to resources contained within the
-        /// resource. If $filter=policyDefinitionId eq '{value}' is provided, the
-        /// returned list includes all policy assignments of the policy definition
+        /// match the optional given $filter. Valid values for $filter are:
+        /// 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If
+        /// $filter is not provided, the unfiltered list includes all policy
+        /// assignments associated with the resource, including those that apply
+        /// directly or from all containing scopes, as well as any applied to resources
+        /// contained within the resource. If $filter=atScope() is provided, the
+        /// returned list includes all policy assignments that apply to the resource,
+        /// which is everything in the unfiltered list except those applied to
+        /// resources contained within the resource. If $filter=atExactScope() is
+        /// provided, the returned list only includes all policy assignments that at
+        /// the resource level. If $filter=policyDefinitionId eq '{value}' is provided,
+        /// the returned list includes all policy assignments of the policy definition
         /// whose id is {value} that apply to the resource. Three parameters plus the
         /// resource name are used to identify a specific resource. If the resource is
         /// not part of a parent resource (the more common case), the parent resource
@@ -1017,14 +1033,11 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1038,12 +1051,13 @@ namespace Microsoft.Azure.Management.ResourceManager
                 tracingParameters.Add("parentResourcePath", parentResourcePath);
                 tracingParameters.Add("resourceType", resourceType);
                 tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListForResource", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/policyAssignments").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/policyAssignments").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceProviderNamespace}", System.Uri.EscapeDataString(resourceProviderNamespace));
             _url = _url.Replace("{parentResourcePath}", parentResourcePath);
@@ -1059,9 +1073,235 @@ namespace Microsoft.Azure.Management.ResourceManager
                     _queryParameters.Add(_odataFilter);
                 }
             }
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<PolicyAssignment>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyAssignment>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves all policy assignments that apply to a management group.
+        /// </summary>
+        /// <remarks>
+        /// This operation retrieves the list of all policy assignments applicable to
+        /// the management group that match the given $filter. Valid values for $filter
+        /// are: 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If
+        /// $filter=atScope() is provided, the returned list includes all policy
+        /// assignments that are assigned to the management group or the management
+        /// group's ancestors. If $filter=atExactScope() is provided, the returned list
+        /// only includes all policy assignments that at the management group. If
+        /// $filter=policyDefinitionId eq '{value}' is provided, the returned list
+        /// includes all policy assignments of the policy definition whose id is
+        /// {value} that apply to the management group.
+        /// </remarks>
+        /// <param name='managementGroupId'>
+        /// The ID of the management group.
+        /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the operation. Valid values for $filter are:
+        /// 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If
+        /// $filter is not provided, no filtering is performed. If $filter=atScope() is
+        /// provided, the returned list only includes all policy assignments that apply
+        /// to the scope, which is everything in the unfiltered list except those
+        /// applied to sub scopes contained within the given scope. If
+        /// $filter=atExactScope() is provided, the returned list only includes all
+        /// policy assignments that at the given scope. If $filter=policyDefinitionId
+        /// eq '{value}' is provided, the returned list includes all policy assignments
+        /// of the policy definition whose id is {value}.
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of records to return. When the $top filter is not provided,
+        /// it will return 500 records.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForManagementGroupWithHttpMessagesAsync(string managementGroupId, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (managementGroupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupId");
+            }
+            if (top > 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 1000);
+            }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+            }
+            string apiVersion = "2020-09-01";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("managementGroupId", managementGroupId);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("top", top);
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListForManagementGroup", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyAssignments").ToString();
+            _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
+            List<string> _queryParameters = new List<string>();
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", filter));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
+            }
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1194,17 +1434,19 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <remarks>
         /// This operation retrieves the list of all policy assignments associated with
         /// the given subscription that match the optional given $filter. Valid values
-        /// for $filter are: 'atScope()' or 'policyDefinitionId eq '{value}''. If
-        /// $filter is not provided, the unfiltered list includes all policy
-        /// assignments associated with the subscription, including those that apply
-        /// directly or from management groups that contain the given subscription, as
-        /// well as any applied to objects contained within the subscription. If
-        /// $filter=atScope() is provided, the returned list includes all policy
-        /// assignments that apply to the subscription, which is everything in the
-        /// unfiltered list except those applied to objects contained within the
-        /// subscription. If $filter=policyDefinitionId eq '{value}' is provided, the
-        /// returned list includes all policy assignments of the policy definition
-        /// whose id is {value}.
+        /// for $filter are: 'atScope()', 'atExactScope()' or 'policyDefinitionId eq
+        /// '{value}''. If $filter is not provided, the unfiltered list includes all
+        /// policy assignments associated with the subscription, including those that
+        /// apply directly or from management groups that contain the given
+        /// subscription, as well as any applied to objects contained within the
+        /// subscription. If $filter=atScope() is provided, the returned list includes
+        /// all policy assignments that apply to the subscription, which is everything
+        /// in the unfiltered list except those applied to objects contained within the
+        /// subscription. If $filter=atExactScope() is provided, the returned list only
+        /// includes all policy assignments that at the subscription. If
+        /// $filter=policyDefinitionId eq '{value}' is provided, the returned list
+        /// includes all policy assignments of the policy definition whose id is
+        /// {value}.
         /// </remarks>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -1232,14 +1474,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </return>
         public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListWithHttpMessagesAsync(ODataQuery<PolicyAssignment> odataQuery = default(ODataQuery<PolicyAssignment>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1248,6 +1487,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -1264,9 +1504,9 @@ namespace Microsoft.Azure.Management.ResourceManager
                     _queryParameters.Add(_odataFilter);
                 }
             }
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1439,10 +1679,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1451,6 +1688,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyAssignmentId", policyAssignmentId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteById", tracingParameters);
             }
@@ -1459,9 +1697,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{policyAssignmentId}").ToString();
             _url = _url.Replace("{policyAssignmentId}", policyAssignmentId);
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1644,14 +1882,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1661,6 +1892,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyAssignmentId", policyAssignmentId);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateById", tracingParameters);
             }
@@ -1669,9 +1901,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{policyAssignmentId}").ToString();
             _url = _url.Replace("{policyAssignmentId}", policyAssignmentId);
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1850,10 +2082,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1862,6 +2091,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyAssignmentId", policyAssignmentId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetById", tracingParameters);
             }
@@ -1870,9 +2100,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{policyAssignmentId}").ToString();
             _url = _url.Replace("{policyAssignmentId}", policyAssignmentId);
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2005,17 +2235,19 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <remarks>
         /// This operation retrieves the list of all policy assignments associated with
         /// the given resource group in the given subscription that match the optional
-        /// given $filter. Valid values for $filter are: 'atScope()' or
-        /// 'policyDefinitionId eq '{value}''. If $filter is not provided, the
+        /// given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()'
+        /// or 'policyDefinitionId eq '{value}''. If $filter is not provided, the
         /// unfiltered list includes all policy assignments associated with the
         /// resource group, including those that apply directly or apply from
         /// containing scopes, as well as any applied to resources contained within the
         /// resource group. If $filter=atScope() is provided, the returned list
         /// includes all policy assignments that apply to the resource group, which is
         /// everything in the unfiltered list except those applied to resources
-        /// contained within the resource group. If $filter=policyDefinitionId eq
-        /// '{value}' is provided, the returned list includes all policy assignments of
-        /// the policy definition whose id is {value} that apply to the resource group.
+        /// contained within the resource group. If $filter=atExactScope() is provided,
+        /// the returned list only includes all policy assignments that at the resource
+        /// group. If $filter=policyDefinitionId eq '{value}' is provided, the returned
+        /// list includes all policy assignments of the policy definition whose id is
+        /// {value} that apply to the resource group.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2193,16 +2425,18 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <remarks>
         /// This operation retrieves the list of all policy assignments associated with
         /// the specified resource in the given resource group and subscription that
-        /// match the optional given $filter. Valid values for $filter are: 'atScope()'
-        /// or 'policyDefinitionId eq '{value}''. If $filter is not provided, the
-        /// unfiltered list includes all policy assignments associated with the
-        /// resource, including those that apply directly or from all containing
-        /// scopes, as well as any applied to resources contained within the resource.
-        /// If $filter=atScope() is provided, the returned list includes all policy
-        /// assignments that apply to the resource, which is everything in the
-        /// unfiltered list except those applied to resources contained within the
-        /// resource. If $filter=policyDefinitionId eq '{value}' is provided, the
-        /// returned list includes all policy assignments of the policy definition
+        /// match the optional given $filter. Valid values for $filter are:
+        /// 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If
+        /// $filter is not provided, the unfiltered list includes all policy
+        /// assignments associated with the resource, including those that apply
+        /// directly or from all containing scopes, as well as any applied to resources
+        /// contained within the resource. If $filter=atScope() is provided, the
+        /// returned list includes all policy assignments that apply to the resource,
+        /// which is everything in the unfiltered list except those applied to
+        /// resources contained within the resource. If $filter=atExactScope() is
+        /// provided, the returned list only includes all policy assignments that at
+        /// the resource level. If $filter=policyDefinitionId eq '{value}' is provided,
+        /// the returned list includes all policy assignments of the policy definition
         /// whose id is {value} that apply to the resource. Three parameters plus the
         /// resource name are used to identify a specific resource. If the resource is
         /// not part of a parent resource (the more common case), the parent resource
@@ -2390,22 +2624,209 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
+        /// Retrieves all policy assignments that apply to a management group.
+        /// </summary>
+        /// <remarks>
+        /// This operation retrieves the list of all policy assignments applicable to
+        /// the management group that match the given $filter. Valid values for $filter
+        /// are: 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If
+        /// $filter=atScope() is provided, the returned list includes all policy
+        /// assignments that are assigned to the management group or the management
+        /// group's ancestors. If $filter=atExactScope() is provided, the returned list
+        /// only includes all policy assignments that at the management group. If
+        /// $filter=policyDefinitionId eq '{value}' is provided, the returned list
+        /// includes all policy assignments of the policy definition whose id is
+        /// {value} that apply to the management group.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<PolicyAssignment>>> ListForManagementGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (nextPageLink == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextPageLink", nextPageLink);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListForManagementGroupNext", tracingParameters);
+            }
+            // Construct URL
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<PolicyAssignment>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PolicyAssignment>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Retrieves all policy assignments that apply to a subscription.
         /// </summary>
         /// <remarks>
         /// This operation retrieves the list of all policy assignments associated with
         /// the given subscription that match the optional given $filter. Valid values
-        /// for $filter are: 'atScope()' or 'policyDefinitionId eq '{value}''. If
-        /// $filter is not provided, the unfiltered list includes all policy
-        /// assignments associated with the subscription, including those that apply
-        /// directly or from management groups that contain the given subscription, as
-        /// well as any applied to objects contained within the subscription. If
-        /// $filter=atScope() is provided, the returned list includes all policy
-        /// assignments that apply to the subscription, which is everything in the
-        /// unfiltered list except those applied to objects contained within the
-        /// subscription. If $filter=policyDefinitionId eq '{value}' is provided, the
-        /// returned list includes all policy assignments of the policy definition
-        /// whose id is {value}.
+        /// for $filter are: 'atScope()', 'atExactScope()' or 'policyDefinitionId eq
+        /// '{value}''. If $filter is not provided, the unfiltered list includes all
+        /// policy assignments associated with the subscription, including those that
+        /// apply directly or from management groups that contain the given
+        /// subscription, as well as any applied to objects contained within the
+        /// subscription. If $filter=atScope() is provided, the returned list includes
+        /// all policy assignments that apply to the subscription, which is everything
+        /// in the unfiltered list except those applied to objects contained within the
+        /// subscription. If $filter=atExactScope() is provided, the returned list only
+        /// includes all policy assignments that at the subscription. If
+        /// $filter=policyDefinitionId eq '{value}' is provided, the returned list
+        /// includes all policy assignments of the policy definition whose id is
+        /// {value}.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

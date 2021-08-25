@@ -206,8 +206,11 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                     Transport = new HttpClientTransport(httpClient)
                 };
 
-                //@@SecretClient client = new SecretClient(
-                /*@@*/ SecretClient _ = new SecretClient(
+#if SNIPPET
+                SecretClient client = new SecretClient(
+#else
+                SecretClient _ = new SecretClient(
+#endif
                     new Uri("https://myvault.vault.azure.net"),
                     new DefaultAzureCredential(),
                     options);

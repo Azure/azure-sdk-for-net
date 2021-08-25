@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ContainerServiceMasterProfile DeserializeContainerServiceMasterProfile(JsonElement element)
         {
-            Optional<Enum31> count = default;
+            Optional<ContainerServiceMasterProfileCount> count = default;
             string dnsPrefix = default;
             Optional<string> fqdn = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    count = new Enum31(property.Value.GetInt32());
+                    count = new ContainerServiceMasterProfileCount(property.Value.GetInt32());
                     continue;
                 }
                 if (property.NameEquals("dnsPrefix"))

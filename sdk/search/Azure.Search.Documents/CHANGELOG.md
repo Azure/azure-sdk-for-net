@@ -1,7 +1,55 @@
 # Release History
 
-## 11.2.0-beta.3 (Unreleased)
+## 11.4.0-beta.2 (2021-08-10)
 
+### Features Added
+- Support for [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/authentication/) based authentication. Users can specify a [`TokenCredential`](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential) when creating a `SearchClient`, `SearchIndexClient` or a `SearchIndexerClient`. For example, you can get started with `new SearchClient(endpoint, new DefaultAzureCredential())` to authenticate via AAD using [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md). For more details see [how to use role-based authentication in Azure Cognitive Search](https://docs.microsoft.com/azure/search/search-security-rbac?tabs=config-svc-portal%2Crbac-portal).
+
+### Bugs Fixed
+- Enhanced the documentation of some `SearchOptions` properties by adding links to REST docs - https://github.com/Azure/azure-sdk-for-net/issues/22808
+
+## 11.4.0-beta.1 (2021-07-06)
+
+### Features Added
+- Support for additional/enhanced skills - [EntityLinkingSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-linking-v3), [EntityRecognitionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-recognition-v3), [PiiDetectionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-pii-detection), [SentimentSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-sentiment-v3)
+- Use managed identities in Azure Active Directory with [SearchIndexerDataIdentity](https://docs.microsoft.com/azure/search/search-howto-managed-identities-data-sources)
+
+## 11.3.0 (2021-06-08)
+
+### Added
+- Adds stable features and bug fixes from the [11.3.0-beta.1](https://github.com/Azure/azure-sdk-for-net/blob/Azure.Search.Documents_11.3.0-beta.1/sdk/search/Azure.Search.Documents/CHANGELOG.md#1130-beta1-2021-04-06) and [11.3.0-beta.2](https://github.com/Azure/azure-sdk-for-net/blob/Azure.Search.Documents_11.3.0-beta.2/sdk/search/Azure.Search.Documents/CHANGELOG.md#1130-beta2-2021-05-11) releases. Preview service features not generally available yet, like Semantic Search and Normalizers, are not included in this GA release.
+
+## 11.3.0-beta.2 (2021-05-11)
+
+### Added
+- Added support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview).
+
+## 11.3.0-beta.1 (2021-04-06)
+
+### Added
+- Added support for [`Azure.Core.GeoJson`](https://docs.microsoft.com/dotnet/api/azure.core.geojson) types in `SearchDocument`, `SearchFilter` and `FieldBuilder`.
+- Added [`EventSource`](https://docs.microsoft.com/dotnet/api/system.diagnostics.tracing.eventsource) based logging. Event source name is **Azure-Search-Documents**. Current set of events are focused on tuning batch sizes for [`SearchIndexingBufferedSender`](https://docs.microsoft.com/dotnet/api/azure.search.documents.searchindexingbufferedsender-1).
+- Added [`CustomEntityLookupSkill`](https://docs.microsoft.com/azure/search/cognitive-search-skill-custom-entity-lookup) and [`DocumentExtractionSkill`](https://docs.microsoft.com/azure/search/cognitive-search-skill-document-extraction). Added `DefaultCountryHint` in [`LanguageDetectionSkill`](https://docs.microsoft.com/azure/search/cognitive-search-skill-language-detection).
+- Added [`LexicalNormalizer`](https://docs.microsoft.com/azure/search/search-normalizers#predefined-normalizers) to include predefined set of normalizers. See [here](https://docs.microsoft.com/azure/search/search-normalizers) for more details on search normalizers. Added `Normalizer` as a [`SearchField`](https://docs.microsoft.com/dotnet/api/azure.search.documents.indexes.models.searchfield) in an index definition.
+- Added support for Azure Data Lake Storage Gen2 - [`AdlsGen2`](https://docs.microsoft.com/azure/storage/blobs/data-lake-storage-introduction) in [`SearchIndexerDataSourceType`](https://docs.microsoft.com/dotnet/api/azure.search.documents.indexes.models.searchindexerdatasourcetype).
+
+## 11.2.0 (2021-02-10)
+
+### Added
+
+- Added setters for `MaxLength` and `MinLength` in `LengthTokenFilter`.
+- Added a public constructor for `SearchIndexingBufferedSender<T>`.
+- Added `IndexActionEventArgs<T>` to track indexing actions.
+- Added `IndexActionCompletedEventArgs<T>` to track the completion of an indexing action.
+- Added `IndexActionFailedEventArgs<T>` to track the failure of an indexing action.
+- All changes from the 11.2.0-beta.2 and 11.2.0-beta.1 releases listed below.
+
+### Breaking Changes
+
+- Renamed `SearchIndexingBufferedSenderOptions<T>.MaxRetries` to `SearchIndexingBufferedSenderOptions<T>.MaxRetriesPerIndexAction`.
+- Renamed `SearchIndexingBufferedSenderOptions<T>.MaxRetryDelay` to `SearchIndexingBufferedSenderOptions<T>.MaxThrottlingDelay`.
+- Renamed `SearchIndexingBufferedSenderOptions<T>.RetryDelay` to `SearchIndexingBufferedSenderOptions<T>.ThrottlingDelay`.
+- Removed the helper method `SearchClient.CreateIndexingBufferedSender<T>()`. Instead, callers are expected to use the public constructor of `SearchIndexingBufferedSender<T>`.
 
 ## 11.2.0-beta.2 (2020-11-10)
 

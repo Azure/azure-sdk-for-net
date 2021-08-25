@@ -20,10 +20,12 @@ namespace Azure.ResourceManager.KeyVault
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal PrivateEndpointConnectionsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of PrivateEndpointConnectionsOperations for mocking. </summary>
         protected PrivateEndpointConnectionsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of PrivateEndpointConnectionsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

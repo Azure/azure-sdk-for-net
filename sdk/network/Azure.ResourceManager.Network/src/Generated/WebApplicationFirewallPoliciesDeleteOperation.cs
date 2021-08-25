@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network
     public partial class WebApplicationFirewallPoliciesDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of WebApplicationFirewallPoliciesDeleteOperation for mocking. </summary>
+        protected WebApplicationFirewallPoliciesDeleteOperation()
+        {
+        }
+
         internal WebApplicationFirewallPoliciesDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WebApplicationFirewallPoliciesDeleteOperation");

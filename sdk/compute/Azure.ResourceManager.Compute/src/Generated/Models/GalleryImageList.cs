@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Gallery Images operation response. </summary>
-    public partial class GalleryImageList
+    internal partial class GalleryImageList
     {
         /// <summary> Initializes a new instance of GalleryImageList. </summary>
         /// <param name="value"> A list of Shared Image Gallery images. </param>

@@ -123,12 +123,19 @@ namespace Azure.Messaging.EventHubs.Tests
                                         string eventHubName,
                                         EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options) { }
 
-            internal MinimalProcessorMock(int eventBatchMaximumCount,
-                                          string consumerGroup,
-                                          string fullyQualifiedNamespace,
-                                          string eventHubName,
-                                          EventHubsSharedAccessKeyCredential credential,
-                                          EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options) { }
+            public MinimalProcessorMock(int eventBatchMaximumCount,
+                                        string consumerGroup,
+                                        string fullyQualifiedNamespace,
+                                        string eventHubName,
+                                        AzureNamedKeyCredential credential,
+                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options) { }
+
+            public MinimalProcessorMock(int eventBatchMaximumCount,
+                                        string consumerGroup,
+                                        string fullyQualifiedNamespace,
+                                        string eventHubName,
+                                        AzureSasCredential credential,
+                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options) { }
 
             public MinimalProcessorMock(int eventBatchMaximumCount,
                                         string consumerGroup,

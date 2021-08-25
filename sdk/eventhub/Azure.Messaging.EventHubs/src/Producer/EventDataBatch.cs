@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Producer
         private readonly object SyncGuard = new object();
 
         /// <summary>A flag indicating that the batch is locked, such as when in use during a publish operation.</summary>
-        private bool _locked = false;
+        private bool _locked;
 
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   of the producer are enabled.  For example, it is used by idempotent publishing.
         /// </remarks>
         ///
-        public int? StartingPublishedSequenceNumber { get; internal set; }
+        internal int? StartingPublishedSequenceNumber { get; set; } // Setter should be internal when member is made public
 
         /// <summary>
         ///   The count of events contained in the batch.
@@ -144,6 +144,18 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="eventData">The event to attempt to add to the batch.</param>
         ///
         /// <returns><c>true</c> if the event was added; otherwise, <c>false</c>.</returns>
+        ///
+        /// <remarks>
+        ///   When an event is accepted into the batch, its content and state are frozen; any
+        ///   changes made to the event will not be reflected in the batch nor will any state
+        ///   transitions be reflected to the original instance.
+        /// </remarks>
+        ///
+        /// <exception cref="InvalidOperationException">
+        ///   When a batch is published, it will be locked for the duration of that operation.  During this time,
+        ///   no events may be added to the batch.  Calling <c>TryAdd</c> while the batch is being published will
+        ///   result in an <see cref="InvalidOperationException" /> until publishing has completed.
+        /// </exception>
         ///
         public bool TryAdd(EventData eventData)
         {

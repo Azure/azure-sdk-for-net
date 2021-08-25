@@ -6,40 +6,30 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics.Models;
+using Azure.AI.TextAnalytics;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasksEntityRecognitionTasksItem. </summary>
-    public partial class EntityRecognitionTasksItem : TaskState
+    internal partial class EntityRecognitionTasksItem : TaskState
     {
         /// <summary> Initializes a new instance of EntityRecognitionTasksItem. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="status"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status) : base(lastUpdateDateTime, name, status)
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
+        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
         }
 
         /// <summary> Initializes a new instance of EntityRecognitionTasksItem. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="status"> . </param>
-        /// <param name="results"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, EntitiesResult results) : base(lastUpdateDateTime, name, status)
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="taskName"></param>
+        /// <param name="status"></param>
+        /// <param name="results"></param>
+        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, EntitiesResult results) : base(lastUpdateDateTime, taskName, status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
             Results = results;
         }
+
+        public EntitiesResult Results { get; }
     }
 }

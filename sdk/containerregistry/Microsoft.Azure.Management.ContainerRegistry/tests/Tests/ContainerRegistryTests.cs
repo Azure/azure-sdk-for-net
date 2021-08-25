@@ -5,7 +5,6 @@ using Microsoft.Azure.Management.ContainerRegistry;
 using Microsoft.Azure.Management.ContainerRegistry.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Management.Storage;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
@@ -74,37 +73,22 @@ namespace ContainerRegistry.Tests
                 // Create container registry
                 var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
 
-                ContainerRegistryCoreScenario(registryClient, resourceGroup, registry, true);
+                ContainerRegistryCoreScenario(registryClient, resourceGroup, registry);
             }
         }
 
-        private void ContainerRegistryCoreScenario(ContainerRegistryManagementClient registryClient, ResourceGroup resourceGroup, Registry registry, bool isManaged)
+        private void ContainerRegistryCoreScenario(ContainerRegistryManagementClient registryClient, ResourceGroup resourceGroup, Registry registry)
         {
             // Validate the created registry
             ContainerRegistryTestUtilities.ValidateResourceDefaultTags(registry);
             Assert.NotNull(registry.Sku);
-            if (isManaged)
-            {
-                Assert.Equal(SkuName.Premium, registry.Sku.Name);
-                Assert.Equal(SkuName.Premium, registry.Sku.Tier);
-            }
-            else
-            {
-                Assert.Equal(SkuName.Classic, registry.Sku.Name);
-                Assert.Equal(SkuTier.Classic, registry.Sku.Tier);
-            }
+            Assert.Equal(SkuName.Premium, registry.Sku.Name);
+            Assert.Equal(SkuName.Premium, registry.Sku.Tier);
+
             Assert.NotNull(registry.LoginServer);
             Assert.NotNull(registry.CreationDate);
             Assert.Equal(ProvisioningState.Succeeded, registry.ProvisioningState);
             Assert.False(registry.AdminUserEnabled);
-            if (isManaged)
-            {
-                Assert.Null(registry.StorageAccount);
-            }
-            else
-            {
-                Assert.NotNull(registry.StorageAccount);
-            }
 
             // List container registries by resource group
             var registriesByResourceGroup = registryClient.Registries.ListByResourceGroup(resourceGroup.Name);
@@ -136,35 +120,20 @@ namespace ContainerRegistry.Tests
                 AdminUserEnabled = true,
                 Sku = new Sku
                 {
-                    Name = isManaged ? SkuName.Basic : SkuName.Classic
+                    Name = SkuName.Basic
                 }
             });
 
             // Validate the updated registry
             ContainerRegistryTestUtilities.ValidateResourceDefaultNewTags(registry);
             Assert.NotNull(registry.Sku);
-            if (isManaged)
-            {
-                Assert.Equal(SkuName.Basic, registry.Sku.Name);
-                Assert.Equal(SkuName.Basic, registry.Sku.Tier);
-            }
-            else
-            {
-                Assert.Equal(SkuName.Classic, registry.Sku.Name);
-                Assert.Equal(SkuTier.Classic, registry.Sku.Tier);
-            }
+            Assert.Equal(SkuName.Basic, registry.Sku.Name);
+            Assert.Equal(SkuName.Basic, registry.Sku.Tier);
+
             Assert.NotNull(registry.LoginServer);
             Assert.NotNull(registry.CreationDate);
             Assert.Equal(ProvisioningState.Succeeded, registry.ProvisioningState);
             Assert.True(registry.AdminUserEnabled);
-            if (isManaged)
-            {
-                Assert.Null(registry.StorageAccount);
-            }
-            else
-            {
-                Assert.NotNull(registry.StorageAccount);
-            }
 
             // List credentials
             var credentials = registryClient.Registries.ListCredentials(resourceGroup.Name, registry.Name);

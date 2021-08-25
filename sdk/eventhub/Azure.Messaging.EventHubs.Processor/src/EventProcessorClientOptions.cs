@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs
     public class EventProcessorClientOptions
     {
         /// <summary>The maximum amount of time to wait for an event to become available before emitting an <c>null</c> value.</summary>
-        private TimeSpan? _maximumWaitTime = null;
+        private TimeSpan? _maximumWaitTime;
 
         /// <summary>The event catch count to use when reading events.</summary>
         private int _cacheEventCount = 100;
@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs
         private int _prefetchCount = 300;
 
         /// <summary>The prefetch size limit to use for the partition receiver.</summary>
-        private long? _prefetchSizeInBytes = default;
+        private long? _prefetchSizeInBytes;
 
         /// <summary>The desired amount of time to allow between load balancing verification attempts.</summary>
         private TimeSpan _loadBalancingUpdateInterval = TimeSpan.FromSeconds(10);
@@ -89,6 +89,8 @@ namespace Azure.Messaging.EventHubs
         ///   <see cref="ProcessEventArgs.HasEvent" /> property is intended to help detect this.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested wait time is negative.</exception>
+        ///
         /// <seealso cref="ProcessEventArgs.HasEvent" />
         ///
         public TimeSpan? MaximumWaitTime
@@ -132,6 +134,8 @@ namespace Azure.Messaging.EventHubs
         ///   times as large as the <see cref="CacheEventCount" /> to allow for efficient buffering of service operations.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is less than 1.</exception>
+        ///
         public int CacheEventCount
         {
             get => _cacheEventCount;
@@ -170,6 +174,8 @@ namespace Azure.Messaging.EventHubs
         ///   times as large as the <see cref="CacheEventCount" /> to allow for efficient buffering of service operations.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is negative.</exception>
+        ///
         public int PrefetchCount
         {
             get => _prefetchCount;
@@ -199,6 +205,8 @@ namespace Azure.Messaging.EventHubs
         ///   as traffic passes through the system.  Consequently, the resulting resource use will fluctuate as well.</para>
         /// </value>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested size is negative.</exception>
+        ///
         public long? PrefetchSizeInBytes
         {
             get => _prefetchSizeInBytes;
@@ -225,6 +233,8 @@ namespace Azure.Messaging.EventHubs
         ///   with higher priority may cause a minor delay longer than this interval for load balancing.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested interval is negative.</exception>
+        ///
         public TimeSpan LoadBalancingUpdateInterval
         {
             get => _loadBalancingUpdateInterval;
@@ -243,6 +253,15 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <value>If not specified, an ownership interval of 30 seconds will be assumed.</value>
+        ///
+        /// <remarks>
+        ///   As a general guideline, it is advised that this value be greater than the configured
+        ///   <see cref="LoadBalancingUpdateInterval" /> by at least a factor of two. It is recommended that
+        ///   this be a factor of three or more, unless there are application scenarios that require more
+        ///   aggressive ownership expiration.
+        /// </remarks>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested interval is negative.</exception>
         ///
         public TimeSpan PartitionOwnershipExpirationInterval
         {

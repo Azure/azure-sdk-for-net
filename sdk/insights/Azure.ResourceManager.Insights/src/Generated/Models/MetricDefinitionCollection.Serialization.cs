@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class MetricDefinitionCollection
+    internal partial class MetricDefinitionCollection
     {
         internal static MetricDefinitionCollection DeserializeMetricDefinitionCollection(JsonElement element)
         {

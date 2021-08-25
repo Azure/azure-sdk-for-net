@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class RouteTablesCreateOrUpdateOperation : Operation<RouteTable>, IOperationSource<RouteTable>
     {
         private readonly ArmOperationHelpers<RouteTable> _operation;
+
+        /// <summary> Initializes a new instance of RouteTablesCreateOrUpdateOperation for mocking. </summary>
+        protected RouteTablesCreateOrUpdateOperation()
+        {
+        }
+
         internal RouteTablesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<RouteTable>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RouteTablesCreateOrUpdateOperation");

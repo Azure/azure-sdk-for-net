@@ -1,0 +1,198 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/a9216f37-b90e-4db2-b844-b171e5394fc1/resourcegroups/res8277?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTkyMTZmMzctYjkwZS00ZGIyLWI4NDQtYjE3MWU1Mzk0ZmMxL3Jlc291cmNlZ3JvdXBzL3JlczgyNzc/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"CENTRALUSEUAP\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b5ab9761-e5e0-4b74-91e4-5533a498a17c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "35"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "c0d5ace6-df81-4c31-99be-eef84192f1ad"
+        ],
+        "x-ms-correlation-request-id": [
+          "c0d5ace6-df81-4c31-99be-eef84192f1ad"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210513T003345Z:c0d5ace6-df81-4c31-99be-eef84192f1ad"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 13 May 2021 00:33:44 GMT"
+        ],
+        "Content-Length": [
+          "174"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a9216f37-b90e-4db2-b844-b171e5394fc1/resourceGroups/res8277\",\r\n  \"name\": \"res8277\",\r\n  \"location\": \"centraluseuap\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/a9216f37-b90e-4db2-b844-b171e5394fc1/resourceGroups/NotExistedRG/providers/Microsoft.CognitiveServices/accounts/nonExistedAccountName/skus?api-version=2021-04-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTkyMTZmMzctYjkwZS00ZGIyLWI4NDQtYjE3MWU1Mzk0ZmMxL3Jlc291cmNlR3JvdXBzL05vdEV4aXN0ZWRSRy9wcm92aWRlcnMvTWljcm9zb2Z0LkNvZ25pdGl2ZVNlcnZpY2VzL2FjY291bnRzL25vbkV4aXN0ZWRBY2NvdW50TmFtZS9za3VzP2FwaS12ZXJzaW9uPTIwMjEtMDQtMzA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ab1a8474-93b4-4714-af3b-cfb5da622cfb"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "88b5565b-fd76-4b7e-ab65-e5d6de7daeb7"
+        ],
+        "x-ms-correlation-request-id": [
+          "88b5565b-fd76-4b7e-ab65-e5d6de7daeb7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210513T003345Z:88b5565b-fd76-4b7e-ab65-e5d6de7daeb7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 13 May 2021 00:33:44 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "104"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'NotExistedRG' could not be found.\"\r\n  }\r\n}",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/a9216f37-b90e-4db2-b844-b171e5394fc1/resourceGroups/res8277/providers/Microsoft.CognitiveServices/accounts/nonExistedAccountName/skus?api-version=2021-04-30",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTkyMTZmMzctYjkwZS00ZGIyLWI4NDQtYjE3MWU1Mzk0ZmMxL3Jlc291cmNlR3JvdXBzL3JlczgyNzcvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9ub25FeGlzdGVkQWNjb3VudE5hbWUvc2t1cz9hcGktdmVyc2lvbj0yMDIxLTA0LTMw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "90e992ff-0c94-4978-85c4-19572027de47"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "ffa086d0-61d8-4653-a4ba-b23ba621f937"
+        ],
+        "x-ms-correlation-request-id": [
+          "ffa086d0-61d8-4653-a4ba-b23ba621f937"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20210513T003345Z:ffa086d0-61d8-4653-a4ba-b23ba621f937"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 13 May 2021 00:33:45 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "237"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.CognitiveServices/accounts/nonExistedAccountName' under resource group 'res8277' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
+      "StatusCode": 404
+    }
+  ],
+  "Names": {
+    "CreateResourceGroup": [
+      "res8277"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "a9216f37-b90e-4db2-b844-b171e5394fc1"
+  }
+}

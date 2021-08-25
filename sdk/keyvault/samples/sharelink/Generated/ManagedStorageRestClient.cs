@@ -32,17 +32,8 @@ namespace Azure.Security.KeyVault.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="apiVersion"/> is null. </exception>
         public ManagedStorageRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.1")
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.vaultBaseUrl = vaultBaseUrl;
-            this.apiVersion = apiVersion;
+            this.vaultBaseUrl = vaultBaseUrl ?? throw new ArgumentNullException(nameof(vaultBaseUrl));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -445,8 +436,8 @@ namespace Azure.Security.KeyVault.Storage
             uri.AppendPath("/storage/restore", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new StorageRestoreParameters(storageBundleBackup);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -657,16 +648,19 @@ namespace Azure.Security.KeyVault.Storage
             uri.AppendPath(storageAccountName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             StorageAccountCreateParameters storageAccountCreateParameters = new StorageAccountCreateParameters(resourceId, activeKeyName, autoRegenerateKey)
             {
                 RegenerationPeriod = regenerationPeriod,
                 StorageAccountAttributes = storageAccountAttributes
             };
-            foreach (var value in tags)
+            if (tags != null)
             {
-                storageAccountCreateParameters.Tags.Add(value);
+                foreach (var value in tags)
+                {
+                    storageAccountCreateParameters.Tags.Add(value);
+                }
             }
             var model = storageAccountCreateParameters;
             var content = new Utf8JsonRequestContent();
@@ -768,8 +762,8 @@ namespace Azure.Security.KeyVault.Storage
             uri.AppendPath(storageAccountName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             StorageAccountUpdateParameters storageAccountUpdateParameters = new StorageAccountUpdateParameters()
             {
                 ActiveKeyName = activeKeyName,
@@ -777,9 +771,12 @@ namespace Azure.Security.KeyVault.Storage
                 RegenerationPeriod = regenerationPeriod,
                 StorageAccountAttributes = storageAccountAttributes
             };
-            foreach (var value in tags)
+            if (tags != null)
             {
-                storageAccountUpdateParameters.Tags.Add(value);
+                foreach (var value in tags)
+                {
+                    storageAccountUpdateParameters.Tags.Add(value);
+                }
             }
             var model = storageAccountUpdateParameters;
             var content = new Utf8JsonRequestContent();
@@ -864,8 +861,8 @@ namespace Azure.Security.KeyVault.Storage
             uri.AppendPath("/regeneratekey", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var model = new StorageAccountRegenerteKeyParameters(keyName);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -1427,15 +1424,18 @@ namespace Azure.Security.KeyVault.Storage
             uri.AppendPath(sasDefinitionName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             SasDefinitionCreateParameters sasDefinitionCreateParameters = new SasDefinitionCreateParameters(templateUri, sasType, validityPeriod)
             {
                 SasDefinitionAttributes = sasDefinitionAttributes
             };
-            foreach (var value in tags)
+            if (tags != null)
             {
-                sasDefinitionCreateParameters.Tags.Add(value);
+                foreach (var value in tags)
+                {
+                    sasDefinitionCreateParameters.Tags.Add(value);
+                }
             }
             var model = sasDefinitionCreateParameters;
             var content = new Utf8JsonRequestContent();
@@ -1547,8 +1547,8 @@ namespace Azure.Security.KeyVault.Storage
             uri.AppendPath(sasDefinitionName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             SasDefinitionUpdateParameters sasDefinitionUpdateParameters = new SasDefinitionUpdateParameters()
             {
                 TemplateUri = templateUri,
@@ -1556,9 +1556,12 @@ namespace Azure.Security.KeyVault.Storage
                 ValidityPeriod = validityPeriod,
                 SasDefinitionAttributes = sasDefinitionAttributes
             };
-            foreach (var value in tags)
+            if (tags != null)
             {
-                sasDefinitionUpdateParameters.Tags.Add(value);
+                foreach (var value in tags)
+                {
+                    sasDefinitionUpdateParameters.Tags.Add(value);
+                }
             }
             var model = sasDefinitionUpdateParameters;
             var content = new Utf8JsonRequestContent();

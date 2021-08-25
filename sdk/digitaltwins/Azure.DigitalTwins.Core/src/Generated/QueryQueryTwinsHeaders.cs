@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal class QueryQueryTwinsHeaders
+    internal partial class QueryQueryTwinsHeaders
     {
         private readonly Response _response;
         public QueryQueryTwinsHeaders(Response response)

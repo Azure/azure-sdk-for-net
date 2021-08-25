@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class MongoDBResourcesUpdateMongoDBDatabaseThroughputOperation : Operation<ThroughputSettingsGetResults>, IOperationSource<ThroughputSettingsGetResults>
     {
         private readonly ArmOperationHelpers<ThroughputSettingsGetResults> _operation;
+
+        /// <summary> Initializes a new instance of MongoDBResourcesUpdateMongoDBDatabaseThroughputOperation for mocking. </summary>
+        protected MongoDBResourcesUpdateMongoDBDatabaseThroughputOperation()
+        {
+        }
+
         internal MongoDBResourcesUpdateMongoDBDatabaseThroughputOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ThroughputSettingsGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "MongoDBResourcesUpdateMongoDBDatabaseThroughputOperation");

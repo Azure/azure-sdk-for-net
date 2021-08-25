@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class PacketCapturesGetStatusOperation : Operation<PacketCaptureQueryStatusResult>, IOperationSource<PacketCaptureQueryStatusResult>
     {
         private readonly ArmOperationHelpers<PacketCaptureQueryStatusResult> _operation;
+
+        /// <summary> Initializes a new instance of PacketCapturesGetStatusOperation for mocking. </summary>
+        protected PacketCapturesGetStatusOperation()
+        {
+        }
+
         internal PacketCapturesGetStatusOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<PacketCaptureQueryStatusResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PacketCapturesGetStatusOperation");

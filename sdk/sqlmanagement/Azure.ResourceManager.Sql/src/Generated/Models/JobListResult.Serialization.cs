@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobListResult
+    internal partial class JobListResult
     {
         internal static JobListResult DeserializeJobListResult(JsonElement element)
         {

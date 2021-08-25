@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.ApiManagement
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -37,15 +38,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Gateway entity identifier. Must be unique in the current API Management
             /// service instance. Must not have value 'managed'
             /// </param>
-            /// <param name='top'>
-            /// Number of records to return.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
-            /// <param name='skip'>
-            /// Number of records to skip.
-            /// </param>
-            public static IPage<ApiContract> ListByService(this IGatewayApiOperations operations, string resourceGroupName, string serviceName, string gatewayId, int? top = default(int?), int? skip = default(int?))
+            public static IPage<ApiContract> ListByService(this IGatewayApiOperations operations, string resourceGroupName, string serviceName, string gatewayId, ODataQuery<ApiContract> odataQuery = default(ODataQuery<ApiContract>))
             {
-                return operations.ListByServiceAsync(resourceGroupName, serviceName, gatewayId, top, skip).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, gatewayId, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -64,18 +62,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Gateway entity identifier. Must be unique in the current API Management
             /// service instance. Must not have value 'managed'
             /// </param>
-            /// <param name='top'>
-            /// Number of records to return.
-            /// </param>
-            /// <param name='skip'>
-            /// Number of records to skip.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ApiContract>> ListByServiceAsync(this IGatewayApiOperations operations, string resourceGroupName, string serviceName, string gatewayId, int? top = default(int?), int? skip = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ApiContract>> ListByServiceAsync(this IGatewayApiOperations operations, string resourceGroupName, string serviceName, string gatewayId, ODataQuery<ApiContract> odataQuery = default(ODataQuery<ApiContract>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, gatewayId, top, skip, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, gatewayId, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

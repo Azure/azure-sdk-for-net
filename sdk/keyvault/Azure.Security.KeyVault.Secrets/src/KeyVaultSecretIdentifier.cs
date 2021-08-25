@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -9,8 +11,36 @@ namespace Azure.Security.KeyVault.Secrets
     /// Information about a <see cref="KeyVaultSecret"/> parsed from a <see cref="Uri"/>.
     /// You can use this information when calling methods of a <see cref="SecretClient"/>.
     /// </summary>
-    public readonly struct KeyVaultSecretIdentifier
+    public readonly struct KeyVaultSecretIdentifier : IEquatable<KeyVaultSecretIdentifier>
     {
+        /// <summary>
+        /// Creates a new instance of the <see cref="KeyVaultSecretIdentifier"/> class.
+        /// </summary>
+        /// <param name="id">The <see cref="Uri"/> to a secret or deleted secret.</param>
+        /// <exception cref="ArgumentException"><paramref name="id"/> is not a valid Key Vault secret ID.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
+        /// <remarks>
+        /// Successfully parsing the given <see cref="Uri"/> does not guarantee that the <paramref name="id"/> is a valid Key Vault secret identifier:
+        /// only that it contains the necessary number of path parts that look like a Key Vault secret identifier. If the <see cref="VaultUri"/> references
+        /// a valid Key Vault, the service will return an error if the <see cref="Name"/> and <see cref="Version"/> do not specify a valid secret.
+        /// </remarks>
+        public KeyVaultSecretIdentifier(Uri id)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+
+            if (KeyVaultIdentifier.TryParse(id, out KeyVaultIdentifier identifier))
+            {
+                SourceId = id;
+                VaultUri = identifier.VaultUri;
+                Name = identifier.Name;
+                Version = identifier.Version;
+            }
+            else
+            {
+                throw new ArgumentException($"{id} is not a valid secret ID", nameof(id));
+            }
+        }
+
         private KeyVaultSecretIdentifier(Uri sourceId, Uri vaultUri, string name, string version)
         {
             SourceId = sourceId;
@@ -20,7 +50,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Gets the source <see cref="Uri"/> passed to <see cref="Parse(Uri)"/> or <see cref="TryParse(Uri, out KeyVaultSecretIdentifier)"/>.
+        /// Gets the source <see cref="Uri"/> passed to <see cref="KeyVaultSecretIdentifier(Uri)"/>.
         /// </summary>
         public Uri SourceId { get; }
 
@@ -40,42 +70,45 @@ namespace Azure.Security.KeyVault.Secrets
         public string Version { get; }
 
         /// <summary>
-        /// Parses a <see cref="Uri"/> to a secret or deleted secret.
+        /// Tries to create a new instance of the <see cref="KeyVaultSecretIdentifier"/> from the given <paramref name="id"/>.
         /// </summary>
-        /// <param name="id">The <see cref="Uri"/> to a secret or deleted secret.</param>
-        /// <returns>A <see cref="KeyVaultSecretIdentifier"/> containing information about the secret or deleted secret.</returns>
-        /// <exception cref="ArgumentException">The <paramref name="id"/> is not a valid Key Vault secret ID.</exception>
-        public static KeyVaultSecretIdentifier Parse(Uri id)
+        /// <param name="id">A <see cref="Uri"/> to a Key Vault secret with or without a version.</param>
+        /// <param name="identifier">A <see cref="KeyVaultSecretIdentifier"/> from the given <paramref name="id"/> if valid; otherwise, an empty structure if invalid.</param>
+        /// <returns>True if the <see cref="Uri"/> contains a <see cref="VaultUri"/>, <see cref="Name"/>, and optional <see cref="Version"/>; otherwise, false.</returns>
+        /// <remarks>
+        /// Successfully parsing the given <see cref="Uri"/> does not guarantee that the <paramref name="id"/> is a valid Key Vault secret identifier:
+        /// only that it contains the necessary number of path parts that look like a Key Vault secret identifier. If the <see cref="VaultUri"/> references
+        /// a valid Key Vault, the service will return an error if the <see cref="Name"/> and <see cref="Version"/> do not specify a valid secret.
+        /// </remarks>
+        public static bool TryCreate(Uri id, out KeyVaultSecretIdentifier identifier)
         {
-            if (TryParse(id, out KeyVaultSecretIdentifier secretId))
+            if (KeyVaultIdentifier.TryParse(id, out KeyVaultIdentifier value))
             {
-                return secretId;
-            }
-
-            throw new ArgumentException($"{id} is not a valid Key Vault secret ID", nameof(id));
-        }
-
-        /// <summary>
-        /// Tries to parse a <see cref="Uri"/> to a secret or deleted secret.
-        /// </summary>
-        /// <param name="id">The <see cref="Uri"/> to a secret or deleted secret.</param>
-        /// <param name="secretId">A <see cref="KeyVaultSecretIdentifier"/> containing information about the secret or deleted secret.</param>
-        /// <returns>True if the <paramref name="id"/> could be parsed successfully; otherwise, false.</returns>
-        public static bool TryParse(Uri id, out KeyVaultSecretIdentifier secretId)
-        {
-            if (KeyVaultIdentifier.TryParse(id, out KeyVaultIdentifier identifier))
-            {
-                secretId = new KeyVaultSecretIdentifier(
-                    id,
-                    identifier.VaultUri,
-                    identifier.Name,
-                    identifier.Version);
-
+                identifier = new KeyVaultSecretIdentifier(value.Id, value.VaultUri, value.Name, value.Version);
                 return true;
             }
 
-            secretId = default;
+            identifier = default;
             return false;
         }
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) =>
+            obj is KeyVaultSecretIdentifier other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(KeyVaultSecretIdentifier other) =>
+            SourceId == other.SourceId;
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() =>
+            SourceId?.GetHashCode() ?? 0;
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() =>
+            base.ToString();
     }
 }

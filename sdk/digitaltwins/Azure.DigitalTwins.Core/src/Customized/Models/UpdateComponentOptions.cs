@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    /// <inheritdoc />
     [CodeGenModel("DigitalTwinsUpdateComponentOptions")]
     internal partial class UpdateComponentOptions
     {

@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.KeyVault
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal RestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of Operations for mocking. </summary>
         protected Operations()
         {
         }
+
         /// <summary> Initializes a new instance of Operations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
@@ -39,9 +41,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Lists all of the available Key Vault Rest API operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Operation> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Models.Operation> ListAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Operation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Models.Operation>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("Operations.List");
                 scope.Start();
@@ -56,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault
                     throw;
                 }
             }
-            async Task<Page<Operation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<Models.Operation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("Operations.List");
                 scope.Start();
@@ -76,9 +78,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Lists all of the available Key Vault Rest API operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Operation> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<Models.Operation> List(CancellationToken cancellationToken = default)
         {
-            Page<Operation> FirstPageFunc(int? pageSizeHint)
+            Page<Models.Operation> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("Operations.List");
                 scope.Start();
@@ -93,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault
                     throw;
                 }
             }
-            Page<Operation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<Models.Operation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("Operations.List");
                 scope.Start();

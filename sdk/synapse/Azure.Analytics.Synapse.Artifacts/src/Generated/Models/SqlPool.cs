@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="restorePointInTime"> Snapshot time to restore. </param>
         /// <param name="createMode"> What is this?. </param>
         /// <param name="creationDate"> Date the SQL pool was created. </param>
-        internal SqlPool(string id, string name, string type, IDictionary<string, string> tags, string location, Sku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, DateTimeOffset? restorePointInTime, string createMode, DateTimeOffset? creationDate) : base(id, name, type, tags, location)
+        internal SqlPool(string id, string name, string type, IDictionary<string, string> tags, string location, Sku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, string restorePointInTime, string createMode, DateTimeOffset? creationDate) : base(id, name, type, tags, location)
         {
             Sku = sku;
             MaxSizeBytes = maxSizeBytes;
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Resource status. </summary>
         public string Status { get; set; }
         /// <summary> Snapshot time to restore. </summary>
-        public DateTimeOffset? RestorePointInTime { get; set; }
+        public string RestorePointInTime { get; set; }
         /// <summary> What is this?. </summary>
         public string CreateMode { get; set; }
         /// <summary> Date the SQL pool was created. </summary>

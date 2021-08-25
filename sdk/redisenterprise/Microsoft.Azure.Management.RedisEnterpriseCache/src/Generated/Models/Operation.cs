@@ -14,9 +14,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
     using System.Linq;
 
     /// <summary>
+    /// REST API Operation
+    /// </summary>
+    /// <remarks>
     /// Details of a REST API operation, returned from the Resource Provider
     /// Operations API
-    /// </summary>
+    /// </remarks>
     public partial class Operation
     {
         /// <summary>

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class GeoBackupPolicyListResult
+    internal partial class GeoBackupPolicyListResult
     {
         internal static GeoBackupPolicyListResult DeserializeGeoBackupPolicyListResult(JsonElement element)
         {

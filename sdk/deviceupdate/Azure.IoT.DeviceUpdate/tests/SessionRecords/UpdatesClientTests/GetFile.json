@@ -1,0 +1,43 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://contosoprodwus2.api.prod.adu.microsoft.com/deviceupdate/blue/v2/updates/providers/Contoso/names/Virtual-Machine/versions/2021.302.1202.48/files/00000",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Iot.DeviceUpdate/1.0.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "6692ed5afc7c5913665d9a1017f02017",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "max-age=60",
+          "private"
+        ],
+        "Content-Length": "175",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Mar 2021 20:28:36 GMT",
+        "ETag": "\u0022490fe67f-4cc1-4b69-8c7e-80e9665060f7\u0022",
+        "traceparent": "00-a6bdb4624ed3d04fb4765b60bf120e45-c5c378aae8eae548-00"
+      },
+      "ResponseBody": {
+        "fileId": "00000",
+        "fileName": "setup.exe",
+        "sizeInBytes": 94,
+        "hashes": {
+          "Sha256": "nTsYZEDeW9554a4YGmawsypogbG8zhc1IgvOE2PbSsA="
+        },
+        "etag": "\u0022490fe67f-4cc1-4b69-8c7e-80e9665060f7\u0022"
+      }
+    }
+  ],
+  "Variables": {
+    "DEVICEUPDATE_ACCOUNT_ENDPOINT": "contosoprodwus2.api.prod.adu.microsoft.com",
+    "DEVICEUPDATE_INSTANCE_ID": "blue",
+    "DEVICEUPDATE_UPDATE_VERSION": "2021.302.1202.48",
+    "RandomSeed": "96134544"
+  }
+}

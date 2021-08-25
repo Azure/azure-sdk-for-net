@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="fqdns"> The list of Fqdn. </param>
         /// <param name="alias"> The alias of the private link service. </param>
         /// <param name="enableProxyProtocol"> Whether the private link service is enabled for proxy protocol or not. </param>
-        internal PrivateLinkService(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<FrontendIPConfiguration> loadBalancerFrontendIpConfigurations, IList<PrivateLinkServiceIpConfiguration> ipConfigurations, IReadOnlyList<NetworkInterface> networkInterfaces, ProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnection> privateEndpointConnections, ResourceSet visibility, ResourceSet autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, type, location, tags)
+        internal PrivateLinkService(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<FrontendIPConfiguration> loadBalancerFrontendIpConfigurations, IList<PrivateLinkServiceIpConfiguration> ipConfigurations, IReadOnlyList<NetworkInterface> networkInterfaces, ProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnection> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, type, location, tags)
         {
             Etag = etag;
             LoadBalancerFrontendIpConfigurations = loadBalancerFrontendIpConfigurations;
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> An array of list about connections to the private endpoint. </summary>
         public IReadOnlyList<PrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> The visibility list of the private link service. </summary>
-        public ResourceSet Visibility { get; set; }
+        public PrivateLinkServicePropertiesVisibility Visibility { get; set; }
         /// <summary> The auto-approval list of the private link service. </summary>
-        public ResourceSet AutoApproval { get; set; }
+        public PrivateLinkServicePropertiesAutoApproval AutoApproval { get; set; }
         /// <summary> The list of Fqdn. </summary>
         public IList<string> Fqdns { get; }
         /// <summary> The alias of the private link service. </summary>

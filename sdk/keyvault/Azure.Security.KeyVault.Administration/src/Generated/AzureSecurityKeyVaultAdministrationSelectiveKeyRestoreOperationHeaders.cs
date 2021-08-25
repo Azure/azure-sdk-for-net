@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal class AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders
+    internal partial class AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders
     {
         private readonly Response _response;
         public AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders(Response response)

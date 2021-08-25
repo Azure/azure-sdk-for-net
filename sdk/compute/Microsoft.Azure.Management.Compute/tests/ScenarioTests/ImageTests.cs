@@ -48,7 +48,7 @@ namespace Compute.Tests
             {
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "FranceCentral");
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                     EnsureClientsInitialized(context);
                     CreateImageTestHelper(originalTestLocation, diskEncryptionSetId: null);
                 }
@@ -85,7 +85,7 @@ namespace Compute.Tests
                     var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
                     var vhduri = vhdContainer + string.Format("/{0}.vhd", HttpMockServer.GetAssetName("TestImageOperations", TestPrefix));
 
-                    vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
+                    vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4V2;
                     vm.StorageProfile.DataDisks = new List<DataDisk>();
                     foreach (int index in new int[] { 1, 2 })
                     {

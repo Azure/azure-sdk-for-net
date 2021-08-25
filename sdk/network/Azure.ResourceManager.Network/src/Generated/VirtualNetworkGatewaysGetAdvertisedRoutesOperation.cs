@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewaysGetAdvertisedRoutesOperation : Operation<GatewayRouteListResult>, IOperationSource<GatewayRouteListResult>
     {
         private readonly ArmOperationHelpers<GatewayRouteListResult> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworkGatewaysGetAdvertisedRoutesOperation for mocking. </summary>
+        protected VirtualNetworkGatewaysGetAdvertisedRoutesOperation()
+        {
+        }
+
         internal VirtualNetworkGatewaysGetAdvertisedRoutesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<GatewayRouteListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetAdvertisedRoutesOperation");

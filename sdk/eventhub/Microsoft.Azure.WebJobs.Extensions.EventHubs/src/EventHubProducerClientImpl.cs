@@ -4,17 +4,21 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
+using Microsoft.Azure.WebJobs.Logging;
+using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Azure.WebJobs
+namespace Microsoft.Azure.WebJobs.EventHubs
 {
     /// TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/9117 is fixed
     internal class EventHubProducerClientImpl : IEventHubProducerClient
     {
         private readonly EventHubProducerClient _client;
+        private readonly ILogger _logger;
 
-        public EventHubProducerClientImpl(EventHubProducerClient client)
+        public EventHubProducerClientImpl(EventHubProducerClient client, ILogger logger)
         {
             _client = client;
+            _logger = logger;
         }
 
         public async Task<IEventDataBatch> CreateBatchAsync(CancellationToken cancellationToken)
@@ -24,7 +28,9 @@ namespace Microsoft.Azure.WebJobs
 
         public async Task SendAsync(IEventDataBatch batch, CancellationToken cancellationToken)
         {
-            await _client.SendAsync(((EventDataBatchImpl) batch).Batch, cancellationToken).ConfigureAwait(false);
+            _logger?.LogDebug("Sending events to EventHub");
+            var eventDataBatch = ((EventDataBatchImpl) batch).Batch;
+            await _client.SendAsync(eventDataBatch, cancellationToken).ConfigureAwait(false);
         }
     }
 }

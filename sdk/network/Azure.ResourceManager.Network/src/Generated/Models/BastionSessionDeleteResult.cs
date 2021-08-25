@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for DisconnectActiveSessions. </summary>
-    public partial class BastionSessionDeleteResult
+    internal partial class BastionSessionDeleteResult
     {
         /// <summary> Initializes a new instance of BastionSessionDeleteResult. </summary>
         internal BastionSessionDeleteResult()

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The response to a list geo backup policies request. </summary>
-    public partial class GeoBackupPolicyListResult
+    internal partial class GeoBackupPolicyListResult
     {
         /// <summary> Initializes a new instance of GeoBackupPolicyListResult. </summary>
         internal GeoBackupPolicyListResult()

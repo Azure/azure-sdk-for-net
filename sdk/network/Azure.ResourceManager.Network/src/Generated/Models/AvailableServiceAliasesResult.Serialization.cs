@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AvailableServiceAliasesResult
+    internal partial class AvailableServiceAliasesResult
     {
         internal static AvailableServiceAliasesResult DeserializeAvailableServiceAliasesResult(JsonElement element)
         {

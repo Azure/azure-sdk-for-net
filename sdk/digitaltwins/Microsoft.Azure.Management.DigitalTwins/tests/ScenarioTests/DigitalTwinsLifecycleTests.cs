@@ -1,97 +1,133 @@
-﻿namespace DigitalTwins.Tests.ScenarioTests
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using DigitalTwins.Tests.Helpers;
-    using Microsoft.Azure.Management.DigitalTwins;
-    using Microsoft.Azure.Management.DigitalTwins.Models;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-    public class DigitalTwinsLifecycleTests: DigitalTwinsTestBase
+using FluentAssertions;
+using Microsoft.Azure.Management.DigitalTwins;
+using Microsoft.Azure.Management.DigitalTwins.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace DigitalTwins.Tests.ScenarioTests
+{
+    public class DigitalTwinsLifecycleTests : DigitalTwinsTestBase
     {
         [Fact]
-        public void TestDigitalTwinsLifecycle()
+        [Trait("Type", "E2E")]
+        public async Task TestDigitalTwinsLifecycle()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            using var context = MockContext.Start(GetType());
+
+            Initialize(context);
+
+            // Create Resource Group
+            ResourceGroup rg = await ResourcesClient.ResourceGroups.CreateOrUpdateAsync(
+                DefaultResourceGroupName,
+                new ResourceGroup
+                {
+                    Location = DefaultLocation,
+                });
+
+            try
             {
-
-                var digitalTwinsDescription = new DigitalTwinsDescription()
-                {
-                    Location = location,
-                };
-
-                this.Initialize(context);
-
-                // Create Resource Group
-                var resourceGroup = this.CreateResourceGroup(DigitalTwinsTestUtilities.DefaultResourceGroupName);
-
                 // Check if instance exists and delete
-                var digitalTwinsAvailability = this.digitalTwinsClient.DigitalTwins.CheckNameAvailability(DigitalTwinsTestUtilities.DefaultLocation, DigitalTwinsTestUtilities.DefaultInstanceName);
+                CheckNameResult dtNameCheck = await DigitalTwinsClient.DigitalTwins.CheckNameAvailabilityAsync(
+                    DefaultLocation,
+                    DefaultInstanceName);
 
-                if (!(bool)digitalTwinsAvailability.NameAvailable)
+                if (!dtNameCheck.NameAvailable.Value)
                 {
-                    this.digitalTwinsClient.DigitalTwins.Delete(
-                        DigitalTwinsTestUtilities.DefaultResourceGroupName,
-                        DigitalTwinsTestUtilities.DefaultInstanceName);
+                    DigitalTwinsDescription dtDelete = await DigitalTwinsClient.DigitalTwins.DeleteAsync(
+                        rg.Name,
+                        DefaultInstanceName);
+                    dtDelete.ProvisioningState.Should().Be(ProvisioningState.Deleted);
 
-                    digitalTwinsAvailability = this.digitalTwinsClient.DigitalTwins.CheckNameAvailability(DigitalTwinsTestUtilities.DefaultLocation, DigitalTwinsTestUtilities.DefaultInstanceName);
-                    Assert.True(digitalTwinsAvailability.NameAvailable);
+                    dtNameCheck = await DigitalTwinsClient.DigitalTwins.CheckNameAvailabilityAsync(
+                        DefaultLocation,
+                        DefaultInstanceName);
+                    dtNameCheck.NameAvailable.Should().BeTrue();
                 }
 
                 // Create DigitalTwins resource
-                var digitalTwinsInstance = this.CreateDigitalTwinsInstance(resourceGroup, DigitalTwinsTestUtilities.DefaultLocation, DigitalTwinsTestUtilities.DefaultInstanceName);
+                var dtInstance = await DigitalTwinsClient.DigitalTwins.CreateOrUpdateAsync(
+                    rg.Name,
+                    DefaultInstanceName,
+                    new DigitalTwinsDescription
+                    {
+                        Location = DefaultLocation,
+                    });
 
-                Assert.NotNull(digitalTwinsInstance);
-                Assert.Equal(DigitalTwinsTestUtilities.DefaultInstanceName, digitalTwinsInstance.Name);
-                Assert.Equal(DigitalTwinsTestUtilities.DefaultLocation, digitalTwinsInstance.Location);
+                try
+                {
+                    dtInstance.Should().NotBeNull();
+                    dtInstance.Name.Should().Be(DefaultInstanceName);
+                    dtInstance.Location.Should().Be(DefaultLocation);
 
-                // Add and Get Tags
-                IDictionary<string, string> tags = new Dictionary<string, string>();
-                tags.Add("key1", "value1");
-                tags.Add("key2", "value2");
-                digitalTwinsInstance = this.digitalTwinsClient.DigitalTwins.Update(DigitalTwinsTestUtilities.DefaultResourceGroupName, DigitalTwinsTestUtilities.DefaultInstanceName, tags);
+                    // Add and Get Tags
+                    const string key2 = "key2";
+                    const string value2 = "value2";
+                    var patch = new DigitalTwinsPatchDescription(
+                        tags: new Dictionary<string, string>
+                        {
+                            { "key1", "value1" },
+                            { key2, value2 },
+                        });
+                    dtInstance = await DigitalTwinsClient.DigitalTwins.UpdateAsync(
+                        rg.Name,
+                        dtInstance.Name,
+                        patch);
 
-                Assert.NotNull(digitalTwinsInstance);
-                Assert.True(digitalTwinsInstance.Tags.Count().Equals(2));
-                Assert.Equal("value2", digitalTwinsInstance.Tags["key2"]);
+                    dtInstance.Should().NotBeNull();
+                    dtInstance.Tags.Count().Should().Be(2);
+                    dtInstance.Tags[key2].Should().Be(value2);
 
-                // List DigitalTwins instances in Resource Group
-                var twinsResources = this.digitalTwinsClient.DigitalTwins.ListByResourceGroup(DigitalTwinsTestUtilities.DefaultResourceGroupName);
-                Assert.True(twinsResources.Count() > 0);
+                    // List DigitalTwins instances in Resource Group
+                    var twinsResources = await DigitalTwinsClient.DigitalTwins.ListByResourceGroupAsync(rg.Name);
+                    twinsResources.Count().Should().BeGreaterThan(0);
 
-                // Get all of the available operations, ensure CRUD
-                var operationList = this.digitalTwinsClient.Operations.List();
-                Assert.True(operationList.Count() > 0);
-                Assert.Contains(operationList, e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/read", StringComparison.OrdinalIgnoreCase));
-                Assert.Contains(operationList, e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/write", StringComparison.OrdinalIgnoreCase));
-                Assert.Contains(operationList, e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/delete", StringComparison.OrdinalIgnoreCase));
+                    // Get all of the available operations, ensure CRUD
+                    var operationList = await DigitalTwinsClient.Operations.ListAsync();
+                    operationList.Count().Should().BeGreaterThan(0);
+                    Assert.Contains(operationList, e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/read", StringComparison.OrdinalIgnoreCase));
+                    Assert.Contains(operationList, e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/write", StringComparison.OrdinalIgnoreCase));
+                    Assert.Contains(operationList, e => e.Name.Equals($"Microsoft.DigitalTwins/digitalTwinsInstances/delete", StringComparison.OrdinalIgnoreCase));
 
-                // Get other operations
+                    // Test other operations
 
-                // Register Operation
-                var registerOperations = operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/register"));
-                Assert.True(registerOperations.Count() > 0);
+                    // Register Operation
+                   var registerOperations = operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/register"));
+                    registerOperations.Count().Should().BeGreaterThan(0);
 
-                // Twin Operations
-                var twinOperations = operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/digitaltwins"));
-                Assert.True(twinOperations.Count() > 0);
+                    // Twin Operations
+                    var twinOperations = operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/digitaltwins"));
+                    twinOperations.Count().Should().BeGreaterThan(0);
 
-                // Event Route Operations
-                var eventRouteOperations =  operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/eventroutes"));
-                Assert.True(eventRouteOperations.Count() > 0);
+                    // Event Route Operations
+                    var eventRouteOperations = operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/eventroutes"));
+                    eventRouteOperations.Count().Should().BeGreaterThan(0);
 
-                // Model operations
-                var modelOperations =  operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/models"));
-                Assert.True(modelOperations.Count() > 0);
-
-                // Delete instance
-                var deleteOp = this.digitalTwinsClient.DigitalTwins.BeginDelete(DigitalTwinsTestUtilities.DefaultResourceGroupName, DigitalTwinsTestUtilities.DefaultInstanceName);
-                Assert.True(deleteOp.ProvisioningState == ProvisioningState.Deleting);
-
+                    // Model operations
+                    var modelOperations = operationList.Where(e => e.Name.Contains($"Microsoft.DigitalTwins/models"));
+                    modelOperations.Count().Should().BeGreaterThan(0);
+                }
+                finally
+                {
+                    // Delete instance
+                    DigitalTwinsDescription deleteOp = await DigitalTwinsClient.DigitalTwins.BeginDeleteAsync(
+                        rg.Name,
+                        dtInstance.Name);
+                    deleteOp.ProvisioningState.Should().Be(ProvisioningState.Deleting);
+                }
+            }
+            finally
+            {
+                await ResourcesClient.ResourceGroups.DeleteAsync(rg.Name);
             }
         }
-
     }
 }

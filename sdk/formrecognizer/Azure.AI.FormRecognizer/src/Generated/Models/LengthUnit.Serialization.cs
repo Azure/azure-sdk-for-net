@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal static class LengthUnitExtensions
+    internal static partial class LengthUnitExtensions
     {
         public static string ToSerialString(this LengthUnit value) => value switch
         {

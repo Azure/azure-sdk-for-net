@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class P2SVpnGatewaysCreateOrUpdateOperation : Operation<P2SVpnGateway>, IOperationSource<P2SVpnGateway>
     {
         private readonly ArmOperationHelpers<P2SVpnGateway> _operation;
+
+        /// <summary> Initializes a new instance of P2SVpnGatewaysCreateOrUpdateOperation for mocking. </summary>
+        protected P2SVpnGatewaysCreateOrUpdateOperation()
+        {
+        }
+
         internal P2SVpnGatewaysCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<P2SVpnGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "P2SVpnGatewaysCreateOrUpdateOperation");

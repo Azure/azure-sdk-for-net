@@ -69,6 +69,11 @@ namespace Microsoft.Azure.Management.Confluent
 
 
         /// <summary>
+        /// Gets the IMarketplaceAgreementsOperations.
+        /// </summary>
+        IMarketplaceAgreementsOperations MarketplaceAgreements { get; }
+
+        /// <summary>
         /// Gets the IOrganizationOperations.
         /// </summary>
         IOrganizationOperations OrganizationOperations { get; }
@@ -77,6 +82,11 @@ namespace Microsoft.Azure.Management.Confluent
         /// Gets the IOrganizationOperationsOperations.
         /// </summary>
         IOrganizationOperationsOperations Organization { get; }
+
+        /// <summary>
+        /// Gets the IValidationsOperations.
+        /// </summary>
+        IValidationsOperations Validations { get; }
 
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> Object that includes an array of CommunicationServices and a possible link for next set. </summary>
-    public partial class CommunicationServiceResourceList
+    internal partial class CommunicationServiceResourceList
     {
         /// <summary> Initializes a new instance of CommunicationServiceResourceList. </summary>
         internal CommunicationServiceResourceList()

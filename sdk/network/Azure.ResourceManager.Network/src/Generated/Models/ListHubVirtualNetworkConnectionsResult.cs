@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of HubVirtualNetworkConnections and a URL nextLink to get the next set of results. </summary>
-    public partial class ListHubVirtualNetworkConnectionsResult
+    internal partial class ListHubVirtualNetworkConnectionsResult
     {
         /// <summary> Initializes a new instance of ListHubVirtualNetworkConnectionsResult. </summary>
         internal ListHubVirtualNetworkConnectionsResult()

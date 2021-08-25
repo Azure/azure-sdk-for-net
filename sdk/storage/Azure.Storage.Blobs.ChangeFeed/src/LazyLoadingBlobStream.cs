@@ -101,15 +101,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         private async Task DownloadBlock(bool async, CancellationToken cancellationToken)
         {
-            Response<BlobDownloadInfo> response;
+            Response<BlobDownloadStreamingResult> response;
             HttpRange range = new HttpRange(_offset, _blockSize);
 
             response = async
-                ? await _blobClient.DownloadAsync(range, cancellationToken: cancellationToken).ConfigureAwait(false)
-                : _blobClient.Download(range, cancellationToken: cancellationToken);
+                ? await _blobClient.DownloadStreamingAsync(range, cancellationToken: cancellationToken).ConfigureAwait(false)
+                : _blobClient.DownloadStreaming(range, cancellationToken: cancellationToken);
             _stream = response.Value.Content;
-            _offset += response.Value.ContentLength;
-            _lastDownloadBytes = response.Value.ContentLength;
+            _offset += response.Value.Details.ContentLength;
+            _lastDownloadBytes = response.Value.Details.ContentLength;
             _blobLength = GetBlobLength(response);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             do
             {
                 int copiedBytes = async
-                    ? await _stream.ReadAsync(buffer, offset, count).ConfigureAwait(false)
+                    ? await _stream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false)
                     : _stream.Read(buffer, offset, count);
                 offset += copiedBytes;
                 count -= copiedBytes;
@@ -173,26 +173,26 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} cannot be less than 0.");
             }
 
             if (offset > buffer.Length)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot exceed {nameof(buffer)} length.");
+                throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} cannot exceed {nameof(buffer)} length.");
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(count)} cannot be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(count), $"{nameof(count)} cannot be less than 0.");
             }
 
             if (offset + count > buffer.Length)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
+                throw new ArgumentOutOfRangeException($"{nameof(offset)} and {nameof(count)}", $"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
             }
         }
 
-        private static long GetBlobLength(Response<BlobDownloadInfo> response)
+        private static long GetBlobLength(Response<BlobDownloadStreamingResult> response)
         {
             string lengthString = response.Value.Details.ContentRange;
             string[] split = lengthString.Split('/');
@@ -211,7 +211,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public override long Length => throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override long Position {
+        public override long Position
+        {
             get => _stream.Position;
             set => throw new NotSupportedException();
         }
@@ -245,6 +246,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             throw new NotSupportedException();
         }
 
-        protected override void Dispose(bool disposing) => _stream.Dispose();
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _stream.Dispose();
+        }
     }
 }

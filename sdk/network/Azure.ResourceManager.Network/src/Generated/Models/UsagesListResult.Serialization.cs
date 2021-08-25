@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class UsagesListResult
+    internal partial class UsagesListResult
     {
         internal static UsagesListResult DeserializeUsagesListResult(JsonElement element)
         {

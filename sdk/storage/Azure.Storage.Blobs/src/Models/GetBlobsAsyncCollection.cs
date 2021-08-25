@@ -37,17 +37,35 @@ namespace Azure.Storage.Blobs.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<BlobsFlatSegment> response = await _client.GetBlobsInternal(
-                continuationToken,
-                _traits,
-                _states,
-                _prefix,
-                pageSizeHint,
-                async,
-                cancellationToken).ConfigureAwait(false);
+            Response<ListBlobsFlatSegmentResponse> response;
+
+            if (async)
+            {
+                response = await _client.GetBlobsInternal(
+                    marker: continuationToken,
+                    traits: _traits,
+                    states: _states,
+                    prefix: _prefix,
+                    pageSizeHint: pageSizeHint,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                response = _client.GetBlobsInternal(
+                    marker: continuationToken,
+                    traits: _traits,
+                    states: _states,
+                    prefix: _prefix,
+                    pageSizeHint: pageSizeHint,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .EnsureCompleted();
+            }
 
             return Page<BlobItem>.FromValues(
-                response.Value.BlobItems.ToBlobItems().ToArray(),
+                response.Value.Segment.BlobItems.ToBlobItems().ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }
@@ -90,6 +108,14 @@ namespace Azure.Storage.Blobs
             {
                 items.Add(ListBlobsIncludeItem.Tags);
             }
+            if ((traits & BlobTraits.ImmutabilityPolicy) == BlobTraits.ImmutabilityPolicy)
+            {
+                items.Add(ListBlobsIncludeItem.Immutabilitypolicy);
+            }
+            if ((traits & BlobTraits.LegalHold) == BlobTraits.LegalHold)
+            {
+                items.Add(ListBlobsIncludeItem.Legalhold);
+            }
             if ((states & BlobStates.Uncommitted) == BlobStates.Uncommitted)
             {
                 items.Add(ListBlobsIncludeItem.Uncommittedblobs);
@@ -97,6 +123,10 @@ namespace Azure.Storage.Blobs
             if ((states & BlobStates.Version) == BlobStates.Version)
             {
                 items.Add(ListBlobsIncludeItem.Versions);
+            }
+            if ((states & BlobStates.DeletedWithVersions) == BlobStates.DeletedWithVersions)
+            {
+                items.Add(ListBlobsIncludeItem.DeletedWithVersions);
             }
             return items.Count > 0 ? items : null;
         }

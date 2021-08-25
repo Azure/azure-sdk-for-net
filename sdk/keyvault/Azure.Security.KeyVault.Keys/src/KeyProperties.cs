@@ -22,9 +22,10 @@ namespace Azure.Security.KeyVault.Keys
         private const string ReleasePolicyPropertyName = "release_policy";
 
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
         private static readonly JsonEncodedText s_releasePolicyPropertyNameBytes = JsonEncodedText.Encode(ReleasePolicyPropertyName);
 
-        internal Dictionary<string, string> _tags;
+        private Dictionary<string, string> _tags;
 
         internal KeyProperties() { }
 
@@ -92,6 +93,11 @@ namespace Azure.Security.KeyVault.Keys
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the private key can be exported.
+        /// </summary>
+        public bool? Exportable { get => _attributes.Exportable; set => _attributes.Exportable = value; }
+
+        /// <summary>
         /// Gets or sets a <see cref="DateTimeOffset"/> indicating when the key will be valid and can be used for cryptographic operations.
         /// </summary>
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
@@ -123,11 +129,6 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <value>Possible values include <c>Purgeable</c>, <c>Recoverable+Purgeable</c>, <c>Recoverable</c>, and <c>Recoverable+ProtectedSubscription</c>.</value>
         public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the private key can be exported.
-        /// </summary>
-        public bool? Exportable { get => _attributes.Exportable; set => _attributes.Exportable = value; }
 
         /// <summary>
         /// Gets or sets the policy rules under which the key can be exported.
@@ -175,7 +176,7 @@ namespace Azure.Security.KeyVault.Keys
                     }
                     break;
                 case ReleasePolicyPropertyName:
-                    ReleasePolicy = new KeyReleasePolicy();
+                    ReleasePolicy = new();
                     ReleasePolicy.ReadProperties(prop.Value);
                     break;
             }
@@ -199,7 +200,25 @@ namespace Azure.Security.KeyVault.Keys
 
                 json.WriteEndObject();
             }
+        }
 
+        internal void WriteTags(Utf8JsonWriter json)
+        {
+            if (_tags != null && _tags.Count > 0)
+            {
+                json.WriteStartObject(s_tagsPropertyNameBytes);
+
+                foreach (KeyValuePair<string, string> kvp in _tags)
+                {
+                    json.WriteString(kvp.Key, kvp.Value);
+                }
+
+                json.WriteEndObject();
+            }
+        }
+
+        internal void WriteReleasePolicy(Utf8JsonWriter json)
+        {
             if (ReleasePolicy != null)
             {
                 json.WriteStartObject(s_releasePolicyPropertyNameBytes);

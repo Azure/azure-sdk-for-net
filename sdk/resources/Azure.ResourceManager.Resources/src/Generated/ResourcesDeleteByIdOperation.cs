@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Resources
     public partial class ResourcesDeleteByIdOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of ResourcesDeleteByIdOperation for mocking. </summary>
+        protected ResourcesDeleteByIdOperation()
+        {
+        }
+
         internal ResourcesDeleteByIdOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesDeleteByIdOperation");

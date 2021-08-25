@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// Initializes a new instance of the UserSourceInfo class.
         /// </summary>
         /// <param name="type">Type of the source uploaded. Possible values
-        /// include: 'Jar', 'Source'</param>
+        /// include: 'Jar', 'NetCoreZip', 'Source'</param>
         /// <param name="relativePath">Relative path of the storage which
         /// stores the source</param>
         /// <param name="version">Version of the source</param>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
 
         /// <summary>
         /// Gets or sets type of the source uploaded. Possible values include:
-        /// 'Jar', 'Source'
+        /// 'Jar', 'NetCoreZip', 'Source'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

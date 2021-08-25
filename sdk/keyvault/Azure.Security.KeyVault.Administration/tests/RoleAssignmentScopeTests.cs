@@ -1,11 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
-using System.Threading;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {

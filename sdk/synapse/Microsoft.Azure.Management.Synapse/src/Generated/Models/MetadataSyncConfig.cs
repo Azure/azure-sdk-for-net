@@ -38,9 +38,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         /// <param name="enabled">Indicates whether the metadata sync is
         /// enabled or disabled</param>
-        public MetadataSyncConfig(bool? enabled = default(bool?))
+        /// <param name="syncIntervalInMinutes">The Sync Interval in
+        /// minutes.</param>
+        public MetadataSyncConfig(bool? enabled = default(bool?), int? syncIntervalInMinutes = default(int?))
         {
             Enabled = enabled;
+            SyncIntervalInMinutes = syncIntervalInMinutes;
             CustomInit();
         }
 
@@ -55,6 +58,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]
         public bool? Enabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sync Interval in minutes.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.syncIntervalInMinutes")]
+        public int? SyncIntervalInMinutes { get; set; }
 
     }
 }

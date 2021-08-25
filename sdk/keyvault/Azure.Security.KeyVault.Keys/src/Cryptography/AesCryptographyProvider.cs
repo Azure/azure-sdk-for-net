@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class AesCryptographyProvider : LocalCryptographyProvider
     {
-        internal AesCryptographyProvider(JsonWebKey keyMaterial, KeyProperties keyProperties) : base(keyMaterial, keyProperties)
+        internal AesCryptographyProvider(JsonWebKey keyMaterial, KeyProperties keyProperties, bool localOnly) : base(keyMaterial, keyProperties, localOnly)
         {
         }
 
@@ -27,18 +27,18 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return false;
         }
 
-        public override DecryptResult Decrypt(DecryptOptions options, CancellationToken cancellationToken = default)
+        public override DecryptResult Decrypt(DecryptParameters parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             ThrowIfTimeInvalid();
 
-            EncryptionAlgorithm algorithm = options.Algorithm;
+            EncryptionAlgorithm algorithm = parameters.Algorithm;
             if (algorithm.GetAesCbcEncryptionAlgorithm() is AesCbc aesCbc)
             {
-                using ICryptoTransform decryptor = aesCbc.CreateDecryptor(KeyMaterial.K, options.Iv);
+                using ICryptoTransform decryptor = aesCbc.CreateDecryptor(KeyMaterial.K, parameters.Iv);
 
-                byte[] ciphertext = options.Ciphertext;
+                byte[] ciphertext = parameters.Ciphertext;
                 byte[] plaintext = decryptor.TransformFinalBlock(ciphertext, 0, ciphertext.Length);
 
                 return new DecryptResult
@@ -48,23 +48,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     Plaintext = plaintext,
                 };
             }
-            else if (algorithm.IsAesGcm() && AesGcmProxy.TryCreate(KeyMaterial.K, out AesGcmProxy aesGcm))
-            {
-                using (aesGcm)
-                {
-                    byte[] ciphertext = options.Ciphertext;
-                    byte[] plaintext = new byte[ciphertext.Length];
-
-                    aesGcm.Decrypt(options.Iv, ciphertext, options.AuthenticationTag, plaintext, options.AdditionalAuthenticatedData);
-
-                    return new DecryptResult
-                    {
-                        Algorithm = algorithm,
-                        KeyId = KeyMaterial.Id,
-                        Plaintext = plaintext,
-                    };
-                }
-            }
             else
             {
                 KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Decrypt), algorithm);
@@ -72,21 +55,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public override EncryptResult Encrypt(EncryptOptions options, CancellationToken cancellationToken = default)
+        public override EncryptResult Encrypt(EncryptParameters parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             ThrowIfTimeInvalid();
 
-            EncryptionAlgorithm algorithm = options.Algorithm;
+            EncryptionAlgorithm algorithm = parameters.Algorithm;
             if (algorithm.GetAesCbcEncryptionAlgorithm() is AesCbc aesCbc)
             {
                 // Make sure the IV is initialized.
-                options.Initialize();
+                parameters.Initialize();
 
-                using ICryptoTransform encryptor = aesCbc.CreateEncryptor(KeyMaterial.K, options.Iv);
+                using ICryptoTransform encryptor = aesCbc.CreateEncryptor(KeyMaterial.K, parameters.Iv);
 
-                byte[] plaintext = options.Plaintext;
+                byte[] plaintext = parameters.Plaintext;
                 byte[] ciphertext = encryptor.TransformFinalBlock(plaintext, 0, plaintext.Length);
 
                 return new EncryptResult
@@ -94,32 +77,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     Algorithm = algorithm,
                     KeyId = KeyMaterial.Id,
                     Ciphertext = ciphertext,
-                    Iv = options.Iv,
+                    Iv = parameters.Iv,
                 };
-            }
-            else if (algorithm.IsAesGcm() && AesGcmProxy.TryCreate(KeyMaterial.K, out AesGcmProxy aesGcm))
-            {
-                using (aesGcm)
-                {
-                    byte[] plaintext = options.Plaintext;
-                    byte[] ciphertext = new byte[plaintext.Length];
-                    byte[] tag = new byte[AesGcmProxy.NonceByteSize];
-
-                    // Generate an nonce only for local AES-GCM; Managed HSM will do it service-side and err if serialized.
-                    byte[] iv = Crypto.GenerateIv(AesGcmProxy.NonceByteSize);
-
-                    aesGcm.Encrypt(iv, plaintext, ciphertext, tag, options.AdditionalAuthenticatedData);
-
-                    return new EncryptResult
-                    {
-                        Algorithm = algorithm,
-                        KeyId = KeyMaterial.Id,
-                        Ciphertext = ciphertext,
-                        Iv = iv,
-                        AuthenticationTag = tag,
-                        AdditionalAuthenticatedData = options.AdditionalAuthenticatedData,
-                    };
-                }
             }
             else
             {

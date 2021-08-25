@@ -14,14 +14,12 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Tests
 
         public TestHelper()
         {
-            
         }
 
         public void Initialize(MockContext context)
         {
             this.ResourceMoverServiceClient = this.GetResourceMoverServiceClient(context);
             this.ResourceMoverServiceClient.SubscriptionId = subscriptionId;
-            
         }
 
         public void Initialize(MockContext context, string subscriptionId)

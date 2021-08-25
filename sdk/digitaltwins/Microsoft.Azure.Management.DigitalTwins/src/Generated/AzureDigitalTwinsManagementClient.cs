@@ -90,6 +90,16 @@ namespace Microsoft.Azure.Management.DigitalTwins
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the AzureDigitalTwinsManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -333,8 +343,10 @@ namespace Microsoft.Azure.Management.DigitalTwins
             DigitalTwins = new DigitalTwinsOperations(this);
             DigitalTwinsEndpoint = new DigitalTwinsEndpointOperations(this);
             Operations = new Operations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-10-31";
+            ApiVersion = "2020-12-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

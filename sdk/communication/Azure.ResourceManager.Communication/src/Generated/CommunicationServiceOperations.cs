@@ -21,25 +21,63 @@ namespace Azure.ResourceManager.Communication
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal CommunicationServiceRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of CommunicationServiceOperations for mocking. </summary>
         protected CommunicationServiceOperations()
         {
         }
+
         /// <summary> Initializes a new instance of CommunicationServiceOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> Gets subscription ID which uniquely identifies the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal CommunicationServiceOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-08-20-preview")
+        internal CommunicationServiceOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-08-20")
         {
             RestClient = new CommunicationServiceRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
+        /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
+        /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<NameAvailability>> CheckNameAvailabilityAsync(NameAvailabilityParameters nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CommunicationServiceOperations.CheckNameAvailability");
+            scope.Start();
+            try
+            {
+                return await RestClient.CheckNameAvailabilityAsync(nameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks that the CommunicationService name is valid and is not already in use. </summary>
+        /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<NameAvailability> CheckNameAvailability(NameAvailabilityParameters nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CommunicationServiceOperations.CheckNameAvailability");
+            scope.Start();
+            try
+            {
+                return RestClient.CheckNameAvailability(nameAvailabilityParameters, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Links an Azure Notification Hub to this communication service. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="linkNotificationHubParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -59,7 +97,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Links an Azure Notification Hub to this communication service. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="linkNotificationHubParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,11 +117,11 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Operation to update an existing CommunicationService. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CommunicationServiceResource>> UpdateAsync(string resourceGroupName, string communicationServiceName, TaggedResource parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationServiceResource>> UpdateAsync(string resourceGroupName, string communicationServiceName, CommunicationServiceResource parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CommunicationServiceOperations.Update");
             scope.Start();
@@ -99,11 +137,11 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Operation to update an existing CommunicationService. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CommunicationServiceResource> Update(string resourceGroupName, string communicationServiceName, TaggedResource parameters = null, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationServiceResource> Update(string resourceGroupName, string communicationServiceName, CommunicationServiceResource parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CommunicationServiceOperations.Update");
             scope.Start();
@@ -119,7 +157,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Get the CommunicationService and its properties. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CommunicationServiceResource>> GetAsync(string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
@@ -138,7 +176,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Get the CommunicationService and its properties. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CommunicationServiceResource> Get(string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
@@ -157,7 +195,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Get the access keys of the CommunicationService resource. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CommunicationServiceKeys>> ListKeysAsync(string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
@@ -176,7 +214,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Get the access keys of the CommunicationService resource. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CommunicationServiceKeys> ListKeys(string resourceGroupName, string communicationServiceName, CancellationToken cancellationToken = default)
@@ -195,11 +233,11 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationServiceKeys>> RegenerateKeyAsync(string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CommunicationServiceOperations.RegenerateKey");
             scope.Start();
@@ -215,11 +253,11 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CommunicationServiceKeys> RegenerateKey(string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters = null, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationServiceKeys> RegenerateKey(string resourceGroupName, string communicationServiceName, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CommunicationServiceOperations.RegenerateKey");
             scope.Start();
@@ -309,7 +347,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Handles requests to list all resources in a resource group. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual AsyncPageable<CommunicationServiceResource> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
@@ -353,7 +391,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Handles requests to list all resources in a resource group. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public virtual Pageable<CommunicationServiceResource> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
@@ -397,7 +435,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Create a new CommunicationService or update an existing CommunicationService. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -428,7 +466,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Create a new CommunicationService or update an existing CommunicationService. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="parameters"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -459,7 +497,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Operation to delete a CommunicationService. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>
@@ -489,7 +527,7 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Operation to delete a CommunicationService. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="communicationServiceName"/> is null. </exception>

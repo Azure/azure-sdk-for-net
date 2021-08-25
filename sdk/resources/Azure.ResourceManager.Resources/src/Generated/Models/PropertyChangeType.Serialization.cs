@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal static class PropertyChangeTypeExtensions
+    internal static partial class PropertyChangeTypeExtensions
     {
         public static string ToSerialString(this PropertyChangeType value) => value switch
         {

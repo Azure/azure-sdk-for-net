@@ -25,6 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         private const string NoneValue = "none";
         private const string ZlibValue = "zlib";
         private const string SnappyValue = "snappy";
+        private const string LzoValue = "lzo";
 
         /// <summary> none. </summary>
         public static OrcCompressionCodec None { get; } = new OrcCompressionCodec(NoneValue);
@@ -32,6 +33,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static OrcCompressionCodec Zlib { get; } = new OrcCompressionCodec(ZlibValue);
         /// <summary> snappy. </summary>
         public static OrcCompressionCodec Snappy { get; } = new OrcCompressionCodec(SnappyValue);
+        /// <summary> lzo. </summary>
+        public static OrcCompressionCodec Lzo { get; } = new OrcCompressionCodec(LzoValue);
         /// <summary> Determines if two <see cref="OrcCompressionCodec"/> values are the same. </summary>
         public static bool operator ==(OrcCompressionCodec left, OrcCompressionCodec right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrcCompressionCodec"/> values are not the same. </summary>

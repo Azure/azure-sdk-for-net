@@ -51,16 +51,13 @@ namespace Microsoft.Azure.Management.DataShare
         public DataShareManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Rejects the invitation identified by invitationId
+        /// List the invitations
         /// </summary>
         /// <remarks>
-        /// Reject an invitation
+        /// Lists invitations
         /// </remarks>
-        /// <param name='location'>
-        /// Location of the invitation
-        /// </param>
-        /// <param name='invitation'>
-        /// An invitation payload
+        /// <param name='skipToken'>
+        /// The continuation token
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -83,20 +80,8 @@ namespace Microsoft.Azure.Management.DataShare
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ConsumerInvitation>> RejectInvitationWithHttpMessagesAsync(string location, ConsumerInvitation invitation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ConsumerInvitation>>> ListInvitationsWithHttpMessagesAsync(string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "location");
-            }
-            if (invitation == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "invitation");
-            }
-            if (invitation != null)
-            {
-                invitation.Validate();
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -108,19 +93,21 @@ namespace Microsoft.Azure.Management.DataShare
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("location", location);
-                tracingParameters.Add("invitation", invitation);
+                tracingParameters.Add("skipToken", skipToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "RejectInvitation", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListInvitations", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.DataShare/locations/{location}/RejectInvitation").ToString();
-            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.DataShare/listInvitations").ToString();
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (skipToken != null)
+            {
+                _queryParameters.Add(string.Format("$skipToken={0}", System.Uri.EscapeDataString(skipToken)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -129,7 +116,7 @@ namespace Microsoft.Azure.Management.DataShare
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -160,12 +147,6 @@ namespace Microsoft.Azure.Management.DataShare
 
             // Serialize Request
             string _requestContent = null;
-            if(invitation != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(invitation, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -216,7 +197,7 @@ namespace Microsoft.Azure.Management.DataShare
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ConsumerInvitation>();
+            var _result = new AzureOperationResponse<IPage<ConsumerInvitation>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -229,7 +210,7 @@ namespace Microsoft.Azure.Management.DataShare
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ConsumerInvitation>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ConsumerInvitation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -438,13 +419,16 @@ namespace Microsoft.Azure.Management.DataShare
         }
 
         /// <summary>
-        /// List the invitations
+        /// Rejects the invitation identified by invitationId
         /// </summary>
         /// <remarks>
-        /// Lists invitations
+        /// Reject an invitation
         /// </remarks>
-        /// <param name='skipToken'>
-        /// The continuation token
+        /// <param name='location'>
+        /// Location of the invitation
+        /// </param>
+        /// <param name='invitation'>
+        /// An invitation payload
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -467,8 +451,20 @@ namespace Microsoft.Azure.Management.DataShare
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ConsumerInvitation>>> ListInvitationsWithHttpMessagesAsync(string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConsumerInvitation>> RejectInvitationWithHttpMessagesAsync(string location, ConsumerInvitation invitation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
+            }
+            if (invitation == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "invitation");
+            }
+            if (invitation != null)
+            {
+                invitation.Validate();
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -480,21 +476,19 @@ namespace Microsoft.Azure.Management.DataShare
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("skipToken", skipToken);
+                tracingParameters.Add("location", location);
+                tracingParameters.Add("invitation", invitation);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListInvitations", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "RejectInvitation", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.DataShare/ListInvitations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.DataShare/locations/{location}/rejectInvitation").ToString();
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (skipToken != null)
-            {
-                _queryParameters.Add(string.Format("$skipToken={0}", System.Uri.EscapeDataString(skipToken)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -503,7 +497,7 @@ namespace Microsoft.Azure.Management.DataShare
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -534,6 +528,12 @@ namespace Microsoft.Azure.Management.DataShare
 
             // Serialize Request
             string _requestContent = null;
+            if(invitation != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(invitation, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -584,7 +584,7 @@ namespace Microsoft.Azure.Management.DataShare
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ConsumerInvitation>>();
+            var _result = new AzureOperationResponse<ConsumerInvitation>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -597,7 +597,7 @@ namespace Microsoft.Azure.Management.DataShare
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ConsumerInvitation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ConsumerInvitation>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

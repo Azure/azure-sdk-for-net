@@ -8,22 +8,37 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for data flow expression preview. </summary>
-    internal partial class EvaluateDataFlowExpressionRequest
+    public partial class EvaluateDataFlowExpressionRequest
     {
         /// <summary> Initializes a new instance of EvaluateDataFlowExpressionRequest. </summary>
-        internal EvaluateDataFlowExpressionRequest()
+        public EvaluateDataFlowExpressionRequest()
         {
         }
 
+        /// <summary> Initializes a new instance of EvaluateDataFlowExpressionRequest. </summary>
+        /// <param name="sessionId"> The ID of data flow debug session. </param>
+        /// <param name="dataFlowName"> The data flow which contains the debug session. </param>
+        /// <param name="streamName"> The output stream name. </param>
+        /// <param name="rowLimits"> The row limit for preview request. </param>
+        /// <param name="expression"> The expression for preview. </param>
+        internal EvaluateDataFlowExpressionRequest(string sessionId, string dataFlowName, string streamName, int? rowLimits, string expression)
+        {
+            SessionId = sessionId;
+            DataFlowName = dataFlowName;
+            StreamName = streamName;
+            RowLimits = rowLimits;
+            Expression = expression;
+        }
+
         /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; }
+        public string SessionId { get; set; }
         /// <summary> The data flow which contains the debug session. </summary>
-        public string DataFlowName { get; }
+        public string DataFlowName { get; set; }
         /// <summary> The output stream name. </summary>
-        public string StreamName { get; }
+        public string StreamName { get; set; }
         /// <summary> The row limit for preview request. </summary>
-        public int? RowLimits { get; }
+        public int? RowLimits { get; set; }
         /// <summary> The expression for preview. </summary>
-        public string Expression { get; }
+        public string Expression { get; set; }
     }
 }

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Compute
     public partial class GalleryApplicationsUpdateOperation : Operation<GalleryApplication>, IOperationSource<GalleryApplication>
     {
         private readonly ArmOperationHelpers<GalleryApplication> _operation;
+
+        /// <summary> Initializes a new instance of GalleryApplicationsUpdateOperation for mocking. </summary>
+        protected GalleryApplicationsUpdateOperation()
+        {
+        }
+
         internal GalleryApplicationsUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<GalleryApplication>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GalleryApplicationsUpdateOperation");

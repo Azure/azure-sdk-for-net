@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkInterfaceIPConfigurationListResult
+    internal partial class NetworkInterfaceIPConfigurationListResult
     {
         internal static NetworkInterfaceIPConfigurationListResult DeserializeNetworkInterfaceIPConfigurationListResult(JsonElement element)
         {

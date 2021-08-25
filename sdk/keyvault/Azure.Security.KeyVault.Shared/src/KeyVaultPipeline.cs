@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault
 {
-    internal class KeyVaultPipeline
+    internal partial class KeyVaultPipeline
     {
         private readonly HttpPipeline _pipeline;
         public ClientDiagnostics Diagnostics { get; }
@@ -91,12 +91,14 @@ namespace Azure.Security.KeyVault
             return request;
         }
 
+#pragma warning disable CA1822 // Member can be static
         public Response<T> CreateResponse<T>(Response response, T result)
             where T : IJsonDeserializable
         {
             result.Deserialize(response.ContentStream);
             return Response.FromValue(result, response);
         }
+#pragma warning restore CA1822 // Member can be static
 
         public DiagnosticScope CreateScope(string name)
         {
@@ -120,12 +122,12 @@ namespace Azure.Security.KeyVault
                 using Request request = CreateRequest(RequestMethod.Get, firstPageUri, false);
                 Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-                // read the respose
+                // read the response
                 KeyVaultPage<T> responseAsPage = new KeyVaultPage<T>(itemFactory);
                 responseAsPage.Deserialize(response.ContentStream);
 
                 // convert from the Page<T> to PageResponse<T>
-                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
+                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.AbsoluteUri, response);
             }
             catch (Exception e)
             {
@@ -151,12 +153,12 @@ namespace Azure.Security.KeyVault
                 using Request request = CreateRequest(RequestMethod.Get, firstPageUri, false);
                 Response response = SendRequest(request, cancellationToken);
 
-                // read the respose
+                // read the response
                 KeyVaultPage<T> responseAsPage = new KeyVaultPage<T>(itemFactory);
                 responseAsPage.Deserialize(response.ContentStream);
 
                 // convert from the Page<T> to PageResponse<T>
-                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
+                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.AbsoluteUri, response);
             }
             catch (Exception e)
             {

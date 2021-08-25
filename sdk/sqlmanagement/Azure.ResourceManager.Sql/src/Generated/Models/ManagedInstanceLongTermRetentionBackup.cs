@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A long term retention backup for a managed database. </summary>
-    public partial class ManagedInstanceLongTermRetentionBackup : Resource
+    public partial class ManagedInstanceLongTermRetentionBackup : ProxyResource
     {
         /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionBackup. </summary>
         public ManagedInstanceLongTermRetentionBackup()

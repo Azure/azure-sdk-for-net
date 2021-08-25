@@ -19,11 +19,18 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates or updates a Note Book. </summary>
     public partial class NotebookCreateOrUpdateNotebookOperation : Operation<NotebookResource>, IOperationSource<NotebookResource>
     {
-        private readonly ArmOperationHelpers<NotebookResource> _operation;
+        private readonly OperationInternals<NotebookResource> _operation;
+
+        /// <summary> Initializes a new instance of NotebookCreateOrUpdateNotebookOperation for mocking. </summary>
+        protected NotebookCreateOrUpdateNotebookOperation()
+        {
+        }
+
         internal NotebookCreateOrUpdateNotebookOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<NotebookResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebookCreateOrUpdateNotebookOperation");
+            _operation = new OperationInternals<NotebookResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebookCreateOrUpdateNotebookOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

@@ -58,13 +58,23 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public static BlobChangeFeedEventType BlobAsyncOperationInitiated { get; } = new BlobChangeFeedEventType("BlobAsyncOperationInitiated");
 
-        ///<inheritdoc/>
+        /// <summary>
+        /// Compares equality of two <see cref="BlobChangeFeedEventType"/> instances.
+        /// </summary>
+        /// <param name="left">The <see cref="BlobChangeFeedEventType"/> to compare.</param>
+        /// <param name="right">The <see cref="BlobChangeFeedEventType"/> to compare to.</param>
+        /// <returns><c>true</c> if values of both BlobChangeFeedEventType are equal, otherwise <c>false</c>.</returns>
         public static bool operator ==(BlobChangeFeedEventType left, BlobChangeFeedEventType right) => left.Equals(right);
 
-        ///<inheritdoc/>
+        /// <summary>
+        /// Compares inequality of two <see cref="BlobChangeFeedEventType"/> instances.
+        /// </summary>
+        /// <param name="left">The <see cref="BlobChangeFeedEventType"/> to compare.</param>
+        /// <param name="right">The <see cref="BlobChangeFeedEventType"/> to compare to.</param>
+        /// <returns><c>true</c> if values of both BlobChangeFeedEventType are not equal, otherwise <c>false</c>.</returns>
         public static bool operator !=(BlobChangeFeedEventType left, BlobChangeFeedEventType right) => !left.Equals(right);
 
-        ///<inheritdoc/>
+        /// <summary> Converts a string to a <see cref="BlobChangeFeedEventType"/>. </summary>
         public static implicit operator BlobChangeFeedEventType(string value) => new BlobChangeFeedEventType(value);
 
         ///<inheritdoc/>

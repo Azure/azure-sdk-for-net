@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkSecurityGroupListResult
+    internal partial class NetworkSecurityGroupListResult
     {
         internal static NetworkSecurityGroupListResult DeserializeNetworkSecurityGroupListResult(JsonElement element)
         {

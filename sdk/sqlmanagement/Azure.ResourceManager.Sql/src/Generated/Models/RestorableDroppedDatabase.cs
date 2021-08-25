@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A restorable dropped database. </summary>
-    public partial class RestorableDroppedDatabase : Resource
+    public partial class RestorableDroppedDatabase : ProxyResource
     {
         /// <summary> Initializes a new instance of RestorableDroppedDatabase. </summary>
         public RestorableDroppedDatabase()

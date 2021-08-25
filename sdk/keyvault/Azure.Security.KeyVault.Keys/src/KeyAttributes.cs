@@ -28,6 +28,8 @@ namespace Azure.Security.KeyVault.Keys
 
         public DateTimeOffset? ExpiresOn { get; set; }
 
+        public bool? Exportable { get; set; }
+
         public DateTimeOffset? CreatedOn { get; internal set; }
 
         public DateTimeOffset? UpdatedOn { get; internal set; }
@@ -36,12 +38,10 @@ namespace Azure.Security.KeyVault.Keys
 
         public string RecoveryLevel { get; internal set; }
 
-        public bool? Exportable { get; internal set; }
-
         internal bool ShouldSerialize =>
-            Enabled.HasValue &&
-            NotBefore.HasValue &&
-            ExpiresOn.HasValue &&
+            Enabled.HasValue ||
+            NotBefore.HasValue ||
+            ExpiresOn.HasValue ||
             Exportable.HasValue;
 
         internal void ReadProperties(JsonElement json)

@@ -7,7 +7,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/3cbc984fcf0fab278b9c28175319f65db1b9162a/specification/cognitiveservices/data-plane/MetricsAdvisor/preview/v1.0/MetricsAdvisor.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/08f5e391f2153a99580b458cc71ef88e45dd0531/specification/cognitiveservices/data-plane/MetricsAdvisor/preview/v1.0/MetricsAdvisor.json
 ```
 
 ### Make generated models internal by default
@@ -44,15 +44,8 @@ directive:
   from: swagger-document
   where: $.definitions.CommentFeedback
   transform: >
-    $.allOf[1].properties.startTime["x-nullable"] = true
-```
-
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.CommentFeedback
-  transform: >
-    $.allOf[1].properties.endTime["x-nullable"] = true
+    $.properties.startTime["x-nullable"] = true;
+    $.properties.endTime["x-nullable"] = true;
 ```
 
 ``` yaml
@@ -60,15 +53,8 @@ directive:
   from: swagger-document
   where: $.definitions.AnomalyFeedback
   transform: >
-    $.allOf[1].properties.anomalyDetectionConfigurationId["x-nullable"] = true
-```
-
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.AnomalyFeedback
-  transform: >
-    $.allOf[1].properties.anomalyDetectionConfigurationSnapshot["x-nullable"] = true
+    $.properties.anomalyDetectionConfigurationId["x-nullable"] = true;
+    $.properties.anomalyDetectionConfigurationSnapshot["x-nullable"] = true;
 ```
 
 ``` yaml
@@ -81,6 +67,129 @@ directive:
     $.properties.expectedValueList.items["x-nullable"] = true;
     $.properties.lowerBoundaryList.items["x-nullable"] = true;
     $.properties.upperBoundaryList.items["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AzureApplicationInsightsParameter
+  transform: >
+    $.properties.apiKey["x-nullable"] = true;
+    $.properties.applicationId["x-nullable"] = true;
+    $.properties.azureCloud["x-nullable"] = true;
+    $.properties.query["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AzureBlobParameter
+  transform: >
+    $.properties.connectionString["x-nullable"] = true;
+    $.properties.container["x-nullable"] = true;
+    $.properties.blobTemplate["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AzureCosmosDBParameter
+  transform: >
+    $.properties.collectionId["x-nullable"] = true;
+    $.properties.connectionString["x-nullable"] = true;
+    $.properties.database["x-nullable"] = true;
+    $.properties.sqlQuery["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AzureDataLakeStorageGen2Parameter
+  transform: >
+    $.properties.accountKey["x-nullable"] = true;
+    $.properties.accountName["x-nullable"] = true;
+    $.properties.directoryTemplate["x-nullable"] = true;
+    $.properties.fileSystemName["x-nullable"] = true;
+    $.properties.fileTemplate["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AzureTableParameter
+  transform: >
+    $.properties.connectionString["x-nullable"] = true;
+    $.properties.query["x-nullable"] = true;
+    $.properties.table["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ElasticsearchParameter
+  transform: >
+    $.properties.authHeader["x-nullable"] = true;
+    $.properties.host["x-nullable"] = true;
+    $.properties.port["x-nullable"] = true;
+    $.properties.query["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.HttpRequestParameter
+  transform: >
+    $.properties.httpHeader["x-nullable"] = true;
+    $.properties.httpMethod["x-nullable"] = true;
+    $.properties.payload["x-nullable"] = true;
+    $.properties.url["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.InfluxDBParameter
+  transform: >
+    $.properties.connectionString["x-nullable"] = true;
+    $.properties.database["x-nullable"] = true;
+    $.properties.password["x-nullable"] = true;
+    $.properties.query["x-nullable"] = true;
+    $.properties.userName["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.MongoDBParameter
+  transform: >
+    $.properties.command["x-nullable"] = true;
+    $.properties.connectionString["x-nullable"] = true;
+    $.properties.database["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.SqlSourceParameter
+  transform: >
+    $.properties.connectionString["x-nullable"] = true;
+    $.properties.query["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AnomalyProperty
+  transform: >
+    $.properties.expectedValue["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.IncidentProperty
+  transform: >
+    $.properties.expectedValueOfRootNode["x-nullable"] = true;
 ```
 
 ### Add required properties
@@ -130,7 +239,15 @@ directive:
   from: swagger-document
   where: $.definitions.IncidentProperty
   transform: >
-    $["required"] = ["maxSeverity", "incidentStatus"]
+    $["required"] = ["maxSeverity", "incidentStatus", "valueOfRootNode"]
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AnomalyProperty
+  transform: >
+    $["required"] = ["anomalySeverity", "value"]
 ```
 
 ### Add x-ms-paths section if not exists

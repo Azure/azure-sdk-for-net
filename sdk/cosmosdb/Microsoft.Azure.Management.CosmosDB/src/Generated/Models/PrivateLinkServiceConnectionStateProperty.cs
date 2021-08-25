@@ -33,15 +33,15 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         /// <param name="status">The private link service connection
         /// status.</param>
-        /// <param name="actionsRequired">Any action that is required beyond
-        /// basic workflow (approve/ reject/ disconnect)</param>
         /// <param name="description">The private link service connection
         /// description.</param>
-        public PrivateLinkServiceConnectionStateProperty(string status = default(string), string actionsRequired = default(string), string description = default(string))
+        /// <param name="actionsRequired">Any action that is required beyond
+        /// basic workflow (approve/ reject/ disconnect)</param>
+        public PrivateLinkServiceConnectionStateProperty(string status = default(string), string description = default(string), string actionsRequired = default(string))
         {
             Status = status;
-            ActionsRequired = actionsRequired;
             Description = description;
+            ActionsRequired = actionsRequired;
             CustomInit();
         }
 
@@ -57,17 +57,17 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public string Status { get; set; }
 
         /// <summary>
+        /// Gets or sets the private link service connection description.
+        /// </summary>
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
+
+        /// <summary>
         /// Gets any action that is required beyond basic workflow (approve/
         /// reject/ disconnect)
         /// </summary>
         [JsonProperty(PropertyName = "actionsRequired")]
         public string ActionsRequired { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the private link service connection description.
-        /// </summary>
-        [JsonProperty(PropertyName = "description")]
-        public string Description { get; set; }
 
     }
 }

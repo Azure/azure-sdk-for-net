@@ -58,6 +58,18 @@ namespace Compute.Tests
 
                     //BUG: LogAnalytics API does not return correct result.
                     //Assert.EndsWith(".csv", result.Properties.Output);
+
+                    ThrottledRequestsInput throttledRequestsInput2 = new ThrottledRequestsInput()
+                    {
+                        BlobContainerSasUri = sasUri,
+                        FromTime = DateTime.UtcNow.AddDays(-10),
+                        ToTime = DateTime.UtcNow.AddDays(-8),
+                        GroupByOperationName = false,
+                        GroupByClientApplicationId = true,
+                        GroupByUserAgent = false,
+                    };
+
+                    result = m_CrpClient.LogAnalytics.ExportThrottledRequests(throttledRequestsInput2, "eastus2");
                 }
                 finally
                 {

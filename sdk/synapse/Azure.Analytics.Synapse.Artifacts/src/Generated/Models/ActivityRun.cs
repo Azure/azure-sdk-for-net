@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Information about an activity run in a pipeline. </summary>
-    public partial class ActivityRun : IReadOnlyDictionary<string, object>
+    public partial class ActivityRun
     {
         /// <summary> Initializes a new instance of ActivityRun. </summary>
         internal ActivityRun()
@@ -35,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="input"> The input for the activity. </param>
         /// <param name="output"> The output for the activity. </param>
         /// <param name="error"> The error if any from the activity run. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         internal ActivityRun(string pipelineName, string pipelineRunId, string activityName, string activityType, string activityRunId, string linkedServiceName, string status, DateTimeOffset? activityRunStart, DateTimeOffset? activityRunEnd, int? durationInMs, object input, object output, object error, IReadOnlyDictionary<string, object> additionalProperties)
         {
             PipelineName = pipelineName;
@@ -80,25 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Output { get; }
         /// <summary> The error if any from the activity run. </summary>
         public object Error { get; }
-        internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
-        public IEnumerable<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
-        int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
-        /// <inheritdoc />
-        public object this[string key]
-        {
-            get => AdditionalProperties[key];
-        }
+        /// <summary> Additional Properties. </summary>
+        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }

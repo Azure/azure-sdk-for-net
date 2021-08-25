@@ -28,6 +28,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// The unique identifier of the submodel.
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// </remarks>
         public string ModelId { get; }
 
         /// <summary>

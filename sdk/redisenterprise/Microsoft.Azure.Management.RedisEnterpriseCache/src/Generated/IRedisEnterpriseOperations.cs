@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// downtime) cache cluster
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Updates an existing RedisEnterprise cluster
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Deletes a RedisEnterprise cache cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Gets information about a RedisEnterprise cluster
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -126,12 +126,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Cluster>> GetMethodWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Cluster>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all RedisEnterprise clusters in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// downtime) cache cluster
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Updates an existing RedisEnterprise cluster
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Deletes a RedisEnterprise cache cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.

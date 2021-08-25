@@ -16,7 +16,7 @@ parameters:
 
 steps:
   - template: install-pipeline-generation.yml
-
+  - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
   # This covers our public repos.
   - ${{ if not(endsWith(parameters.Repository, '-pr'))}}:
     - script: >
@@ -30,7 +30,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention ci
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         ${{parameters.CIConventionOptions}}
@@ -48,7 +48,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention up
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         ${{parameters.UPConventionOptions}}
@@ -66,12 +66,12 @@ steps:
         --repository ${{parameters.Repository}}
         --convention tests
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         ${{parameters.TestsConventionOptions}}
       displayName: Create Live Test pipelines for public repository
-      condition: ne(variables['TestsConventionOptions'],'')
+      condition: ne('${{parameters.TestsConventionOptions}}','')
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
 
@@ -88,7 +88,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention ci
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         --no-schedule
@@ -107,7 +107,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention up
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         --no-schedule
@@ -126,12 +126,12 @@ steps:
         --repository ${{parameters.Repository}}
         --convention tests
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         --no-schedule
         ${{parameters.TestsConventionOptions}}
       displayName: Create Live Test pipelines for private repository
-      condition: ne(variables['TestsConventionOptions'],'')
+      condition: ne('${{parameters.TestsConventionOptions}}','')
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)

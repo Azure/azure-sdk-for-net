@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ArmOperationHelpers<AsyncPageable<BastionActiveSession>> _operation;
         private readonly Func<string, Task<Response>> _nextPageFunc;
+
+        /// <summary> Initializes a new instance of NetworkManagementGetActiveSessionsOperation for mocking. </summary>
+        protected NetworkManagementGetActiveSessionsOperation()
+        {
+        }
+
         internal NetworkManagementGetActiveSessionsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, Func<string, Task<Response>> nextPageFunc)
         {
             _operation = new ArmOperationHelpers<AsyncPageable<BastionActiveSession>>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkManagementGetActiveSessionsOperation");

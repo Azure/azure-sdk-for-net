@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BastionSessionDeleteResult
+    internal partial class BastionSessionDeleteResult
     {
         internal static BastionSessionDeleteResult DeserializeBastionSessionDeleteResult(JsonElement element)
         {

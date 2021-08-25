@@ -67,5 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public SearchResourceCounter StorageSizeCounter { get; }
         /// <summary> Total number of synonym maps. </summary>
         public SearchResourceCounter SynonymMapCounter { get; }
+        /// <summary> Total number of skillsets. </summary>
+        public SearchResourceCounter SkillsetCounter { get; }
     }
 }

@@ -16,15 +16,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
     internal class QueueTriggerExecutor : ITriggerExecutor<QueueMessage>
     {
         private readonly ITriggeredFunctionExecutor _innerExecutor;
+        private readonly QueueCausalityManager _queueCausalityManager;
 
-        public QueueTriggerExecutor(ITriggeredFunctionExecutor innerExecutor)
+        public QueueTriggerExecutor(ITriggeredFunctionExecutor innerExecutor, QueueCausalityManager queueCausalityManager)
         {
             _innerExecutor = innerExecutor;
+            _queueCausalityManager = queueCausalityManager;
         }
 
         public async Task<FunctionResult> ExecuteAsync(QueueMessage value, CancellationToken cancellationToken)
         {
-            Guid? parentId = QueueCausalityManager.GetOwner(value);
+            Guid? parentId = _queueCausalityManager.GetOwner(value);
             TriggeredFunctionData input = new TriggeredFunctionData
             {
                 ParentId = parentId,

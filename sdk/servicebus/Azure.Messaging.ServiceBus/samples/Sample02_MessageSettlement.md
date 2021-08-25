@@ -14,7 +14,7 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
+ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);
@@ -72,4 +72,4 @@ ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
 
 To see the full example source, see:
 
-* [Sample02_MessageSettlement.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample02_MessageSettlement.cs)
+* [Sample02_MessageSettlement.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample02_MessageSettlement.cs)

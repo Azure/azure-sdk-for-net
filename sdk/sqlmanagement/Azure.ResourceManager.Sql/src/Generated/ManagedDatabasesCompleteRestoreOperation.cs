@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedDatabasesCompleteRestoreOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of ManagedDatabasesCompleteRestoreOperation for mocking. </summary>
+        protected ManagedDatabasesCompleteRestoreOperation()
+        {
+        }
+
         internal ManagedDatabasesCompleteRestoreOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedDatabasesCompleteRestoreOperation");

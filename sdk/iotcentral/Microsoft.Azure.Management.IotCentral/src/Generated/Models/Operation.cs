@@ -33,10 +33,16 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// write | action | delete}</param>
         /// <param name="display">The object that represents the
         /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="origin">The intended executor of the
+        /// operation.</param>
+        /// <param name="properties">Additional descriptions for the
+        /// operation.</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), object properties = default(object))
         {
             Name = name;
             Display = display;
+            Origin = origin;
+            Properties = properties;
             CustomInit();
         }
 
@@ -57,6 +63,18 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets the intended executor of the operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; private set; }
+
+        /// <summary>
+        /// Gets additional descriptions for the operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public object Properties { get; private set; }
 
     }
 }

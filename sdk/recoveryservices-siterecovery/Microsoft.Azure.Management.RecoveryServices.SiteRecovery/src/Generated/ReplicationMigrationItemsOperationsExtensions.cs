@@ -37,9 +37,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='protectionContainerName'>
             /// Protection container name.
             /// </param>
-            public static IPage<MigrationItem> ListByReplicationProtectionContainers(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName)
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='skipToken'>
+            /// The pagination token.
+            /// </param>
+            /// <param name='takeToken'>
+            /// The page size.
+            /// </param>
+            public static IPage<MigrationItem> ListByReplicationProtectionContainers(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, ODataQuery<MigrationItemsQueryParameter> odataQuery = default(ODataQuery<MigrationItemsQueryParameter>), string skipToken = default(string), string takeToken = default(string))
             {
-                return operations.ListByReplicationProtectionContainersAsync(fabricName, protectionContainerName).GetAwaiter().GetResult();
+                return operations.ListByReplicationProtectionContainersAsync(fabricName, protectionContainerName, odataQuery, skipToken, takeToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -57,12 +66,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='protectionContainerName'>
             /// Protection container name.
             /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='skipToken'>
+            /// The pagination token.
+            /// </param>
+            /// <param name='takeToken'>
+            /// The page size.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<MigrationItem>> ListByReplicationProtectionContainersAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<MigrationItem>> ListByReplicationProtectionContainersAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, ODataQuery<MigrationItemsQueryParameter> odataQuery = default(ODataQuery<MigrationItemsQueryParameter>), string skipToken = default(string), string takeToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByReplicationProtectionContainersWithHttpMessagesAsync(fabricName, protectionContainerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByReplicationProtectionContainersWithHttpMessagesAsync(fabricName, protectionContainerName, odataQuery, skipToken, takeToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -529,9 +547,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='skipToken'>
             /// The pagination token.
             /// </param>
-            public static IPage<MigrationItem> List(this IReplicationMigrationItemsOperations operations, ODataQuery<MigrationItemsQueryParameter> odataQuery = default(ODataQuery<MigrationItemsQueryParameter>), string skipToken = default(string))
+            /// <param name='takeToken'>
+            /// The page size.
+            /// </param>
+            public static IPage<MigrationItem> List(this IReplicationMigrationItemsOperations operations, ODataQuery<MigrationItemsQueryParameter> odataQuery = default(ODataQuery<MigrationItemsQueryParameter>), string skipToken = default(string), string takeToken = default(string))
             {
-                return operations.ListAsync(odataQuery, skipToken).GetAwaiter().GetResult();
+                return operations.ListAsync(odataQuery, skipToken, takeToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -546,12 +567,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='skipToken'>
             /// The pagination token.
             /// </param>
+            /// <param name='takeToken'>
+            /// The page size.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<MigrationItem>> ListAsync(this IReplicationMigrationItemsOperations operations, ODataQuery<MigrationItemsQueryParameter> odataQuery = default(ODataQuery<MigrationItemsQueryParameter>), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<MigrationItem>> ListAsync(this IReplicationMigrationItemsOperations operations, ODataQuery<MigrationItemsQueryParameter> odataQuery = default(ODataQuery<MigrationItemsQueryParameter>), string skipToken = default(string), string takeToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, skipToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, skipToken, takeToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal static class ApplicationArtifactTypeExtensions
+    internal static partial class ApplicationArtifactTypeExtensions
     {
         public static string ToSerialString(this ApplicationArtifactType value) => value switch
         {

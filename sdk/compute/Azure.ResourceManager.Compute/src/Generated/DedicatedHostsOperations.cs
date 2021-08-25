@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Compute
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal DedicatedHostsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of DedicatedHostsOperations for mocking. </summary>
         protected DedicatedHostsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of DedicatedHostsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

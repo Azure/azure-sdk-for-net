@@ -8,24 +8,20 @@ namespace Azure.Identity
     /// </summary>
     public class ClientCertificateCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
-
         /// <summary>
-        /// If set to true the credential will store tokens in a cache persisted to the machine, protected to the current user, which can be shared by other credentials and processes.
+        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If not options are specified, the token cache will not be persisted.
         /// </summary>
-        internal bool EnablePersistentCache { get; set; }
-
-        /// <summary>
-        /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
-        /// </summary>
-        internal bool AllowUnencryptedCache { get; set; }
+        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
 
         /// <summary>
         /// Will include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the <see cref="ClientCertificateCredential"/>.
         /// </summary>
         public bool SendCertificateChain { get; set; }
 
-        bool ITokenCacheOptions.EnablePersistentCache => EnablePersistentCache;
-
-        bool ITokenCacheOptions.AllowUnencryptedCache => AllowUnencryptedCache;
+        /// <summary>
+        /// Specifies either the specific <see cref="RegionalAuthority"/> (preferred), or use <see cref="RegionalAuthority.AutoDiscoverRegion"/> to attempt to auto-detect the region.
+        /// If not specified or auto-detection fails the non-regional endpoint will be used.
+        /// </summary>
+        public RegionalAuthority? RegionalAuthority { get; set; } = Azure.Identity.RegionalAuthority.FromEnvironment();
     }
 }

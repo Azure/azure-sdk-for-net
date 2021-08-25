@@ -23,7 +23,7 @@ namespace Azure.Identity.Tests
         private static readonly Lazy<Action> s_clearAuthorityEndpointResolutionManager = new Lazy<Action>(() =>
         {
             var assembly = typeof(PublicClientApplication).Assembly;
-            Type authorityEndpointResolutionManagerType = assembly.GetType("Microsoft.Identity.Client.Instance.AuthorityEndpointResolutionManager", true);
+            Type authorityEndpointResolutionManagerType = assembly.GetType("Microsoft.Identity.Client.Instance.AuthorityResolutionManager", true);
             Type iServiceBundleType = assembly.GetType("Microsoft.Identity.Client.Internal.IServiceBundle", true);
             Type booleanType = typeof(bool);
 
@@ -31,9 +31,9 @@ namespace Azure.Identity.Tests
             foreach (ConstructorInfo constructor in constructors)
             {
                 var parameters = constructor.GetParameters();
-                if (parameters.Length == 2 && parameters[0].ParameterType == iServiceBundleType && parameters[1].ParameterType == booleanType)
+                if (parameters.Length == 1 && parameters[0].ParameterType == booleanType)
                 {
-                    NewExpression callConstructor = Expression.New(constructor, Expression.Constant(null, iServiceBundleType), Expression.Constant(true, booleanType));
+                    NewExpression callConstructor = Expression.New(constructor, Expression.Constant(true, booleanType));
                     return Expression.Lambda<Action>(callConstructor).Compile();
                 }
             }

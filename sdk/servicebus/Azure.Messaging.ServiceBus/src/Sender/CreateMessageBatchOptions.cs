@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
-
     /// <summary>
     ///   The set of options that can be specified to influence the way in which an service bus message batch
     ///   behaves and is sent to the Queue/Topic.
@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus
     public class CreateMessageBatchOptions
     {
         /// <summary>The requested maximum size to allow for the batch, in bytes.</summary>
-        private long? _maxSizeInBytes = null;
+        private long? _maxSizeInBytes;
 
         /// <summary>
         ///   The maximum size to allow for a single batch of messages, in bytes.
@@ -25,7 +25,9 @@ namespace Azure.Messaging.ServiceBus
         ///   The desired limit, in bytes, for the size of the associated service bus message batch.  If <c>null</c>,
         ///   the maximum size allowed by the active transport will be used.
         /// </value>
-        ///
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A negative value is attempted to be set for the property.
+        /// </exception>
         public long? MaxSizeInBytes
         {
             get => _maxSizeInBytes;

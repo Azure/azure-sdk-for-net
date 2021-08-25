@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class FirewallPolicyRuleGroupsCreateOrUpdateOperation : Operation<FirewallPolicyRuleGroup>, IOperationSource<FirewallPolicyRuleGroup>
     {
         private readonly ArmOperationHelpers<FirewallPolicyRuleGroup> _operation;
+
+        /// <summary> Initializes a new instance of FirewallPolicyRuleGroupsCreateOrUpdateOperation for mocking. </summary>
+        protected FirewallPolicyRuleGroupsCreateOrUpdateOperation()
+        {
+        }
+
         internal FirewallPolicyRuleGroupsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<FirewallPolicyRuleGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "FirewallPolicyRuleGroupsCreateOrUpdateOperation");

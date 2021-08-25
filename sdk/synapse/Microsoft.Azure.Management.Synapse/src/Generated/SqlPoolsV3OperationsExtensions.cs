@@ -215,6 +215,92 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
+            /// Deactivates the SqlPool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// The name of the sql pool.
+            /// </param>
+            public static void Deactivate(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
+            {
+                operations.DeactivateAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deactivates the SqlPool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// The name of the sql pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeactivateAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeactivateWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Activates the SqlPool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// The name of the sql pool.
+            /// </param>
+            public static void Activate(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
+            {
+                operations.ActivateAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Activates the SqlPool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// The name of the sql pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ActivateAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ActivateWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets a list of sql pools.
             /// </summary>
             /// <param name='operations'>
@@ -399,6 +485,92 @@ namespace Microsoft.Azure.Management.Synapse
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Deactivates the SqlPool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// The name of the sql pool.
+            /// </param>
+            public static void BeginDeactivate(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
+            {
+                operations.BeginDeactivateAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deactivates the SqlPool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// The name of the sql pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeactivateAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeactivateWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Activates the SqlPool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// The name of the sql pool.
+            /// </param>
+            public static void BeginActivate(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
+            {
+                operations.BeginActivateAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Activates the SqlPool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// The name of the sql pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginActivateAsync(this ISqlPoolsV3Operations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginActivateWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

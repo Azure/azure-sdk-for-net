@@ -48,14 +48,9 @@ namespace IotHub.Tests.Helpers
         {
             counter++;
             // Save request
-            if (request.Content == null)
-            {
-                Request = string.Empty;
-            }
-            else
-            {
-                Request = await request.Content.ReadAsStringAsync();
-            }
+            Request = request.Content == null
+                ? string.Empty
+                : await request.Content.ReadAsStringAsync();
             RequestHeaders = request.Headers;
             if (request.Content != null)
             {
@@ -69,22 +64,23 @@ namespace IotHub.Tests.Helpers
             {
                 return await base.SendAsync(request, cancellationToken);
             }
-            else
+
+            if (_response != null && counter == 1)
             {
-                if (_response != null && counter == 1)
-                {
-                    return _response;
-                }
-                else
-                {
-                    var statusCode = StatusCodeToReturn;
-                    if (counter > 1)
-                        statusCode = SubsequentStatusCodeToReturn;
-                    HttpResponseMessage response = new HttpResponseMessage(statusCode);
-                    response.Content = new StringContent("");
-                    return response;
-                }
+                return _response;
             }
+
+            var statusCode = StatusCodeToReturn;
+            if (counter > 1)
+            {
+                statusCode = SubsequentStatusCodeToReturn;
+            }
+
+            var response = new HttpResponseMessage(statusCode)
+            {
+                Content = new StringContent(""),
+            };
+            return response;
         }
     }
 }

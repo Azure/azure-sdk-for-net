@@ -16,9 +16,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
     using System.Linq;
 
     /// <summary>
+    /// Resource
+    /// </summary>
+    /// <remarks>
     /// Common fields that are returned in the response for all Azure Resource
     /// Manager resources
-    /// </summary>
+    /// </remarks>
     public partial class Resource : IResource
     {
         /// <summary>

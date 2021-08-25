@@ -44,14 +44,23 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// objective name of the sql pool.</param>
         /// <param name="requestedServiceObjectiveName">The requested service
         /// level objective name of the sql pool.</param>
+        /// <param name="maxServiceObjectiveName">The max service level
+        /// objective name of the sql pool.</param>
+        /// <param name="autoPauseTimer">The period of inactivity in minutes
+        /// before automatically pausing the sql pool.</param>
+        /// <param name="autoResume">Indicates whether the sql pool can
+        /// automatically resume when connection attempts are made.</param>
         /// <param name="tags">Resource tags.</param>
-        public SqlPoolUpdate(Sku sku = default(Sku), string status = default(string), System.Guid? sqlPoolGuid = default(System.Guid?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public SqlPoolUpdate(SkuV3 sku = default(SkuV3), string status = default(string), System.Guid? sqlPoolGuid = default(System.Guid?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string maxServiceObjectiveName = default(string), int? autoPauseTimer = default(int?), bool? autoResume = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             Status = status;
             SqlPoolGuid = sqlPoolGuid;
             CurrentServiceObjectiveName = currentServiceObjectiveName;
             RequestedServiceObjectiveName = requestedServiceObjectiveName;
+            MaxServiceObjectiveName = maxServiceObjectiveName;
+            AutoPauseTimer = autoPauseTimer;
+            AutoResume = autoResume;
             Tags = tags;
             CustomInit();
         }
@@ -65,7 +74,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// Gets or sets the name and tier of the SKU.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; set; }
+        public SkuV3 Sku { get; set; }
 
         /// <summary>
         /// Gets the status of the sql pool. Possible values include:
@@ -93,6 +102,26 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestedServiceObjectiveName")]
         public string RequestedServiceObjectiveName { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the max service level objective name of the sql pool.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxServiceObjectiveName")]
+        public string MaxServiceObjectiveName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the period of inactivity in minutes before
+        /// automatically pausing the sql pool.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoPauseTimer")]
+        public int? AutoPauseTimer { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the sql pool can automatically
+        /// resume when connection attempts are made.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoResume")]
+        public bool? AutoResume { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

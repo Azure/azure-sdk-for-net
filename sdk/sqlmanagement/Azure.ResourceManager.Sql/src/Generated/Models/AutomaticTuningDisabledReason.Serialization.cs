@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class AutomaticTuningDisabledReasonExtensions
+    internal static partial class AutomaticTuningDisabledReasonExtensions
     {
         public static string ToSerialString(this AutomaticTuningDisabledReason value) => value switch
         {

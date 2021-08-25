@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> Client options for Sql. </summary>
-    public class SqlManagementClientOptions : ClientOptions
+    public partial class SqlManagementClientOptions : ClientOptions
     {
     }
 }

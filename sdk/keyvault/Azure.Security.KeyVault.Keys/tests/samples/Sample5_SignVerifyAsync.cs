@@ -13,7 +13,6 @@ using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
-
     /// <summary>
     /// Sample demonstrates how to sign data with both a RSA key and an EC key using the synchronous methods of the CryptographyClient.
     /// </summary>

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NatGatewaysCreateOrUpdateOperation : Operation<NatGateway>, IOperationSource<NatGateway>
     {
         private readonly ArmOperationHelpers<NatGateway> _operation;
+
+        /// <summary> Initializes a new instance of NatGatewaysCreateOrUpdateOperation for mocking. </summary>
+        protected NatGatewaysCreateOrUpdateOperation()
+        {
+        }
+
         internal NatGatewaysCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<NatGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "NatGatewaysCreateOrUpdateOperation");

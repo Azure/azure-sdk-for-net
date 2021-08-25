@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// Initializes a new instance of the Update class.
         /// </summary>
         /// <param name="maintenanceScope">The impact area. Possible values
-        /// include: 'All', 'Host', 'Resource', 'InResource', 'OSImage',
-        /// 'Extension', 'InGuestPatch', 'SQLDB', 'SQLManagedInstance'</param>
+        /// include: 'Host', 'OSImage', 'Extension', 'InGuestPatch', 'SQLDB',
+        /// 'SQLManagedInstance'</param>
         /// <param name="impactType">The impact type. Possible values include:
         /// 'None', 'Freeze', 'Restart', 'Redeploy'</param>
         /// <param name="status">The status. Possible values include:
@@ -62,9 +62,9 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the impact area. Possible values include: 'All',
-        /// 'Host', 'Resource', 'InResource', 'OSImage', 'Extension',
-        /// 'InGuestPatch', 'SQLDB', 'SQLManagedInstance'
+        /// Gets or sets the impact area. Possible values include: 'Host',
+        /// 'OSImage', 'Extension', 'InGuestPatch', 'SQLDB',
+        /// 'SQLManagedInstance'
         /// </summary>
         [JsonProperty(PropertyName = "maintenanceScope")]
         public string MaintenanceScope { get; set; }

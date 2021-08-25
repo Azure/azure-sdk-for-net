@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of sync agent linked databases. </summary>
-    public partial class SyncAgentLinkedDatabaseListResult
+    internal partial class SyncAgentLinkedDatabaseListResult
     {
         /// <summary> Initializes a new instance of SyncAgentLinkedDatabaseListResult. </summary>
         internal SyncAgentLinkedDatabaseListResult()

@@ -27,12 +27,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             ParameterInfo[] arrayParam = methodbase.GetParameters();
 
             ITriggerBinding binding = new EventGridTriggerBinding(arrayParam[0], null, singleDispatch: true);
-            JObject eve = JObject.Parse(FakeData.eventGridEvent);
+            JObject eve = JObject.Parse(FakeData.EventGridEvent);
             JObject data = (JObject)eve["data"];
 
             // Data for batch binding
             ITriggerBinding bindingBatch = new EventGridTriggerBinding(arrayParam[0], null, singleDispatch: false);
-            JArray events = JArray.Parse(FakeData.multipleEventGridEvents);
+            JArray events = JArray.Parse(FakeData.MultipleEventGridEvents);
             IEnumerable<JToken> dataEvents = events.Select(ev => ev["data"]);
 
             // JObject as input
@@ -44,12 +44,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             Assert.AreEqual(dataEvents, triggerDataWithEvents.BindingData["data"]);
 
             // string as input
-            ITriggerData triggerDataWithString = await binding.BindAsync(FakeData.eventGridEvent, null);
+            ITriggerData triggerDataWithString = await binding.BindAsync(FakeData.EventGridEvent, null);
             Assert.AreEqual(data, triggerDataWithString.BindingData["data"]);
 
             // test invalid, batch of events
-            FormatException formatException = Assert.Throws<FormatException>(() => binding.BindAsync(FakeData.eventGridEvents, null));
-            Assert.AreEqual($"Unable to parse {FakeData.eventGridEvents} to {typeof(JObject)}", formatException.Message);
+            FormatException formatException = Assert.Throws<FormatException>(() => binding.BindAsync(FakeData.EventGridEvents, null));
+            Assert.AreEqual($"Unable to parse {FakeData.EventGridEvents} to {typeof(JObject)}", formatException.Message);
 
             // test invalid, random object
             var testObject = new TestClass();

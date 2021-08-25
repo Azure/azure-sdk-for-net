@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    internal static class AggregationTypeExtensions
+    internal static partial class AggregationTypeExtensions
     {
         public static string ToSerialString(this AggregationType value) => value switch
         {

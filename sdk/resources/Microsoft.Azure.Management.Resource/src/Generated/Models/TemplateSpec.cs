@@ -45,13 +45,22 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// createdBy and modifiedBy information.</param>
         /// <param name="description">Template Spec description.</param>
         /// <param name="displayName">Template Spec display name.</param>
+        /// <param name="metadata">The Template Spec metadata. Metadata is an
+        /// open-ended object and is typically a collection of key-value
+        /// pairs.</param>
+        /// <param name="versions">High-level information about the versions
+        /// within this Template Spec. The keys are the version names. Only
+        /// populated if the $expand query parameter is set to
+        /// 'versions'.</param>
         /// <param name="tags">Resource tags.</param>
-        public TemplateSpec(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string description = default(string), string displayName = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public TemplateSpec(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string description = default(string), string displayName = default(string), object metadata = default(object), IDictionary<string, TemplateSpecVersionInfo> versions = default(IDictionary<string, TemplateSpecVersionInfo>), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type, systemData)
         {
             Location = location;
             Description = description;
             DisplayName = displayName;
+            Metadata = metadata;
+            Versions = versions;
             Tags = tags;
             CustomInit();
         }
@@ -80,6 +89,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Template Spec metadata. Metadata is an open-ended
+        /// object and is typically a collection of key-value pairs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.metadata")]
+        public object Metadata { get; set; }
+
+        /// <summary>
+        /// Gets high-level information about the versions within this Template
+        /// Spec. The keys are the version names. Only populated if the $expand
+        /// query parameter is set to 'versions'.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.versions")]
+        public IDictionary<string, TemplateSpecVersionInfo> Versions { get; private set; }
 
         /// <summary>
         /// Gets or sets resource tags.

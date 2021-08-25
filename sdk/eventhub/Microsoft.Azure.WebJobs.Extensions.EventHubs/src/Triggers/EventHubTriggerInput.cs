@@ -2,9 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Consumer;
 using System.Collections.Generic;
 using System.Globalization;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Primitives;
+using Microsoft.Azure.WebJobs.EventHubs.Processor;
 
 namespace Microsoft.Azure.WebJobs.EventHubs
 {
@@ -17,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         internal EventData[] Events { get; set; }
 
-        internal PartitionContext PartitionContext { get; set; }
+        internal EventProcessorHostPartition ProcessorPartition { get; set; }
 
         public bool IsSingleDispatch
         {
@@ -31,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         {
             return new EventHubTriggerInput
             {
-                PartitionContext = null,
+                ProcessorPartition = null,
                 Events = new EventData[]
                 {
                       eventData
@@ -45,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             return new EventHubTriggerInput
             {
                 Events = this.Events,
-                PartitionContext = this.PartitionContext,
+                ProcessorPartition = this.ProcessorPartition,
                 _selector = idx
             };
         }
@@ -55,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             return this.Events[this._selector];
         }
 
-        public Dictionary<string, string> GetTriggerDetails(PartitionContext context)
+        public Dictionary<string, string> GetTriggerDetails(EventProcessorPartition context)
         {
             if (Events.Length == 0)
             {

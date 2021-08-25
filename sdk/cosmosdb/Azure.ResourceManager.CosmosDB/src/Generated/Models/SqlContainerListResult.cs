@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the containers and their properties. </summary>
-    public partial class SqlContainerListResult
+    internal partial class SqlContainerListResult
     {
         /// <summary> Initializes a new instance of SqlContainerListResult. </summary>
         internal SqlContainerListResult()

@@ -12,9 +12,10 @@ namespace Azure.Data.AppConfiguration
     /// A setting, defined by a unique combination of a key and label.
     /// </summary>
     [JsonConverter(typeof(ConfigurationSettingJsonConverter))]
-    public sealed class ConfigurationSetting
+    public class ConfigurationSetting
     {
         private IDictionary<string, string> _tags;
+        private string _value;
 
         internal ConfigurationSetting()
         {
@@ -26,14 +27,25 @@ namespace Azure.Data.AppConfiguration
         /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
-        public ConfigurationSetting(string key, string value, string label = null)
+        public ConfigurationSetting(string key, string value, string label = null): this(key, value, label, default)
+        {
+        }
+
+        /// <summary>
+        /// Creates a configuration setting and sets the values from the passed in parameter to this setting.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="value">The configuration setting's value.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="etag">The ETag value for the configuration setting.</param>
+        public ConfigurationSetting(string key, string value, string label, ETag etag)
         {
             Key = key;
             Value = value;
             Label = label;
+            ETag = etag;
         }
 
-        #region Snippet:SettingProperties
         /// <summary>
         /// The primary identifier of the configuration setting.
         /// A <see cref="Key"/> is used together with a <see cref="Label"/> to uniquely identify a configuration setting.
@@ -49,7 +61,21 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// The configuration setting's value.
         /// </summary>
-        public string Value { get; set; }
+        public string Value
+        {
+            get => GetValue();
+            set => SetValue(value);
+        }
+
+        internal virtual string GetValue()
+        {
+            return _value;
+        }
+
+        internal virtual void SetValue(string value)
+        {
+            _value = value;
+        }
 
         /// <summary>
         /// The content type of the configuration setting's value.
@@ -78,7 +104,6 @@ namespace Azure.Data.AppConfiguration
         /// These can be used to indicate how a configuration setting may be applied.
         /// </summary>
         public IDictionary<string, string> Tags
-        #endregion Setting:Properties
         {
             get => _tags ?? (_tags = new Dictionary<string, string>());
             internal set => _tags = value;

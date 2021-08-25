@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.ChangeFeed
@@ -20,7 +21,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         internal BlobChangeFeedEventData(Dictionary<string, object> record)
         {
             BlobOperationName = new BlobOperationName((string)record[Constants.ChangeFeed.EventData.Api]);
-            ClientRequestId = Guid.Parse((string)record[Constants.ChangeFeed.EventData.ClientRequestId]);
+            ClientRequestId = (string)record[Constants.ChangeFeed.EventData.ClientRequestId];
             RequestId = Guid.Parse((string)record[Constants.ChangeFeed.EventData.RequestId]);
             ETag = new ETag((string)record[Constants.ChangeFeed.EventData.Etag]);
             ContentType = (string)record[Constants.ChangeFeed.EventData.ContentType];
@@ -55,7 +56,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// diagnostic logs using the "client-request-id" field in the logs, and can be provided in client requests using
         /// the "x-ms-client-request-id" header.
         /// </summary>
-        public Guid ClientRequestId { get; internal set; }
+        public string ClientRequestId { get; internal set; }
 
         /// <summary>
         /// Service-generated request id for the storage API operation. Can be used to correlate to Azure Storage diagnostic

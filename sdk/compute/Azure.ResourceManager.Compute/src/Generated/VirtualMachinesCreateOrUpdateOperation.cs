@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachinesCreateOrUpdateOperation : Operation<VirtualMachine>, IOperationSource<VirtualMachine>
     {
         private readonly ArmOperationHelpers<VirtualMachine> _operation;
+
+        /// <summary> Initializes a new instance of VirtualMachinesCreateOrUpdateOperation for mocking. </summary>
+        protected VirtualMachinesCreateOrUpdateOperation()
+        {
+        }
+
         internal VirtualMachinesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VirtualMachine>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachinesCreateOrUpdateOperation");

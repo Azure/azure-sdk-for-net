@@ -19,6 +19,11 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareAccessTier? AccessTier { get; set; }
 
         /// <summary>
+        /// Optional, valid for NFS shares only.
+        /// </summary>
+        public ShareRootSquash? RootSquash { get; set; }
+
+        /// <summary>
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on setting the share's properties.
         /// </summary>

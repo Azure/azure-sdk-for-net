@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Compute
     public partial class DisksCreateOrUpdateOperation : Operation<Disk>, IOperationSource<Disk>
     {
         private readonly ArmOperationHelpers<Disk> _operation;
+
+        /// <summary> Initializes a new instance of DisksCreateOrUpdateOperation for mocking. </summary>
+        protected DisksCreateOrUpdateOperation()
+        {
+        }
+
         internal DisksCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Disk>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DisksCreateOrUpdateOperation");

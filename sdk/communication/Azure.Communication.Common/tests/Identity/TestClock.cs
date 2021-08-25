@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using IScheduledAction = Azure.Communication.Identity.ThreadSafeRefreshableAccessTokenCache.IScheduledAction;
+using IScheduledAction = Azure.Communication.ThreadSafeRefreshableAccessTokenCache.IScheduledAction;
 
 namespace Azure.Communication.Identity
 {

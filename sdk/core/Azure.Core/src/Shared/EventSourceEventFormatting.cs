@@ -8,13 +8,15 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
+#nullable enable
+
 namespace Azure.Core.Shared
 {
     internal static class EventSourceEventFormatting
     {
         public static string Format(EventWrittenEventArgs eventData)
         {
-            var payloadArray = eventData.Payload.ToArray();
+            var payloadArray = eventData.Payload?.ToArray() ?? Array.Empty<object?>();
 
             ProcessPayloadArray(payloadArray);
 
@@ -38,16 +40,19 @@ namespace Azure.Core.Shared
                 stringBuilder.Append(nameof(eventData.Message)).Append(" = ").Append(eventData.Message);
             }
 
-            for (int i = 0; i < eventData.PayloadNames.Count; i++)
+            if (eventData.PayloadNames != null)
             {
-                stringBuilder.AppendLine();
-                stringBuilder.Append(eventData.PayloadNames[i]).Append(" = ").Append(payloadArray[i]);
+                for (int i = 0; i < eventData.PayloadNames.Count; i++)
+                {
+                    stringBuilder.AppendLine();
+                    stringBuilder.Append(eventData.PayloadNames[i]).Append(" = ").Append(payloadArray[i]);
+                }
             }
 
             return stringBuilder.ToString();
         }
 
-        private static void ProcessPayloadArray(object[] payloadArray)
+        private static void ProcessPayloadArray(object?[] payloadArray)
         {
             for (int i = 0; i < payloadArray.Length; i++)
             {
@@ -55,7 +60,7 @@ namespace Azure.Core.Shared
             }
         }
 
-        private static object FormatValue(object o)
+        private static object? FormatValue(object? o)
         {
             if (o is byte[] bytes)
             {

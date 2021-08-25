@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class DatabaseAccountsFailoverPriorityChangeOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of DatabaseAccountsFailoverPriorityChangeOperation for mocking. </summary>
+        protected DatabaseAccountsFailoverPriorityChangeOperation()
+        {
+        }
+
         internal DatabaseAccountsFailoverPriorityChangeOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatabaseAccountsFailoverPriorityChangeOperation");

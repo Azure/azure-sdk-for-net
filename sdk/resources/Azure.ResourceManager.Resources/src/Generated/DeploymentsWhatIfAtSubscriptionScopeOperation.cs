@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Resources
     public partial class DeploymentsWhatIfAtSubscriptionScopeOperation : Operation<WhatIfOperationResult>, IOperationSource<WhatIfOperationResult>
     {
         private readonly ArmOperationHelpers<WhatIfOperationResult> _operation;
+
+        /// <summary> Initializes a new instance of DeploymentsWhatIfAtSubscriptionScopeOperation for mocking. </summary>
+        protected DeploymentsWhatIfAtSubscriptionScopeOperation()
+        {
+        }
+
         internal DeploymentsWhatIfAtSubscriptionScopeOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<WhatIfOperationResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsWhatIfAtSubscriptionScopeOperation");

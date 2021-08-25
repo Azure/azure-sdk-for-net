@@ -15,42 +15,36 @@ namespace Azure.Storage.Files.Shares.Models
     public class ShareDirectoryProperties
     {
         /// <summary>
-        /// The internal RawStorageDirectoryProperties
-        /// </summary>
-        internal RawStorageDirectoryProperties _rawStorageDirectoryProperties;
-
-        /// <summary>
         /// A set of name-value pairs that contain metadata for the directory.
         /// </summary>
-        public IDictionary<string, string> Metadata => _rawStorageDirectoryProperties.Metadata;
+        public IDictionary<string, string> Metadata { get; internal set; }
 
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
         /// </summary>
-        public ETag ETag => _rawStorageDirectoryProperties.ETag;
+        public ETag ETag { get; internal set; }
 
         /// <summary>
         /// Returns DateTimeOffest the directory was last modified. Operations on files within the directory
         /// do not affect the last modified time of the directory.
         /// </summary>
-        public DateTimeOffset LastModified => _rawStorageDirectoryProperties.LastModified;
+        public DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
         /// Set to true if the directory metadata is completely encrypted using the specified algorithm.
         /// Otherwise, the value is set to false.
         /// </summary>
-        public bool IsServerEncrypted => _rawStorageDirectoryProperties.IsServerEncrypted;
+        public bool IsServerEncrypted { get; internal set; }
 
         /// <summary>
         /// The SMB properties for the directory.
         /// </summary>
         public FileSmbProperties SmbProperties { get; set; }
 
-        internal ShareDirectoryProperties(RawStorageDirectoryProperties rawStorageDirectoryProperties)
-        {
-            _rawStorageDirectoryProperties = rawStorageDirectoryProperties;
-            SmbProperties = new FileSmbProperties(rawStorageDirectoryProperties);
-        }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        internal ShareDirectoryProperties() { }
     }
 
     /// <summary>
@@ -66,6 +60,7 @@ namespace Azure.Storage.Files.Shares.Models
                 ETag eTag,
                 DateTimeOffset lastModified,
                 bool isServerEncrypted,
+#pragma warning disable CA1801 // Review unused parameters
                 string fileAttributes,
                 DateTimeOffset fileCreationTime,
                 DateTimeOffset fileLastWriteTime,
@@ -73,20 +68,24 @@ namespace Azure.Storage.Files.Shares.Models
                 string filePermissionKey,
                 string fileId,
                 string fileParentId
+#pragma warning restore CA1801 // Review unused parameters
             )
-            => new ShareDirectoryProperties(new RawStorageDirectoryProperties()
+            => new ShareDirectoryProperties
             {
                 Metadata = metadata,
                 ETag = eTag,
                 LastModified = lastModified,
                 IsServerEncrypted = isServerEncrypted,
-                FileAttributes = fileAttributes,
-                FileCreationTime = fileCreationTime,
-                FileLastWriteTime = fileLastWriteTime,
-                FileChangeTime = fileChangeTime,
-                FilePermissionKey = filePermissionKey,
-                FileId = fileId,
-                FileParentId = fileParentId
-            });
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = ShareExtensions.ToFileAttributes(fileAttributes),
+                    FilePermissionKey = filePermissionKey,
+                    FileCreatedOn = fileCreationTime,
+                    FileLastWrittenOn = fileLastWriteTime,
+                    FileChangedOn = fileChangeTime,
+                    FileId = fileId,
+                    ParentId = fileParentId
+                }
+            };
     }
 }

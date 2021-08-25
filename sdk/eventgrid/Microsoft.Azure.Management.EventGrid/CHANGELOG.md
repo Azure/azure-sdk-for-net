@@ -1,5 +1,22 @@
 # Release History
 
+## 6.2.0 (2021-06)
+- This release corresponds to api-version 2021-06-01-preview which includes the following new features:
+    * Support of AAD authentication for user topics, domains, and partner namespaces.
+    * Private link support for partner namespaces.
+    * IP Filtering for partner namespaces.
+    * System Identity for partner topics.
+    * User Identity for user topics and domains.
+
+## 6.1.0 (2020-10)
+- This release corresponds to api-version 2020-10-15-preview which includes the following new features:
+    * MSI for System Topics
+    * Azure Arc support Topics and Event Subscriptions
+    * Delivery Attributes for Event Subscriptions
+    * Ability to specify a TTL for StorageQueue destinations
+    * New AttributeFiltering Operators for Event Channels
+    * Exposing Source scopes on the TopicType resource
+
 ## 6.0.0 (2020-06)
 - Add support to new GA service API version 2020-06-01.
 - The new GA'ed features include:

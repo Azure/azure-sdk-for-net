@@ -361,7 +361,28 @@ namespace Microsoft.Azure.ContainerRegistry
             {
                 _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(payload, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/vnd.docker.distribution.manifest.v2+json");
+                string mediaType = string.Empty;
+                switch (payload)
+                {
+                    case V2Manifest v2Manifest:
+                         mediaType = v2Manifest.MediaType;
+                        break;
+                    case V1Manifest v1Manifest:
+                        mediaType = v1Manifest.MediaType;
+                        break;
+                    case ManifestList manifestList:
+                        mediaType = manifestList.MediaType;
+                        break;
+                    case OCIManifest ociManifest:
+                        mediaType = ociManifest.MediaType;
+                        break;
+                    case OCIIndex ociIndex:
+                        mediaType = ociIndex.MediaType;
+                        break;
+                    default:
+                        throw new AcrErrorsException($"The manifest type is unknown: {payload}.");
+                }
+                _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(mediaType);
             }
             // Set Credentials
             if (Client.Credentials != null)

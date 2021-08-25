@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// of Logging|Metrics|AzureServices (For example, "Logging, Metrics"),
         /// or None to bypass none of those traffics. Possible values include:
         /// 'None', 'Logging', 'Metrics', 'AzureServices'</param>
+        /// <param name="resourceAccessRules">Sets the resource access
+        /// rules</param>
         /// <param name="virtualNetworkRules">Sets the virtual network
         /// rules</param>
         /// <param name="ipRules">Sets the IP ACL rules</param>
@@ -68,6 +70,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string Bypass { get; set; }
 
         /// <summary>
+        /// Gets or sets sets the resource access rules
         /// </summary>
         [JsonProperty(PropertyName = "resourceAccessRules")]
         public IList<ResourceAccessRule> ResourceAccessRules { get; set; }

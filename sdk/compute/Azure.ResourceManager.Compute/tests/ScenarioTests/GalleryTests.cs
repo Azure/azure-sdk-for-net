@@ -451,8 +451,8 @@ namespace Azure.ResourceManager.Compute.Tests
             StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName); // resource group is also created in this method.
             VirtualMachine inputVM = null;
             var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imageRef);
-            VirtualMachine createdVM = returnTwoVM.Item1;
-            inputVM = returnTwoVM.Item2;
+            VirtualMachine createdVM = returnTwoVM.Response;
+            inputVM = returnTwoVM.Input;
             Image imageInput = new Image(m_location)
             {
                 Tags =

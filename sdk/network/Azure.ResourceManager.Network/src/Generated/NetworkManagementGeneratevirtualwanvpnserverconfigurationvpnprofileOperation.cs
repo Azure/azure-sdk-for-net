@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation : Operation<VpnProfileResponse>, IOperationSource<VpnProfileResponse>
     {
         private readonly ArmOperationHelpers<VpnProfileResponse> _operation;
+
+        /// <summary> Initializes a new instance of NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation for mocking. </summary>
+        protected NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation()
+        {
+        }
+
         internal NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VpnProfileResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkManagementGeneratevirtualwanvpnserverconfigurationvpnprofileOperation");

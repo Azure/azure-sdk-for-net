@@ -6,40 +6,30 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics.Models;
+using Azure.AI.TextAnalytics;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasksKeyPhraseExtractionTasksItem. </summary>
-    public partial class KeyPhraseExtractionTasksItem : TaskState
+    internal partial class KeyPhraseExtractionTasksItem : TaskState
     {
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="status"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status) : base(lastUpdateDateTime, name, status)
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
+        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
         }
 
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="status"> . </param>
-        /// <param name="results"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, KeyPhraseResult results) : base(lastUpdateDateTime, name, status)
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="taskName"></param>
+        /// <param name="status"></param>
+        /// <param name="results"></param>
+        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, KeyPhraseResult results) : base(lastUpdateDateTime, taskName, status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
             Results = results;
         }
+
+        public KeyPhraseResult Results { get; }
     }
 }

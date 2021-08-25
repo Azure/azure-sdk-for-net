@@ -21,11 +21,6 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="SecretClient"/> to use for retrieving values.
-        /// </summary>
-        internal SecretClient Client { get; set; }
-
-        /// <summary>
         /// Gets or sets the <see cref="KeyVaultSecretManager"/> instance used to control secret loading.
         /// </summary>
         public KeyVaultSecretManager Manager { get; set; }

@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="type">The type of Azure resource.</param>
         /// <param name="location">The location of the resource group to which
         /// the resource belongs.</param>
-        public TableGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), TableGetPropertiesResource resource = default(TableGetPropertiesResource), TableGetPropertiesOptions options = default(TableGetPropertiesOptions))
-            : base(id, name, type, location, tags, identity)
+        public TableGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), TableGetPropertiesResource resource = default(TableGetPropertiesResource), TableGetPropertiesOptions options = default(TableGetPropertiesOptions))
+            : base(id, name, type, location, tags)
         {
             Resource = resource;
             Options = options;

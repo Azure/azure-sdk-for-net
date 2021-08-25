@@ -20,4 +20,11 @@ namespace Azure.Messaging.EventGrid.Tests
         public string Name { get; set; }
         public int Age { get; set; }
     }
+
+#pragma warning disable SA1402 // File may only contain a single type
+    internal class DerivedTestPayload: TestPayload
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        public int? DerivedProperty { get; set; }
+    }
 }

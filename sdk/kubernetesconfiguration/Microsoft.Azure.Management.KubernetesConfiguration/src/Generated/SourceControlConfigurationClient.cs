@@ -22,8 +22,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
     using System.Net.Http;
 
     /// <summary>
-    /// Use these APIs to create Source Control Configuration resources through
-    /// ARM, for Kubernetes Clusters.
+    /// KubernetesConfiguration Client
     /// </summary>
     public partial class SourceControlConfigurationClient : ServiceClient<SourceControlConfigurationClient>, ISourceControlConfigurationClient, IAzureClient
     {
@@ -54,6 +53,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to be used with the HTTP request.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -80,6 +84,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IExtensionsOperations.
+        /// </summary>
+        public virtual IExtensionsOperations Extensions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SourceControlConfigurationClient class.
@@ -324,7 +333,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         {
             SourceControlConfigurations = new SourceControlConfigurationsOperations(this);
             Operations = new Operations(this);
+            Extensions = new ExtensionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2020-07-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

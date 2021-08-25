@@ -139,12 +139,12 @@ namespace Azure.Data.Tables.Sas
 
             if (parameters.StartsOn != DateTimeOffset.MinValue)
             {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.StartTime, WebUtility.UrlEncode(parameters.StartsOn.ToString(TableConstants.Sas.SasTimeFormat, CultureInfo.InvariantCulture)));
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.StartTime, WebUtility.UrlEncode(parameters.StartsOnString));
             }
 
             if (parameters.ExpiresOn != DateTimeOffset.MinValue)
             {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(parameters.ExpiresOn.ToString(TableConstants.Sas.SasTimeFormat, CultureInfo.InvariantCulture)));
+                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(parameters.ExpiresOnString));
             }
 
             var ipr = parameters.IPRange.ToString();

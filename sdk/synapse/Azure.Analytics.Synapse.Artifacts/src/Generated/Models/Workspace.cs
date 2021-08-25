@@ -50,8 +50,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="extraProperties"> Workspace level configs and feature flags. </param>
         /// <param name="managedVirtualNetworkSettings"> Managed Virtual Network Settings. </param>
         /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>
-        /// <param name="babylonConfiguration"> Babylon Configuration. </param>
-        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, BabylonConfiguration babylonConfiguration) : base(id, name, type, tags, location)
+        /// <param name="purviewConfiguration"> Purview Configuration. </param>
+        /// <param name="adlaResourceId"> The ADLA resource ID. </param>
+        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, string adlaResourceId) : base(id, name, type, tags, location)
         {
             Identity = identity;
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -68,7 +69,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ExtraProperties = extraProperties;
             ManagedVirtualNetworkSettings = managedVirtualNetworkSettings;
             WorkspaceRepositoryConfiguration = workspaceRepositoryConfiguration;
-            BabylonConfiguration = babylonConfiguration;
+            PurviewConfiguration = purviewConfiguration;
+            AdlaResourceId = adlaResourceId;
         }
 
         /// <summary> Identity of the workspace. </summary>
@@ -101,7 +103,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public ManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
         /// <summary> Git integration settings. </summary>
         public WorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get; set; }
-        /// <summary> Babylon Configuration. </summary>
-        public BabylonConfiguration BabylonConfiguration { get; set; }
+        /// <summary> Purview Configuration. </summary>
+        public PurviewConfiguration PurviewConfiguration { get; set; }
+        /// <summary> The ADLA resource ID. </summary>
+        public string AdlaResourceId { get; }
     }
 }

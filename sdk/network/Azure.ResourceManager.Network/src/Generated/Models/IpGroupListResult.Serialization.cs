@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IpGroupListResult
+    internal partial class IpGroupListResult
     {
         internal static IpGroupListResult DeserializeIpGroupListResult(JsonElement element)
         {

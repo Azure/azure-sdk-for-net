@@ -16,8 +16,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Use these APIs to create Source Control Configuration resources through
-    /// ARM, for Kubernetes Clusters.
+    /// KubernetesConfiguration Client
     /// </summary>
     public partial interface ISourceControlConfigurationClient : System.IDisposable
     {
@@ -48,6 +47,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to be used with the HTTP request.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -75,6 +79,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IExtensionsOperations.
+        /// </summary>
+        IExtensionsOperations Extensions { get; }
 
     }
 }

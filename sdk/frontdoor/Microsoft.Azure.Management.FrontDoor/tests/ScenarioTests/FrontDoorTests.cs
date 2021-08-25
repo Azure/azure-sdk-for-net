@@ -497,10 +497,10 @@ namespace FrontDoor.Tests.ScenarioTests
                 {
                     Location = "global",
                     Tags = new Dictionary<string, string>
-                {
-                    {"key1","value1"},
-                    {"key2","value2"}
-                },
+                    {
+                        {"key1","value1"},
+                        {"key2","value2"}
+                    },
                     PolicySettings = new PolicySettings
                     {
                         EnabledState = "Enabled",

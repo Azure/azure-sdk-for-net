@@ -30,7 +30,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
             string expectedResourceId = string.Format(resourceIdFormat, expectedSubId, expectedResourceGroupName, expectedServiceName);
 
             Assert.Equal(expectedResourceId, service.Id);
-            Assert.Equal(expectedLocation, service.Location);
+            Assert.Equal(expectedLocation.ToLowerAndRemoveWhiteSpaces(), service.Location.ToLowerAndRemoveWhiteSpaces());
             Assert.Equal(expectedSkuName, service.Sku.Name, true);
             Assert.Equal(expectedServiceName, service.Name);
             Assert.True(expectedTags.DictionaryEqual(service.Tags));

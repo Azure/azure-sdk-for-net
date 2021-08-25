@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary> Client options for AppConfiguration. </summary>
-    public class AppConfigurationManagementClientOptions : ClientOptions
+    public partial class AppConfigurationManagementClientOptions : ClientOptions
     {
     }
 }

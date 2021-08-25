@@ -33,15 +33,13 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// 'AssignmentPending', 'PreparePending', 'PrepareInProgress',
         /// 'PrepareFailed', 'MovePending', 'MoveInProgress', 'MoveFailed',
         /// 'DiscardInProgress', 'DiscardFailed', 'CommitPending',
-        /// 'CommitInProgress', 'CommitFailed', 'Committed'</param>
-        /// <param name="targetId">Gets the Target ARM Id of the
-        /// resource.</param>
-        public MoveResourceStatus(string moveState = default(string), JobStatus jobStatus = default(JobStatus), MoveResourceError errors = default(MoveResourceError), string targetId = default(string))
+        /// 'CommitInProgress', 'CommitFailed', 'Committed',
+        /// 'DeleteSourcePending', 'ResourceMoveCompleted'</param>
+        public MoveResourceStatus(string moveState = default(string), JobStatus jobStatus = default(JobStatus), MoveResourceError errors = default(MoveResourceError))
         {
             MoveState = moveState;
             JobStatus = jobStatus;
             Errors = errors;
-            TargetId = targetId;
             CustomInit();
         }
 
@@ -55,7 +53,8 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// 'PreparePending', 'PrepareInProgress', 'PrepareFailed',
         /// 'MovePending', 'MoveInProgress', 'MoveFailed', 'DiscardInProgress',
         /// 'DiscardFailed', 'CommitPending', 'CommitInProgress',
-        /// 'CommitFailed', 'Committed'
+        /// 'CommitFailed', 'Committed', 'DeleteSourcePending',
+        /// 'ResourceMoveCompleted'
         /// </summary>
         [JsonProperty(PropertyName = "moveState")]
         public string MoveState { get; set; }
@@ -69,12 +68,6 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         [JsonProperty(PropertyName = "errors")]
         public MoveResourceError Errors { get; set; }
-
-        /// <summary>
-        /// Gets the Target ARM Id of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "targetId")]
-        public string TargetId { get; private set; }
 
     }
 }

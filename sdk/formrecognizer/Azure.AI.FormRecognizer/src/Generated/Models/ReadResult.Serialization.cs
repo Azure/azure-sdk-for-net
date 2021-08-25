@@ -20,7 +20,6 @@ namespace Azure.AI.FormRecognizer.Models
             float width = default;
             float height = default;
             LengthUnit unit = default;
-            Optional<Language> language = default;
             Optional<IReadOnlyList<TextLine>> lines = default;
             Optional<IReadOnlyList<SelectionMark>> selectionMarks = default;
             foreach (var property in element.EnumerateObject())
@@ -50,16 +49,6 @@ namespace Azure.AI.FormRecognizer.Models
                     unit = property.Value.GetString().ToLengthUnit();
                     continue;
                 }
-                if (property.NameEquals("language"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    language = new Language(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("lines"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -79,7 +68,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        selectionMarks = null;
                         continue;
                     }
                     List<SelectionMark> array = new List<SelectionMark>();
@@ -91,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new ReadResult(page, angle, width, height, unit, Optional.ToNullable(language), Optional.ToList(lines), Optional.ToList(selectionMarks));
+            return new ReadResult(page, angle, width, height, unit, Optional.ToList(lines), Optional.ToList(selectionMarks));
         }
     }
 }

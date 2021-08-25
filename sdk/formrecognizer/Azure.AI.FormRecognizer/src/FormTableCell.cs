@@ -89,7 +89,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// When 'IncludeFieldElements' is set to <c>true</c>, a list of references to
-        /// the field elements constituting this cell is returned. An empty list otherwise. For calls to recognize content, this
+        /// the field elements constituting this cell is returned. An empty list otherwise. For calls to Recognize Content, this
         /// list is always populated.
         /// </summary>
         public IReadOnlyList<FormElement> FieldElements { get; }

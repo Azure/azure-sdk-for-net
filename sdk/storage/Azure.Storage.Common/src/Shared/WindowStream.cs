@@ -116,7 +116,7 @@ namespace Azure.Storage.Shared
         /// </summary>
         private class UnseekableWindowStream : WindowStream
         {
-            private long _position = 0;
+            private long _position;
 
             private long MaxLength { get; }
 

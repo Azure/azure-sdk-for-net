@@ -248,12 +248,6 @@ namespace Azure.ResourceManager.Insights.Models
     {
         public Action() { }
     }
-    public partial class ActionGroupList
-    {
-        internal ActionGroupList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.ActionGroupResource> Value { get { throw null; } }
-    }
     public partial class ActionGroupPatchBody
     {
         public ActionGroupPatchBody() { }
@@ -298,12 +292,6 @@ namespace Azure.ResourceManager.Insights.Models
         public string EqualsValue { get { throw null; } set { } }
         public string Field { get { throw null; } set { } }
     }
-    public partial class ActivityLogAlertList
-    {
-        internal ActivityLogAlertList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.ActivityLogAlertResource> Value { get { throw null; } }
-    }
     public partial class ActivityLogAlertPatchBody
     {
         public ActivityLogAlertPatchBody() { }
@@ -345,11 +333,6 @@ namespace Azure.ResourceManager.Insights.Models
         public bool IsEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? LastUpdatedTime { get { throw null; } }
         public string NamePropertiesName { get { throw null; } set { } }
-    }
-    public partial class AlertRuleResourceCollection
-    {
-        internal AlertRuleResourceCollection() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.AlertRuleResource> Value { get { throw null; } }
     }
     public partial class AlertRuleResourcePatch
     {
@@ -425,12 +408,6 @@ namespace Azure.ResourceManager.Insights.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Insights.Models.AutoscaleNotification> Notifications { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Insights.Models.AutoscaleProfile> Profiles { get { throw null; } }
         public string TargetResourceUri { get { throw null; } set { } }
-    }
-    public partial class AutoscaleSettingResourceCollection
-    {
-        internal AutoscaleSettingResourceCollection() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.AutoscaleSettingResource> Value { get { throw null; } }
     }
     public partial class AutoscaleSettingResourcePatch
     {
@@ -733,11 +710,6 @@ namespace Azure.ResourceManager.Insights.Models
         public EnableRequest(string receiverName) { }
         public string ReceiverName { get { throw null; } }
     }
-    public partial class EventCategoryCollection
-    {
-        internal EventCategoryCollection() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.LocalizableString> Value { get { throw null; } }
-    }
     public partial class EventData
     {
         internal EventData() { }
@@ -766,12 +738,6 @@ namespace Azure.ResourceManager.Insights.Models
         public Azure.ResourceManager.Insights.Models.LocalizableString SubStatus { get { throw null; } }
         public string TenantId { get { throw null; } }
     }
-    public partial class EventDataCollection
-    {
-        internal EventDataCollection() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.EventData> Value { get { throw null; } }
-    }
     public enum EventLevel
     {
         Critical = 0,
@@ -796,11 +762,6 @@ namespace Azure.ResourceManager.Insights.Models
         public string Name { get { throw null; } }
         public System.DateTimeOffset? ResolvedTime { get { throw null; } }
         public string RuleName { get { throw null; } }
-    }
-    public partial class IncidentListResult
-    {
-        internal IncidentListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.Incident> Value { get { throw null; } }
     }
     public partial class ItsmReceiver
     {
@@ -839,11 +800,6 @@ namespace Azure.ResourceManager.Insights.Models
         public double? Threshold { get { throw null; } set { } }
         public Azure.ResourceManager.Insights.Models.ConditionalOperator? ThresholdOperator { get { throw null; } set { } }
     }
-    public partial class LogProfileCollection
-    {
-        internal LogProfileCollection() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.LogProfileResource> Value { get { throw null; } }
-    }
     public partial class LogProfileResource : Azure.ResourceManager.Insights.Models.Resource
     {
         public LogProfileResource(string location, System.Collections.Generic.IEnumerable<string> locations, System.Collections.Generic.IEnumerable<string> categories, Azure.ResourceManager.Insights.Models.RetentionPolicy retentionPolicy) : base (default(string)) { }
@@ -873,11 +829,6 @@ namespace Azure.ResourceManager.Insights.Models
         public Azure.ResourceManager.Insights.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Insights.Models.Schedule Schedule { get { throw null; } set { } }
         public Azure.ResourceManager.Insights.Models.Source Source { get { throw null; } set { } }
-    }
-    public partial class LogSearchRuleResourceCollection
-    {
-        internal LogSearchRuleResourceCollection() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.LogSearchRuleResource> Value { get { throw null; } }
     }
     public partial class LogSearchRuleResourcePatch
     {
@@ -971,11 +922,6 @@ namespace Azure.ResourceManager.Insights.Models
         public string TargetResourceType { get { throw null; } set { } }
         public System.TimeSpan WindowSize { get { throw null; } set { } }
     }
-    public partial class MetricAlertResourceCollection
-    {
-        internal MetricAlertResourceCollection() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.MetricAlertResource> Value { get { throw null; } }
-    }
     public partial class MetricAlertResourcePatch
     {
         public MetricAlertResourcePatch() { }
@@ -1024,11 +970,6 @@ namespace Azure.ResourceManager.Insights.Models
         public System.TimeSpan? Retention { get { throw null; } }
         public System.TimeSpan? TimeGrain { get { throw null; } }
     }
-    public partial class MetricBaselinesResponse
-    {
-        internal MetricBaselinesResponse() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.SingleMetricBaseline> Value { get { throw null; } }
-    }
     public partial class MetricCriteria : Azure.ResourceManager.Insights.Models.MultiMetricCriteria
     {
         public MetricCriteria(string name, string metricName, Azure.ResourceManager.Insights.Models.AggregationType timeAggregation, Azure.ResourceManager.Insights.Models.Operator @operator, double threshold) : base (default(string), default(string), default(Azure.ResourceManager.Insights.Models.AggregationType)) { }
@@ -1049,11 +990,6 @@ namespace Azure.ResourceManager.Insights.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.AggregationType> SupportedAggregationTypes { get { throw null; } }
         public Azure.ResourceManager.Insights.Models.Unit? Unit { get { throw null; } }
     }
-    public partial class MetricDefinitionCollection
-    {
-        internal MetricDefinitionCollection() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.MetricDefinition> Value { get { throw null; } }
-    }
     public partial class MetricDimension
     {
         public MetricDimension(string name, string @operator, System.Collections.Generic.IEnumerable<string> values) { }
@@ -1068,11 +1004,6 @@ namespace Azure.ResourceManager.Insights.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Insights.Models.MetricNamespaceName Properties { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class MetricNamespaceCollection
-    {
-        internal MetricNamespaceCollection() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Insights.Models.MetricNamespace> Value { get { throw null; } }
     }
     public partial class MetricNamespaceName
     {

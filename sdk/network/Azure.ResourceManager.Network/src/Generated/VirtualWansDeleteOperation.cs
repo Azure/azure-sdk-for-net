@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualWansDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of VirtualWansDeleteOperation for mocking. </summary>
+        protected VirtualWansDeleteOperation()
+        {
+        }
+
         internal VirtualWansDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualWansDeleteOperation");

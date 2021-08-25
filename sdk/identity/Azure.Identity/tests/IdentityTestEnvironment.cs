@@ -10,10 +10,6 @@ namespace Azure.Identity.Tests
 {
     public class IdentityTestEnvironment : TestEnvironment
     {
-        public IdentityTestEnvironment() : base("identity")
-        {
-        }
-
         public string IdentityTenantId => GetRecordedVariable("AZURE_IDENTITY_TEST_TENANTID");
         public string Username => GetRecordedVariable("AZURE_IDENTITY_TEST_USERNAME");
         public string Password => GetVariable("AZURE_IDENTITY_TEST_PASSWORD");
@@ -35,6 +31,7 @@ namespace Azure.Identity.Tests
 
         public string TestPassword => GetOptionalVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
         public string TestTenantId => GetRecordedOptionalVariable("TENANT_ID") ?? GetRecordedVariable("AZURE_IDENTITY_TEST_TENANTID");
+        public string KeyvaultScope => GetRecordedOptionalVariable("AZURE_KEYVAULT_SCOPE") ?? "SANITIZED";
 
         public string ServicePrincipalClientId => GetRecordedVariable("IDENTITY_SP_CLIENT_ID");
         public string ServicePrincipalTenantId => GetRecordedVariable("IDENTITY_SP_TENANT_ID");

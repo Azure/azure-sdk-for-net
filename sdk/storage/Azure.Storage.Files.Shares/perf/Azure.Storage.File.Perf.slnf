@@ -1,0 +1,13 @@
+{
+  "solution": {
+    "path": "..\\..\\Azure.Storage.sln",
+    "projects": [
+      "..\\..\\common\\Perf\\Azure.Test.Perf\\Azure.Test.Perf.csproj",
+      "..\\core\\Azure.Core.TestFramework\\src\\Azure.Core.TestFramework.csproj",
+      "Azure.Storage.Common\\src\\Azure.Storage.Common.csproj",
+      "Azure.Storage.Files.Shares\\perf\\Azure.Storage.Files.Shares.Perf\\Azure.Storage.Files.Shares.Perf.csproj",
+      "Azure.Storage.Files.Shares\\perf\\Microsoft.Azure.Storage.File.Perf\\Microsoft.Azure.Storage.File.Perf.csproj",
+      "Azure.Storage.Files.Shares\\src\\Azure.Storage.Files.Shares.csproj"
+    ]
+  }
+}

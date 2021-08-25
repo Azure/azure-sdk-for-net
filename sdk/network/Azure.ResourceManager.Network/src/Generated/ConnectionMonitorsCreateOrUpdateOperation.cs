@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class ConnectionMonitorsCreateOrUpdateOperation : Operation<ConnectionMonitorResult>, IOperationSource<ConnectionMonitorResult>
     {
         private readonly ArmOperationHelpers<ConnectionMonitorResult> _operation;
+
+        /// <summary> Initializes a new instance of ConnectionMonitorsCreateOrUpdateOperation for mocking. </summary>
+        protected ConnectionMonitorsCreateOrUpdateOperation()
+        {
+        }
+
         internal ConnectionMonitorsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ConnectionMonitorResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ConnectionMonitorsCreateOrUpdateOperation");

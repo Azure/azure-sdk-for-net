@@ -1,0 +1,117 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "326",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-ea012a5f66d12e42959b204f2193c517-dda21fdc354d6c4f-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210604.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "e6c19efc0bcdc72f6a020f044fd9da2e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "startTime": "2020-09-26T00:00:00Z",
+        "endTime": "2020-09-29T00:00:00Z",
+        "value": {
+          "anomalyValue": "AutoDetect"
+        },
+        "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+        "feedbackType": "Anomaly",
+        "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+        "dimensionFilter": {
+          "dimension": {
+            "city": "Delhi",
+            "category": "Handmade"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "c78a5b7c-054a-49dd-ba48-92f6937310b5",
+        "Content-Length": "0",
+        "Date": "Fri, 04 Jun 2021 10:28:04 GMT",
+        "Location": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/f531b339-3a42-4dad-b397-397236edc8de",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "359",
+        "x-request-id": "c78a5b7c-054a-49dd-ba48-92f6937310b5"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/f531b339-3a42-4dad-b397-397236edc8de",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-ea012a5f66d12e42959b204f2193c517-e6b2fc56d1d7c247-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210604.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "d9b54ca902518a938985d32d9ffd01ff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d4cd8c16-c44d-4167-9b87-36f17aae5340",
+        "Content-Length": "892",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 04 Jun 2021 10:28:04 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "116",
+        "x-request-id": "d4cd8c16-c44d-4167-9b87-36f17aae5340"
+      },
+      "ResponseBody": {
+        "feedbackId": "f531b339-3a42-4dad-b397-397236edc8de",
+        "createdTime": "2021-06-04T10:28:05.207Z",
+        "userPrincipal": "foo@contoso.com",
+        "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+        "dimensionFilter": {
+          "dimension": {
+            "city": "Delhi",
+            "category": "Handmade"
+          }
+        },
+        "feedbackType": "Anomaly",
+        "startTime": "2020-09-26T00:00:00Z",
+        "endTime": "2020-09-29T00:00:00Z",
+        "value": {
+          "anomalyValue": "AutoDetect"
+        },
+        "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+        "anomalyDetectionConfigurationSnapshot": {
+          "anomalyDetectionConfigurationId": "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c",
+          "name": "Default",
+          "description": "",
+          "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+          "wholeMetricConfiguration": {
+            "smartDetectionCondition": {
+              "sensitivity": 100.0,
+              "anomalyDetectorDirection": "Both",
+              "suppressCondition": {
+                "minNumber": 1,
+                "minRatio": 100.0
+              }
+            }
+          },
+          "dimensionGroupOverrideConfigurations": [],
+          "seriesOverrideConfigurations": []
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-06-04T03:28:04.8590863-07:00",
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "1945671246"
+  }
+}

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Test.PerfStress;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,7 +59,7 @@ namespace Azure.Test.Stress
         }
 
         // Helpers
-        protected static bool ContainsOperationCanceledException(Exception e) => StressProgram.ContainsOperationCanceledException(e);
+        protected static bool ContainsOperationCanceledException(Exception e) => PerfStressUtilities.ContainsOperationCanceledException(e);
 
         protected static Task DelayUntil(Func<bool> predicate, CancellationToken token = default) => DelayUntil(predicate, TimeSpan.FromMilliseconds(50), token);
 
@@ -78,7 +79,6 @@ namespace Azure.Test.Stress
                 throw new InvalidOperationException($"Undefined environment variable {name}");
             }
             return value;
-
         }
     }
 }

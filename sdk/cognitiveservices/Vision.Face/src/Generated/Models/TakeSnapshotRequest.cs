@@ -45,7 +45,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// apply it.</param>
         /// <param name="userData">User specified data about the snapshot for
         /// any purpose. Length should not exceed 16KB.</param>
-        public TakeSnapshotRequest(SnapshotObjectType type, string objectId, IList<System.Guid?> applyScope, string userData = default(string))
+        public TakeSnapshotRequest(SnapshotObjectType type, string objectId, IList<System.Guid> applyScope, string userData = default(string))
         {
             Type = type;
             ObjectId = objectId;
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// the applyScope of Snapshot - Take can apply it.
         /// </summary>
         [JsonProperty(PropertyName = "applyScope")]
-        public IList<System.Guid?> ApplyScope { get; set; }
+        public IList<System.Guid> ApplyScope { get; set; }
 
         /// <summary>
         /// Gets or sets user specified data about the snapshot for any
@@ -104,6 +104,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
             if (ApplyScope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ApplyScope");
+            }
+            if (ObjectId != null)
+            {
+                if (ObjectId.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ObjectId", 64);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(ObjectId, "^[a-z0-9-_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "ObjectId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (UserData != null)
+            {
+                if (UserData.Length > 16384)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "UserData", 16384);
+                }
             }
         }
     }

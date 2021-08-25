@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.Sms
+namespace Azure.Communication.Sms.Models
 {
     [CodeGenModel("SendMessageRequest")]
     internal partial class SendMessageRequest

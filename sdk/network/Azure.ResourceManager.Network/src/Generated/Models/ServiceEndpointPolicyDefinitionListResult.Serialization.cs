@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ServiceEndpointPolicyDefinitionListResult
+    internal partial class ServiceEndpointPolicyDefinitionListResult
     {
         internal static ServiceEndpointPolicyDefinitionListResult DeserializeServiceEndpointPolicyDefinitionListResult(JsonElement element)
         {

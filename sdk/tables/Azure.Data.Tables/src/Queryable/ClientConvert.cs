@@ -9,7 +9,6 @@ namespace Azure.Data.Tables.Queryable
     {
         private static readonly Type[] s_knownTypes = CreateKnownPrimitives();
 
-
         internal enum StorageType
         {
             Boolean,
@@ -36,12 +35,18 @@ namespace Azure.Data.Tables.Queryable
             Uri,
             XDocument,
             XElement,
+            BinaryData,
             Binary,
         }
 
         internal static bool IsBinaryValue(object value)
         {
-            return StorageType.Binary == (StorageType)IndexOfStorage(value.GetType());
+            return (StorageType)IndexOfStorage(value.GetType()) switch
+            {
+                StorageType.Binary => true,
+                StorageType.BinaryData => true,
+                _ => false
+            };
         }
 
         internal static bool TryKeyBinaryToString(object binaryValue, out string result)
@@ -76,6 +81,7 @@ namespace Azure.Data.Tables.Queryable
             types[(int)StorageType.Boolean] = typeof(bool);
             types[(int)StorageType.Byte] = typeof(byte);
             types[(int)StorageType.ByteArray] = typeof(byte[]);
+            types[(int)StorageType.BinaryData] = typeof(BinaryData);
             types[(int)StorageType.Char] = typeof(char);
             types[(int)StorageType.CharArray] = typeof(char[]);
             types[(int)StorageType.DateTime] = typeof(DateTime);

@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkManagementDeleteBastionShareableLinkOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of NetworkManagementDeleteBastionShareableLinkOperation for mocking. </summary>
+        protected NetworkManagementDeleteBastionShareableLinkOperation()
+        {
+        }
+
         internal NetworkManagementDeleteBastionShareableLinkOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkManagementDeleteBastionShareableLinkOperation");

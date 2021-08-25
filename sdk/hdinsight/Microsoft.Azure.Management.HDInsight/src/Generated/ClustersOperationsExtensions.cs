@@ -465,6 +465,95 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             /// <summary>
+            /// The the async operation status.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='operationId'>
+            /// The long running operation id.
+            /// </param>
+            public static AsyncOperationResult GetAzureAsyncOperationStatus(this IClustersOperations operations, string resourceGroupName, string clusterName, string operationId)
+            {
+                return operations.GetAzureAsyncOperationStatusAsync(resourceGroupName, clusterName, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The the async operation status.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='operationId'>
+            /// The long running operation id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AsyncOperationResult> GetAzureAsyncOperationStatusAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAzureAsyncOperationStatusWithHttpMessagesAsync(resourceGroupName, clusterName, operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the cluster identity certificate.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The cluster configurations.
+            /// </param>
+            public static void UpdateIdentityCertificate(this IClustersOperations operations, string resourceGroupName, string clusterName, UpdateClusterIdentityCertificateParameters parameters)
+            {
+                operations.UpdateIdentityCertificateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the cluster identity certificate.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The cluster configurations.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateIdentityCertificateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, UpdateClusterIdentityCertificateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpdateIdentityCertificateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Executes script actions on the specified HDInsight cluster.
             /// </summary>
             /// <param name='operations'>
@@ -760,6 +849,49 @@ namespace Microsoft.Azure.Management.HDInsight
             public static async Task BeginUpdateGatewaySettingsAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, UpdateGatewaySettingsParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginUpdateGatewaySettingsWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Updates the cluster identity certificate.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The cluster configurations.
+            /// </param>
+            public static void BeginUpdateIdentityCertificate(this IClustersOperations operations, string resourceGroupName, string clusterName, UpdateClusterIdentityCertificateParameters parameters)
+            {
+                operations.BeginUpdateIdentityCertificateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the cluster identity certificate.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The cluster configurations.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginUpdateIdentityCertificateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, UpdateClusterIdentityCertificateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginUpdateIdentityCertificateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

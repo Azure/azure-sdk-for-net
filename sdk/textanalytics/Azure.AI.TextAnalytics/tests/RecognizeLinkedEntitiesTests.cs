@@ -5,74 +5,82 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
     public class RecognizeLinkedEntitiesTests : TextAnalyticsClientLiveTestBase
     {
-        public RecognizeLinkedEntitiesTests(bool isAsync) : base(isAsync) { }
-
-        private const string singleEnglish = "Microsoft was founded by Bill Gates and Paul Allen.";
-        private const string singleSpanish = "Microsoft fue fundado por Bill Gates y Paul Allen.";
-
-        private static List<string> batchConvenienceDocuments = new List<string>
+        public RecognizeLinkedEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
         {
-            "Microsoft was founded by Bill Gates and Paul Allen.",
-            "Pike place market is my favorite Seattle attraction.",
+        }
+
+        private const string EnglishDocument1 = "Microsoft was founded by Bill Gates and Paul Allen.";
+        private const string EnglishDocument2 = "Pike place market is my favorite Seattle attraction.";
+
+        private const string SpanishDocument1 = "Microsoft fue fundado por Bill Gates y Paul Allen.";
+
+        private static readonly List<string> s_batchConvenienceDocuments = new List<string>
+        {
+            EnglishDocument1,
+            EnglishDocument2,
         };
 
-        private static List<TextDocumentInput> batchDocuments = new List<TextDocumentInput>
+        private static readonly List<TextDocumentInput> s_batchDocuments = new List<TextDocumentInput>
         {
-            new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+            new TextDocumentInput("1", EnglishDocument1)
             {
                  Language = "en",
             },
-            new TextDocumentInput("3", "Pike place market is my favorite Seattle attraction.")
+            new TextDocumentInput("3", SpanishDocument1)
             {
-                 Language = "en",
+                 Language = "es",
             }
         };
 
-        [Test]
+        private static readonly List<string> s_document1ExpectedOutput = new List<string>
+        {
+            "Microsoft",
+            "Bill Gates",
+            "Paul Allen"
+        };
+
+        private static readonly List<string> s_document2ExpectedOutput = new List<string>
+        {
+            "Pike Place Market",
+            "Seattle"
+        };
+
+        [RecordedTest]
+        public async Task RecognizeLinkedEntitiesWithAADTest()
+        {
+            TextAnalyticsClient client = GetClient(useTokenCredential: true);
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(EnglishDocument1);
+
+            ValidateInDocumenResult(linkedEntities, s_document1ExpectedOutput);
+        }
+
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = singleEnglish;
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(EnglishDocument1);
 
-            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(document);
-
-            Assert.AreEqual(3, linkedEntities.Count);
-
-            var entitiesList = new List<string> { "Bill Gates", "Microsoft", "Paul Allen" };
-            foreach (LinkedEntity entity in linkedEntities)
-            {
-                Assert.IsTrue(entitiesList.Contains(entity.Name));
-                Assert.IsNotNull(entity.DataSource);
-                Assert.IsNotNull(entity.DataSourceEntityId);
-                Assert.IsNotNull(entity.Language);
-                Assert.IsNotNull(entity.Url);
-                Assert.IsNotNull(entity.Matches);
-                Assert.IsNotNull(entity.BingEntitySearchApiId);
-
-                LinkedEntityMatch match = entity.Matches.First();
-                Assert.IsNotNull(match.ConfidenceScore);
-                Assert.IsNotNull(match.Text);
-            }
+            ValidateInDocumenResult(linkedEntities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = singleSpanish;
+            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(SpanishDocument1, "es");
 
-            LinkedEntityCollection linkedEntities = await client.RecognizeLinkedEntitiesAsync(document, "es");
-
-            Assert.GreaterOrEqual(linkedEntities.Count, 3);
+            ValidateInDocumenResult(linkedEntities, s_document1ExpectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -94,7 +102,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public void RecognizeLinkedEntitiesBatchWithInvalidDocumentBatch()
         {
             TextAnalyticsClient client = GetClient();
@@ -114,73 +122,77 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocumentBatch, ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
-            var documents = batchConvenienceDocuments;
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments);
 
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(documents);
-
-            foreach (RecognizeLinkedEntitiesResult result in results)
+            var expectedOutput = new Dictionary<string, List<string>>()
             {
-                Assert.GreaterOrEqual(result.Entities.Count(), 2);
-            }
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchConvenienceWithStatisticsTest()
         {
+            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             TextAnalyticsClient client = GetClient();
-            var documents = batchConvenienceDocuments;
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, "en", options);
 
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
-
-            foreach (RecognizeLinkedEntitiesResult result in results)
+            var expectedOutput = new Dictionary<string, List<string>>()
             {
-                Assert.GreaterOrEqual(result.Entities.Count(), 2);
-            }
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
 
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = batchDocuments;
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments);
 
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(documents);
-
-            foreach (RecognizeLinkedEntitiesResult result in results)
+            var expectedOutput = new Dictionary<string, List<string>>()
             {
-                Assert.GreaterOrEqual(result.Entities.Count(), 2);
-            }
+                { "1", s_document1ExpectedOutput },
+                { "3", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchWithStatisticsTest()
         {
+            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             TextAnalyticsClient client = GetClient();
-            List<TextDocumentInput> documents = batchDocuments;
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, options);
 
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
-
-            foreach (RecognizeLinkedEntitiesResult result in results)
+            var expectedOutput = new Dictionary<string, List<string>>()
             {
-                Assert.GreaterOrEqual(result.Entities.Count(), 2);
-            }
+                { "1", s_document1ExpectedOutput },
+                { "3", s_document1ExpectedOutput },
+            };
 
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
         }
 
-        [Test]
+        [RecordedTest]
         public void RecognizeLinkedEntitiesBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -190,7 +202,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeLinkedEntitiesBatchWithNullTextTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -201,6 +213,78 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(results[0].HasError);
             InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[0].Entities.Count());
             Assert.AreEqual(exceptionMessage, ex.Message);
+        }
+
+        private void ValidateInDocumenResult(LinkedEntityCollection entities, List<string> minimumExpectedOutput)
+        {
+            Assert.IsNotNull(entities.Warnings);
+            Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
+            foreach (LinkedEntity entity in entities)
+            {
+                Assert.That(entity.Name, Is.Not.Null.And.Not.Empty);
+                Assert.That(entity.Language, Is.Not.Null.And.Not.Empty);
+                Assert.That(entity.DataSource, Is.Not.Null.And.Not.Empty);
+                Assert.IsNotNull(entity.Url);
+
+                if (entity.DataSourceEntityId != null)
+                {
+                    Assert.IsNotEmpty(entity.DataSourceEntityId);
+                }
+
+                if (entity.BingEntitySearchApiId != null)
+                {
+                    Assert.IsNotEmpty(entity.BingEntitySearchApiId);
+                }
+
+                Assert.GreaterOrEqual(entity.Matches.Count(), 1);
+                foreach (LinkedEntityMatch match in entity.Matches)
+                {
+                    Assert.That(match.Text, Is.Not.Null.And.Not.Empty);
+                    Assert.IsTrue(minimumExpectedOutput.Contains(match.Text, StringComparer.OrdinalIgnoreCase));
+                    Assert.GreaterOrEqual(match.ConfidenceScore, 0.0);
+                    Assert.GreaterOrEqual(match.Offset, 0);
+                    Assert.Greater(match.Length, 0);
+                }
+            }
+        }
+
+        private void ValidateBatchDocumentsResult(RecognizeLinkedEntitiesResultCollection results, Dictionary<string, List<string>> minimumExpectedOutput, bool includeStatistics = default)
+        {
+            Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
+
+            if (includeStatistics)
+            {
+                Assert.IsNotNull(results.Statistics);
+                Assert.Greater(results.Statistics.DocumentCount, 0);
+                Assert.Greater(results.Statistics.TransactionCount, 0);
+                Assert.GreaterOrEqual(results.Statistics.InvalidDocumentCount, 0);
+                Assert.GreaterOrEqual(results.Statistics.ValidDocumentCount, 0);
+            }
+            else
+                Assert.IsNull(results.Statistics);
+
+            foreach (RecognizeLinkedEntitiesResult entitiesInDocument in results)
+            {
+                Assert.That(entitiesInDocument.Id, Is.Not.Null.And.Not.Empty);
+
+                Assert.False(entitiesInDocument.HasError);
+
+                //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
+                Assert.IsNotNull(entitiesInDocument.Statistics);
+
+                if (includeStatistics)
+                {
+                    Assert.GreaterOrEqual(entitiesInDocument.Statistics.CharacterCount, 0);
+                    Assert.Greater(entitiesInDocument.Statistics.TransactionCount, 0);
+                }
+                else
+                {
+                    Assert.AreEqual(0, entitiesInDocument.Statistics.CharacterCount);
+                    Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
+                }
+
+                ValidateInDocumenResult(entitiesInDocument.Entities, minimumExpectedOutput[entitiesInDocument.Id]);
+            }
         }
     }
 }

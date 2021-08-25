@@ -10,7 +10,7 @@ using System;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Spark job definition resource type. </summary>
-    public partial class SparkJobDefinitionResource : AzureEntityResource
+    public partial class SparkJobDefinitionResource : SubResource
     {
         /// <summary> Initializes a new instance of SparkJobDefinitionResource. </summary>
         /// <param name="properties"> Properties of spark job definition. </param>

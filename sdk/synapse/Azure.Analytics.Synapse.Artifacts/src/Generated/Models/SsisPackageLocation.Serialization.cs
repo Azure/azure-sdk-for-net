@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SsisPackageLocationConverter))]
     public partial class SsisPackageLocation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -42,6 +45,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("configurationPath");
                 writer.WriteObjectValue(ConfigurationPath);
+            }
+            if (Optional.IsDefined(ConfigurationAccessCredential))
+            {
+                writer.WritePropertyName("configurationAccessCredential");
+                writer.WriteObjectValue(ConfigurationAccessCredential);
             }
             if (Optional.IsDefined(PackageName))
             {
@@ -79,6 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<SecretBase> packagePassword = default;
             Optional<SsisAccessCredential> accessCredential = default;
             Optional<object> configurationPath = default;
+            Optional<SsisAccessCredential> configurationAccessCredential = default;
             Optional<string> packageName = default;
             Optional<object> packageContent = default;
             Optional<string> packageLastModifiedDate = default;
@@ -144,6 +153,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             configurationPath = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("configurationAccessCredential"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            configurationAccessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("packageName"))
                         {
                             packageName = property0.Value.GetString();
@@ -183,7 +202,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SsisPackageLocation(packagePath.Value, Optional.ToNullable(type), packagePassword.Value, accessCredential.Value, configurationPath.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, Optional.ToList(childPackages));
+            return new SsisPackageLocation(packagePath.Value, Optional.ToNullable(type), packagePassword.Value, accessCredential.Value, configurationPath.Value, configurationAccessCredential.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, Optional.ToList(childPackages));
+        }
+
+        internal partial class SsisPackageLocationConverter : JsonConverter<SsisPackageLocation>
+        {
+            public override void Write(Utf8JsonWriter writer, SsisPackageLocation model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SsisPackageLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSsisPackageLocation(document.RootElement);
+            }
         }
     }
 }

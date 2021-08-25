@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
     /// <summary>
     /// PrivateLinkResourcesOperations operations.
     /// </summary>
-    internal partial class PrivateLinkResourcesOperations : IServiceOperations<redisenterpriseClient>, IPrivateLinkResourcesOperations
+    internal partial class PrivateLinkResourcesOperations : IServiceOperations<RedisEnterpriseManagementClient>, IPrivateLinkResourcesOperations
     {
         /// <summary>
         /// Initializes a new instance of the PrivateLinkResourcesOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal PrivateLinkResourcesOperations(redisenterpriseClient client)
+        internal PrivateLinkResourcesOperations(RedisEnterpriseManagementClient client)
         {
             if (client == null)
             {
@@ -46,16 +46,16 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         }
 
         /// <summary>
-        /// Gets a reference to the redisenterpriseClient
+        /// Gets a reference to the RedisEnterpriseManagementClient
         /// </summary>
-        public redisenterpriseClient Client { get; private set; }
+        public RedisEnterpriseManagementClient Client { get; private set; }
 
         /// <summary>
         /// Gets the private link resources that need to be created for a
         /// RedisEnterprise cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<PrivateLinkResource>>> ListByRedisEnterpriseCacheWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<PrivateLinkResource>>> ListByClusterWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByRedisEnterpriseCache", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByCluster", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;

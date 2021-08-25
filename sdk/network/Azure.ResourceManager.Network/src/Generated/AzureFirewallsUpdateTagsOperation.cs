@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class AzureFirewallsUpdateTagsOperation : Operation<AzureFirewall>, IOperationSource<AzureFirewall>
     {
         private readonly ArmOperationHelpers<AzureFirewall> _operation;
+
+        /// <summary> Initializes a new instance of AzureFirewallsUpdateTagsOperation for mocking. </summary>
+        protected AzureFirewallsUpdateTagsOperation()
+        {
+        }
+
         internal AzureFirewallsUpdateTagsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<AzureFirewall>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "AzureFirewallsUpdateTagsOperation");

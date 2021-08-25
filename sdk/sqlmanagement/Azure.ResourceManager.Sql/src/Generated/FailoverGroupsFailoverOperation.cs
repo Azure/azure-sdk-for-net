@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class FailoverGroupsFailoverOperation : Operation<FailoverGroup>, IOperationSource<FailoverGroup>
     {
         private readonly ArmOperationHelpers<FailoverGroup> _operation;
+
+        /// <summary> Initializes a new instance of FailoverGroupsFailoverOperation for mocking. </summary>
+        protected FailoverGroupsFailoverOperation()
+        {
+        }
+
         internal FailoverGroupsFailoverOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<FailoverGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "FailoverGroupsFailoverOperation");

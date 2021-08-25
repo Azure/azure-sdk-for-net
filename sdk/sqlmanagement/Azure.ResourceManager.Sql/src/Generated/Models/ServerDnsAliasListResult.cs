@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of server DNS aliases. </summary>
-    public partial class ServerDnsAliasListResult
+    internal partial class ServerDnsAliasListResult
     {
         /// <summary> Initializes a new instance of ServerDnsAliasListResult. </summary>
         internal ServerDnsAliasListResult()

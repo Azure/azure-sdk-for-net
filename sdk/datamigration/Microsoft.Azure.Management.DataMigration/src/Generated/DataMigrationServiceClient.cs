@@ -400,6 +400,8 @@ namespace Microsoft.Azure.Management.DataMigration
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateSsisTaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ConnectionInfo>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ConnectionInfo>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MongoDbProgress>("resultType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MongoDbProgress>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateOracleAzureDbPostgreSqlSyncTaskOutput>("resultType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateOracleAzureDbPostgreSqlSyncTaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput>("resultType"));

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Resources
     public partial class DeploymentsValidateAtTenantScopeOperation : Operation<DeploymentValidateResult>, IOperationSource<DeploymentValidateResult>
     {
         private readonly ArmOperationHelpers<DeploymentValidateResult> _operation;
+
+        /// <summary> Initializes a new instance of DeploymentsValidateAtTenantScopeOperation for mocking. </summary>
+        protected DeploymentsValidateAtTenantScopeOperation()
+        {
+        }
+
         internal DeploymentsValidateAtTenantScopeOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<DeploymentValidateResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsValidateAtTenantScopeOperation");

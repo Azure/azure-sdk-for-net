@@ -6,29 +6,30 @@
 #nullable disable
 
 using System;
+using Azure.AI.MetricsAdvisor.Models;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> The CommentFeedback. </summary>
     public partial class MetricCommentFeedback : MetricFeedback
     {
 
         /// <summary> Initializes a new instance of MetricCommentFeedback. </summary>
-        /// <param name="type"> feedback type. </param>
+        /// <param name="feedbackKind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>
-        /// <param name="createdTime"> feedback created time. </param>
+        /// <param name="createdOn"> feedback created time. </param>
         /// <param name="userPrincipal"> user who gives this feedback. </param>
         /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
-        /// <param name="startTime"> the start timestamp of feedback timerange. </param>
-        /// <param name="endTime"> the end timestamp of feedback timerange, when equals to startTime means only one timestamp. </param>
-        /// <param name="valueInternal"> . </param>
-        internal MetricCommentFeedback(FeedbackType type, string id, DateTimeOffset? createdTime, string userPrincipal, string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset? startTime, DateTimeOffset? endTime, CommentFeedbackValue valueInternal) : base(type, id, createdTime, userPrincipal, metricId, dimensionFilter)
+        /// <param name="dimensionFilter"></param>
+        /// <param name="startsOn"> the start timestamp of feedback time range. </param>
+        /// <param name="endsOn"> the end timestamp of feedback time range, when equals to startTime means only one timestamp. </param>
+        /// <param name="valueInternal"></param>
+        internal MetricCommentFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset? startsOn, DateTimeOffset? endsOn, CommentFeedbackValue valueInternal) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ValueInternal = valueInternal;
-            Type = type;
+            FeedbackKind = feedbackKind;
         }
     }
 }

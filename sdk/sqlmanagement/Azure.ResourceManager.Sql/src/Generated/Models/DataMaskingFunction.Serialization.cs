@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class DataMaskingFunctionExtensions
+    internal static partial class DataMaskingFunctionExtensions
     {
         public static string ToSerialString(this DataMaskingFunction value) => value switch
         {

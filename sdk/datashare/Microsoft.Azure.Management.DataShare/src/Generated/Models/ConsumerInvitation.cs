@@ -35,10 +35,13 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="invitationId">Unique id of the invitation.</param>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
+        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
         /// <param name="dataSetCount">Number of data sets in a share</param>
         /// <param name="description">Description shared when the invitation
         /// was created</param>
+        /// <param name="expirationDate">The expiration date for the share
+        /// subscription created by accepting the invitation.</param>
         /// <param name="invitationStatus">The status of the invitation.
         /// Possible values include: 'Pending', 'Accepted', 'Rejected',
         /// 'Withdrawn'</param>
@@ -60,11 +63,12 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// resource</param>
         /// <param name="userName">Name of the user who created the
         /// resource</param>
-        public ConsumerInvitation(string invitationId, string id = default(string), string name = default(string), string type = default(string), int? dataSetCount = default(int?), string description = default(string), string invitationStatus = default(string), string location = default(string), string providerEmail = default(string), string providerName = default(string), string providerTenantName = default(string), System.DateTime? respondedAt = default(System.DateTime?), System.DateTime? sentAt = default(System.DateTime?), string shareName = default(string), string termsOfUse = default(string), string userEmail = default(string), string userName = default(string))
-            : base(id, name, type)
+        public ConsumerInvitation(string invitationId, string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), int? dataSetCount = default(int?), string description = default(string), System.DateTime? expirationDate = default(System.DateTime?), string invitationStatus = default(string), string location = default(string), string providerEmail = default(string), string providerName = default(string), string providerTenantName = default(string), System.DateTime? respondedAt = default(System.DateTime?), System.DateTime? sentAt = default(System.DateTime?), string shareName = default(string), string termsOfUse = default(string), string userEmail = default(string), string userName = default(string))
+            : base(id, name, systemData, type)
         {
             DataSetCount = dataSetCount;
             Description = description;
+            ExpirationDate = expirationDate;
             InvitationId = invitationId;
             InvitationStatus = invitationStatus;
             Location = location;
@@ -96,6 +100,13 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; private set; }
+
+        /// <summary>
+        /// Gets the expiration date for the share subscription created by
+        /// accepting the invitation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.expirationDate")]
+        public System.DateTime? ExpirationDate { get; private set; }
 
         /// <summary>
         /// Gets or sets unique id of the invitation.

@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(SubscriptionValidationEventDataConverter))]
     public partial class SubscriptionValidationEventData
     {
         internal static SubscriptionValidationEventData DeserializeSubscriptionValidationEventData(JsonElement element)
@@ -30,6 +33,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new SubscriptionValidationEventData(validationCode.Value, validationUrl.Value);
+        }
+
+        internal partial class SubscriptionValidationEventDataConverter : JsonConverter<SubscriptionValidationEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, SubscriptionValidationEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SubscriptionValidationEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSubscriptionValidationEventData(document.RootElement);
+            }
         }
     }
 }

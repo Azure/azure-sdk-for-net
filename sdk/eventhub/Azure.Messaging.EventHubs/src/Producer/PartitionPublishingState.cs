@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The identifier of the producer group for which publishing is being performed.
         /// </summary>
         ///
-        public long? ProducerGroupId  { get; set; }
+        public long? ProducerGroupId { get; set; }
 
         /// <summary>
         ///   The owner level for which publishing is being performed.
@@ -53,6 +53,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The sequence number assigned to the event that was most recently published to the associated partition
         ///   successfully.
         /// </summary>
+        ///
+        /// <value>
+        ///   The sequence number will be in the range of <c>0</c> - <see cref="int.MaxValue"/> (inclusive) and will
+        ///   increase as events are published.  When more than <see cref="int.MaxValue" /> events have been published,
+        ///   the sequence number will roll over to <c>0</c>.
+        /// </value>
         ///
         public int? LastPublishedSequenceNumber { get; set; }
 

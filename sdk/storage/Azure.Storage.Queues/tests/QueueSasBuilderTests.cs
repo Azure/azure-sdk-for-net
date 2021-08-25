@@ -21,20 +21,20 @@ namespace Azure.Storage.Queues.Test
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueSasBuilder_ToSasQueryParameters_VersionTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var queueName = GetNewQueueName();
-            QueueSasBuilder queueSasBuilder = BuildQueueSasBuilder(constants, queueName, includeVersion: true);
-            var signature = BuildSignature(constants, queueName, includeVersion: true);
+            QueueSasBuilder queueSasBuilder = BuildQueueSasBuilder(constants, queueName);
+            var signature = BuildSignature(constants, queueName);
 
             // Act
             var sasQueryParameters = queueSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
 
             // Assert
-            Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
+            Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
             Assert.IsNull(sasQueryParameters.Services);
             Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
@@ -47,49 +47,23 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [Test]
-        public void QueueSasBuilder_ToSasQueryParameters_NoVersionTest()
-        {
-            // Arrange
-            var constants = new TestConstants(this);
-            var queueName = GetNewQueueName();
-            QueueSasBuilder queueSasBuilder = BuildQueueSasBuilder(constants, queueName, includeVersion: false);
-            var signature = BuildSignature(constants, queueName, includeVersion: false);
-
-            // Act
-            var sasQueryParameters = queueSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
-
-            // Assert
-            Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.IsNull(sasQueryParameters.Services);
-            Assert.IsNull(sasQueryParameters.ResourceTypes);
-            Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
-            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
-            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
-            Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
-            Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
-            Assert.AreEqual(string.Empty, sasQueryParameters.Resource);
-            Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
-            Assert.AreEqual(signature, sasQueryParameters.Signature);
-        }
-
-        [Test]
+        [RecordedTest]
         public void QueueSasBuilder_NullSharedKeyCredentialTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var queueName = GetNewQueueName();
-            QueueSasBuilder queueSasBuilder = BuildQueueSasBuilder(constants, queueName, includeVersion: true);
+            QueueSasBuilder queueSasBuilder = BuildQueueSasBuilder(constants, queueName);
 
             // Act
             Assert.Throws<ArgumentNullException>(() => queueSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
         }
 
-        [Test]
+        [RecordedTest]
         public void ToSasQueryParameters_IdentifierTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var queueName = GetNewQueueName();
 
             QueueSasBuilder sasBuilder = new QueueSasBuilder
@@ -97,7 +71,6 @@ namespace Azure.Storage.Queues.Test
                 Identifier = constants.Sas.Identifier,
                 QueueName = queueName,
                 Protocol = SasProtocol.Https,
-                Version = constants.Sas.Version
             };
 
             // Act
@@ -106,10 +79,10 @@ namespace Azure.Storage.Queues.Test
             // Assert
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
-            Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
+            Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2019_12_12)]
         [TestCase("FTPUCALXDWR")]
         [TestCase("rwdxlacuptf")]
@@ -138,7 +111,7 @@ namespace Azure.Storage.Queues.Test
             await queueClient.GetPropertiesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AccountPermissionsRawPermissions_InvalidPermission()
         {
             // Arrange
@@ -157,7 +130,7 @@ namespace Azure.Storage.Queues.Test
                 new ArgumentException("e is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("PUAR")]
         [TestCase("raup")]
         public async Task QueuePermissionsRawPermissions(string permissionsString)
@@ -189,7 +162,7 @@ namespace Azure.Storage.Queues.Test
             await sasQueueClient.PeekMessagesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task QueuePermissionsRawPermissions_Invalid()
         {
             // Arrange
@@ -210,7 +183,7 @@ namespace Azure.Storage.Queues.Test
                 new ArgumentException("s is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_LocalDockerUrl_PortTest()
         {
             // Arrange
@@ -234,7 +207,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_CustomUri_AccountShareFileTest()
         {
             // Arrange
@@ -257,7 +230,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        private QueueSasBuilder BuildQueueSasBuilder(TestConstants constants, string queueName, bool includeVersion)
+        private QueueSasBuilder BuildQueueSasBuilder(TestConstants constants, string queueName)
         {
             var queueSasBuilder = new QueueSasBuilder
             {
@@ -271,15 +244,10 @@ namespace Azure.Storage.Queues.Test
             };
             queueSasBuilder.SetPermissions(Permissions);
 
-            if (includeVersion)
-            {
-                queueSasBuilder.Version = constants.Sas.Version;
-            }
-
             return queueSasBuilder;
         }
 
-        private string BuildSignature(TestConstants constants, string queueName, bool includeVersion)
+        private string BuildSignature(TestConstants constants, string queueName)
         {
             var stringToSign = string.Join("\n",
                 Permissions,
@@ -289,7 +257,7 @@ namespace Azure.Storage.Queues.Test
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(SasProtocol.Https),
-                includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion);
+                SasQueryParametersInternals.DefaultSasVersionInternal);
 
             return StorageSharedKeyCredentialInternals.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }

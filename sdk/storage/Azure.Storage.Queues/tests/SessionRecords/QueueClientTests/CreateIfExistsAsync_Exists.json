@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://seandevtest.queue.core.windows.net/test-queue-993f78e1-3653-86e6-a84b-cae954172bce",
@@ -90,6 +90,6 @@
   ],
   "Variables": {
     "RandomSeed": "224441832",
-    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttp://seandevtest.file.core.windows.net\nhttp://seandevtest.queue.core.windows.net\nhttp://seandevtest.table.core.windows.net\n\n\n\n\nhttp://seandevtest-secondary.blob.core.windows.net\nhttp://seandevtest-secondary.file.core.windows.net\nhttp://seandevtest-secondary.queue.core.windows.net\nhttp://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=http://seandevtest.queue.core.windows.net/;FileEndpoint=http://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=http://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Sanitized\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttp://seandevtest.file.core.windows.net\nhttp://seandevtest.queue.core.windows.net\nhttp://seandevtest.table.core.windows.net\n\n\n\n\nhttp://seandevtest-secondary.blob.core.windows.net\nhttp://seandevtest-secondary.file.core.windows.net\nhttp://seandevtest-secondary.queue.core.windows.net\nhttp://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=http://seandevtest.queue.core.windows.net/;FileEndpoint=http://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=http://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Sanitized\nseanscope1\n\n"
   }
 }

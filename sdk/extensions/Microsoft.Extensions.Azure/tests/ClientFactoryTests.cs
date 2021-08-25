@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
@@ -81,28 +82,23 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
-        public void ThrowsWhenUnableToReadCompositeObject()
-        {
-            IConfiguration configuration = GetConfiguration(
-                new KeyValuePair<string, string>("composite:non-existent", "_"));
-
-            var clientOptions = new TestClientOptions();
-            var exception = Assert.Throws<InvalidOperationException>(() => ClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration, null));
-            Assert.AreEqual("Unable to convert section 'composite' to parameter type 'Azure.Core.Extensions.Tests.TestClient+CompositeObject', unable to find matching constructor.", exception.Message);
-        }
-
-        [Test]
         public void ThrowsExceptionWithInformationAboutArguments()
         {
-            IConfiguration configuration = GetConfiguration();
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("some section:a", "a"),
+                new KeyValuePair<string, string>("some section:b:c", "b")
+                ).GetSection("some section");
 
             var clientOptions = new TestClientOptions();
-            var exception = Assert.Throws<InvalidOperationException>(() => ClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration, null));
-            Assert.AreEqual("Unable to find matching constructor. Define one of the follow sets of configuration parameters:" + Environment.NewLine +
-                "1. connectionString" + Environment.NewLine +
-                "2. uri" + Environment.NewLine +
-                "3. uri, composite" + Environment.NewLine +
-                "4. composite" + Environment.NewLine,
+            var exception = Assert.Throws<InvalidOperationException>(() => ClientFactory.CreateClient(typeof(TestClientWithCredentials), typeof(TestClientOptions), clientOptions, configuration, null));
+            Assert.AreEqual("Unable to find matching constructor while trying to create an instance of TestClientWithCredentials." + Environment.NewLine +
+                "Expected one of the follow sets of configuration parameters:" + Environment.NewLine +
+                "1. uri" + Environment.NewLine +
+                "2. uri, credential:key" + Environment.NewLine +
+                "3. uri, credential:signature" + Environment.NewLine +
+                "4. uri" + Environment.NewLine +
+                "" + Environment.NewLine +
+                "Found the following configuration keys: b, b:c, a",
                 exception.Message);
         }
 
@@ -156,6 +152,43 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
+        public void CreatesManagedServiceIdentityCredentialsWithClientId()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("credential", "managedidentity")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
+            var managedIdentityCredential = (ManagedIdentityCredential)credential;
+
+            var client = (ManagedIdentityClient)typeof(ManagedIdentityCredential).GetField("_client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
+            var clientId = typeof(ManagedIdentityClient).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(client);
+
+            Assert.AreEqual("ConfigurationClientId", clientId);
+        }
+
+        [Test]
+        public void CreatesManagedServiceIdentityCredentials()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentity")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
+            var managedIdentityCredential = (ManagedIdentityCredential)credential;
+
+            var client = (ManagedIdentityClient)typeof(ManagedIdentityCredential).GetField("_client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
+            var clientId = typeof(ManagedIdentityClient).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(client);
+
+            Assert.Null(clientId);
+        }
+
+        [Test]
         public void IgnoresConstructorWhenCredentialsNull()
         {
             IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("uri", "http://localhost"));
@@ -165,6 +198,57 @@ namespace Azure.Core.Extensions.Tests
 
             Assert.AreEqual("http://localhost/", client.Uri.ToString());
             Assert.AreSame(clientOptions, client.Options);
+        }
+
+        [Test]
+        public void IgnoresNonTokenCredentialConstructors()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("uri", "http://localhost"),
+                new KeyValuePair<string, string>("credential", "managedidentity"),
+                new KeyValuePair<string, string>("clientId", "secret")
+            );
+
+            var clientOptions = new TestClientOptions();
+            var client = (TestClientWithCredentials)ClientFactory.CreateClient(typeof(TestClientWithCredentials), typeof(TestClientOptions), clientOptions, configuration, new DefaultAzureCredential());
+
+            Assert.AreEqual("http://localhost/", client.Uri.ToString());
+            Assert.AreSame(clientOptions, client.Options);
+            Assert.NotNull(client.Credential);
+        }
+
+        [Test]
+        public void CanUseAzureKeyCredential()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("uri", "http://localhost"),
+                new KeyValuePair<string, string>("credential:key", "key"),
+                new KeyValuePair<string, string>("clientId", "secret")
+            );
+
+            var clientOptions = new TestClientOptions();
+            var client = (TestClientWithCredentials)ClientFactory.CreateClient(typeof(TestClientWithCredentials), typeof(TestClientOptions), clientOptions, configuration, new DefaultAzureCredential());
+
+            Assert.AreEqual("http://localhost/", client.Uri.ToString());
+            Assert.AreSame(clientOptions, client.Options);
+            Assert.AreEqual("key", client.AzureKeyCredential.Key);
+        }
+
+        [Test]
+        public void CanUseAzureSasCredential()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("uri", "http://localhost"),
+                new KeyValuePair<string, string>("credential:signature", "key"),
+                new KeyValuePair<string, string>("clientId", "secret")
+            );
+
+            var clientOptions = new TestClientOptions();
+            var client = (TestClientWithCredentials)ClientFactory.CreateClient(typeof(TestClientWithCredentials), typeof(TestClientOptions), clientOptions, configuration, new DefaultAzureCredential());
+
+            Assert.AreEqual("http://localhost/", client.Uri.ToString());
+            Assert.AreSame(clientOptions, client.Options);
+            Assert.AreEqual("key", client.AzureSasCredential.Signature);
         }
 
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)

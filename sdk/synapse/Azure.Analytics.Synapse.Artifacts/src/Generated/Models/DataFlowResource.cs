@@ -10,7 +10,7 @@ using System;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Data flow resource type. </summary>
-    public partial class DataFlowResource : AzureEntityResource
+    public partial class DataFlowResource : SubResource
     {
         /// <summary> Initializes a new instance of DataFlowResource. </summary>
         /// <param name="properties"> Data flow properties. </param>

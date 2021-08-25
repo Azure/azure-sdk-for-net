@@ -7,10 +7,6 @@ namespace Azure.ResourceManager.Communication.Tests
 {
     public class CommunicationManagementTestEnvironment : TestEnvironment
     {
-        public CommunicationManagementTestEnvironment() : base("communication")
-        {
-        }
-
         internal const string SubscriptionIdEnvironmentVariableName = "SUBSCRIPTION_ID";
         internal const string NotificationHubsResourceGroupNameEnvironmentVariableName = "NOTIFICATION_HUBS_RESOURCE_GROUP_NAME";
         internal const string NotificationHubsResourceIdEnvironmentVariableName = "NOTIFICATION_HUBS_RESOURCE_ID";

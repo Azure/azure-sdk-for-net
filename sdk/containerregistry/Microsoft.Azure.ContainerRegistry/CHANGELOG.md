@@ -1,7 +1,8 @@
 # Release History
 
-## 1.0.0-preview.2 (Unreleased)
-
+## 1.0.0-preview.2 (2021-02-01)
+- Fix issue #17084: Unable to create OCI manifest in Azure Container Registry
+- Fix issue #16511: Incorrect scopes passed when calling Write APIs 
 
 ## 1.0.0-preview.1 (2020-04-06)
 

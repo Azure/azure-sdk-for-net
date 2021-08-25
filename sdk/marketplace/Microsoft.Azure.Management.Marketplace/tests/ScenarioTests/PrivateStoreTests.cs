@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Marketplace.Tests.ScenarioTests
         {
             var privateStoreId = "a70d384d-ec34-47dd-9d38-ec6df452cba1";
             var offerId = "data3-limited-1019419.d3_azure_managed_services";
-            var planId = "d3-azure-cost-management";
+            var planId = "data3-managed-azure-plan";
 
             using (var context = MockContext.Start(this.GetType()))
             {

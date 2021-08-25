@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// object.</param>
         /// <param name="targetInstanceType">The type of the affected object
         /// which is of
-        /// {Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType}
+        /// Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType
         /// class.</param>
         /// <param name="customDetails">The custom job details like test
         /// failover job details.</param>
@@ -156,8 +156,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the type of the affected object which is of
-        /// {Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType}
-        /// class.
+        /// Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType class.
         /// </summary>
         [JsonProperty(PropertyName = "targetInstanceType")]
         public string TargetInstanceType { get; set; }

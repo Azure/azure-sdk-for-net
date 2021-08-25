@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation : Operation<PrivateLinkServiceVisibility>, IOperationSource<PrivateLinkServiceVisibility>
     {
         private readonly ArmOperationHelpers<PrivateLinkServiceVisibility> _operation;
+
+        /// <summary> Initializes a new instance of PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation for mocking. </summary>
+        protected PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation()
+        {
+        }
+
         internal PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<PrivateLinkServiceVisibility>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation");

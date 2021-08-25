@@ -19,8 +19,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class ChangeFeedTests : ChangeFeedTestBase
     {
-        public ChangeFeedTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ChangeFeedTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// Tests building a ChangeFeed with a ChangeFeedCursor, and then calling ChangeFeed.GetCursor()
         /// and making sure the cursors match.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task GetCursor()
         {
             // Arrange
@@ -56,16 +56,16 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             using FileStream stream = File.OpenRead(
                 $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"ChangeFeedManifest.json"}");
-            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
+            BlobDownloadStreamingResult blobDownloadInfo = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync(default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download(default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -191,11 +191,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync(default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default));
             }
             else
             {
-                blobClient.Verify(r => r.Download(default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default));
             }
 
             if (IsAsync)
@@ -256,7 +256,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// We call ChangeFeed.GetPage() with a page size of 3, and then again with no page size,
         /// resulting in two pages with 3 and 5 Events.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task GetPage()
         {
             // Arrange
@@ -293,16 +293,16 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             using FileStream stream = File.OpenRead(
                 $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"ChangeFeedManifest.json"}");
-            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
+            BlobDownloadStreamingResult blobDownloadInfo = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync(default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download(default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -508,11 +508,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync(default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default));
             }
             else
             {
-                blobClient.Verify(r => r.Download(default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default));
             }
 
             if (IsAsync)
@@ -604,7 +604,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             containerClient.Verify(r => r.Uri, Times.Exactly(2));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task NoYearsAfterStartTime()
         {
             // Arrange
@@ -631,16 +631,16 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             using FileStream stream = File.OpenRead(
                 $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"ChangeFeedManifest.json"}");
-            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
+            BlobDownloadStreamingResult blobDownloadInfo = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync(default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download(default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -696,11 +696,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync(default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default));
             }
             else
             {
-                blobClient.Verify(r => r.Download(default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default));
             }
 
             if (IsAsync)
@@ -723,7 +723,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task NoSegmentsRemainingInStartYear()
         {
             // Arrange
@@ -760,16 +760,16 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             using FileStream stream = File.OpenRead(
                 $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"ChangeFeedManifest.json"}");
-            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
+            BlobDownloadStreamingResult blobDownloadInfo = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync(default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download(default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -904,11 +904,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync(default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default));
             }
             else
             {
-                blobClient.Verify(r => r.Download(default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default));
             }
 
             if (IsAsync)
@@ -979,7 +979,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 default));
 
             containerClient.Verify(r => r.Uri, Times.Exactly(1));
-
         }
 
         public static Task<Page<BlobHierarchyItem>> GetYearsPathShortFuncAsync(string continuation, int? pageSizeHint)

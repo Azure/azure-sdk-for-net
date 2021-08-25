@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class AuthorizationRuleListResult
+    internal partial class AuthorizationRuleListResult
     {
         internal static AuthorizationRuleListResult DeserializeAuthorizationRuleListResult(JsonElement element)
         {

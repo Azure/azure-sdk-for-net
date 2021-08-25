@@ -31,14 +31,8 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public DigitalTwinModelsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-10-31")
         {
-            endpoint ??= new Uri("https://digitaltwins-name.digitaltwins.azure.net");
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this.endpoint = endpoint ?? new Uri("https://digitaltwins-name.digitaltwins.azure.net");
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -53,10 +47,10 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/models", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (models != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartArray();
                 foreach (var item in models)
@@ -330,7 +324,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string id, IEnumerable<object> updateModel, DecomissionModelOptions digitalTwinModelsUpdateOptions)
+        internal HttpMessage CreateUpdateRequest(string id, IEnumerable<object> updateModel, DecommissionModelOptions digitalTwinModelsUpdateOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -341,8 +335,8 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json-patch+json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json-patch+json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in updateModel)
@@ -372,7 +366,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinModelsUpdateOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="updateModel"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string id, IEnumerable<object> updateModel, DecomissionModelOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string id, IEnumerable<object> updateModel, DecommissionModelOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -412,7 +406,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinModelsUpdateOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="updateModel"/> is null. </exception>
-        public Response Update(string id, IEnumerable<object> updateModel, DecomissionModelOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
+        public Response Update(string id, IEnumerable<object> updateModel, DecommissionModelOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {

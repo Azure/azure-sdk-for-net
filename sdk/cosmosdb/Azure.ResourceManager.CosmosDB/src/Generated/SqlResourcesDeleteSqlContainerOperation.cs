@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class SqlResourcesDeleteSqlContainerOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of SqlResourcesDeleteSqlContainerOperation for mocking. </summary>
+        protected SqlResourcesDeleteSqlContainerOperation()
+        {
+        }
+
         internal SqlResourcesDeleteSqlContainerOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SqlResourcesDeleteSqlContainerOperation");

@@ -1123,6 +1123,70 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
+            /// Get delivery attributes for an event subscription.
+            /// </summary>
+            /// <remarks>
+            /// Get all delivery attributes for an event subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope of the event subscription. The scope can be a subscription, or a
+            /// resource group, or a top level resource belonging to a resource provider
+            /// namespace, or an EventGrid topic. For example, use
+            /// '/subscriptions/{subscriptionId}/' for a subscription,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for a
+            /// resource group, and
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
+            /// for a resource, and
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}'
+            /// for an EventGrid topic.
+            /// </param>
+            /// <param name='eventSubscriptionName'>
+            /// Name of the event subscription.
+            /// </param>
+            public static DeliveryAttributeListResult GetDeliveryAttributes(this IEventSubscriptionsOperations operations, string scope, string eventSubscriptionName)
+            {
+                return operations.GetDeliveryAttributesAsync(scope, eventSubscriptionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get delivery attributes for an event subscription.
+            /// </summary>
+            /// <remarks>
+            /// Get all delivery attributes for an event subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope of the event subscription. The scope can be a subscription, or a
+            /// resource group, or a top level resource belonging to a resource provider
+            /// namespace, or an EventGrid topic. For example, use
+            /// '/subscriptions/{subscriptionId}/' for a subscription,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for a
+            /// resource group, and
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'
+            /// for a resource, and
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{topicName}'
+            /// for an EventGrid topic.
+            /// </param>
+            /// <param name='eventSubscriptionName'>
+            /// Name of the event subscription.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeliveryAttributeListResult> GetDeliveryAttributesAsync(this IEventSubscriptionsOperations operations, string scope, string eventSubscriptionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeliveryAttributesWithHttpMessagesAsync(scope, eventSubscriptionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update an event subscription.
             /// </summary>
             /// <remarks>

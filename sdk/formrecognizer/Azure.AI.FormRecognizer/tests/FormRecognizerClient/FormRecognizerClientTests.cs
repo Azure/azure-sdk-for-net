@@ -281,6 +281,49 @@ namespace Azure.AI.FormRecognizer.Tests
 
         #endregion
 
+        #region Recognize Invoices
+
+        [Test]
+        public void StartRecognizeInvoicesRequiresTheFileStream()
+        {
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeInvoicesAsync(null));
+        }
+
+        [Test]
+        public void StartRecognizeInvoicesRespectsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            var options = new RecognizeInvoicesOptions { ContentType = FormContentType.Pdf };
+
+            using var stream = new MemoryStream(Array.Empty<byte>());
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeInvoicesAsync(stream, recognizeInvoicesOptions: options, cancellationToken: cancellationSource.Token));
+        }
+
+        [Test]
+        public void StartRecognizeInvoicesFromUriRequiresTheFileUri()
+        {
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeInvoicesFromUriAsync(null));
+        }
+
+        [Test]
+        public void StartRecognizeInvoicesFromUriRespectsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            var fakeUri = new Uri("http://localhost");
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync(Is.InstanceOf<OperationCanceledException>(), async () => await client.StartRecognizeInvoicesFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
+        }
+
+        #endregion
+
         #region Recognize Custom Forms
 
         /// <summary>

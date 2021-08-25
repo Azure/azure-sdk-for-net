@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<int> activeSeriesCount = default;
             Optional<int> allSeriesCount = default;
             Optional<int> metricsCount = default;
-            Optional<int> datafeedCount = default;
+            Optional<int> dataFeedCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"))
@@ -62,18 +62,18 @@ namespace Azure.AI.MetricsAdvisor.Models
                     metricsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("datafeedCount"))
+                if (property.NameEquals("dataFeedCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    datafeedCount = property.Value.GetInt32();
+                    dataFeedCount = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new UsageStats(Optional.ToNullable(timestamp), Optional.ToNullable(activeSeriesCount), Optional.ToNullable(allSeriesCount), Optional.ToNullable(metricsCount), Optional.ToNullable(datafeedCount));
+            return new UsageStats(Optional.ToNullable(timestamp), Optional.ToNullable(activeSeriesCount), Optional.ToNullable(allSeriesCount), Optional.ToNullable(metricsCount), Optional.ToNullable(dataFeedCount));
         }
     }
 }

@@ -27,8 +27,8 @@ namespace Azure.Search.Documents.Tests
             watch.Stop();
 
             Assert.IsTrue(
-                78 <= watch.ElapsedMilliseconds && watch.ElapsedMilliseconds <= 500,
-                $"Expected a delay between 78ms and 500ms, not {watch.ElapsedMilliseconds}");
+                70 <= watch.ElapsedMilliseconds && watch.ElapsedMilliseconds <= 500,
+                $"Expected a delay between 70ms and 500ms, not {watch.ElapsedMilliseconds}");
         }
 
         [Test]
@@ -55,6 +55,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/19002")]
         public async Task ClampDelay()
         {
             Stopwatch watch = new Stopwatch();

@@ -26,9 +26,8 @@ namespace Microsoft.Azure.Management.ContainerService
             /// cluster.
             /// </summary>
             /// <remarks>
-            /// Gets a list of private endpoint connections in the specified managed
-            /// cluster. The operation returns properties of each private endpoint
-            /// connection.
+            /// To learn more about private clusters, see:
+            /// https://docs.microsoft.com/azure/aks/private-clusters
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -49,9 +48,8 @@ namespace Microsoft.Azure.Management.ContainerService
             /// cluster.
             /// </summary>
             /// <remarks>
-            /// Gets a list of private endpoint connections in the specified managed
-            /// cluster. The operation returns properties of each private endpoint
-            /// connection.
+            /// To learn more about private clusters, see:
+            /// https://docs.microsoft.com/azure/aks/private-clusters
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -74,11 +72,11 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Gets the private endpoint connection.
+            /// Gets the specified private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Gets the details of the private endpoint connection by managed cluster and
-            /// resource group.
+            /// To learn more about private clusters, see:
+            /// https://docs.microsoft.com/azure/aks/private-clusters
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -98,11 +96,11 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
-            /// Gets the private endpoint connection.
+            /// Gets the specified private endpoint connection.
             /// </summary>
             /// <remarks>
-            /// Gets the details of the private endpoint connection by managed cluster and
-            /// resource group.
+            /// To learn more about private clusters, see:
+            /// https://docs.microsoft.com/azure/aks/private-clusters
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -130,9 +128,6 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <summary>
             /// Updates a private endpoint connection.
             /// </summary>
-            /// <remarks>
-            /// Updates a private endpoint connection in the specified managed cluster.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -146,7 +141,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// The name of the private endpoint connection.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Update a private endpoint connection operation.
+            /// The updated private endpoint connection.
             /// </param>
             public static PrivateEndpointConnection Update(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection parameters)
             {
@@ -156,9 +151,6 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <summary>
             /// Updates a private endpoint connection.
             /// </summary>
-            /// <remarks>
-            /// Updates a private endpoint connection in the specified managed cluster.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -172,7 +164,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// The name of the private endpoint connection.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Update a private endpoint connection operation.
+            /// The updated private endpoint connection.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -188,9 +180,6 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <summary>
             /// Deletes a private endpoint connection.
             /// </summary>
-            /// <remarks>
-            /// Deletes the private endpoint connection in the specified managed cluster.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -211,9 +200,6 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <summary>
             /// Deletes a private endpoint connection.
             /// </summary>
-            /// <remarks>
-            /// Deletes the private endpoint connection in the specified managed cluster.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -237,9 +223,6 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <summary>
             /// Deletes a private endpoint connection.
             /// </summary>
-            /// <remarks>
-            /// Deletes the private endpoint connection in the specified managed cluster.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -260,9 +243,6 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <summary>
             /// Deletes a private endpoint connection.
             /// </summary>
-            /// <remarks>
-            /// Deletes the private endpoint connection in the specified managed cluster.
-            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

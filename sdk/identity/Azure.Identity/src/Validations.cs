@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace Azure.Identity
 {
@@ -12,6 +13,8 @@ namespace Azure.Identity
         private const string NullTenantIdErrorMessage = "Tenant id cannot be null. You can locate your tenant id by following the instructions listed here: https://docs.microsoft.com/partner-center/find-ids-and-domain-names";
 
         private const string NonTlsAuthorityHostErrorMessage = "Authority host must be a TLS protected (https) endpoint.";
+
+        internal const string NoWindowsPowerShellLegacyErrorMessage = "PowerShell Legacy is only supported in Windows.";
 
         /// <summary>
         /// As tenant id is used in constructing authority endpoints and in command line invocation we validate the character set of the tenant id matches allowed characters.
@@ -52,6 +55,22 @@ namespace Azure.Identity
             }
 
             return authorityHost;
+        }
+
+        /// <summary>
+        /// PowerShell Legacy can only be used on Windows OS systems.
+        /// </summary>
+        /// <param name="useLegacyPowerShell"></param>
+        /// <returns></returns>
+        public static bool CanUseLegacyPowerShell(bool useLegacyPowerShell)
+        {
+            //If the OS is not Windows, PowerShell Legacy cannot be used
+            if (useLegacyPowerShell && !RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                throw new ArgumentException(NoWindowsPowerShellLegacyErrorMessage);
+            }
+
+            return useLegacyPowerShell;
         }
 
         private static bool IsValidTenantCharacter(char c)

@@ -31,9 +31,25 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="multichannel">Multichannel setting. Applies to Premium
         /// FileStorage only.</param>
-        public SmbSetting(Multichannel multichannel = default(Multichannel))
+        /// <param name="versions">SMB protocol versions supported by server.
+        /// Valid values are SMB2.1, SMB3.0, SMB3.1.1. Should be passed as a
+        /// string with delimiter ';'.</param>
+        /// <param name="authenticationMethods">SMB authentication methods
+        /// supported by server. Valid values are NTLMv2, Kerberos. Should be
+        /// passed as a string with delimiter ';'.</param>
+        /// <param name="kerberosTicketEncryption">Kerberos ticket encryption
+        /// supported by server. Valid values are RC4-HMAC, AES-256. Should be
+        /// passed as a string with delimiter ';'</param>
+        /// <param name="channelEncryption">SMB channel encryption supported by
+        /// server. Valid values are AES-128-CCM, AES-128-GCM, AES-256-GCM.
+        /// Should be passed as a string with delimiter ';'.</param>
+        public SmbSetting(Multichannel multichannel = default(Multichannel), string versions = default(string), string authenticationMethods = default(string), string kerberosTicketEncryption = default(string), string channelEncryption = default(string))
         {
             Multichannel = multichannel;
+            Versions = versions;
+            AuthenticationMethods = authenticationMethods;
+            KerberosTicketEncryption = kerberosTicketEncryption;
+            ChannelEncryption = channelEncryption;
             CustomInit();
         }
 
@@ -48,6 +64,38 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "multichannel")]
         public Multichannel Multichannel { get; set; }
+
+        /// <summary>
+        /// Gets or sets SMB protocol versions supported by server. Valid
+        /// values are SMB2.1, SMB3.0, SMB3.1.1. Should be passed as a string
+        /// with delimiter ';'.
+        /// </summary>
+        [JsonProperty(PropertyName = "versions")]
+        public string Versions { get; set; }
+
+        /// <summary>
+        /// Gets or sets SMB authentication methods supported by server. Valid
+        /// values are NTLMv2, Kerberos. Should be passed as a string with
+        /// delimiter ';'.
+        /// </summary>
+        [JsonProperty(PropertyName = "authenticationMethods")]
+        public string AuthenticationMethods { get; set; }
+
+        /// <summary>
+        /// Gets or sets kerberos ticket encryption supported by server. Valid
+        /// values are RC4-HMAC, AES-256. Should be passed as a string with
+        /// delimiter ';'
+        /// </summary>
+        [JsonProperty(PropertyName = "kerberosTicketEncryption")]
+        public string KerberosTicketEncryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets SMB channel encryption supported by server. Valid
+        /// values are AES-128-CCM, AES-128-GCM, AES-256-GCM. Should be passed
+        /// as a string with delimiter ';'.
+        /// </summary>
+        [JsonProperty(PropertyName = "channelEncryption")]
+        public string ChannelEncryption { get; set; }
 
     }
 }

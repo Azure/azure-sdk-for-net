@@ -28,7 +28,8 @@ namespace Compute.Tests
             string publisher = "Microsoft.Compute",
             string type = "VMAccessAgent",
             string version = "2.0",
-            bool autoUpdateMinorVersion = true)
+            bool autoUpdateMinorVersion = true,
+            bool? enableAutomaticUpgrade = null)
         {
             var vmExtension = new VirtualMachineScaleSetExtension
             {
@@ -38,7 +39,8 @@ namespace Compute.Tests
                 TypeHandlerVersion = version,
                 AutoUpgradeMinorVersion = autoUpdateMinorVersion,
                 Settings = "{}",
-                ProtectedSettings = "{}"
+                ProtectedSettings = "{}",
+                EnableAutomaticUpgrade = enableAutomaticUpgrade
             };
 
             return vmExtension;
@@ -123,7 +125,7 @@ namespace Compute.Tests
             var vmssName = TestUtilities.GenerateName("vmss");
             bool createOSDisk = !hasManagedDisks || osDiskSizeInGB != null;
 
-            string vmSize = zones == null ? VirtualMachineSizeTypes.StandardA0 : VirtualMachineSizeTypes.StandardA1V2;
+            string vmSize = zones == null ? VirtualMachineSizeTypes.StandardA1V2 : VirtualMachineSizeTypes.StandardA1V2;
 
             var vmScaleSet = new VirtualMachineScaleSet()
             {
@@ -280,7 +282,9 @@ namespace Compute.Tests
             int? capacity = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
-            string dedicatedHostName = null)
+            string dedicatedHostName = null,
+            string userData = null,
+            string capacityReservationGroupReferenceId = null)
         {
             try
             {
@@ -310,7 +314,9 @@ namespace Compute.Tests
                                                                                      capacity: capacity,
                                                                                      dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
                                                                                      dedicatedHostGroupName: dedicatedHostGroupName,
-                                                                                     dedicatedHostName: dedicatedHostName);
+                                                                                     dedicatedHostName: dedicatedHostName,
+                                                                                     userData: userData,
+                                                                                     capacityReservationGroupReferenceId: capacityReservationGroupReferenceId);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
@@ -400,7 +406,9 @@ namespace Compute.Tests
             int? capacity = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
-            string dedicatedHostName = null)
+            string dedicatedHostName = null,
+            string userData = null,
+            string capacityReservationGroupReferenceId = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
@@ -440,6 +448,8 @@ namespace Compute.Tests
                     EncryptionAtHost = encryptionAtHostEnabled.Value
                 };
             }
+            
+            inputVMScaleSet.VirtualMachineProfile.UserData = userData;
 
             if (hasDiffDisks)
             {
@@ -465,6 +475,17 @@ namespace Compute.Tests
                 CreateDedicatedHostGroup(rgName, dedicatedHostGroupName, availabilityZone: null);
                 CreateDedicatedHost(rgName, dedicatedHostGroupName, dedicatedHostName, "DSv3-Type1");
                 inputVMScaleSet.HostGroup = new CM.SubResource() { Id = dedicatedHostGroupReferenceId };
+            }
+
+            if (!string.IsNullOrEmpty(capacityReservationGroupReferenceId))
+            {
+                inputVMScaleSet.VirtualMachineProfile.CapacityReservation = new CapacityReservationProfile
+                {
+                    CapacityReservationGroup = new CM.SubResource
+                    {
+                        Id = capacityReservationGroupReferenceId
+                    }
+                };
             }
 
             inputVMScaleSet.SinglePlacementGroup = singlePlacementGroup ? (bool?) null : false;
@@ -621,7 +642,7 @@ namespace Compute.Tests
                 }
             }
 
-            if (vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy != null)
+            if (vmScaleSet.UpgradePolicy?.AutomaticOSUpgradePolicy != null)
             {
                 bool expectedDisableAutomaticRollbackValue = vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback ?? false;
                 Assert.True(vmScaleSetOut.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback == expectedDisableAutomaticRollbackValue);
@@ -635,7 +656,7 @@ namespace Compute.Tests
                 bool expectedAutomaticRepairsEnabledValue = vmScaleSet.AutomaticRepairsPolicy.Enabled ?? false;
                 Assert.True(vmScaleSetOut.AutomaticRepairsPolicy.Enabled == expectedAutomaticRepairsEnabledValue);
 
-                string expectedAutomaticRepairsGracePeriodValue = vmScaleSet.AutomaticRepairsPolicy.GracePeriod ?? "PT30M";
+                string expectedAutomaticRepairsGracePeriodValue = vmScaleSet.AutomaticRepairsPolicy.GracePeriod ?? "PT10M";
                 Assert.Equal(vmScaleSetOut.AutomaticRepairsPolicy.GracePeriod, expectedAutomaticRepairsGracePeriodValue, ignoreCase: true);
             }
 

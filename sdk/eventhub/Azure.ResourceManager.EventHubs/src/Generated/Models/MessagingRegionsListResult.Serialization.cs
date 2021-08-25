@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class MessagingRegionsListResult
+    internal partial class MessagingRegionsListResult
     {
         internal static MessagingRegionsListResult DeserializeMessagingRegionsListResult(JsonElement element)
         {

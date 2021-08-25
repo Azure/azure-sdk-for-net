@@ -1,7 +1,58 @@
 # Release History
 
-## 0.1.0-preview.8 (Unreleased)
+## 0.1.0-preview.16 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 0.1.0-preview.15 (2021-08-18)
+
+### Features Added
+
+- Added support for per call response classification.
+
+## 0.1.0-preview.14 (2021-06-30)
+
+### New Features
+- Added `ResponseError` type to represent the standard Azure error response.
+
+
+## 0.1.0-preview.13 (2021-06-08)
+
+### New Features
+- Added `DateTimeRange` type to represent ISO 8601 time interval.
+
+## 0.1.0-preview.12 (2021-05-11)
+
+### New Features
+- Added `RequestOptions`.
+
+## 0.1.0-preview.11 (2021-03-22)
+
+### New Features
+- Improved debugging experience for `JsonData`.
+- `JsonData` can be used with `JsonSerializer`
+
+## 0.1.0-preview.10 (2021-03-09)
+
+
+## 0.1.0-preview.9 (2021-02-09)
+
+### Key Bug Fixes
+- Fixed a dependency issue with `Azure.Core`, rebinding the reference to the latest released package.
+
+## 0.1.0-preview.8 (2021-02-09)
+
+### New Features
+- Added `ProtocolClientOptions`, `DynamicRequest`, `DynamicResponse` types.
+
+### Breaking Changes
+- Methods from `SerializationExtensions` moved into `Azure.Core` package.
 
 ## 0.1.0-preview.7 (2020-10-28)
 

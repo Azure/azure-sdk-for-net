@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(BigDataPoolResourceInfoListResultConverter))]
     public partial class BigDataPoolResourceInfoListResult
     {
         internal static BigDataPoolResourceInfoListResult DeserializeBigDataPoolResourceInfoListResult(JsonElement element)
@@ -41,6 +44,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new BigDataPoolResourceInfoListResult(nextLink.Value, Optional.ToList(value));
+        }
+
+        internal partial class BigDataPoolResourceInfoListResultConverter : JsonConverter<BigDataPoolResourceInfoListResult>
+        {
+            public override void Write(Utf8JsonWriter writer, BigDataPoolResourceInfoListResult model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override BigDataPoolResourceInfoListResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeBigDataPoolResourceInfoListResult(document.RootElement);
+            }
         }
     }
 }

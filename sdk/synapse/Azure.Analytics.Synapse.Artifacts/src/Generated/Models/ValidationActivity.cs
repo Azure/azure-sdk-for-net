@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> This activity verifies that an external resource exists. </summary>
-    public partial class ValidationActivity : Activity
+    public partial class ValidationActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of ValidationActivity. </summary>
         /// <param name="name"> Activity name. </param>
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Activity description. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="timeout"> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sleep"> A delay in seconds between validation attempts. If no value is specified, 10 seconds will be used as the default. Type: integer (or Expression with resultType integer). </param>
         /// <param name="minimumSize"> Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType integer). </param>

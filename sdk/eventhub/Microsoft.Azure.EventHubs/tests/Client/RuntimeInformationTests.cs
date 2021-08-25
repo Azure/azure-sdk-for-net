@@ -77,7 +77,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                             Assert.True(partition.Path == csb.EntityPath, $"Returned path {partition.Path} is different than {csb.EntityPath}");
                             Assert.True(partition.PartitionId == pid, $"Returned partition id {partition.PartitionId} is different than {pid}");
                             Assert.True(partition.LastEnqueuedOffset != null, "Returned LastEnqueuedOffset is null");
-                            Assert.True(partition.LastEnqueuedTimeUtc != null, "Returned LastEnqueuedTimeUtc is null");
+                            Assert.True(partition.LastEnqueuedTimeUtc != default, "Returned LastEnqueuedTimeUtc is null");
 
                             // Validate returned data regarding recently sent event.
                             // Account 60 seconds of max clock skew.

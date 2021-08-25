@@ -6,39 +6,30 @@
 #nullable disable
 
 using System;
+using Azure.AI.TextAnalytics;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasksEntityRecognitionPiiTasksItem. </summary>
-    public partial class EntityRecognitionPiiTasksItem : TaskState
+    internal partial class EntityRecognitionPiiTasksItem : TaskState
     {
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="status"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status) : base(lastUpdateDateTime, name, status)
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
         }
 
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="status"> . </param>
-        /// <param name="results"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, PiiEntitiesResult results) : base(lastUpdateDateTime, name, status)
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="taskName"></param>
+        /// <param name="status"></param>
+        /// <param name="results"></param>
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, PiiEntitiesResult results) : base(lastUpdateDateTime, taskName, status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
             Results = results;
         }
+
+        public PiiEntitiesResult Results { get; }
     }
 }

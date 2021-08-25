@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteCrossConnectionPeeringsCreateOrUpdateOperation : Operation<ExpressRouteCrossConnectionPeering>, IOperationSource<ExpressRouteCrossConnectionPeering>
     {
         private readonly ArmOperationHelpers<ExpressRouteCrossConnectionPeering> _operation;
+
+        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringsCreateOrUpdateOperation for mocking. </summary>
+        protected ExpressRouteCrossConnectionPeeringsCreateOrUpdateOperation()
+        {
+        }
+
         internal ExpressRouteCrossConnectionPeeringsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ExpressRouteCrossConnectionPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCrossConnectionPeeringsCreateOrUpdateOperation");

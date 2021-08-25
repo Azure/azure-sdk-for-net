@@ -100,7 +100,7 @@ namespace Cdn.Tests.ScenarioTests
                 // Update origin on running endpoint should succeed
                 var originParameters = new OriginUpdateParameters
                 {
-                    HostName = "www.bing.com",
+                    HostName = "host2.hello.com",
                     HttpPort = 1234,
                     HttpsPort = 8081,
                     PrivateLinkLocation = "EastUS",

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(RestSourceConverter))]
     public partial class RestSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -46,6 +49,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("requestInterval");
                 writer.WriteObjectValue(RequestInterval);
             }
+            if (Optional.IsCollectionDefined(AdditionalColumns))
+            {
+                writer.WritePropertyName("additionalColumns");
+                writer.WriteStartArray();
+                foreach (var item in AdditionalColumns)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
@@ -79,6 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> paginationRules = default;
             Optional<object> httpRequestTimeout = default;
             Optional<object> requestInterval = default;
+            Optional<IList<AdditionalColumns>> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -147,6 +161,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     requestInterval = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("additionalColumns"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<AdditionalColumns> array = new List<AdditionalColumns>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.AdditionalColumns.DeserializeAdditionalColumns(item));
+                    }
+                    additionalColumns = array;
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
@@ -185,7 +214,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, paginationRules.Value, httpRequestTimeout.Value, requestInterval.Value);
+            return new RestSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, paginationRules.Value, httpRequestTimeout.Value, requestInterval.Value, Optional.ToList(additionalColumns));
+        }
+
+        internal partial class RestSourceConverter : JsonConverter<RestSource>
+        {
+            public override void Write(Utf8JsonWriter writer, RestSource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override RestSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeRestSource(document.RootElement);
+            }
         }
     }
 }

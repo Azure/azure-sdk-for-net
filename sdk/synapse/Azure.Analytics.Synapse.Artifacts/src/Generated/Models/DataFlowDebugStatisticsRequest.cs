@@ -11,21 +11,34 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for data flow statistics. </summary>
-    internal partial class DataFlowDebugStatisticsRequest
+    public partial class DataFlowDebugStatisticsRequest
     {
         /// <summary> Initializes a new instance of DataFlowDebugStatisticsRequest. </summary>
-        internal DataFlowDebugStatisticsRequest()
+        public DataFlowDebugStatisticsRequest()
         {
             Columns = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of DataFlowDebugStatisticsRequest. </summary>
+        /// <param name="sessionId"> The ID of data flow debug session. </param>
+        /// <param name="dataFlowName"> The data flow which contains the debug session. </param>
+        /// <param name="streamName"> The output stream name. </param>
+        /// <param name="columns"> List of column names. </param>
+        internal DataFlowDebugStatisticsRequest(string sessionId, string dataFlowName, string streamName, IList<string> columns)
+        {
+            SessionId = sessionId;
+            DataFlowName = dataFlowName;
+            StreamName = streamName;
+            Columns = columns;
+        }
+
         /// <summary> The ID of data flow debug session. </summary>
-        public string SessionId { get; }
+        public string SessionId { get; set; }
         /// <summary> The data flow which contains the debug session. </summary>
-        public string DataFlowName { get; }
+        public string DataFlowName { get; set; }
         /// <summary> The output stream name. </summary>
-        public string StreamName { get; }
+        public string StreamName { get; set; }
         /// <summary> List of column names. </summary>
-        public IReadOnlyList<string> Columns { get; }
+        public IList<string> Columns { get; }
     }
 }

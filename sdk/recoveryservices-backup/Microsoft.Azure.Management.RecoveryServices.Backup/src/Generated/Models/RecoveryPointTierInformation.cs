@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,13 +34,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// class.
         /// </summary>
         /// <param name="type">Recovery point tier type. Possible values
-        /// include: 'Invalid', 'InstantRP', 'HardenedRP'</param>
+        /// include: 'Invalid', 'InstantRP', 'HardenedRP', 'ArchivedRP'</param>
         /// <param name="status">Recovery point tier status. Possible values
-        /// include: 'Invalid', 'Valid', 'Disabled', 'Deleted'</param>
-        public RecoveryPointTierInformation(RecoveryPointTierType? type = default(RecoveryPointTierType?), RecoveryPointTierStatus? status = default(RecoveryPointTierStatus?))
+        /// include: 'Invalid', 'Valid', 'Disabled', 'Deleted',
+        /// 'Rehydrated'</param>
+        /// <param name="extendedInfo">Recovery point tier status.</param>
+        public RecoveryPointTierInformation(RecoveryPointTierType? type = default(RecoveryPointTierType?), RecoveryPointTierStatus? status = default(RecoveryPointTierStatus?), IDictionary<string, string> extendedInfo = default(IDictionary<string, string>))
         {
             Type = type;
             Status = status;
+            ExtendedInfo = extendedInfo;
             CustomInit();
         }
 
@@ -49,17 +54,23 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets recovery point tier type. Possible values include:
-        /// 'Invalid', 'InstantRP', 'HardenedRP'
+        /// 'Invalid', 'InstantRP', 'HardenedRP', 'ArchivedRP'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public RecoveryPointTierType? Type { get; set; }
 
         /// <summary>
         /// Gets or sets recovery point tier status. Possible values include:
-        /// 'Invalid', 'Valid', 'Disabled', 'Deleted'
+        /// 'Invalid', 'Valid', 'Disabled', 'Deleted', 'Rehydrated'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public RecoveryPointTierStatus? Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets recovery point tier status.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedInfo")]
+        public IDictionary<string, string> ExtendedInfo { get; set; }
 
     }
 }

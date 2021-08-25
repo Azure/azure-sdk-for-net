@@ -4,7 +4,7 @@
 trigger:
   branches:
     include:
-    - master
+    - main
     - hotfix/*
     - release/*
   paths:
@@ -14,7 +14,7 @@ trigger:
 pr:
   branches:
     include:
-    - master
+    - main
     - feature/*
     - hotfix/*
     - release/*
@@ -28,5 +28,7 @@ extends:
     ServiceDirectory: monitor
     ArtifactName: packages
     Artifacts:
-    - name: Microsoft.OpenTelemetry.Exporter.AzureMonitor
+    - name: Azure.Monitor.OpenTelemetry.Exporter
       safeName: MicrosoftOpenTelemetryExporterAzureMonitor
+    - name: Azure.Monitor.Query
+      safeName: AzureMonitorQuery

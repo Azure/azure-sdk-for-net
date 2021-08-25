@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class DatabaseAccountsUpdateOperation : Operation<DatabaseAccountGetResults>, IOperationSource<DatabaseAccountGetResults>
     {
         private readonly ArmOperationHelpers<DatabaseAccountGetResults> _operation;
+
+        /// <summary> Initializes a new instance of DatabaseAccountsUpdateOperation for mocking. </summary>
+        protected DatabaseAccountsUpdateOperation()
+        {
+        }
+
         internal DatabaseAccountsUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<DatabaseAccountGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatabaseAccountsUpdateOperation");

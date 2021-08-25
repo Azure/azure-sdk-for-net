@@ -39,12 +39,15 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <param name="etag">Etag of the azure resource</param>
         /// <param name="tenantId">The tenant id to connect to, and get the
         /// data from.</param>
+        /// <param name="tipLookbackPeriod">The lookback period for the feed to
+        /// be imported.</param>
         /// <param name="dataTypes">The available data types for the
         /// connector.</param>
-        public TIDataConnector(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string tenantId = default(string), TIDataConnectorDataTypes dataTypes = default(TIDataConnectorDataTypes))
+        public TIDataConnector(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string tenantId = default(string), System.DateTime? tipLookbackPeriod = default(System.DateTime?), TIDataConnectorDataTypes dataTypes = default(TIDataConnectorDataTypes))
             : base(id, name, type, etag)
         {
             TenantId = tenantId;
+            TipLookbackPeriod = tipLookbackPeriod;
             DataTypes = dataTypes;
             CustomInit();
         }
@@ -59,6 +62,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.tenantId")]
         public string TenantId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the lookback period for the feed to be imported.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tipLookbackPeriod")]
+        public System.DateTime? TipLookbackPeriod { get; set; }
 
         /// <summary>
         /// Gets or sets the available data types for the connector.

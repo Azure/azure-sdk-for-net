@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.IotHub.Tests", "tests\Microsoft.Azure.Management.IotHub.Tests.csproj", "{DD48424F-23AE-4CAA-A8C6-78ED453201FF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.IotHub", "src\Microsoft.Azure.Management.IotHub.csproj", "{6D87768F-C148-4850-AA06-B6D0E0319462}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A2940BEF-649E-4B28-A11A-696F3A66E981}"
+	ProjectSection(SolutionItems) = preProject
+		AzSdk.RP.props = AzSdk.RP.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +29,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {345D5505-FC35-4106-A59B-CA21EB988F98}
 	EndGlobalSection
 EndGlobal

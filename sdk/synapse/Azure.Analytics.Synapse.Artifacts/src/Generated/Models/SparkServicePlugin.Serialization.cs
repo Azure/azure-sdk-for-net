@@ -7,19 +7,21 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SparkServicePluginConverter))]
     public partial class SparkServicePlugin
     {
         internal static SparkServicePlugin DeserializeSparkServicePlugin(JsonElement element)
         {
-            Optional<DateTimeOffset> preparationStartedAt = default;
-            Optional<DateTimeOffset> resourceAcquisitionStartedAt = default;
-            Optional<DateTimeOffset> submissionStartedAt = default;
-            Optional<DateTimeOffset> monitoringStartedAt = default;
-            Optional<DateTimeOffset> cleanupStartedAt = default;
+            Optional<DateTimeOffset?> preparationStartedAt = default;
+            Optional<DateTimeOffset?> resourceAcquisitionStartedAt = default;
+            Optional<DateTimeOffset?> submissionStartedAt = default;
+            Optional<DateTimeOffset?> monitoringStartedAt = default;
+            Optional<DateTimeOffset?> cleanupStartedAt = default;
             Optional<PluginCurrentState> currentState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        preparationStartedAt = null;
                         continue;
                     }
                     preparationStartedAt = property.Value.GetDateTimeOffset("O");
@@ -37,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        resourceAcquisitionStartedAt = null;
                         continue;
                     }
                     resourceAcquisitionStartedAt = property.Value.GetDateTimeOffset("O");
@@ -47,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        submissionStartedAt = null;
                         continue;
                     }
                     submissionStartedAt = property.Value.GetDateTimeOffset("O");
@@ -57,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        monitoringStartedAt = null;
                         continue;
                     }
                     monitoringStartedAt = property.Value.GetDateTimeOffset("O");
@@ -67,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        cleanupStartedAt = null;
                         continue;
                     }
                     cleanupStartedAt = property.Value.GetDateTimeOffset("O");
@@ -85,6 +87,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SparkServicePlugin(Optional.ToNullable(preparationStartedAt), Optional.ToNullable(resourceAcquisitionStartedAt), Optional.ToNullable(submissionStartedAt), Optional.ToNullable(monitoringStartedAt), Optional.ToNullable(cleanupStartedAt), Optional.ToNullable(currentState));
+        }
+
+        internal partial class SparkServicePluginConverter : JsonConverter<SparkServicePlugin>
+        {
+            public override void Write(Utf8JsonWriter writer, SparkServicePlugin model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SparkServicePlugin Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSparkServicePlugin(document.RootElement);
+            }
         }
     }
 }

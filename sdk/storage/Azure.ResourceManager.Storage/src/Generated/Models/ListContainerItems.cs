@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Response schema. Contains list of blobs returned, and if paging is requested or required, a URL to next page of containers. </summary>
-    public partial class ListContainerItems
+    internal partial class ListContainerItems
     {
         /// <summary> Initializes a new instance of ListContainerItems. </summary>
         internal ListContainerItems()

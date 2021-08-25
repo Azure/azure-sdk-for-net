@@ -19,14 +19,27 @@ namespace Microsoft.Azure.Management.Maintenance
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Maintenance", "ApplyUpdates", "2020-07-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "ConfigurationAssignments", "2020-07-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "MaintenanceConfigurations", "2020-07-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "Operations", "2020-07-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "PublicMaintenanceConfigurations", "2020-07-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "Updates", "2020-07-01-preview"),
+                new Tuple<string, string, string>("Maintenance", "ApplyUpdateForResourceGroup", "2021-05-01"),
+                new Tuple<string, string, string>("Maintenance", "ApplyUpdates", "2021-05-01"),
+                new Tuple<string, string, string>("Maintenance", "ConfigurationAssignments", "2021-05-01"),
+                new Tuple<string, string, string>("Maintenance", "MaintenanceConfigurations", "2021-05-01"),
+                new Tuple<string, string, string>("Maintenance", "MaintenanceConfigurationsForResourceGroup", "2021-05-01"),
+                new Tuple<string, string, string>("Maintenance", "Operations", "2021-05-01"),
+                new Tuple<string, string, string>("Maintenance", "PublicMaintenanceConfigurations", "2021-05-01"),
+                new Tuple<string, string, string>("Maintenance", "Updates", "2021-05-01"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/maintenance/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions  --override-client-name=MaintenanceManagementClient --title=MaintenanceManagementClient --csharp.output-folder='$(csharp-sdks-folder)/maintenance/Microsoft.Azure.Management.Maintenance/src/Generated/' --csharp-sdks-folder=E:\\Github\\ARM\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "c2ea3a3ccd14293b4bd1d17e684ef9129f0dc604";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

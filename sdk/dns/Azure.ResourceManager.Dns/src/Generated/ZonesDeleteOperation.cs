@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Dns
     public partial class ZonesDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of ZonesDeleteOperation for mocking. </summary>
+        protected ZonesDeleteOperation()
+        {
+        }
+
         internal ZonesDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ZonesDeleteOperation");

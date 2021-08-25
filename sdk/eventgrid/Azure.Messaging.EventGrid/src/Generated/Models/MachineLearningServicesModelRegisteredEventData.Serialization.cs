@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MachineLearningServicesModelRegisteredEventDataConverter))]
     public partial class MachineLearningServicesModelRegisteredEventData
     {
         internal static MachineLearningServicesModelRegisteredEventData DeserializeMachineLearningServicesModelRegisteredEventData(JsonElement element)
@@ -52,6 +55,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MachineLearningServicesModelRegisteredEventData(modelName.Value, modelVersion.Value, modelTags.Value, modelProperties.Value);
+        }
+
+        internal partial class MachineLearningServicesModelRegisteredEventDataConverter : JsonConverter<MachineLearningServicesModelRegisteredEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MachineLearningServicesModelRegisteredEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override MachineLearningServicesModelRegisteredEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMachineLearningServicesModelRegisteredEventData(document.RootElement);
+            }
         }
     }
 }

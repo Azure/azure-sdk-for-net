@@ -1,12 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
+using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Tests.Artifacts
+namespace Azure.Analytics.Synapse.Artifacts.Tests
 {
     /// <summary>
     /// The suite of tests for the <see cref="DatasetClient"/> class.
@@ -15,46 +19,55 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class DatasetClientLiveTests : ArtifactsClientTestBase
+    public class DatasetClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DatasetClientLiveTests"/> class.
-        /// </summary>
-        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public DatasetClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [Test]
+        private DatasetClient CreateClient()
+        {
+            return InstrumentClient(new DatasetClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new ArtifactsClientOptions())
+            ));
+        }
+
+        [RecordedTest]
         public async Task TestGetDataset()
         {
-            await foreach (var expectedDataset in DatasetClient.GetDatasetsByWorkspaceAsync())
+            DatasetClient client = CreateClient();
+            await foreach (var expectedDataset in client.GetDatasetsByWorkspaceAsync())
             {
-                DatasetResource actualDataset = await DatasetClient.GetDatasetAsync(expectedDataset.Name);
+                DatasetResource actualDataset = await client.GetDatasetAsync(expectedDataset.Name);
                 Assert.AreEqual(expectedDataset.Name, actualDataset.Name);
                 Assert.AreEqual(expectedDataset.Id, actualDataset.Id);
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestCreateDataset()
         {
-            string datasetName = Recording.GenerateName("Dataset");
-            DatasetCreateOrUpdateDatasetOperation operation = await DatasetClient.StartCreateOrUpdateDatasetAsync(datasetName, new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
+            DatasetClient client = CreateClient();
+
+            string datasetName = Recording.GenerateId("Dataset", 16);
+            DatasetCreateOrUpdateDatasetOperation operation = await client.StartCreateOrUpdateDatasetAsync(datasetName, new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
             DatasetResource dataset = await operation.WaitForCompletionAsync();
             Assert.AreEqual(datasetName, dataset.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestDeleteDataset()
         {
-            string datasetName = Recording.GenerateName("Dataset");
+            DatasetClient client = CreateClient();
+            string datasetName = Recording.GenerateId("Dataset", 16);
 
-            DatasetCreateOrUpdateDatasetOperation createOperation = await DatasetClient.StartCreateOrUpdateDatasetAsync(datasetName, new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
+            DatasetCreateOrUpdateDatasetOperation createOperation = await client.StartCreateOrUpdateDatasetAsync(datasetName, new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
             await createOperation.WaitForCompletionAsync();
 
-            DatasetDeleteDatasetOperation deleteOperation = await DatasetClient.StartDeleteDatasetAsync(datasetName);
-            Response response = await deleteOperation.WaitForCompletionAsync();
+            DatasetDeleteDatasetOperation deleteOperation = await client.StartDeleteDatasetAsync(datasetName);
+            Response response = await deleteOperation.WaitForCompletionResponseAsync();
             Assert.AreEqual(200, response.Status);
         }
     }

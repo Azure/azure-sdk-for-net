@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkWatchersGetAzureReachabilityReportOperation : Operation<AzureReachabilityReport>, IOperationSource<AzureReachabilityReport>
     {
         private readonly ArmOperationHelpers<AzureReachabilityReport> _operation;
+
+        /// <summary> Initializes a new instance of NetworkWatchersGetAzureReachabilityReportOperation for mocking. </summary>
+        protected NetworkWatchersGetAzureReachabilityReportOperation()
+        {
+        }
+
         internal NetworkWatchersGetAzureReachabilityReportOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<AzureReachabilityReport>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetAzureReachabilityReportOperation");

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication
 {
-    internal class CommunicationServiceDeleteHeaders
+    internal partial class CommunicationServiceDeleteHeaders
     {
         private readonly Response _response;
         public CommunicationServiceDeleteHeaders(Response response)

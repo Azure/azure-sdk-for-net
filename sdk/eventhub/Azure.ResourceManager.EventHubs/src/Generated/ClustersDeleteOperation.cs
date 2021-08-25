@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.EventHubs
     public partial class ClustersDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of ClustersDeleteOperation for mocking. </summary>
+        protected ClustersDeleteOperation()
+        {
+        }
+
         internal ClustersDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ClustersDeleteOperation");

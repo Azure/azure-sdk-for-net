@@ -86,10 +86,11 @@ namespace Azure.ResourceManager.Communication.Tests
                 resourceRetrieved.Value.ProvisioningState.ToString());
 
             // Update
+            CommunicationServiceResource emptyResource = new CommunicationServiceResource();
             resource = await acsClient.CommunicationService.UpdateAsync(
                 rg.Name,
                 resourceName,
-                new TaggedResource());
+                emptyResource);
 
             Assert.True(resource.Tags.Count == 0);
 
@@ -153,15 +154,15 @@ namespace Azure.ResourceManager.Communication.Tests
                 resource.Tags as IEnumerable<KeyValuePair<string, string>>,
                 resourceRetrieved.Value.Tags as IEnumerable<KeyValuePair<string, string>>);
 
+            // Update
             resource.Tags.Remove("tag1");
             resource.Tags["tag2"] = "tag2newval";
             resource.Tags.Add("tag3", "tag3val");
 
-            // Update
             resource = await acsClient.CommunicationService.UpdateAsync(
                 rg.Name,
                 resourceName,
-                new TaggedResource(resource.Tags));
+                resource);
 
             Assert.False(resource.Tags.ContainsKey("tag1"));
             Assert.AreEqual("tag2newval", resource.Tags["tag2"]);

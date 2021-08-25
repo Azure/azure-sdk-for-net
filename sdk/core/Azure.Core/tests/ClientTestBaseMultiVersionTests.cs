@@ -6,7 +6,8 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    [ClientTestFixture(FakeClientVersion.V1, FakeClientVersion.V2, FakeClientVersion.V3)]
+    [ClientTestFixture(FakeClientVersion.V0, FakeClientVersion.V1, FakeClientVersion.V2, FakeClientVersion.V3, FakeClientVersion.V4)]
+    [ServiceVersion(Min = FakeClientVersion.V1, Max = FakeClientVersion.V3)]
     public class ClientTestBaseMultiVersionTests : ClientTestBase
     {
         private readonly FakeClientVersion _version;
@@ -59,9 +60,11 @@ namespace Azure.Core.Tests
 
         public enum FakeClientVersion
         {
+            V0 = 0,
             V1 = 1,
             V2 = 2,
-            V3 = 3
+            V3 = 3,
+            V4 = 4
         }
     }
 }

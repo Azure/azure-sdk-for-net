@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='operationId'>
             /// Operation ID
             /// </param>
-            public static object GetAzureAsyncHeaderResult(this IOperations operations, string resourceGroupName, string workspaceName, string operationId)
+            public static OperationResource GetAzureAsyncHeaderResult(this IOperations operations, string resourceGroupName, string workspaceName, string operationId)
             {
                 return operations.GetAzureAsyncHeaderResultAsync(resourceGroupName, workspaceName, operationId).GetAwaiter().GetResult();
             }
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetAzureAsyncHeaderResultAsync(this IOperations operations, string resourceGroupName, string workspaceName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationResource> GetAzureAsyncHeaderResultAsync(this IOperations operations, string resourceGroupName, string workspaceName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAzureAsyncHeaderResultWithHttpMessagesAsync(resourceGroupName, workspaceName, operationId, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -66,7 +66,9 @@ namespace DataShare.Tests.ScenarioTests
 
         internal static SynchronizationSetting GetSynchronizationSetting()
         {
-            return new ScheduledSynchronizationSetting(RecurrenceInterval.Day, DateTime.UtcNow);
+            var today = DateTime.Today;
+            var tomorrow = today.AddDays(1);
+            return new ScheduledSynchronizationSetting(RecurrenceInterval.Day, tomorrow);
         }
     }
 }

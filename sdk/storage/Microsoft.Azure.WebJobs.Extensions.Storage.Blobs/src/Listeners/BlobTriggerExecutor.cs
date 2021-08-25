@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         public async Task<FunctionResult> ExecuteAsync(BlobTriggerExecutorContext context, CancellationToken cancellationToken)
         {
             BlobBaseClient value = context.Blob.BlobClient;
-            BlobTriggerSource triggerSource = context.TriggerSource;
+            BlobTriggerScanSource triggerSource = context.TriggerSource;
             string pollId = context.PollId;
 
             // Avoid unnecessary network calls for non-matches. First, check to see if the blob matches this trigger.

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualHubsCreateOrUpdateOperation : Operation<VirtualHub>, IOperationSource<VirtualHub>
     {
         private readonly ArmOperationHelpers<VirtualHub> _operation;
+
+        /// <summary> Initializes a new instance of VirtualHubsCreateOrUpdateOperation for mocking. </summary>
+        protected VirtualHubsCreateOrUpdateOperation()
+        {
+        }
+
         internal VirtualHubsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VirtualHub>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualHubsCreateOrUpdateOperation");

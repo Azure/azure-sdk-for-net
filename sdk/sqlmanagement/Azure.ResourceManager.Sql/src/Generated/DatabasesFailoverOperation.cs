@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Sql
     public partial class DatabasesFailoverOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of DatabasesFailoverOperation for mocking. </summary>
+        protected DatabasesFailoverOperation()
+        {
+        }
+
         internal DatabasesFailoverOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatabasesFailoverOperation");

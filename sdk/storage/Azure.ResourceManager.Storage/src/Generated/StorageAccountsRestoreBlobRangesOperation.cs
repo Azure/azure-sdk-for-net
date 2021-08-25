@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Storage
     public partial class StorageAccountsRestoreBlobRangesOperation : Operation<BlobRestoreStatus>, IOperationSource<BlobRestoreStatus>
     {
         private readonly ArmOperationHelpers<BlobRestoreStatus> _operation;
+
+        /// <summary> Initializes a new instance of StorageAccountsRestoreBlobRangesOperation for mocking. </summary>
+        protected StorageAccountsRestoreBlobRangesOperation()
+        {
+        }
+
         internal StorageAccountsRestoreBlobRangesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<BlobRestoreStatus>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "StorageAccountsRestoreBlobRangesOperation");

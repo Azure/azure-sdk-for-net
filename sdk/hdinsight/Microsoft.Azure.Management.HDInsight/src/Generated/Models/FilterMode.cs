@@ -18,5 +18,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     {
         public const string Exclude = "Exclude";
         public const string Include = "Include";
+        public const string Recommend = "Recommend";
+        public const string Default = "Default";
     }
 }

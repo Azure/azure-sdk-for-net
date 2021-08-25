@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of managed databases. </summary>
-    public partial class ManagedDatabaseListResult
+    internal partial class ManagedDatabaseListResult
     {
         /// <summary> Initializes a new instance of ManagedDatabaseListResult. </summary>
         internal ManagedDatabaseListResult()

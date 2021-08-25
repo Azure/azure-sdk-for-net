@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.Serialization;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -9,7 +10,8 @@ namespace Azure.Identity
     /// <summary>
     /// An exception indicating that interactive authentication is required.
     /// </summary>
-    internal class AuthenticationRequiredException : CredentialUnavailableException
+    [Serializable]
+    public class AuthenticationRequiredException : CredentialUnavailableException
     {
         /// <summary>
         /// Creates a new <see cref="AuthenticationRequiredException"/> with the specified message and context.
@@ -19,7 +21,6 @@ namespace Azure.Identity
         public AuthenticationRequiredException(string message, TokenRequestContext context)
             : this(message, context, default)
         {
-
         }
 
         /// <summary>
@@ -32,6 +33,16 @@ namespace Azure.Identity
             : base(message, innerException)
         {
             TokenRequestContext = context;
+        }
+
+        /// <summary>
+        /// A constructor used for serialization.
+        /// </summary>
+        /// <param name="info">The <see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The <see cref="StreamingContext"/>.</param>
+        /// <returns></returns>
+        protected AuthenticationRequiredException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class FileShareItems
+    internal partial class FileShareItems
     {
         internal static FileShareItems DeserializeFileShareItems(JsonElement element)
         {

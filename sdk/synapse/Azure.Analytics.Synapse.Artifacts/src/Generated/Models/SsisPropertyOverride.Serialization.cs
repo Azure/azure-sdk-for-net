@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SsisPropertyOverrideConverter))]
     public partial class SsisPropertyOverride : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -48,6 +51,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SsisPropertyOverride(value, Optional.ToNullable(isSensitive));
+        }
+
+        internal partial class SsisPropertyOverrideConverter : JsonConverter<SsisPropertyOverride>
+        {
+            public override void Write(Utf8JsonWriter writer, SsisPropertyOverride model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SsisPropertyOverride Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSsisPropertyOverride(document.RootElement);
+            }
         }
     }
 }

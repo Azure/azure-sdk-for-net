@@ -5,6 +5,7 @@ using Microsoft.Azure.Management.Migrate.ResourceMover.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,15 +14,15 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Tests
     public class ResourceMoverTests : ResourceMoverTestsBase
     {
         private const string MoveCollectionResourceGroup = "moveCollectionRg";
-        private const string MoveCollectionRegion = "eastus2";
+        private const string MoveCollectionRegion = "eastus2euap";
         private const string SourceRegion = "eastus";
         private const string TargetRegion = "westus2";
         private const string MoveCollectionName = "ResourceMover-eastus-westus2";
         private const string VirtualMachineId = "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Compute/virtualMachines/vm1";
         private const string AvailabilitySetId = "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Compute/availabilitySets/AvailabilitySet1";
-        private const string NetworkInterfaceId = "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Network/networkInterfaces/vm1364";
+        private const string NetworkInterfaceId = "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Network/networkInterfaces/vm1294";
         private const string VirtualNetworkId = "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Network/virtualNetworks/vnet1";
-        private const string NetworkSecurityGroupId = "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Network/networkSecurityGroups/vm1-nsg";
+        private const string NetworkSecurityGroupId = "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Network/networkSecurityGroups/vm1nsg799";
         private const string PublicIpId = "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Network/publicIPAddresses/vm1-publicIp";
         private const string LoadBalancerId = "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS/providers/Microsoft.Network/loadBalancers/LoadBalancer1";
         private const string ResourceGroupId = "/subscriptions/e80eb9fa-c996-4435-aa32-5af6f3d3077c/resourceGroups/NETSdkEastUS";
@@ -31,6 +32,8 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Tests
 
         private const string SystemAssignedIdentityType = "SystemAssigned";
         private const string NoneIdentityType = "None";
+
+        private const string DescendentDependencyLevel = "Descendant";
 
         private TestHelper TestHelper { get; set; }
 
@@ -88,11 +91,11 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Tests
                 {
                     Tags = new Dictionary<string, string>()
                     {
-                        { "Key1", "Value1 " }
+                        { "Key1", "Value1" }
                     },
                     Identity = new Identity()
                     {
-                        Type = NoneIdentityType
+                        Type = SystemAssignedIdentityType
                     }
                 };
 
@@ -137,6 +140,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Tests
                     (await client.MoveCollections.DeleteWithHttpMessagesAsync(
                         MoveCollectionResourceGroup,
                         MoveCollectionName)).Body;
+                
                 Assert.True(operationStatus == null ||
                     OperationStatusSucceeded.Equals(
                     operationStatus.Status,
@@ -162,8 +166,8 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Tests
                     };
 
                 // VM redundancy can be set to either availability set or availaiblity zone.
-                // We are moving the VM from availability set to availability zone, so overriding the
-                // availability set dependency of VM to null.
+                // We are moving the VM from availability set to availability zone,
+                // so overriding the availability set dependency of VM to null.
                 var vmDependencyOverrideList = new List<MoveResourceDependencyOverride>()
                 {
                     new MoveResourceDependencyOverride()
@@ -271,13 +275,48 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Tests
             {
                 this.TestHelper.Initialize(context);
                 var client = TestHelper.ResourceMoverServiceClient;
-
-                var unresolvedDependencies =
+                var unresolvedDependencies = new List<UnresolvedDependency>();
+                var response =
                     (await client.UnresolvedDependencies.GetWithHttpMessagesAsync(
                         MoveCollectionResourceGroup,
-                        MoveCollectionName)).Body;
+                        MoveCollectionName,
+                        dependencyLevel: DescendentDependencyLevel)).Body;
+                unresolvedDependencies.AddRange(response);
+                while(!string.IsNullOrEmpty(response.NextPageLink))
+                {
+                    response =
+                        (await client.UnresolvedDependencies.GetNextWithHttpMessagesAsync(
+                            response.NextPageLink)).Body;
+                    unresolvedDependencies.AddRange(response);
+                }
 
-                Assert.NotNull(unresolvedDependencies.Value);
+                var unresolvedDependencySourceIds = unresolvedDependencies.Select(
+                    dependency => dependency.Id).ToList();
+
+                Assert.Contains(
+                    NetworkInterfaceId,
+                    unresolvedDependencySourceIds,
+                    StringComparer.OrdinalIgnoreCase);
+                Assert.Contains(
+                    VirtualNetworkId,
+                    unresolvedDependencySourceIds,
+                    StringComparer.OrdinalIgnoreCase);
+                Assert.Contains(
+                    LoadBalancerId,
+                    unresolvedDependencySourceIds,
+                    StringComparer.OrdinalIgnoreCase);
+                Assert.Contains(
+                    ResourceGroupId,
+                    unresolvedDependencySourceIds,
+                    StringComparer.OrdinalIgnoreCase);
+                Assert.Contains(
+                    NetworkSecurityGroupId,
+                    unresolvedDependencySourceIds,
+                    StringComparer.OrdinalIgnoreCase);
+                Assert.Contains(
+                    PublicIpId,
+                    unresolvedDependencySourceIds,
+                    StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -531,8 +570,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Tests
                         PublicIpId,
                         LoadBalancerId,
                         VirtualNetworkId,
-                        NetworkSecurityGroupId,
-                        ResourceGroupId
+                        NetworkSecurityGroupId
                     },
                     ValidateOnly = true,
                     MoveResourceInputType = MoveResourceInputType.MoveResourceSourceId
@@ -568,8 +606,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Tests
                         PublicIpId,
                         LoadBalancerId,
                         VirtualNetworkId,
-                        NetworkSecurityGroupId,
-                        ResourceGroupId
+                        NetworkSecurityGroupId
                     },
                     MoveResourceInputType = MoveResourceInputType.MoveResourceSourceId
                 };
@@ -603,7 +640,9 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Tests
                         PublicIpId,
                         VirtualNetworkId,
                         NetworkSecurityGroupId,
-                        ResourceGroupId
+                        ResourceGroupId,
+                        NetworkInterfaceId,
+                        LoadBalancerId
                     },
                     ValidateOnly = true,
                     MoveResourceInputType = MoveResourceInputType.MoveResourceSourceId
@@ -638,7 +677,9 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Tests
                         PublicIpId,
                         VirtualNetworkId,
                         NetworkSecurityGroupId,
-                        ResourceGroupId
+                        ResourceGroupId,
+                        NetworkInterfaceId,
+                        LoadBalancerId
                     },
                     MoveResourceInputType = MoveResourceInputType.MoveResourceSourceId
                 };

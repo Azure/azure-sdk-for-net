@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Sql
     public partial class SyncAgentsDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of SyncAgentsDeleteOperation for mocking. </summary>
+        protected SyncAgentsDeleteOperation()
+        {
+        }
+
         internal SyncAgentsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SyncAgentsDeleteOperation");

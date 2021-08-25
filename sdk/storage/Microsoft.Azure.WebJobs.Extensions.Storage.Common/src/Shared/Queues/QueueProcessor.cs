@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             }
         }
 
-        private async Task HandlePoisonMessageAsync(QueueMessage message, CancellationToken cancellationToken)
+        internal async Task HandlePoisonMessageAsync(QueueMessage message, CancellationToken cancellationToken)
         {
             if (_poisonQueue != null)
             {
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             string msg = string.Format(CultureInfo.InvariantCulture, "Message has reached MaxDequeueCount of {0}. Moving message to queue '{1}'.", QueuesOptions.MaxDequeueCount, poisonQueue.Name);
             _logger?.LogWarning(msg);
 
-            await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message.MessageText, cancellationToken).ConfigureAwait(false);
+            await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message.Body, cancellationToken).ConfigureAwait(false);
 
             var eventArgs = new PoisonMessageEventArgs(message, poisonQueue);
             OnMessageAddedToPoisonQueue(eventArgs);

@@ -23,7 +23,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             #region Snippet:SchemaRegistryCreateSchemaRegistryClient
             // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+            // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
             var client = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
             #endregion
 
@@ -79,8 +79,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 ]
             }";
 
-            Response<SchemaProperties> schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
-            string schemaId = schemaProperties.Value.Id;
+            SchemaProperties schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
+            string schemaId = schemaProperties.Id;
             #endregion
 
             Assert.AreEqual(_schemaProperties.Id, schemaId);
@@ -93,8 +93,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             var schemaId = _schemaProperties.Id;
 
             #region Snippet:SchemaRegistryRetrieveSchema
-            Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);
-            string schemaContent = schemaProperties.Value.Content;
+            SchemaProperties schemaProperties = client.GetSchema(schemaId);
+            string schemaContent = schemaProperties.Content;
             #endregion
 
             Assert.AreEqual(Regex.Replace(_schemaProperties.Content, @"\s+", string.Empty), schemaContent);

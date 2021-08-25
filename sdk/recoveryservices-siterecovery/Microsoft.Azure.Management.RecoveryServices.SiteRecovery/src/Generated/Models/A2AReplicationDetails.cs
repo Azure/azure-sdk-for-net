@@ -34,14 +34,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="fabricObjectId">The fabric specific object Id of the
         /// virtual machine.</param>
-        /// <param name="initialPrimaryFabricLocation">The initial primary
-        /// fabric location.</param>
-        /// <param name="initialRecoveryFabricLocation">The initial recovery
-        /// fabric location.</param>
         /// <param name="initialPrimaryZone">The initial primary availability
         /// zone.</param>
+        /// <param name="initialPrimaryFabricLocation">The initial primary
+        /// fabric location.</param>
         /// <param name="initialRecoveryZone">The initial recovery availability
         /// zone.</param>
+        /// <param name="initialRecoveryFabricLocation">The initial recovery
+        /// fabric location.</param>
         /// <param name="multiVmGroupId">The multi vm group Id.</param>
         /// <param name="multiVmGroupName">The multi vm group name.</param>
         /// <param name="multiVmGroupCreateOption">Whether Multi VM group is
@@ -86,8 +86,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="lastHeartbeat">The last heartbeat received from the
         /// source server.</param>
         /// <param name="agentVersion">The agent version.</param>
+        /// <param name="agentExpiryDate">Agent expiry date.</param>
         /// <param name="isReplicationAgentUpdateRequired">A value indicating
         /// whether replication agent update is required.</param>
+        /// <param name="agentCertificateExpiryDate">Agent certificate expiry
+        /// date.</param>
+        /// <param name="isReplicationAgentCertificateUpdateRequired">A value
+        /// indicating whether agent certificate update is required.</param>
         /// <param name="recoveryFabricObjectId">The recovery fabric object
         /// Id.</param>
         /// <param name="vmProtectionState">The protection state for the
@@ -105,21 +110,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="rpoInSeconds">The last RPO value in seconds.</param>
         /// <param name="lastRpoCalculatedTime">The time (in UTC) when the last
         /// RPO value was calculated by Protection Service.</param>
+        /// <param name="primaryAvailabilityZone">The primary availability
+        /// zone.</param>
         /// <param name="recoveryAvailabilityZone">The recovery availability
         /// zone.</param>
         /// <param name="vmEncryptionType">The encryption type of the VM.
         /// Possible values include: 'NotEncrypted', 'OnePassEncrypted',
         /// 'TwoPassEncrypted'</param>
-        /// <param name="tfoAzureVMName">The test failover VM name.</param>
+        /// <param name="tfoAzureVMName">The test failover vm name.</param>
+        /// <param name="recoveryAzureGeneration">The recovery azure
+        /// generation.</param>
         /// <param name="recoveryProximityPlacementGroupId">The recovery
         /// proximity placement group Id.</param>
-        public A2AReplicationDetails(string fabricObjectId = default(string), string initialPrimaryFabricLocation = default(string), string initialRecoveryFabricLocation = default(string), string initialPrimaryZone = default(string), string initialRecoveryZone = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmGroupCreateOption = default(string), string managementId = default(string), IList<A2AProtectedDiskDetails> protectedDisks = default(IList<A2AProtectedDiskDetails>), IList<A2AUnprotectedDiskDetails> unprotectedDisks = default(IList<A2AUnprotectedDiskDetails>), IList<A2AProtectedManagedDiskDetails> protectedManagedDisks = default(IList<A2AProtectedManagedDiskDetails>), string recoveryBootDiagStorageAccountId = default(string), string primaryFabricLocation = default(string), string recoveryFabricLocation = default(string), string osType = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureVMName = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryCloudService = default(string), string recoveryAvailabilitySet = default(string), string selectedRecoveryAzureNetworkId = default(string), string selectedTfoAzureNetworkId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), AzureToAzureVmSyncedConfigDetails vmSyncedConfigDetails = default(AzureToAzureVmSyncedConfigDetails), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string agentVersion = default(string), bool? isReplicationAgentUpdateRequired = default(bool?), string recoveryFabricObjectId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), string lifecycleId = default(string), string testFailoverRecoveryFabricObjectId = default(string), long? rpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string recoveryAvailabilityZone = default(string), string vmEncryptionType = default(string), string tfoAzureVMName = default(string), string recoveryProximityPlacementGroupId = default(string))
+        /// <param name="autoProtectionOfDataDisk">A value indicating whether
+        /// the auto protection is enabled. Possible values include:
+        /// 'Disabled', 'Enabled'</param>
+        /// <param name="recoveryVirtualMachineScaleSetId">The recovery virtual
+        /// machine scale set id.</param>
+        public A2AReplicationDetails(string fabricObjectId = default(string), string initialPrimaryZone = default(string), string initialPrimaryFabricLocation = default(string), string initialRecoveryZone = default(string), string initialRecoveryFabricLocation = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmGroupCreateOption = default(string), string managementId = default(string), IList<A2AProtectedDiskDetails> protectedDisks = default(IList<A2AProtectedDiskDetails>), IList<A2AUnprotectedDiskDetails> unprotectedDisks = default(IList<A2AUnprotectedDiskDetails>), IList<A2AProtectedManagedDiskDetails> protectedManagedDisks = default(IList<A2AProtectedManagedDiskDetails>), string recoveryBootDiagStorageAccountId = default(string), string primaryFabricLocation = default(string), string recoveryFabricLocation = default(string), string osType = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureVMName = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryCloudService = default(string), string recoveryAvailabilitySet = default(string), string selectedRecoveryAzureNetworkId = default(string), string selectedTfoAzureNetworkId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), AzureToAzureVmSyncedConfigDetails vmSyncedConfigDetails = default(AzureToAzureVmSyncedConfigDetails), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string agentVersion = default(string), System.DateTime? agentExpiryDate = default(System.DateTime?), bool? isReplicationAgentUpdateRequired = default(bool?), System.DateTime? agentCertificateExpiryDate = default(System.DateTime?), bool? isReplicationAgentCertificateUpdateRequired = default(bool?), string recoveryFabricObjectId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), string lifecycleId = default(string), string testFailoverRecoveryFabricObjectId = default(string), long? rpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string primaryAvailabilityZone = default(string), string recoveryAvailabilityZone = default(string), string vmEncryptionType = default(string), string tfoAzureVMName = default(string), string recoveryAzureGeneration = default(string), string recoveryProximityPlacementGroupId = default(string), string autoProtectionOfDataDisk = default(string), string recoveryVirtualMachineScaleSetId = default(string))
         {
             FabricObjectId = fabricObjectId;
-            InitialPrimaryFabricLocation = initialPrimaryFabricLocation;
-            InitialRecoveryFabricLocation = initialRecoveryFabricLocation;
             InitialPrimaryZone = initialPrimaryZone;
+            InitialPrimaryFabricLocation = initialPrimaryFabricLocation;
             InitialRecoveryZone = initialRecoveryZone;
+            InitialRecoveryFabricLocation = initialRecoveryFabricLocation;
             MultiVmGroupId = multiVmGroupId;
             MultiVmGroupName = multiVmGroupName;
             MultiVmGroupCreateOption = multiVmGroupCreateOption;
@@ -144,7 +158,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             MonitoringJobType = monitoringJobType;
             LastHeartbeat = lastHeartbeat;
             AgentVersion = agentVersion;
+            AgentExpiryDate = agentExpiryDate;
             IsReplicationAgentUpdateRequired = isReplicationAgentUpdateRequired;
+            AgentCertificateExpiryDate = agentCertificateExpiryDate;
+            IsReplicationAgentCertificateUpdateRequired = isReplicationAgentCertificateUpdateRequired;
             RecoveryFabricObjectId = recoveryFabricObjectId;
             VmProtectionState = vmProtectionState;
             VmProtectionStateDescription = vmProtectionStateDescription;
@@ -152,10 +169,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TestFailoverRecoveryFabricObjectId = testFailoverRecoveryFabricObjectId;
             RpoInSeconds = rpoInSeconds;
             LastRpoCalculatedTime = lastRpoCalculatedTime;
+            PrimaryAvailabilityZone = primaryAvailabilityZone;
             RecoveryAvailabilityZone = recoveryAvailabilityZone;
             VmEncryptionType = vmEncryptionType;
             TfoAzureVMName = tfoAzureVMName;
+            RecoveryAzureGeneration = recoveryAzureGeneration;
             RecoveryProximityPlacementGroupId = recoveryProximityPlacementGroupId;
+            AutoProtectionOfDataDisk = autoProtectionOfDataDisk;
+            RecoveryVirtualMachineScaleSetId = recoveryVirtualMachineScaleSetId;
             CustomInit();
         }
 
@@ -171,28 +192,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string FabricObjectId { get; set; }
 
         /// <summary>
-        /// Gets the initial primary fabric location.
-        /// </summary>
-        [JsonProperty(PropertyName = "initialPrimaryFabricLocation")]
-        public string InitialPrimaryFabricLocation { get; private set; }
-
-        /// <summary>
-        /// Gets the initial recovery fabric location.
-        /// </summary>
-        [JsonProperty(PropertyName = "initialRecoveryFabricLocation")]
-        public string InitialRecoveryFabricLocation { get; private set; }
-
-        /// <summary>
         /// Gets the initial primary availability zone.
         /// </summary>
         [JsonProperty(PropertyName = "initialPrimaryZone")]
         public string InitialPrimaryZone { get; private set; }
 
         /// <summary>
+        /// Gets the initial primary fabric location.
+        /// </summary>
+        [JsonProperty(PropertyName = "initialPrimaryFabricLocation")]
+        public string InitialPrimaryFabricLocation { get; private set; }
+
+        /// <summary>
         /// Gets the initial recovery availability zone.
         /// </summary>
         [JsonProperty(PropertyName = "initialRecoveryZone")]
         public string InitialRecoveryZone { get; private set; }
+
+        /// <summary>
+        /// Gets the initial recovery fabric location.
+        /// </summary>
+        [JsonProperty(PropertyName = "initialRecoveryFabricLocation")]
+        public string InitialRecoveryFabricLocation { get; private set; }
 
         /// <summary>
         /// Gets or sets the multi vm group Id.
@@ -342,11 +363,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string AgentVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets agent expiry date.
+        /// </summary>
+        [JsonProperty(PropertyName = "agentExpiryDate")]
+        public System.DateTime? AgentExpiryDate { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether replication agent update is
         /// required.
         /// </summary>
         [JsonProperty(PropertyName = "isReplicationAgentUpdateRequired")]
         public bool? IsReplicationAgentUpdateRequired { get; set; }
+
+        /// <summary>
+        /// Gets agent certificate expiry date.
+        /// </summary>
+        [JsonProperty(PropertyName = "agentCertificateExpiryDate")]
+        public System.DateTime? AgentCertificateExpiryDate { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether agent certificate update is
+        /// required.
+        /// </summary>
+        [JsonProperty(PropertyName = "isReplicationAgentCertificateUpdateRequired")]
+        public bool? IsReplicationAgentCertificateUpdateRequired { get; set; }
 
         /// <summary>
         /// Gets or sets the recovery fabric object Id.
@@ -397,6 +437,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public System.DateTime? LastRpoCalculatedTime { get; set; }
 
         /// <summary>
+        /// Gets or sets the primary availability zone.
+        /// </summary>
+        [JsonProperty(PropertyName = "primaryAvailabilityZone")]
+        public string PrimaryAvailabilityZone { get; set; }
+
+        /// <summary>
         /// Gets or sets the recovery availability zone.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryAvailabilityZone")]
@@ -410,16 +456,35 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string VmEncryptionType { get; private set; }
 
         /// <summary>
-        /// Gets or sets the test failover VM name.
+        /// Gets or sets the test failover vm name.
         /// </summary>
         [JsonProperty(PropertyName = "tfoAzureVMName")]
         public string TfoAzureVMName { get; set; }
+
+        /// <summary>
+        /// Gets the recovery azure generation.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryAzureGeneration")]
+        public string RecoveryAzureGeneration { get; private set; }
 
         /// <summary>
         /// Gets or sets the recovery proximity placement group Id.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryProximityPlacementGroupId")]
         public string RecoveryProximityPlacementGroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the auto protection is
+        /// enabled. Possible values include: 'Disabled', 'Enabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "autoProtectionOfDataDisk")]
+        public string AutoProtectionOfDataDisk { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recovery virtual machine scale set id.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryVirtualMachineScaleSetId")]
+        public string RecoveryVirtualMachineScaleSetId { get; set; }
 
     }
 }

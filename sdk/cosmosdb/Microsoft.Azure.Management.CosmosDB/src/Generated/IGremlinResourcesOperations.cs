@@ -196,6 +196,64 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </exception>
         Task<AzureOperationResponse<ThroughputSettingsGetResults>> UpdateGremlinDatabaseThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Migrate an Azure Cosmos DB Gremlin database from manual throughput
+        /// to autoscale
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateGremlinDatabaseToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Gremlin database from autoscale to
+        /// manual throughput
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateGremlinDatabaseToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists the Gremlin graph under an existing Azure Cosmos DB database
         /// account.
         /// </summary>
@@ -386,6 +444,70 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </exception>
         Task<AzureOperationResponse<ThroughputSettingsGetResults>> UpdateGremlinGraphThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string graphName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Migrate an Azure Cosmos DB Gremlin graph from manual throughput to
+        /// autoscale
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='graphName'>
+        /// Cosmos DB graph name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateGremlinGraphToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Gremlin graph from autoscale to manual
+        /// throughput
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='graphName'>
+        /// Cosmos DB graph name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateGremlinGraphToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or update an Azure Cosmos DB Gremlin database
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -473,6 +595,64 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginUpdateGremlinDatabaseThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Gremlin database from manual throughput
+        /// to autoscale
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateGremlinDatabaseToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Gremlin database from autoscale to
+        /// manual throughput
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateGremlinDatabaseToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update an Azure Cosmos DB Gremlin graph
         /// </summary>
@@ -570,5 +750,69 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginUpdateGremlinGraphThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string graphName, ThroughputSettingsUpdateParameters updateThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Gremlin graph from manual throughput to
+        /// autoscale
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='graphName'>
+        /// Cosmos DB graph name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateGremlinGraphToAutoscaleWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Migrate an Azure Cosmos DB Gremlin graph from autoscale to manual
+        /// throughput
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='graphName'>
+        /// Cosmos DB graph name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateGremlinGraphToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string graphName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

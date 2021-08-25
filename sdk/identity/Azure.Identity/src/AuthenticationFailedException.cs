@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// An exception class raised for errors in authenticating client requests.
     /// </summary>
+    [Serializable]
     public class AuthenticationFailedException : Exception
     {
         /// <summary>
@@ -29,6 +31,16 @@ namespace Azure.Identity
         /// <param name="innerException">The exception underlying the authentication failure.</param>
         public AuthenticationFailedException(string message, Exception innerException)
             : base(message, innerException)
+        {
+        }
+
+        /// <summary>
+        /// A constructor used for serialization.
+        /// </summary>
+        /// <param name="info">The <see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The <see cref="StreamingContext"/>.</param>
+        /// <returns></returns>
+        protected AuthenticationFailedException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

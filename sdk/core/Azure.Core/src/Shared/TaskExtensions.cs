@@ -79,7 +79,6 @@ namespace Azure.Core.Pipeline
 
         public static ConfiguredValueTaskAwaitable EnsureCompleted(this ConfiguredValueTaskAwaitable awaitable, bool async)
         {
-
             if (!async)
             {
 #if DEBUG

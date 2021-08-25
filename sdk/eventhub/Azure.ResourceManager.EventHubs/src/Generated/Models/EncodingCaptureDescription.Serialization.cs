@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal static class EncodingCaptureDescriptionExtensions
+    internal static partial class EncodingCaptureDescriptionExtensions
     {
         public static string ToSerialString(this EncodingCaptureDescription value) => value switch
         {

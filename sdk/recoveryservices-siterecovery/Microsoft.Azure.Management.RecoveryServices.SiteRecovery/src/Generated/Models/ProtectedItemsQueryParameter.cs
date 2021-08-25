@@ -34,18 +34,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="sourceFabricName">The source fabric name
         /// filter.</param>
         /// <param name="recoveryPlanName">The recovery plan filter.</param>
+        /// <param name="sourceFabricLocation">The source fabric location
+        /// filter.</param>
+        /// <param name="fabricObjectId">The fabric object Id filter.</param>
         /// <param name="vCenterName">The vCenter name filter.</param>
         /// <param name="instanceType">The replication provider type.</param>
         /// <param name="multiVmGroupCreateOption">Whether Multi VM group is
         /// auto created or specified by user. Possible values include:
         /// 'AutoCreated', 'UserSpecified'</param>
-        public ProtectedItemsQueryParameter(string sourceFabricName = default(string), string recoveryPlanName = default(string), string vCenterName = default(string), string instanceType = default(string), string multiVmGroupCreateOption = default(string))
+        /// <param name="processServerId">The process server Id filter.</param>
+        public ProtectedItemsQueryParameter(string sourceFabricName = default(string), string recoveryPlanName = default(string), string sourceFabricLocation = default(string), string fabricObjectId = default(string), string vCenterName = default(string), string instanceType = default(string), string multiVmGroupCreateOption = default(string), string processServerId = default(string))
         {
             SourceFabricName = sourceFabricName;
             RecoveryPlanName = recoveryPlanName;
+            SourceFabricLocation = sourceFabricLocation;
+            FabricObjectId = fabricObjectId;
             VCenterName = vCenterName;
             InstanceType = instanceType;
             MultiVmGroupCreateOption = multiVmGroupCreateOption;
+            ProcessServerId = processServerId;
             CustomInit();
         }
 
@@ -67,6 +74,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string RecoveryPlanName { get; set; }
 
         /// <summary>
+        /// Gets or sets the source fabric location filter.
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceFabricLocation")]
+        public string SourceFabricLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the fabric object Id filter.
+        /// </summary>
+        [JsonProperty(PropertyName = "fabricObjectId")]
+        public string FabricObjectId { get; set; }
+
+        /// <summary>
         /// Gets or sets the vCenter name filter.
         /// </summary>
         [JsonProperty(PropertyName = "vCenterName")]
@@ -84,6 +103,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "multiVmGroupCreateOption")]
         public string MultiVmGroupCreateOption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the process server Id filter.
+        /// </summary>
+        [JsonProperty(PropertyName = "processServerId")]
+        public string ProcessServerId { get; set; }
 
     }
 }

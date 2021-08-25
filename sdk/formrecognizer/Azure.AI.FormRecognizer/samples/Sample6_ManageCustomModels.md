@@ -41,16 +41,19 @@ AsyncPageable<CustomFormModelInfo> models = client.GetCustomModelsAsync();
 await foreach (CustomFormModelInfo modelInfo in models)
 {
     Console.WriteLine($"Custom Model Info:");
-    Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
-    Console.WriteLine($"    Model name: {modelInfo.ModelName}");
-    Console.WriteLine($"    Is composed model: {modelInfo.Properties.IsComposedModel}");
-    Console.WriteLine($"    Model Status: {modelInfo.Status}");
-    Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
-    Console.WriteLine($"    Training model completed on: : {modelInfo.TrainingCompletedOn}");
+    Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
+    Console.WriteLine($"  Model name: {modelInfo.ModelName}");
+    Console.WriteLine($"  Is composed model: {modelInfo.Properties.IsComposedModel}");
+    Console.WriteLine($"  Model Status: {modelInfo.Status}");
+    Console.WriteLine($"  Training model started on: {modelInfo.TrainingStartedOn}");
+    Console.WriteLine($"  Training model completed on: : {modelInfo.TrainingCompletedOn}");
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, "My new model").WaitForCompletionAsync();
+Uri trainingFileUri = <trainingFileUri>;
+TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My new model");
+Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
+CustomFormModel model = operationResponse.Value;
 
 // Get the model that was just created
 CustomFormModel modelCopy = await client.GetCustomModelAsync(model.ModelId);
@@ -62,7 +65,7 @@ foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
     Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
     foreach (CustomFormModelField field in submodel.Fields.Values)
     {
-        Console.Write($"    FieldName: {field.Name}");
+        Console.Write($"  FieldName: {field.Name}");
         if (field.Label != null)
         {
             Console.Write($", FieldLabel: {field.Label}");
@@ -93,16 +96,20 @@ Pageable<CustomFormModelInfo> models = client.GetCustomModels();
 foreach (CustomFormModelInfo modelInfo in models.Take(10))
 {
     Console.WriteLine($"Custom Model Info:");
-    Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
-    Console.WriteLine($"    Model name: {modelInfo.ModelName}");
-    Console.WriteLine($"    Is composed model: {modelInfo.Properties.IsComposedModel}");
-    Console.WriteLine($"    Model Status: {modelInfo.Status}");
-    Console.WriteLine($"    Training model started on: {modelInfo.TrainingStartedOn}");
-    Console.WriteLine($"    Training model completed on: {modelInfo.TrainingCompletedOn}");
+    Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
+    Console.WriteLine($"  Model name: {modelInfo.ModelName}");
+    Console.WriteLine($"  Is composed model: {modelInfo.Properties.IsComposedModel}");
+    Console.WriteLine($"  Model Status: {modelInfo.Status}");
+    Console.WriteLine($"  Training model started on: {modelInfo.TrainingStartedOn}");
+    Console.WriteLine($"  Training model completed on: {modelInfo.TrainingCompletedOn}");
 }
 
 // Create a new model to store in the account
-CustomFormModel model = await client.StartTraining(new Uri(trainingFileUrl), useTrainingLabels: false, "My new model").WaitForCompletionAsync();
+
+Uri trainingFileUri = <trainingFileUri>;
+TrainingOperation operation = client.StartTraining(trainingFileUri, useTrainingLabels: false, "My new model");
+Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
+CustomFormModel model = operationResponse.Value;
 
 // Get the model that was just created
 CustomFormModel modelCopy = client.GetCustomModel(model.ModelId);
@@ -114,7 +121,7 @@ foreach (CustomFormSubmodel submodel in modelCopy.Submodels)
     Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
     foreach (CustomFormModelField field in submodel.Fields.Values)
     {
-        Console.Write($"    FieldName: {field.Name}");
+        Console.Write($"  FieldName: {field.Name}");
         if (field.Label != null)
         {
             Console.Write($", FieldLabel: {field.Label}");
@@ -129,7 +136,7 @@ client.DeleteModel(model.ModelId);
 
 To see the full example source files, see:
 
-* [Manage custom models (Asynchronous)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample7_ManageCustomModelsAsync.cs)
-* [Manage custom models (Synchronous)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample7_ManageCustomModels.cs)
+* [Manage custom models (Asynchronous)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample7_ManageCustomModelsAsync.cs)
+* [Manage custom models (Synchronous)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample7_ManageCustomModels.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

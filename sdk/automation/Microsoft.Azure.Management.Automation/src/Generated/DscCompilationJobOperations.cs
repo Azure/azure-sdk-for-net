@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The name of the automation account.
         /// </param>
         /// <param name='compilationJobName'>
-        /// The the DSC configuration Id.
+        /// The DSC configuration Id.
         /// </param>
         /// <param name='parameters'>
         /// The parameters supplied to the create compilation job operation.
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The name of the automation account.
         /// </param>
         /// <param name='compilationJobName'>
-        /// The the DSC configuration Id.
+        /// The DSC configuration Id.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-01-15";
+            string apiVersion = "2020-01-13-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-01-15";
+            string apiVersion = "2020-01-13-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -492,7 +492,7 @@ namespace Microsoft.Azure.Management.Automation
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DscCompilationJob>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<DscCompilationJob>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -581,7 +581,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-01-15";
+            string apiVersion = "2020-01-13-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -741,7 +741,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The name of the automation account.
         /// </param>
         /// <param name='compilationJobName'>
-        /// The the DSC configuration Id.
+        /// The DSC configuration Id.
         /// </param>
         /// <param name='parameters'>
         /// The parameters supplied to the create compilation job operation.
@@ -808,7 +808,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-01-15";
+            string apiVersion = "2020-01-13-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1112,7 +1112,7 @@ namespace Microsoft.Azure.Management.Automation
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DscCompilationJob>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<DscCompilationJob>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

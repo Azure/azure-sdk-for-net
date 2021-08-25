@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The response to a list managed instance operations request. </summary>
-    public partial class ManagedInstanceOperationListResult
+    internal partial class ManagedInstanceOperationListResult
     {
         /// <summary> Initializes a new instance of ManagedInstanceOperationListResult. </summary>
         internal ManagedInstanceOperationListResult()

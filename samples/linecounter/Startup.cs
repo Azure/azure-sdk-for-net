@@ -29,6 +29,7 @@ namespace LineCounter
                     builder.AddEventHubProducerClient(Configuration.GetSection("Uploads")).WithName("Uploads");
 
                     builder.AddEventHubProducerClient(Configuration.GetSection("Results")).WithName("Results");
+                    builder.AddEventGridPublisherClient(Configuration.GetSection("Notification"));
                 });
             services.AddApplicationInsightsTelemetry();
         }

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VpnSitesCreateOrUpdateOperation : Operation<VpnSite>, IOperationSource<VpnSite>
     {
         private readonly ArmOperationHelpers<VpnSite> _operation;
+
+        /// <summary> Initializes a new instance of VpnSitesCreateOrUpdateOperation for mocking. </summary>
+        protected VpnSitesCreateOrUpdateOperation()
+        {
+        }
+
         internal VpnSitesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VpnSite>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VpnSitesCreateOrUpdateOperation");

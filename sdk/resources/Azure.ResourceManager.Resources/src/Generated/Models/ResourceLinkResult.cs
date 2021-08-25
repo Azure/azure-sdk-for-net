@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of resource links. </summary>
-    public partial class ResourceLinkResult
+    internal partial class ResourceLinkResult
     {
         /// <summary> Initializes a new instance of ResourceLinkResult. </summary>
         /// <param name="value"> An array of resource links. </param>

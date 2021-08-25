@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Sql
     public partial class TdeCertificatesCreateOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of TdeCertificatesCreateOperation for mocking. </summary>
+        protected TdeCertificatesCreateOperation()
+        {
+        }
+
         internal TdeCertificatesCreateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TdeCertificatesCreateOperation");

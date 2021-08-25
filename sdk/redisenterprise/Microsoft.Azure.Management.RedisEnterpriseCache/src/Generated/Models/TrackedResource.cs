@@ -16,9 +16,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
     using System.Linq;
 
     /// <summary>
-    /// The resource model definition for an Azure Resource Manager tracked top
-    /// level resource
+    /// Tracked Resource
     /// </summary>
+    /// <remarks>
+    /// The resource model definition for an Azure Resource Manager tracked top
+    /// level resource which has 'tags' and a 'location'
+    /// </remarks>
     public partial class TrackedResource : Resource
     {
         /// <summary>

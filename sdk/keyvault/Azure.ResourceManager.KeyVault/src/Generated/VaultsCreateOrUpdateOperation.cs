@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.KeyVault
     public partial class VaultsCreateOrUpdateOperation : Operation<Vault>, IOperationSource<Vault>
     {
         private readonly ArmOperationHelpers<Vault> _operation;
+
+        /// <summary> Initializes a new instance of VaultsCreateOrUpdateOperation for mocking. </summary>
+        protected VaultsCreateOrUpdateOperation()
+        {
+        }
+
         internal VaultsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Vault>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VaultsCreateOrUpdateOperation");

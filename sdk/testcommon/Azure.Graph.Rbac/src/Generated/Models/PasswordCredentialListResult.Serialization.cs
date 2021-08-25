@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class PasswordCredentialListResult
+    internal partial class PasswordCredentialListResult
     {
         internal static PasswordCredentialListResult DeserializePasswordCredentialListResult(JsonElement element)
         {

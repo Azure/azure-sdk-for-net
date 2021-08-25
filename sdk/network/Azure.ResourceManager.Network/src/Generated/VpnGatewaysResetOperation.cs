@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VpnGatewaysResetOperation : Operation<VpnGateway>, IOperationSource<VpnGateway>
     {
         private readonly ArmOperationHelpers<VpnGateway> _operation;
+
+        /// <summary> Initializes a new instance of VpnGatewaysResetOperation for mocking. </summary>
+        protected VpnGatewaysResetOperation()
+        {
+        }
+
         internal VpnGatewaysResetOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VpnGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VpnGatewaysResetOperation");

@@ -19,6 +19,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation : Operation<string>, IOperationSource<string>
     {
         private readonly ArmOperationHelpers<string> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation for mocking. </summary>
+        protected VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation()
+        {
+        }
+
         internal VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<string>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation");

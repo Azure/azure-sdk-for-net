@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of job versions. </summary>
-    public partial class JobVersionListResult
+    internal partial class JobVersionListResult
     {
         /// <summary> Initializes a new instance of JobVersionListResult. </summary>
         internal JobVersionListResult()
         {
-            Value = new ChangeTrackingList<Resource>();
+            Value = new ChangeTrackingList<JobVersion>();
         }
 
         /// <summary> Initializes a new instance of JobVersionListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal JobVersionListResult(IReadOnlyList<Resource> value, string nextLink)
+        internal JobVersionListResult(IReadOnlyList<JobVersion> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<Resource> Value { get; }
+        public IReadOnlyList<JobVersion> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

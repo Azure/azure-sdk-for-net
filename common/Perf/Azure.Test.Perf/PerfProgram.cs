@@ -1,18 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Test.PerfStress;
 using CommandLine;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Emit;
 using System.Runtime;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using BenchmarkDotNet.Running;
 
 namespace Azure.Test.Perf
 {
@@ -24,19 +25,31 @@ namespace Azure.Test.Perf
         private static List<TimeSpan>[] _correctedLatencies;
         private static Channel<(TimeSpan, Stopwatch)> _pendingOperations;
 
+        private static int CompletedOperations => _completedOperations.Sum();
+        private static double OperationsPerSecond => _completedOperations.Zip(_lastCompletionTimes,
+            (operations, time) => operations > 0 ? (operations / time.TotalSeconds) : 0)
+            .Sum();
+
         public static async Task Main(Assembly assembly, string[] args)
         {
+            // See if we want to run a BenchmarkDotNet microbenchmark
+            if (args.Length > 0 && args[0].Equals("micro", StringComparison.OrdinalIgnoreCase))
+            {
+                BenchmarkSwitcher.FromAssembly(assembly).Run(args.Skip(1).ToArray());
+                return;
+            }
+
             var testTypes = assembly.ExportedTypes
                 .Where(t => typeof(IPerfTest).IsAssignableFrom(t) && !t.IsAbstract);
 
             if (testTypes.Any())
             {
-                var optionTypes = GetOptionTypes(testTypes);
-                await Parser.Default.ParseArguments(args, optionTypes).MapResult<PerfOptions, Task>(
+                var optionTypes = PerfStressUtilities.GetOptionTypes(testTypes);
+                await PerfStressUtilities.Parser.ParseArguments(args, optionTypes).MapResult<PerfOptions, Task>(
                     async o =>
                     {
                         var verbName = o.GetType().GetCustomAttribute<VerbAttribute>().Name;
-                        var testType = testTypes.Where(t => GetVerbName(t.Name) == verbName).Single();
+                        var testType = testTypes.Where(t => PerfStressUtilities.GetVerbName(t.Name) == verbName).Single();
                         await Run(testType, o);
                     },
                     errors => Task.CompletedTask
@@ -63,18 +76,6 @@ namespace Azure.Test.Perf
                 Console.WriteLine("Application started.");
             }
 
-            Console.WriteLine("=== Versions ===");
-            Console.WriteLine($"Runtime: {Environment.Version}");
-            var azureAssemblies = testType.Assembly.GetReferencedAssemblies()
-                .Where(a => a.Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase))
-                .Where(a => !a.Name.Equals("Azure.Test.Perf", StringComparison.OrdinalIgnoreCase))
-                .OrderBy(a => a.Name);
-            foreach (var a in azureAssemblies)
-            {
-                Console.WriteLine($"{a.Name}: {a.Version}");
-            }
-            Console.WriteLine();
-
             Console.WriteLine("=== Options ===");
             Console.WriteLine(JsonSerializer.Serialize(options, options.GetType(), new JsonSerializerOptions()
             {
@@ -82,8 +83,12 @@ namespace Azure.Test.Perf
             }));
             Console.WriteLine();
 
+            ConfigureThreadPool(options);
+
+            PrintEnvironment();
+
             using var setupStatusCts = new CancellationTokenSource();
-            var setupStatusThread = PrintStatus("=== Setup ===", () => ".", newLine: false, setupStatusCts.Token);
+            var setupStatusThread = PerfStressUtilities.PrintStatus("=== Setup ===", () => ".", newLine: false, setupStatusCts.Token);
 
             using var cleanupStatusCts = new CancellationTokenSource();
             Thread cleanupStatusThread = null;
@@ -96,10 +101,11 @@ namespace Azure.Test.Perf
 
             try
             {
-
                 try
                 {
                     await tests[0].GlobalSetupAsync();
+
+                    var startedPlayback = false;
 
                     try
                     {
@@ -107,9 +113,21 @@ namespace Azure.Test.Perf
                         setupStatusCts.Cancel();
                         setupStatusThread.Join();
 
+                        if (options.TestProxy != null)
+                        {
+                            using var recordStatusCts = new CancellationTokenSource();
+                            var recordStatusThread = PerfStressUtilities.PrintStatus("=== Record and Start Playback ===", () => ".", newLine: false, recordStatusCts.Token);
+
+                            await Task.WhenAll(tests.Select(t => t.RecordAndStartPlayback()));
+                            startedPlayback = true;
+
+                            recordStatusCts.Cancel();
+                            recordStatusThread.Join();
+                        }
+
                         if (options.Warmup > 0)
                         {
-                            await RunTestsAsync(tests, options.Sync, options.Parallel, options.Rate, options.Warmup, "Warmup");
+                            await RunTestsAsync(tests, options, "Warmup", warmup: true);
                         }
 
                         for (var i = 0; i < options.Iterations; i++)
@@ -119,21 +137,53 @@ namespace Azure.Test.Perf
                             {
                                 title += " " + (i + 1);
                             }
-                            await RunTestsAsync(tests, options.Sync, options.Parallel, options.Rate, options.Duration, title, options.JobStatistics, options.Latency);
+                            await RunTestsAsync(tests, options, title);
                         }
+                    }
+                    catch (AggregateException ae)
+                    {
+                        foreach (Exception e in ae.InnerExceptions)
+                        {
+                            Console.WriteLine($"Exception: {e}");
+                        }
+                        throw;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Exception: {e}");
+                        throw;
                     }
                     finally
                     {
-                        if (!options.NoCleanup)
+                        try
                         {
-                            if (cleanupStatusThread == null)
+                            if (startedPlayback)
                             {
-                                cleanupStatusThread = PrintStatus("=== Cleanup ===", () => ".", newLine: false, cleanupStatusCts.Token);
+                                using var playbackStatusCts = new CancellationTokenSource();
+                                var playbackStatusThread = PerfStressUtilities.PrintStatus("=== Stop Playback ===", () => ".", newLine: false, playbackStatusCts.Token);
+                                await Task.WhenAll(tests.Select(t => t.StopPlayback()));
+                                playbackStatusCts.Cancel();
+                                playbackStatusThread.Join();
                             }
+                        }
+                        finally
+                        {
+                            if (!options.NoCleanup)
+                            {
+                                if (cleanupStatusThread == null)
+                                {
+                                    cleanupStatusThread = PerfStressUtilities.PrintStatus("=== Cleanup ===", () => ".", newLine: false, cleanupStatusCts.Token);
+                                }
 
-                            await Task.WhenAll(tests.Select(t => t.CleanupAsync()));
+                                await Task.WhenAll(tests.Select(t => t.CleanupAsync()));
+                            }
                         }
                     }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Exception: {e}");
+                    throw;
                 }
                 finally
                 {
@@ -141,7 +191,7 @@ namespace Azure.Test.Perf
                     {
                         if (cleanupStatusThread == null)
                         {
-                            cleanupStatusThread = PrintStatus("=== Cleanup ===", () => ".", newLine: false, cleanupStatusCts.Token);
+                            cleanupStatusThread = PerfStressUtilities.PrintStatus("=== Cleanup ===", () => ".", newLine: false, cleanupStatusCts.Token);
                         }
 
                         await tests[0].GlobalCleanupAsync();
@@ -158,26 +208,118 @@ namespace Azure.Test.Perf
             {
                 cleanupStatusThread.Join();
             }
+
+            // I would prefer to print assembly versions at the start of testing, but they cannot be determined until
+            // code in each assembly has been executed, so this must wait until after testing is complete.
+            PrintAssemblyVersions(testType);
         }
 
-        private static async Task RunTestsAsync(IPerfTest[] tests, bool sync, int parallel, int? rate,
-            int durationSeconds, string title, bool jobStatistics = false, bool latency = false)
+        private static void ConfigureThreadPool(PerfOptions options)
         {
-            _completedOperations = new int[parallel];
-            _lastCompletionTimes = new TimeSpan[parallel];
+            if (options.MinWorkerThreads.HasValue || options.MinIOCompletionThreads.HasValue)
+            {
+                ThreadPool.GetMinThreads(out var minWorkerThreads, out var minIOCompletionThreads);
+                var successful = ThreadPool.SetMinThreads(options.MinWorkerThreads ?? minWorkerThreads,
+                    options.MinIOCompletionThreads ?? minIOCompletionThreads);
+
+                if (!successful)
+                {
+                    throw new InvalidOperationException("ThreadPool.SetMinThreads() was unsuccessful");
+                }
+            }
+
+            if (options.MaxWorkerThreads.HasValue || options.MaxIOCompletionThreads.HasValue)
+            {
+                ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxIOCompletionThreads);
+                var successful = ThreadPool.SetMaxThreads(options.MaxWorkerThreads ?? maxWorkerThreads,
+                    options.MaxIOCompletionThreads ?? maxIOCompletionThreads);
+
+                if (!successful)
+                {
+                    throw new InvalidOperationException("ThreadPool.SetMaxThreads() was unsuccessful");
+                }
+            }
+        }
+
+        private static void PrintEnvironment()
+        {
+            Console.WriteLine("=== Environment ===");
+
+            Console.WriteLine($"GCSettings.IsServerGC: {GCSettings.IsServerGC}");
+
+            Console.WriteLine($"Environment.ProcessorCount: {Environment.ProcessorCount}");
+            Console.WriteLine($"Environment.Is64BitProcess: {Environment.Is64BitProcess}");
+
+            ThreadPool.GetMinThreads(out var minWorkerThreads, out var minCompletionPortThreads);
+            ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxCompletionPortThreads);
+            Console.WriteLine($"ThreadPool.MinWorkerThreads: {minWorkerThreads}");
+            Console.WriteLine($"ThreadPool.MinCompletionPortThreads: {minCompletionPortThreads}");
+            Console.WriteLine($"ThreadPool.MaxWorkerThreads: {maxWorkerThreads}");
+            Console.WriteLine($"ThreadPool.MaxCompletionPortThreads: {maxCompletionPortThreads}");
+
+            Console.WriteLine();
+        }
+
+        private static void PrintAssemblyVersions(Type testType)
+        {
+            Console.WriteLine("=== Versions ===");
+
+            Console.WriteLine($"Runtime:         {Environment.Version}");
+
+            var referencedAssemblies = testType.Assembly.GetReferencedAssemblies();
+
+            var azureLoadedAssemblies = AppDomain.CurrentDomain.GetAssemblies()
+                // Include all Track1 and Track2 assemblies
+                .Where(a => a.GetName().Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) ||
+                            a.GetName().Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
+                // Exclude Azure.Core.TestFramework since it is only used to setup environment and should not impact results
+                .Where(a => !a.GetName().Name.Equals("Azure.Core.TestFramework", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(a => a.GetName().Name);
+
+            foreach (var a in azureLoadedAssemblies)
+            {
+                var name = a.GetName().Name;
+                var referencedVersion = referencedAssemblies.Where(r => r.Name == name).SingleOrDefault()?.Version;
+                var loadedVersion = a.GetName().Version;
+                var informationalVersion = FileVersionInfo.GetVersionInfo(a.Location).ProductVersion;
+                var debuggableAttribute = (DebuggableAttribute)(a.GetCustomAttribute(typeof(DebuggableAttribute)));
+
+                Console.WriteLine($"{name}:");
+                if (referencedVersion != null)
+                {
+                    Console.WriteLine($"  Referenced:    {referencedVersion}");
+                }
+                Console.WriteLine($"  Loaded:        {loadedVersion}");
+                Console.WriteLine($"  Informational: {informationalVersion}");
+                Console.WriteLine($"  JITOptimizer:  {(debuggableAttribute.IsJITOptimizerDisabled ? "Disabled" : "Enabled")}");
+            }
+
+            Console.WriteLine();
+        }
+
+        private static async Task RunTestsAsync(IPerfTest[] tests, PerfOptions options, string title, bool warmup = false)
+        {
+            var durationSeconds = warmup ? options.Warmup : options.Duration;
+
+            // Always disable jobStatistics and latency during warmup
+            var jobStatistics = warmup ? false : options.JobStatistics;
+            var latency = warmup ? false : options.Latency;
+
+            _completedOperations = new int[options.Parallel];
+            _lastCompletionTimes = new TimeSpan[options.Parallel];
 
             if (latency)
             {
-                _latencies = new List<TimeSpan>[parallel];
-                for (var i = 0; i < parallel; i++)
+                _latencies = new List<TimeSpan>[options.Parallel];
+                for (var i = 0; i < options.Parallel; i++)
                 {
                     _latencies[i] = new List<TimeSpan>();
                 }
 
-                if (rate.HasValue)
+                if (options.Rate.HasValue)
                 {
-                    _correctedLatencies = new List<TimeSpan>[parallel];
-                    for (var i = 0; i < parallel; i++)
+                    _correctedLatencies = new List<TimeSpan>[options.Parallel];
+                    for (var i = 0; i < options.Parallel; i++)
                     {
                         _correctedLatencies[i] = new List<TimeSpan>();
                     }
@@ -191,45 +333,49 @@ namespace Azure.Test.Perf
             var lastCompleted = 0;
 
             using var progressStatusCts = new CancellationTokenSource();
-            var progressStatusThread = PrintStatus(
+            var progressStatusThread = PerfStressUtilities.PrintStatus(
                 $"=== {title} ===" + Environment.NewLine +
-                "Current\t\tTotal",
+                "Current\t\tTotal\t\tAverage",
                 () =>
                 {
-                    var totalCompleted = _completedOperations.Sum();
+                    var totalCompleted = CompletedOperations;
                     var currentCompleted = totalCompleted - lastCompleted;
+                    var averageCompleted = OperationsPerSecond;
+
                     lastCompleted = totalCompleted;
-                    return currentCompleted + "\t\t" + totalCompleted;
+                    return $"{currentCompleted}\t\t{totalCompleted}\t\t{averageCompleted:F2}";
                 },
                 newLine: true,
-                progressStatusCts.Token);
+                progressStatusCts.Token,
+                options.StatusInterval
+                );
 
             Thread pendingOperationsThread = null;
-            if (rate.HasValue)
+            if (options.Rate.HasValue)
             {
                 _pendingOperations = Channel.CreateUnbounded<ValueTuple<TimeSpan, Stopwatch>>();
-                pendingOperationsThread = WritePendingOperations(rate.Value, cancellationToken);
+                pendingOperationsThread = WritePendingOperations(options.Rate.Value, cancellationToken);
             }
 
-            if (sync)
+            if (options.Sync)
             {
-                var threads = new Thread[parallel];
+                var threads = new Thread[options.Parallel];
 
-                for (var i = 0; i < parallel; i++)
+                for (var i = 0; i < options.Parallel; i++)
                 {
                     var j = i;
                     threads[i] = new Thread(() => RunLoop(tests[j], j, latency, cancellationToken));
                     threads[i].Start();
                 }
-                for (var i = 0; i < parallel; i++)
+                for (var i = 0; i < options.Parallel; i++)
                 {
                     threads[i].Join();
                 }
             }
             else
             {
-                var tasks = new Task[parallel];
-                for (var i = 0; i < parallel; i++)
+                var tasks = new Task[options.Parallel];
+                for (var i = 0; i < options.Parallel; i++)
                 {
                     var j = i;
                     // Call Task.Run() instead of directly calling RunLoopAsync(), to ensure the requested
@@ -249,12 +395,12 @@ namespace Azure.Test.Perf
 
             Console.WriteLine("=== Results ===");
 
-            var totalOperations = _completedOperations.Sum();
-            var operationsPerSecond = _completedOperations.Zip(_lastCompletionTimes, (operations, time) => (operations / time.TotalSeconds)).Sum();
+            var totalOperations = CompletedOperations;
+            var operationsPerSecond = OperationsPerSecond;
             var secondsPerOperation = 1 / operationsPerSecond;
             var weightedAverageSeconds = totalOperations / operationsPerSecond;
 
-            Console.WriteLine($"Completed {totalOperations} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
+            Console.WriteLine($"Completed {totalOperations:N0} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
                 $"({operationsPerSecond:N2} ops/s, {secondsPerOperation:N3} s/op)");
             Console.WriteLine();
 
@@ -331,8 +477,16 @@ namespace Azure.Test.Perf
                     _lastCompletionTimes[index] = sw.Elapsed;
                 }
             }
-            catch (OperationCanceledException)
+            catch (Exception e)
             {
+                if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                {
+                    // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 
@@ -374,8 +528,11 @@ namespace Azure.Test.Perf
             }
             catch (Exception e)
             {
-                // Ignore if any part of the exception chain is type OperationCanceledException
-                if (!ContainsOperationCanceledException(e))
+                if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                {
+                    // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
+                }
+                else
                 {
                     throw;
                 }
@@ -394,7 +551,7 @@ namespace Azure.Test.Perf
                 {
                     while (writtenOperations < (rate * sw.Elapsed.TotalSeconds))
                     {
-                        _pendingOperations.Writer.TryWrite(ValueTuple.Create(sw.Elapsed, sw));
+                        _pendingOperations.Writer.TryWrite((sw.Elapsed, sw));
                         writtenOperations++;
                     }
 
@@ -405,113 +562,6 @@ namespace Azure.Test.Perf
             thread.Start();
 
             return thread;
-        }
-
-        // Run in dedicated thread instead of using async/await in ThreadPool, to ensure this thread has priority
-        // and never fails to run to due ThreadPool starvation.
-        private static Thread PrintStatus(string header, Func<object> status, bool newLine, CancellationToken token)
-        {
-            var thread = new Thread(() =>
-            {
-                Console.WriteLine(header);
-
-                bool needsExtraNewline = false;
-
-                while (!token.IsCancellationRequested)
-                {
-                    try
-                    {
-                        Sleep(TimeSpan.FromSeconds(1), token);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                    }
-
-                    var obj = status();
-
-                    if (newLine)
-                    {
-                        Console.WriteLine(obj);
-                    }
-                    else
-                    {
-                        Console.Write(obj);
-                        needsExtraNewline = true;
-                    }
-                }
-
-                if (needsExtraNewline)
-                {
-                    Console.WriteLine();
-                }
-
-                Console.WriteLine();
-            });
-
-            thread.Start();
-
-            return thread;
-        }
-
-        private static void Sleep(TimeSpan timeout, CancellationToken token)
-        {
-            var sw = Stopwatch.StartNew();
-            while (sw.Elapsed < timeout)
-            {
-                if (token.IsCancellationRequested)
-                {
-                    // Simulate behavior of Task.Delay(TimeSpan, CancellationToken)
-                    throw new OperationCanceledException();
-                }
-
-                Thread.Sleep(TimeSpan.FromMilliseconds(10));
-            }
-        }
-
-        private static bool ContainsOperationCanceledException(Exception e)
-        {
-            if (e is OperationCanceledException)
-            {
-                return true;
-            }
-            else if (e.InnerException != null)
-            {
-                return ContainsOperationCanceledException(e.InnerException);
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        // Dynamically create option types with a "Verb" attribute
-        private static Type[] GetOptionTypes(IEnumerable<Type> testTypes)
-        {
-            var optionTypes = new List<Type>();
-
-            var ab = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName("Options"), AssemblyBuilderAccess.Run);
-            var mb = ab.DefineDynamicModule("Options");
-
-            foreach (var t in testTypes)
-            {
-                var baseOptionsType = t.GetConstructors().First().GetParameters()[0].ParameterType;
-                var tb = mb.DefineType(t.Name + "Options", TypeAttributes.Public, baseOptionsType);
-
-                var attrCtor = typeof(VerbAttribute).GetConstructor(new Type[] { typeof(string), typeof(bool) });
-                var verbName = GetVerbName(t.Name);
-                tb.SetCustomAttribute(new CustomAttributeBuilder(attrCtor,
-                    new object[] { verbName, attrCtor.GetParameters()[1].DefaultValue }));
-
-                optionTypes.Add(tb.CreateType());
-            }
-
-            return optionTypes.ToArray();
-        }
-
-        private static string GetVerbName(string testName)
-        {
-            var lower = testName.ToLowerInvariant();
-            return lower.EndsWith("test") ? lower.Substring(0, lower.Length - 4) : lower;
         }
     }
 }

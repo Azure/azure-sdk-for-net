@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of policy set definitions. </summary>
-    public partial class PolicySetDefinitionListResult
+    internal partial class PolicySetDefinitionListResult
     {
         /// <summary> Initializes a new instance of PolicySetDefinitionListResult. </summary>
         internal PolicySetDefinitionListResult()

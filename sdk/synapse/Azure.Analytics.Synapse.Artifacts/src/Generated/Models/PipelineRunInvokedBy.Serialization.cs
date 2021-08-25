@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(PipelineRunInvokedByConverter))]
     public partial class PipelineRunInvokedBy
     {
         internal static PipelineRunInvokedBy DeserializePipelineRunInvokedBy(JsonElement element)
@@ -36,6 +39,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new PipelineRunInvokedBy(name.Value, id.Value, invokedByType.Value);
+        }
+
+        internal partial class PipelineRunInvokedByConverter : JsonConverter<PipelineRunInvokedBy>
+        {
+            public override void Write(Utf8JsonWriter writer, PipelineRunInvokedBy model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override PipelineRunInvokedBy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializePipelineRunInvokedBy(document.RootElement);
+            }
         }
     }
 }

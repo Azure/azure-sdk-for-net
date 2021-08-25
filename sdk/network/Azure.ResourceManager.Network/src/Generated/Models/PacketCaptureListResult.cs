@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of packet capture sessions. </summary>
-    public partial class PacketCaptureListResult
+    internal partial class PacketCaptureListResult
     {
         /// <summary> Initializes a new instance of PacketCaptureListResult. </summary>
         internal PacketCaptureListResult()

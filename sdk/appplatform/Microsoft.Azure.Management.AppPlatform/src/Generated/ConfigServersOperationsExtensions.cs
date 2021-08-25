@@ -160,6 +160,54 @@ namespace Microsoft.Azure.Management.AppPlatform
             }
 
             /// <summary>
+            /// Check if the config server settings are valid.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='configServerSettings'>
+            /// Config server settings to be validated
+            /// </param>
+            public static ConfigServerSettingsValidateResult Validate(this IConfigServersOperations operations, string resourceGroupName, string serviceName, ConfigServerSettings configServerSettings)
+            {
+                return operations.ValidateAsync(resourceGroupName, serviceName, configServerSettings).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check if the config server settings are valid.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='configServerSettings'>
+            /// Config server settings to be validated
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ConfigServerSettingsValidateResult> ValidateAsync(this IConfigServersOperations operations, string resourceGroupName, string serviceName, ConfigServerSettings configServerSettings, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ValidateWithHttpMessagesAsync(resourceGroupName, serviceName, configServerSettings, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Update the config server.
             /// </summary>
             /// <param name='operations'>
@@ -250,6 +298,54 @@ namespace Microsoft.Azure.Management.AppPlatform
             public static async Task<ConfigServerResource> BeginUpdatePatchAsync(this IConfigServersOperations operations, string resourceGroupName, string serviceName, ConfigServerResource configServerResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdatePatchWithHttpMessagesAsync(resourceGroupName, serviceName, configServerResource, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Check if the config server settings are valid.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='configServerSettings'>
+            /// Config server settings to be validated
+            /// </param>
+            public static ConfigServerSettingsValidateResult BeginValidate(this IConfigServersOperations operations, string resourceGroupName, string serviceName, ConfigServerSettings configServerSettings)
+            {
+                return operations.BeginValidateAsync(resourceGroupName, serviceName, configServerSettings).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check if the config server settings are valid.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Service resource.
+            /// </param>
+            /// <param name='configServerSettings'>
+            /// Config server settings to be validated
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ConfigServerSettingsValidateResult> BeginValidateAsync(this IConfigServersOperations operations, string resourceGroupName, string serviceName, ConfigServerSettings configServerSettings, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginValidateWithHttpMessagesAsync(resourceGroupName, serviceName, configServerSettings, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

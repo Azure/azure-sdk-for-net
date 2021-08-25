@@ -11,12 +11,15 @@
 namespace Microsoft.Azure.Management.Batch.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The identity of the Batch account, if configured. This is only used
-    /// when the user specifies 'Microsoft.KeyVault' as their Batch account
-    /// encryption configuration.
+    /// The identity of the Batch account, if configured. This is used when the
+    /// user specifies 'Microsoft.KeyVault' as their Batch account encryption
+    /// configuration or when `ManagedIdentity` is selected as the auto-storage
+    /// authentication mode.
     /// </summary>
     public partial class BatchAccountIdentity
     {
@@ -32,18 +35,22 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Initializes a new instance of the BatchAccountIdentity class.
         /// </summary>
         /// <param name="type">The type of identity used for the Batch account.
-        /// Possible values include: 'SystemAssigned', 'None'</param>
+        /// Possible values include: 'SystemAssigned', 'UserAssigned',
+        /// 'None'</param>
         /// <param name="principalId">The principal id of the Batch account.
         /// This property will only be provided for a system assigned
         /// identity.</param>
         /// <param name="tenantId">The tenant id associated with the Batch
         /// account. This property will only be provided for a system assigned
         /// identity.</param>
-        public BatchAccountIdentity(ResourceIdentityType type, string principalId = default(string), string tenantId = default(string))
+        /// <param name="userAssignedIdentities">The list of user identities
+        /// associated with the Batch account.</param>
+        public BatchAccountIdentity(ResourceIdentityType type, string principalId = default(string), string tenantId = default(string), IDictionary<string, UserAssignedIdentities> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentities>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -68,10 +75,17 @@ namespace Microsoft.Azure.Management.Batch.Models
 
         /// <summary>
         /// Gets or sets the type of identity used for the Batch account.
-        /// Possible values include: 'SystemAssigned', 'None'
+        /// Possible values include: 'SystemAssigned', 'UserAssigned', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ResourceIdentityType Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of user identities associated with the Batch
+        /// account.
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserAssignedIdentities> UserAssignedIdentities { get; set; }
 
         /// <summary>
         /// Validate the object.

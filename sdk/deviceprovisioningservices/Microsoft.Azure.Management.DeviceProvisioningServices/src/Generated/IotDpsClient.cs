@@ -57,19 +57,20 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -89,9 +90,17 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
         public virtual IIotDpsResourceOperations IotDpsResource { get; private set; }
 
         /// <summary>
-        /// Gets the IDpsCertificatesOperations.
+        /// Initializes a new instance of the IotDpsClient class.
         /// </summary>
-        public virtual IDpsCertificatesOperations DpsCertificates { get; private set; }
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling IotDpsClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected IotDpsClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the IotDpsClient class.
@@ -176,6 +185,33 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
         /// Thrown when a required parameter is null
         /// </exception>
         public IotDpsClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the IotDpsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling IotDpsClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public IotDpsClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -297,9 +333,8 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             Operations = new Operations(this);
             DpsCertificate = new DpsCertificateOperations(this);
             IotDpsResource = new IotDpsResourceOperations(this);
-            DpsCertificates = new DpsCertificatesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-11-15";
+            ApiVersion = "2020-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

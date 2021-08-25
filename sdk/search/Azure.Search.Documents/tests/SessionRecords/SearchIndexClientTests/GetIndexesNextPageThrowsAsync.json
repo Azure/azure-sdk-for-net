@@ -2,8 +2,9 @@
   "Entries": [],
   "Variables": {
     "RandomSeed": "1502897414",
-    "SearchIndexName": "josgoidr",
+    "SearchIndexName": "mbqvlxmt",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

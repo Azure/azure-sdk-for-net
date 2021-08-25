@@ -219,8 +219,38 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         /// <remarks>
         /// This operation retrieves a list of all the policy definitions in a
-        /// given subscription.
+        /// given subscription that match the optional given $filter. Valid
+        /// values for $filter are: 'atExactScope()', 'policyType -eq {value}'
+        /// or 'category eq '{value}''. If $filter is not provided, the
+        /// unfiltered list includes all policy definitions associated with the
+        /// subscription, including those that apply directly or from
+        /// management groups that contain the given subscription. If
+        /// $filter=atExactScope() is provided, the returned list only includes
+        /// all policy definitions that at the given subscription. If
+        /// $filter='policyType -eq {value}' is provided, the returned list
+        /// only includes all policy definitions whose type match the {value}.
+        /// Possible policyType values are NotSpecified, BuiltIn, Custom, and
+        /// Static. If $filter='category -eq {value}' is provided, the returned
+        /// list only includes all policy definitions whose category match the
+        /// {value}.
         /// </remarks>
+        /// <param name='filter'>
+        /// The filter to apply on the operation. Valid values for $filter are:
+        /// 'atExactScope()', 'policyType -eq {value}' or 'category eq
+        /// '{value}''. If $filter is not provided, no filtering is performed.
+        /// If $filter=atExactScope() is provided, the returned list only
+        /// includes all policy definitions that at the given scope. If
+        /// $filter='policyType -eq {value}' is provided, the returned list
+        /// only includes all policy definitions whose type match the {value}.
+        /// Possible policyType values are NotSpecified, BuiltIn, Custom, and
+        /// Static. If $filter='category -eq {value}' is provided, the returned
+        /// list only includes all policy definitions whose category match the
+        /// {value}.
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of records to return. When the $top filter is not
+        /// provided, it will return 500 records.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -236,14 +266,37 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListWithHttpMessagesAsync(string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve built-in policy definitions
         /// </summary>
         /// <remarks>
         /// This operation retrieves a list of all the built-in policy
-        /// definitions.
+        /// definitions that match the optional given $filter. If
+        /// $filter='policyType -eq {value}' is provided, the returned list
+        /// only includes all built-in policy definitions whose type match the
+        /// {value}. Possible policyType values are NotSpecified, BuiltIn,
+        /// Custom, and Static. If $filter='category -eq {value}' is provided,
+        /// the returned list only includes all built-in policy definitions
+        /// whose category match the {value}.
         /// </remarks>
+        /// <param name='filter'>
+        /// The filter to apply on the operation. Valid values for $filter are:
+        /// 'atExactScope()', 'policyType -eq {value}' or 'category eq
+        /// '{value}''. If $filter is not provided, no filtering is performed.
+        /// If $filter=atExactScope() is provided, the returned list only
+        /// includes all policy definitions that at the given scope. If
+        /// $filter='policyType -eq {value}' is provided, the returned list
+        /// only includes all policy definitions whose type match the {value}.
+        /// Possible policyType values are NotSpecified, BuiltIn, Custom, and
+        /// Static. If $filter='category -eq {value}' is provided, the returned
+        /// list only includes all policy definitions whose category match the
+        /// {value}.
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of records to return. When the $top filter is not
+        /// provided, it will return 500 records.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -259,16 +312,46 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListBuiltInWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListBuiltInWithHttpMessagesAsync(string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve policy definitions in a management group
         /// </summary>
         /// <remarks>
         /// This operation retrieves a list of all the policy definitions in a
-        /// given management group.
+        /// given management group that match the optional given $filter. Valid
+        /// values for $filter are: 'atExactScope()', 'policyType -eq {value}'
+        /// or 'category eq '{value}''. If $filter is not provided, the
+        /// unfiltered list includes all policy definitions associated with the
+        /// management group, including those that apply directly or from
+        /// management groups that contain the given management group. If
+        /// $filter=atExactScope() is provided, the returned list only includes
+        /// all policy definitions that at the given management group. If
+        /// $filter='policyType -eq {value}' is provided, the returned list
+        /// only includes all policy definitions whose type match the {value}.
+        /// Possible policyType values are NotSpecified, BuiltIn, Custom, and
+        /// Static. If $filter='category -eq {value}' is provided, the returned
+        /// list only includes all policy definitions whose category match the
+        /// {value}.
         /// </remarks>
         /// <param name='managementGroupId'>
         /// The ID of the management group.
+        /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the operation. Valid values for $filter are:
+        /// 'atExactScope()', 'policyType -eq {value}' or 'category eq
+        /// '{value}''. If $filter is not provided, no filtering is performed.
+        /// If $filter=atExactScope() is provided, the returned list only
+        /// includes all policy definitions that at the given scope. If
+        /// $filter='policyType -eq {value}' is provided, the returned list
+        /// only includes all policy definitions whose type match the {value}.
+        /// Possible policyType values are NotSpecified, BuiltIn, Custom, and
+        /// Static. If $filter='category -eq {value}' is provided, the returned
+        /// list only includes all policy definitions whose category match the
+        /// {value}.
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of records to return. When the $top filter is not
+        /// provided, it will return 500 records.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -285,13 +368,26 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListByManagementGroupWithHttpMessagesAsync(string managementGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListByManagementGroupWithHttpMessagesAsync(string managementGroupId, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves policy definitions in a subscription
         /// </summary>
         /// <remarks>
         /// This operation retrieves a list of all the policy definitions in a
-        /// given subscription.
+        /// given subscription that match the optional given $filter. Valid
+        /// values for $filter are: 'atExactScope()', 'policyType -eq {value}'
+        /// or 'category eq '{value}''. If $filter is not provided, the
+        /// unfiltered list includes all policy definitions associated with the
+        /// subscription, including those that apply directly or from
+        /// management groups that contain the given subscription. If
+        /// $filter=atExactScope() is provided, the returned list only includes
+        /// all policy definitions that at the given subscription. If
+        /// $filter='policyType -eq {value}' is provided, the returned list
+        /// only includes all policy definitions whose type match the {value}.
+        /// Possible policyType values are NotSpecified, BuiltIn, Custom, and
+        /// Static. If $filter='category -eq {value}' is provided, the returned
+        /// list only includes all policy definitions whose category match the
+        /// {value}.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -317,7 +413,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         /// <remarks>
         /// This operation retrieves a list of all the built-in policy
-        /// definitions.
+        /// definitions that match the optional given $filter. If
+        /// $filter='policyType -eq {value}' is provided, the returned list
+        /// only includes all built-in policy definitions whose type match the
+        /// {value}. Possible policyType values are NotSpecified, BuiltIn,
+        /// Custom, and Static. If $filter='category -eq {value}' is provided,
+        /// the returned list only includes all built-in policy definitions
+        /// whose category match the {value}.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -343,7 +445,20 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         /// <remarks>
         /// This operation retrieves a list of all the policy definitions in a
-        /// given management group.
+        /// given management group that match the optional given $filter. Valid
+        /// values for $filter are: 'atExactScope()', 'policyType -eq {value}'
+        /// or 'category eq '{value}''. If $filter is not provided, the
+        /// unfiltered list includes all policy definitions associated with the
+        /// management group, including those that apply directly or from
+        /// management groups that contain the given management group. If
+        /// $filter=atExactScope() is provided, the returned list only includes
+        /// all policy definitions that at the given management group. If
+        /// $filter='policyType -eq {value}' is provided, the returned list
+        /// only includes all policy definitions whose type match the {value}.
+        /// Possible policyType values are NotSpecified, BuiltIn, Custom, and
+        /// Static. If $filter='category -eq {value}' is provided, the returned
+        /// list only includes all policy definitions whose category match the
+        /// {value}.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

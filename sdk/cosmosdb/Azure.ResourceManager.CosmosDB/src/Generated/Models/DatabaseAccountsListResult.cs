@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the database accounts and their properties. </summary>
-    public partial class DatabaseAccountsListResult
+    internal partial class DatabaseAccountsListResult
     {
         /// <summary> Initializes a new instance of DatabaseAccountsListResult. </summary>
         internal DatabaseAccountsListResult()

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AutoApprovedPrivateLinkServicesResult
+    internal partial class AutoApprovedPrivateLinkServicesResult
     {
         internal static AutoApprovedPrivateLinkServicesResult DeserializeAutoApprovedPrivateLinkServicesResult(JsonElement element)
         {

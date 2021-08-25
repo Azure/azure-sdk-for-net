@@ -22,7 +22,10 @@ Familiarity with the legacy client library is assumed. For those new to the Azur
   - [Uploading Blobs to a Container](#uploading-blobs-to-a-container)
   - [Downloading Blobs from a Container](#downloading-blobs-from-a-container)
   - [Listing Blobs in a Container](#listing-blobs-in-a-container)
+  - [Managing Blob Metadata](#managing-blob-metadata)
   - [Generate a SAS](#generate-a-sas)
+  - [Content Hashes](#content-hashes)
+  - [Resiliency](#resiliency)
 - [Additional information](#additional-information)
 
 ## Migration benefits
@@ -63,13 +66,13 @@ The legacy Storage SDK contained a `TokenCredential` class that could be used to
 
 v12
 
-A `TokenCredential` abstract class (different API surface than v11) exists in the Azure.Core package that all libraries of the new Azure SDK family depend on, and can be used to construct Storage clients. Implementations of this class can be found separately in the [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity) package. [`DefaultAzureCredential`](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential) is a good starting point, with code as simple as the following:
+A `TokenCredential` abstract class (different API surface than v11) exists in the Azure.Core package that all libraries of the new Azure SDK family depend on, and can be used to construct Storage clients. Implementations of this class can be found separately in the [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity) package. [`DefaultAzureCredential`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#defaultazurecredential) is a good starting point, with code as simple as the following:
 
 ```C# Snippet:SampleSnippetsBlobMigration_TokenCredential
-BlobServiceClient client = new BlobServiceClient(new Uri(accountUri), new DefaultAzureCredential());
+BlobServiceClient client = new BlobServiceClient(new Uri(serviceUri), new DefaultAzureCredential());
 ```
 
-You can view more [Identity samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#examples) for how to authenticate with the Identity package.
+You can view more [Identity samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#examples) for how to authenticate with the Identity package.
 
 #### SAS
 
@@ -95,7 +98,7 @@ v12
 The new library only supports constructing a client with a fully constructed SAS URI. Note that since client URIs are immutable once created, a new client instance with a new SAS must be created in order to rotate a SAS.
 
 ```C# Snippet:SampleSnippetsBlobMigration_SasUri
-BlobClient blob = new BlobClient(new Uri(blobLocationWithSas));
+BlobClient blob = new BlobClient(sasUri);
 ```
 
 #### Connection string
@@ -192,11 +195,11 @@ await containerClient.SetAccessPolicyAsync(permissions: signedIdentifiers);
 
 ### Client Structure
 
-The legacy SDK used a stateful model. There were container and blob objects that held state regarding service resources and required the user to manually call their update methods. But blob contents were not a part of this state and had to be uploaded/downloaded whenever they were to be interacted with. This became increasingly confusing over time, and increasingly susceptible to thread safety issues.
+**The legacy SDK used a stateful model.** There were container and blob objects that held state regarding service resources and required the user to manually call their update methods. But blob contents were not a part of this state and had to be uploaded/downloaded whenever they were to be interacted with. This became increasingly confusing over time, and increasingly susceptible to thread safety issues.
 
-The modern SDK has taken a client-based approach. There are no objects designed to be representations of storage resources, but instead clients that act as your mechanism to interact with your storage resources in the cloud. Clients hold no state of your resources.
+The modern SDK has taken a client-based approach. There are no objects designed to be representations of storage resources, but instead clients that act as your mechanism to interact with your storage resources in the cloud. **Clients hold no state of your resources.** This is most noticable when looking at [blob metadata](#managing-blob-metadata).
 
-The hierarchical structure of Azure Blob Storage can be understood by the following diagram:
+The hierarchical structure of Azure Blob Storage can be understood by the following diagram:  
 ![Blob Storage Hierarchy](https://docs.microsoft.com/en-us/azure/storage/blobs/media/storage-blobs-introduction/blob1.png)
 
 In the interest of simplifying the API surface, v12 uses three top level clients to match this structure that can be used to interact with a majority of your resources: `BlobServiceClient`, `BlobContainerClient`, and `BlobClient`. Note that blob-type-specific operations can still be accessed by their specific clients, as in v11.
@@ -209,7 +212,7 @@ We recommend `BlobClient` as a starting place when migrating code that used v11'
 
 #### Migrating from CloudBlobDirectory
 
-Note the absence of a v12 equivalent for v11's `CloudBlobDirectory`. Directories were an SDK-only concept that did not exist in Azure Blob Storage, and which were not brought forwards into the modern Storage SDK. As shown by the diagram in [Client Structure](#client-structure)], containers only contain a flat list of blobs, but those blobs can be named and listed in ways that imply a folder-like structure. See our [Listing Blobs in a Container](#listing-blobs-in-a-container) migration samples later in this guide for more information.
+Note the absence of a v12 equivalent for v11's `CloudBlobDirectory`. Directories were an SDK-only concept that did not exist in Azure Blob Storage, and which were not brought forwards into the modern Storage SDK. As shown by the diagram in [Client Structure](#client-structure), containers only contain a flat list of blobs, but those blobs can be named and listed in ways that imply a folder-like structure. See our [Listing Blobs in a Container](#listing-blobs-in-a-container) migration samples later in this guide for more information.
 
 For those whose workloads revolve around manipulating directories and heavily relied on the leagacy SDKs abstraction of this structure, consider the [pros and cons of enabling hierarchical namespace](https://docs.microsoft.com/azure/storage/blobs/data-lake-storage-namespace) on your storage account, which would allow switching to the [Data Lake gen 2 SDK](https://docs.microsoft.com/dotnet/api/overview/azure/storage.files.datalake-readme), whose migration is not covered in this document.
 
@@ -259,6 +262,8 @@ BlobContainerClient containerClient = await blobServiceClient.CreateBlobContaine
 
 ### Uploading Blobs to a Container
 
+#### Uploading from a file
+
 v11
 ```csharp
 CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
@@ -271,9 +276,39 @@ BlobClient blobClient = containerClient.GetBlobClient(blobName);
 await blobClient.UploadAsync(localFilePath, overwrite: true);
 ```
 
-This example uploads from given file paths, but note that v12 also conatins an overloads for uploading from a readable `Stream` instance.
+#### Uploading from a stream
+
+v11
+```csharp
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+using Stream stream = File.OpenRead(localFilePath);
+await cloudBlockBlob.UploadFromStreamAsync(stream);
+```
+
+v12
+```C# Snippet:SampleSnippetsBlobMigration_UploadBlobFromStream
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+using Stream stream = File.OpenRead(localFilePath);
+await blobClient.UploadAsync(stream, overwrite: true);
+```
+
+#### Uploading text
+
+v11
+```csharp
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+await blob.UploadTextAsync("content");
+```
+
+v12
+```C# Snippet:SampleSnippetsBlobMigration_UploadBlobText
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+await blobClient.UploadAsync(BinaryData.FromString("hello world"), overwrite: true);
+```
 
 ### Downloading Blobs from a Container
+
+#### Downloading to a file
 
 v11
 ```csharp
@@ -282,24 +317,44 @@ await cloudBlockBlob.DownloadToFileAsync(downloadFilePath, FileMode.Create);
 ```
 
 v12
-
 ```C# Snippet:SampleSnippetsBlobMigration_DownloadBlob
 BlobClient blobClient = containerClient.GetBlobClient(blobName);
 await blobClient.DownloadToAsync(downloadFilePath);
 ```
 
-This example uploads from given file paths, but note that v12 also conatins an overloads for downloading to a writable `Stream` instance.
+#### Downloading to a stream
 
-v12 also contains overloads for reading the download stream directly, with smart retries abstracted into the stream implementation. Remember to dispose of your stream when finished, either through `Stream.Close()` or (as in this example) through a disposable pattern. Note that this is the only mechanism in v12 to download a specific range of a blob instead of the whole blob.
+v11
+```csharp
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+using Stream target = File.OpenWrite(downloadFilePath);
+await blob.DownloadToStreamAsync(target);
+```
 
-```C# Snippet:SampleSnippetsBlobMigration_DownloadBlobDirectStream
+v12
+```C# Snippet:SampleSnippetsBlobMigration_DownloadBlobToStream
 BlobClient blobClient = containerClient.GetBlobClient(blobName);
-BlobDownloadInfo downloadResponse = await blobClient.DownloadAsync();
-using (Stream downloadStream = downloadResponse.Content)
+using (Stream target = File.OpenWrite(downloadFilePath))
 {
-    await MyConsumeStreamFunc(downloadStream);
+    await blobClient.DownloadToAsync(target);
 }
 ```
+
+#### Downloading text
+
+v11
+```csharp
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+string content = await blob.DownloadTextAsync();
+```
+
+v12
+```C# Snippet:SampleSnippetsBlobMigration_DownloadBlobText
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
+string downloadedData = downloadResult.Content.ToString();
+```
+
 
 ### Listing Blobs in a Container
 
@@ -391,11 +446,66 @@ v12
 
 v12 has explicit methods for listing by hierarchy.
 ```C# Snippet:SampleSnippetsBlobMigration_ListHierarchy
-IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix);
+IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix, delimiter: delimiter);
 await foreach (BlobHierarchyItem item in results)
 {
     MyConsumeBlobItemFunc(item);
 }
+```
+
+### Managing Blob Metadata
+
+On the service, blob metadata is overwritten alongside blob data overwrites. If metadata is not provided on a blob content edit, that is interpreted as a metadata clear. Legacy versions of the SDK mitigated this by maintaining blob metadata internally and sending it for you on appropriate requests. This helped in simple cases, but could fall out of sync and required developers to defensively code against metadata changes in a multi-client scenario anyway.
+
+V12 has abandoned this stateful approach, having users manage their own metadata. While this requires additional code for developers, it ensures you always know how your metadata is being managed and avoid silently corrupting metadata due to SDK caching.
+
+v11 samples:
+
+The legacy SDK maintained a metadata cache, allowing you to modify metadata on the CloudBlob and invoke Update(). Calling FetchAttributes beforehand refreshed the metadata cache to avoid undoing recent changes.
+
+```csharp
+cloudBlob.FetchAttributes();
+cloudBlob.Metadata.Add("foo", "bar");
+cloudBlob.SetMetadata(metadata);
+```
+
+The legacy SDK maintained internal state for blob content uploads. Calling FetchAttributes beforehand refreshed the metadata cache to avoid undoing recent changes.
+
+```csharp
+// download blob content. blob metadata is fetched and cached on download
+cloudBlob.DownloadToByteArray(downloadBuffer, 0);
+
+// modify blob content
+string modifiedBlobContent = Encoding.UTF8.GetString(downloadBuffer) + "FizzBuzz";
+
+// reupload modified blob content while preserving metadata
+blobClient.UploadText(modifiedBlobContent);
+```
+
+v12 samples:
+
+The modern SDK requires you to hold onto metadata and update it approprately before sending off. You cannot just add a new key-value pair, you must update the collection and send the collection.
+
+```C# Snippet:SampleSnippetsBlobMigration_EditMetadata
+IDictionary<string, string> metadata = blobClient.GetProperties().Value.Metadata;
+metadata.Add("foo", "bar");
+blobClient.SetMetadata(metadata);
+```
+
+Additionally with blob content edits, if your blobs have metadata you need to get the metadata and reupload with that metadata, telling the service what metadata goes with this new blob state.
+
+```C# Snippet:SampleSnippetsBlobMigration_EditBlobWithMetadata
+// download blob content and metadata
+BlobDownloadResult blobData = blobClient.DownloadContent();
+
+// modify blob content
+string modifiedBlobContent = blobData.Content + "FizzBuzz";
+
+// reupload modified blob content while preserving metadata
+// not adding metadata is a metadata clear
+blobClient.Upload(
+    BinaryData.FromString(modifiedBlobContent),
+    new BlobUploadOptions() { Metadata = blobData.Details.Metadata });
 ```
 
 ### Generate a SAS
@@ -436,19 +546,50 @@ sasBlobToken = blob.GetSharedAccessSignature(null, policyName);
 
 v12
 
-The modern SDK uses a builder pattern for constructing a SAS token. Clients are not involved in the process.
+The modern SDK uses a builder pattern for constructing a SAS token. Similar to the pattern to create a SAS in v11, you can generate a SAS URI from the client. This is the preferred method in order to prevent passing the key to more than one place. It also is more convenient to generate from the client in the case of authenticating with a connection string, as you would not have to parse the connection string to grab the storage account name and key.
+
+To create a simple SAS with any optional parameters, use the convenience overload of GenerateSas which only requires taking in permissions and the expiry time.
+
+```C# Snippet:SampleSnippetsBlobMigration_GenerateSas
+// Create a BlobClient with a shared key credential
+BlobClient blobClient = new BlobClient(blobUri, sharedKeyCredential);
+
+Uri sasUri;
+// Ensure our client has the credentials required to generate a SAS
+if (blobClient.CanGenerateSasUri)
+{
+    // Create full, self-authenticating URI to the resource from the BlobClient
+    sasUri = blobClient.GenerateSasUri(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1));
+
+    // Use newly made as SAS URI to download the blob
+    await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
+}
+```
+
+To create a more complex SAS pass the SAS builder to the GenerateSas method.
+
+```C# Snippet:SampleSnippetsBlobMigration_GenerateSas_Builder
+BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
+{
+    // Since we are generating from the client, the client will have the container and blob name
+    // Specify any optional paremeters here
+    StartsOn = DateTimeOffset.UtcNow.AddHours(-1)
+};
+
+// Create full, self-authenticating URI to the resource from the BlobClient
+Uri sasUri = blobClient.GenerateSasUri(sasBuilder);
+```
+
+You can also generate a SAS without use of the client.
 
 ```C# Snippet:SampleSnippetsBlobMigration_SasBuilder
 // Create BlobSasBuilder and specify parameters
-BlobSasBuilder sasBuilder = new BlobSasBuilder()
+BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
 {
     // with no url in a client to read from, container and blob name must be provided if applicable
     BlobContainerName = containerName,
-    BlobName = blobName,
-    ExpiresOn = DateTimeOffset.Now.AddHours(1)
+    BlobName = blobName
 };
-// permissions applied separately, using the appropriate enum to the scope of your SAS
-sasBuilder.SetPermissions(BlobSasPermissions.Read);
 
 // Create full, self-authenticating URI to the resource
 BlobUriBuilder uriBuilder = new BlobUriBuilder(StorageAccountBlobUri)
@@ -464,11 +605,150 @@ If using a stored access policy, construct your `BlobSasBuilder` from the exampl
 
 ```C# Snippet:SampleSnippetsBlobMigration_SasBuilderIdentifier
 // Create BlobSasBuilder and specify parameters
-BlobSasBuilder sasBuilder = new BlobSasBuilder()
+BlobSasBuilder sasBuilder = new BlobSasBuilder
 {
     Identifier = "mysignedidentifier"
 };
 ```
+
+### Content Hashes
+
+#### Blob Content MD5
+
+V11 calculated blob content MD5 for validation on download by default, assuming there was a stored MD5 in the blob properties. Calculation and storage on upload was opt-in. Note that this value is not generated or validated by the service, and is only retained for the client to validate against.
+
+v11
+
+```csharp
+BlobRequestOptions options = new BlobRequestOptions
+{
+    ChecksumOptions = new ChecksumOptions()
+    {
+        DisableContentMD5Validation = false, // true to disable download content validation
+        StoreContentMD5 = false // true to calculate content MD5 on upload and store property
+    }
+};
+```
+
+V12 does not have an automated mechanism for blob content validation. It must be done per-request by the user.
+
+v12
+
+```C# Snippet:SampleSnippetsBlobMigration_BlobContentMD5
+// upload with blob content hash
+await blobClient.UploadAsync(
+    contentStream,
+    new BlobUploadOptions()
+    {
+        HttpHeaders = new BlobHttpHeaders()
+        {
+            ContentHash = precalculatedContentHash
+        }
+    });
+
+// download whole blob and validate against stored blob content hash
+Response<BlobDownloadStreamingResult> response = await blobClient.DownloadStreamingAsync();
+
+Stream downloadStream = response.Value.Content;
+byte[] blobContentMD5 = response.Value.Details.BlobContentHash ?? response.Value.Details.ContentHash;
+// validate stream against hash in your workflow
+```
+
+#### Transactional MD5 and CRC64
+
+Transactional hashes are not stored and have a lifespan of the request they are calculated for. Transactional hashes are verified by the service on upload.
+
+V11 provided transactional hashing on uploads and downloads through opt-in request options. MD5 and Storage's custom CRC64 were supported. The SDK calculated and validated these hashes automatically when enabled. The calculation worked on any upload or download method.
+
+v11
+
+```csharp
+BlobRequestOptions options = new BlobRequestOptions
+{
+    ChecksumOptions = new ChecksumOptions()
+    {
+        // request fails if both are true
+        UseTransactionalMD5 = false, // true to use MD5 on all blob content transactions
+        UseTransactionalCRC64 = false // true to use CRC64 on all blob content transactions
+    }
+};
+```
+
+V12 does not currently provide this functionality. Users who manage their own individual upload and download HTTP requests can provide a precalculated MD5 on upload and access the MD5 in the response object. V12 currently offers no API to request a transactional CRC64.
+
+```C# Snippet:SampleSnippetsBlobMigration_TransactionalMD5
+// upload a block with transactional hash calculated by user
+await blockBlobClient.StageBlockAsync(
+    blockId,
+    blockContentStream,
+    transactionalContentHash: precalculatedBlockHash);
+
+// upload more blocks as needed
+
+// commit block list
+await blockBlobClient.CommitBlockListAsync(blockList);
+
+// download any range of blob with transactional MD5 requested (maximum 4 MB for downloads)
+Response<BlobDownloadStreamingResult> response = await blockBlobClient.DownloadStreamingAsync(
+    range: new HttpRange(length: 4 * Constants.MB), // a range must be provided; here we use transactional download max size
+    rangeGetContentHash: true);
+
+Stream downloadStream = response.Value.Content;
+byte[] transactionalMD5 = response.Value.Details.ContentHash;
+// validate stream against hash in your workflow
+```
+
+### Resiliency
+
+#### Retry policy
+
+V11
+
+```csharp
+Stream targetStream = new MemoryStream();
+BlobRequestOptions options = new BlobRequestOptions()
+{
+    RetryPolicy = new ExponentialRetry(deltaBackoff: TimeSpan.FromSeconds(10), maxAttempts: 6)
+};
+await blockBlobClient.DownloadToStreamAsync(targetStream,accessCondition: null, options: options, operationContext: null);
+```
+
+V12
+
+```C# Snippet:SampleSnippetsBlobMigration_RetryPolicy
+BlobClientOptions blobClientOptions = new BlobClientOptions();
+blobClientOptions.Retry.Mode = RetryMode.Exponential;
+blobClientOptions.Retry.Delay = TimeSpan.FromSeconds(10);
+blobClientOptions.Retry.MaxRetries = 6;
+BlobServiceClient service = new BlobServiceClient(connectionString, blobClientOptions);
+BlobClient blobClient = service.GetBlobContainerClient(containerName).GetBlobClient(blobName);
+Stream targetStream = new MemoryStream();
+await blobClient.DownloadToAsync(targetStream);
+```
+
+#### Maximum execution time
+
+V11
+
+```csharp
+Stream targetStream = new MemoryStream();
+BlobRequestOptions options = new BlobRequestOptions()
+{
+    MaximumExecutionTime = TimeSpan.FromSeconds(30)
+};
+await blockBlobClient.DownloadToStreamAsync(targetStream,accessCondition: null, options: options, operationContext: null);
+```
+
+V12
+
+```C# Snippet:SampleSnippetsBlobMigration_MaximumExecutionTime
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+Stream targetStream = new MemoryStream();
+await blobClient.DownloadToAsync(targetStream, cancellationTokenSource.Token);
+```
+
 
 ## Additional information
 

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    /// <summary> REST API operation supported by CommunicationService resource provider. </summary>
+    /// <summary> Details of a REST API operation, returned from the Resource Provider Operations API. </summary>
     public partial class Operation
     {
         /// <summary> Initializes a new instance of Operation. </summary>
@@ -16,25 +16,29 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Initializes a new instance of Operation. </summary>
-        /// <param name="name"> Name of the operation with format: {provider}/{resource}/{operation}. </param>
-        /// <param name="display"> The object that describes the operation. </param>
-        /// <param name="origin"> Optional. The intended executor of the operation; governs the display of the operation in the RBAC UX and the audit logs UX. </param>
-        /// <param name="properties"> Extra properties for the operation. </param>
-        internal Operation(string name, OperationDisplay display, string origin, OperationProperties properties)
+        /// <param name="name"> The name of the operation, as per Resource-Based Access Control (RBAC). Examples: &quot;Microsoft.Compute/virtualMachines/write&quot;, &quot;Microsoft.Compute/virtualMachines/capture/action&quot;. </param>
+        /// <param name="isDataAction"> Whether the operation applies to data-plane. This is &quot;true&quot; for data-plane operations and &quot;false&quot; for ARM/control-plane operations. </param>
+        /// <param name="display"> Localized display information for this particular operation. </param>
+        /// <param name="origin"> The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is &quot;user,system&quot;. </param>
+        /// <param name="actionType"> Enum. Indicates the action type. &quot;Internal&quot; refers to actions that are for internal only APIs. </param>
+        internal Operation(string name, bool? isDataAction, OperationDisplay display, Origin? origin, ActionType? actionType)
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
             Origin = origin;
-            Properties = properties;
+            ActionType = actionType;
         }
 
-        /// <summary> Name of the operation with format: {provider}/{resource}/{operation}. </summary>
+        /// <summary> The name of the operation, as per Resource-Based Access Control (RBAC). Examples: &quot;Microsoft.Compute/virtualMachines/write&quot;, &quot;Microsoft.Compute/virtualMachines/capture/action&quot;. </summary>
         public string Name { get; }
-        /// <summary> The object that describes the operation. </summary>
+        /// <summary> Whether the operation applies to data-plane. This is &quot;true&quot; for data-plane operations and &quot;false&quot; for ARM/control-plane operations. </summary>
+        public bool? IsDataAction { get; }
+        /// <summary> Localized display information for this particular operation. </summary>
         public OperationDisplay Display { get; }
-        /// <summary> Optional. The intended executor of the operation; governs the display of the operation in the RBAC UX and the audit logs UX. </summary>
-        public string Origin { get; }
-        /// <summary> Extra properties for the operation. </summary>
-        public OperationProperties Properties { get; }
+        /// <summary> The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is &quot;user,system&quot;. </summary>
+        public Origin? Origin { get; }
+        /// <summary> Enum. Indicates the action type. &quot;Internal&quot; refers to actions that are for internal only APIs. </summary>
+        public ActionType? ActionType { get; }
     }
 }

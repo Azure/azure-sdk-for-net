@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Compute
     public partial class DedicatedHostsUpdateOperation : Operation<DedicatedHost>, IOperationSource<DedicatedHost>
     {
         private readonly ArmOperationHelpers<DedicatedHost> _operation;
+
+        /// <summary> Initializes a new instance of DedicatedHostsUpdateOperation for mocking. </summary>
+        protected DedicatedHostsUpdateOperation()
+        {
+        }
+
         internal DedicatedHostsUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<DedicatedHost>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DedicatedHostsUpdateOperation");

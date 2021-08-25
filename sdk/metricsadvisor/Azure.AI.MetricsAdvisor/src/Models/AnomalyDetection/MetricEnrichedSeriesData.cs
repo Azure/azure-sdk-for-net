@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary>
     /// Contains details about the data ingested by a time series, but with additional content from an
     /// <see cref="AnomalyDetectionConfiguration"/>. To make plotting easier, this data is scattered
-    /// across different lists, such as <see cref="Timestamps"/> and <see cref="Values"/>. A data
+    /// across different lists, such as <see cref="Timestamps"/> and <see cref="MetricValues"/>. A data
     /// point is represented by the same index across these lists.
     /// </summary>
     [CodeGenModel("SeriesResult")]
@@ -22,17 +22,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             SeriesKey = new DimensionKey(series.Dimension);
             Timestamps = timestamps;
-            Values = values;
+            MetricValues = values;
             IsAnomaly = isAnomaly;
             Periods = periods;
-            ExpectedValues = expectedValues;
-            LowerBoundaries = lowerBoundaries;
-            UpperBoundaries = upperBoundaries;
+            ExpectedMetricValues = expectedValues;
+            LowerBoundaryValues = lowerBoundaries;
+            UpperBoundaryValues = upperBoundaries;
         }
 
         /// <summary>
-        /// The key that, within a metric, uniquely identifies a time series. Every dimension
-        /// contained in the associated <see cref="DataFeed"/> has been assigned a value.
+        /// The key that, within a metric, uniquely identifies this time series. In this key,
+        /// a value is assigned to every possible dimension.
         /// </summary>
         public DimensionKey SeriesKey { get; }
 
@@ -46,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The values of the data points present in this time series.
         /// </summary>
         [CodeGenMember("ValueList")]
-        public IReadOnlyList<double> Values { get; }
+        public IReadOnlyList<double> MetricValues { get; }
 
         /// <summary>
         /// The expected values of the data points in this time series, according
@@ -54,7 +54,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// detector.
         /// </summary>
         [CodeGenMember("ExpectedValueList")]
-        public IReadOnlyList<double?> ExpectedValues { get; }
+        public IReadOnlyList<double?> ExpectedMetricValues { get; }
 
         /// <summary>
         /// Whether or not a data point is considered an anomaly, according to the
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The period of every data point in this time series, measured in amount of
-        /// points.
+        /// points. Used to describe seasonal data.
         /// </summary>
         [CodeGenMember("PeriodList")]
         public IReadOnlyList<int?> Periods { get; }
@@ -76,7 +76,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// smart detector.
         /// </summary>
         [CodeGenMember("LowerBoundaryList")]
-        public IReadOnlyList<double?> LowerBoundaries { get; }
+        public IReadOnlyList<double?> LowerBoundaryValues { get; }
 
         /// <summary>
         /// The upper boundaries the data points in this time series must cross to
@@ -84,6 +84,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// smart detector.
         /// </summary>
         [CodeGenMember("UpperBoundaryList")]
-        public IReadOnlyList<double?> UpperBoundaries { get; }
+        public IReadOnlyList<double?> UpperBoundaryValues { get; }
     }
 }

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.NetApp
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -36,7 +38,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='accountName'>
             /// The name of the NetApp account
             /// </param>
-            public static BackupsList List(this IAccountBackupsOperations operations, string resourceGroupName, string accountName)
+            public static IEnumerable<Backup> List(this IAccountBackupsOperations operations, string resourceGroupName, string accountName)
             {
                 return operations.ListAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
@@ -59,7 +61,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupsList> ListAsync(this IAccountBackupsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Backup>> ListAsync(this IAccountBackupsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -71,7 +73,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// Get Backup for a Netapp Account
             /// </summary>
             /// <remarks>
-            /// Get Backup for a Netapp Account
+            /// Gets the specified backup for a Netapp Account
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -94,7 +96,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// Get Backup for a Netapp Account
             /// </summary>
             /// <remarks>
-            /// Get Backup for a Netapp Account
+            /// Gets the specified backup for a Netapp Account
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -123,7 +125,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// Delete Backup for a Netapp Account
             /// </summary>
             /// <remarks>
-            /// Delete Backup for a Netapp Account
+            /// Delete the specified Backup for a Netapp Account
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -146,7 +148,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// Delete Backup for a Netapp Account
             /// </summary>
             /// <remarks>
-            /// Delete Backup for a Netapp Account
+            /// Delete the specified Backup for a Netapp Account
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -172,7 +174,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// Delete Backup for a Netapp Account
             /// </summary>
             /// <remarks>
-            /// Delete Backup for a Netapp Account
+            /// Delete the specified Backup for a Netapp Account
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -195,7 +197,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// Delete Backup for a Netapp Account
             /// </summary>
             /// <remarks>
-            /// Delete Backup for a Netapp Account
+            /// Delete the specified Backup for a Netapp Account
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

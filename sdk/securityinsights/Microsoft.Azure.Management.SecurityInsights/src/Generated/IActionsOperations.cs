@@ -53,6 +53,102 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// </exception>
         Task<AzureOperationResponse<IPage<ActionResponse>>> ListByAlertRuleWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets the action of alert rule.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace.
+        /// </param>
+        /// <param name='ruleId'>
+        /// Alert rule ID
+        /// </param>
+        /// <param name='actionId'>
+        /// Action ID
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ActionResponse>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleId, string actionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates or updates the action of alert rule.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace.
+        /// </param>
+        /// <param name='ruleId'>
+        /// Alert rule ID
+        /// </param>
+        /// <param name='actionId'>
+        /// Action ID
+        /// </param>
+        /// <param name='action'>
+        /// The action
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ActionResponse>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleId, string actionId, ActionRequest action, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete the action of alert rule.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace.
+        /// </param>
+        /// <param name='ruleId'>
+        /// Alert rule ID
+        /// </param>
+        /// <param name='actionId'>
+        /// Action ID
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleId, string actionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets all actions of alert rule.
         /// </summary>
         /// <param name='nextPageLink'>

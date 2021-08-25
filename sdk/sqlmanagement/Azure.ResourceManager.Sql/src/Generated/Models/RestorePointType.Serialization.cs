@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class RestorePointTypeExtensions
+    internal static partial class RestorePointTypeExtensions
     {
         public static string ToSerialString(this RestorePointType value) => value switch
         {

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualHubRouteTableV2SCreateOrUpdateOperation : Operation<VirtualHubRouteTableV2>, IOperationSource<VirtualHubRouteTableV2>
     {
         private readonly ArmOperationHelpers<VirtualHubRouteTableV2> _operation;
+
+        /// <summary> Initializes a new instance of VirtualHubRouteTableV2SCreateOrUpdateOperation for mocking. </summary>
+        protected VirtualHubRouteTableV2SCreateOrUpdateOperation()
+        {
+        }
+
         internal VirtualHubRouteTableV2SCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VirtualHubRouteTableV2>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualHubRouteTableV2SCreateOrUpdateOperation");

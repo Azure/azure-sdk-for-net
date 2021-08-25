@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewaysResetOperation : Operation<VirtualNetworkGateway>, IOperationSource<VirtualNetworkGateway>
     {
         private readonly ArmOperationHelpers<VirtualNetworkGateway> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworkGatewaysResetOperation for mocking. </summary>
+        protected VirtualNetworkGatewaysResetOperation()
+        {
+        }
+
         internal VirtualNetworkGatewaysResetOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VirtualNetworkGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysResetOperation");

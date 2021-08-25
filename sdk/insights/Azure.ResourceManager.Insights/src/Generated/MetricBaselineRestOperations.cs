@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath("/providers/microsoft.insights/calculatebaseline", false);
             uri.AppendQuery("api-version", "2017-11-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(timeSeriesInformation);
             request.Content = content;

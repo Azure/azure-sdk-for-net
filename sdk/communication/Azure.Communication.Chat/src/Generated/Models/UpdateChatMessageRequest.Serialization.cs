@@ -20,10 +20,16 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("content");
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(Priority))
+            if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("priority");
-                writer.WriteStringValue(Priority.Value.ToString());
+                writer.WritePropertyName("metadata");
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }

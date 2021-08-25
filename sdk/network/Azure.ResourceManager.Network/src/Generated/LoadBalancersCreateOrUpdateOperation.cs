@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class LoadBalancersCreateOrUpdateOperation : Operation<LoadBalancer>, IOperationSource<LoadBalancer>
     {
         private readonly ArmOperationHelpers<LoadBalancer> _operation;
+
+        /// <summary> Initializes a new instance of LoadBalancersCreateOrUpdateOperation for mocking. </summary>
+        protected LoadBalancersCreateOrUpdateOperation()
+        {
+        }
+
         internal LoadBalancersCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<LoadBalancer>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LoadBalancersCreateOrUpdateOperation");

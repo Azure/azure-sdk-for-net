@@ -14,14 +14,10 @@ namespace Azure.Security.KeyVault.Keys
     public class ImportKeyOptions : IJsonSerializable
     {
         private const string KeyPropertyName = "key";
-        private const string TagsPropertyName = "tags";
         private const string HsmPropertyName = "hsm";
-        private const string ReleasePolicyPropertyName = "release_policy";
 
         private static readonly JsonEncodedText s_keyPropertyNameBytes = JsonEncodedText.Encode(KeyPropertyName);
-        private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
         private static readonly JsonEncodedText s_hsmPropertyNameBytes = JsonEncodedText.Encode(HsmPropertyName);
-        private static readonly JsonEncodedText s_releasePolicyPropertyNameBytes = JsonEncodedText.Encode(ReleasePolicyPropertyName);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImportKeyOptions"/> class.
@@ -57,11 +53,6 @@ namespace Azure.Security.KeyVault.Keys
         public bool? HardwareProtected { get; set; }
 
         /// <summary>
-        /// Gets or sets the policy rules under which the key can be exported.
-        /// </summary>
-        public KeyReleasePolicy ReleasePolicy { get; set; }
-
-        /// <summary>
         /// Gets additional properties of the <see cref="KeyVaultKey"/>.
         /// </summary>
         public KeyProperties Properties { get; }
@@ -78,31 +69,12 @@ namespace Azure.Security.KeyVault.Keys
             }
 
             Properties.WriteAttributes(json);
-
-            if (Properties._tags != null && Properties._tags.Count > 0)
-            {
-                json.WriteStartObject(s_tagsPropertyNameBytes);
-
-                foreach (KeyValuePair<string, string> kvp in Properties._tags)
-                {
-                    json.WriteString(kvp.Key, kvp.Value);
-                }
-
-                json.WriteEndObject();
-            }
+            Properties.WriteReleasePolicy(json);
+            Properties.WriteTags(json);
 
             if (HardwareProtected.HasValue)
             {
                 json.WriteBoolean(s_hsmPropertyNameBytes, HardwareProtected.Value);
-            }
-
-            if (ReleasePolicy != null)
-            {
-                json.WriteStartObject(s_releasePolicyPropertyNameBytes);
-
-                ReleasePolicy.WriteProperties(json);
-
-                json.WriteEndObject();
             }
         }
     }

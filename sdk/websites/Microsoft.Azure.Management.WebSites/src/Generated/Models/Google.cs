@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the Google provider.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Google : ProxyOnlyResource
     {
@@ -33,6 +36,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="enabled">&lt;code&gt;false&lt;/code&gt; if the Google
+        /// provider should not be enabled despite the set registration;
+        /// otherwise, &lt;code&gt;true&lt;/code&gt;.</param>
+        /// <param name="registration">The configuration settings of the app
+        /// registration for the Google provider.</param>
+        /// <param name="login">The configuration settings of the login
+        /// flow.</param>
+        /// <param name="validation">The configuration settings of the Azure
+        /// Active Directory token validation flow.</param>
         public Google(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), ClientRegistration registration = default(ClientRegistration), LoginScopes login = default(LoginScopes), AllowedAudiencesValidation validation = default(AllowedAudiencesValidation))
             : base(id, name, kind, type)
         {
@@ -49,21 +61,29 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; if the
+        /// Google provider should not be enabled despite the set registration;
+        /// otherwise, &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the app registration for
+        /// the Google provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties.registration")]
         public ClientRegistration Registration { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the login flow.
         /// </summary>
         [JsonProperty(PropertyName = "properties.login")]
         public LoginScopes Login { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the Azure Active
+        /// Directory token validation flow.
         /// </summary>
         [JsonProperty(PropertyName = "properties.validation")]
         public AllowedAudiencesValidation Validation { get; set; }

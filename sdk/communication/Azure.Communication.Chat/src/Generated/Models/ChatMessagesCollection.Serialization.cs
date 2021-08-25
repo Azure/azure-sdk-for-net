@@ -15,21 +15,16 @@ namespace Azure.Communication.Chat
     {
         internal static ChatMessagesCollection DeserializeChatMessagesCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<ChatMessage>> value = default;
+            IReadOnlyList<ChatMessageInternal> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ChatMessage> array = new List<ChatMessage>();
+                    List<ChatMessageInternal> array = new List<ChatMessageInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatMessage.DeserializeChatMessage(item));
+                        array.Add(ChatMessageInternal.DeserializeChatMessageInternal(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +35,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessagesCollection(Optional.ToList(value), nextLink.Value);
+            return new ChatMessagesCollection(value, nextLink.Value);
         }
     }
 }

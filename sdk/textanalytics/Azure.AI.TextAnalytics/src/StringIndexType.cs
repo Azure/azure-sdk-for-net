@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     [CodeGenModel("StringIndexType")]
-    internal partial struct StringIndexType
+    internal readonly partial struct StringIndexType
     {
     }
 }

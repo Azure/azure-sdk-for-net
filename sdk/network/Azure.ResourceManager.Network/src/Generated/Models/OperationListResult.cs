@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Result of the request to list Network operations. It contains a list of operations and a URL link to get the next set of results. </summary>
-    public partial class OperationListResult
+    internal partial class OperationListResult
     {
         /// <summary> Initializes a new instance of OperationListResult. </summary>
         internal OperationListResult()

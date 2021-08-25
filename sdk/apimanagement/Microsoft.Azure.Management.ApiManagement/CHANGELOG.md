@@ -1,8 +1,11 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
-### Changes in 6.0.0-preview
+### Changes in 7.0.0-preview
 
-- Fixed `quotas` update contract
+- Switch the .NET client to use api-version `2020-12-01`
+- new entities added, are `ContentType`, `ContentItem`, `DeletedServices`, `GatewayCertificateAuthority`, `PortalRevision`, `PortalSettings`, `TenantSettings`, `ApiManagementSkus`.
+- Added support for creating Azure KeyVault based `namedValues`, which allows auto rotation of this Entity. blocked POST operations to get entity secret from it due to Security Issue.
+- Added support for creating Azure KeyVault based `certificates`, which allows auto rotation of this Entity.
 
 ### Changes in 5.0.0-preview
 

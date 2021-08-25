@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class OperationDefinitionListResult
+    internal partial class OperationDefinitionListResult
     {
         internal static OperationDefinitionListResult DeserializeOperationDefinitionListResult(JsonElement element)
         {

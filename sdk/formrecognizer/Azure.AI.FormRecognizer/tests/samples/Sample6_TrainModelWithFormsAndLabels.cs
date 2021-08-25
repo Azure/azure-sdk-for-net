@@ -17,7 +17,6 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
 
             #region Snippet:FormRecognizerSampleTrainModelWithFormsAndLabels
             // For this sample, you can use the training forms found in the `trainingFiles` folder.
@@ -26,25 +25,34 @@ namespace Azure.AI.FormRecognizer.Samples
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
             // For instructions to create a label file for your training forms, please see:
-            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
 
+#if SNIPPET
+            Uri trainingFileUri = <trainingFileUri>;
+#else
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+#endif
+            string modelName = "My Model with labels";
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true, "My Model with labels").WaitForCompletionAsync();
+
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: true, modelName);
+            Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
+            CustomFormModel model = operationResponse.Value;
 
             Console.WriteLine($"Custom Model Info:");
-            Console.WriteLine($"    Model Id: {model.ModelId}");
-            Console.WriteLine($"    Model name: {model.ModelName}");
-            Console.WriteLine($"    Model Status: {model.Status}");
-            Console.WriteLine($"    Is composed model: {model.Properties.IsComposedModel}");
-            Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
-            Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
+            Console.WriteLine($"  Model Id: {model.ModelId}");
+            Console.WriteLine($"  Model name: {model.ModelName}");
+            Console.WriteLine($"  Model Status: {model.Status}");
+            Console.WriteLine($"  Is composed model: {model.Properties.IsComposedModel}");
+            Console.WriteLine($"  Training model started on: {model.TrainingStartedOn}");
+            Console.WriteLine($"  Training model completed on: {model.TrainingCompletedOn}");
 
             foreach (CustomFormSubmodel submodel in model.Submodels)
             {
                 Console.WriteLine($"Submodel Form Type: {submodel.FormType}");
                 foreach (CustomFormModelField field in submodel.Fields.Values)
                 {
-                    Console.Write($"    FieldName: {field.Name}");
+                    Console.Write($"  FieldName: {field.Name}");
                     if (field.Accuracy != null)
                     {
                         Console.Write($", Accuracy: {field.Accuracy}");

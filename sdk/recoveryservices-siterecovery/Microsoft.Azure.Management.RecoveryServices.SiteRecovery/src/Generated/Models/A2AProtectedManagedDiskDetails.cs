@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Id.</param>
         /// <param name="recoveryReplicaDiskId">Recovery replica disk Arm
         /// Id.</param>
+        /// <param name="recoveryOrignalTargetDiskId">Recovery original target
+        /// disk Arm Id.</param>
         /// <param name="recoveryReplicaDiskAccountType">The replica disk type.
         /// Its an optional value and will be same as source disk type if not
         /// user provided.</param>
@@ -47,6 +49,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// after failover. Its an optional value and will be same as source
         /// disk type if not user provided.</param>
         /// <param name="recoveryDiskEncryptionSetId">The recovery disk
+        /// encryption set Id.</param>
+        /// <param name="primaryDiskEncryptionSetId">The primary disk
         /// encryption set Id.</param>
         /// <param name="diskName">The disk name.</param>
         /// <param name="diskCapacityInBytes">The disk capacity in
@@ -84,15 +88,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// disk.</param>
         /// <param name="tfoDiskName">The test failover name for the managed
         /// disk.</param>
-        public A2AProtectedManagedDiskDetails(string diskId = default(string), string recoveryResourceGroupId = default(string), string recoveryTargetDiskId = default(string), string recoveryReplicaDiskId = default(string), string recoveryReplicaDiskAccountType = default(string), string recoveryTargetDiskAccountType = default(string), string recoveryDiskEncryptionSetId = default(string), string diskName = default(string), long? diskCapacityInBytes = default(long?), string primaryStagingAzureStorageAccountId = default(string), string diskType = default(string), bool? resyncRequired = default(bool?), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), double? dataPendingInStagingStorageAccountInMB = default(double?), double? dataPendingAtSourceAgentInMB = default(double?), string diskState = default(string), IList<string> allowedDiskLevelOperation = default(IList<string>), bool? isDiskEncrypted = default(bool?), string secretIdentifier = default(string), string dekKeyVaultArmId = default(string), bool? isDiskKeyEncrypted = default(bool?), string keyIdentifier = default(string), string kekKeyVaultArmId = default(string), string failoverDiskName = default(string), string tfoDiskName = default(string))
+        public A2AProtectedManagedDiskDetails(string diskId = default(string), string recoveryResourceGroupId = default(string), string recoveryTargetDiskId = default(string), string recoveryReplicaDiskId = default(string), string recoveryOrignalTargetDiskId = default(string), string recoveryReplicaDiskAccountType = default(string), string recoveryTargetDiskAccountType = default(string), string recoveryDiskEncryptionSetId = default(string), string primaryDiskEncryptionSetId = default(string), string diskName = default(string), long? diskCapacityInBytes = default(long?), string primaryStagingAzureStorageAccountId = default(string), string diskType = default(string), bool? resyncRequired = default(bool?), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), double? dataPendingInStagingStorageAccountInMB = default(double?), double? dataPendingAtSourceAgentInMB = default(double?), string diskState = default(string), IList<string> allowedDiskLevelOperation = default(IList<string>), bool? isDiskEncrypted = default(bool?), string secretIdentifier = default(string), string dekKeyVaultArmId = default(string), bool? isDiskKeyEncrypted = default(bool?), string keyIdentifier = default(string), string kekKeyVaultArmId = default(string), string failoverDiskName = default(string), string tfoDiskName = default(string))
         {
             DiskId = diskId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
             RecoveryTargetDiskId = recoveryTargetDiskId;
             RecoveryReplicaDiskId = recoveryReplicaDiskId;
+            RecoveryOrignalTargetDiskId = recoveryOrignalTargetDiskId;
             RecoveryReplicaDiskAccountType = recoveryReplicaDiskAccountType;
             RecoveryTargetDiskAccountType = recoveryTargetDiskAccountType;
             RecoveryDiskEncryptionSetId = recoveryDiskEncryptionSetId;
+            PrimaryDiskEncryptionSetId = primaryDiskEncryptionSetId;
             DiskName = diskName;
             DiskCapacityInBytes = diskCapacityInBytes;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
@@ -145,6 +151,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string RecoveryReplicaDiskId { get; set; }
 
         /// <summary>
+        /// Gets or sets recovery original target disk Arm Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryOrignalTargetDiskId")]
+        public string RecoveryOrignalTargetDiskId { get; set; }
+
+        /// <summary>
         /// Gets or sets the replica disk type. Its an optional value and will
         /// be same as source disk type if not user provided.
         /// </summary>
@@ -163,6 +175,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryDiskEncryptionSetId")]
         public string RecoveryDiskEncryptionSetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the primary disk encryption set Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "primaryDiskEncryptionSetId")]
+        public string PrimaryDiskEncryptionSetId { get; set; }
 
         /// <summary>
         /// Gets or sets the disk name.

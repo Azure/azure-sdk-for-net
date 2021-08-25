@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Resources
     public partial class ResourcesUpdateByIdOperation : Operation<GenericResource>, IOperationSource<GenericResource>
     {
         private readonly ArmOperationHelpers<GenericResource> _operation;
+
+        /// <summary> Initializes a new instance of ResourcesUpdateByIdOperation for mocking. </summary>
+        protected ResourcesUpdateByIdOperation()
+        {
+        }
+
         internal ResourcesUpdateByIdOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesUpdateByIdOperation");

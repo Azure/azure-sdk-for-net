@@ -26,8 +26,8 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             Optional<string> sparkJobDefinition = default;
             Optional<IReadOnlyList<SparkJob>> pipeline = default;
             Optional<string> jobType = default;
-            Optional<DateTimeOffset> submitTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            Optional<DateTimeOffset?> submitTime = default;
+            Optional<DateTimeOffset?> endTime = default;
             Optional<string> queuedDuration = default;
             Optional<string> runningDuration = default;
             Optional<string> totalDuration = default;
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        submitTime = null;
                         continue;
                     }
                     submitTime = property.Value.GetDateTimeOffset("O");
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        endTime = null;
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");

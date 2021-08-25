@@ -283,14 +283,14 @@ namespace Azure.Storage.Files.Shares
             // regular style Uri will already have account name in domain
             if (_isPathStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
-                path.Append("/").Append(AccountName);
+                path.Append('/').Append(AccountName);
             }
             if (!string.IsNullOrWhiteSpace(ShareName))
             {
-                path.Append("/").Append(ShareName);
+                path.Append('/').Append(ShareName);
                 if (!string.IsNullOrWhiteSpace(_directoryOrFilePath))
                 {
-                    path.Append("/").Append(_directoryOrFilePath.EscapePath());
+                    path.Append('/').Append(_directoryOrFilePath.EscapePath());
                 }
             }
 
@@ -298,13 +298,13 @@ namespace Azure.Storage.Files.Shares
             var query = new StringBuilder(Query);
             if (!string.IsNullOrWhiteSpace(Snapshot))
             {
-                if (query.Length > 0) { query.Append("&"); }
-                query.Append(Constants.File.SnapshotParameterName).Append("=").Append(Snapshot);
+                if (query.Length > 0) { query.Append('&'); }
+                query.Append(Constants.File.SnapshotParameterName).Append('=').Append(Snapshot);
             }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {
-                if (query.Length > 0) { query.Append("&"); }
+                if (query.Length > 0) { query.Append('&'); }
                 query.Append(sas);
             }
 

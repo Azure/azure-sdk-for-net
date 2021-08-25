@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineScaleSetsUpdateOperation : Operation<VirtualMachineScaleSet>, IOperationSource<VirtualMachineScaleSet>
     {
         private readonly ArmOperationHelpers<VirtualMachineScaleSet> _operation;
+
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetsUpdateOperation for mocking. </summary>
+        protected VirtualMachineScaleSetsUpdateOperation()
+        {
+        }
+
         internal VirtualMachineScaleSetsUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VirtualMachineScaleSet>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetsUpdateOperation");

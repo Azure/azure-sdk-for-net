@@ -15,39 +15,78 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString");
-            writer.WriteStringValue(ConnectionString);
-            writer.WritePropertyName("container");
-            writer.WriteStringValue(Container);
-            writer.WritePropertyName("blobTemplate");
-            writer.WriteStringValue(BlobTemplate);
+            if (Optional.IsDefined(ConnectionString))
+            {
+                if (ConnectionString != null)
+                {
+                    writer.WritePropertyName("connectionString");
+                    writer.WriteStringValue(ConnectionString);
+                }
+                else
+                {
+                    writer.WriteNull("connectionString");
+                }
+            }
+            if (Container != null)
+            {
+                writer.WritePropertyName("container");
+                writer.WriteStringValue(Container);
+            }
+            else
+            {
+                writer.WriteNull("container");
+            }
+            if (BlobTemplate != null)
+            {
+                writer.WritePropertyName("blobTemplate");
+                writer.WriteStringValue(BlobTemplate);
+            }
+            else
+            {
+                writer.WriteNull("blobTemplate");
+            }
             writer.WriteEndObject();
         }
 
         internal static AzureBlobParameter DeserializeAzureBlobParameter(JsonElement element)
         {
-            string connectionString = default;
+            Optional<string> connectionString = default;
             string container = default;
             string blobTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionString"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        connectionString = null;
+                        continue;
+                    }
                     connectionString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("container"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        container = null;
+                        continue;
+                    }
                     container = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("blobTemplate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        blobTemplate = null;
+                        continue;
+                    }
                     blobTemplate = property.Value.GetString();
                     continue;
                 }
             }
-            return new AzureBlobParameter(connectionString, container, blobTemplate);
+            return new AzureBlobParameter(connectionString.Value, container, blobTemplate);
         }
     }
 }

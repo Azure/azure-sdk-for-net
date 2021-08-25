@@ -3,13 +3,13 @@
 
 namespace Microsoft.Azure.Management.StorageCache.Tests
 {
-    using System;
-    using System.Collections.Generic;
     using Microsoft.Azure.Management.StorageCache.Models;
     using Microsoft.Azure.Management.StorageCache.Tests.Fixtures;
     using Microsoft.Azure.Management.StorageCache.Tests.Utilities;
     using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
+    using System.Collections.Generic;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -42,6 +42,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             this.fixture = fixture;
             this.testOutputHelper = testOutputHelper;
             this.storageAccountsFixture = storageAccountsFixture;
+            testOutputHelper.WriteLine(storageAccountsFixture.notes.ToString());
         }
 
         /// <summary>
@@ -50,12 +51,14 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
         [Fact]
         public void TestCreateClfsStorageTarget()
         {
+            testOutputHelper.WriteLine(storageAccountsFixture.notes.ToString());
             this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
                 client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
+
                 StorageTarget storageTarget;
                 var suffix = "cre";
                 storageTarget = this.storageAccountsFixture.AddClfsStorageAccount(context, suffix: suffix, waitForPermissions: false, testOutputHelper: this.testOutputHelper);
@@ -74,6 +77,73 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 Assert.Equal(id, storageTarget.Id, ignoreCase: true);
                 Assert.Equal("clfs", storageTarget.TargetType);
                 Assert.Equal(clfsTarget, storageTarget.Clfs.Target);
+                Assert.Equal("/junction" + suffix, storageTarget.Junctions[0].NamespacePath);
+                Assert.Equal("/", storageTarget.Junctions[0].TargetPath);
+
+                // Call an invalid DNSRefresh case.
+                Models.SystemData systemData = new Models.SystemData("SDK", "Application", DateTime.UtcNow, "SDK", "Application", DateTime.UtcNow);
+                StorageTarget st = new StorageTarget("clfs", "clfsStorageTarget", null, "StorageTarget", systemData: systemData);
+                Models.SystemData sd = storageTarget.SystemData;
+                testOutputHelper.WriteLine($"ST values createdBy {sd.CreatedBy}, createdByType {sd.CreatedByType}, createdAt {sd.CreatedAt}");
+                testOutputHelper.WriteLine($"ST values modifiedBy {sd.LastModifiedBy}, modifiedByType {sd.LastModifiedByType}, modifiedAt {sd.LastModifiedAt}");
+
+                CloudErrorException ex = new CloudErrorException();
+                ex = Assert.Throws<CloudErrorException>(
+                    () => client.StorageTargets.DnsRefresh(fixture.ResourceGroup.Name, fixture.Cache.Name, storageTarget.Name));
+                testOutputHelper.WriteLine($"Exception Message: {ex.Body.Error.Message}");
+                testOutputHelper.WriteLine($"Request: {ex.Request}");
+                testOutputHelper.WriteLine($"Response: {ex.Response}");
+                Assert.Contains("BadRequest", ex.Body.Error.Code);
+
+                Microsoft.Rest.ValidationException rex = Assert.Throws<Microsoft.Rest.ValidationException>(
+                    () => client.StorageTargets.DnsRefresh(null, fixture.Cache.Name, storageTarget.Name));
+                testOutputHelper.WriteLine($"Exception Message: {rex.Message}");
+                Assert.Contains("'resourceGroupName' cannot be null", rex.Message);
+
+                rex = Assert.Throws<Microsoft.Rest.ValidationException>(
+                    () => client.StorageTargets.DnsRefresh(fixture.ResourceGroup.Name, null, storageTarget.Name));
+                testOutputHelper.WriteLine($"Exception Message: {rex.Message}");
+                Assert.Contains("'cacheName' cannot be null", rex.Message);
+
+                rex = Assert.Throws<Microsoft.Rest.ValidationException>(
+                    () => client.StorageTargets.DnsRefresh(fixture.ResourceGroup.Name, ".badcachename.", storageTarget.Name));
+                testOutputHelper.WriteLine($"Exception Message: {rex.Message}");
+                Assert.Contains("'cacheName' does not match expected pattern '^[-0-9a-zA-Z_]{1,80}$'", rex.Message);
+            }
+        }
+
+        /// <summary>
+        /// The TestCreateBlobNfsStorageTarget.
+        /// </summary>
+        [Fact]
+        public void TestCreateBlobNfsStorageTarget()
+        {
+            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
+            {
+                var client = context.GetClient<StorageCacheManagementClient>();
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
+                this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                StorageTarget storageTarget;
+                var suffix = "bnfs";
+                string blobNfsUsageModel = "WRITE_WORKLOAD_15";
+                storageTarget = this.storageAccountsFixture.AddBlobNfsStorageAccount(context, suffix: suffix, waitForPermissions: false, testOutputHelper: this.testOutputHelper, usageModel: blobNfsUsageModel);
+                string id =
+                    $"/subscriptions/{this.fixture.SubscriptionID}" +
+                    $"/resourceGroups/{this.fixture.ResourceGroup.Name}" +
+                    $"/providers/Microsoft.StorageCache/caches/{this.fixture.Cache.Name}" +
+                    $"/storageTargets/{this.fixture.ResourceGroup.Name + suffix}";
+
+                string blobNfsTarget =
+                    $"/subscriptions/{this.fixture.SubscriptionID}" +
+                    $"/resourceGroups/{this.fixture.ResourceGroup.Name}" +
+                    $"/providers/Microsoft.Storage/storageAccounts/{this.fixture.ResourceGroup.Name + suffix}" +
+                    $"/blobServices/default/containers/{this.fixture.ResourceGroup.Name + suffix}";
+                Assert.Equal(this.fixture.ResourceGroup.Name + suffix, storageTarget.Name);
+                Assert.Equal(id, storageTarget.Id, ignoreCase: true);
+                Assert.Equal("blobNfs", storageTarget.TargetType);
+                Assert.Equal(blobNfsTarget, storageTarget.BlobNfs.Target);
+                Assert.Equal(blobNfsUsageModel, storageTarget.BlobNfs.UsageModel);
                 Assert.Equal("/junction" + suffix, storageTarget.Junctions[0].NamespacePath);
                 Assert.Equal("/", storageTarget.Junctions[0].TargetPath);
             }
@@ -158,7 +228,10 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
         [Fact]
         public void TestDeleteClfsStorageTarget()
         {
-            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            if (testOutputHelper != null)
+            {
+                this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            }
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
@@ -228,12 +301,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
 
                 CloudErrorException ex = Assert.Throws<CloudErrorException>(
                     () =>
-                    this.fixture.CacheHelper.CreateStorageTarget(
+                    this.fixture.CacheHelper.CreateInvalidStorageTarget(
                         this.fixture.Cache.Name,
                         "invalidst",
                         storageTargetParameters,
-                        this.testOutputHelper,
-                        maxRequestTries: 0));
+                        this.testOutputHelper));
 
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
@@ -264,12 +336,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
 
                 CloudErrorException ex = Assert.Throws<CloudErrorException>(
                     () =>
-                    this.fixture.CacheHelper.CreateStorageTarget(
+                    this.fixture.CacheHelper.CreateInvalidStorageTarget(
                         this.fixture.Cache.Name,
                         "invalidst",
                         storageTargetParameters,
-                        this.testOutputHelper,
-                        maxRequestTries: 0));
+                        this.testOutputHelper));
 
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
@@ -302,66 +373,16 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
 
                 CloudErrorException ex = Assert.Throws<CloudErrorException>(
                     () =>
-                    this.fixture.CacheHelper.CreateStorageTarget(
+                    this.fixture.CacheHelper.CreateInvalidStorageTarget(
                         this.fixture.Cache.Name,
                         "invalidst",
                         storageTargetParameters,
-                        this.testOutputHelper,
-                        maxRequestTries: 0));
+                        this.testOutputHelper));
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
                 Assert.Contains("InvalidParameter", ex.Body.Error.Code);
                 Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
-            }
-        }
-
-        /// <summary>
-        /// Test clfs target with empty namespace.
-        /// </summary>
-        [Fact]
-        public void TestClfsTargetEmptyNameSpace()
-        {
-            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
-            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
-            {
-                var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
-                this.fixture.CacheHelper.StoragecacheManagementClient = client;
-                var storageAccount = this.storageAccountsFixture.AddStorageAccount(context, this.fixture.ResourceGroup, testOutputHelper: this.testOutputHelper);
-                var blobContainer = this.storageAccountsFixture.AddBlobContainer(context, this.fixture.ResourceGroup, storageAccount, testOutputHelper: this.testOutputHelper);
-
-                StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateClfsStorageTargetParameters(
-                    storageAccount.Name,
-                    blobContainer.Name,
-                    string.Empty);
-                storageTargetParameters.Junctions = new List<NamespaceJunction>() { };
-                var exceptionTarget = string.Empty;
-                CloudErrorException ex;
-                DateTimeOffset startTime = DateTimeOffset.Now;
-                do
-                {
-                    ex = Assert.Throws<CloudErrorException>(
-                    () =>
-                    this.fixture.CacheHelper.CreateStorageTarget(
-                        this.fixture.Cache.Name,
-                        "invalidst",
-                        storageTargetParameters,
-                        this.testOutputHelper,
-                        maxRequestTries: 0));
-                    exceptionTarget = ex.Body.Error.Target;
-                    if (DateTimeOffset.Now.Subtract(startTime).TotalSeconds > 600)
-                    {
-                        throw new TimeoutException();
-                    }
-                }
-                while (exceptionTarget != "storageTarget.junctions");
-
-                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
-                this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
-                this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
-                Assert.Contains("InvalidParameter", ex.Body.Error.Code);
-                Assert.Equal("storageTarget.junctions", ex.Body.Error.Target);
             }
         }
 
@@ -405,6 +426,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
         public void TestClfsTargetInvalidNameSpace()
         {
             this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
+            this.testOutputHelper.WriteLine("TestClfsTargetInvalidNamespace 2");
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
@@ -419,60 +441,21 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                     "Invalid#$%1");
                 var exceptionTarget = string.Empty;
                 CloudErrorException ex;
-                DateTimeOffset startTime = DateTimeOffset.Now;
-                do
-                {
-                    ex = Assert.Throws<CloudErrorException>(
-                    () =>
-                    this.fixture.CacheHelper.CreateStorageTarget(
-                        this.fixture.Cache.Name,
-                        "invalidst",
-                        storageTargetParameters,
-                        this.testOutputHelper,
-                        maxRequestTries: 0));
-                    exceptionTarget = ex.Body.Error.Target;
-                    if (DateTimeOffset.Now.Subtract(startTime).TotalSeconds > 600)
-                    {
-                        throw new TimeoutException();
-                    }
-                }
-                while (exceptionTarget != "storageTarget.junctions.namespacePath");
-                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
-                this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
-                this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
+
+                ex = Assert.Throws<CloudErrorException>(
+                () =>
+                this.fixture.CacheHelper.CreateInvalidStorageTarget(
+                    this.fixture.Cache.Name,
+                    "invalidst",
+                    storageTargetParameters,
+                    this.testOutputHelper));
+                exceptionTarget = ex.Message;
+                testOutputHelper.WriteLine($"Exception Message: {ex.Body.Error.Message}");
+                testOutputHelper.WriteLine($"Exception Data: {ex.Body.Error.Code}");
+                testOutputHelper.WriteLine($"Exception Target: {ex.Body.Error.Target}");
                 Assert.Contains("InvalidParameter", ex.Body.Error.Code);
                 Assert.Equal("storageTarget.junctions.namespacePath", ex.Body.Error.Target);
-            }
-        }
-
-        /// <summary>
-        /// Test storage account permission.
-        /// </summary>
-        [Fact]
-        public void TestStorageAccountPermission()
-        {
-            this.testOutputHelper.WriteLine($"Running in {HttpMockServer.GetCurrentMode()} mode.");
-            using (StorageCacheTestContext context = new StorageCacheTestContext(this))
-            {
-                var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
-                this.fixture.CacheHelper.StoragecacheManagementClient = client;
-                CloudErrorException ex = Assert.Throws<CloudErrorException>(
-                    () =>
-                    this.storageAccountsFixture.AddClfsStorageAccount(
-                        context,
-                        "perm",
-                        waitForStorageTarget: false,
-                        addPermissions: false,
-                        testOutputHelper: this.testOutputHelper,
-                        waitForPermissions: false,
-                        maxRequestTries: 0));
-                this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
-                this.testOutputHelper.WriteLine($"{ex.Body.Error.Code}");
-                this.testOutputHelper.WriteLine($"{ex.Body.Error.Target}");
-                Assert.Contains("InvalidParameter", ex.Body.Error.Code);
-                Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
-                Assert.Contains("hasn't sufficient permissions", ex.Body.Error.Message);
+                //Assert.Equal("storageTarget.clfs.target", ex.Body.Error.Target);
             }
         }
     }

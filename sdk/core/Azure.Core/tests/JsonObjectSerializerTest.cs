@@ -54,11 +54,13 @@ namespace Azure.Core.Tests
                 C = 3,
                 IgnoredE = 5,
                 F = 6,
+                IgnoredG = 7,
+                H = "8",
             };
 
             _jsonObjectSerializer.Serialize(memoryStream, o, o.GetType(), default);
 
-            Assert.AreEqual($"{{\"d\":4,\"{SerializedName("A")}\":\"1\",\"{SerializedName("B")}\":2}}", Encoding.UTF8.GetString(memoryStream.ToArray()));
+            Assert.AreEqual($"{{\"d\":4,\"{SerializedName("H")}\":\"8\",\"{SerializedName("A")}\":\"1\",\"{SerializedName("B")}\":2}}", Encoding.UTF8.GetString(memoryStream.ToArray()));
         }
 
         [Test]
@@ -72,17 +74,19 @@ namespace Azure.Core.Tests
                 C = 3,
                 IgnoredE = 5,
                 F = 6,
+                IgnoredG = 7,
+                H = "8",
             };
 
             await _jsonObjectSerializer.SerializeAsync(memoryStream, o, o.GetType(), default);
 
-            Assert.AreEqual($"{{\"d\":4,\"{SerializedName("A")}\":\"1\",\"{SerializedName("B")}\":2}}", Encoding.UTF8.GetString(memoryStream.ToArray()));
+            Assert.AreEqual($"{{\"d\":4,\"{SerializedName("H")}\":\"8\",\"{SerializedName("A")}\":\"1\",\"{SerializedName("B")}\":2}}", Encoding.UTF8.GetString(memoryStream.ToArray()));
         }
 
         [Test]
         public void CanDeserializeAnObject()
         {
-            using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes($"{{\"d\":4,\"{SerializedName("A")}\":\"1\",\"{SerializedName("B")}\":2}}"));
+            using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes($"{{\"d\":4,\"{SerializedName("H")}\":\"8\",\"{SerializedName("A")}\":\"1\",\"{SerializedName("B")}\":2}}"));
 
             var model = (ExtendedModel)_jsonObjectSerializer.Deserialize(memoryStream, typeof(ExtendedModel), default);
 
@@ -92,12 +96,14 @@ namespace Azure.Core.Tests
             Assert.AreEqual(0, model.ReadOnlyD);
             Assert.AreEqual(0, model.IgnoredE);
             Assert.AreEqual(0, model.F);
+            Assert.AreEqual(0, model.IgnoredG);
+            Assert.AreEqual("8", model.H);
         }
 
         [Test]
         public async Task CanDeserializeAnObjectAsync()
         {
-            using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes($"{{\"d\":4,\"{SerializedName("A")}\":\"1\",\"{SerializedName("B")}\":2}}"));
+            using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes($"{{\"d\":4,\"{SerializedName("H")}\":\"8\",\"{SerializedName("A")}\":\"1\",\"{SerializedName("B")}\":2}}"));
 
             var model = (ExtendedModel)await _jsonObjectSerializer.DeserializeAsync(memoryStream, typeof(ExtendedModel), default).ConfigureAwait(false);
 
@@ -107,6 +113,8 @@ namespace Azure.Core.Tests
             Assert.AreEqual(0, model.ReadOnlyD);
             Assert.AreEqual(0, model.IgnoredE);
             Assert.AreEqual(0, model.F);
+            Assert.AreEqual(0, model.IgnoredG);
+            Assert.AreEqual("8", model.H);
         }
 
         [Test]
@@ -137,6 +145,10 @@ namespace Azure.Core.Tests
                         Assert.AreEqual("d", propertyName);
                         break;
 
+                    case nameof(ExtendedModel.H):
+                        Assert.AreEqual(SerializedName("H"), propertyName);
+                        break;
+
                     default:
                         Assert.IsNull(propertyName, $"Unexpected serialized name '{propertyName}' for member {member.DeclaringType}.{member.Name}");
                         break;
@@ -146,8 +158,14 @@ namespace Azure.Core.Tests
 
         public class Model
         {
+#if NET5_0
+            [JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+#endif
             public string A { get; set; }
 
+#if NET5_0
+            [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+#endif
             public int B { get; set; }
 
             [JsonIgnore]
@@ -171,6 +189,18 @@ namespace Azure.Core.Tests
             internal int IgnoredE { get; set; }
 
             public int F;
+
+#if NET5_0
+            [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+#else
+            [JsonIgnore]
+#endif
+            public int IgnoredG { get; set; }
+
+#if NET5_0
+            [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+#endif
+            public string H { get; set; }
         }
     }
 }

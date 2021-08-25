@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Network
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ExpressRouteCircuitsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ExpressRouteCircuitsOperations for mocking. </summary>
         protected ExpressRouteCircuitsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ExpressRouteCircuitsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

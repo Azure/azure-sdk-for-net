@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the Cassandra tables and their properties. </summary>
-    public partial class CassandraTableListResult
+    internal partial class CassandraTableListResult
     {
         /// <summary> Initializes a new instance of CassandraTableListResult. </summary>
         internal CassandraTableListResult()

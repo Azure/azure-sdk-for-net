@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath(actionGroupName, true);
             uri.AppendQuery("api-version", "2019-06-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(actionGroup);
             request.Content = content;
@@ -315,8 +315,8 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath(actionGroupName, true);
             uri.AppendQuery("api-version", "2019-06-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(actionGroupPatch);
             request.Content = content;
@@ -541,8 +541,8 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath("/subscribe", false);
             uri.AppendQuery("api-version", "2019-06-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(enableRequest);
             request.Content = content;

@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Network
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal VirtualHubRouteTableV2SRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2SOperations for mocking. </summary>
         protected VirtualHubRouteTableV2SOperations()
         {
         }
+
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2SOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

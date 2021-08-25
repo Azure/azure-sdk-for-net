@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private readonly KeyCurveName _curve;
         private readonly JsonWebKey _keyMaterial;
 
-        internal EcCryptographyProvider(JsonWebKey keyMaterial, KeyProperties keyProperties) : base(keyMaterial, keyProperties)
+        internal EcCryptographyProvider(JsonWebKey keyMaterial, KeyProperties keyProperties, bool localOnly) : base(keyMaterial, keyProperties, localOnly)
         {
             // Unset the KeyMaterial since we want to conditionally set it if supported.
             KeyMaterial = null;

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> List of Virtual Machine Scale Set OS Upgrade History operation response. </summary>
-    public partial class VirtualMachineScaleSetListOSUpgradeHistory
+    internal partial class VirtualMachineScaleSetListOSUpgradeHistory
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetListOSUpgradeHistory. </summary>
         /// <param name="value"> The list of OS upgrades performed on the virtual machine scale set. </param>

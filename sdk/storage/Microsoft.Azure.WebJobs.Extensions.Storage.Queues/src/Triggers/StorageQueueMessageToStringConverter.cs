@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 {
@@ -15,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
                 throw new ArgumentNullException(nameof(input));
             }
 
-            return input.MessageText;
+            return input.Body.ToValidUTF8String();
         }
     }
 }

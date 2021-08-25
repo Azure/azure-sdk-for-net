@@ -70,6 +70,27 @@ namespace Azure.Storage.Tests
             Assert.IsTrue(classifier.IsRetriableResponse(message));
         }
 
+        [TestCase("ContainerAlreadyExists", "If-Match", false)]
+        [TestCase("ContainerAlreadyExists","If-None-Match", false)]
+        [TestCase("ContainerAlreadyExists","If-Unmodified-Since", false)]
+        [TestCase("ContainerAlreadyExists","If-Modified-Since", false)]
+        [TestCase("BlobAlreadyExists", "If-Match", false)]
+        [TestCase("BlobAlreadyExists", "If-None-Match", false)]
+        [TestCase("BlobAlreadyExists", "If-Unmodified-Since", false)]
+        [TestCase("BlobAlreadyExists", "If-Modified-Since", false)]
+        [TestCase("InternalError", "If-Match", true)]
+        [TestCase("BlobAlreadyExists", "Non-Conditional-Header", true)]
+        public void IsError_409_ConditionalResponse(string code, string header, bool isError)
+        {
+            var mockRequest = new MockRequest();
+            mockRequest.Headers.Add("x-ms-error-code", code);
+            mockRequest.Headers.Add(header, "value");
+            var httpMessage = new HttpMessage(mockRequest, new ResponseClassifier());
+
+            httpMessage.Response = new MockResponse(409);
+            Assert.AreEqual(isError, classifier.IsErrorResponse(httpMessage));
+        }
+
         private HttpMessage BuildMessage(Response response, Uri secondaryUri = default)
         {
             return new HttpMessage(

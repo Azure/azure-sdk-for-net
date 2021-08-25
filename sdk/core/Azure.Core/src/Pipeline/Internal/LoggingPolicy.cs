@@ -32,26 +32,29 @@ namespace Azure.Core.Pipeline
         private HttpMessageSanitizer _sanitizer;
         private readonly string? _assemblyName;
 
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
+            if (!s_eventSource.IsEnabled())
+            {
+                ProcessNext(message, pipeline);
+                return;
+            }
+
+            ProcessAsync(message, pipeline, false).EnsureCompleted();
+        }
+
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            if (!s_eventSource.IsEnabled())
+            {
+                return ProcessNextAsync(message, pipeline);
+            }
+
+            return ProcessAsync(message, pipeline, true);
         }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            if (!s_eventSource.IsEnabled())
-            {
-                if (async)
-                {
-                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-                }
-                else
-                {
-                    ProcessNext(message, pipeline);
-                }
-                return;
-            }
-
             Request request = message.Request;
 
             s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers), _assemblyName);
@@ -128,11 +131,6 @@ namespace Azure.Core.Pipeline
             return _sanitizer.SanitizeUrl(requestUri.ToString());
         }
 
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            ProcessAsync(message, pipeline, false).EnsureCompleted();
-        }
-
         private string FormatHeaders(IEnumerable<HttpHeader> headers)
         {
             var stringBuilder = new StringBuilder();
@@ -204,7 +202,9 @@ namespace Azure.Core.Pipeline
 
             public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
+#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                 var result = await _originalStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
 
                 var countToLog = result;
                 DecrementLength(ref countToLog);
@@ -269,7 +269,6 @@ namespace Azure.Core.Pipeline
 
                 var bytes = await FormatAsync(stream, async).ConfigureAwait(false).EnsureCompleted(async);
                 Log(requestId, eventType, bytes, textEncoding);
-
             }
 
             public async ValueTask LogAsync(string requestId, RequestContent? content, Encoding? textEncoding, bool async)

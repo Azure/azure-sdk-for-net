@@ -17,6 +17,8 @@ namespace Microsoft.Azure.Management.Synapse.Tests
 
         internal SynapseManagementClient SynapseClient { get; set; }
 
+        internal SynapseSqlV3ManagementClient SynapseSqlV3Client { get; set; }
+
         internal SynapseManagementHelper SynapseManagementHelper { get; private set; }
 
         internal virtual void TestInitialize([System.Runtime.CompilerServices.CallerMemberName] string methodName = "testframework_failed")
@@ -24,6 +26,7 @@ namespace Microsoft.Azure.Management.Synapse.Tests
             Context = SynapseMockContext.Start(this.GetType(), methodName);
             CommonData = new CommonTestFixture();
             SynapseClient = Context.GetServiceClient<SynapseManagementClient>();
+            SynapseSqlV3Client = Context.GetServiceClient<SynapseSqlV3ManagementClient>();
             SynapseManagementHelper = new SynapseManagementHelper(CommonData, Context);
 
             if (IsRecordMode)

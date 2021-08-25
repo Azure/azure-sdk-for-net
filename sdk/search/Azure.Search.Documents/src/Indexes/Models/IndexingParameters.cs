@@ -34,12 +34,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Indexer-specific configuration properties.
         /// Each value must be of a primitive type.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         [CodeGenMember("Configuration")]
         public IndexingParametersConfiguration IndexingParametersConfiguration
         {
             get => _indexingParametersConfiguration;
             set => _indexingParametersConfiguration = value;
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         private class ConfigurationAdapter : IDictionary<string, object>
         {

@@ -31,8 +31,10 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public ProxyResource(string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        /// <param name="systemData">Top level metadata
+        /// https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/common-api-contracts.md#system-metadata-for-all-azure-resources</param>
+        public ProxyResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, systemData)
         {
             CustomInit();
         }

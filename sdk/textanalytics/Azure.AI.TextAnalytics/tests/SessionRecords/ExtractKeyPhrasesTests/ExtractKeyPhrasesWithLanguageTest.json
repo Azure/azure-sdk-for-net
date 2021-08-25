@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/keyPhrases",
+      "RequestUri": "https://tacanaryjava.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/keyPhrases",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,10 +11,10 @@
         "Content-Length": "88",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-a67aaa1482836b4a9ad3a60ad37ca901-cde43ccd50b0b94c-00",
+        "traceparent": "00-b25a37c3f6fd794c92c43bbd8b81f649-3a80433a53348942-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201105.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20210803.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "fee09dae9a1670151c1a3a802afd3e61",
         "x-ms-return-client-request-id": "true"
@@ -30,14 +30,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "55ed9eda-6345-49c5-bbf5-98a4f2f77e32",
+        "apim-request-id": "17495d8d-7c62-4c16-aa53-ed58d2e43dc8",
         "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Thu, 05 Nov 2020 20:52:33 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
+        "Date": "Tue, 03 Aug 2021 18:39:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "10"
+        "x-envoy-upstream-service-time": "25"
       },
       "ResponseBody": {
         "documents": [
@@ -51,13 +51,13 @@
           }
         ],
         "errors": [],
-        "modelVersion": "2020-07-01"
+        "modelVersion": "2021-06-01"
       }
     }
   ],
   "Variables": {
     "RandomSeed": "462050848",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://tacanaryjava.cognitiveservices.azure.com/"
   }
 }

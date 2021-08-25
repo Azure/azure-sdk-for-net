@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Resources
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal PolicyAssignmentsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of PolicyAssignmentsOperations for mocking. </summary>
         protected PolicyAssignmentsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of PolicyAssignmentsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

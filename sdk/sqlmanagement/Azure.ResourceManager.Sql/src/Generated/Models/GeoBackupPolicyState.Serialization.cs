@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class GeoBackupPolicyStateExtensions
+    internal static partial class GeoBackupPolicyStateExtensions
     {
         public static string ToSerialString(this GeoBackupPolicyState value) => value switch
         {

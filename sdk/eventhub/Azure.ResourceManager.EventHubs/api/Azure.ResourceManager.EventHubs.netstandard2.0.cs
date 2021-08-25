@@ -2,7 +2,7 @@ namespace Azure.ResourceManager.EventHubs
 {
     public partial class ClustersDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ClustersDeleteOperation() { }
+        protected ClustersDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventHubs
     }
     public partial class ClustersPatchOperation : Azure.Operation<Azure.ResourceManager.EventHubs.Models.Cluster>
     {
-        internal ClustersPatchOperation() { }
+        protected ClustersPatchOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventHubs
     }
     public partial class ClustersPutOperation : Azure.Operation<Azure.ResourceManager.EventHubs.Models.Cluster>
     {
-        internal ClustersPutOperation() { }
+        protected ClustersPutOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.EventHubs
     }
     public partial class NamespacesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.EventHubs.Models.EHNamespace>
     {
-        internal NamespacesCreateOrUpdateOperation() { }
+        protected NamespacesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.EventHubs
     }
     public partial class NamespacesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal NamespacesDeleteOperation() { }
+        protected NamespacesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -273,22 +273,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         public Azure.ResourceManager.EventHubs.Models.ProvisioningStateDR? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.RoleDisasterRecovery? Role { get { throw null; } }
     }
-    public partial class ArmDisasterRecoveryListResult
-    {
-        internal ArmDisasterRecoveryListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.ArmDisasterRecovery> Value { get { throw null; } }
-    }
     public partial class AuthorizationRule : Azure.ResourceManager.EventHubs.Models.Resource
     {
         public AuthorizationRule() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.AccessRights> Rights { get { throw null; } }
-    }
-    public partial class AuthorizationRuleListResult
-    {
-        internal AuthorizationRuleListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.AuthorizationRule> Value { get { throw null; } }
     }
     public partial class AvailableCluster
     {
@@ -331,12 +319,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string Status { get { throw null; } }
         public string Updated { get { throw null; } }
     }
-    public partial class ClusterListResult
-    {
-        internal ClusterListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.Cluster> Value { get { throw null; } }
-    }
     public partial class ClusterQuotaConfigurationProperties
     {
         public ClusterQuotaConfigurationProperties() { }
@@ -371,12 +353,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public System.DateTimeOffset? CreatedAt { get { throw null; } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
         public string UserMetadata { get { throw null; } set { } }
-    }
-    public partial class ConsumerGroupListResult
-    {
-        internal ConsumerGroupListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.ConsumerGroup> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DefaultAction : System.IEquatable<Azure.ResourceManager.EventHubs.Models.DefaultAction>
@@ -431,12 +407,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         internal EHNamespaceIdListResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.EHNamespaceIdContainer> Value { get { throw null; } }
     }
-    public partial class EHNamespaceListResult
-    {
-        internal EHNamespaceListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.EHNamespace> Value { get { throw null; } }
-    }
     public enum EncodingCaptureDescription
     {
         Avro = 0,
@@ -471,12 +441,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public Azure.ResourceManager.EventHubs.Models.EntityStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedAt { get { throw null; } }
     }
-    public partial class EventHubListResult
-    {
-        internal EventHubListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.Eventhub> Value { get { throw null; } }
-    }
     public partial class Identity
     {
         public Identity() { }
@@ -509,12 +473,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string FilterName { get { throw null; } set { } }
         public string IpMask { get { throw null; } set { } }
     }
-    public partial class IpFilterRuleListResult
-    {
-        internal IpFilterRuleListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.IpFilterRule> Value { get { throw null; } }
-    }
     public enum KeyType
     {
         PrimaryKey = 0,
@@ -531,12 +489,6 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         public MessagingRegions() { }
         public Azure.ResourceManager.EventHubs.Models.MessagingRegionsProperties Properties { get { throw null; } set { } }
-    }
-    public partial class MessagingRegionsListResult
-    {
-        internal MessagingRegionsListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.MessagingRegions> Value { get { throw null; } }
     }
     public partial class MessagingRegionsProperties
     {
@@ -592,12 +544,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string Operation { get { throw null; } }
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
-    }
-    public partial class OperationListResult
-    {
-        internal OperationListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.Operation> Value { get { throw null; } }
     }
     public enum ProvisioningStateDR
     {
@@ -691,11 +637,5 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         public VirtualNetworkRule() { }
         public string VirtualNetworkSubnetId { get { throw null; } set { } }
-    }
-    public partial class VirtualNetworkRuleListResult
-    {
-        internal VirtualNetworkRuleListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.VirtualNetworkRule> Value { get { throw null; } }
     }
 }

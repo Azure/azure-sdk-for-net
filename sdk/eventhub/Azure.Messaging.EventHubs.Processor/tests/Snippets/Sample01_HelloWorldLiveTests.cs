@@ -2,17 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Messaging.EventHubs.Processor.Tests;
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
-using System.Diagnostics;
-using System.Collections.Concurrent;
 
 namespace Azure.Messaging.EventHubs.Tests.Snippets
 {
@@ -30,9 +29,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// <summary>The active Event Hub resource scope for the test fixture.</summary>
         private EventHubScope _eventHubScope;
 
-        /// <summary>The active Blob storage resource scope for the test fixture.</summary>
-        private StorageScope _storageScope;
-
         /// <summary>
         ///   Performs the tasks needed to initialize the test fixture.  This
         ///   method runs once for the entire fixture, prior to running any tests.
@@ -42,7 +38,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         public async Task FixtureSetUp()
         {
             _eventHubScope = await EventHubScope.CreateAsync(2);
-            _storageScope = await StorageScope.CreateAsync();
         }
 
         /// <summary>
@@ -53,11 +48,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [OneTimeTearDown]
         public async Task FixtureTearDown()
         {
-            await Task.WhenAll
-            (
-                _eventHubScope.DisposeAsync().AsTask(),
-                _storageScope.DisposeAsync().AsTask()
-            );
+            await _eventHubScope.DisposeAsync();
         }
 
         /// <summary>
@@ -69,11 +60,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             #region Snippet:EventHubs_Processor_Sample01_PublishEvents
 
+#if SNIPPET
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            /*@@*/
-            /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
+#else
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = _eventHubScope.EventHubName;
+#endif
 
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
@@ -94,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         // decision would have to be made as to whether the event should
                         // be dropped or published on its own.
 
-                        return;
+                        break;
                     }
                 }
 
@@ -128,21 +121,24 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ProcessEvents()
         {
+            await using var storageScope = await StorageScope.CreateAsync();
+
             #region Snippet:EventHubs_Processor_Sample01_ProcessEvents
 
+#if SNIPPET
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-            /*@@*/
-            /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
-            /*@@*/ blobContainerName = _storageScope.ContainerName;
 
             var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-            /*@@*/
-            /*@@*/ eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _eventHubScope.EventHubName;
-            /*@@*/ consumerGroup = _eventHubScope.ConsumerGroups.First();
+#else
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+            var blobContainerName = storageScope.ContainerName;
+            var eventHubsConnectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = _eventHubScope.EventHubName;
+            var consumerGroup = _eventHubScope.ConsumerGroups.First();
+#endif
 
             var storageClient = new BlobContainerClient(
                 storageConnectionString,

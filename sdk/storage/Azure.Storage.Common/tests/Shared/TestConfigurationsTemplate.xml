@@ -9,6 +9,7 @@
   <TargetManagedDiskTenant>ManagedDiskTenant</TargetManagedDiskTenant>
   <TargetBlobAndContainerSoftDeleteTenant>SoftDeleteTenant</TargetBlobAndContainerSoftDeleteTenant>
   <TargetPremiumFileTenant>PremiumFileTenant</TargetPremiumFileTenant>
+  <TargetManagedDisk>DefaultManagedDisk</TargetManagedDisk>
 
   <TenantConfigurations>
     <!-- A storage account with an Encryption Scope, Blob Versioning, and Last Access Time enabled -->
@@ -54,6 +55,8 @@
       <TenantType>Cloud</TenantType>
       <AccountName>[OAUTH-ACCOUNT]</AccountName>
       <AccountKey>[OAUTH-ACCOUNT-KEY]</AccountKey>
+      <ResourceGroupName>[OAUTH-RESOURCE-GROUP-NAME]</ResourceGroupName>
+      <SubscriptionId>[OAUTH-SUBSCRIPTION-ID]</SubscriptionId>
 
       <ActiveDirectoryApplicationId>[ActiveDirectoryApplicationId]</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>[ActiveDirectoryApplicationSecret]</ActiveDirectoryApplicationSecret>
@@ -69,9 +72,9 @@
       <FileServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
-	
+
     <!-- A storage account with premium preformance enabled -->
-	<!-- Replace [RAGRS-ACCOUNT] and [RAGRS-ACCOUNT-KEY] -->
+    <!-- Replace [RAGRS-ACCOUNT] and [RAGRS-ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>PremiumBlobTenant</TenantName>
       <TenantType>Cloud</TenantType>
@@ -86,8 +89,8 @@
       <FileServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
-    
-    <!-- A storge account with hierarchical namespace enabled and OAuth access -->
+
+    <!-- A storge account with hierarchical namespace enabled, OAuth access, and blob soft delete enabled -->
     <!-- Replace [NAMESPACE-ACCOUNT] and [NAMESPACE-ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>NamespaceTenant</TenantName>
@@ -145,7 +148,6 @@
       <FileServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
-  </TenantConfigurations>
 
     <!-- A Premium FileStorage account -->
     <!-- Replace [ACCOUNT] and [ACCOUNT-KEY] -->
@@ -175,4 +177,17 @@
       <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
     </KeyVaultConfiguration>
   </KeyVaultConfigurations>
+
+  <ManagedDiskConfigurations>
+    <ManagedDiskConfiguration>
+      <Name>DefaultManagedDisk</Name>
+      <DiskNamePrefix>[DISK NAME PREFIX]</DiskNamePrefix>
+      <ResourceGroupName>[RESOURECE GROUP NAME]</ResourceGroupName>
+      <SubsriptionId>[SubscriptionId]</SubsriptionId>
+      <Location>[Location]</Location>
+      <ActiveDirectoryApplicationId>[ActiveDirectoryApplicationId]</ActiveDirectoryApplicationId>
+      <ActiveDirectoryApplicationSecret>[ActiveDirectoryApplicationSecret]</ActiveDirectoryApplicationSecret>
+      <ActiveDirectoryTenantId>[ActiveDirectoryTenantId]</ActiveDirectoryTenantId>
+    </ManagedDiskConfiguration>
+  </ManagedDiskConfigurations>
 </TestConfigurations>

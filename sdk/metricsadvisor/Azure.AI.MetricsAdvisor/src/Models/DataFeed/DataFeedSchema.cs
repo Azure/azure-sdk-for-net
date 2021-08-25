@@ -1,31 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Defines how a <see cref="DataFeed"/> structures the data ingested from the data source in terms
-    /// of metrics and dimensions. This schema defines how many time series are generated for anomaly
-    /// detection.
+    /// Specifies which values, such as metrics and dimensions, will be ingested from the <see cref="DataFeedSource"/>.
     /// </summary>
+    /// <remarks>
+    /// At least one metric must be added to <see cref="MetricColumns"/> when creating a <see cref="DataFeed"/>,
+    /// otherwise the creation operation will fail. Other properties are optional.
+    /// </remarks>
     public class DataFeedSchema
     {
-        private IList<DataFeedDimension> _dimensionColumns;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeedSchema"/> class.
         /// </summary>
-        /// <param name="metricColumns">The metrics ingested from the data feed. The values of these metrics are monitored in search of anomalies. Cannot be empty.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="metricColumns"/> is null.</exception>
-        public DataFeedSchema(IList<DataFeedMetric> metricColumns)
+        public DataFeedSchema()
         {
-            Argument.AssertNotNull(metricColumns, nameof(metricColumns));
-
-            MetricColumns = metricColumns;
+            MetricColumns = new ChangeTrackingList<DataFeedMetric>();
             DimensionColumns = new ChangeTrackingList<DataFeedDimension>();
         }
 
@@ -37,31 +33,33 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The metrics ingested from the data source. The values of these metrics are
-        /// monitored in search of anomalies. Cannot be empty.
+        /// The metrics used to monitor and assess the status of specific business processes. The service will monitor
+        /// how these values vary over time in search of any anomalous behavior.
         /// </summary>
+        /// <remarks>
+        /// At least one metric must be added to this property when creating a <see cref="DataFeed"/>, otherwise the
+        /// creation operation will fail. Once the data feed containing this schema is created, this property cannot
+        /// be changed anymore.
+        /// </remarks>
         public IList<DataFeedMetric> MetricColumns { get; }
 
         /// <summary>
-        /// The dimensions ingested from the data source. Given a metric, for each set of
-        /// values this set of dimensions can assume, one time series is generated and
-        /// monitored in search of anomalies.
+        /// The dimensions ingested from the data source. Given a metric, for each set of values these dimensions can
+        /// assume, one time series is generated in the service and monitored in search of anomalies.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><see cref="DimensionColumns"/> is null.</exception>
-        public IList<DataFeedDimension> DimensionColumns
-        {
-            get => _dimensionColumns;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(DimensionColumns));
-                _dimensionColumns = value;
-            }
-        }
+        /// <remarks>
+        /// Once the data feed containing this schema is created, this property cannot be changed anymore.
+        /// </remarks>
+        public IList<DataFeedDimension> DimensionColumns { get; }
 
         /// <summary>
-        /// The name of the data source's column with date or string values to be used as timestamp.
-        /// If not specified, the time when a data point is ingested will be used instead.
+        /// The name of column of the <see cref="DataFeedSource"/> with date or string values to be used as timestamp.
+        /// If not specified, the value of this property defaults to an empty string, and the start time of each data
+        /// ingestion will be used instead.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         public string TimestampColumn { get; set; }
     }
 }

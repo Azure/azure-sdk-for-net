@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.EventGrid.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Information about the destination for an event subscription.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("EventSubscriptionDestination")]
     public partial class EventSubscriptionDestination
     {
         /// <summary>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Converters;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Triggers;
@@ -32,8 +33,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly SharedQueueWatcher _messageEnqueuedWatcherSetter;
         private readonly ILoggerFactory _loggerFactory;
+        private readonly ILogger<QueueTriggerBinding> _logger;
         private readonly IObjectToTypeConverter<QueueMessage> _converter;
         private readonly IQueueProcessorFactory _queueProcessorFactory;
+        private readonly QueueCausalityManager _queueCausalityManager;
 
         public QueueTriggerBinding(string parameterName,
             QueueServiceClient queueServiceClient,
@@ -43,7 +46,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             IWebJobsExceptionHandler exceptionHandler,
             SharedQueueWatcher messageEnqueuedWatcherSetter,
             ILoggerFactory loggerFactory,
-            IQueueProcessorFactory queueProcessorFactory)
+            IQueueProcessorFactory queueProcessorFactory,
+            QueueCausalityManager queueCausalityManager)
         {
             _queueServiceClient = queueServiceClient ?? throw new ArgumentNullException(nameof(queueServiceClient));
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));
@@ -52,11 +56,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             _queueOptions = queueOptions ?? throw new ArgumentNullException(nameof(queueOptions));
             _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
             _messageEnqueuedWatcherSetter = messageEnqueuedWatcherSetter ?? throw new ArgumentNullException(nameof(messageEnqueuedWatcherSetter));
+            _queueCausalityManager = queueCausalityManager ?? throw new ArgumentNullException(nameof(queueCausalityManager));
 
             _parameterName = parameterName;
             _loggerFactory = loggerFactory;
             _queueProcessorFactory = queueProcessorFactory;
             _converter = CreateConverter(_queue);
+            _logger = loggerFactory.CreateLogger<QueueTriggerBinding>();
         }
 
         public Type TriggerValueType
@@ -130,7 +136,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             }
 
             var factory = new QueueListenerFactory(_queueServiceClient, _queue, _queueOptions, _exceptionHandler,
-                    _messageEnqueuedWatcherSetter, _loggerFactory, context.Executor, _queueProcessorFactory, context.Descriptor);
+                    _messageEnqueuedWatcherSetter, _loggerFactory, context.Executor, _queueProcessorFactory, _queueCausalityManager, context.Descriptor);
 
             return factory.CreateAsync(context.CancellationToken);
         }
@@ -145,12 +151,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             };
         }
 
-        private static IReadOnlyDictionary<string, object> CreateBindingData(QueueMessage value,
+        private IReadOnlyDictionary<string, object> CreateBindingData(QueueMessage value,
             IReadOnlyDictionary<string, object> bindingDataFromValueType)
         {
             Dictionary<string, object> bindingData = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
-            string queueMessageString = value.MessageText;
+            string queueMessageString = value.TryGetAsString(_logger);
 
             // Don't provide the QueueTrigger binding data when the queue message is not a valid string.
             if (queueMessageString != null)

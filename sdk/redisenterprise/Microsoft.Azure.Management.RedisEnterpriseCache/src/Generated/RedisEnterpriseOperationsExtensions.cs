@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -159,14 +159,14 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
             /// </param>
-            public static Cluster GetMethod(this IRedisEnterpriseOperations operations, string resourceGroupName, string clusterName)
+            public static Cluster Get(this IRedisEnterpriseOperations operations, string resourceGroupName, string clusterName)
             {
-                return operations.GetMethodAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -184,9 +184,9 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> GetMethodAsync(this IRedisEnterpriseOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> GetAsync(this IRedisEnterpriseOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetMethodWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IPage<Cluster> ListByResourceGroup(this IRedisEnterpriseOperations operations, string resourceGroupName)
             {
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -262,7 +262,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -355,7 +355,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.
@@ -372,7 +372,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='clusterName'>
             /// The name of the RedisEnterprise cluster.

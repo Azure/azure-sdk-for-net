@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.NetApp
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -41,7 +39,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='poolName'>
             /// The name of the capacity pool
             /// </param>
-            public static IEnumerable<Volume> List(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName)
+            public static IPage<Volume> List(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName)
             {
                 return operations.ListAsync(resourceGroupName, accountName, poolName).GetAwaiter().GetResult();
             }
@@ -67,7 +65,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Volume>> ListAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Volume>> ListAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, poolName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -502,7 +500,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <remarks>
             /// Resync the connection on the destination volume. If the operation is ran on
             /// the source volume it will reverse-resync the connection and sync from
-            /// source to destination.
+            /// destination to source.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -530,7 +528,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <remarks>
             /// Resync the connection on the destination volume. If the operation is ran on
             /// the source volume it will reverse-resync the connection and sync from
-            /// source to destination.
+            /// destination to source.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1100,7 +1098,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <remarks>
             /// Resync the connection on the destination volume. If the operation is ran on
             /// the source volume it will reverse-resync the connection and sync from
-            /// source to destination.
+            /// destination to source.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1128,7 +1126,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <remarks>
             /// Resync the connection on the destination volume. If the operation is ran on
             /// the source volume it will reverse-resync the connection and sync from
-            /// source to destination.
+            /// destination to source.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1385,6 +1383,46 @@ namespace Microsoft.Azure.Management.NetApp
             public static async Task BeginPoolChangeAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, PoolChangeRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginPoolChangeWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Describe all volumes
+            /// </summary>
+            /// <remarks>
+            /// List all volumes within the capacity pool
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Volume> ListNext(this IVolumesOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Describe all volumes
+            /// </summary>
+            /// <remarks>
+            /// List all volumes within the capacity pool
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Volume>> ListNextAsync(this IVolumesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027doesnotexist\u0027)/docs/$count?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027doesnotexist\u0027)/docs/$count?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-154bcd4992c2b74da184b32915c10067-a586d9c9d4057546-00",
+        "traceparent": "00-4a91fcdbe07e6745a821fa7718fafe39-d194ccf89bd5d647-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "9641ca3ce0e80834b37771415da659ae",
         "x-ms-return-client-request-id": "true"
@@ -20,10 +20,10 @@
         "Cache-Control": "no-cache",
         "client-request-id": "9641ca3c-e0e8-0834-b377-71415da659ae",
         "Content-Language": "en",
-        "Content-Length": "88",
+        "Content-Length": "78",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Jun 2020 06:25:30 GMT",
-        "elapsed-time": "8",
+        "Date": "Sat, 27 Mar 2021 18:39:51 GMT",
+        "elapsed-time": "7",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -32,14 +32,15 @@
         "x-ms-client-request-id": "9641ca3c-e0e8-0834-b377-71415da659ae"
       },
       "ResponseBody": {
-        "Message": "The index \u0027doesnotexist\u0027 for service \u0027azs-net-heathsrchtst\u0027 was not found."
+        "Message": "The index \u0027doesnotexist\u0027 for service \u0027mohitc-acs\u0027 was not found."
       }
     }
   ],
   "Variables": {
     "RandomSeed": "2017785311",
-    "SearchIndexName": "josgoidr",
+    "SearchIndexName": "mbqvlxmt",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

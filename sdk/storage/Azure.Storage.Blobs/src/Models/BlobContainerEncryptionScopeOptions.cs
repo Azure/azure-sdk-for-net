@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
@@ -16,6 +18,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// If true, prevents any request from specifying a different encryption scope than the scope set on the container.
         /// </summary>
-        public bool PreventEncryptionScopeOverride  { get; set; }
+        public bool PreventEncryptionScopeOverride { get; set; }
     }
 }

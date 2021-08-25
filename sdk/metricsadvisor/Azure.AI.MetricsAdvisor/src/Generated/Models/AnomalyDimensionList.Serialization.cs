@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static AnomalyDimensionList DeserializeAnomalyDimensionList(JsonElement element)
         {
-            string nextLink = default;
+            Optional<string> nextLink = default;
             IReadOnlyList<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyDimensionList(nextLink, value);
+            return new AnomalyDimensionList(nextLink.Value, value);
         }
     }
 }

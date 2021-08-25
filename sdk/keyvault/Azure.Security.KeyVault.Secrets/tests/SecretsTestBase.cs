@@ -13,11 +13,13 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 {
     [ClientTestFixture(
         SecretClientOptions.ServiceVersion.V7_0,
-        SecretClientOptions.ServiceVersion.V7_1)]
+        SecretClientOptions.ServiceVersion.V7_1,
+        SecretClientOptions.ServiceVersion.V7_2,
+        SecretClientOptions.ServiceVersion.V7_3_Preview)]
     [NonParallelizable]
     public abstract class SecretsTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(10);
+        protected readonly TimeSpan PollingInterval = KeyVaultTestEnvironment.DefaultPollingInterval;
         private readonly SecretClientOptions.ServiceVersion _serviceVersion;
 
         public SecretClient Client { get; set; }
@@ -31,7 +33,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         private KeyVaultTestEventListener _listener;
 
         protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
         }
@@ -42,7 +44,17 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 (new SecretClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new SecretClientOptions(_serviceVersion))));
+                    InstrumentClientOptions(
+                        new SecretClientOptions(_serviceVersion)
+                        {
+                            Diagnostics =
+                            {
+                                LoggedHeaderNames =
+                                {
+                                    "x-ms-request-id",
+                                }
+                            },
+                        })));
         }
 
         public override void StartTestRecording()

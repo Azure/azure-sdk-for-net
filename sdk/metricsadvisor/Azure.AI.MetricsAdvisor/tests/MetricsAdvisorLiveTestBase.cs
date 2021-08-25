@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -14,6 +13,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class MetricsAdvisorLiveTestBase : RecordedTestBase<MetricsAdvisorTestEnvironment>
     {
+        protected const string TempDataFeedMetricName = "metric";
+        protected const string TempDataFeedDimensionNameA = "dimensionA";
+        protected const string TempDataFeedDimensionNameB = "dimensionB";
+
         public MetricsAdvisorLiveTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             Sanitizer = new MetricsAdvisorRecordedTestSanitizer();
@@ -29,7 +32,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         internal const string AlertConfigurationId = "204a211a-c5f4-45f3-a30e-512fb25d1d2c";
         internal const string AlertId = "17571a77000";
         internal const string MetricId = "27e3015f-04fd-44ba-a20b-bc529a0aebae";
-        internal const string DataFeedId = "0072a752-1476-4cfa-8cf0-f226995201a0";
+        internal const string DataFeedId = "9860df01-e740-40ec-94a2-6351813552ba";
 
         protected int MaximumSamplesCount => 10;
 
@@ -37,85 +40,129 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2020-10-31T00:00:00Z");
 
-        public void InitDataFeedSources()
+        public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient(bool useTokenCredential = false)
         {
-            _blobFeedName = Recording.GenerateAlphaNumericId("test");
-            _blobSource = new AzureBlobDataFeedSource(TestEnvironment.PrimaryStorageAccountKey, "foo", "template");
-            _dailyGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
-            _dataFeedSchema = new DataFeedSchema(new List<DataFeedMetric> { new DataFeedMetric("someMetricId", "someMetricName", "someMetricDisplayName", "someDescription") });
-            _dataFeedIngestionSettings = new DataFeedIngestionSettings(new DateTimeOffset(Recording.UtcNow.Year, Recording.UtcNow.Month, Recording.UtcNow.Day, 0, 0, 0, TimeSpan.Zero));
-            _dataFeedDescription = "my feed description";
-        }
-
-        public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient()
-        {
-            return InstrumentClient(new MetricsAdvisorAdministrationClient(
-                new Uri(TestEnvironment.MetricsAdvisorUri),
-                new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey),
-                InstrumentClientOptions(new MetricsAdvisorClientsOptions())));
-        }
-
-        public MetricsAdvisorClient GetMetricsAdvisorClient()
-        {
-            return InstrumentClient(new MetricsAdvisorClient(
-                new Uri(TestEnvironment.MetricsAdvisorUri),
-                new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey),
-                InstrumentClientOptions(new MetricsAdvisorClientsOptions())));
-        }
-
-        internal static async Task<DataFeed> GetFirstDataFeed(MetricsAdvisorAdministrationClient adminClient)
-        {
-            DataFeed feed = null;
-            IAsyncEnumerable<Page<DataFeed>> pages = adminClient.GetDataFeedsAsync(new GetDataFeedsOptions { TopCount = 1 }).AsPages();
-
-            await foreach (var page in pages)
+            // TODO: remove 'if' block when (https://github.com/Azure/azure-sdk-for-net/issues/23268) is solved
+            if (useTokenCredential)
             {
-                //Only perform a single iteration.
-                feed = page.Values?.FirstOrDefault();
-                break;
+                Assert.Ignore();
             }
-            return feed;
+
+            var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
+            var instrumentedOptions = GetInstrumentedOptions();
+
+            MetricsAdvisorAdministrationClient client = useTokenCredential
+                ? new(endpoint, TestEnvironment.Credential, instrumentedOptions)
+                : new(endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
+
+            return InstrumentClient(client);
         }
 
-        internal async Task<string> CreateDetectionConfiguration(MetricsAdvisorAdministrationClient adminClient)
+        public MetricsAdvisorClient GetMetricsAdvisorClient(bool useTokenCredential = false)
         {
-            DataFeed feed = await GetFirstDataFeed(adminClient).ConfigureAwait(false);
-            AnomalyDetectionConfiguration config = PopulateMetricAnomalyDetectionConfiguration(feed.MetricIds.First().Value);
+            // TODO: remove 'if' block when (https://github.com/Azure/azure-sdk-for-net/issues/23268) is solved
+            if (useTokenCredential)
+            {
+                Assert.Ignore();
+            }
 
-            return await adminClient.CreateDetectionConfigurationAsync(config).ConfigureAwait(false);
+            var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
+            var instrumentedOptions = GetInstrumentedOptions();
+
+            MetricsAdvisorClient client = useTokenCredential
+                ? new(endpoint, TestEnvironment.Credential, instrumentedOptions)
+                : new(endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
+
+            return InstrumentClient(client);
         }
 
-        public AnomalyDetectionConfiguration PopulateMetricAnomalyDetectionConfiguration(string metricId)
+        protected async Task<DisposableDataFeed> CreateTempDataFeedAsync(MetricsAdvisorAdministrationClient adminClient)
         {
-            return new AnomalyDetectionConfiguration(
-                metricId,
-                Recording.GenerateAlphaNumericId("Name"),
-                new MetricWholeSeriesDetectionCondition(
-                    DetectionConditionsOperator.And,
-                    new SmartDetectionCondition(42, AnomalyDetectorDirection.Both, new SuppressCondition(1, 67)),
-                    new HardThresholdCondition(23, 45, AnomalyDetectorDirection.Both, new SuppressCondition(1, 50)),
-                    new ChangeThresholdCondition(12, 5, true, AnomalyDetectorDirection.Both, new SuppressCondition(1, 1))));
+            var dataFeed = new DataFeed()
+            {
+                Name = Recording.GenerateAlphaNumericId("dataFeed"),
+                DataSource = new SqlServerDataFeedSource("connString", "query"),
+                Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
+                Schema = new DataFeedSchema()
+                {
+                    MetricColumns = { new DataFeedMetric(TempDataFeedMetricName) },
+                    DimensionColumns = { new DataFeedDimension(TempDataFeedDimensionNameA), new DataFeedDimension(TempDataFeedDimensionNameB) }
+                },
+                IngestionSettings = new DataFeedIngestionSettings(SamplingStartTime)
+            };
+
+            return await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeed);
         }
 
-        protected void ValidateDimensionKey(DimensionKey dimensionKey)
+        protected int Count(DimensionKey dimensionKey)
+        {
+            int count = 0;
+
+            foreach (var _ in dimensionKey)
+            {
+                count++;
+            }
+
+            return count;
+        }
+
+        protected void ValidateSeriesKey(DimensionKey seriesKey)
+        {
+            Assert.That(seriesKey, Is.Not.Null);
+
+            Assert.That(Count(seriesKey), Is.EqualTo(2));
+            Assert.That(seriesKey.TryGetValue("city", out string city));
+            Assert.That(seriesKey.TryGetValue("category", out string category));
+
+            Assert.That(city, Is.Not.Null.And.Not.Empty);
+            Assert.That(category, Is.Not.Null.And.Not.Empty);
+        }
+
+        protected void ValidateGroupKey(DimensionKey groupKey)
+        {
+            Assert.That(groupKey, Is.Not.Null);
+
+            int count = 0;
+
+            foreach (KeyValuePair<string, string> dimension in groupKey)
+            {
+                Assert.That(dimension.Key, Is.EqualTo("city").Or.EqualTo("category"));
+                Assert.That(dimension.Value, Is.Not.Null.And.Not.Empty);
+
+                count++;
+            }
+
+            Assert.That(count, Is.GreaterThan(0));
+            Assert.That(count, Is.LessThanOrEqualTo(2));
+        }
+
+        protected void ValidateTempDataFeedDimensionKey(DimensionKey dimensionKey, string expectedDimensionA)
         {
             Assert.That(dimensionKey, Is.Not.Null);
 
-            Dictionary<string, string> dimensionColumns = dimensionKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(2));
-            Assert.That(dimensionColumns.ContainsKey("city"));
-            Assert.That(dimensionColumns.ContainsKey("category"));
-
-            Assert.That(dimensionColumns["city"], Is.Not.Null.And.Not.Empty);
-            Assert.That(dimensionColumns["category"], Is.Not.Null.And.Not.Empty);
+            Assert.That(Count(dimensionKey), Is.EqualTo(1));
+            Assert.That(dimensionKey.TryGetValue(TempDataFeedDimensionNameA, out string dimensionA));
+            Assert.That(dimensionA, Is.EqualTo(expectedDimensionA));
         }
 
-        internal string _blobFeedName;
-        internal AzureBlobDataFeedSource _blobSource;
-        internal DataFeedGranularity _dailyGranularity;
-        internal DataFeedSchema _dataFeedSchema;
-        internal DataFeedIngestionSettings _dataFeedIngestionSettings;
-        internal string _dataFeedDescription;
+        protected void ValidateTempDataFeedDimensionKey(DimensionKey dimensionKey, string expectedDimensionA, string expectedDimensionB)
+        {
+            Assert.That(dimensionKey, Is.Not.Null);
+
+            Assert.That(Count(dimensionKey), Is.EqualTo(2));
+            Assert.That(dimensionKey.TryGetValue(TempDataFeedDimensionNameA, out string dimensionA));
+            Assert.That(dimensionKey.TryGetValue(TempDataFeedDimensionNameB, out string dimensionB));
+            Assert.That(dimensionA, Is.EqualTo(expectedDimensionA));
+            Assert.That(dimensionB, Is.EqualTo(expectedDimensionB));
+        }
+
+        private MetricsAdvisorClientsOptions GetInstrumentedOptions()
+        {
+            var options = new MetricsAdvisorClientsOptions();
+
+            options.Retry.MaxRetries = 6;
+
+            return InstrumentClientOptions(options);
+        }
     }
 }

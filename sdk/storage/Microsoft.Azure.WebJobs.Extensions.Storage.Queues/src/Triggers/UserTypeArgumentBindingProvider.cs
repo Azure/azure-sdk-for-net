@@ -7,32 +7,43 @@ using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Triggers;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Triggers;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 {
     internal class UserTypeArgumentBindingProvider : IQueueTriggerArgumentBindingProvider
     {
+        private readonly ILoggerFactory _loggerFactory;
+
+        public UserTypeArgumentBindingProvider(ILoggerFactory loggerFactory)
+        {
+            _loggerFactory = loggerFactory;
+        }
+
         public ITriggerDataArgumentBinding<QueueMessage> TryCreate(ParameterInfo parameter)
         {
             // At indexing time, attempt to bind all types.
             // (Whether or not actual binding is possible depends on the message shape at runtime.)
-            return new UserTypeArgumentBinding(parameter.ParameterType);
+            return new UserTypeArgumentBinding(parameter.ParameterType, _loggerFactory);
         }
 
         private class UserTypeArgumentBinding : ITriggerDataArgumentBinding<QueueMessage>
         {
             private readonly Type _valueType;
             private readonly IBindingDataProvider _bindingDataProvider;
+            private readonly ILoggerFactory _loggerFactory;
 
-            public UserTypeArgumentBinding(Type valueType)
+            public UserTypeArgumentBinding(Type valueType, ILoggerFactory loggerFactory)
             {
                 _valueType = valueType;
                 _bindingDataProvider = BindingDataProvider.FromType(_valueType);
+                _loggerFactory = loggerFactory;
             }
 
             public Type ValueType
@@ -55,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
                 object convertedValue;
                 try
                 {
-                    convertedValue = JsonConvert.DeserializeObject(value.MessageText, ValueType, JsonSerialization.Settings);
+                    convertedValue = JsonConvert.DeserializeObject(value.Body.ToValidUTF8String(), ValueType, JsonSerialization.Settings);
                 }
                 catch (JsonException e)
                 {
@@ -68,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
                     throw new InvalidOperationException(msg);
                 }
 
-                IValueProvider provider = new QueueMessageValueProvider(value, convertedValue, ValueType);
+                IValueProvider provider = new QueueMessageValueProvider(value, convertedValue, ValueType, _loggerFactory);
 
                 IReadOnlyDictionary<string, object> bindingData = (_bindingDataProvider != null)
                     ? _bindingDataProvider.GetBindingData(convertedValue) : null;

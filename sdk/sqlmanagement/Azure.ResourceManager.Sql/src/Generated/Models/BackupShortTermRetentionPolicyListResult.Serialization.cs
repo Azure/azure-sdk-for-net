@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class BackupShortTermRetentionPolicyListResult
+    internal partial class BackupShortTermRetentionPolicyListResult
     {
         internal static BackupShortTermRetentionPolicyListResult DeserializeBackupShortTermRetentionPolicyListResult(JsonElement element)
         {

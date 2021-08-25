@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobTargetGroupListResult
+    internal partial class JobTargetGroupListResult
     {
         internal static JobTargetGroupListResult DeserializeJobTargetGroupListResult(JsonElement element)
         {

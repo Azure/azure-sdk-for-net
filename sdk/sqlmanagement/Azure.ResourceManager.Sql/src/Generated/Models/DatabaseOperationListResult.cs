@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The response to a list database operations request. </summary>
-    public partial class DatabaseOperationListResult
+    internal partial class DatabaseOperationListResult
     {
         /// <summary> Initializes a new instance of DatabaseOperationListResult. </summary>
         internal DatabaseOperationListResult()

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -16,26 +16,21 @@ namespace Azure.Communication.Chat
     {
         /// <summary> Initializes a new instance of CreateChatThreadRequest. </summary>
         /// <param name="topic"> The chat thread topic. </param>
-        /// <param name="members"> Members to be added to the chat thread. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topic"/> or <paramref name="members"/> is null. </exception>
-        public CreateChatThreadRequest(string topic, IEnumerable<ChatThreadMemberInternal> members)
+        /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
+        public CreateChatThreadRequest(string topic)
         {
             if (topic == null)
             {
                 throw new ArgumentNullException(nameof(topic));
             }
-            if (members == null)
-            {
-                throw new ArgumentNullException(nameof(members));
-            }
 
             Topic = topic;
-            Members = members.ToList();
+            Participants = new ChangeTrackingList<ChatParticipantInternal>();
         }
 
         /// <summary> The chat thread topic. </summary>
         public string Topic { get; }
-        /// <summary> Members to be added to the chat thread. </summary>
-        public IList<ChatThreadMemberInternal> Members { get; }
+        /// <summary> Participants to be added to the chat thread. </summary>
+        public IList<ChatParticipantInternal> Participants { get; }
     }
 }

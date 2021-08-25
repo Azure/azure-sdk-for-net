@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SparkRequestConverter))]
     public partial class SparkRequest
     {
         internal static SparkRequest DeserializeSparkRequest(JsonElement element)
@@ -178,6 +181,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SparkRequest(name.Value, file.Value, className.Value, Optional.ToList(args), Optional.ToList(jars), Optional.ToList(pyFiles), Optional.ToList(files), Optional.ToList(archives), Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors));
+        }
+
+        internal partial class SparkRequestConverter : JsonConverter<SparkRequest>
+        {
+            public override void Write(Utf8JsonWriter writer, SparkRequest model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SparkRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSparkRequest(document.RootElement);
+            }
         }
     }
 }

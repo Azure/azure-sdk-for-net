@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> This activity is used for iterating over a collection and execute given activities. </summary>
-    public partial class ForEachActivity : Activity
+    public partial class ForEachActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of ForEachActivity. </summary>
         /// <param name="name"> Activity name. </param>
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Activity description. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="isSequential"> Should the loop be executed in sequence or in parallel (max 50). </param>
         /// <param name="batchCount"> Batch count to be used for controlling the number of parallel execution (when isSequential is set to false). </param>
         /// <param name="items"> Collection to iterate. </param>

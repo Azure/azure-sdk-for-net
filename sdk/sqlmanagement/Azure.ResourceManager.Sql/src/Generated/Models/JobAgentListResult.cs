@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of Azure SQL job agents. </summary>
-    public partial class JobAgentListResult
+    internal partial class JobAgentListResult
     {
         /// <summary> Initializes a new instance of JobAgentListResult. </summary>
         internal JobAgentListResult()

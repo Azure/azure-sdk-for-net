@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/indexes(\u0027aypqybvw\u0027)/docs/search.post.search?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027nkplulhj\u0027)/docs/search.post.search?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "39",
         "Content-Type": "application/json",
-        "traceparent": "00-5ea0d6dddae5284990b9c2d891f385e8-e7d8a8d7d64e6345-00",
+        "traceparent": "00-a38d7f27d6d4b44e8971359f063141b2-5032f1a244c5e148-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "bf8cc4a405e089e0f690d708880c3947",
         "x-ms-return-client-request-id": "true"
@@ -25,10 +25,10 @@
         "Cache-Control": "no-cache",
         "client-request-id": "bf8cc4a4-05e0-89e0-f690-d708880c3947",
         "Content-Language": "en",
-        "Content-Length": "148",
+        "Content-Length": "341",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 17 Jul 2020 20:28:12 GMT",
-        "elapsed-time": "18",
+        "Date": "Sat, 27 Mar 2021 16:36:38 GMT",
+        "elapsed-time": "341",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -39,16 +39,23 @@
       },
       "ResponseBody": {
         "error": {
-          "code": "",
-          "message": "Failed to parse query string at line 1, column 8. See https://aka.ms/azure-search-full-query for supported syntax."
+          "code": "InvalidRequestParameter",
+          "message": "Failed to parse query string at line 1, column 8. See https://aka.ms/azure-search-full-query for supported syntax.",
+          "details": [
+            {
+              "code": "InvalidSearchSyntax",
+              "message": "Failed to parse query string at line 1, column 8. See https://aka.ms/azure-search-full-query for supported syntax."
+            }
+          ]
         }
       }
     }
   ],
   "Variables": {
     "RandomSeed": "1564667618",
-    "SearchIndexName": "aypqybvw",
+    "SearchIndexName": "nkplulhj",
+    "SEARCH_ENDPOINT_SUFFIX": null,
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-pakrysearch"
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

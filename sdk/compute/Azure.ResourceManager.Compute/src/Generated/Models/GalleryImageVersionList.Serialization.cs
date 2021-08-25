@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryImageVersionList
+    internal partial class GalleryImageVersionList
     {
         internal static GalleryImageVersionList DeserializeGalleryImageVersionList(JsonElement element)
         {

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of virtual network rules. </summary>
-    public partial class VirtualNetworkRuleListResult
+    internal partial class VirtualNetworkRuleListResult
     {
         /// <summary> Initializes a new instance of VirtualNetworkRuleListResult. </summary>
         internal VirtualNetworkRuleListResult()

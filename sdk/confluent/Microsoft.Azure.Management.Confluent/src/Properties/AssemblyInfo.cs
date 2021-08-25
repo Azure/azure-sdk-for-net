@@ -7,8 +7,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Confluent Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Confluent management functions for managing the Microsoft Azure Confluent service.")]
 
-[assembly: AssemblyVersion("0.1.0")]
-[assembly: AssemblyFileVersion("0.1.0")]
+[assembly: AssemblyVersion("1.0.1")]
+[assembly: AssemblyFileVersion("1.0.1")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

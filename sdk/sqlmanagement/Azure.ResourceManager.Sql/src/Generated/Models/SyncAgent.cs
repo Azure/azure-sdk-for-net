@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An Azure SQL Database sync agent. </summary>
-    public partial class SyncAgent : Resource
+    public partial class SyncAgent : ProxyResource
     {
         /// <summary> Initializes a new instance of SyncAgent. </summary>
         public SyncAgent()

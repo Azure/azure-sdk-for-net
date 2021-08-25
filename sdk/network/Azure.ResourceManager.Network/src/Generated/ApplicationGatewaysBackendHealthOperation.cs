@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class ApplicationGatewaysBackendHealthOperation : Operation<ApplicationGatewayBackendHealth>, IOperationSource<ApplicationGatewayBackendHealth>
     {
         private readonly ArmOperationHelpers<ApplicationGatewayBackendHealth> _operation;
+
+        /// <summary> Initializes a new instance of ApplicationGatewaysBackendHealthOperation for mocking. </summary>
+        protected ApplicationGatewaysBackendHealthOperation()
+        {
+        }
+
         internal ApplicationGatewaysBackendHealthOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ApplicationGatewayBackendHealth>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ApplicationGatewaysBackendHealthOperation");

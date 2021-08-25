@@ -94,5 +94,15 @@ namespace Microsoft.Azure.Management.IotHub
         /// </summary>
         IIotHubOperations IotHub { get; }
 
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
     }
 }

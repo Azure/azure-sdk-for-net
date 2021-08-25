@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -307,8 +307,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(virtualNetworkGatewayName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -711,8 +711,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/generatevpnclientpackage", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -801,8 +801,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/generatevpnprofile", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -1296,8 +1296,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/setvpnclientipsecparameters", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(vpnclientIpsecParams);
             request.Content = content;
@@ -1460,8 +1460,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/vpndeviceconfigurationscript", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -1558,10 +1558,10 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/startPacketCapture", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (parameters != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(parameters);
                 request.Content = content;
@@ -1643,8 +1643,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/stopPacketCapture", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -1809,8 +1809,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/disconnectVirtualNetworkGatewayVpnConnections", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request0.Uri = uri;
-            request0.Headers.Add("Content-Type", "application/json");
             request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;

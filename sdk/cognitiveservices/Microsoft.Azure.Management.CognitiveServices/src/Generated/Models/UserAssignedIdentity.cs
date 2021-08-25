@@ -46,17 +46,17 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets azure Active Directory principal ID associated with
-        /// this Identity.
+        /// Gets azure Active Directory principal ID associated with this
+        /// Identity.
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
-        public string PrincipalId { get; set; }
+        public string PrincipalId { get; private set; }
 
         /// <summary>
-        /// Gets or sets client App Id associated with this identity.
+        /// Gets client App Id associated with this identity.
         /// </summary>
         [JsonProperty(PropertyName = "clientId")]
-        public string ClientId { get; set; }
+        public string ClientId { get; private set; }
 
     }
 }

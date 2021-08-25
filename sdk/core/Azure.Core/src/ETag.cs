@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure
 {
@@ -18,7 +19,7 @@ namespace Azure
         private const string WeakETagPrefix = "W/\"";
         private const string DefaultFormat = "G";
         private const string HeaderFormat = "H";
-        private readonly string _value;
+        private readonly string? _value;
 
         /// <summary>
         /// Creates a new instance of <see cref="ETag"/>.
@@ -73,7 +74,7 @@ namespace Azure
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return _value?.GetHashCode() ?? 0;
+            return _value.GetHashCodeOrdinal();
         }
 
         /// <summary>
@@ -101,14 +102,12 @@ namespace Azure
         {
             if (_value == null)
             {
-                return "<null>";
+                return string.Empty;
             }
-
-            var _needsQuoateWrap = !IsValidQuotedFormat(_value);
 
             return format switch
             {
-                HeaderFormat => _needsQuoateWrap ?  $"{QuoteString}{_value}{QuoteString}" : _value,
+                HeaderFormat => !IsValidQuotedFormat(_value) ?  $"{QuoteString}{_value}{QuoteString}" : _value,
                 DefaultFormat => _value,
                 _ => throw new ArgumentException("Invalid format string.")
             };

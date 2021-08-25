@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of managed instance administrators. </summary>
-    public partial class ManagedInstanceAdministratorListResult
+    internal partial class ManagedInstanceAdministratorListResult
     {
         /// <summary> Initializes a new instance of ManagedInstanceAdministratorListResult. </summary>
         internal ManagedInstanceAdministratorListResult()

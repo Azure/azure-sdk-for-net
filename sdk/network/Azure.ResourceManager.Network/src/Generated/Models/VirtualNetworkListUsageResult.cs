@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the virtual networks GetUsage API service call. </summary>
-    public partial class VirtualNetworkListUsageResult
+    internal partial class VirtualNetworkListUsageResult
     {
         /// <summary> Initializes a new instance of VirtualNetworkListUsageResult. </summary>
         internal VirtualNetworkListUsageResult()

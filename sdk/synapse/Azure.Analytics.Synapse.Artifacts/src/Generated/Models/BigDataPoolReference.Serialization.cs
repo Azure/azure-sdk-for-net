@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(BigDataPoolReferenceConverter))]
     public partial class BigDataPoolReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -40,6 +43,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new BigDataPoolReference(type, referenceName);
+        }
+
+        internal partial class BigDataPoolReferenceConverter : JsonConverter<BigDataPoolReference>
+        {
+            public override void Write(Utf8JsonWriter writer, BigDataPoolReference model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override BigDataPoolReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeBigDataPoolReference(document.RootElement);
+            }
         }
     }
 }

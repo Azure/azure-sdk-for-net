@@ -33,9 +33,20 @@ namespace Azure.Core.Pipeline
                 return _stream.Read(buffer, offset, count);
             }
             // We dispose stream on timeout so catch and check if cancellation token was cancelled
-            catch (ObjectDisposedException)
+            catch (IOException ex)
             {
-                source.Token.ThrowIfCancellationRequested();
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
+                throw;
+            }
+            // We dispose stream on timeout so catch and check if cancellation token was cancelled
+            catch (ObjectDisposedException ex)
+            {
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
+                throw;
+            }
+            catch (OperationCanceledException ex)
+            {
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
                 throw;
             }
             finally
@@ -49,12 +60,25 @@ namespace Azure.Core.Pipeline
             var source = StartTimeout(cancellationToken, out bool dispose);
             try
             {
+#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                 return await _stream.ReadAsync(buffer, offset, count, source.Token).ConfigureAwait(false);
+#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
             }
             // We dispose stream on timeout so catch and check if cancellation token was cancelled
-            catch (ObjectDisposedException)
+            catch (IOException ex)
             {
-                source.Token.ThrowIfCancellationRequested();
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
+                throw;
+            }
+            // We dispose stream on timeout so catch and check if cancellation token was cancelled
+            catch (ObjectDisposedException ex)
+            {
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
+                throw;
+            }
+            catch (OperationCanceledException ex)
+            {
+                ResponseBodyPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
                 throw;
             }
             finally
@@ -90,7 +114,7 @@ namespace Azure.Core.Pipeline
         private void InitializeTokenSource()
         {
             _cancellationTokenSource = new CancellationTokenSource();
-            _cancellationTokenSource.Token.Register(() => DisposeStream());
+            _cancellationTokenSource.Token.Register(static state => ((ReadTimeoutStream)state!).DisposeStream(), this);
         }
 
         private void DisposeStream()
@@ -136,7 +160,10 @@ namespace Azure.Core.Pipeline
         {
             try
             {
-                _stream.ReadTimeout = (int) _readTimeout.TotalMilliseconds;
+                if (_stream.CanTimeout)
+                {
+                    _stream.ReadTimeout = (int) _readTimeout.TotalMilliseconds;
+                }
             }
             catch
             {

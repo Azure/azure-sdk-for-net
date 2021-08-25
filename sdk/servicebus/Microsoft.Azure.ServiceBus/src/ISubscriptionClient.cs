@@ -120,7 +120,7 @@ namespace Microsoft.Azure.ServiceBus
         /// of inflight receive and session handling operations to finish and unregisters future receives on the session handler which previously 
         /// registered. 
         /// </summary>
-        /// <param name="inflightSessionHandlerTasksWaitTimeout"> is the waitTimeout for inflight session handling tasks.</param>
+        /// <param name="inflightSessionHandlerTasksWaitTimeout"> is the maximum waitTimeout for inflight session handling tasks.</param>
         Task UnregisterSessionHandlerAsync(TimeSpan inflightSessionHandlerTasksWaitTimeout);
     }
 }

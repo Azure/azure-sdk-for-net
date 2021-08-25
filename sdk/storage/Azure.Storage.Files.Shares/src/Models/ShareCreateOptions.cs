@@ -16,7 +16,9 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Optional custom metadata to set for this share.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata Metadata { get; set; }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Optional. Maximum size of the share in gigabytes.  If unspecified, use the service's default value.
@@ -27,5 +29,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// Optional.  Specifies the access tier of the share.
         /// </summary>
         public ShareAccessTier? AccessTier { get; set; }
+
+        /// <summary>
+        /// The protocols to enable for the share.
+        /// </summary>
+        public ShareProtocols? Protocols { get; set; }
+
+        /// <summary>
+        /// The root squash to set for the share.  Only valid for NFS shares.
+        /// </summary>
+        public ShareRootSquash? RootSquash { get; set; }
     }
 }

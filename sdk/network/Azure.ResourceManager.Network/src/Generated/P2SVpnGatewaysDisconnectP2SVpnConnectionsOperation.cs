@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network
     public partial class P2SVpnGatewaysDisconnectP2SVpnConnectionsOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of P2SVpnGatewaysDisconnectP2SVpnConnectionsOperation for mocking. </summary>
+        protected P2SVpnGatewaysDisconnectP2SVpnConnectionsOperation()
+        {
+        }
+
         internal P2SVpnGatewaysDisconnectP2SVpnConnectionsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "P2SVpnGatewaysDisconnectP2SVpnConnectionsOperation");

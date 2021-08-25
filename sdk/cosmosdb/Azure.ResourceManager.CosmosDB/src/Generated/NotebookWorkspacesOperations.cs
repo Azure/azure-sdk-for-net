@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal NotebookWorkspacesRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of NotebookWorkspacesOperations for mocking. </summary>
         protected NotebookWorkspacesOperations()
         {
         }
+
         /// <summary> Initializes a new instance of NotebookWorkspacesOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
@@ -192,7 +194,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="notebookCreateUpdateParameters"> The notebook workspace to create for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="notebookCreateUpdateParameters"/> is null. </exception>
-        public virtual async Task<NotebookWorkspacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, ARMProxyResource notebookCreateUpdateParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<NotebookWorkspacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateUpdateParameters notebookCreateUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -228,7 +230,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="notebookCreateUpdateParameters"> The notebook workspace to create for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="notebookCreateUpdateParameters"/> is null. </exception>
-        public virtual NotebookWorkspacesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, ARMProxyResource notebookCreateUpdateParameters, CancellationToken cancellationToken = default)
+        public virtual NotebookWorkspacesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateUpdateParameters notebookCreateUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

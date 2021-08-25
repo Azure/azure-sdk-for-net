@@ -21,10 +21,12 @@ namespace Azure.Graph.Rbac
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ServicePrincipalsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ServicePrincipalsOperations for mocking. </summary>
         protected ServicePrincipalsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ServicePrincipalsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
@@ -78,7 +80,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the service principal to delete. </param>
         /// <param name="parameters"> Parameters to update a service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateAsync(string objectId, ServicePrincipalBase parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateAsync(string objectId, ServicePrincipalUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.Update");
             scope.Start();
@@ -97,7 +99,7 @@ namespace Azure.Graph.Rbac
         /// <param name="objectId"> The object ID of the service principal to delete. </param>
         /// <param name="parameters"> Parameters to update a service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Update(string objectId, ServicePrincipalBase parameters, CancellationToken cancellationToken = default)
+        public virtual Response Update(string objectId, ServicePrincipalUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServicePrincipalsOperations.Update");
             scope.Start();

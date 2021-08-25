@@ -14,10 +14,10 @@ namespace SmokeTest
     {
         private static Dictionary<string, Uri> authorityHostMap = new Dictionary<string, Uri>
         {
-            { "AzureCloud", KnownAuthorityHosts.AzureCloud },
-            { "AzureChinaCloud", KnownAuthorityHosts.AzureChinaCloud },
-            { "AzureGermanCloud", KnownAuthorityHosts.AzureGermanCloud },
-            { "AzureUSGovernment", KnownAuthorityHosts.AzureUSGovernment },
+            { "AzureCloud", AzureAuthorityHosts.AzurePublicCloud },
+            { "AzureChinaCloud", AzureAuthorityHosts.AzureChina },
+            { "AzureGermanCloud", AzureAuthorityHosts.AzureGermany },
+            { "AzureUSGovernment", AzureAuthorityHosts.AzureGovernment },
         };
 
         private static string SecretName = $"SmokeTestSecret-{Guid.NewGuid()}";
@@ -38,7 +38,7 @@ namespace SmokeTest
             Console.WriteLine("3.- Delete that Secret (Clean up)\n");
 
             string keyVaultUri = Environment.GetEnvironmentVariable("KEY_VAULT_URI");
-            var authorityHost = GetAuthorityHost(Environment.GetEnvironmentVariable("AZURE_CLOUD"), KnownAuthorityHosts.AzureCloud);
+            var authorityHost = GetAuthorityHost(Environment.GetEnvironmentVariable("AZURE_CLOUD"), AzureAuthorityHosts.AzurePublicCloud);
 
             var defaultAzureCredentialOptions = new DefaultAzureCredentialOptions 
             {

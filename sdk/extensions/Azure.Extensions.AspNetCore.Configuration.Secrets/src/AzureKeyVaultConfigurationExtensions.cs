@@ -44,9 +44,8 @@ namespace Microsoft.Extensions.Configuration
             TokenCredential credential,
             KeyVaultSecretManager manager)
         {
-            return AddAzureKeyVault(configurationBuilder, new AzureKeyVaultConfigurationOptions
+            return AddAzureKeyVault(configurationBuilder, new SecretClient(vaultUri, credential), new AzureKeyVaultConfigurationOptions
             {
-                Client = new SecretClient(vaultUri, credential),
                 Manager = manager
             });
         }
@@ -63,11 +62,10 @@ namespace Microsoft.Extensions.Configuration
             SecretClient client,
             KeyVaultSecretManager manager)
         {
-            return configurationBuilder.Add(new AzureKeyVaultConfigurationSource(new AzureKeyVaultConfigurationOptions()
+            return AddAzureKeyVault(configurationBuilder, client, new AzureKeyVaultConfigurationOptions()
             {
-                Client = client,
                 Manager = manager
-            }));
+            });
         }
 
         /// <summary>
@@ -99,24 +97,12 @@ namespace Microsoft.Extensions.Configuration
             SecretClient client,
             AzureKeyVaultConfigurationOptions options)
         {
-            options.Client = client;
-            return configurationBuilder.AddAzureKeyVault(options);
-        }
-
-        /// <summary>
-        /// Adds an <see cref="IConfigurationProvider"/> that reads configuration values from the Azure KeyVault.
-        /// </summary>
-        /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
-        /// <param name="options">The <see cref="AzureKeyVaultConfigurationOptions"/> to use.</param>
-        /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
-        internal static IConfigurationBuilder AddAzureKeyVault(this IConfigurationBuilder configurationBuilder, AzureKeyVaultConfigurationOptions options)
-        {
             Argument.AssertNotNull(configurationBuilder, nameof(configurationBuilder));
             Argument.AssertNotNull(options, nameof(configurationBuilder));
-            Argument.AssertNotNull(options.Client, $"{nameof(options)}.{nameof(options.Client)}");
+            Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(options.Manager, $"{nameof(options)}.{nameof(options.Manager)}");
 
-            configurationBuilder.Add(new AzureKeyVaultConfigurationSource(options));
+            configurationBuilder.Add(new AzureKeyVaultConfigurationSource(client, options));
 
             return configurationBuilder;
         }

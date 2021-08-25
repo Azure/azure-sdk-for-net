@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault
     }
     public partial class PrivateEndpointConnectionsDeleteOperation : Azure.Operation<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnection>
     {
-        internal PrivateEndpointConnectionsDeleteOperation() { }
+        protected PrivateEndpointConnectionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KeyVault
     }
     public partial class VaultsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.KeyVault.Models.Vault>
     {
-        internal VaultsCreateOrUpdateOperation() { }
+        protected VaultsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KeyVault
     }
     public partial class VaultsPurgeDeletedOperation : Azure.Operation<Azure.Response>
     {
-        internal VaultsPurgeDeletedOperation() { }
+        protected VaultsPurgeDeletedOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -171,12 +171,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.DeletedVaultProperties Properties { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class DeletedVaultListResult
-    {
-        internal DeletedVaultListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.DeletedVault> Value { get { throw null; } }
     }
     public partial class DeletedVaultProperties
     {
@@ -291,12 +285,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
     }
-    public partial class OperationListResult
-    {
-        internal OperationListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.Operation> Value { get { throw null; } }
-    }
     public partial class Permissions
     {
         public Permissions() { }
@@ -398,12 +386,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class ResourceListResult
-    {
-        internal ResourceListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.Resource> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecretPermissions : System.IEquatable<Azure.ResourceManager.KeyVault.Models.SecretPermissions>
@@ -528,12 +510,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string Location { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultProperties Properties { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class VaultListResult
-    {
-        internal VaultListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.Vault> Value { get { throw null; } }
     }
     public partial class VaultPatchParameters
     {

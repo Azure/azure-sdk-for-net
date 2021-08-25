@@ -5,43 +5,36 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureTableParameter. </summary>
     internal partial class AzureTableParameter
     {
         /// <summary> Initializes a new instance of AzureTableParameter. </summary>
-        /// <param name="connectionString"> Azure Table connection string. </param>
-        /// <param name="table"> Table name. </param>
-        /// <param name="query"> Query script. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/>, <paramref name="table"/>, or <paramref name="query"/> is null. </exception>
-        public AzureTableParameter(string connectionString, string table, string query)
+        /// <param name="table"> A table name in this Azure Table. </param>
+        /// <param name="query"> The statement to query this table. Please find syntax and details from Azure Table documents. </param>
+        public AzureTableParameter(string table, string query)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
-            if (table == null)
-            {
-                throw new ArgumentNullException(nameof(table));
-            }
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
+            Table = table;
+            Query = query;
+        }
 
+        /// <summary> Initializes a new instance of AzureTableParameter. </summary>
+        /// <param name="connectionString"> The connection string of this Azure Table. </param>
+        /// <param name="table"> A table name in this Azure Table. </param>
+        /// <param name="query"> The statement to query this table. Please find syntax and details from Azure Table documents. </param>
+        internal AzureTableParameter(string connectionString, string table, string query)
+        {
             ConnectionString = connectionString;
             Table = table;
             Query = query;
         }
 
-        /// <summary> Azure Table connection string. </summary>
+        /// <summary> The connection string of this Azure Table. </summary>
         public string ConnectionString { get; set; }
-        /// <summary> Table name. </summary>
+        /// <summary> A table name in this Azure Table. </summary>
         public string Table { get; set; }
-        /// <summary> Query script. </summary>
+        /// <summary> The statement to query this table. Please find syntax and details from Azure Table documents. </summary>
         public string Query { get; set; }
     }
 }

@@ -12,39 +12,41 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         private readonly KeyProperties _keyProperties;
 
-        public LocalCryptographyProvider(JsonWebKey keyMaterial, KeyProperties keyProperties)
+        public LocalCryptographyProvider(JsonWebKey keyMaterial, KeyProperties keyProperties, bool localOnly)
         {
             KeyMaterial = keyMaterial ?? throw new ArgumentNullException(nameof(keyMaterial));
             _keyProperties = keyProperties;
+
+            CanRemote = !localOnly && KeyMaterial.Id != null;
         }
 
-        public bool ShouldRemote => KeyMaterial?.Id != null;
+        public bool CanRemote { get; }
 
         protected JsonWebKey KeyMaterial { get; set; }
 
-        protected bool MustRemote => ShouldRemote && !KeyMaterial.HasPrivateKey;
+        protected bool MustRemote => CanRemote && !KeyMaterial.HasPrivateKey;
 
         public abstract bool SupportsOperation(KeyOperation operation);
 
-        public virtual DecryptResult Decrypt(DecryptOptions options, CancellationToken cancellationToken = default)
+        public virtual DecryptResult Decrypt(DecryptParameters parameters, CancellationToken cancellationToken = default)
         {
             throw CreateOperationNotSupported(nameof(Decrypt));
         }
 
-        public virtual Task<DecryptResult> DecryptAsync(DecryptOptions options, CancellationToken cancellationToken = default)
+        public virtual Task<DecryptResult> DecryptAsync(DecryptParameters parameters, CancellationToken cancellationToken = default)
         {
-            DecryptResult result = Decrypt(options, cancellationToken);
+            DecryptResult result = Decrypt(parameters, cancellationToken);
             return Task.FromResult(result);
         }
 
-        public virtual EncryptResult Encrypt(EncryptOptions options, CancellationToken cancellationToken = default)
+        public virtual EncryptResult Encrypt(EncryptParameters parameters, CancellationToken cancellationToken = default)
         {
             throw CreateOperationNotSupported(nameof(Encrypt));
         }
 
-        public virtual Task<EncryptResult> EncryptAsync(EncryptOptions options, CancellationToken cancellationToken = default)
+        public virtual Task<EncryptResult> EncryptAsync(EncryptParameters parameters, CancellationToken cancellationToken = default)
         {
-            EncryptResult result = Encrypt(options, cancellationToken);
+            EncryptResult result = Encrypt(parameters, cancellationToken);
             return Task.FromResult(result);
         }
 
@@ -93,7 +95,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static NotSupportedException CreateOperationNotSupported(string name) => new NotSupportedException($"Operation {name} not supported with the given key");
+        internal static NotSupportedException CreateOperationNotSupported(string name, Exception innerException = null) =>
+            new NotSupportedException($"Operation {name} not supported with the given key", innerException);
 
         protected void ThrowIfTimeInvalid()
         {

@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Resources
     public partial class DeploymentsDeleteAtManagementGroupScopeOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of DeploymentsDeleteAtManagementGroupScopeOperation for mocking. </summary>
+        protected DeploymentsDeleteAtManagementGroupScopeOperation()
+        {
+        }
+
         internal DeploymentsDeleteAtManagementGroupScopeOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsDeleteAtManagementGroupScopeOperation");

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Resources
     public partial class DeploymentsWhatIfOperation : Operation<WhatIfOperationResult>, IOperationSource<WhatIfOperationResult>
     {
         private readonly ArmOperationHelpers<WhatIfOperationResult> _operation;
+
+        /// <summary> Initializes a new instance of DeploymentsWhatIfOperation for mocking. </summary>
+        protected DeploymentsWhatIfOperation()
+        {
+        }
+
         internal DeploymentsWhatIfOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<WhatIfOperationResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsWhatIfOperation");

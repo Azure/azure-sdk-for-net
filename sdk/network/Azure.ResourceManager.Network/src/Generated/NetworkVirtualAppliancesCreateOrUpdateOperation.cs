@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkVirtualAppliancesCreateOrUpdateOperation : Operation<NetworkVirtualAppliance>, IOperationSource<NetworkVirtualAppliance>
     {
         private readonly ArmOperationHelpers<NetworkVirtualAppliance> _operation;
+
+        /// <summary> Initializes a new instance of NetworkVirtualAppliancesCreateOrUpdateOperation for mocking. </summary>
+        protected NetworkVirtualAppliancesCreateOrUpdateOperation()
+        {
+        }
+
         internal NetworkVirtualAppliancesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<NetworkVirtualAppliance>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "NetworkVirtualAppliancesCreateOrUpdateOperation");

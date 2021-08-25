@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class CassandraResourcesCreateUpdateCassandraKeyspaceOperation : Operation<CassandraKeyspaceGetResults>, IOperationSource<CassandraKeyspaceGetResults>
     {
         private readonly ArmOperationHelpers<CassandraKeyspaceGetResults> _operation;
+
+        /// <summary> Initializes a new instance of CassandraResourcesCreateUpdateCassandraKeyspaceOperation for mocking. </summary>
+        protected CassandraResourcesCreateUpdateCassandraKeyspaceOperation()
+        {
+        }
+
         internal CassandraResourcesCreateUpdateCassandraKeyspaceOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<CassandraKeyspaceGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CassandraResourcesCreateUpdateCassandraKeyspaceOperation");

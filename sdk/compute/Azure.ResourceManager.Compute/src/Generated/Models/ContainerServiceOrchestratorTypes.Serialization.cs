@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal static class ContainerServiceOrchestratorTypesExtensions
+    internal static partial class ContainerServiceOrchestratorTypesExtensions
     {
         public static string ToSerialString(this ContainerServiceOrchestratorTypes value) => value switch
         {

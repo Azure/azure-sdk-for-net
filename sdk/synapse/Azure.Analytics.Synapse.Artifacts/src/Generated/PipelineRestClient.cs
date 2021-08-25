@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 {
     internal partial class PipelineRestClient
     {
-        private string endpoint;
+        private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -30,19 +30,10 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PipelineRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
+        public PipelineRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -53,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/pipelines", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -107,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/pipelines/", false);
             uri.AppendPath(pipelineName, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -116,8 +107,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 request.Headers.Add("If-Match", ifMatch);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(pipeline);
             request.Content = content;
@@ -188,7 +179,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/pipelines/", false);
             uri.AppendPath(pipelineName, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -225,7 +216,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
-                    return Response.FromValue<PipelineResource>(null, message.Response);
+                    return Response.FromValue((PipelineResource)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -255,7 +246,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
-                    return Response.FromValue<PipelineResource>(null, message.Response);
+                    return Response.FromValue((PipelineResource)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -267,7 +258,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/pipelines/", false);
             uri.AppendPath(pipelineName, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -330,14 +321,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request0 = message.Request;
             request0.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/pipelines/", false);
             uri.AppendPath(pipelineName, true);
             uri.AppendPath("/rename", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request0.Uri = uri;
-            request0.Headers.Add("Content-Type", "application/json");
             request0.Headers.Add("Accept", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
@@ -406,7 +397,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/pipelines/", false);
             uri.AppendPath(pipelineName, true);
             uri.AppendPath("/createRun", false);
@@ -424,10 +415,10 @@ namespace Azure.Analytics.Synapse.Artifacts
                 uri.AppendQuery("startActivityName", startActivityName, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (parameters != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteStartObject();
                 foreach (var item in parameters)
@@ -509,7 +500,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

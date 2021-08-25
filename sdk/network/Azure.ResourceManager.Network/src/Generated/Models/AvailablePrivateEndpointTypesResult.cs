@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An array of available PrivateEndpoint types. </summary>
-    public partial class AvailablePrivateEndpointTypesResult
+    internal partial class AvailablePrivateEndpointTypesResult
     {
         /// <summary> Initializes a new instance of AvailablePrivateEndpointTypesResult. </summary>
         internal AvailablePrivateEndpointTypesResult()

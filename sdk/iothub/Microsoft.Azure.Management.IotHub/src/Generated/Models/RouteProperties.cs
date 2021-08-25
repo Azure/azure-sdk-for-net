@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// applied to, such as DeviceMessages. Possible values include:
         /// 'Invalid', 'DeviceMessages', 'TwinChangeEvents',
         /// 'DeviceLifecycleEvents', 'DeviceJobLifecycleEvents',
-        /// 'DigitalTwinChangeEvents'</param>
+        /// 'DeviceConnectionStateEvents'</param>
         /// <param name="endpointNames">The list of endpoints to which messages
         /// that satisfy the condition are routed. Currently only one endpoint
         /// is allowed.</param>
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// Gets or sets the source that the routing rule is to be applied to,
         /// such as DeviceMessages. Possible values include: 'Invalid',
         /// 'DeviceMessages', 'TwinChangeEvents', 'DeviceLifecycleEvents',
-        /// 'DeviceJobLifecycleEvents', 'DigitalTwinChangeEvents'
+        /// 'DeviceJobLifecycleEvents', 'DeviceConnectionStateEvents'
         /// </summary>
         [JsonProperty(PropertyName = "source")]
         public string Source { get; set; }

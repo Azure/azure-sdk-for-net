@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
     /// <summary> A list of managed private endpoints. </summary>
-    public partial class ManagedPrivateEndpointListResponse
+    internal partial class ManagedPrivateEndpointListResponse
     {
         /// <summary> Initializes a new instance of ManagedPrivateEndpointListResponse. </summary>
         internal ManagedPrivateEndpointListResponse()

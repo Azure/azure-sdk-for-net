@@ -1,22 +1,93 @@
 # Release History
 
-## 3.1.0-beta.1 (Unreleased)
+## 3.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
+## 3.1.1 (2021-06-08)
+
+### Key Bug Fixes
+- Handles invoices and other recognition operations that return a `FormField` with `Text` and no `BoundingBox` or `Page` information.
+
+## 3.1.0 (2021-05-26)
+
+### New Features
+- This General Availability (GA) release marks the stability of the changes introduced in package versions `3.1.0-beta.1` through `3.1.0-beta.4`.
+- Updated the `FormRecognizerModelFactory` class to support missing model types for mocking.
+- Added support for service version `2.0`. This can be specified in the `FormRecognizerClientOptions` object under the `ServiceVersion` enum.
+By default the SDK targets latest supported service version.
 
 ### Breaking changes
-- It defaults to the latest supported API version, which currently is `2.1-preview.1`.
+- The client defaults to the latest supported service version, which currently is `2.1`.
+- Renamed `Id` for `Identity` in all the `StartRecognizeIdDocuments` functionalities. For example, the name of the method is now `StartRecognizeIdentityDocuments`.
+- Renamed the model `ReadingOrder` to `FormReadingOrder`.
+- The model `TextAppearance` now includes the properties `StyleName` and `StyleConfidence` that were part of the `TextStyle` object.
+- Removed the model `TextStyle`.
+- Renamed the method `AsCountryCode` to `AsCountryRegion`.
+- Removed type `FieldValueGender`.
+- Removed value `Gender` from the model `FieldValuetype`.
+
+## 3.0.1 (2021-04-09)
+
+### Key Bug Fixes
+- Updated dependency versions.
+
+## 3.1.0-beta.4 (2021-04-06)
+
+### New Features
+- Added support for pre-built passports and US driver licenses recognition with the `StartRecognizeIdDocuments` API.
+- Expanded the set of document languages that can be provided to the `StartRecognizeContent` API.
+- Added property `Pages` to `RecognizeBusinessCardsOptions`, `RecognizeCustomFormsOptions`, `RecognizeInvoicesOptions`, and `RecognizeReceiptsOptions` to specify the page numbers to recognize.
+- Added property `ReadingOrder` to `RecognizeContentOptions` to specify the order in which recognized text lines are returned.
+
+### Breaking changes
+- The client defaults to the latest supported service version, which currently is `2.1-preview.3`.
+- `StartRecognizeCustomForms` now throws a `RequestFailedException` when an invalid file is passed.
+
+## 3.1.0-beta.3 (2021-03-09)
+
+### New Features
+- Added protected constructors for mocking to `Operation` types, such as `TrainingOperation` and `RecognizeContentOperation`.
+
+## 3.1.0-beta.2 (2021-02-09)
+### Breaking changes
+- Renamed the model `Appearance` to `TextAppearance`.
+- Renamed the model `Style` to `TextStyle`.
+- Renamed the extensible enum `TextStyle` to `TextStyleName`.
+- Changed object type for property `Pages` under `RecognizeContentOptions` from `IEnumerable` to `IList`.
+- Changed model type of `Locale` from `string` to `FormRecognizerLocale` in `RecognizeBusinessCardsOptions`, `RecognizeInvoicesOptions`, and `RecognizeReceiptsOptions`.
+- Changed model type of `Language` from `string` to `FormRecognizerLanguage` in `RecognizeContentOptions`.
+
+## 3.1.0-beta.1 (2020-11-23)
+
+### Breaking changes
+- It defaults to the latest supported service version, which currently is `2.1-preview.2`.
 
 ### New Features
 - Added integration for ASP.NET Core.
 - Added support for pre-built business card recognition.
-- Added support for providing locale info when recognizing receipts and business cards. Supported locales include support EN-US, EN-AU, EN-CA, EN-GB, EN-IN.
+- Added support for pre-built invoices recognition.
+- Added support for providing locale information when recognizing receipts and business cards. Supported locales include EN-US, EN-AU, EN-CA, EN-GB, EN-IN.
+- Added support for providing the document language in `StartRecognizeContent` when recognizing a form.
 - Added support to train and recognize custom forms with selection marks such as check boxes and radio buttons. This functionality is only available in train with labels scenarios.
+- Added support to `StartRecognizeContent` to recognize selection marks such as check boxes and radio buttons.
 - Added ability to create a composed model from the `FormTrainingClient` by calling method `StartCreateComposedModel`.
 - Added ability to pass parameter `ModelName` to `StartTraining` methods.
 - Added the properties `ModelName` and `Properties` to types `CustomFormModel` and `CustomFormModelInfo`.
 - Added type `CustomFormModelProperties` that includes information like if a model is a composed model.
 - Added property `ModelId` to `CustomFormSubmodel` and `TrainingDocumentInfo`.
 - Added properties `ModelId` and `FormTypeConfidence` to `RecognizedForm`.
-- Added support to `StartRecognizeContent` to recognize selection marks such as check boxes and radio buttons.
+- Added property `Appearance` to `FormLine` to indicate the style of the extracted text. For example, "handwriting" or "other".
+- Added property `BoundingBox` to `FormTable`.
+- Added support for `ContentType` `image/bmp` in recognize content and prebuilt models.
+- Added property `Pages` to `RecognizeContentOptions` to specify the page numbers to analyze.
 
 ## 3.0.0 (2020-08-20)
 
@@ -163,5 +234,5 @@ This package's [documentation][readme] and [samples][samples] demonstrate the ne
 
 [guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html
 [cognitiveServices_fr_nuget]: https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.FormRecognizer/0.8.0-preview
-[readme]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md
+[readme]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md
+[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md

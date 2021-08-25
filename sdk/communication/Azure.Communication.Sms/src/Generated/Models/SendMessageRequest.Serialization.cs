@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Sms
+namespace Azure.Communication.Sms.Models
 {
     internal partial class SendMessageRequest : IUtf8JsonSerializable
     {
@@ -17,19 +17,19 @@ namespace Azure.Communication.Sms
             writer.WriteStartObject();
             writer.WritePropertyName("from");
             writer.WriteStringValue(From);
-            writer.WritePropertyName("to");
+            writer.WritePropertyName("smsRecipients");
             writer.WriteStartArray();
-            foreach (var item in To)
+            foreach (var item in SmsRecipients)
             {
-                writer.WriteStringValue(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("message");
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(SendSmsOptions))
+            if (Optional.IsDefined(SmsSendOptions))
             {
-                writer.WritePropertyName("sendSmsOptions");
-                writer.WriteObjectValue(SendSmsOptions);
+                writer.WritePropertyName("smsSendOptions");
+                writer.WriteObjectValue(SmsSendOptions);
             }
             writer.WriteEndObject();
         }

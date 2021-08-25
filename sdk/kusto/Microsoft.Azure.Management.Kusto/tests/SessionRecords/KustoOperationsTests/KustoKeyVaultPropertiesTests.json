@@ -127,8 +127,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Kusto/clusters/eventgridclienttest?api-version=2020-09-18",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Rlc3QtY2xpZW50cy1yZy9wcm92aWRlcnMvTWljcm9zb2Z0Lkt1c3RvL2NsdXN0ZXJzL2V2ZW50Z3JpZGNsaWVudHRlc3Q/YXBpLXZlcnNpb249MjAyMC0wOS0xOA==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Kusto/clusters/eventgridclienttest?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Rlc3QtY2xpZW50cy1yZy9wcm92aWRlcnMvTWljcm9zb2Z0Lkt1c3RvL2NsdXN0ZXJzL2V2ZW50Z3JpZGNsaWVudHRlc3Q/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"keyVaultProperties\": {\r\n      \"keyName\": \"clientstestkey\",\r\n      \"keyVersion\": \"6fd57d53ad6b4b53bacb062c98c761a0\",\r\n      \"keyVaultUri\": \"https://clientstestkv.vault.azure.net/\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -162,13 +162,13 @@
           "\"\""
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/465356cf-a398-4931-8019-d97de845e6fd?api-version=2020-09-18&operationResultResponseType=Location"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/465356cf-a398-4931-8019-d97de845e6fd?api-version=2021-01-01&operationResultResponseType=Location"
         ],
         "x-ms-request-id": [
           "4cf83a34-04f6-4838-a0f8-28a1a190b8d1"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationResults/465356cf-a398-4931-8019-d97de845e6fd?api-version=2020-09-18"
+          "https://management.azure.com/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia Central/operationResults/465356cf-a398-4931-8019-d97de845e6fd?api-version=2021-01-01"
         ],
         "Set-Cookie": [
           "ARRAffinity=af17762fd4ecbe8ed09aca9cef9471fcedd1f1b9f2441fc7df3d8638ad607b76;Path=/;HttpOnly;Secure;Domain=armrp-kustorpceau.australiacentral.kusto.windows.net",
@@ -209,8 +209,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/465356cf-a398-4931-8019-d97de845e6fd?api-version=2020-09-18",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy80NjUzNTZjZi1hMzk4LTQ5MzEtODAxOS1kOTdkZTg0NWU2ZmQ/YXBpLXZlcnNpb249MjAyMC0wOS0xOA==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/465356cf-a398-4931-8019-d97de845e6fd?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy80NjUzNTZjZi1hMzk4LTQ5MzEtODAxOS1kOTdkZTg0NWU2ZmQ/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -273,8 +273,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/465356cf-a398-4931-8019-d97de845e6fd?api-version=2020-09-18",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy80NjUzNTZjZi1hMzk4LTQ5MzEtODAxOS1kOTdkZTg0NWU2ZmQ/YXBpLXZlcnNpb249MjAyMC0wOS0xOA==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/providers/Microsoft.Kusto/locations/Australia%20Central/operationResults/465356cf-a398-4931-8019-d97de845e6fd?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vbG9jYXRpb25zL0F1c3RyYWxpYSUyMENlbnRyYWwvb3BlcmF0aW9uUmVzdWx0cy80NjUzNTZjZi1hMzk4LTQ5MzEtODAxOS1kOTdkZTg0NWU2ZmQ/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -337,8 +337,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Kusto/clusters/eventgridclienttest?api-version=2020-09-18",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Rlc3QtY2xpZW50cy1yZy9wcm92aWRlcnMvTWljcm9zb2Z0Lkt1c3RvL2NsdXN0ZXJzL2V2ZW50Z3JpZGNsaWVudHRlc3Q/YXBpLXZlcnNpb249MjAyMC0wOS0xOA==",
+      "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Kusto/clusters/eventgridclienttest?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Rlc3QtY2xpZW50cy1yZy9wcm92aWRlcnMvTWljcm9zb2Z0Lkt1c3RvL2NsdXN0ZXJzL2V2ZW50Z3JpZGNsaWVudHRlc3Q/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

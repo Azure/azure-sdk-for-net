@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkWatchersGetNetworkConfigurationDiagnosticOperation : Operation<NetworkConfigurationDiagnosticResponse>, IOperationSource<NetworkConfigurationDiagnosticResponse>
     {
         private readonly ArmOperationHelpers<NetworkConfigurationDiagnosticResponse> _operation;
+
+        /// <summary> Initializes a new instance of NetworkWatchersGetNetworkConfigurationDiagnosticOperation for mocking. </summary>
+        protected NetworkWatchersGetNetworkConfigurationDiagnosticOperation()
+        {
+        }
+
         internal NetworkWatchersGetNetworkConfigurationDiagnosticOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<NetworkConfigurationDiagnosticResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetNetworkConfigurationDiagnosticOperation");

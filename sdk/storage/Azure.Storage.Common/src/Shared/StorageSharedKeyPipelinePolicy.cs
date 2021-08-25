@@ -61,7 +61,6 @@ namespace Azure.Storage
 
             message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out var contentEncoding);
             message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentLanguage, out var contentLanguage);
-            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out var contentLength);
             message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out var contentMD5);
             message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentType, out var contentType);
             message.Request.Headers.TryGetValue(Constants.HeaderNames.IfModifiedSince, out var ifModifiedSince);
@@ -70,62 +69,67 @@ namespace Azure.Storage
             message.Request.Headers.TryGetValue(Constants.HeaderNames.IfUnmodifiedSince, out var ifUnmodifiedSince);
             message.Request.Headers.TryGetValue(Constants.HeaderNames.Range, out var range);
 
-            var stringToSign = string.Join("\n",
-                message.Request.Method.ToString().ToUpperInvariant(),
-                contentEncoding ?? "",
-                contentLanguage ?? "",
-                contentLength == "0" ? "" : contentLength ?? "",
-                contentMD5 ?? "", // todo: fix base 64 VALUE
-                contentType ?? "",
-                "", // Empty date because x-ms-date is expected (as per web page above)
-                ifModifiedSince ?? "",
-                ifMatch ?? "",
-                ifNoneMatch ?? "",
-                ifUnmodifiedSince ?? "",
-                range ?? "",
-                BuildCanonicalizedHeaders(message),
-                BuildCanonicalizedResource(message.Request.Uri.ToUri()));
-            return stringToSign;
+            string contentLengthString = string.Empty;
+
+            if (message.Request.Content != null && message.Request.Content.TryComputeLength(out long contentLength))
+            {
+                contentLengthString = contentLength.ToString(CultureInfo.InvariantCulture);
+            }
+            var uri = message.Request.Uri.ToUri();
+            var stringBuilder = new StringBuilder(uri.AbsolutePath.Length + 64);
+            stringBuilder.Append(message.Request.Method.ToString().ToUpperInvariant()).Append('\n');
+            stringBuilder.Append(contentEncoding ?? "").Append('\n');
+            stringBuilder.Append(contentLanguage ?? "").Append('\n');
+            stringBuilder.Append(contentLengthString == "0" ? "" : contentLengthString ?? "").Append('\n');
+            stringBuilder.Append(contentMD5 ?? "");// todo: fix base 64 VALUE
+            stringBuilder.Append('\n');
+            stringBuilder.Append(contentType ?? "").Append('\n'); // Empty date because x-ms-date is expected (as per web page above))
+            stringBuilder.Append('\n');
+            stringBuilder.Append(ifModifiedSince ?? "").Append('\n');
+            stringBuilder.Append(ifMatch ?? "").Append('\n');
+            stringBuilder.Append(ifNoneMatch ?? "").Append('\n');
+            stringBuilder.Append(ifUnmodifiedSince ?? "").Append('\n');
+            stringBuilder.Append(range ?? "").Append('\n');
+            BuildCanonicalizedHeaders(stringBuilder, message);
+            BuildCanonicalizedResource(stringBuilder, uri);
+            return stringBuilder.ToString();
         }
 
-        private static string BuildCanonicalizedHeaders(HttpMessage message)
+        private static void BuildCanonicalizedHeaders(StringBuilder stringBuilder, HttpMessage message)
         {
             // Grab all the "x-ms-*" headers, trim whitespace, lowercase, sort,
             // and combine them with their values (separated by a colon).
-            var sb = new StringBuilder();
-            foreach (var headerName in
+            foreach (var header in
                 message.Request.Headers
-                .Select(h => h.Name.ToLowerInvariant())
-                .Where(name => name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
+                .Where(static h => h.Name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
 #pragma warning disable CA1308 // Normalize strings to uppercase
-                .OrderBy(name => name.Trim()))
+                .Select(static h => (h.Name.ToLowerInvariant(), h.Value))
 #pragma warning restore CA1308 // Normalize strings to uppercase
+                .OrderBy(static h => h.Item1.Trim()))
             {
-                if (sb.Length > 0)
-                {
-                    sb.Append('\n');
-                }
-                message.Request.Headers.TryGetValue(headerName, out var value);
-                sb.Append(headerName).Append(':').Append(value);
+                stringBuilder.Append(header.Item1);
+                stringBuilder.Append(':');
+                stringBuilder.Append(header.Value);
+                stringBuilder.Append('\n');
             }
-            return sb.ToString();
         }
 
-        private string BuildCanonicalizedResource(Uri resource)
+        private void BuildCanonicalizedResource(StringBuilder stringBuilder, Uri resource)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authentication-for-the-azure-storage-services
-            StringBuilder cr = new StringBuilder("/").Append(_credentials.AccountName);
+            stringBuilder.Append('/');
+            stringBuilder.Append(_credentials.AccountName);
             if (resource.AbsolutePath.Length > 0)
             {
                 // Any portion of the CanonicalizedResource string that is derived from
                 // the resource's URI should be encoded exactly as it is in the URI.
                 // -- https://msdn.microsoft.com/en-gb/library/azure/dd179428.aspx
-                cr.Append(resource.AbsolutePath);//EscapedPath()
+                stringBuilder.Append(resource.AbsolutePath);//EscapedPath()
             }
             else
             {
                 // a slash is required to indicate the root path
-                cr.Append('/');
+                stringBuilder.Append('/');
             }
 
             System.Collections.Generic.IDictionary<string, string> parameters = resource.GetQueryParameters(); // Returns URL decoded values
@@ -134,11 +138,10 @@ namespace Azure.Storage
                 foreach (var name in parameters.Keys.OrderBy(key => key, StringComparer.Ordinal))
                 {
 #pragma warning disable CA1308 // Normalize strings to uppercase
-                    cr.Append('\n').Append(name.ToLowerInvariant()).Append(':').Append(parameters[name]);
+                    stringBuilder.Append('\n').Append(name.ToLowerInvariant()).Append(':').Append(parameters[name]);
 #pragma warning restore CA1308 // Normalize strings to uppercase
                 }
             }
-            return cr.ToString();
         }
     }
 }

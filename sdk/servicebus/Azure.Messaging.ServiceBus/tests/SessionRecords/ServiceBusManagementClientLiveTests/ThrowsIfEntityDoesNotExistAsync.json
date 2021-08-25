@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/NonExistingPath?api-version=2017-04\u0026enrich=False",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/NonExistingPath?api-version=2017-04\u0026enrich=False",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-d9ed663d45c57449a6efc95f25a39f11-464227baa4ba0f48-00",
+        "traceparent": "00-479ad4d4f2a65e459514547bc11514b7-fee840ae49d78642-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "19a2704d2d797fb31499d23ab88617a1",
         "x-ms-return-client-request-id": "true"
@@ -17,22 +17,22 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/atom\u002Bxml; type=feed; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:46 GMT",
+        "Date": "Fri, 20 Nov 2020 03:31:58 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003Cfeed xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Ctitle type=\u0022text\u0022\u003EPublicly Listed Services\u003C/title\u003E\u003Csubtitle type=\u0022text\u0022\u003EThis is the list of publicly-listed services currently available.\u003C/subtitle\u003E\u003Cid\u003Euuid:c2fd9ce8-26a7-441d-a230-cfaa38fe4074;id=167042\u003C/id\u003E\u003Cupdated\u003E2020-10-29T16:52:46Z\u003C/updated\u003E\u003Cgenerator\u003EService Bus 1.1\u003C/generator\u003E\u003C/feed\u003E"
+      "ResponseBody": "\u003Cfeed xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Ctitle type=\u0022text\u0022\u003EPublicly Listed Services\u003C/title\u003E\u003Csubtitle type=\u0022text\u0022\u003EThis is the list of publicly-listed services currently available.\u003C/subtitle\u003E\u003Cid\u003Euuid:fcb981b6-8931-4008-b940-5cca52945e81;id=6902\u003C/id\u003E\u003Cupdated\u003E2020-11-20T03:31:59Z\u003C/updated\u003E\u003Cgenerator\u003EService Bus 1.1\u003C/generator\u003E\u003C/feed\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/NonExistingTopic?api-version=2017-04\u0026enrich=False",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/NonExistingTopic?api-version=2017-04\u0026enrich=False",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-08c55bb6fed21d44b9bc31f0af0250fe-aefe659d5e26e34b-00",
+        "traceparent": "00-1764573e0ea5f749b64f52fccf0348bb-1096a98ba83fb144-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "d7492719788e6cfb23917ca6139a2ea9",
         "x-ms-return-client-request-id": "true"
@@ -41,22 +41,22 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/atom\u002Bxml; type=feed; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:47 GMT",
+        "Date": "Fri, 20 Nov 2020 03:31:59 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003Cfeed xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Ctitle type=\u0022text\u0022\u003EPublicly Listed Services\u003C/title\u003E\u003Csubtitle type=\u0022text\u0022\u003EThis is the list of publicly-listed services currently available.\u003C/subtitle\u003E\u003Cid\u003Euuid:c2fd9ce8-26a7-441d-a230-cfaa38fe4074;id=167043\u003C/id\u003E\u003Cupdated\u003E2020-10-29T16:52:47Z\u003C/updated\u003E\u003Cgenerator\u003EService Bus 1.1\u003C/generator\u003E\u003C/feed\u003E"
+      "ResponseBody": "\u003Cfeed xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Ctitle type=\u0022text\u0022\u003EPublicly Listed Services\u003C/title\u003E\u003Csubtitle type=\u0022text\u0022\u003EThis is the list of publicly-listed services currently available.\u003C/subtitle\u003E\u003Cid\u003Euuid:fcb981b6-8931-4008-b940-5cca52945e81;id=6903\u003C/id\u003E\u003Cupdated\u003E2020-11-20T03:32:00Z\u003C/updated\u003E\u003Cgenerator\u003EService Bus 1.1\u003C/generator\u003E\u003C/feed\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/NonExistingTopic/Subscriptions/NonExistingPath?api-version=2017-04\u0026enrich=False",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/NonExistingTopic/Subscriptions/NonExistingPath?api-version=2017-04\u0026enrich=False",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-fcd94e740ba53a4884fbd41143588796-391bf6b2c677944b-00",
+        "traceparent": "00-e27f644bc3aa334ea66131c2938c86a6-5a64464fb3f76d4a-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "cc8ad5268fb28e1627387dd0b6ab8ecb",
         "x-ms-return-client-request-id": "true"
@@ -65,25 +65,25 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/atom\u002Bxml; type=feed; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:48 GMT",
+        "Date": "Fri, 20 Nov 2020 03:32:00 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003Cfeed xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Ctitle type=\u0022text\u0022\u003EPublicly Listed Services\u003C/title\u003E\u003Csubtitle type=\u0022text\u0022\u003EThis is the list of publicly-listed services currently available.\u003C/subtitle\u003E\u003Cid\u003Euuid:c2fd9ce8-26a7-441d-a230-cfaa38fe4074;id=167044\u003C/id\u003E\u003Cupdated\u003E2020-10-29T16:52:48Z\u003C/updated\u003E\u003Cgenerator\u003EService Bus 1.1\u003C/generator\u003E\u003C/feed\u003E"
+      "ResponseBody": "\u003Cfeed xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Ctitle type=\u0022text\u0022\u003EPublicly Listed Services\u003C/title\u003E\u003Csubtitle type=\u0022text\u0022\u003EThis is the list of publicly-listed services currently available.\u003C/subtitle\u003E\u003Cid\u003Euuid:fcb981b6-8931-4008-b940-5cca52945e81;id=6904\u003C/id\u003E\u003Cupdated\u003E2020-11-20T03:32:00Z\u003C/updated\u003E\u003Cgenerator\u003EService Bus 1.1\u003C/generator\u003E\u003C/feed\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/NonExistingPath?api-version=2017-04",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/NonExistingPath?api-version=2017-04",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "747",
+        "Content-Length": "851",
         "Content-Type": "application/atom\u002Bxml",
         "If-Match": "*",
-        "traceparent": "00-5bb5c5139187fe4aa41bb1abfd21a3a6-a405ae6473133f49-00",
+        "traceparent": "00-45ad6b2a7e29ea47aea4f94a41e309d8-19cde7496ae4f04e-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "e385e689fadbd4ac7436f6e8b10d6b7a",
         "x-ms-return-client-request-id": "true"
@@ -99,9 +99,11 @@
         "      \u003CDeadLetteringOnMessageExpiration\u003Efalse\u003C/DeadLetteringOnMessageExpiration\u003E\r\n",
         "      \u003CMaxDeliveryCount\u003E10\u003C/MaxDeliveryCount\u003E\r\n",
         "      \u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\r\n",
+        "      \u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\r\n",
         "      \u003CAuthorizationRules /\u003E\r\n",
         "      \u003CStatus\u003EActive\u003C/Status\u003E\r\n",
         "      \u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\r\n",
+        "      \u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\r\n",
         "    \u003C/QueueDescription\u003E\r\n",
         "  \u003C/content\u003E\r\n",
         "\u003C/entry\u003E"
@@ -109,25 +111,25 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Type": "application/xml; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:49 GMT",
+        "Date": "Fri, 20 Nov 2020 03:32:01 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003ESubCode=40400. Not Found. The Operation doesn\u0027t exist. To know more visit https://aka.ms/sbResourceMgrExceptions. . TrackingId:89022c32-2f4d-4e96-9168-d2813705b5bd_G1, SystemTracker:recordedtests.servicebus.windows.net:NonExistingPath, Timestamp:2020-10-29T16:52:49\u003C/Detail\u003E\u003C/Error\u003E"
+      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003ESubCode=40400. Not Found. The Operation doesn\u0027t exist. To know more visit https://aka.ms/sbResourceMgrExceptions. . TrackingId:2415d256-456d-4fb2-84d2-798c1b459f32_G17, SystemTracker:jolovservicebus.servicebus.windows.net:NonExistingPath, Timestamp:2020-11-20T03:32:01\u003C/Detail\u003E\u003C/Error\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/NonExistingPath?api-version=2017-04",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/NonExistingPath?api-version=2017-04",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "577",
+        "Content-Length": "843",
         "Content-Type": "application/atom\u002Bxml",
         "If-Match": "*",
-        "traceparent": "00-0e9c18319f53054b9fc55c6f9bb0e0a4-24c15c624dbe9949-00",
+        "traceparent": "00-42a2678853694349a367d0c43a282857-c1e24c8cddb20f45-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "e313286b4bfc8aee10baaf56fa2bb578",
         "x-ms-return-client-request-id": "true"
@@ -139,10 +141,14 @@
         "      \u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\r\n",
         "      \u003CRequiresDuplicateDetection\u003Efalse\u003C/RequiresDuplicateDetection\u003E\r\n",
         "      \u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\r\n",
+        "      \u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\r\n",
+        "      \u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\r\n",
         "      \u003CAuthorizationRules /\u003E\r\n",
         "      \u003CStatus\u003EActive\u003C/Status\u003E\r\n",
         "      \u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\r\n",
         "      \u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\r\n",
+        "      \u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\r\n",
+        "      \u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\r\n",
         "    \u003C/TopicDescription\u003E\r\n",
         "  \u003C/content\u003E\r\n",
         "\u003C/entry\u003E"
@@ -150,25 +156,25 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Type": "application/xml; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:50 GMT",
+        "Date": "Fri, 20 Nov 2020 03:32:01 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003ESubCode=40400. Not Found. The Operation doesn\u0027t exist. To know more visit https://aka.ms/sbResourceMgrExceptions. . TrackingId:1f589ac5-938d-46ad-b197-d4a9e7362b77_G1, SystemTracker:recordedtests.servicebus.windows.net:NonExistingPath, Timestamp:2020-10-29T16:52:50\u003C/Detail\u003E\u003C/Error\u003E"
+      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003ESubCode=40400. Not Found. The Operation doesn\u0027t exist. To know more visit https://aka.ms/sbResourceMgrExceptions. . TrackingId:6f7938f3-be3c-413f-8fa4-8666fa2acad9_G17, SystemTracker:jolovservicebus.servicebus.windows.net:NonExistingPath, Timestamp:2020-11-20T03:32:02\u003C/Detail\u003E\u003C/Error\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/NonExistingTopic/Subscriptions/NonExistingPath?api-version=2017-04",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/NonExistingTopic/Subscriptions/NonExistingPath?api-version=2017-04",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "653",
         "Content-Type": "application/atom\u002Bxml",
         "If-Match": "*",
-        "traceparent": "00-fc2b37a785a51c4088d5b816c27760a6-396c94e793028d4a-00",
+        "traceparent": "00-309be1eb9d9cd1409b16da8bfafe436b-b9cdad1884e7334a-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "2d1cb0024b142ccd29b5577b982edd19",
         "x-ms-return-client-request-id": "true"
@@ -191,22 +197,22 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Type": "application/xml; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:50 GMT",
+        "Date": "Fri, 20 Nov 2020 03:32:02 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003EThe incoming request is not recognized as a namespace policy put request. To know more visit https://aka.ms/sbResourceMgrExceptions. TrackingId:b6626bdb-c90e-47b5-b2bd-5e95bb9bb7af_G1, SystemTracker:recordedtests.servicebus.windows.net:NonExistingTopic/Subscriptions/NonExistingPath, Timestamp:2020-10-29T16:52:50\u003C/Detail\u003E\u003C/Error\u003E"
+      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003EThe incoming request is not recognized as a namespace policy put request. To know more visit https://aka.ms/sbResourceMgrExceptions. TrackingId:220310b5-599c-4073-b6e6-264c0598dd50_G17, SystemTracker:jolovservicebus.servicebus.windows.net:NonExistingTopic/Subscriptions/NonExistingPath, Timestamp:2020-11-20T03:32:03\u003C/Detail\u003E\u003C/Error\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/NonExistingPath?api-version=2017-04",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/NonExistingPath?api-version=2017-04",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-0bbda2f5a7cdc04cb53f18ac639ffac3-574d9a81a6afc443-00",
+        "traceparent": "00-b50a7b5a7f22e644a79f33620c22870b-278606a89593084e-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "8e6503ccab973ecef7fbd3204a56da49",
         "x-ms-return-client-request-id": "true"
@@ -215,22 +221,22 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Type": "application/xml; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:51 GMT",
+        "Date": "Fri, 20 Nov 2020 03:32:02 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003ENo service is hosted at the specified address. TrackingId:3af245b3-2eff-4dab-8931-fc666a01ff11_G1, SystemTracker:recordedtests.servicebus.windows.net:NonExistingPath, Timestamp:2020-10-29T16:52:51\u003C/Detail\u003E\u003C/Error\u003E"
+      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003ENo service is hosted at the specified address. TrackingId:c605676d-3e3a-4b83-833e-22452702ead2_G17, SystemTracker:jolovservicebus.servicebus.windows.net:NonExistingPath, Timestamp:2020-11-20T03:32:03\u003C/Detail\u003E\u003C/Error\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/NonExistingPath?api-version=2017-04",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/NonExistingPath?api-version=2017-04",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f444a013fcf01e44b4cae643a7a8b3ad-243bbcc8a75df04b-00",
+        "traceparent": "00-9f764bae7b66a2419763938f5538646e-47014853e96fd146-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "00e57e803ef01f655ae6ba46f373f1e2",
         "x-ms-return-client-request-id": "true"
@@ -239,22 +245,22 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Type": "application/xml; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:51 GMT",
+        "Date": "Fri, 20 Nov 2020 03:32:03 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003ENo service is hosted at the specified address. TrackingId:3b582e86-e998-4c07-bffd-26ca5d0d8545_G1, SystemTracker:recordedtests.servicebus.windows.net:NonExistingPath, Timestamp:2020-10-29T16:52:51\u003C/Detail\u003E\u003C/Error\u003E"
+      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003ENo service is hosted at the specified address. TrackingId:4d272b8b-64ec-47b0-ba8a-a6cdef3dc457_G17, SystemTracker:jolovservicebus.servicebus.windows.net:NonExistingPath, Timestamp:2020-11-20T03:32:04\u003C/Detail\u003E\u003C/Error\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/NonExistingTopic/Subscriptions/NonExistingPath?api-version=2017-04",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/NonExistingTopic/Subscriptions/NonExistingPath?api-version=2017-04",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-af28ec4bfeed1c4da82b8f061b05bbe3-154a28e525461147-00",
+        "traceparent": "00-90899ca50a528549bc5389f0f069710f-956fda75942db54e-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "f78996dd27c656e0e1de351978ade1d2",
         "x-ms-return-client-request-id": "true"
@@ -263,24 +269,24 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Type": "application/xml; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:51 GMT",
+        "Date": "Fri, 20 Nov 2020 03:32:03 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003ENo service is hosted at the specified address. TrackingId:d205a14e-0380-4865-a795-59802cae20d7_G1, SystemTracker:recordedtests.servicebus.windows.net:NonExistingTopic/Subscriptions/NonExistingPath, Timestamp:2020-10-29T16:52:52\u003C/Detail\u003E\u003C/Error\u003E"
+      "ResponseBody": "\u003CError\u003E\u003CCode\u003E404\u003C/Code\u003E\u003CDetail\u003ENo service is hosted at the specified address. TrackingId:d6377996-62ed-48d0-8870-36fca9199e71_G17, SystemTracker:jolovservicebus.servicebus.windows.net:NonExistingTopic/Subscriptions/NonExistingPath, Timestamp:2020-11-20T03:32:04\u003C/Detail\u003E\u003C/Error\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/19fb0edb?api-version=2017-04",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/19fb0edb?api-version=2017-04",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "747",
+        "Content-Length": "851",
         "Content-Type": "application/atom\u002Bxml",
-        "traceparent": "00-bab95809b3b778418b557e395421f5ea-f7a1ed9e90fd1341-00",
+        "traceparent": "00-449ab82cd37bd04f80920f3cfbdf72a7-4047d990db8c614b-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "e46be704d77701996cfb5980f42f6559",
         "x-ms-return-client-request-id": "true"
@@ -296,9 +302,11 @@
         "      \u003CDeadLetteringOnMessageExpiration\u003Efalse\u003C/DeadLetteringOnMessageExpiration\u003E\r\n",
         "      \u003CMaxDeliveryCount\u003E10\u003C/MaxDeliveryCount\u003E\r\n",
         "      \u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\r\n",
+        "      \u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\r\n",
         "      \u003CAuthorizationRules /\u003E\r\n",
         "      \u003CStatus\u003EActive\u003C/Status\u003E\r\n",
         "      \u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\r\n",
+        "      \u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\r\n",
         "    \u003C/QueueDescription\u003E\r\n",
         "  \u003C/content\u003E\r\n",
         "\u003C/entry\u003E"
@@ -306,24 +314,24 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:52 GMT",
+        "Date": "Fri, 20 Nov 2020 03:32:04 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/19fb0edb?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003E19fb0edb\u003C/title\u003E\u003Cpublished\u003E2020-10-29T16:52:52Z\u003C/published\u003E\u003Cupdated\u003E2020-10-29T16:52:52Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Erecordedtests\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://recordedtests.servicebus.windows.net/19fb0edb?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CQueueDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CLockDuration\u003EPT1M\u003C/LockDuration\u003E\u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Efalse\u003C/RequiresDuplicateDetection\u003E\u003CRequiresSession\u003Efalse\u003C/RequiresSession\u003E\u003CDefaultMessageTimeToLive\u003EP10675199DT2H48M5.4775807S\u003C/DefaultMessageTimeToLive\u003E\u003CDeadLetteringOnMessageExpiration\u003Efalse\u003C/DeadLetteringOnMessageExpiration\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT10M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CMaxDeliveryCount\u003E10\u003C/MaxDeliveryCount\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CMessageCount\u003E0\u003C/MessageCount\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-10-29T16:52:52.43Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-10-29T16:52:52.473Z\u003C/UpdatedAt\u003E\u003CSupportOrdering\u003Etrue\u003C/SupportOrdering\u003E\u003CAutoDeleteOnIdle\u003EP10675199DT2H48M5.4775807S\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/QueueDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://jolovservicebus.servicebus.windows.net/19fb0edb?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003E19fb0edb\u003C/title\u003E\u003Cpublished\u003E2020-11-20T03:32:04Z\u003C/published\u003E\u003Cupdated\u003E2020-11-20T03:32:04Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Ejolovservicebus\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://jolovservicebus.servicebus.windows.net/19fb0edb?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CQueueDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CLockDuration\u003EPT1M\u003C/LockDuration\u003E\u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Efalse\u003C/RequiresDuplicateDetection\u003E\u003CRequiresSession\u003Efalse\u003C/RequiresSession\u003E\u003CDefaultMessageTimeToLive\u003EP10675199DT2H48M5.4775807S\u003C/DefaultMessageTimeToLive\u003E\u003CDeadLetteringOnMessageExpiration\u003Efalse\u003C/DeadLetteringOnMessageExpiration\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT10M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CMaxDeliveryCount\u003E10\u003C/MaxDeliveryCount\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CMessageCount\u003E0\u003C/MessageCount\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-11-20T03:32:04.947Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-11-20T03:32:04.973Z\u003C/UpdatedAt\u003E\u003CSupportOrdering\u003Etrue\u003C/SupportOrdering\u003E\u003CAutoDeleteOnIdle\u003EP10675199DT2H48M5.4775807S\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/QueueDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/b443f109?api-version=2017-04",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/b443f109?api-version=2017-04",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "577",
+        "Content-Length": "843",
         "Content-Type": "application/atom\u002Bxml",
-        "traceparent": "00-ba42ab48c5b41e459a468dff6fa36ec7-2606fc8aad5db04f-00",
+        "traceparent": "00-eac71c86b0adf64499d03bed0ccd9375-37df5ec2849d344d-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "870fb0932d6af8058ba27bb9bd178551",
         "x-ms-return-client-request-id": "true"
@@ -335,10 +343,14 @@
         "      \u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\r\n",
         "      \u003CRequiresDuplicateDetection\u003Efalse\u003C/RequiresDuplicateDetection\u003E\r\n",
         "      \u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\r\n",
+        "      \u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\r\n",
+        "      \u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\r\n",
         "      \u003CAuthorizationRules /\u003E\r\n",
         "      \u003CStatus\u003EActive\u003C/Status\u003E\r\n",
         "      \u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\r\n",
         "      \u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\r\n",
+        "      \u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\r\n",
+        "      \u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\r\n",
         "    \u003C/TopicDescription\u003E\r\n",
         "  \u003C/content\u003E\r\n",
         "\u003C/entry\u003E"
@@ -346,22 +358,22 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:53 GMT",
+        "Date": "Fri, 20 Nov 2020 03:32:05 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/b443f109?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Eb443f109\u003C/title\u003E\u003Cpublished\u003E2020-10-29T16:52:53Z\u003C/published\u003E\u003Cupdated\u003E2020-10-29T16:52:53Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Erecordedtests\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://recordedtests.servicebus.windows.net/b443f109?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CDefaultMessageTimeToLive\u003EP10675199DT2H48M5.4775807S\u003C/DefaultMessageTimeToLive\u003E\u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Efalse\u003C/RequiresDuplicateDetection\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT10M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-10-29T16:52:53.383Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-10-29T16:52:53.51Z\u003C/UpdatedAt\u003E\u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\u003CAutoDeleteOnIdle\u003EP10675199DT2H48M5.4775807S\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/TopicDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://jolovservicebus.servicebus.windows.net/b443f109?api-version=2017-04\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Eb443f109\u003C/title\u003E\u003Cpublished\u003E2020-11-20T03:32:05Z\u003C/published\u003E\u003Cupdated\u003E2020-11-20T03:32:05Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Ejolovservicebus\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://jolovservicebus.servicebus.windows.net/b443f109?api-version=2017-04\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CDefaultMessageTimeToLive\u003EP10675199DT2H48M5.4775807S\u003C/DefaultMessageTimeToLive\u003E\u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Efalse\u003C/RequiresDuplicateDetection\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT10M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-11-20T03:32:05.887Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-11-20T03:32:05.977Z\u003C/UpdatedAt\u003E\u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\u003CAutoDeleteOnIdle\u003EP10675199DT2H48M5.4775807S\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/TopicDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/b443f109?api-version=2017-04\u0026enrich=False",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/b443f109?api-version=2017-04\u0026enrich=False",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-aef29dfc0621054eb40538cbee3881e9-90db720b7bc24a49-00",
+        "traceparent": "00-4e03c6453e7127438cb3d73efb2e2a74-3c67c7c70220d946-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "09ac859d661c310c574147d28802646f",
         "x-ms-return-client-request-id": "true"
@@ -370,23 +382,23 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:53 GMT",
-        "ETag": "637395871735100000",
+        "Date": "Fri, 20 Nov 2020 03:32:05 GMT",
+        "ETag": "637414399259770000",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/b443f109?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Eb443f109\u003C/title\u003E\u003Cpublished\u003E2020-10-29T16:52:53Z\u003C/published\u003E\u003Cupdated\u003E2020-10-29T16:52:53Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Erecordedtests\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://recordedtests.servicebus.windows.net/b443f109?api-version=2017-04\u0026amp;enrich=False\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CDefaultMessageTimeToLive\u003EP10675199DT2H48M5.4775807S\u003C/DefaultMessageTimeToLive\u003E\u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Efalse\u003C/RequiresDuplicateDetection\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT10M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-10-29T16:52:53.383Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-10-29T16:52:53.51Z\u003C/UpdatedAt\u003E\u003CAccessedAt\u003E0001-01-01T00:00:00Z\u003C/AccessedAt\u003E\u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\u003CCountDetails xmlns:d2p1=\u0022http://schemas.microsoft.com/netservices/2011/06/servicebus\u0022\u003E\u003Cd2p1:ActiveMessageCount\u003E0\u003C/d2p1:ActiveMessageCount\u003E\u003Cd2p1:DeadLetterMessageCount\u003E0\u003C/d2p1:DeadLetterMessageCount\u003E\u003Cd2p1:ScheduledMessageCount\u003E0\u003C/d2p1:ScheduledMessageCount\u003E\u003Cd2p1:TransferMessageCount\u003E0\u003C/d2p1:TransferMessageCount\u003E\u003Cd2p1:TransferDeadLetterMessageCount\u003E0\u003C/d2p1:TransferDeadLetterMessageCount\u003E\u003C/CountDetails\u003E\u003CSubscriptionCount\u003E0\u003C/SubscriptionCount\u003E\u003CAutoDeleteOnIdle\u003EP10675199DT2H48M5.4775807S\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/TopicDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://jolovservicebus.servicebus.windows.net/b443f109?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Eb443f109\u003C/title\u003E\u003Cpublished\u003E2020-11-20T03:32:05Z\u003C/published\u003E\u003Cupdated\u003E2020-11-20T03:32:05Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Ejolovservicebus\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://jolovservicebus.servicebus.windows.net/b443f109?api-version=2017-04\u0026amp;enrich=False\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CTopicDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CDefaultMessageTimeToLive\u003EP10675199DT2H48M5.4775807S\u003C/DefaultMessageTimeToLive\u003E\u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Efalse\u003C/RequiresDuplicateDetection\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT10M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CFilteringMessagesBeforePublishing\u003Efalse\u003C/FilteringMessagesBeforePublishing\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-11-20T03:32:05.887Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-11-20T03:32:05.977Z\u003C/UpdatedAt\u003E\u003CAccessedAt\u003E0001-01-01T00:00:00Z\u003C/AccessedAt\u003E\u003CSupportOrdering\u003Efalse\u003C/SupportOrdering\u003E\u003CCountDetails xmlns:d2p1=\u0022http://schemas.microsoft.com/netservices/2011/06/servicebus\u0022\u003E\u003Cd2p1:ActiveMessageCount\u003E0\u003C/d2p1:ActiveMessageCount\u003E\u003Cd2p1:DeadLetterMessageCount\u003E0\u003C/d2p1:DeadLetterMessageCount\u003E\u003Cd2p1:ScheduledMessageCount\u003E0\u003C/d2p1:ScheduledMessageCount\u003E\u003Cd2p1:TransferMessageCount\u003E0\u003C/d2p1:TransferMessageCount\u003E\u003Cd2p1:TransferDeadLetterMessageCount\u003E0\u003C/d2p1:TransferDeadLetterMessageCount\u003E\u003C/CountDetails\u003E\u003CSubscriptionCount\u003E0\u003C/SubscriptionCount\u003E\u003CAutoDeleteOnIdle\u003EP10675199DT2H48M5.4775807S\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableSubscriptionPartitioning\u003Efalse\u003C/EnableSubscriptionPartitioning\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/TopicDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/19fb0edb?api-version=2017-04\u0026enrich=False",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/19fb0edb?api-version=2017-04\u0026enrich=False",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-ff3f39540ead164f94e01e0fa14ce78a-fc93706cae50a54a-00",
+        "traceparent": "00-2f1f31a6ca975c4fa31da9ff1a726ac4-6c49ed87eb4e0c4f-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "587ec429203cd743e17359d55cdf4355",
         "x-ms-return-client-request-id": "true"
@@ -395,23 +407,23 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:53 GMT",
-        "ETag": "637395871724730000",
+        "Date": "Fri, 20 Nov 2020 03:32:05 GMT",
+        "ETag": "637414399249730000",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/19fb0edb?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003E19fb0edb\u003C/title\u003E\u003Cpublished\u003E2020-10-29T16:52:52Z\u003C/published\u003E\u003Cupdated\u003E2020-10-29T16:52:52Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Erecordedtests\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://recordedtests.servicebus.windows.net/19fb0edb?api-version=2017-04\u0026amp;enrich=False\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CQueueDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CLockDuration\u003EPT1M\u003C/LockDuration\u003E\u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Efalse\u003C/RequiresDuplicateDetection\u003E\u003CRequiresSession\u003Efalse\u003C/RequiresSession\u003E\u003CDefaultMessageTimeToLive\u003EP10675199DT2H48M5.4775807S\u003C/DefaultMessageTimeToLive\u003E\u003CDeadLetteringOnMessageExpiration\u003Efalse\u003C/DeadLetteringOnMessageExpiration\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT10M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CMaxDeliveryCount\u003E10\u003C/MaxDeliveryCount\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CMessageCount\u003E0\u003C/MessageCount\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-10-29T16:52:52.43Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-10-29T16:52:52.473Z\u003C/UpdatedAt\u003E\u003CAccessedAt\u003E0001-01-01T00:00:00Z\u003C/AccessedAt\u003E\u003CSupportOrdering\u003Etrue\u003C/SupportOrdering\u003E\u003CCountDetails xmlns:d2p1=\u0022http://schemas.microsoft.com/netservices/2011/06/servicebus\u0022\u003E\u003Cd2p1:ActiveMessageCount\u003E0\u003C/d2p1:ActiveMessageCount\u003E\u003Cd2p1:DeadLetterMessageCount\u003E0\u003C/d2p1:DeadLetterMessageCount\u003E\u003Cd2p1:ScheduledMessageCount\u003E0\u003C/d2p1:ScheduledMessageCount\u003E\u003Cd2p1:TransferMessageCount\u003E0\u003C/d2p1:TransferMessageCount\u003E\u003Cd2p1:TransferDeadLetterMessageCount\u003E0\u003C/d2p1:TransferDeadLetterMessageCount\u003E\u003C/CountDetails\u003E\u003CAutoDeleteOnIdle\u003EP10675199DT2H48M5.4775807S\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/QueueDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://jolovservicebus.servicebus.windows.net/19fb0edb?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003E19fb0edb\u003C/title\u003E\u003Cpublished\u003E2020-11-20T03:32:04Z\u003C/published\u003E\u003Cupdated\u003E2020-11-20T03:32:04Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Ejolovservicebus\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://jolovservicebus.servicebus.windows.net/19fb0edb?api-version=2017-04\u0026amp;enrich=False\u0022/\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CQueueDescription xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CLockDuration\u003EPT1M\u003C/LockDuration\u003E\u003CMaxSizeInMegabytes\u003E1024\u003C/MaxSizeInMegabytes\u003E\u003CRequiresDuplicateDetection\u003Efalse\u003C/RequiresDuplicateDetection\u003E\u003CRequiresSession\u003Efalse\u003C/RequiresSession\u003E\u003CDefaultMessageTimeToLive\u003EP10675199DT2H48M5.4775807S\u003C/DefaultMessageTimeToLive\u003E\u003CDeadLetteringOnMessageExpiration\u003Efalse\u003C/DeadLetteringOnMessageExpiration\u003E\u003CDuplicateDetectionHistoryTimeWindow\u003EPT10M\u003C/DuplicateDetectionHistoryTimeWindow\u003E\u003CMaxDeliveryCount\u003E10\u003C/MaxDeliveryCount\u003E\u003CEnableBatchedOperations\u003Etrue\u003C/EnableBatchedOperations\u003E\u003CSizeInBytes\u003E0\u003C/SizeInBytes\u003E\u003CMessageCount\u003E0\u003C/MessageCount\u003E\u003CIsAnonymousAccessible\u003Efalse\u003C/IsAnonymousAccessible\u003E\u003CAuthorizationRules\u003E\u003C/AuthorizationRules\u003E\u003CStatus\u003EActive\u003C/Status\u003E\u003CCreatedAt\u003E2020-11-20T03:32:04.947Z\u003C/CreatedAt\u003E\u003CUpdatedAt\u003E2020-11-20T03:32:04.973Z\u003C/UpdatedAt\u003E\u003CAccessedAt\u003E0001-01-01T00:00:00Z\u003C/AccessedAt\u003E\u003CSupportOrdering\u003Etrue\u003C/SupportOrdering\u003E\u003CCountDetails xmlns:d2p1=\u0022http://schemas.microsoft.com/netservices/2011/06/servicebus\u0022\u003E\u003Cd2p1:ActiveMessageCount\u003E0\u003C/d2p1:ActiveMessageCount\u003E\u003Cd2p1:DeadLetterMessageCount\u003E0\u003C/d2p1:DeadLetterMessageCount\u003E\u003Cd2p1:ScheduledMessageCount\u003E0\u003C/d2p1:ScheduledMessageCount\u003E\u003Cd2p1:TransferMessageCount\u003E0\u003C/d2p1:TransferMessageCount\u003E\u003Cd2p1:TransferDeadLetterMessageCount\u003E0\u003C/d2p1:TransferDeadLetterMessageCount\u003E\u003C/CountDetails\u003E\u003CAutoDeleteOnIdle\u003EP10675199DT2H48M5.4775807S\u003C/AutoDeleteOnIdle\u003E\u003CEnablePartitioning\u003Efalse\u003C/EnablePartitioning\u003E\u003CEntityAvailabilityStatus\u003EAvailable\u003C/EntityAvailabilityStatus\u003E\u003CEnableExpress\u003Efalse\u003C/EnableExpress\u003E\u003C/QueueDescription\u003E\u003C/content\u003E\u003C/entry\u003E"
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/19fb0edb?api-version=2017-04",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/19fb0edb?api-version=2017-04",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-2e49e36b99c1f04eb72e953e4a76ec7c-e53113b24bf1f441-00",
+        "traceparent": "00-bc33ec100597544da61e7cad697dc360-38246ffb80bfdb41-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "6ee308765b832d3da4de2f28e5336f88",
         "x-ms-return-client-request-id": "true"
@@ -420,22 +432,22 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 29 Oct 2020 16:52:54 GMT",
-        "ETag": "637395871724730000",
+        "Date": "Fri, 20 Nov 2020 03:32:06 GMT",
+        "ETag": "637414399249730000",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/b443f109?api-version=2017-04",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/b443f109?api-version=2017-04",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f8f1cc18cd09234d8138cf01008e0c57-f0a67a654b9afb42-00",
+        "traceparent": "00-53a49a9184929948b27e9ab229e7c7d6-991e505ad041814e-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "f98f0c3e2c987c1441d428a90c37d578",
         "x-ms-return-client-request-id": "true"
@@ -444,8 +456,8 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 29 Oct 2020 16:52:54 GMT",
-        "ETag": "637395871735100000",
+        "Date": "Fri, 20 Nov 2020 03:32:06 GMT",
+        "ETag": "637414399259770000",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000"
       },
@@ -454,6 +466,6 @@
   ],
   "Variables": {
     "RandomSeed": "1597779506",
-    "SERVICEBUS_CONNECTION_STRING": "Endpoint=sb://recordedtests.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Kg=="
+    "SERVICEBUS_CONNECTION_STRING": "Endpoint=sb://jolovservicebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Kg=="
   }
 }

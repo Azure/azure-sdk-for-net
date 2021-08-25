@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class TransparentDataEncryptionActivityListResult
+    internal partial class TransparentDataEncryptionActivityListResult
     {
         internal static TransparentDataEncryptionActivityListResult DeserializeTransparentDataEncryptionActivityListResult(JsonElement element)
         {

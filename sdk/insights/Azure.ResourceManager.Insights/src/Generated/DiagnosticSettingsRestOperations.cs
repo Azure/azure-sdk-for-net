@@ -129,8 +129,8 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", "2017-05-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;

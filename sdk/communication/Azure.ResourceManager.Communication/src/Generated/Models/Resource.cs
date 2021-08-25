@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    /// <summary> The core properties of ARM resources. </summary>
+    /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     public partial class Resource
     {
         /// <summary> Initializes a new instance of Resource. </summary>
@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Initializes a new instance of Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the service - e.g. &quot;Microsoft.Communication/CommunicationServices&quot;. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         internal Resource(string id, string name, string type)
         {
             Id = id;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Communication.Models
             Type = type;
         }
 
-        /// <summary> Fully qualified resource ID for the resource. </summary>
+        /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
         public string Id { get; }
         /// <summary> The name of the resource. </summary>
         public string Name { get; }
-        /// <summary> The type of the service - e.g. &quot;Microsoft.Communication/CommunicationServices&quot;. </summary>
+        /// <summary> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </summary>
         public string Type { get; }
     }
 }

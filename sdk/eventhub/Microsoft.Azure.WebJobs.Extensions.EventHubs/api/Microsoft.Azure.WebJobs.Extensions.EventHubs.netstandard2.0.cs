@@ -5,9 +5,7 @@ namespace Microsoft.Azure.WebJobs
     public sealed partial class EventHubAttribute : System.Attribute
     {
         public EventHubAttribute(string eventHubName) { }
-        [Microsoft.Azure.WebJobs.Description.ConnectionStringAttribute]
         public string Connection { get { throw null; } set { } }
-        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string EventHubName { get { throw null; } }
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
@@ -24,24 +22,32 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 {
     public partial class EventHubOptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
     {
-        public const string LeaseContainerName = "azure-webjobs-eventhub";
         public EventHubOptions() { }
         public int BatchCheckpointFrequency { get { throw null; } set { } }
-        public Azure.Messaging.EventHubs.Primitives.EventProcessorOptions EventProcessorOptions { get { throw null; } }
-        public bool InvokeProcessorAfterReceiveTimeout { get { throw null; } set { } }
-        public int MaxBatchSize { get { throw null; } set { } }
-        public void AddEventHubProducerClient(Azure.Messaging.EventHubs.Producer.EventHubProducerClient client) { }
-        public void AddEventHubProducerClient(string eventHubName, Azure.Messaging.EventHubs.Producer.EventHubProducerClient client) { }
-        public void AddReceiver(string eventHubName, string receiverConnectionString) { }
-        public void AddReceiver(string eventHubName, string receiverConnectionString, string storageConnectionString) { }
-        public void AddSender(string eventHubName, string sendConnectionString) { }
-        public string Format() { throw null; }
-        public static string GetBlobPrefix(string eventHubName, string serviceBusNamespace) { throw null; }
+        public Azure.Messaging.EventHubs.EventHubsRetryOptions ClientRetryOptions { get { throw null; } set { } }
+        public System.Uri CustomEndpointAddress { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.EventHubs.InitialOffsetOptions InitialOffsetOptions { get { throw null; } }
+        public System.TimeSpan LoadBalancingUpdateInterval { get { throw null; } set { } }
+        public int MaxEventBatchSize { get { throw null; } set { } }
+        public System.TimeSpan PartitionOwnershipExpirationInterval { get { throw null; } set { } }
+        public int PrefetchCount { get { throw null; } set { } }
+        public long? PrefetchSizeInBytes { get { throw null; } set { } }
+        public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
+        public Azure.Messaging.EventHubs.EventHubsTransportType TransportType { get { throw null; } set { } }
+        public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
+        string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
     }
-    public partial class EventHubsWebJobsStartup : Microsoft.Azure.WebJobs.Hosting.IWebJobsStartup
+    public partial class InitialOffsetOptions
     {
-        public EventHubsWebJobsStartup() { }
-        public void Configure(Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { }
+        public InitialOffsetOptions() { }
+        public System.DateTimeOffset? EnqueuedTimeUtc { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.EventHubs.OffsetType? Type { get { throw null; } set { } }
+    }
+    public enum OffsetType
+    {
+        FromStart = 0,
+        FromEnd = 1,
+        FromEnqueuedTime = 2,
     }
 }
 namespace Microsoft.Extensions.Hosting

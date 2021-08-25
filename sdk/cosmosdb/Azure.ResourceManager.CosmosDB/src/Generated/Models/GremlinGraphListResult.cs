@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the graphs and their properties. </summary>
-    public partial class GremlinGraphListResult
+    internal partial class GremlinGraphListResult
     {
         /// <summary> Initializes a new instance of GremlinGraphListResult. </summary>
         internal GremlinGraphListResult()

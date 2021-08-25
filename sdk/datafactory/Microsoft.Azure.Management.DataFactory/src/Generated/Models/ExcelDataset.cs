@@ -38,8 +38,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="location">The location of the excel storage.</param>
-        /// <param name="sheetName">The sheet of excel file. Type: string (or
-        /// Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
@@ -54,6 +52,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
+        /// <param name="sheetName">The sheet name of excel file. Type: string
+        /// (or Expression with resultType string).</param>
+        /// <param name="sheetIndex">The sheet index of excel file and default
+        /// value is 0. Type: integer (or Expression with resultType
+        /// integer)</param>
         /// <param name="range">The partial data of one sheet. Type: string (or
         /// Expression with resultType string).</param>
         /// <param name="firstRowAsHeader">When used as input, treat the first
@@ -64,11 +67,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// json dataset.</param>
         /// <param name="nullValue">The null value string. Type: string (or
         /// Expression with resultType string).</param>
-        public ExcelDataset(LinkedServiceReference linkedServiceName, DatasetLocation location, object sheetName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object range = default(object), object firstRowAsHeader = default(object), DatasetCompression compression = default(DatasetCompression), object nullValue = default(object))
+        public ExcelDataset(LinkedServiceReference linkedServiceName, DatasetLocation location, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object sheetName = default(object), object sheetIndex = default(object), object range = default(object), object firstRowAsHeader = default(object), DatasetCompression compression = default(DatasetCompression), object nullValue = default(object))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             Location = location;
             SheetName = sheetName;
+            SheetIndex = sheetIndex;
             Range = range;
             FirstRowAsHeader = firstRowAsHeader;
             Compression = compression;
@@ -88,11 +92,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public DatasetLocation Location { get; set; }
 
         /// <summary>
-        /// Gets or sets the sheet of excel file. Type: string (or Expression
-        /// with resultType string).
+        /// Gets or sets the sheet name of excel file. Type: string (or
+        /// Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.sheetName")]
         public object SheetName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sheet index of excel file and default value is 0.
+        /// Type: integer (or Expression with resultType integer)
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.sheetIndex")]
+        public object SheetIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the partial data of one sheet. Type: string (or
@@ -135,10 +146,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-            if (SheetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SheetName");
             }
         }
     }

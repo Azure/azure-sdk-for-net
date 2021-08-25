@@ -22,14 +22,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="activeSeriesCount"> The active series count. </param>
         /// <param name="allSeriesCount"> All series count under non deleted data feed. </param>
         /// <param name="metricsCount"> The metrics count under non deleted data feed. </param>
-        /// <param name="datafeedCount"> The count of non deleted data feed. </param>
-        internal UsageStats(DateTimeOffset? timestamp, int? activeSeriesCount, int? allSeriesCount, int? metricsCount, int? datafeedCount)
+        /// <param name="dataFeedCount"> The count of non deleted data feed. </param>
+        internal UsageStats(DateTimeOffset? timestamp, int? activeSeriesCount, int? allSeriesCount, int? metricsCount, int? dataFeedCount)
         {
             Timestamp = timestamp;
             ActiveSeriesCount = activeSeriesCount;
             AllSeriesCount = allSeriesCount;
             MetricsCount = metricsCount;
-            DatafeedCount = datafeedCount;
+            DataFeedCount = dataFeedCount;
         }
 
         /// <summary> The timestamp of the stats. </summary>
@@ -41,6 +41,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> The metrics count under non deleted data feed. </summary>
         public int? MetricsCount { get; }
         /// <summary> The count of non deleted data feed. </summary>
-        public int? DatafeedCount { get; }
+        public int? DataFeedCount { get; }
     }
 }

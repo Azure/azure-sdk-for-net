@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties pertained to Nfs3Target
+    /// Properties pertaining to the Nfs3Target
     /// </summary>
     public partial class Nfs3Target
     {
@@ -28,9 +28,8 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// </summary>
         /// <param name="target">IP address or host name of an NFSv3 host
         /// (e.g., 10.0.44.44).</param>
-        /// <param name="usageModel">Identifies the primary usage model to be
-        /// used for this Storage Target. Get choices from
-        /// .../usageModels</param>
+        /// <param name="usageModel">Identifies the StorageCache usage model to
+        /// be used for this storage target.</param>
         public Nfs3Target(string target = default(string), string usageModel = default(string))
         {
             Target = target;
@@ -51,8 +50,8 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         public string Target { get; set; }
 
         /// <summary>
-        /// Gets or sets identifies the primary usage model to be used for this
-        /// Storage Target. Get choices from .../usageModels
+        /// Gets or sets identifies the StorageCache usage model to be used for
+        /// this storage target.
         /// </summary>
         [JsonProperty(PropertyName = "usageModel")]
         public string UsageModel { get; set; }

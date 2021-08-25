@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ResourceSkusResult
+    internal partial class ResourceSkusResult
     {
         internal static ResourceSkusResult DeserializeResourceSkusResult(JsonElement element)
         {

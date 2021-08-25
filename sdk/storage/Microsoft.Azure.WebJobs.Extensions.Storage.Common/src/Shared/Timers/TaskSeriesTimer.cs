@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers
 
         private async Task StopAsyncCore(CancellationToken cancellationToken)
         {
-            await Task.Delay(0).ConfigureAwait(false);
+            await Task.Delay(0, cancellationToken).ConfigureAwait(false);
             TaskCompletionSource<object> cancellationTaskSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             using (cancellationToken.Register(() => cancellationTaskSource.SetCanceled()))

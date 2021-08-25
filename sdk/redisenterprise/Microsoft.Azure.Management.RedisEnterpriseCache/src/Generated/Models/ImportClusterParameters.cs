@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// <summary>
         /// Initializes a new instance of the ImportClusterParameters class.
         /// </summary>
-        /// <param name="sasUri">SAS Uri for the target blob to import
+        /// <param name="sasUri">SAS URI for the target blob to import
         /// from</param>
         public ImportClusterParameters(string sasUri)
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SAS Uri for the target blob to import from
+        /// Gets or sets SAS URI for the target blob to import from
         /// </summary>
         [JsonProperty(PropertyName = "sasUri")]
         public string SasUri { get; set; }

@@ -31,17 +31,8 @@ namespace Azure.Template
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="apiVersion"/> is null. </exception>
         public TemplateRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.vaultBaseUrl = vaultBaseUrl;
-            this.apiVersion = apiVersion;
+            this.vaultBaseUrl = vaultBaseUrl ?? throw new ArgumentNullException(nameof(vaultBaseUrl));
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

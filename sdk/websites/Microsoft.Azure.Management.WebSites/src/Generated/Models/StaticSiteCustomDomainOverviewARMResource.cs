@@ -42,11 +42,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// domain.</param>
         /// <param name="createdOn">The date and time on which the custom
         /// domain was created for the static site.</param>
-        public StaticSiteCustomDomainOverviewARMResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string domainName = default(string), System.DateTime? createdOn = default(System.DateTime?))
+        /// <param name="status">The status of the custom domain. Possible
+        /// values include: 'RetrievingValidationToken', 'Validating',
+        /// 'Adding', 'Ready', 'Failed', 'Deleting'</param>
+        /// <param name="validationToken">The TXT record validation
+        /// token</param>
+        public StaticSiteCustomDomainOverviewARMResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string domainName = default(string), System.DateTime? createdOn = default(System.DateTime?), string status = default(string), string validationToken = default(string), string errorMessage = default(string))
             : base(id, name, kind, type)
         {
             DomainName = domainName;
             CreatedOn = createdOn;
+            Status = status;
+            ValidationToken = validationToken;
+            ErrorMessage = errorMessage;
             CustomInit();
         }
 
@@ -67,6 +75,25 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdOn")]
         public System.DateTime? CreatedOn { get; private set; }
+
+        /// <summary>
+        /// Gets the status of the custom domain. Possible values include:
+        /// 'RetrievingValidationToken', 'Validating', 'Adding', 'Ready',
+        /// 'Failed', 'Deleting'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.status")]
+        public string Status { get; private set; }
+
+        /// <summary>
+        /// Gets the TXT record validation token
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.validationToken")]
+        public string ValidationToken { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.errorMessage")]
+        public string ErrorMessage { get; private set; }
 
     }
 }

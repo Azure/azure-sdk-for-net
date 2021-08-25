@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewayConnectionsUpdateTagsOperation : Operation<VirtualNetworkGatewayConnection>, IOperationSource<VirtualNetworkGatewayConnection>
     {
         private readonly ArmOperationHelpers<VirtualNetworkGatewayConnection> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionsUpdateTagsOperation for mocking. </summary>
+        protected VirtualNetworkGatewayConnectionsUpdateTagsOperation()
+        {
+        }
+
         internal VirtualNetworkGatewayConnectionsUpdateTagsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VirtualNetworkGatewayConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworkGatewayConnectionsUpdateTagsOperation");

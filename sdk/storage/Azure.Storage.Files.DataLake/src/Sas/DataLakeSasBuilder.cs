@@ -26,6 +26,13 @@ namespace Azure.Storage.Sas
         /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
+        /// <remarks>
+        /// This property has been deprecated and we will always use the latest
+        /// storage SAS version of the Storage service supported. This change
+        /// does not have any impact on how your application generates or makes
+        /// use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
 
         /// <summary>
@@ -548,10 +555,7 @@ namespace Azure.Storage.Sas
                 }
             }
 
-            if (string.IsNullOrEmpty(Version))
-            {
-                Version = SasQueryParameters.DefaultSasVersion;
-            }
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
 
             if (!string.IsNullOrEmpty(PreauthorizedAgentObjectId) && !string.IsNullOrEmpty(AgentObjectId))
             {
@@ -582,5 +586,29 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the DataLakeSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        internal static DataLakeSasBuilder DeepCopy(DataLakeSasBuilder originalDataLakeSasBuilder)
+            => new DataLakeSasBuilder
+            {
+                Version = originalDataLakeSasBuilder.Version,
+                Protocol = originalDataLakeSasBuilder.Protocol,
+                StartsOn = originalDataLakeSasBuilder.StartsOn,
+                ExpiresOn = originalDataLakeSasBuilder.ExpiresOn,
+                Permissions = originalDataLakeSasBuilder.Permissions,
+                IPRange = originalDataLakeSasBuilder.IPRange,
+                Identifier = originalDataLakeSasBuilder.Identifier,
+                FileSystemName = originalDataLakeSasBuilder.FileSystemName,
+                Path = originalDataLakeSasBuilder.Path,
+                IsDirectory = originalDataLakeSasBuilder.IsDirectory,
+                Resource = originalDataLakeSasBuilder.Resource,
+                CacheControl = originalDataLakeSasBuilder.CacheControl,
+                ContentDisposition = originalDataLakeSasBuilder.ContentDisposition,
+                ContentEncoding = originalDataLakeSasBuilder.ContentEncoding,
+                ContentLanguage = originalDataLakeSasBuilder.ContentLanguage,
+                ContentType = originalDataLakeSasBuilder.ContentType,
+                PreauthorizedAgentObjectId = originalDataLakeSasBuilder.PreauthorizedAgentObjectId,
+                AgentObjectId = originalDataLakeSasBuilder.AgentObjectId,
+                CorrelationId = originalDataLakeSasBuilder.CorrelationId
+            };
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class WorkloadClassifierListResult
+    internal partial class WorkloadClassifierListResult
     {
         internal static WorkloadClassifierListResult DeserializeWorkloadClassifierListResult(JsonElement element)
         {

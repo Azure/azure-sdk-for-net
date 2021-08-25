@@ -25,8 +25,15 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(MaxAgeInSeconds))
             {
-                writer.WritePropertyName("maxAgeInSeconds");
-                writer.WriteNumberValue(MaxAgeInSeconds.Value);
+                if (MaxAgeInSeconds != null)
+                {
+                    writer.WritePropertyName("maxAgeInSeconds");
+                    writer.WriteNumberValue(MaxAgeInSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxAgeInSeconds");
+                }
             }
             writer.WriteEndObject();
         }
@@ -34,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static CorsOptions DeserializeCorsOptions(JsonElement element)
         {
             IList<string> allowedOrigins = default;
-            Optional<long> maxAgeInSeconds = default;
+            Optional<long?> maxAgeInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"))
@@ -51,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        maxAgeInSeconds = null;
                         continue;
                     }
                     maxAgeInSeconds = property.Value.GetInt64();

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
@@ -20,34 +19,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample01_HelloWorldLiveTests
     {
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        private EventHubScope _scope;
-
-        /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
-        /// </summary>
-        ///
-        [OneTimeSetUp]
-        public async Task FixtureSetUp()
-        {
-            _scope = await EventHubScope.CreateAsync(2);
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
-        /// </summary>
-        ///
-        [OneTimeTearDown]
-        public async Task FixtureTearDown()
-        {
-            await _scope.DisposeAsync();
-        }
-
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -55,8 +28,10 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task CreateClients()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            var eventHubName = _scope.EventHubName;
+            var eventHubName = scope.EventHubName;
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
             #region Snippet:EventHubs_Sample01_CreateClients
@@ -80,9 +55,10 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task PublishEvents()
         {
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            var eventHubName = _scope.EventHubName;
+            await using var scope = await EventHubScope.CreateAsync(1);
 
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
             var producer = new EventHubProducerClient(connectionString, eventHubName);
 
             #region Snippet:EventHubs_Sample01_PublishEvents
@@ -104,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         // decision would have to be made as to whether the event should
                         // be dropped or published on its own.
 
-                        return;
+                        break;
                     }
                 }
 
@@ -138,9 +114,10 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ReadEvents()
         {
-            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            var eventHubName = _scope.EventHubName;
+            await using var scope = await EventHubScope.CreateAsync(1);
 
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
+            var eventHubName = scope.EventHubName;
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString, eventHubName);
 
             #region Snippet:EventHubs_Sample01_ReadEvents

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal static class SpendingLimitExtensions
+    internal static partial class SpendingLimitExtensions
     {
         public static string ToSerialString(this SpendingLimit value) => value switch
         {

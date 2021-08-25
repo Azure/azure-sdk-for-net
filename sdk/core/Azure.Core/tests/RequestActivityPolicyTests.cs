@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -60,10 +61,31 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("requestId", clientRequestId));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("serviceRequestId", "server request id"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "UNSET"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("kind", "client"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
         }
 
+        [Test]
+        [NonParallelizable]
+        public async Task ActivityMarkedAsErrorForErrorResponse()
+        {
+            Activity activity = null;
+            using var testListener = new TestDiagnosticListener("Azure.Core");
+
+            MockTransport mockTransport = CreateMockTransport(_ =>
+            {
+                activity = Activity.Current;
+                MockResponse mockResponse = new MockResponse(500);
+                return mockResponse;
+            });
+
+            Task<Response> requestTask = SendGetRequest(mockTransport, s_enabledPolicy);
+
+            await requestTask;
+
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "ERROR"));
+        }
 
         [Test]
         [NonParallelizable]
@@ -146,7 +168,11 @@ namespace Azure.Core.Tests
 
             activity.Stop();
 
+#if NET5_0
+            Assert.True(transport.SingleRequest.TryGetHeader("traceparent", out string requestId));
+#else
             Assert.True(transport.SingleRequest.TryGetHeader("Request-Id", out string requestId));
+#endif
             Assert.AreEqual(activity.Id, requestId);
         }
 

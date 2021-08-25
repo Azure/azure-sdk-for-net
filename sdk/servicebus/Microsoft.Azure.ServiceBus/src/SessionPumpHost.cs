@@ -59,12 +59,7 @@ namespace Microsoft.Azure.ServiceBus
                 }
 
                 this.sessionPumpCancellationTokenSource = new CancellationTokenSource();
-
-                // Running task cancellation token source can be reused if previously UnregisterSessionHandlerAsync was called
-                if (this.runningTaskCancellationTokenSource == null)
-                {
-                    this.runningTaskCancellationTokenSource = new CancellationTokenSource();
-                }
+                this.runningTaskCancellationTokenSource = new CancellationTokenSource();
 
                 this.sessionReceivePump = new SessionReceivePump(
                     this.ClientId,
@@ -88,6 +83,8 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     this.sessionPumpCancellationTokenSource.Cancel();
                     this.sessionPumpCancellationTokenSource.Dispose();
+                    this.runningTaskCancellationTokenSource.Cancel();
+                    this.runningTaskCancellationTokenSource.Dispose();
                     this.sessionReceivePump = null;
                 }
 
@@ -125,11 +122,22 @@ namespace Microsoft.Azure.ServiceBus
                 || this.sessionReceivePump.maxPendingAcceptSessionsSemaphoreSlim.CurrentCount <           
                 this.sessionReceivePump.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls))
             {
+                // We can proceed when the inflight tasks are done. 
+                if (this.sessionReceivePump.maxConcurrentSessionsSemaphoreSlim.CurrentCount ==
+                    this.sessionReceivePump.sessionHandlerOptions.MaxConcurrentSessions
+                && this.sessionReceivePump.maxPendingAcceptSessionsSemaphoreSlim.CurrentCount ==
+                this.sessionReceivePump.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls)
+                {
+                    break;
+                }
+
                 await Task.Delay(10).ConfigureAwait(false);
             }
 
             lock (this.sessionPumpCancellationTokenSource)
             {
+                this.runningTaskCancellationTokenSource.Cancel();
+                this.runningTaskCancellationTokenSource.Dispose();
                 this.sessionReceivePump = null;
             }
             MessagingEventSource.Log.UnregisterSessionHandlerStop(this.ClientId);

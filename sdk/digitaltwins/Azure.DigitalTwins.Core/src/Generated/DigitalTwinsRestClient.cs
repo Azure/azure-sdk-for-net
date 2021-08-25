@@ -32,14 +32,8 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public DigitalTwinsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-10-31")
         {
-            endpoint ??= new Uri("https://digitaltwins-name.digitaltwins.azure.net");
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this.endpoint = endpoint ?? new Uri("https://digitaltwins-name.digitaltwins.azure.net");
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -229,8 +223,8 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("If-Match", digitalTwinsUpdateOptions.IfMatch);
             }
-            request.Headers.Add("Content-Type", "application/json-patch+json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json-patch+json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchDocument)
@@ -356,8 +350,8 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("If-None-Match", digitalTwinsAddRelationshipOptions.IfNoneMatch);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(relationship);
             request.Content = content;
@@ -480,8 +474,8 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("If-Match", digitalTwinsUpdateRelationshipOptions.IfMatch);
             }
-            request.Headers.Add("Content-Type", "application/json-patch+json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json-patch+json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchDocument)
@@ -618,8 +612,8 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("Telemetry-Source-Time", telemetrySourceTime);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(telemetry);
             request.Content = content;
@@ -645,8 +639,8 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("Telemetry-Source-Time", telemetrySourceTime);
             }
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(telemetry);
             request.Content = content;
@@ -767,8 +761,8 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("If-Match", digitalTwinsUpdateComponentOptions.IfMatch);
             }
-            request.Headers.Add("Content-Type", "application/json-patch+json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json-patch+json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchDocument)

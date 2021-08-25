@@ -35,15 +35,17 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// Initializes a new instance of the SqlDatabaseUpdate class.
         /// </summary>
         /// <param name="collation">The collation of the database.</param>
-        /// <param name="maxSizeBytes">The max size of the database expressed
-        /// in bytes.</param>
+        /// <param name="storageRedundancy">Storage redundancy of the database.
+        /// Possible values include: 'Geo', 'GeoZone', 'Local', 'Zone'</param>
         /// <param name="databaseGuid">The Guid of the database.</param>
+        /// <param name="status">Status of the database.</param>
         /// <param name="tags">Resource tags.</param>
-        public SqlDatabaseUpdate(string collation = default(string), long? maxSizeBytes = default(long?), System.Guid? databaseGuid = default(System.Guid?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public SqlDatabaseUpdate(string collation = default(string), string storageRedundancy = default(string), System.Guid? databaseGuid = default(System.Guid?), string status = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Collation = collation;
-            MaxSizeBytes = maxSizeBytes;
+            StorageRedundancy = storageRedundancy;
             DatabaseGuid = databaseGuid;
+            Status = status;
             Tags = tags;
             CustomInit();
         }
@@ -60,16 +62,23 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public string Collation { get; set; }
 
         /// <summary>
-        /// Gets or sets the max size of the database expressed in bytes.
+        /// Gets or sets storage redundancy of the database. Possible values
+        /// include: 'Geo', 'GeoZone', 'Local', 'Zone'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.maxSizeBytes")]
-        public long? MaxSizeBytes { get; set; }
+        [JsonProperty(PropertyName = "properties.storageRedundancy")]
+        public string StorageRedundancy { get; set; }
 
         /// <summary>
         /// Gets the Guid of the database.
         /// </summary>
         [JsonProperty(PropertyName = "properties.databaseGuid")]
         public System.Guid? DatabaseGuid { get; private set; }
+
+        /// <summary>
+        /// Gets status of the database.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.status")]
+        public string Status { get; private set; }
 
         /// <summary>
         /// Gets or sets resource tags.

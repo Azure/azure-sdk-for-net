@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkInterfacesCreateOrUpdateOperation : Operation<NetworkInterface>, IOperationSource<NetworkInterface>
     {
         private readonly ArmOperationHelpers<NetworkInterface> _operation;
+
+        /// <summary> Initializes a new instance of NetworkInterfacesCreateOrUpdateOperation for mocking. </summary>
+        protected NetworkInterfacesCreateOrUpdateOperation()
+        {
+        }
+
         internal NetworkInterfacesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<NetworkInterface>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "NetworkInterfacesCreateOrUpdateOperation");

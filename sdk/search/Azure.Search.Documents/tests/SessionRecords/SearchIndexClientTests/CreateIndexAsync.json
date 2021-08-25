@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-pakrymsearch2.search.windows.net/indexes?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "4032",
+        "Content-Length": "4314",
         "Content-Type": "application/json",
-        "traceparent": "00-1fa33923ab3aa14c9243426ef0ffd1e8-fdeb0c7e74bf534a-00",
+        "traceparent": "00-1701beae9126e244a7cf9904d417f05a-0a44830b0a1fd443-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "aa80379a73db164d8f4210e420ecefbc",
         "x-ms-return-client-request-id": "true"
@@ -123,6 +123,16 @@
           },
           {
             "name": "location",
+            "type": "Edm.GeographyPoint",
+            "key": false,
+            "retrievable": true,
+            "searchable": false,
+            "filterable": true,
+            "sortable": true,
+            "facetable": false
+          },
+          {
+            "name": "geoLocation",
             "type": "Edm.GeographyPoint",
             "key": false,
             "retrievable": true,
@@ -288,6 +298,15 @@
                 "type": "distance",
                 "fieldName": "location",
                 "boost": 2
+              },
+              {
+                "distance": {
+                  "referencePointParameter": "mygeoloc",
+                  "boostingDistance": 100
+                },
+                "type": "distance",
+                "fieldName": "geoLocation",
+                "boost": 2
               }
             ],
             "functionAggregation": "sum"
@@ -308,13 +327,13 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "aa80379a-73db-164d-8f42-10e420ecefbc",
-        "Content-Length": "6234",
+        "Content-Length": "6655",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 17 Jul 2020 21:46:02 GMT",
-        "elapsed-time": "1042",
-        "ETag": "W/\u00220x8D82A9ACCC692DE\u0022",
+        "Date": "Sat, 27 Mar 2021 18:43:52 GMT",
+        "elapsed-time": "640",
+        "ETag": "W/\u00220x8D8F15045106ACE\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-pakrymsearch2.search.windows.net/indexes(\u0027tkubrcbf\u0027)?api-version=2020-06-30",
+        "Location": "https://mohitc-acs.search.windows.net/indexes(\u0027tkubrcbf\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -323,8 +342,8 @@
         "x-ms-client-request-id": "aa80379a-73db-164d-8f42-10e420ecefbc"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-pakrymsearch2.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D82A9ACCC692DE\u0022",
+        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D8F15045106ACE\u0022",
         "name": "tkubrcbf",
         "defaultScoringProfile": null,
         "fields": [
@@ -470,6 +489,20 @@
           },
           {
             "name": "location",
+            "type": "Edm.GeographyPoint",
+            "searchable": false,
+            "filterable": true,
+            "retrievable": true,
+            "sortable": true,
+            "facetable": false,
+            "key": false,
+            "indexAnalyzer": null,
+            "searchAnalyzer": null,
+            "analyzer": null,
+            "synonymMaps": []
+          },
+          {
+            "name": "geoLocation",
             "type": "Edm.GeographyPoint",
             "searchable": false,
             "filterable": true,
@@ -695,6 +728,19 @@
                   "boostingDistance": 100.0
                 },
                 "tag": null
+              },
+              {
+                "fieldName": "geoLocation",
+                "interpolation": "linear",
+                "type": "distance",
+                "boost": 2.0,
+                "freshness": null,
+                "magnitude": null,
+                "distance": {
+                  "referencePointParameter": "mygeoloc",
+                  "boostingDistance": 100.0
+                },
+                "tag": null
               }
             ]
           }
@@ -723,15 +769,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-pakrymsearch2.search.windows.net/indexes(\u0027tkubrcbf\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027tkubrcbf\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-cab89883bb9dba48abbe301492712c3b-b5a876adfcbce349-00",
+        "traceparent": "00-114b1d8676bb6f488f1d1402c78cfb46-fda0caddedc9334c-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "48422d284ea7facf3728c9c3bc301ed9",
         "x-ms-return-client-request-id": "true"
@@ -741,8 +787,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "48422d28-4ea7-facf-3728-c9c3bc301ed9",
-        "Date": "Fri, 17 Jul 2020 21:46:02 GMT",
-        "elapsed-time": "410",
+        "Date": "Sat, 27 Mar 2021 18:43:52 GMT",
+        "elapsed-time": "197",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "48422d28-4ea7-facf-3728-c9c3bc301ed9",
@@ -756,6 +802,7 @@
     "RandomSeed": "1121409174",
     "SearchIndexName": "tkubrcbf",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-pakrymsearch2"
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

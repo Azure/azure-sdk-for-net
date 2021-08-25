@@ -19,6 +19,7 @@ namespace Azure.Search.Documents.Models
             Optional<long> odataCount = default;
             Optional<double> searchCoverage = default;
             Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
+            Optional<IReadOnlyList<AnswerResult>> searchAnswers = default;
             Optional<SearchOptions> searchNextPageParameters = default;
             IReadOnlyList<SearchResult> value = default;
             Optional<string> odataNextLink = default;
@@ -64,6 +65,21 @@ namespace Azure.Search.Documents.Models
                     searchFacets = dictionary;
                     continue;
                 }
+                if (property.NameEquals("@search.answers"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchAnswers = null;
+                        continue;
+                    }
+                    List<AnswerResult> array = new List<AnswerResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AnswerResult.DeserializeAnswerResult(item));
+                    }
+                    searchAnswers = array;
+                    continue;
+                }
                 if (property.NameEquals("@search.nextPageParameters"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -90,7 +106,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), searchNextPageParameters.Value, value, odataNextLink.Value);
+            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), Optional.ToList(searchAnswers), searchNextPageParameters.Value, value, odataNextLink.Value);
         }
     }
 }

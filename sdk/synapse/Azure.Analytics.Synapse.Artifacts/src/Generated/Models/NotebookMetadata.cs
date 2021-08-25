@@ -5,14 +5,13 @@
 
 #nullable disable
 
-using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Notebook root-level metadata. </summary>
-    public partial class NotebookMetadata : IDictionary<string, object>
+    public partial class NotebookMetadata
     {
         /// <summary> Initializes a new instance of NotebookMetadata. </summary>
         public NotebookMetadata()
@@ -23,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of NotebookMetadata. </summary>
         /// <param name="kernelspec"> Kernel information. </param>
         /// <param name="languageInfo"> Language info. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         internal NotebookMetadata(NotebookKernelSpec kernelspec, NotebookLanguageInfo languageInfo, IDictionary<string, object> additionalProperties)
         {
             Kernelspec = kernelspec;
@@ -35,42 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public NotebookKernelSpec Kernelspec { get; set; }
         /// <summary> Language info. </summary>
         public NotebookLanguageInfo LanguageInfo { get; set; }
-        internal IDictionary<string, object> AdditionalProperties { get; }
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
-        public ICollection<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public ICollection<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
-        int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
-        /// <inheritdoc />
-        public void Add(string key, object value) => AdditionalProperties.Add(key, value);
-        /// <inheritdoc />
-        public bool Remove(string key) => AdditionalProperties.Remove(key);
-        /// <inheritdoc />
-        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
-        /// <inheritdoc />
-        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
-        /// <inheritdoc />
-        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
-        /// <inheritdoc />
-        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
-        /// <inheritdoc />
-        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
-        /// <inheritdoc />
-        void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
-        /// <inheritdoc />
-        public object this[string key]
-        {
-            get => AdditionalProperties[key];
-            set => AdditionalProperties[key] = value;
-        }
+        /// <summary> Additional Properties. </summary>
+        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

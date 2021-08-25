@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkWatchersGetTroubleshootingOperation : Operation<TroubleshootingResult>, IOperationSource<TroubleshootingResult>
     {
         private readonly ArmOperationHelpers<TroubleshootingResult> _operation;
+
+        /// <summary> Initializes a new instance of NetworkWatchersGetTroubleshootingOperation for mocking. </summary>
+        protected NetworkWatchersGetTroubleshootingOperation()
+        {
+        }
+
         internal NetworkWatchersGetTroubleshootingOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<TroubleshootingResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetTroubleshootingOperation");

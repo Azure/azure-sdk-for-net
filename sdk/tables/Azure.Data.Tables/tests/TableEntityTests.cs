@@ -2,17 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Data.Tables;
 using NUnit.Framework;
 
-namespace Azure.Tables.Tests
+namespace Azure.Data.Tables.Tests
 {
     public class TableEntityTests
     {
         private TableEntity emptyEntity = new TableEntity { { "My value was nulled!", null } };
         private TableEntity fullEntity = new TableEntity("partition", "row") {
-            { TableConstants.PropertyNames.TimeStamp, default(DateTimeOffset) },
+            { TableConstants.PropertyNames.Timestamp, default(DateTimeOffset) },
             { "binary", new byte[] { 1, 2 }},
+            { "binarydata", new BinaryData( new byte[] { 1, 2 })},
             { "boolean", true },
             { "datetime", new DateTime() },
             { "datetimeoffset", new DateTimeOffset() },
@@ -32,6 +32,7 @@ namespace Azure.Tables.Tests
         public void ValidateDictionaryEntityGetTypes()
         {
             Assert.That(fullEntity.GetBinary("binary"), Is.InstanceOf(typeof(byte[])));
+            Assert.That(fullEntity.GetBinaryData("binarydata"), Is.InstanceOf(typeof(BinaryData)));
             Assert.That(fullEntity.GetBoolean("boolean"), Is.InstanceOf(typeof(bool?)));
             Assert.That(fullEntity.GetDateTime("datetime"), Is.InstanceOf(typeof(DateTime?)));
             Assert.That(fullEntity.GetDateTimeOffset("datetimeoffset"), Is.InstanceOf(typeof(DateTimeOffset?)));
@@ -49,6 +50,7 @@ namespace Azure.Tables.Tests
         public void DictionaryEntityGetWrongTypesThrows()
         {
             Assert.That(() => fullEntity.GetBinary("boolean"), Throws.InstanceOf<InvalidOperationException>(), "GetBinary should validate that the value for the inputted key is a Binary.");
+            Assert.That(() => fullEntity.GetBinaryData("boolean"), Throws.InstanceOf<InvalidOperationException>(), "GetBinary should validate that the value for the inputted key is a BinaryData.");
             Assert.That(() => fullEntity.GetBoolean("datetime"), Throws.InstanceOf<InvalidOperationException>(), "GetBoolean should validate that the value for the inputted key is a Boolean.");
             Assert.That(() => fullEntity.GetDateTime("double"), Throws.InstanceOf<InvalidOperationException>(), "GetDateTime should validate that the value for the inputted key is a DateTime.");
             Assert.That(() => fullEntity.GetDouble("guid"), Throws.InstanceOf<InvalidOperationException>(), "GetDouble should validate that the value for the inputted key is an Double.");
@@ -65,6 +67,7 @@ namespace Azure.Tables.Tests
         public void ValidateDictionaryEntityGetTypeForNonexistentProperties()
         {
             Assert.That(fullEntity.GetBinary(nonexistentKey), Is.Null);
+            Assert.That(fullEntity.GetBinaryData(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetBoolean(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetDateTime(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetDateTimeOffset(nonexistentKey), Is.Null);

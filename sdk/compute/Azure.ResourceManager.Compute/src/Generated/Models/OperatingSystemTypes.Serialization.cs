@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal static class OperatingSystemTypesExtensions
+    internal static partial class OperatingSystemTypesExtensions
     {
         public static string ToSerialString(this OperatingSystemTypes value) => value switch
         {

@@ -111,6 +111,36 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// </exception>
         Task<AzureOperationResponse<ConfigServerResource>> UpdatePatchWithHttpMessagesAsync(string resourceGroupName, string serviceName, ConfigServerResource configServerResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Check if the config server settings are valid.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the Service resource.
+        /// </param>
+        /// <param name='configServerSettings'>
+        /// Config server settings to be validated
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ConfigServerSettingsValidateResult>> ValidateWithHttpMessagesAsync(string resourceGroupName, string serviceName, ConfigServerSettings configServerSettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Update the config server.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -170,5 +200,35 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ConfigServerResource>> BeginUpdatePatchWithHttpMessagesAsync(string resourceGroupName, string serviceName, ConfigServerResource configServerResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Check if the config server settings are valid.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the Service resource.
+        /// </param>
+        /// <param name='configServerSettings'>
+        /// Config server settings to be validated
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ConfigServerSettingsValidateResult>> BeginValidateWithHttpMessagesAsync(string resourceGroupName, string serviceName, ConfigServerSettings configServerSettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

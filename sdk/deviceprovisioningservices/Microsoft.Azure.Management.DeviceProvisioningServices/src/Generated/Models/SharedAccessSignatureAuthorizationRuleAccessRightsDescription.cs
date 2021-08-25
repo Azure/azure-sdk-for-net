@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -82,22 +81,5 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         [JsonProperty(PropertyName = "rights")]
         public string Rights { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (KeyName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeyName");
-            }
-            if (Rights == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Rights");
-            }
-        }
     }
 }

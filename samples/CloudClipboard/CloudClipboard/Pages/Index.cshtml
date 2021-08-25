@@ -1,0 +1,21 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Cloud Clipboard";
+}
+
+<br />
+@foreach (string id in Model.ClipIds)
+{
+<div>
+    <a asp-page="./Clip" asp-route-userId="@Model.UserId" asp-route-clipId="@id">@id</a>
+</div>
+}
+
+<br />
+<form method="post">
+    <div class="form-group">
+        <textarea asp-for="NewClip" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Add New Clip</button>
+</form>

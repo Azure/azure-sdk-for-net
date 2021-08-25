@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class TableResourcesCreateUpdateTableOperation : Operation<TableGetResults>, IOperationSource<TableGetResults>
     {
         private readonly ArmOperationHelpers<TableGetResults> _operation;
+
+        /// <summary> Initializes a new instance of TableResourcesCreateUpdateTableOperation for mocking. </summary>
+        protected TableResourcesCreateUpdateTableOperation()
+        {
+        }
+
         internal TableResourcesCreateUpdateTableOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<TableGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TableResourcesCreateUpdateTableOperation");

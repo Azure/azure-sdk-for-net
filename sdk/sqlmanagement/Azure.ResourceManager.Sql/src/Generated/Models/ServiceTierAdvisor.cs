@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents a Service Tier Advisor. </summary>
-    public partial class ServiceTierAdvisor : Resource
+    public partial class ServiceTierAdvisor : ProxyResource
     {
         /// <summary> Initializes a new instance of ServiceTierAdvisor. </summary>
         public ServiceTierAdvisor()

@@ -9,12 +9,13 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    internal static class SearchQueryTypeExtensions
+    internal static partial class SearchQueryTypeExtensions
     {
         public static string ToSerialString(this SearchQueryType value) => value switch
         {
             SearchQueryType.Simple => "simple",
             SearchQueryType.Full => "full",
+            SearchQueryType.Semantic => "semantic",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.")
         };
 
@@ -22,6 +23,7 @@ namespace Azure.Search.Documents.Models
         {
             if (string.Equals(value, "simple", StringComparison.InvariantCultureIgnoreCase)) return SearchQueryType.Simple;
             if (string.Equals(value, "full", StringComparison.InvariantCultureIgnoreCase)) return SearchQueryType.Full;
+            if (string.Equals(value, "semantic", StringComparison.InvariantCultureIgnoreCase)) return SearchQueryType.Semantic;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.");
         }
     }

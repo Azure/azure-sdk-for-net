@@ -45,14 +45,18 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="isSubjectCaseSensitive">Specifies if the
         /// SubjectBeginsWith and SubjectEndsWith properties of the filter
         /// should be compared in a case sensitive manner.</param>
+        /// <param name="enableAdvancedFilteringOnArrays">Allows advanced
+        /// filters to be evaluated against an array of values instead of
+        /// expecting a singular value.</param>
         /// <param name="advancedFilters">An array of advanced filters that are
         /// used for filtering event subscriptions.</param>
-        public EventSubscriptionFilter(string subjectBeginsWith = default(string), string subjectEndsWith = default(string), IList<string> includedEventTypes = default(IList<string>), bool? isSubjectCaseSensitive = default(bool?), IList<AdvancedFilter> advancedFilters = default(IList<AdvancedFilter>))
+        public EventSubscriptionFilter(string subjectBeginsWith = default(string), string subjectEndsWith = default(string), IList<string> includedEventTypes = default(IList<string>), bool? isSubjectCaseSensitive = default(bool?), bool? enableAdvancedFilteringOnArrays = default(bool?), IList<AdvancedFilter> advancedFilters = default(IList<AdvancedFilter>))
         {
             SubjectBeginsWith = subjectBeginsWith;
             SubjectEndsWith = subjectEndsWith;
             IncludedEventTypes = includedEventTypes;
             IsSubjectCaseSensitive = isSubjectCaseSensitive;
+            EnableAdvancedFilteringOnArrays = enableAdvancedFilteringOnArrays;
             AdvancedFilters = advancedFilters;
             CustomInit();
         }
@@ -94,6 +98,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "isSubjectCaseSensitive")]
         public bool? IsSubjectCaseSensitive { get; set; }
+
+        /// <summary>
+        /// Gets or sets allows advanced filters to be evaluated against an
+        /// array of values instead of expecting a singular value.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableAdvancedFilteringOnArrays")]
+        public bool? EnableAdvancedFilteringOnArrays { get; set; }
 
         /// <summary>
         /// Gets or sets an array of advanced filters that are used for

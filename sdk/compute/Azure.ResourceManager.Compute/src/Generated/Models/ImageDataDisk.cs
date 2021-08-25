@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed image disk. </param>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
-        internal ImageDataDisk(SubResource snapshot, SubResource managedDisk, string blobUri, CachingTypes? caching, int? diskSizeGB, StorageAccountTypes? storageAccountType, SubResource diskEncryptionSet, int lun) : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet)
+        internal ImageDataDisk(SubResource snapshot, SubResource managedDisk, string blobUri, CachingTypes? caching, int? diskSizeGB, StorageAccountTypes? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, int lun) : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet)
         {
             Lun = lun;
         }

@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents a database replication link. </summary>
-    public partial class ReplicationLink : Resource
+    public partial class ReplicationLink : ProxyResource
     {
         /// <summary> Initializes a new instance of ReplicationLink. </summary>
         public ReplicationLink()

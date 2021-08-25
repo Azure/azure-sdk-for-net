@@ -11,23 +11,25 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class FullBackupClientLiveTests : BackupRestoreTestBase
     {
-        public FullBackupClientLiveTests(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public FullBackupClientLiveTests(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
+
+        public TimeSpan Timeout => TimeSpan.FromMinutes(5);
 
         [RecordedTest]
         public async Task BackupAndRestore()
         {
-            var source = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+            var source = new CancellationTokenSource(Timeout);
 
             UriBuilder builder = new UriBuilder(TestEnvironment.StorageUri);
             builder.Path = BlobContainerName;
 
             // Start the backup.
-            BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, "?" + SasToken, source.Token);
+            KeyVaultBackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, "?" + SasToken, source.Token);
 
             // Wait for completion of the LRO.
-            BackupResult backupResult = await backupOperation.WaitForCompletionAsync(source.Token);
+            KeyVaultBackupResult backupResult = await backupOperation.WaitForCompletionAsync(source.Token);
 
             await WaitForOperationAsync();
 
@@ -36,7 +38,41 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(backupOperation.HasValue, Is.True);
 
             // Start the restore.
-            RestoreOperation restoreOperation = await Client.StartRestoreAsync(backupResult.BackupFolderUri, "?" + SasToken, source.Token);
+            KeyVaultRestoreOperation restoreOperation = await Client.StartRestoreAsync(backupResult.FolderUri, "?" + SasToken, source.Token);
+
+            // Wait for completion of the LRO
+            var restoreResult = await restoreOperation.WaitForCompletionAsync(source.Token);
+
+            await WaitForOperationAsync();
+
+            Assert.That(source.IsCancellationRequested, Is.False);
+            Assert.That(restoreResult, Is.Not.Null);
+            Assert.That(restoreOperation.HasValue, Is.True);
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        public async Task BackupAndRestoreMultiPartFolderName()
+        {
+            var source = new CancellationTokenSource(Timeout);
+
+            UriBuilder builder = new UriBuilder(TestEnvironment.StorageUri);
+            builder.Path = BlobContainerNameMultiPart;
+
+            // Start the backup.
+            KeyVaultBackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, "?" + SasToken, source.Token);
+
+            // Wait for completion of the LRO.
+            KeyVaultBackupResult backupResult = await backupOperation.WaitForCompletionAsync(source.Token);
+
+            await WaitForOperationAsync();
+
+            Assert.That(source.IsCancellationRequested, Is.False);
+            Assert.That(backupResult, Is.Not.Null);
+            Assert.That(backupOperation.HasValue, Is.True);
+
+            // Start the restore.
+            KeyVaultRestoreOperation restoreOperation = await Client.StartRestoreAsync(backupResult.FolderUri, "?" + SasToken, source.Token);
 
             // Wait for completion of the LRO
             var restoreResult = await restoreOperation.WaitForCompletionAsync(source.Token);

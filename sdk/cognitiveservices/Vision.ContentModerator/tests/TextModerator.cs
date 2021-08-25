@@ -47,10 +47,9 @@ namespace ContentModeratorTests
                     Assert.True(allTermLists.TrueForAll(x => !string.IsNullOrEmpty(((int)x.Id).ToString()) && !string.IsNullOrEmpty(x.Name) && x.Metadata != null), "Failed to get the result");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                throw e;
+                throw;
             }
         }
 
@@ -79,9 +78,9 @@ namespace ContentModeratorTests
                     Assert.True(Helpers.Utilities.VerifyDetectLanguage(detectLanguage.Body), TestBase.ErrorMessage);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -106,16 +105,16 @@ namespace ContentModeratorTests
                     Assert.True(Helpers.Utilities.VerifyScreenText(screenText.Body), TestBase.ErrorMessage);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
         #endregion
 
 
 
-       
+
 
 
     }

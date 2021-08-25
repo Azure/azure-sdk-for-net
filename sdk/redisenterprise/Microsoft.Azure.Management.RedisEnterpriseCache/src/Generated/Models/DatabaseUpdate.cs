@@ -55,9 +55,10 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// VolatileLRU. Possible values include: 'AllKeysLFU', 'AllKeysLRU',
         /// 'AllKeysRandom', 'VolatileLRU', 'VolatileLFU', 'VolatileTTL',
         /// 'VolatileRandom', 'NoEviction'</param>
+        /// <param name="persistence">Persistence settings</param>
         /// <param name="modules">Optional set of redis modules to enable in
         /// this database - modules can only be added at creation time.</param>
-        public DatabaseUpdate(string clientProtocol = default(string), int? port = default(int?), string provisioningState = default(string), string resourceState = default(string), string clusteringPolicy = default(string), string evictionPolicy = default(string), IList<Module> modules = default(IList<Module>))
+        public DatabaseUpdate(string clientProtocol = default(string), int? port = default(int?), string provisioningState = default(string), string resourceState = default(string), string clusteringPolicy = default(string), string evictionPolicy = default(string), Persistence persistence = default(Persistence), IList<Module> modules = default(IList<Module>))
         {
             ClientProtocol = clientProtocol;
             Port = port;
@@ -65,6 +66,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
             ResourceState = resourceState;
             ClusteringPolicy = clusteringPolicy;
             EvictionPolicy = evictionPolicy;
+            Persistence = persistence;
             Modules = modules;
             CustomInit();
         }
@@ -122,6 +124,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.evictionPolicy")]
         public string EvictionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets persistence settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.persistence")]
+        public Persistence Persistence { get; set; }
 
         /// <summary>
         /// Gets or sets optional set of redis modules to enable in this

@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="hostName">The host name.</param>
         /// <param name="lastHeartbeat">The last heartbeat received from CS
         /// server.</param>
-        /// <param name="versionStatus">Version status</param>
+        /// <param name="versionStatus">Version status.</param>
         /// <param name="sslCertExpiryDate">CS SSL cert expiry date.</param>
         /// <param name="sslCertExpiryRemainingDays">CS SSL cert expiry
         /// date.</param>
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public System.DateTime? LastHeartbeat { get; set; }
 
         /// <summary>
-        /// Gets or sets version status
+        /// Gets or sets version status.
         /// </summary>
         [JsonProperty(PropertyName = "versionStatus")]
         public string VersionStatus { get; set; }

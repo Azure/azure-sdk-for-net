@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
     /// <summary>
     /// Properties related to EventGrid.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("EventGrid")]
     public partial class EventGrid : DigitalTwinsEndpointResourceProperties
     {
         /// <summary>
@@ -39,12 +38,17 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// 'Moving', 'Disabled'</param>
         /// <param name="createdTime">Time when the Endpoint was added to
         /// DigitalTwinsInstance.</param>
-        /// <param name="deadLetterSecret">Dead letter storage secret. Will be
-        /// obfuscated during read.</param>
+        /// <param name="authenticationType">Specifies the authentication type
+        /// being used for connecting to the endpoint. Possible values include:
+        /// 'KeyBased', 'IdentityBased'</param>
+        /// <param name="deadLetterSecret">Dead letter storage secret for
+        /// key-based authentication. Will be obfuscated during read.</param>
+        /// <param name="deadLetterUri">Dead letter storage URL for
+        /// identity-based authentication.</param>
         /// <param name="accessKey2">EventGrid secondary accesskey. Will be
         /// obfuscated during read.</param>
-        public EventGrid(string topicEndpoint, string accessKey1, string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), string deadLetterSecret = default(string), string accessKey2 = default(string))
-            : base(provisioningState, createdTime, deadLetterSecret)
+        public EventGrid(string topicEndpoint, string accessKey1, string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), string authenticationType = default(string), string deadLetterSecret = default(string), string deadLetterUri = default(string), string accessKey2 = default(string))
+            : base(provisioningState, createdTime, authenticationType, deadLetterSecret, deadLetterUri)
         {
             TopicEndpoint = topicEndpoint;
             AccessKey1 = accessKey1;
