@@ -33,11 +33,14 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// <param name="displayName">Localized friendly display name of the
         /// dimension</param>
         /// <param name="internalName">Internal name of the dimension.</param>
-        public MetricDimension(string name = default(string), string displayName = default(string), string internalName = default(string))
+        /// <param name="toBeExportedForShoebox">Flag to indicate export for
+        /// Shoebox</param>
+        public MetricDimension(string name = default(string), string displayName = default(string), string internalName = default(string), bool? toBeExportedForShoebox = default(bool?))
         {
             Name = name;
             DisplayName = displayName;
             InternalName = internalName;
+            ToBeExportedForShoebox = toBeExportedForShoebox;
             CustomInit();
         }
 
@@ -63,6 +66,12 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// </summary>
         [JsonProperty(PropertyName = "internalName")]
         public string InternalName { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag to indicate export for Shoebox
+        /// </summary>
+        [JsonProperty(PropertyName = "toBeExportedForShoebox")]
+        public bool? ToBeExportedForShoebox { get; set; }
 
     }
 }

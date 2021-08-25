@@ -48,15 +48,21 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// <param name="accountId">unique id of certain account.</param>
         /// <param name="accountDomain">Correspond domain name of certain
         /// Spatial Anchors Account</param>
+        /// <param name="plan">The plan associated with this account</param>
+        /// <param name="sku">The sku associated with this account</param>
+        /// <param name="kind">The kind of account, if supported</param>
         /// <param name="systemData">The system metadata related to an object
         /// anchors account.</param>
-        public ObjectAnchorsAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ObjectAnchorsAccountIdentity identity = default(ObjectAnchorsAccountIdentity), string storageAccountName = default(string), string accountId = default(string), string accountDomain = default(string), SystemData systemData = default(SystemData))
+        public ObjectAnchorsAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ObjectAnchorsAccountIdentity identity = default(ObjectAnchorsAccountIdentity), string storageAccountName = default(string), string accountId = default(string), string accountDomain = default(string), Identity plan = default(Identity), Sku sku = default(Sku), Sku kind = default(Sku), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
             StorageAccountName = storageAccountName;
             AccountId = accountId;
             AccountDomain = accountDomain;
+            Plan = plan;
+            Sku = sku;
+            Kind = kind;
             SystemData = systemData;
             CustomInit();
         }
@@ -91,6 +97,24 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         public string AccountDomain { get; private set; }
 
         /// <summary>
+        /// Gets or sets the plan associated with this account
+        /// </summary>
+        [JsonProperty(PropertyName = "plan")]
+        public Identity Plan { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sku associated with this account
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the kind of account, if supported
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public Sku Kind { get; set; }
+
+        /// <summary>
         /// Gets the system metadata related to an object anchors account.
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
@@ -105,6 +129,14 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         public override void Validate()
         {
             base.Validate();
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
+            if (Kind != null)
+            {
+                Kind.Validate();
+            }
         }
     }
 }
