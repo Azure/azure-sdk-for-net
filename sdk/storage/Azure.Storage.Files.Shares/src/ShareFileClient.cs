@@ -3897,7 +3897,7 @@ namespace Azure.Storage.Files.Shares
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
-            ShareFileUploadRangeFromUriOptions options = null,
+            ShareFileUploadRangeFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
             UploadRangeFromUriInternal(
                 sourceUri: sourceUri,
@@ -3943,7 +3943,7 @@ namespace Azure.Storage.Files.Shares
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
-            ShareFileUploadRangeFromUriOptions options = null,
+            ShareFileUploadRangeFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
             await UploadRangeFromUriInternal(
                 sourceUri: sourceUri,
