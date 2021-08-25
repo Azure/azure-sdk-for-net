@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public DeletedVaultContainer DeletedVaultContainer { get; set; }
         public ManagedHsmContainer ManagedHsmContainer { get; set; }
         public ResourceGroup ResourceGroup { get; set; }
-        public ProvidersOperations ResourceProvidersClient { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
             : base(isAsync)
