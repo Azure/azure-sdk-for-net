@@ -58,13 +58,17 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='restorePointCollectionName'>
         /// The name of the restore point collection that the disk restore point
-        /// belongs.
+        /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// maximum name length is 80 characters.
         /// </param>
         /// <param name='vmRestorePointName'>
         /// The name of the vm restore point that the disk disk restore point belongs.
+        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+        /// length is 80 characters.
         /// </param>
         /// <param name='diskRestorePointName'>
-        /// The name of the disk restore point created.
+        /// The name of the disk restore point created. Supported characters for the
+        /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -109,7 +113,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskRestorePointName");
             }
-            string apiVersion = "2021-04-01";
+            string apiVersion = "2020-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -271,10 +275,13 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='restorePointCollectionName'>
         /// The name of the restore point collection that the disk restore point
-        /// belongs.
+        /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// maximum name length is 80 characters.
         /// </param>
         /// <param name='vmRestorePointName'>
         /// The name of the vm restore point that the disk disk restore point belongs.
+        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+        /// length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -315,7 +322,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vmRestorePointName");
             }
-            string apiVersion = "2021-04-01";
+            string apiVersion = "2020-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -475,13 +482,17 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='restorePointCollectionName'>
         /// The name of the restore point collection that the disk restore point
-        /// belongs.
+        /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// maximum name length is 80 characters.
         /// </param>
         /// <param name='vmRestorePointName'>
         /// The name of the vm restore point that the disk disk restore point belongs.
+        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+        /// length is 80 characters.
         /// </param>
         /// <param name='diskRestorePointName'>
-        /// The name of the disk restore point created.
+        /// The name of the disk restore point created. Supported characters for the
+        /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
         /// </param>
         /// <param name='grantAccessData'>
         /// Access data object supplied in the body of the get disk access operation.
@@ -507,13 +518,17 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='restorePointCollectionName'>
         /// The name of the restore point collection that the disk restore point
-        /// belongs.
+        /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// maximum name length is 80 characters.
         /// </param>
         /// <param name='vmRestorePointName'>
         /// The name of the vm restore point that the disk disk restore point belongs.
+        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+        /// length is 80 characters.
         /// </param>
         /// <param name='diskRestorePointName'>
-        /// The name of the disk restore point created.
+        /// The name of the disk restore point created. Supported characters for the
+        /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -536,13 +551,17 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='restorePointCollectionName'>
         /// The name of the restore point collection that the disk restore point
-        /// belongs.
+        /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// maximum name length is 80 characters.
         /// </param>
         /// <param name='vmRestorePointName'>
         /// The name of the vm restore point that the disk disk restore point belongs.
+        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+        /// length is 80 characters.
         /// </param>
         /// <param name='diskRestorePointName'>
-        /// The name of the disk restore point created.
+        /// The name of the disk restore point created. Supported characters for the
+        /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
         /// </param>
         /// <param name='grantAccessData'>
         /// Access data object supplied in the body of the get disk access operation.
@@ -598,7 +617,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 grantAccessData.Validate();
             }
-            string apiVersion = "2021-04-01";
+            string apiVersion = "2020-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -767,13 +786,17 @@ namespace Microsoft.Azure.Management.Compute
         /// </param>
         /// <param name='restorePointCollectionName'>
         /// The name of the restore point collection that the disk restore point
-        /// belongs.
+        /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+        /// maximum name length is 80 characters.
         /// </param>
         /// <param name='vmRestorePointName'>
         /// The name of the vm restore point that the disk disk restore point belongs.
+        /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+        /// length is 80 characters.
         /// </param>
         /// <param name='diskRestorePointName'>
-        /// The name of the disk restore point created.
+        /// The name of the disk restore point created. Supported characters for the
+        /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -815,7 +838,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskRestorePointName");
             }
-            string apiVersion = "2021-04-01";
+            string apiVersion = "2020-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

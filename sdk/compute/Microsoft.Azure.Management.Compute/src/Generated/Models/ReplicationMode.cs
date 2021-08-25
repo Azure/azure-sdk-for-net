@@ -12,18 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for PublicNetworkAccess.
+    /// Defines values for ReplicationMode.
     /// </summary>
-    public static class PublicNetworkAccess
+    public static class ReplicationMode
     {
-        /// <summary>
-        /// Export on disk will depend on the networkAccessPolicy.
-        /// </summary>
-        public const string Enabled = "Enabled";
-        /// <summary>
-        /// The disk cannot be exported unless it is associated with a
-        /// diskAccess.
-        /// </summary>
-        public const string Disabled = "Disabled";
+        public const string Full = "Full";
+        public const string Shallow = "Shallow";
     }
 }

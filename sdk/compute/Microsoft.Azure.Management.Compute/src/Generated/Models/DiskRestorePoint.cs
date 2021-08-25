@@ -54,15 +54,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// keys.</param>
         /// <param name="supportsHibernation">Indicates the OS on a disk
         /// supports hibernation.</param>
-        /// <param name="networkAccessPolicy">Possible values include:
-        /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
-        /// <param name="publicNetworkAccess">Possible values include:
-        /// 'Enabled', 'Disabled'</param>
-        /// <param name="diskAccessId">ARM id of the DiskAccess resource for
-        /// using private endpoints on disks.</param>
-        /// <param name="completionPercent">Percent complete of a clone
-        /// operation.</param>
-        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?), string networkAccessPolicy = default(string), string publicNetworkAccess = default(string), string diskAccessId = default(string), double? completionPercent = default(double?))
+        public DiskRestorePoint(string id = default(string), string name = default(string), string type = default(string), System.DateTime? timeCreated = default(System.DateTime?), string sourceResourceId = default(string), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), string familyId = default(string), string sourceUniqueId = default(string), Encryption encryption = default(Encryption), bool? supportsHibernation = default(bool?))
             : base(id, name, type)
         {
             TimeCreated = timeCreated;
@@ -74,10 +66,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             SourceUniqueId = sourceUniqueId;
             Encryption = encryption;
             SupportsHibernation = supportsHibernation;
-            NetworkAccessPolicy = networkAccessPolicy;
-            PublicNetworkAccess = publicNetworkAccess;
-            DiskAccessId = diskAccessId;
-            CompletionPercent = completionPercent;
             CustomInit();
         }
 
@@ -143,32 +131,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportsHibernation")]
         public bool? SupportsHibernation { get; set; }
-
-        /// <summary>
-        /// Gets or sets possible values include: 'AllowAll', 'AllowPrivate',
-        /// 'DenyAll'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.networkAccessPolicy")]
-        public string NetworkAccessPolicy { get; set; }
-
-        /// <summary>
-        /// Gets or sets possible values include: 'Enabled', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
-        public string PublicNetworkAccess { get; set; }
-
-        /// <summary>
-        /// Gets or sets ARM id of the DiskAccess resource for using private
-        /// endpoints on disks.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.diskAccessId")]
-        public string DiskAccessId { get; set; }
-
-        /// <summary>
-        /// Gets or sets percent complete of a clone operation.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.completionPercent")]
-        public double? CompletionPercent { get; set; }
 
         /// <summary>
         /// Validate the object.

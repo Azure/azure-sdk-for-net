@@ -46,16 +46,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// provisioning state.</param>
         /// <param name="timeCreated">The time when the disk access was
         /// created.</param>
-        /// <param name="extendedLocation">The extended location where the disk
-        /// access will be created. Extended location cannot be
-        /// changed.</param>
-        public DiskAccess(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), System.DateTime? timeCreated = default(System.DateTime?), ExtendedLocation extendedLocation = default(ExtendedLocation))
+        public DiskAccess(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), System.DateTime? timeCreated = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             TimeCreated = timeCreated;
-            ExtendedLocation = extendedLocation;
             CustomInit();
         }
 
@@ -82,13 +78,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public System.DateTime? TimeCreated { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the extended location where the disk access will be
-        /// created. Extended location cannot be changed.
-        /// </summary>
-        [JsonProperty(PropertyName = "extendedLocation")]
-        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Validate the object.
