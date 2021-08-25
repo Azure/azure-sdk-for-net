@@ -13,14 +13,14 @@ using System.Text.Json;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Contains the columns and rows for one table in a query response. </summary>
-    public partial class LogsQueryResultTable
+    public partial class LogsTable
     {
-        /// <summary> Initializes a new instance of LogsQueryResultTable. </summary>
+        /// <summary> Initializes a new instance of LogsTable. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
         /// <param name="internalRows"> The resulting rows from this query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="columns"/> is null. </exception>
-        internal LogsQueryResultTable(string name, IEnumerable<LogsQueryResultColumn> columns, JsonElement internalRows)
+        internal LogsTable(string name, IEnumerable<LogsTableColumn> columns, JsonElement internalRows)
         {
             if (name == null)
             {
@@ -36,11 +36,11 @@ namespace Azure.Monitor.Query.Models
             InternalRows = internalRows;
         }
 
-        /// <summary> Initializes a new instance of LogsQueryResultTable. </summary>
+        /// <summary> Initializes a new instance of LogsTable. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
         /// <param name="internalRows"> The resulting rows from this query. </param>
-        internal LogsQueryResultTable(string name, IReadOnlyList<LogsQueryResultColumn> columns, JsonElement internalRows)
+        internal LogsTable(string name, IReadOnlyList<LogsTableColumn> columns, JsonElement internalRows)
         {
             Name = name;
             Columns = columns;
@@ -50,6 +50,6 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The name of the table. </summary>
         public string Name { get; }
         /// <summary> The list of columns in this table. </summary>
-        public IReadOnlyList<LogsQueryResultColumn> Columns { get; }
+        public IReadOnlyList<LogsTableColumn> Columns { get; }
     }
 }

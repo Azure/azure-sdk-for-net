@@ -1463,12 +1463,12 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class SystemData
     {
         public SystemData() { }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } set { } }
-        public string CreatedBy { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.CreatedByType? CreatedByType { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } set { } }
-        public string LastModifiedBy { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.CreatedByType? LastModifiedByType { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public string CreatedBy { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.CreatedByType? CreatedByType { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedAt { get { throw null; } }
+        public string LastModifiedBy { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.CreatedByType? LastModifiedByType { get { throw null; } }
     }
     public partial class Tag : Azure.ResourceManager.Resources.Models.Resource
     {

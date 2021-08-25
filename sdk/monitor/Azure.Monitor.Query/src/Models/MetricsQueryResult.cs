@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> Metrics returned as the result of the query. </summary>
         [CodeGenMember("Value")]
-        public IReadOnlyList<Metric> Metrics { get; }
+        public IReadOnlyList<MetricResult> Metrics { get; }
 
         /// <summary>
         /// The timespan for which the data was retrieved.
