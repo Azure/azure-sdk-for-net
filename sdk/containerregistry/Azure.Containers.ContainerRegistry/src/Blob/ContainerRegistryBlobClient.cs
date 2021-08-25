@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
     /// </summary>
-    public class ContainerRegistryArtifactBlobClient
+    public class ContainerRegistryBlobClient
     {
         private readonly Uri _endpoint;
         private readonly string _registryName;
@@ -26,7 +26,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         private readonly AuthenticationRestClient _acrAuthClient;
         private readonly ContainerRegistryBlobRestClient _blobRestClient;
 
-        private readonly string _repositoryName = "";
+        private readonly string _repositoryName;
+
+        // TODO: Design choice about taking repository name in the constructor, vs. methods?
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts.
@@ -35,8 +37,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
+        /// <param name="repository"></param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContainerRegistryArtifactBlobClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContainerRegistryClientOptions())
+        public ContainerRegistryBlobClient(Uri endpoint, TokenCredential credential, string repository) : this(endpoint, credential, repository, new ContainerRegistryClientOptions())
         {
         }
 
@@ -47,9 +50,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
+        /// <param name="repository"></param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContainerRegistryArtifactBlobClient(Uri endpoint, TokenCredential credential, ContainerRegistryClientOptions options)
+        public ContainerRegistryBlobClient(Uri endpoint, TokenCredential credential, string repository, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -57,6 +61,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
+            _repositoryName = repository;
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
@@ -69,7 +74,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
-        protected ContainerRegistryArtifactBlobClient()
+        protected ContainerRegistryBlobClient()
         {
         }
 
