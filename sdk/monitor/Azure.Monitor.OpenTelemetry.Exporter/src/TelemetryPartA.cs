@@ -77,9 +77,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private static string GetLocationIp(ref TagEnumerationState monitorTags)
         {
             var httpMethod = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpMethod)?.ToString();
-            if (!string.IsNullOrWhiteSpace(httpMethod))
+            var httpClientIp = AzMonList.GetTagValue(ref monitorTags.PartCTags, SemanticConventions.AttributeHttpClientIP)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpMethod) && !string.IsNullOrWhiteSpace(httpClientIp))
             {
-                return AzMonList.GetTagValue(ref monitorTags.PartCTags, SemanticConventions.AttributeHttpClientIP)?.ToString();
+                return httpClientIp;
             }
 
             return AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeNetPeerIp)?.ToString();

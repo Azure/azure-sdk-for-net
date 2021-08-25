@@ -247,7 +247,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
         }
 
         [Fact]
-        public void AiLocationIpisSetAsNetPeerIpforNonHttpServerSpans()
+        public void AiLocationIpisSetAsNetPeerIpForServerSpans()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
