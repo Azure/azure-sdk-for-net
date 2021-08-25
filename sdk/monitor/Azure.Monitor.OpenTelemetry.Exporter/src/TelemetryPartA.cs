@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static string RoleInstance { get; set; }
 
-        internal static TelemetryItem GetTelemetryItem(Activity activity, Resource resource, string instrumentationKey)
+        internal static TelemetryItem GetTelemetryItem(Activity activity, ref TagEnumerationState monitorTags, Resource resource, string instrumentationKey)
         {
             TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], FormatUtcTimestamp(activity.StartTimeUtc))
             {
@@ -43,6 +43,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
             telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
+            // we only have mapping for server spans
+            // todo: non-server spans
+            if (activity.Kind == ActivityKind.Server)
+            {
+                telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()] = GetOperationName(activity, ref monitorTags.PartBTags);
+            }
+
             if (activity.ParentSpanId != default)
             {
                 telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = activity.ParentSpanId.ToHexString();
@@ -51,6 +58,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
 
             return telemetryItem;
+        }
+
+        private static string GetOperationName(Activity activity, ref AzMonList partBTags)
+        {
+            var httpMethod = AzMonList.GetTagValue(ref partBTags, SemanticConventions.AttributeHttpMethod)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpMethod))
+            {
+                return $"{httpMethod} {activity.DisplayName}";
+            }
+
+            return activity.DisplayName;
         }
 
         internal static TelemetryItem GetTelemetryItem(LogRecord logRecord, string instrumentationKey)

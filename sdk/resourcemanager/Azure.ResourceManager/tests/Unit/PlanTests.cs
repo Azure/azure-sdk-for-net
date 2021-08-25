@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Tests
         {
             Plan plan = new(null, null, null, null, null);
             var json = JsonHelper.SerializePropertiesToString(plan);
-            Assert.IsTrue(json.Equals("{\"properties\":{}}"));
+            Assert.AreEqual("{\"properties\":{\"name\":null,\"publisher\":null,\"product\":null}}", json);
         }
 
         [Test]
