@@ -921,8 +921,11 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task ServerCertificateCustomValidationCallbackIsHonored([Values(true, false)] bool setCertCallback,[Values(true, false)]  bool isValidCert)
+        public async Task ServerCertificateCustomValidationCallbackIsHonored([Values(true, false)] bool setCertCallback, [Values(true, false)] bool isValidCert)
         {
+            // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
+            ServicePointManager.ServerCertificateValidationCallback = null;
+
             using (TestServer testServer = new TestServer(
                 async context =>
                 {
@@ -950,13 +953,13 @@ namespace Azure.Core.Tests
                 try
                 {
                     await ExecuteRequest(request, transport);
-                    if (setCertCallback)
-                    {
-                        Assert.IsTrue(isValidCert);
-                    }
+                    Assert.IsTrue(isValidCert);
+                    Assert.IsTrue(setCertCallback);
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (ex is not AssertionException)
                 {
+                    Assert.That(setCertCallback && !isValidCert || !setCertCallback);
+
                     ex = ex.InnerException;
                     while (ex is { } && ex is not AuthenticationException)
                     {
@@ -966,11 +969,8 @@ namespace Azure.Core.Tests
                     {
                         throw;
                     }
-                    Assert.That(ex.Message.Contains("certificate"));
-                    if (setCertCallback)
-                    {
-                        Assert.IsFalse(isValidCert);
-                    }
+                    TestContext.WriteLine(ex.Message);
+                    Assert.That(ex.Message.Contains("certificate") || ex.Message.Contains("TLS"), ex.Message);
                 }
                 finally
                 {
