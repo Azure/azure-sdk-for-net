@@ -20,6 +20,7 @@ namespace Azure.Core.Tests
 {
     public class HttpClientTransportFunctionalTest : TransportFunctionalTests
     {
+        private static RemoteCertificateValidationCallback certCallback = (_, _, _, _) => true;
         public HttpClientTransportFunctionalTest(bool isAsync) : base(isAsync)
         { }
 
@@ -48,7 +49,16 @@ namespace Azure.Core.Tests
         {
 #if NET461
             // No way to disable SSL check per HttpClient on NET461
-            ServicePointManager.ServerCertificateValidationCallback += (_, _, _, _) => true;
+            ServicePointManager.ServerCertificateValidationCallback += certCallback;
+#endif
+        }
+
+        [TearDown]
+        public void TestTeardown()
+        {
+#if NET461
+            // No way to disable SSL check per HttpClient on NET461
+            ServicePointManager.ServerCertificateValidationCallback -= certCallback;
 #endif
         }
 
