@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Tests
             string resourceLinkName = Recording.GenerateAssetName("link-C-");
             ResourceIdentifier resourceLinkId = vnId1 + "/providers/Microsoft.Resources/links/" + resourceLinkName;
             ResourceLinkProperties properties = new ResourceLinkProperties(vnId2);
-            ResourceLink resourceLink = (await vn1.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId, properties)).Value;
+            ResourceLink resourceLink = (await Client.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId, properties)).Value;
             Assert.AreEqual(resourceLinkName, resourceLink.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn1.GetResourceLinks().CreateOrUpdateAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetResourceLinks().CreateOrUpdateAsync(null));
         }
         
         [TestCase]
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Tests
             ResourceIdentifier resourceLinkId2 = vnId1 + "/providers/Microsoft.Resources/links/" + resourceLinkName2;
             ResourceLinkProperties properties1 = new ResourceLinkProperties(vnId2);
             ResourceLinkProperties properties2 = new ResourceLinkProperties(vnId3);
-            _ = await vn1.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId1, properties1);
-            _ = await vn1.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId2, properties2);
+            _ = await Client.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId1, properties1);
+            _ = await Client.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId2, properties2);
             int count = 0;
-            await foreach (var resourceLink in vn1.GetResourceLinks().GetAllAsync())
+            await foreach (var resourceLink in Client.GetResourceLinks().GetAllAsync(vnId1))
             {
                 count++;
             }
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Tests
             string resourceLinkName = Recording.GenerateAssetName("link-G-");
             ResourceIdentifier resourceLinkId = vnId1 + "/providers/Microsoft.Resources/links/" + resourceLinkName;
             ResourceLinkProperties properties = new ResourceLinkProperties(vnId2);
-            ResourceLink resourceLink = (await vn1.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId, properties)).Value;
-            ResourceLink getResourceLink = await vn1.GetResourceLinks().GetAsync(resourceLinkId);
+            ResourceLink resourceLink = (await Client.GetResourceLinks().CreateOrUpdateAsync(resourceLinkId, properties)).Value;
+            ResourceLink getResourceLink = await Client.GetResourceLinks().GetAsync(resourceLinkId);
             AssertValidResourceLink(resourceLink, getResourceLink);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn1.GetResourceLinks().GetAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetResourceLinks().GetAsync(null));
         }
 
         private GenericResourceData ConstructGenericVirtualNetwork()
