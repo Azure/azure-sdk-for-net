@@ -18,4 +18,8 @@
     <PackageTags>azure;management;network</PackageTags>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            HttpHeaderUtilities.SetUserAgentHeader(request.Headers, this);
             return message;
         }
 
@@ -137,6 +138,7 @@ namespace Azure.ResourceManager.Network
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            HttpHeaderUtilities.SetUserAgentHeader(request.Headers, this);
             return message;
         }
 
@@ -227,6 +229,7 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            HttpHeaderUtilities.SetUserAgentHeader(request.Headers, this);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -316,6 +319,7 @@ namespace Azure.ResourceManager.Network
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            HttpHeaderUtilities.SetUserAgentHeader(request.Headers, this);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -409,6 +413,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            HttpHeaderUtilities.SetUserAgentHeader(request.Headers, this);
             return message;
         }
 
@@ -467,6 +472,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            HttpHeaderUtilities.SetUserAgentHeader(request.Headers, this);
             return message;
         }
 
@@ -534,6 +540,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            HttpHeaderUtilities.SetUserAgentHeader(request.Headers, this);
             return message;
         }
 
@@ -601,6 +608,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            HttpHeaderUtilities.SetUserAgentHeader(request.Headers, this);
             return message;
         }
 
