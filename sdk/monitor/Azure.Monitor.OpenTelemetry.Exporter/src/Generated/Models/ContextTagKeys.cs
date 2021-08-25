@@ -42,6 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         private const string AiSessionIsFirstValue = "ai.session.isFirst";
         private const string AiUserAccountIdValue = "ai.user.accountId";
         private const string AiUserIdValue = "ai.user.id";
+        private const string AiUserAgentValue = "ai.user.userAgent";
         private const string AiUserAuthUserIdValue = "ai.user.authUserId";
         private const string AiCloudRoleValue = "ai.cloud.role";
         private const string AiCloudRoleVerValue = "ai.cloud.roleVer";
@@ -91,6 +92,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public static ContextTagKeys AiUserAccountId { get; } = new ContextTagKeys(AiUserAccountIdValue);
         /// <summary> ai.user.id. </summary>
         public static ContextTagKeys AiUserId { get; } = new ContextTagKeys(AiUserIdValue);
+        /// <summary> ai.user.userAgent. </summary>
+        public static ContextTagKeys AiUserAgent { get; } = new ContextTagKeys(AiUserAgentValue);
         /// <summary> ai.user.authUserId. </summary>
         public static ContextTagKeys AiUserAuthUserId { get; } = new ContextTagKeys(AiUserAuthUserIdValue);
         /// <summary> ai.cloud.role. </summary>
