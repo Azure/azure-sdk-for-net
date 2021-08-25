@@ -1,0 +1,541 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/TS-SDKTest-1173-RG?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-f328aa16beeac748a7afe7241066db57-36faddeeca74784c-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "fa57291963610f2dc27b01068ac4cb0a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "07cdf12f-fad5-439c-b056-656251d2be44",
+        "x-ms-ratelimit-remaining-subscription-writes": "1189",
+        "x-ms-request-id": "07cdf12f-fad5-439c-b056-656251d2be44",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225131Z:07cdf12f-fad5-439c-b056-656251d2be44"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG",
+        "name": "TS-SDKTest-1173-RG",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2537?api-version=2021-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "123",
+        "Content-Type": "application/json",
+        "traceparent": "00-0eafbdc89f7c6046b8177106a37830ae-bb3d8f8304dfd14f-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "43be9e0551b10c3c5136640bc8bc31ab",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {
+          "description": "Description of my Template Spec",
+          "displayName": "TS-SDKTest-2537 (Test)"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "718",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "43be9e0551b10c3c5136640bc8bc31ab",
+        "x-ms-correlation-request-id": "a8983242-52ea-4746-9597-ed0b732b1852",
+        "x-ms-ratelimit-remaining-subscription-writes": "1188",
+        "x-ms-request-id": "3ff4463d-459f-4b3c-b42e-a7fb54e5a20c",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225132Z:a8983242-52ea-4746-9597-ed0b732b1852"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022displayName\u0022: \u0022TS-SDKTest-2537 (Test)\u0022,\r\n",
+        "    \u0022description\u0022: \u0022Description of my Template Spec\u0022\r\n",
+        "  },\r\n",
+        "  \u0022systemData\u0022: {\r\n",
+        "    \u0022createdBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022createdByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022createdAt\u0022: \u00222021-08-25T22:51:31.7462715Z\u0022,\r\n",
+        "    \u0022lastModifiedBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022lastModifiedByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022lastModifiedAt\u0022: \u00222021-08-25T22:51:31.7462715Z\u0022\r\n",
+        "  },\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2537\u0022,\r\n",
+        "  \u0022type\u0022: \u0022Microsoft.Resources/templateSpecs\u0022,\r\n",
+        "  \u0022name\u0022: \u0022TS-SDKTest-2537\u0022\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2537/versions/v1?api-version=2021-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "528",
+        "Content-Type": "application/json",
+        "traceparent": "00-bc19423d399fd54d8e6825d549a4e50c-28e03ef366bdf441-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "071a153708ec67679e3109c6789c449b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {
+          "description": "My first version",
+          "mainTemplate": {
+            "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+              "storageAccountName": {
+                "type": "string"
+              }
+            },
+            "resources": [
+              {
+                "type": "Microsoft.Storage/storageAccounts",
+                "name": "[parameters(\u0027storageAccountName\u0027)]",
+                "apiVersion": "2015-06-15",
+                "location": "[resourceGroup().location]",
+                "properties": {
+                  "accountType": "Standard_LRS",
+                  "supportsHttpsTrafficOnly": "true"
+                }
+              }
+            ],
+            "outputs": {}
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1349",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "071a153708ec67679e3109c6789c449b",
+        "x-ms-correlation-request-id": "d2c70d6f-97e7-49a7-911b-56959fffc83c",
+        "x-ms-ratelimit-remaining-subscription-writes": "1187",
+        "x-ms-request-id": "02396c09-413a-4060-803b-0ec46c2aa3a7",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225132Z:d2c70d6f-97e7-49a7-911b-56959fffc83c"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022description\u0022: \u0022My first version\u0022,\r\n",
+        "    \u0022mainTemplate\u0022: {\r\n",
+        "      \u0022$schema\u0022: \u0022http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\u0022,\r\n",
+        "      \u0022contentVersion\u0022: \u00221.0.0.0\u0022,\r\n",
+        "      \u0022parameters\u0022: {\r\n",
+        "        \u0022storageAccountName\u0022: {\r\n",
+        "          \u0022type\u0022: \u0022string\u0022\r\n",
+        "        }\r\n",
+        "      },\r\n",
+        "      \u0022resources\u0022: [\r\n",
+        "        {\r\n",
+        "          \u0022type\u0022: \u0022Microsoft.Storage/storageAccounts\u0022,\r\n",
+        "          \u0022name\u0022: \u0022[parameters(\u0027storageAccountName\u0027)]\u0022,\r\n",
+        "          \u0022apiVersion\u0022: \u00222015-06-15\u0022,\r\n",
+        "          \u0022location\u0022: \u0022[resourceGroup().location]\u0022,\r\n",
+        "          \u0022properties\u0022: {\r\n",
+        "            \u0022accountType\u0022: \u0022Standard_LRS\u0022,\r\n",
+        "            \u0022supportsHttpsTrafficOnly\u0022: \u0022true\u0022\r\n",
+        "          }\r\n",
+        "        }\r\n",
+        "      ],\r\n",
+        "      \u0022outputs\u0022: {}\r\n",
+        "    }\r\n",
+        "  },\r\n",
+        "  \u0022systemData\u0022: {\r\n",
+        "    \u0022createdBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022createdByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022createdAt\u0022: \u00222021-08-25T22:51:32.5312427Z\u0022,\r\n",
+        "    \u0022lastModifiedBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022lastModifiedByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022lastModifiedAt\u0022: \u00222021-08-25T22:51:32.5312427Z\u0022\r\n",
+        "  },\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2537/versions/v1\u0022,\r\n",
+        "  \u0022type\u0022: \u0022Microsoft.Resources/templateSpecs/versions\u0022,\r\n",
+        "  \u0022name\u0022: \u0022v1\u0022\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2537/versions/v1?api-version=2021-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e9c9b8847f010b47bbeebb326c9b966a-8dc01c2603a4f54a-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "903b4ad04c3dd7671aed102cc903fabe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1349",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "903b4ad04c3dd7671aed102cc903fabe",
+        "x-ms-correlation-request-id": "6e173123-4f1d-4508-8c50-9d5b6e41c91d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "cb0c7250-fd1a-497b-8bf7-b5b1054c305c",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225132Z:6e173123-4f1d-4508-8c50-9d5b6e41c91d"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022description\u0022: \u0022My first version\u0022,\r\n",
+        "    \u0022mainTemplate\u0022: {\r\n",
+        "      \u0022$schema\u0022: \u0022http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\u0022,\r\n",
+        "      \u0022contentVersion\u0022: \u00221.0.0.0\u0022,\r\n",
+        "      \u0022parameters\u0022: {\r\n",
+        "        \u0022storageAccountName\u0022: {\r\n",
+        "          \u0022type\u0022: \u0022string\u0022\r\n",
+        "        }\r\n",
+        "      },\r\n",
+        "      \u0022resources\u0022: [\r\n",
+        "        {\r\n",
+        "          \u0022type\u0022: \u0022Microsoft.Storage/storageAccounts\u0022,\r\n",
+        "          \u0022name\u0022: \u0022[parameters(\u0027storageAccountName\u0027)]\u0022,\r\n",
+        "          \u0022apiVersion\u0022: \u00222015-06-15\u0022,\r\n",
+        "          \u0022location\u0022: \u0022[resourceGroup().location]\u0022,\r\n",
+        "          \u0022properties\u0022: {\r\n",
+        "            \u0022accountType\u0022: \u0022Standard_LRS\u0022,\r\n",
+        "            \u0022supportsHttpsTrafficOnly\u0022: \u0022true\u0022\r\n",
+        "          }\r\n",
+        "        }\r\n",
+        "      ],\r\n",
+        "      \u0022outputs\u0022: {}\r\n",
+        "    }\r\n",
+        "  },\r\n",
+        "  \u0022systemData\u0022: {\r\n",
+        "    \u0022createdBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022createdByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022createdAt\u0022: \u00222021-08-25T22:51:32.5312427Z\u0022,\r\n",
+        "    \u0022lastModifiedBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022lastModifiedByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022lastModifiedAt\u0022: \u00222021-08-25T22:51:32.5312427Z\u0022\r\n",
+        "  },\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2537/versions/v1\u0022,\r\n",
+        "  \u0022type\u0022: \u0022Microsoft.Resources/templateSpecs/versions\u0022,\r\n",
+        "  \u0022name\u0022: \u0022v1\u0022\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2537/versions/v1?api-version=2021-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "542",
+        "Content-Type": "application/json",
+        "traceparent": "00-9c2751c6b62f8d408286fb0848d812fa-2f3223a6d1314c40-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "ae525bcf02b1fde93756a580487694b4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {
+          "description": "This is an updated description",
+          "mainTemplate": {
+            "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+              "storageAccountName": {
+                "type": "string"
+              }
+            },
+            "resources": [
+              {
+                "type": "Microsoft.Storage/storageAccounts",
+                "name": "[parameters(\u0027storageAccountName\u0027)]",
+                "apiVersion": "2015-06-15",
+                "location": "[resourceGroup().location]",
+                "properties": {
+                  "accountType": "Standard_LRS",
+                  "supportsHttpsTrafficOnly": "true"
+                }
+              }
+            ],
+            "outputs": {}
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1363",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ae525bcf02b1fde93756a580487694b4",
+        "x-ms-correlation-request-id": "2f52b9ac-0acb-44eb-b9f7-075255bb2ac9",
+        "x-ms-ratelimit-remaining-subscription-writes": "1186",
+        "x-ms-request-id": "6f14360e-0715-4aa9-83fc-666b9fa2c87f",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225133Z:2f52b9ac-0acb-44eb-b9f7-075255bb2ac9"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022description\u0022: \u0022This is an updated description\u0022,\r\n",
+        "    \u0022mainTemplate\u0022: {\r\n",
+        "      \u0022$schema\u0022: \u0022http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\u0022,\r\n",
+        "      \u0022contentVersion\u0022: \u00221.0.0.0\u0022,\r\n",
+        "      \u0022parameters\u0022: {\r\n",
+        "        \u0022storageAccountName\u0022: {\r\n",
+        "          \u0022type\u0022: \u0022string\u0022\r\n",
+        "        }\r\n",
+        "      },\r\n",
+        "      \u0022resources\u0022: [\r\n",
+        "        {\r\n",
+        "          \u0022type\u0022: \u0022Microsoft.Storage/storageAccounts\u0022,\r\n",
+        "          \u0022name\u0022: \u0022[parameters(\u0027storageAccountName\u0027)]\u0022,\r\n",
+        "          \u0022apiVersion\u0022: \u00222015-06-15\u0022,\r\n",
+        "          \u0022location\u0022: \u0022[resourceGroup().location]\u0022,\r\n",
+        "          \u0022properties\u0022: {\r\n",
+        "            \u0022accountType\u0022: \u0022Standard_LRS\u0022,\r\n",
+        "            \u0022supportsHttpsTrafficOnly\u0022: \u0022true\u0022\r\n",
+        "          }\r\n",
+        "        }\r\n",
+        "      ],\r\n",
+        "      \u0022outputs\u0022: {}\r\n",
+        "    }\r\n",
+        "  },\r\n",
+        "  \u0022systemData\u0022: {\r\n",
+        "    \u0022createdBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022createdByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022createdAt\u0022: \u00222021-08-25T22:51:32.5312427Z\u0022,\r\n",
+        "    \u0022lastModifiedBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022lastModifiedByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022lastModifiedAt\u0022: \u00222021-08-25T22:51:33.0262526Z\u0022\r\n",
+        "  },\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2537/versions/v1\u0022,\r\n",
+        "  \u0022type\u0022: \u0022Microsoft.Resources/templateSpecs/versions\u0022,\r\n",
+        "  \u0022name\u0022: \u0022v1\u0022\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2537/versions?api-version=2021-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-edb1b9b9a95c1e49a5347d626a2ac06a-2cffef4d0520704f-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "7d3ac8f2a181eb6dae42ecfef83a9e9a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1544",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7d3ac8f2a181eb6dae42ecfef83a9e9a",
+        "x-ms-correlation-request-id": "422d0b5b-9bae-4976-a1ad-370a0028e5e1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "abfc93d2-3ddc-4031-b6b7-22c757bd5b40",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225133Z:422d0b5b-9bae-4976-a1ad-370a0028e5e1"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022value\u0022: [\r\n",
+        "    {\r\n",
+        "      \u0022location\u0022: \u0022westus\u0022,\r\n",
+        "      \u0022properties\u0022: {\r\n",
+        "        \u0022description\u0022: \u0022This is an updated description\u0022,\r\n",
+        "        \u0022mainTemplate\u0022: {\r\n",
+        "          \u0022$schema\u0022: \u0022http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\u0022,\r\n",
+        "          \u0022contentVersion\u0022: \u00221.0.0.0\u0022,\r\n",
+        "          \u0022parameters\u0022: {\r\n",
+        "            \u0022storageAccountName\u0022: {\r\n",
+        "              \u0022type\u0022: \u0022string\u0022\r\n",
+        "            }\r\n",
+        "          },\r\n",
+        "          \u0022resources\u0022: [\r\n",
+        "            {\r\n",
+        "              \u0022type\u0022: \u0022Microsoft.Storage/storageAccounts\u0022,\r\n",
+        "              \u0022name\u0022: \u0022[parameters(\u0027storageAccountName\u0027)]\u0022,\r\n",
+        "              \u0022apiVersion\u0022: \u00222015-06-15\u0022,\r\n",
+        "              \u0022location\u0022: \u0022[resourceGroup().location]\u0022,\r\n",
+        "              \u0022properties\u0022: {\r\n",
+        "                \u0022accountType\u0022: \u0022Standard_LRS\u0022,\r\n",
+        "                \u0022supportsHttpsTrafficOnly\u0022: \u0022true\u0022\r\n",
+        "              }\r\n",
+        "            }\r\n",
+        "          ],\r\n",
+        "          \u0022outputs\u0022: {}\r\n",
+        "        }\r\n",
+        "      },\r\n",
+        "      \u0022systemData\u0022: {\r\n",
+        "        \u0022createdBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "        \u0022createdByType\u0022: \u0022Application\u0022,\r\n",
+        "        \u0022createdAt\u0022: \u00222021-08-25T22:51:32.5312427Z\u0022,\r\n",
+        "        \u0022lastModifiedBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "        \u0022lastModifiedByType\u0022: \u0022Application\u0022,\r\n",
+        "        \u0022lastModifiedAt\u0022: \u00222021-08-25T22:51:33.0262526Z\u0022\r\n",
+        "      },\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2537/versions/v1\u0022,\r\n",
+        "      \u0022type\u0022: \u0022Microsoft.Resources/templateSpecs/versions\u0022,\r\n",
+        "      \u0022name\u0022: \u0022v1\u0022\r\n",
+        "    }\r\n",
+        "  ]\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2537/versions/v1?api-version=2021-05-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1e6790880168d842b9cf6aa8eba8d492-b78a62d3a3a60c43-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "1cf64b37964aceea613e58e7a7e68fa4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Wed, 25 Aug 2021 22:51:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1cf64b37964aceea613e58e7a7e68fa4",
+        "x-ms-correlation-request-id": "79941d24-dcd8-410b-8f4c-905815830881",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14993",
+        "x-ms-request-id": "9f005af1-d3ec-4d5b-9e98-81219bfdc6e1",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225133Z:79941d24-dcd8-410b-8f4c-905815830881"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-1173-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2537/versions/v1?api-version=2021-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b7491d394872bf42bde978d929a4e0a1-175cdeda4fd33d42-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "003a5b587cc92d3cee67006e16ea05fd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "251",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0f17e02c-a794-4e6e-95c4-0fdd53519841",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "0f17e02c-a794-4e6e-95c4-0fdd53519841",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225133Z:0f17e02c-a794-4e6e-95c4-0fdd53519841"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.Resources/templateSpecs/TS-SDKTest-2537/versions/v1\u0027 under resource group \u0027TS-SDKTest-1173-RG\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1060474145",
+    "SUBSCRIPTION_ID": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
+  }
+}

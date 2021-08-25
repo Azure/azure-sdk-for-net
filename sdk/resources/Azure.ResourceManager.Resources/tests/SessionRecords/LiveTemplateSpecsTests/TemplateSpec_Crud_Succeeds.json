@@ -1,0 +1,727 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/TS-SDKTest-474-RG?api-version=2019-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-3d7f5d4673c329449967db63457aa54a-d8f763837210b648-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "88e21d58a81193f1ae1cab49345eaeb5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "231",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3bd31701-e800-4d23-bef8-ebfe326abc35",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "3bd31701-e800-4d23-bef8-ebfe326abc35",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225121Z:3bd31701-e800-4d23-bef8-ebfe326abc35"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG",
+        "name": "TS-SDKTest-474-RG",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-3638?api-version=2021-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "123",
+        "Content-Type": "application/json",
+        "traceparent": "00-3fd82f72a6424b4a9bed232f4a9af116-b59ffbf80ec89547-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "e803670fe16744b6bdf1dd60b3772e86",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {
+          "description": "Description of my Template Spec",
+          "displayName": "TS-SDKTest-3638 (Test)"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "717",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e803670fe16744b6bdf1dd60b3772e86",
+        "x-ms-correlation-request-id": "9d972f8a-d2c2-4857-b276-98bff11f2cd2",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "75919810-5c3f-43a5-b8bb-fe2393e05100",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225122Z:9d972f8a-d2c2-4857-b276-98bff11f2cd2"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022displayName\u0022: \u0022TS-SDKTest-3638 (Test)\u0022,\r\n",
+        "    \u0022description\u0022: \u0022Description of my Template Spec\u0022\r\n",
+        "  },\r\n",
+        "  \u0022systemData\u0022: {\r\n",
+        "    \u0022createdBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022createdByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022createdAt\u0022: \u00222021-08-25T22:51:22.2106383Z\u0022,\r\n",
+        "    \u0022lastModifiedBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022lastModifiedByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022lastModifiedAt\u0022: \u00222021-08-25T22:51:22.2106383Z\u0022\r\n",
+        "  },\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-3638\u0022,\r\n",
+        "  \u0022type\u0022: \u0022Microsoft.Resources/templateSpecs\u0022,\r\n",
+        "  \u0022name\u0022: \u0022TS-SDKTest-3638\u0022\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-3638?api-version=2021-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-42628119f5cc4d4d9559c49b4b104b97-ba03fafa3cb3744f-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "44e8d9e45786bc39b6e6da60ea416a16",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "717",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "44e8d9e45786bc39b6e6da60ea416a16",
+        "x-ms-correlation-request-id": "14f90afb-4681-4dbc-b3ff-1acd6b75a4d2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "983ef15c-76f1-4b4a-abe9-b39bf0309b96",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225122Z:14f90afb-4681-4dbc-b3ff-1acd6b75a4d2"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022displayName\u0022: \u0022TS-SDKTest-3638 (Test)\u0022,\r\n",
+        "    \u0022description\u0022: \u0022Description of my Template Spec\u0022\r\n",
+        "  },\r\n",
+        "  \u0022systemData\u0022: {\r\n",
+        "    \u0022createdBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022createdByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022createdAt\u0022: \u00222021-08-25T22:51:22.2106383Z\u0022,\r\n",
+        "    \u0022lastModifiedBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022lastModifiedByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022lastModifiedAt\u0022: \u00222021-08-25T22:51:22.2106383Z\u0022\r\n",
+        "  },\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-3638\u0022,\r\n",
+        "  \u0022type\u0022: \u0022Microsoft.Resources/templateSpecs\u0022,\r\n",
+        "  \u0022name\u0022: \u0022TS-SDKTest-3638\u0022\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-3638?api-version=2021-05-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "122",
+        "Content-Type": "application/json",
+        "traceparent": "00-97c3033db24108478f379c3f6594c82d-e9f1c32ba10d5f45-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "e88f13664bab3bf02c4454b71332faa4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {
+          "description": "This is an updated description",
+          "displayName": "TS-SDKTest-3638 (Test)"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "716",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e88f13664bab3bf02c4454b71332faa4",
+        "x-ms-correlation-request-id": "12842896-3ef0-4b01-9ae3-ed7b07877b5d",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "814a9856-212c-4501-9988-af99fa61797e",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225122Z:12842896-3ef0-4b01-9ae3-ed7b07877b5d"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022location\u0022: \u0022westus\u0022,\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022displayName\u0022: \u0022TS-SDKTest-3638 (Test)\u0022,\r\n",
+        "    \u0022description\u0022: \u0022This is an updated description\u0022\r\n",
+        "  },\r\n",
+        "  \u0022systemData\u0022: {\r\n",
+        "    \u0022createdBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022createdByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022createdAt\u0022: \u00222021-08-25T22:51:22.2106383Z\u0022,\r\n",
+        "    \u0022lastModifiedBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "    \u0022lastModifiedByType\u0022: \u0022Application\u0022,\r\n",
+        "    \u0022lastModifiedAt\u0022: \u00222021-08-25T22:51:22.8856193Z\u0022\r\n",
+        "  },\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-3638\u0022,\r\n",
+        "  \u0022type\u0022: \u0022Microsoft.Resources/templateSpecs\u0022,\r\n",
+        "  \u0022name\u0022: \u0022TS-SDKTest-3638\u0022\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG/providers/Microsoft.Resources/templateSpecs/?api-version=2021-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-63caa29141007c4ab1eebba272395ae8-816a56bce58bbc4b-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "844fc27c71c5b7402e46318107555a7b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "813",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "844fc27c71c5b7402e46318107555a7b",
+        "x-ms-correlation-request-id": "6e041d9a-2f02-4ada-b4f2-c8761bc5c09d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "27870f60-4849-4b8b-842f-2eee9fb202a8",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225122Z:6e041d9a-2f02-4ada-b4f2-c8761bc5c09d"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022value\u0022: [\r\n",
+        "    {\r\n",
+        "      \u0022location\u0022: \u0022westus\u0022,\r\n",
+        "      \u0022properties\u0022: {\r\n",
+        "        \u0022displayName\u0022: \u0022TS-SDKTest-3638 (Test)\u0022,\r\n",
+        "        \u0022description\u0022: \u0022This is an updated description\u0022\r\n",
+        "      },\r\n",
+        "      \u0022systemData\u0022: {\r\n",
+        "        \u0022createdBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "        \u0022createdByType\u0022: \u0022Application\u0022,\r\n",
+        "        \u0022createdAt\u0022: \u00222021-08-25T22:51:22.2106383Z\u0022,\r\n",
+        "        \u0022lastModifiedBy\u0022: \u00220c6b3936-e85b-4734-8d4b-a76010c2c69c\u0022,\r\n",
+        "        \u0022lastModifiedByType\u0022: \u0022Application\u0022,\r\n",
+        "        \u0022lastModifiedAt\u0022: \u00222021-08-25T22:51:22.8856193Z\u0022\r\n",
+        "      },\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-3638\u0022,\r\n",
+        "      \u0022type\u0022: \u0022Microsoft.Resources/templateSpecs\u0022,\r\n",
+        "      \u0022name\u0022: \u0022TS-SDKTest-3638\u0022\r\n",
+        "    }\r\n",
+        "  ]\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/providers/Microsoft.Resources/templateSpecs/?api-version=2021-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-750f110379e9d5469436e0ac5a4dc2a1-25b65633709eab4a-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "9ff9c68646e898dbe9ac18420381a883",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "11119",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "bbee530a-ebca-489d-92b2-fc33c5e80ed3",
+        "x-ms-original-request-ids": [
+          "6668d042-ef5b-4c0c-9645-52d954941115",
+          "d2749d4c-8a98-4485-a750-86c7c15dd20e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "bbee530a-ebca-489d-92b2-fc33c5e80ed3",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225123Z:bbee530a-ebca-489d-92b2-fc33c5e80ed3"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "location": "westus",
+            "properties": {
+              "displayName": "TS-SDKTest-4459 (Test)",
+              "description": "Description of my Template Spec"
+            },
+            "systemData": {
+              "createdBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "createdByType": "Application",
+              "createdAt": "2021-08-25T21:13:34.9633075Z",
+              "lastModifiedBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2021-08-25T21:13:34.9633075Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-2568-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-4459",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "TS-SDKTest-4459"
+          },
+          {
+            "location": "westus",
+            "properties": {
+              "displayName": "TS-SDKTest-7122 (Test)",
+              "description": "Description of my Template Spec"
+            },
+            "systemData": {
+              "createdBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "createdByType": "Application",
+              "createdAt": "2021-08-25T21:22:38.7893545Z",
+              "lastModifiedBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2021-08-25T21:22:38.7893545Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-3011-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-7122",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "TS-SDKTest-7122"
+          },
+          {
+            "location": "westus",
+            "properties": {
+              "displayName": "TS-SDKTest-2921 (Test)",
+              "description": "Description of my Template Spec"
+            },
+            "systemData": {
+              "createdBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "createdByType": "Application",
+              "createdAt": "2021-08-25T22:17:13.1992369Z",
+              "lastModifiedBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2021-08-25T22:17:13.1992369Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-4655-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2921",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "TS-SDKTest-2921"
+          },
+          {
+            "location": "westus",
+            "properties": {
+              "displayName": "TS-SDKTest-2563 (Test)",
+              "description": "Description of my Template Spec"
+            },
+            "systemData": {
+              "createdBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "createdByType": "Application",
+              "createdAt": "2021-08-25T22:24:27.6930982Z",
+              "lastModifiedBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2021-08-25T22:24:27.6930982Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-780-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2563",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "TS-SDKTest-2563"
+          },
+          {
+            "location": "westus",
+            "properties": {
+              "displayName": "TS-SDKTest-3638 (Test)",
+              "description": "This is an updated description"
+            },
+            "systemData": {
+              "createdBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "createdByType": "Application",
+              "createdAt": "2021-08-25T22:51:22.2106383Z",
+              "lastModifiedBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2021-08-25T22:51:22.8856193Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-3638",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "TS-SDKTest-3638"
+          },
+          {
+            "location": "eastus",
+            "tags": {},
+            "properties": {},
+            "systemData": {
+              "createdBy": "gopremra@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-06-15T17:11:13.8332151Z",
+              "lastModifiedBy": "gopremra@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-06-15T19:51:38.1413599Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/testTS",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "testTS"
+          },
+          {
+            "location": "eastus2",
+            "properties": {},
+            "systemData": {
+              "createdBy": "gopremra@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-08-04T23:10:34.5434501Z",
+              "lastModifiedBy": "gopremra@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-08-04T23:10:35.9085007Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/gopremra-stackTS",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "gopremra-stackTS"
+          },
+          {
+            "location": "eastus2",
+            "properties": {},
+            "systemData": {
+              "createdBy": "gopremra@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-08-13T19:11:12.917304Z",
+              "lastModifiedBy": "gopremra@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-08-13T19:11:14.6473424Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ps3636/providers/Microsoft.Resources/templateSpecs/gopremra-stackTS",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "gopremra-stackTS"
+          },
+          {
+            "location": "centralus",
+            "properties": {},
+            "systemData": {
+              "createdBy": "gopremra@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-08-17T17:21:27.7951675Z",
+              "lastModifiedBy": "gopremra@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-08-17T18:17:17.5958584Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/reproTS",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "reproTS"
+          },
+          {
+            "location": "eastus",
+            "tags": {},
+            "properties": {},
+            "systemData": {
+              "createdBy": "daetienn@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-08-23T16:41:27.2088973Z",
+              "lastModifiedBy": "daetienn@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-08-23T17:12:00.8671929Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Angel-TestRG/providers/Microsoft.Resources/templateSpecs/cliRelativePathBug",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "cliRelativePathBug"
+          },
+          {
+            "location": "westus",
+            "properties": {
+              "displayName": "TS-SDKTest-4459 (Test)",
+              "description": "Description of my Template Spec"
+            },
+            "systemData": {
+              "createdBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "createdByType": "Application",
+              "createdAt": "2021-08-25T21:13:34.9633075Z",
+              "lastModifiedBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2021-08-25T21:13:34.9633075Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-2568-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-4459",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "TS-SDKTest-4459"
+          },
+          {
+            "location": "westus",
+            "properties": {
+              "displayName": "TS-SDKTest-7122 (Test)",
+              "description": "Description of my Template Spec"
+            },
+            "systemData": {
+              "createdBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "createdByType": "Application",
+              "createdAt": "2021-08-25T21:22:38.7893545Z",
+              "lastModifiedBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2021-08-25T21:22:38.7893545Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-3011-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-7122",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "TS-SDKTest-7122"
+          },
+          {
+            "location": "westus",
+            "properties": {
+              "displayName": "TS-SDKTest-2921 (Test)",
+              "description": "Description of my Template Spec"
+            },
+            "systemData": {
+              "createdBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "createdByType": "Application",
+              "createdAt": "2021-08-25T22:17:13.1992369Z",
+              "lastModifiedBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2021-08-25T22:17:13.1992369Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-4655-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2921",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "TS-SDKTest-2921"
+          },
+          {
+            "location": "westus",
+            "properties": {
+              "displayName": "TS-SDKTest-2563 (Test)",
+              "description": "Description of my Template Spec"
+            },
+            "systemData": {
+              "createdBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "createdByType": "Application",
+              "createdAt": "2021-08-25T22:24:27.6930982Z",
+              "lastModifiedBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2021-08-25T22:24:27.6930982Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-780-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-2563",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "TS-SDKTest-2563"
+          },
+          {
+            "location": "westus",
+            "properties": {
+              "displayName": "TS-SDKTest-3638 (Test)",
+              "description": "This is an updated description"
+            },
+            "systemData": {
+              "createdBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "createdByType": "Application",
+              "createdAt": "2021-08-25T22:51:22.2106383Z",
+              "lastModifiedBy": "0c6b3936-e85b-4734-8d4b-a76010c2c69c",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2021-08-25T22:51:22.8856193Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-3638",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "TS-SDKTest-3638"
+          },
+          {
+            "location": "eastus",
+            "tags": {},
+            "properties": {},
+            "systemData": {
+              "createdBy": "gopremra@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-06-15T17:11:13.8332151Z",
+              "lastModifiedBy": "gopremra@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-06-15T19:51:38.1413599Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/testTS",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "testTS"
+          },
+          {
+            "location": "eastus2",
+            "properties": {},
+            "systemData": {
+              "createdBy": "gopremra@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-08-04T23:10:34.5434501Z",
+              "lastModifiedBy": "gopremra@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-08-04T23:10:35.9085007Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/gopremra-stackTS",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "gopremra-stackTS"
+          },
+          {
+            "location": "eastus2",
+            "properties": {},
+            "systemData": {
+              "createdBy": "gopremra@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-08-13T19:11:12.917304Z",
+              "lastModifiedBy": "gopremra@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-08-13T19:11:14.6473424Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ps3636/providers/Microsoft.Resources/templateSpecs/gopremra-stackTS",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "gopremra-stackTS"
+          },
+          {
+            "location": "centralus",
+            "properties": {},
+            "systemData": {
+              "createdBy": "gopremra@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-08-17T17:21:27.7951675Z",
+              "lastModifiedBy": "gopremra@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-08-17T18:17:17.5958584Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Gokul-TestRG4/providers/Microsoft.Resources/templateSpecs/reproTS",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "reproTS"
+          },
+          {
+            "location": "eastus",
+            "tags": {},
+            "properties": {},
+            "systemData": {
+              "createdBy": "daetienn@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2021-08-23T16:41:27.2088973Z",
+              "lastModifiedBy": "daetienn@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2021-08-23T17:12:00.8671929Z"
+            },
+            "id": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Angel-TestRG/providers/Microsoft.Resources/templateSpecs/cliRelativePathBug",
+            "type": "Microsoft.Resources/templateSpecs",
+            "name": "cliRelativePathBug"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-3638?api-version=2021-05-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e353c4bdd3963b48b06d07b5c5c3595e-6cf8b12be513f640-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "27e336ebe6f2f550d2d7ba641a6f34d6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Wed, 25 Aug 2021 22:51:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "27e336ebe6f2f550d2d7ba641a6f34d6",
+        "x-ms-correlation-request-id": "c6a649d7-36c4-4660-a952-6cbdc17857e5",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "571a246c-76a7-4697-82b5-22b654de7622",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225123Z:c6a649d7-36c4-4660-a952-6cbdc17857e5"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TS-SDKTest-474-RG/providers/Microsoft.Resources/templateSpecs/TS-SDKTest-3638?api-version=2021-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-aa45492d41d1b244a36776b2e5efae01-5f0c083a3129c246-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20210825.1",
+          "(.NET 5.0.9; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "4c31d8e95b3836bbe7b69a1858feb4ac",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "238",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Aug 2021 22:51:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8ad23794-4d89-4a9e-9434-87d47f59bc29",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "8ad23794-4d89-4a9e-9434-87d47f59bc29",
+        "x-ms-routing-request-id": "WESTUS2:20210825T225123Z:8ad23794-4d89-4a9e-9434-87d47f59bc29"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.Resources/templateSpecs/TS-SDKTest-3638\u0027 under resource group \u0027TS-SDKTest-474-RG\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "427570055",
+    "SUBSCRIPTION_ID": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
+  }
+}

@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.Resources.Tests
         public PolicyAssignmentsOperations PolicyAssignmentsOperations { get; set; }
         public PolicyDefinitionsOperations PolicyDefinitionsOperations { get; set; }
         public PolicySetDefinitionsOperations PolicySetDefinitionsOperations { get; set; }
+        public TemplateSpecsOperations TemplateSpecsOperations { get; set; }
+        public TemplateSpecVersionsOperations TemplateSpecVersionsOperations { get; set; }
 
         protected ResourceOperationsTestsBase(bool isAsync)
             : base(isAsync)
@@ -45,6 +47,8 @@ namespace Azure.ResourceManager.Resources.Tests
             PolicyAssignmentsOperations = ResourcesManagementClient.PolicyAssignments;
             PolicyDefinitionsOperations = ResourcesManagementClient.PolicyDefinitions;
             PolicySetDefinitionsOperations = ResourcesManagementClient.PolicySetDefinitions;
+            TemplateSpecsOperations = ResourcesManagementClient.TemplateSpecs;
+            TemplateSpecVersionsOperations = ResourcesManagementClient.TemplateSpecVersions;
         }
     }
 }

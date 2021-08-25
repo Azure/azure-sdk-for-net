@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("metadata");
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsDefined(MainTemplate))
+            if (Optional.IsDefined(MainTemplateJson))
             {
                 writer.WritePropertyName("mainTemplate");
-                writer.WriteObjectValue(MainTemplate);
+                MainTemplateJson.WriteTo(writer);
             }
             if (Optional.IsDefined(UiFormDefinition))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> description = default;
             Optional<IList<LinkedTemplateArtifact>> linkedTemplates = default;
             Optional<object> metadata = default;
-            Optional<object> mainTemplate = default;
+            Optional<JsonElement> mainTemplate = default;
             Optional<object> uiFormDefinition = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -166,12 +166,7 @@ namespace Azure.ResourceManager.Resources.Models
                         }
                         if (property0.NameEquals("mainTemplate"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            mainTemplate = property0.Value.GetObject();
+                            mainTemplate = property0.Value.Clone();
                             continue;
                         }
                         if (property0.NameEquals("uiFormDefinition"))
@@ -188,7 +183,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new TemplateSpecVersion(id.Value, name.Value, type.Value, systemData.Value, location, Optional.ToDictionary(tags), description.Value, Optional.ToList(linkedTemplates), metadata.Value, mainTemplate.Value, uiFormDefinition.Value);
+            return new TemplateSpecVersion(id.Value, name.Value, type.Value, systemData.Value, location, Optional.ToDictionary(tags), description.Value, Optional.ToList(linkedTemplates), metadata.Value, mainTemplate, uiFormDefinition.Value);
         }
     }
 }
