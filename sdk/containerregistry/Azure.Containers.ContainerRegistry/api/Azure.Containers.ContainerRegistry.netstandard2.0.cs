@@ -221,11 +221,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public string FileName { get { throw null; } }
         public string RepositoryName { get { throw null; } }
     }
-    public partial class ContainerRegistryArtifactDataClient
+    public partial class ContainerRegistryArtifactBlobClient
     {
-        protected ContainerRegistryArtifactDataClient() { }
-        public ContainerRegistryArtifactDataClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public ContainerRegistryArtifactDataClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
+        protected ContainerRegistryArtifactBlobClient() { }
+        public ContainerRegistryArtifactBlobClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ContainerRegistryArtifactBlobClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadBlobResult> DownloadBlob(string digest, Azure.Containers.ContainerRegistry.Specialized.DownloadBlobOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadBlobResult>> DownloadBlobAsync(string digest, Azure.Containers.ContainerRegistry.Specialized.DownloadBlobOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.Specialized.DownloadManifestResult> DownloadManifest(string digest, Azure.Containers.ContainerRegistry.Specialized.DownloadManifestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

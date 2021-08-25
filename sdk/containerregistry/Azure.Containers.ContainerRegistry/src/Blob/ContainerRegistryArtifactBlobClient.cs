@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
     /// </summary>
-    public class ContainerRegistryArtifactDataClient
+    public class ContainerRegistryArtifactBlobClient
     {
         private readonly Uri _endpoint;
         private readonly string _registryName;
@@ -36,7 +36,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContainerRegistryArtifactDataClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContainerRegistryClientOptions())
+        public ContainerRegistryArtifactBlobClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContainerRegistryClientOptions())
         {
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// against the container registry.  </param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContainerRegistryArtifactDataClient(Uri endpoint, TokenCredential credential, ContainerRegistryClientOptions options)
+        public ContainerRegistryArtifactBlobClient(Uri endpoint, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -69,7 +69,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
-        protected ContainerRegistryArtifactDataClient()
+        protected ContainerRegistryArtifactBlobClient()
         {
         }
 
