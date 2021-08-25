@@ -33,19 +33,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName(NamePrefix));
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            //await CleanupResourceGroupsAsync();
-
-            // need to cleanup created plans, since only one plan is allowed per location
-            var ddosProtectionPlans = await GetContainer().GetAllAsync().ToEnumerableAsync();
-            foreach (var plan in ddosProtectionPlans)
-            {
-                await plan.DeleteAsync();
-            }
-        }
-
         public DdosProtectionPlanContainer GetContainer()
         {
             return resourceGroup.GetDdosProtectionPlans();
@@ -59,11 +46,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var name = Recording.GenerateAssetName(NamePrefix);
 
             // create
-            var ddosProtectionPlanResponse = await container.CreateOrUpdateAsync(name, new DdosProtectionPlanData(TestEnvironment.Location));
+            DdosProtectionPlan ddosProtectionPlan = await container.CreateOrUpdate(name, new DdosProtectionPlanData(TestEnvironment.Location)).WaitForCompletionAsync();
 
             Assert.True(await container.CheckIfExistsAsync(name));
 
-            var ddosProtectionPlanData = ddosProtectionPlanResponse.Value.Data;
+            var ddosProtectionPlanData = ddosProtectionPlan.Data;
             ValidateCommon(ddosProtectionPlanData, name);
             Assert.IsEmpty(ddosProtectionPlanData.Tags);
 
@@ -71,8 +58,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var data = new DdosProtectionPlanData(TestEnvironment.Location);
             data.Tags.Add("tag1", "value1");
             data.Tags.Add("tag2", "value2");
-            ddosProtectionPlanResponse = await container.CreateOrUpdateAsync(name, data);
-            ddosProtectionPlanData = ddosProtectionPlanResponse.Value.Data;
+            ddosProtectionPlan = await container.CreateOrUpdate(name, data).WaitForCompletionAsync();
+            ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);
             Assert.That(ddosProtectionPlanData.Tags, Has.Count.EqualTo(2));
@@ -80,8 +67,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.That(ddosProtectionPlanData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // get
-            ddosProtectionPlanResponse = await container.GetAsync(name);
-            ddosProtectionPlanData = ddosProtectionPlanResponse.Value.Data;
+            ddosProtectionPlan = await container.GetAsync(name);
+            ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);
             Assert.That(ddosProtectionPlanData.Tags, Has.Count.EqualTo(2));
@@ -91,8 +78,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // patch
             var tags = new TagsObject();
             tags.Tags.Add("tag2", "value2");
-            ddosProtectionPlanResponse = await ddosProtectionPlanResponse.Value.UpdateTagsAsync(tags);
-            ddosProtectionPlanData = ddosProtectionPlanResponse.Value.Data;
+            ddosProtectionPlan = await ddosProtectionPlan.UpdateTagsAsync(tags);
+            ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);
             Assert.That(ddosProtectionPlanData.Tags, Has.Count.EqualTo(1));
@@ -101,7 +88,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // list
             var ddosProtectionPlans = await container.GetAllAsync().ToEnumerableAsync();
             Assert.That(ddosProtectionPlans, Has.Count.EqualTo(1));
-            var ddosProtectionPlan = ddosProtectionPlans[0];
+            ddosProtectionPlan = ddosProtectionPlans[0];
             ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);

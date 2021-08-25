@@ -37,12 +37,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         private async Task<NetworkWatcherContainer> GetContainer()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("nw"));
@@ -109,7 +103,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //await getResponse.Value.GetNetworkConfigurationDiagnosticAsync();
 
             //Delete Network Watcher
-            await getResponse.Value.StartDeleteAsync();
+            await getResponse.Value.DeleteAsync();
 
             //Get all Network Watchers in the subscription
             List<NetworkWatcher> listAllAfterDeletingResponse = await ArmClient.DefaultSubscription.GetNetworkWatchersAsync().ToEnumerableAsync();

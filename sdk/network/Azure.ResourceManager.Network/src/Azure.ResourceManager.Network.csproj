@@ -17,8 +17,5 @@
     </Description>
     <PackageTags>azure;management;network</PackageTags>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Update="Azure.Core" VersionOverride="1.18.0-alpha.20210812.1" />
-  </ItemGroup>
 
 </Project>

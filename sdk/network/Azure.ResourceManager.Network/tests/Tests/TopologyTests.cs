@@ -27,20 +27,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         [Test]
         [RecordedTest]
+        [Ignore("Review after preview")]
         public async Task TopologyApiTest()
         {
             string resourceGroupName1 = Recording.GenerateAssetName("azsmnet");
             string resourceGroupName2 = Recording.GenerateAssetName("azsmnet");
 
-            string location = "westus2";
+            string location = TestEnvironment.Location;
             var resourceGroup1 = await CreateResourceGroup(resourceGroupName1, location);
 
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");

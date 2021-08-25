@@ -29,12 +29,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         public async Task<PublicIPPrefixContainer> GetContainer()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("test_public_ip_prefix_"));
@@ -49,7 +43,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var name = Recording.GenerateAssetName("test_public_ip_prefix_");
 
             // create
-            var prefixResponse = await container.CreateOrUpdateAsync(name, new PublicIPPrefixData()
+            PublicIPPrefix prefix = await container.CreateOrUpdate(name, new PublicIPPrefixData()
             {
                 Location = TestEnvironment.Location,
                 PrefixLength = 28,
@@ -57,11 +51,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 {
                     Name = PublicIPPrefixSkuName.Standard,
                 }
-            });
+            }).WaitForCompletionAsync();
 
             Assert.True(await container.CheckIfExistsAsync(name));
 
-            var prefixData = prefixResponse.Value.Data;
+            var prefixData = prefix.Data;
             ValidateCommon(prefixData, name);
             Assert.IsEmpty(prefixData.Tags);
 
@@ -69,8 +63,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             prefixData.Tags.Add("tag2", "value2");
 
             // update
-            prefixResponse = await container.CreateOrUpdateAsync(name, prefixData);
-            prefixData = prefixResponse.Value.Data;
+            prefix = await container.CreateOrUpdate(name, prefixData).WaitForCompletionAsync();
+            prefixData = prefix.Data;
 
             ValidateCommon(prefixData, name);
             Assert.That(prefixData.Tags, Has.Count.EqualTo(2));
@@ -78,8 +72,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.That(prefixData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // get
-            prefixResponse = await container.GetAsync(name);
-            prefixData = prefixResponse.Value.Data;
+            prefix = await container.GetAsync(name);
+            prefixData = prefix.Data;
 
             ValidateCommon(prefixData, name);
             Assert.That(prefixData.Tags, Has.Count.EqualTo(2));
@@ -89,7 +83,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // update tags
             var tags = new TagsObject();
             tags.Tags.Add("tag2", "value2");
-            prefixData = (await prefixResponse.Value.UpdateTagsAsync(tags)).Value.Data;
+            prefixData = (await prefix.UpdateTagsAsync(tags)).Value.Data;
 
             ValidateCommon(prefixData, name);
             Assert.That(prefixData.Tags, Has.Count.EqualTo(1));
@@ -98,7 +92,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // list
             var prefixes = await container.GetAllAsync().ToEnumerableAsync();
             Assert.That(prefixes, Has.Count.EqualTo(1));
-            var prefix = prefixes[0];
+            prefix = prefixes[0];
             prefixData = prefix.Data;
 
             ValidateCommon(prefixData, name);

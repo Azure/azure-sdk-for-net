@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                 Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24", } }
             };
 
-            VirtualNetwork vnet = await virtualNetworkContainer.CreateOrUpdateAsync(vnetName, input);
+            VirtualNetwork vnet = await virtualNetworkContainer.CreateOrUpdate(vnetName, input).WaitForCompletionAsync();
             #endregion
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         }
 
         [SetUp]
-        private async Task initialize()
+        protected async Task initialize()
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());

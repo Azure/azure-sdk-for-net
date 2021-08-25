@@ -27,12 +27,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         private ConnectionMonitorContainer ConnectionMonitors
         {
             get
@@ -78,7 +72,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName, cm);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName, cm);
             Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
 
             Assert.AreEqual("Running", putConnectionMonitor.Value.Data.MonitoringStatus);
@@ -129,11 +123,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 AutoStart = false
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName, cm);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName, cm);
             Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
             Assert.AreEqual("NotStarted", putConnectionMonitor.Value.Data.MonitoringStatus);
 
-            Operation connectionMonitorsStartOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartStartAsync();
+            Operation connectionMonitorsStartOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartAsync();
             await connectionMonitorsStartOperation.WaitForCompletionResponseAsync();;
 
             Response<ConnectionMonitor> getConnectionMonitor = await ConnectionMonitors.GetAsync(connectionMonitorName);
@@ -177,11 +171,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName, cm);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName, cm);
             Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Running", putConnectionMonitor.Value.Data.MonitoringStatus);
 
-            Operation connectionMonitorsStopOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartStopAsync();
+            Operation connectionMonitorsStopOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StopAsync();
             await connectionMonitorsStopOperation.WaitForCompletionResponseAsync();;
 
             Response<ConnectionMonitor> getConnectionMonitor = await ConnectionMonitors.GetAsync(connectionMonitorName);
@@ -225,16 +219,16 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName, cm);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName, cm);
             await putConnectionMonitorOperation.WaitForCompletionAsync();;
 
-            Operation connectionMonitorsStartOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartStartAsync();
+            Operation connectionMonitorsStartOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartAsync();
             await connectionMonitorsStartOperation.WaitForCompletionResponseAsync();;
 
-            Operation connectionMonitorsStopOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartStopAsync();
+            Operation connectionMonitorsStopOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StopAsync();
             await connectionMonitorsStopOperation.WaitForCompletionResponseAsync();;
 
-            Operation<ConnectionMonitorQueryResult> queryResultOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartQueryAsync();
+            Operation<ConnectionMonitorQueryResult> queryResultOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.QueryAsync();
             Response<ConnectionMonitorQueryResult> queryResult = await queryResultOperation.WaitForCompletionAsync();;
             //Has.One.EqualTo(queryResult.States);
             Assert.AreEqual("Reachable", queryResult.Value.States[0].ConnectionState);
@@ -279,12 +273,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 MonitoringIntervalInSeconds = 30
             };
 
-            var putConnectionMonitorOperation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName, cm);
+            var putConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName, cm);
             Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
             Assert.AreEqual(30, putConnectionMonitor.Value.Data.MonitoringIntervalInSeconds);
 
             cm.MonitoringIntervalInSeconds = 60;
-            var updateConnectionMonitorOperation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName, cm);
+            var updateConnectionMonitorOperation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName, cm);
             Response<ConnectionMonitor> updateConnectionMonitor = await updateConnectionMonitorOperation.WaitForCompletionAsync();;
             Assert.AreEqual(60, updateConnectionMonitor.Value.Data.MonitoringIntervalInSeconds);
         }
@@ -328,19 +322,19 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 AutoStart = false
             };
 
-            var connectionMonitor1Operation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName1, cm);
+            var connectionMonitor1Operation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName1, cm);
             await connectionMonitor1Operation.WaitForCompletionAsync();;
-            var connectionMonitor2Operation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName2, cm);
+            var connectionMonitor2Operation = await ConnectionMonitors.CreateOrUpdateAsync(connectionMonitorName2, cm);
             var connectionMonitor2 = (await connectionMonitor2Operation.WaitForCompletionAsync()).Value;
 
             AsyncPageable<ConnectionMonitor> getConnectionMonitors1AP = ConnectionMonitors.GetAllAsync();
             Task<List<ConnectionMonitor>> getConnectionMonitors1 = getConnectionMonitors1AP.ToEnumerableAsync();
             Assert.AreEqual(2, getConnectionMonitors1.Result.Count);
 
-            var operation = await connectionMonitor2.StartDeleteAsync();
+            var operation = await connectionMonitor2.DeleteAsync();
             await operation.WaitForCompletionResponseAsync();
             // TODO: restore to use Delete of the specific resource container: ADO 5998
-            //Operation connectionMonitorsDeleteOperation = await ConnectionMonitors.Get(connectionMonitorName2).Value.StartDeleteAsync();
+            //Operation connectionMonitorsDeleteOperation = await ConnectionMonitors.Get(connectionMonitorName2).Value.DeleteAsync();
             //await connectionMonitorsDeleteOperation.WaitForCompletionAsync();;
             AsyncPageable<ConnectionMonitor> getConnectionMonitors2 = ConnectionMonitors.GetAllAsync();
             Has.One.EqualTo(getConnectionMonitors2);

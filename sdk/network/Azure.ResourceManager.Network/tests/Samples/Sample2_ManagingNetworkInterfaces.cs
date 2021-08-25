@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                 },
                 Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24" } }
             };
-            VirtualNetwork virtualNetwork = await virtualNetworkContainer.CreateOrUpdateAsync(vnetName, vnetInput);
+            VirtualNetwork virtualNetwork = await virtualNetworkContainer.CreateOrUpdate(vnetName, vnetInput).WaitForCompletionAsync();
 
             #region Snippet:Managing_Networks_CreateANetworkInterface
             PublicIPAddressContainer publicIPAddressContainer = resourceGroup.GetPublicIPAddresses();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                     DomainNameLabel = "myDomain"
                 }
             };
-            PublicIPAddress publicIPAddress = await publicIPAddressContainer.CreateOrUpdateAsync(publicIPAddressName, publicIPInput);
+            PublicIPAddress publicIPAddress = await publicIPAddressContainer.CreateOrUpdate(publicIPAddressName, publicIPInput).WaitForCompletionAsync();
 
             NetworkInterfaceContainer networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             string networkInterfaceName = "myNetworkInterface";
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                     }
                 }
             };
-            NetworkInterface networkInterface = await networkInterfaceContainer.CreateOrUpdateAsync(networkInterfaceName, networkInterfaceInput);
+            NetworkInterface networkInterface = await networkInterfaceContainer.CreateOrUpdate(networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
             #endregion
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         }
 
         [SetUp]
-        private async Task initialize()
+        protected async Task initialize()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.DefaultSubscription;

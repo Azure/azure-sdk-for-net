@@ -29,12 +29,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         public async Task<ApplicationSecurityGroupContainer> GetContainer()
         {
             var resourceGroup = await CreateResourceGroup(Recording.GenerateAssetName("test_application_security_group_"));
@@ -49,10 +43,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var name = Recording.GenerateAssetName("test_application_security_group_");
 
             // create
-            var applicationSecurityGroupResponse = await container.CreateOrUpdateAsync(name, new ApplicationSecurityGroupData()
+            var applicationSecurityGroupResponse = await container.CreateOrUpdate(name, new ApplicationSecurityGroupData()
             {
                 Location = TestEnvironment.Location,
-            });
+            }).WaitForCompletionAsync();
 
             Assert.True(await container.CheckIfExistsAsync(name));
 
@@ -64,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             applicationSecurityGroupData.Tags.Add("tag2", "value2");
 
             // update
-            applicationSecurityGroupResponse = await container.CreateOrUpdateAsync(name, applicationSecurityGroupData);
+            applicationSecurityGroupResponse = await container.CreateOrUpdate(name, applicationSecurityGroupData).WaitForCompletionAsync();
             applicationSecurityGroupData = applicationSecurityGroupResponse.Value.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);

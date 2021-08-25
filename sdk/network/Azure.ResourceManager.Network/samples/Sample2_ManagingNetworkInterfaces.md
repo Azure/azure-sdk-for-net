@@ -47,7 +47,7 @@ var publicIPInput = new PublicIPAddressData()
         DomainNameLabel = "myDomain"
     }
 };
-PublicIPAddress publicIPAddress = await publicIPAddressContainer.CreateOrUpdateAsync(publicIPAddressName, publicIPInput);
+PublicIPAddress publicIPAddress = await publicIPAddressContainer.CreateOrUpdate(publicIPAddressName, publicIPInput).WaitForCompletionAsync();
 
 NetworkInterfaceContainer networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
 string networkInterfaceName = "myNetworkInterface";
@@ -71,7 +71,7 @@ var networkInterfaceInput = new NetworkInterfaceData()
         }
     }
 };
-NetworkInterface networkInterface = await networkInterfaceContainer.CreateOrUpdateAsync(networkInterfaceName, networkInterfaceInput);
+NetworkInterface networkInterface = await networkInterfaceContainer.CreateOrUpdate(networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
 ```
 
 ***List all network interfaces***

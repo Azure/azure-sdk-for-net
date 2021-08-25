@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DdosProtectionPlanData(id, name, type, location, tags, etag.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
+            return new DdosProtectionPlanData(id, name, type, tags, location, etag.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
         }
     }
 }

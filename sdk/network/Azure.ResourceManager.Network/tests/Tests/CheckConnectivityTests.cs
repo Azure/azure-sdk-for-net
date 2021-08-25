@@ -27,20 +27,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         [Test]
         [RecordedTest]
+        [Ignore("Review this after preview")]
         public async Task CheckConnectivityVmToInternetTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
-
-            string location = "westus2";
+            string location = TestEnvironment.Location;
             var resourceGroup = await CreateResourceGroup(resourceGroupName, location);
+
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
@@ -51,16 +46,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //Deploy networkWatcherAgent on VM
             await deployWindowsNetworkAgent(virtualMachineName, location, resourceGroup);
 
-            //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
-            //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await networkWatcherContainer.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            string networkWatcherName = Recording.GenerateAssetName("azsmnet");
+            var properties = new NetworkWatcherData { Location = location };
+            await resourceGroup.GetNetworkWatchers().CreateOrUpdateAsync(networkWatcherName, properties);
 
             ConnectivityParameters connectivityParameters =
                 new ConnectivityParameters(new ConnectivitySource(vm.Id), new ConnectivityDestination { Address = "bing.com", Port = 80 });
 
-            Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.StartCheckConnectivityAsync(connectivityParameters);
+            Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.CheckConnectivityAsync(connectivityParameters);
             Response<ConnectivityInformation> connectivityCheck = await connectivityCheckOperation.WaitForCompletionAsync();;
 
             //Validation

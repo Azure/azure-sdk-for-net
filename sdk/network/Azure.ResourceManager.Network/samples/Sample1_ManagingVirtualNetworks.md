@@ -55,7 +55,7 @@ var input = new VirtualNetworkData()
     Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24", } }
 };
 
-VirtualNetwork vnet = await virtualNetworkContainer.CreateOrUpdateAsync(vnetName, input);
+VirtualNetwork vnet = await virtualNetworkContainer.CreateOrUpdate(vnetName, input).WaitForCompletionAsync();
 ```
 
 ***List all virtual networks***

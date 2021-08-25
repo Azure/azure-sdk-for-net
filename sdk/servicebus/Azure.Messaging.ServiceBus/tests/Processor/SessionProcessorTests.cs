@@ -385,7 +385,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var cts = new CancellationTokenSource();
 
             // mutate the cancellation token to distinguish it from CancellationToken.None
-            cts.CancelAfter(100);
+            cts.CancelAfter(500);
 
             await mockSessionProcessor.Object.CloseAsync(cts.Token);
             mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));

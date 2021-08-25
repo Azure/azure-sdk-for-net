@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
-
         private static string GetNameById(string Id, string resourceType)
         {
             string name = Id.Substring(Id.IndexOf(resourceType + '/') + resourceType.Length + 1);
@@ -49,7 +43,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         {
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
-            string location = NetworkManagementTestUtilities.GetResourceLocation(ArmClient, "Microsoft.Compute/virtualMachineScaleSets");
+            string location = TestEnvironment.Location;
             string deploymentName = Recording.GenerateAssetName("vmss");
             var resourceGroup = CreateResourceGroup(resourceGroupName, location);
 

@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        //[TearDown]
-        //public async Task CleanupResourceGroup()
-        //{
-        //    await CleanupResourceGroupsAsync();
-        //}
-
         [Test]
         [RecordedTest]
         [Ignore("Track2: The NetworkWathcer is involved, so disable the test")]
@@ -79,11 +73,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var networkSecurityGroupContainer = GetNetworkSecurityGroupContainer(resourceGroupName);
             Response<NetworkSecurityGroup> nsg = await networkSecurityGroupContainer.GetAsync(resourceGroupName, networkSecurityGroupName);
             nsg.Value.Data.SecurityRules.Add(SecurityRule);
-            var createOrUpdateOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, nsg.Value.Data);
+            var createOrUpdateOperation = await networkSecurityGroupContainer.CreateOrUpdateAsync(networkSecurityGroupName, nsg.Value.Data);
             Response<NetworkSecurityGroup> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //Get view security group rules
-            var viewNSGRulesOperation = await GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.StartGetVMSecurityRulesAsync(new SecurityGroupViewParameters(vm.Id));
+            var viewNSGRulesOperation = await GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetVMSecurityRulesAsync(new SecurityGroupViewParameters(vm.Id));
             Response<SecurityGroupViewResult> viewNSGRules = await viewNSGRulesOperation.WaitForCompletionAsync();;
 
             //Verify effective security rule defined earlier
