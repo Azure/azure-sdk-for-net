@@ -24,7 +24,7 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Gets the single table result of the query.
         /// </summary>
-        public LogsQueryResultTable Table
+        public LogsTable Table
         {
             get
             {
@@ -41,7 +41,7 @@ namespace Azure.Monitor.Query.Models
         /// Gets the multi-table result of the query.
         /// </summary>
         [CodeGenMember("Tables")]
-        public IReadOnlyList<LogsQueryResultTable> AllTables { get; }
+        public IReadOnlyList<LogsTable> AllTables { get; }
 
         /// <summary>
         /// Returns the query statistics if the <see cref="LogsQueryOptions.IncludeStatistics"/> is set to <c>true</c>. <c>null</c> otherwise.

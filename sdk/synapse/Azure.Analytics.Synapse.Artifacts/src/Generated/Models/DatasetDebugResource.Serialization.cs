@@ -28,6 +28,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        internal static DatasetDebugResource DeserializeDatasetDebugResource(JsonElement element)
+        {
+            Dataset properties = default;
+            Optional<string> name = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"))
+                {
+                    properties = Dataset.DeserializeDataset(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new DatasetDebugResource(name.Value, properties);
+        }
+
         internal partial class DatasetDebugResourceConverter : JsonConverter<DatasetDebugResource>
         {
             public override void Write(Utf8JsonWriter writer, DatasetDebugResource model, JsonSerializerOptions options)
@@ -36,7 +56,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             public override DatasetDebugResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDatasetDebugResource(document.RootElement);
             }
         }
     }

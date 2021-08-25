@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
         /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
-        internal LogsQueryResult(IEnumerable<LogsQueryResultTable> allTables)
+        internal LogsQueryResult(IEnumerable<LogsTable> allTables)
         {
             if (allTables == null)
             {
@@ -33,7 +33,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
-        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error)
+        internal LogsQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error)
         {
             AllTables = allTables;
             _statistics = statistics;
