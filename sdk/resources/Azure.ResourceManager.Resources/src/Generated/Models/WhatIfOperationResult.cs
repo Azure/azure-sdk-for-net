@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of WhatIfOperationResult. </summary>
         /// <param name="status"> Status of the What-If operation. </param>
-        /// <param name="errorResponse"> Error when What-If operation fails. </param>
+        /// <param name="error"> Error when What-If operation fails. </param>
         /// <param name="changes"> List of resource changes predicted by What-If operation. </param>
-        internal WhatIfOperationResult(string status, ErrorResponse errorResponse, IReadOnlyList<WhatIfChange> changes)
+        internal WhatIfOperationResult(string status, ErrorDetail error, IReadOnlyList<WhatIfChange> changes)
         {
             Status = status;
-            ErrorResponse = errorResponse;
+            Error = error;
             Changes = changes;
         }
 
         /// <summary> Status of the What-If operation. </summary>
         public string Status { get; }
         /// <summary> Error when What-If operation fails. </summary>
-        public ErrorResponse ErrorResponse { get; }
+        public ErrorDetail Error { get; }
         /// <summary> List of resource changes predicted by What-If operation. </summary>
         public IReadOnlyList<WhatIfChange> Changes { get; }
     }

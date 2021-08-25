@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="templateHash"> The hash produced for the template. </param>
         /// <param name="outputResources"> Array of provisioned resources. </param>
         /// <param name="validatedResources"> Array of validated resources. </param>
-        /// <param name="errorResponse"> The deployment error. </param>
-        internal DeploymentPropertiesExtended(ProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, string duration, object outputs, IReadOnlyList<ProviderData> providers, IReadOnlyList<Dependency> dependencies, TemplateLink templateLink, object parameters, ParametersLink parametersLink, DeploymentMode? mode, DebugSetting debugSetting, OnErrorDeploymentExtended onErrorDeployment, string templateHash, IReadOnlyList<ResourceReference> outputResources, IReadOnlyList<ResourceReference> validatedResources, ErrorResponse errorResponse)
+        /// <param name="error"> The deployment error. </param>
+        internal DeploymentPropertiesExtended(ProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, string duration, object outputs, IReadOnlyList<ProviderData> providers, IReadOnlyList<Dependency> dependencies, TemplateLink templateLink, object parameters, ParametersLink parametersLink, DeploymentMode? mode, DebugSetting debugSetting, OnErrorDeploymentExtended onErrorDeployment, string templateHash, IReadOnlyList<ResourceReference> outputResources, IReadOnlyList<ResourceReference> validatedResources, ErrorDetail error)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
             TemplateHash = templateHash;
             OutputResources = outputResources;
             ValidatedResources = validatedResources;
-            ErrorResponse = errorResponse;
+            Error = error;
         }
 
         /// <summary> Denotes the state of provisioning. </summary>
@@ -96,6 +96,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Array of validated resources. </summary>
         public IReadOnlyList<ResourceReference> ValidatedResources { get; }
         /// <summary> The deployment error. </summary>
-        public ErrorResponse ErrorResponse { get; }
+        public ErrorDetail Error { get; }
     }
 }

@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of StatusMessage. </summary>
         /// <param name="status"> Status of the deployment operation. </param>
-        /// <param name="errorResponse"> The error reported by the operation. </param>
-        internal StatusMessage(string status, ErrorResponse errorResponse)
+        /// <param name="error"> The error reported by the operation. </param>
+        internal StatusMessage(string status, ErrorDetail error)
         {
             Status = status;
-            ErrorResponse = errorResponse;
+            Error = error;
         }
 
         /// <summary> Status of the deployment operation. </summary>
         public string Status { get; }
         /// <summary> The error reported by the operation. </summary>
-        public ErrorResponse ErrorResponse { get; }
+        public ErrorDetail Error { get; }
     }
 }

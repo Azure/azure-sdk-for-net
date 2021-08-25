@@ -17,8 +17,11 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of DeploymentScript and their operations over a ResourceGroup. </summary>
-    public partial class DeploymentScriptContainer : ResourceContainer
+    public partial class DeploymentScriptContainer : ArmContainer
     {
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly DeploymentScriptsRestOperations _restClient;
+
         /// <summary> Initializes a new instance of the <see cref="DeploymentScriptContainer"/> class for mocking. </summary>
         protected DeploymentScriptContainer()
         {
@@ -26,27 +29,24 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Initializes a new instance of DeploymentScriptContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DeploymentScriptContainer(ResourceOperations parent) : base(parent)
+        internal DeploymentScriptContainer(ArmResource parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
+            _restClient = new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary> Represents the REST operations. </summary>
-        private DeploymentScriptsRestOperations _restClient => new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
+        protected override ResourceType ValidResourceType => ResourceGroup.ResourceType;
 
         // Container level operations.
 
         /// <summary> Creates a deployment script. </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
-        public virtual Response<DeploymentScript> CreateOrUpdate(string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
+        public virtual DeploymentScriptCreateOperation CreateOrUpdate(string scriptName, DeploymentScriptData deploymentScript, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (scriptName == null)
             {
@@ -58,71 +58,14 @@ namespace Azure.ResourceManager.Resources
             }
 
             using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(scriptName, deploymentScript, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a deployment script. </summary>
-        /// <param name="scriptName"> Name of the deployment script. </param>
-        /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
-        public async virtual Task<Response<DeploymentScript>> CreateOrUpdateAsync(string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
-        {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
-            if (deploymentScript == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentScript));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(scriptName, deploymentScript, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a deployment script. </summary>
-        /// <param name="scriptName"> Name of the deployment script. </param>
-        /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
-        public virtual DeploymentScriptsCreateOperation StartCreateOrUpdate(string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
-        {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
-            if (deploymentScript == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentScript));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _restClient.Create(Id.ResourceGroupName, scriptName, deploymentScript, cancellationToken);
-                return new DeploymentScriptsCreateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateRequest(Id.ResourceGroupName, scriptName, deploymentScript).Request, response);
+                var operation = new DeploymentScriptCreateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateRequest(Id.ResourceGroupName, scriptName, deploymentScript).Request, response);
+                if (waitForCompletion)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -134,9 +77,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Creates a deployment script. </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
+        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
-        public async virtual Task<DeploymentScriptsCreateOperation> StartCreateOrUpdateAsync(string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
+        public async virtual Task<DeploymentScriptCreateOperation> CreateOrUpdateAsync(string scriptName, DeploymentScriptData deploymentScript, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             if (scriptName == null)
             {
@@ -147,12 +91,15 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(deploymentScript));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.StartCreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _restClient.CreateAsync(Id.ResourceGroupName, scriptName, deploymentScript, cancellationToken).ConfigureAwait(false);
-                return new DeploymentScriptsCreateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateRequest(Id.ResourceGroupName, scriptName, deploymentScript).Request, response);
+                var operation = new DeploymentScriptCreateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateRequest(Id.ResourceGroupName, scriptName, deploymentScript).Request, response);
+                if (waitForCompletion)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -319,15 +266,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(DeploymentScriptOperations.ResourceType);
+                var filters = new ResourceFilterCollection(DeploymentScript.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -342,15 +289,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.GetAsGenericResources");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.GetAllAsGenericResources");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(DeploymentScriptOperations.ResourceType);
+                var filters = new ResourceFilterCollection(DeploymentScript.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroup, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

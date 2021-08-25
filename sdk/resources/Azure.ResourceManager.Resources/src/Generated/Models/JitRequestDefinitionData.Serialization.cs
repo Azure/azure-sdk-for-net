@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new JitRequestDefinitionData(id, name, type, location, tags, applicationResourceId.Value, publisherTenantId.Value, Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
+            return new JitRequestDefinitionData(id, name, type, tags, location, applicationResourceId.Value, publisherTenantId.Value, Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
         }
     }
 }

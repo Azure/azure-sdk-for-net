@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of DeploymentValidateResult. </summary>
-        /// <param name="errorResponse"> The deployment validation error. </param>
+        /// <param name="error"> The deployment validation error. </param>
         /// <param name="properties"> The template deployment properties. </param>
-        internal DeploymentValidateResult(ErrorResponse errorResponse, DeploymentPropertiesExtended properties)
+        internal DeploymentValidateResult(ErrorDetail error, DeploymentPropertiesExtended properties)
         {
-            ErrorResponse = errorResponse;
+            Error = error;
             Properties = properties;
         }
 
         /// <summary> The deployment validation error. </summary>
-        public ErrorResponse ErrorResponse { get; }
+        public ErrorDetail Error { get; }
         /// <summary> The template deployment properties. </summary>
         public DeploymentPropertiesExtended Properties { get; }
     }

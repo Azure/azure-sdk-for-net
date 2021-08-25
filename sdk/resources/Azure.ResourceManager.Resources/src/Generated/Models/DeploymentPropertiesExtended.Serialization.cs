@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> templateHash = default;
             Optional<IReadOnlyList<ResourceReference>> outputResources = default;
             Optional<IReadOnlyList<ResourceReference>> validatedResources = default;
-            Optional<ErrorResponse> error = default;
+            Optional<ErrorDetail> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ProviderData> array = new List<ProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ProviderData>(property.Value.ToString()));
+                        array.Add(JsonSerializer.Deserialize<ProviderData>(item.ToString()));
                     }
                     providers = array;
                     continue;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ErrorResponse>(property.Value.ToString());
+                    error = JsonSerializer.Deserialize<ErrorDetail>(property.Value.ToString());
                     continue;
                 }
             }

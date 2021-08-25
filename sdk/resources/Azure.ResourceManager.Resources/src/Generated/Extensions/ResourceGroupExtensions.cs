@@ -12,9 +12,9 @@ namespace Azure.ResourceManager.Resources
     {
         #region Application
         /// <summary> Gets an object representing a ApplicationContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="ApplicationContainer" /> object. </returns>
-        public static ApplicationContainer GetApplications(this ResourceGroupOperations resourceGroup)
+        public static ApplicationContainer GetApplications(this ResourceGroup resourceGroup)
         {
             return new ApplicationContainer(resourceGroup);
         }
@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Resources
 
         #region ApplicationDefinition
         /// <summary> Gets an object representing a ApplicationDefinitionContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="ApplicationDefinitionContainer" /> object. </returns>
-        public static ApplicationDefinitionContainer GetApplicationDefinitions(this ResourceGroupOperations resourceGroup)
+        public static ApplicationDefinitionContainer GetApplicationDefinitions(this ResourceGroup resourceGroup)
         {
             return new ApplicationDefinitionContainer(resourceGroup);
         }
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.Resources
 
         #region JitRequestDefinition
         /// <summary> Gets an object representing a JitRequestDefinitionContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="JitRequestDefinitionContainer" /> object. </returns>
-        public static JitRequestDefinitionContainer GetJitRequestDefinitions(this ResourceGroupOperations resourceGroup)
+        public static JitRequestDefinitionContainer GetJitRequestDefinitions(this ResourceGroup resourceGroup)
         {
             return new JitRequestDefinitionContainer(resourceGroup);
         }
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Resources
 
         #region DeploymentScript
         /// <summary> Gets an object representing a DeploymentScriptContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="DeploymentScriptContainer" /> object. </returns>
-        public static DeploymentScriptContainer GetDeploymentScripts(this ResourceGroupOperations resourceGroup)
+        public static DeploymentScriptContainer GetDeploymentScripts(this ResourceGroup resourceGroup)
         {
             return new DeploymentScriptContainer(resourceGroup);
         }

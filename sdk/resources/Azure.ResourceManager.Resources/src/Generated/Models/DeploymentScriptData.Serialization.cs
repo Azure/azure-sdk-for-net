@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new DeploymentScriptData(id, name, type, identity.Value, location, Optional.ToDictionary(tags), kind, systemData.Value);
+            return new DeploymentScriptData(id, name, type, identity.Value, location, Optional.ToDictionary(tags), kind, systemData);
         }
     }
 }
