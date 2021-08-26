@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Represents the REST operations. </summary>
-        private TagRestOperations RestClient => new TagRestOperations(_clientDiagnostics, Pipeline, _subscriptionId, BaseUri);
+        private TagRestOperations RestClient => new TagRestOperations(_clientDiagnostics, Pipeline, ClientOptions, _subscriptionId, BaseUri);
 
         private ClientDiagnostics Diagnostics => _clientDiagnostics ??= new ClientDiagnostics(ClientOptions);
 
