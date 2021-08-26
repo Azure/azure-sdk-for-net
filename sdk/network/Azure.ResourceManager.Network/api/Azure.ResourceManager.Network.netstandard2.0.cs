@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.Response<Azure.ResourceManager.Network.ConnectionMonitor> GetIfExists(string connectionMonitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ConnectionMonitor>> GetIfExistsAsync(string connectionMonitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ConnectionMonitorData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class ConnectionMonitorData : Azure.ResourceManager.Models.Resource
     {
         internal ConnectionMonitorData() { }
         public bool? AutoStart { get { throw null; } }
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Network
         public virtual Azure.Response<Azure.ResourceManager.Network.DdosProtectionPlan> GetIfExists(string ddosProtectionPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.DdosProtectionPlan>> GetIfExistsAsync(string ddosProtectionPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DdosProtectionPlanData : Azure.ResourceManager.Resources.Models.TrackedResource
+    public partial class DdosProtectionPlanData : Azure.ResourceManager.Models.TrackedResource
     {
         public DdosProtectionPlanData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
         public string Etag { get { throw null; } }
@@ -4906,13 +4906,13 @@ namespace Azure.ResourceManager.Network.Models
         internal AutoApprovedPrivateLinkService() { }
         public string PrivateLinkService { get { throw null; } }
     }
-    public partial class AvailableDelegation : Azure.ResourceManager.Resources.Models.Resource
+    public partial class AvailableDelegation : Azure.ResourceManager.Models.Resource
     {
         internal AvailableDelegation() { }
         public System.Collections.Generic.IReadOnlyList<string> Actions { get { throw null; } }
         public string ServiceName { get { throw null; } }
     }
-    public partial class AvailablePrivateEndpointType : Azure.ResourceManager.Resources.Models.Resource
+    public partial class AvailablePrivateEndpointType : Azure.ResourceManager.Models.Resource
     {
         internal AvailablePrivateEndpointType() { }
         public string DisplayName { get { throw null; } }
@@ -4951,7 +4951,7 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IReadOnlyList<string> Providers { get { throw null; } }
         public string StateName { get { throw null; } }
     }
-    public partial class AvailableServiceAlias : Azure.ResourceManager.Resources.Models.Resource
+    public partial class AvailableServiceAlias : Azure.ResourceManager.Models.Resource
     {
         internal AvailableServiceAlias() { }
         public string ResourceName { get { throw null; } }
@@ -5277,7 +5277,7 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IList<string> Providers { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
     }
-    public partial class AzureWebCategory : Azure.ResourceManager.Resources.Models.Resource
+    public partial class AzureWebCategory : Azure.ResourceManager.Models.Resource
     {
         internal AzureWebCategory() { }
         public string Etag { get { throw null; } }
@@ -8484,14 +8484,6 @@ namespace Azure.ResourceManager.Network.Models
         public string RuleSetType { get { throw null; } set { } }
         public string RuleSetVersion { get { throw null; } set { } }
     }
-    public partial class ManagedServiceIdentity
-    {
-        public ManagedServiceIdentity() { }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.ResourceIdentityType? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-    }
     public partial class MatchCondition
     {
         public MatchCondition(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.MatchVariable> matchVariables, Azure.ResourceManager.Network.Models.WebApplicationFirewallOperator @operator, System.Collections.Generic.IEnumerable<string> matchValues) { }
@@ -10796,7 +10788,7 @@ namespace Azure.ResourceManager.Network.Models
         public string State { get { throw null; } }
         public string SystemService { get { throw null; } }
     }
-    public partial class ServiceTagsListResult : Azure.ResourceManager.Resources.Models.Resource
+    public partial class ServiceTagsListResult : Azure.ResourceManager.Models.Resource
     {
         internal ServiceTagsListResult() { }
         public string ChangeNumber { get { throw null; } }

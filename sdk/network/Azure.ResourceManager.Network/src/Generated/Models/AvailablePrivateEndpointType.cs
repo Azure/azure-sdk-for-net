@@ -6,12 +6,12 @@
 #nullable disable
 
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The information of an AvailablePrivateEndpointType. </summary>
-    public partial class AvailablePrivateEndpointType : Resources.Models.Resource
+    public partial class AvailablePrivateEndpointType : ResourceManager.Models.Resource
     {
         /// <summary> Initializes a new instance of AvailablePrivateEndpointType. </summary>
         internal AvailablePrivateEndpointType()

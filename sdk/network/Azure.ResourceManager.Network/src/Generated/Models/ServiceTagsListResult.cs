@@ -8,12 +8,12 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListServiceTags API service call. </summary>
-    public partial class ServiceTagsListResult : Resources.Models.Resource
+    public partial class ServiceTagsListResult : ResourceManager.Models.Resource
     {
         /// <summary> Initializes a new instance of ServiceTagsListResult. </summary>
         internal ServiceTagsListResult()

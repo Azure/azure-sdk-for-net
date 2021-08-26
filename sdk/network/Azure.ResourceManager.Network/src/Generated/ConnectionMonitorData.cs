@@ -9,13 +9,13 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ConnectionMonitor data model. </summary>
-    public partial class ConnectionMonitorData : Resources.Models.Resource
+    public partial class ConnectionMonitorData : ResourceManager.Models.Resource
     {
         /// <summary> Initializes a new instance of ConnectionMonitorData. </summary>
         internal ConnectionMonitorData()

@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VpnSitesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _vpnSiteLinksRestClient = new VpnSiteLinksRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new VpnSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vpnSiteLinksRestClient = new VpnSiteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VpnSite"/> class. </summary>
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Network
         internal VpnSite(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VpnSitesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _vpnSiteLinksRestClient = new VpnSiteLinksRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new VpnSitesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vpnSiteLinksRestClient = new VpnSiteLinksRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>

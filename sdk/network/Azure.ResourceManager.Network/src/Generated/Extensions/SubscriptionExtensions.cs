@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
         #region ApplicationGateway
         private static ApplicationGatewaysRestOperations GetApplicationGatewaysRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ApplicationGatewaysRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ApplicationGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the ApplicationGateways for this <see cref="Subscription" />. </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
         #region ApplicationSecurityGroup
         private static ApplicationSecurityGroupsRestOperations GetApplicationSecurityGroupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ApplicationSecurityGroupsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ApplicationSecurityGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the ApplicationSecurityGroups for this <see cref="Subscription" />. </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Network
         #region AzureFirewall
         private static AzureFirewallsRestOperations GetAzureFirewallsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new AzureFirewallsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new AzureFirewallsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the AzureFirewalls for this <see cref="Subscription" />. </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Network
         #region BastionHost
         private static BastionHostsRestOperations GetBastionHostsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new BastionHostsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new BastionHostsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the BastionHosts for this <see cref="Subscription" />. </summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Network
         #region CustomIpPrefix
         private static CustomIPPrefixesRestOperations GetCustomIPPrefixesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new CustomIPPrefixesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new CustomIPPrefixesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the CustomIpPrefixes for this <see cref="Subscription" />. </summary>
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Network
         #region DdosProtectionPlan
         private static DdosProtectionPlansRestOperations GetDdosProtectionPlansRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new DdosProtectionPlansRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new DdosProtectionPlansRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the DdosProtectionPlans for this <see cref="Subscription" />. </summary>
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.Network
         #region DscpConfiguration
         private static DscpConfigurationRestOperations GetDscpConfigurationRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new DscpConfigurationRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new DscpConfigurationRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the DscpConfigurations for this <see cref="Subscription" />. </summary>
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.Network
         #region ExpressRouteCircuit
         private static ExpressRouteCircuitsRestOperations GetExpressRouteCircuitsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ExpressRouteCircuitsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ExpressRouteCircuitsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the ExpressRouteCircuits for this <see cref="Subscription" />. </summary>
@@ -1026,7 +1026,7 @@ namespace Azure.ResourceManager.Network
         #region ExpressRouteCrossConnection
         private static ExpressRouteCrossConnectionsRestOperations GetExpressRouteCrossConnectionsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ExpressRouteCrossConnectionsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ExpressRouteCrossConnectionsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the ExpressRouteCrossConnections for this <see cref="Subscription" />. </summary>
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.Network
         #region ExpressRoutePort
         private static ExpressRoutePortsRestOperations GetExpressRoutePortsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ExpressRoutePortsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ExpressRoutePortsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the ExpressRoutePorts for this <see cref="Subscription" />. </summary>
@@ -1276,7 +1276,7 @@ namespace Azure.ResourceManager.Network
         #region FirewallPolicy
         private static FirewallPoliciesRestOperations GetFirewallPoliciesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new FirewallPoliciesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new FirewallPoliciesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the FirewallPolicies for this <see cref="Subscription" />. </summary>
@@ -1401,7 +1401,7 @@ namespace Azure.ResourceManager.Network
         #region IpAllocation
         private static IpAllocationsRestOperations GetIpAllocationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new IpAllocationsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new IpAllocationsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the IpAllocations for this <see cref="Subscription" />. </summary>
@@ -1526,7 +1526,7 @@ namespace Azure.ResourceManager.Network
         #region IpGroup
         private static IpGroupsRestOperations GetIpGroupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new IpGroupsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new IpGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the IpGroups for this <see cref="Subscription" />. </summary>
@@ -1651,7 +1651,7 @@ namespace Azure.ResourceManager.Network
         #region LoadBalancer
         private static LoadBalancersRestOperations GetLoadBalancersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new LoadBalancersRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new LoadBalancersRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the LoadBalancers for this <see cref="Subscription" />. </summary>
@@ -1776,7 +1776,7 @@ namespace Azure.ResourceManager.Network
         #region NatGateway
         private static NatGatewaysRestOperations GetNatGatewaysRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new NatGatewaysRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new NatGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the NatGateways for this <see cref="Subscription" />. </summary>
@@ -1901,7 +1901,7 @@ namespace Azure.ResourceManager.Network
         #region NetworkInterface
         private static NetworkInterfacesRestOperations GetNetworkInterfacesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new NetworkInterfacesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new NetworkInterfacesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the NetworkInterfaces for this <see cref="Subscription" />. </summary>
@@ -2026,7 +2026,7 @@ namespace Azure.ResourceManager.Network
         #region NetworkProfile
         private static NetworkProfilesRestOperations GetNetworkProfilesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new NetworkProfilesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new NetworkProfilesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the NetworkProfiles for this <see cref="Subscription" />. </summary>
@@ -2151,7 +2151,7 @@ namespace Azure.ResourceManager.Network
         #region NetworkSecurityGroup
         private static NetworkSecurityGroupsRestOperations GetNetworkSecurityGroupsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new NetworkSecurityGroupsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new NetworkSecurityGroupsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the NetworkSecurityGroups for this <see cref="Subscription" />. </summary>
@@ -2276,7 +2276,7 @@ namespace Azure.ResourceManager.Network
         #region NetworkVirtualAppliance
         private static NetworkVirtualAppliancesRestOperations GetNetworkVirtualAppliancesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new NetworkVirtualAppliancesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new NetworkVirtualAppliancesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the NetworkVirtualAppliances for this <see cref="Subscription" />. </summary>
@@ -2401,7 +2401,7 @@ namespace Azure.ResourceManager.Network
         #region NetworkWatcher
         private static NetworkWatchersRestOperations GetNetworkWatchersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new NetworkWatchersRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new NetworkWatchersRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the NetworkWatchers for this <see cref="Subscription" />. </summary>
@@ -2496,7 +2496,7 @@ namespace Azure.ResourceManager.Network
         #region PrivateEndpoint
         private static PrivateEndpointsRestOperations GetPrivateEndpointsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new PrivateEndpointsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new PrivateEndpointsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the PrivateEndpoints for this <see cref="Subscription" />. </summary>
@@ -2621,7 +2621,7 @@ namespace Azure.ResourceManager.Network
         #region PrivateLinkService
         private static PrivateLinkServicesRestOperations GetPrivateLinkServicesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new PrivateLinkServicesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new PrivateLinkServicesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the PrivateLinkServices for this <see cref="Subscription" />. </summary>
@@ -2850,7 +2850,7 @@ namespace Azure.ResourceManager.Network
         #region PublicIPAddress
         private static PublicIPAddressesRestOperations GetPublicIPAddressesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new PublicIPAddressesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new PublicIPAddressesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the PublicIPAddresses for this <see cref="Subscription" />. </summary>
@@ -2975,7 +2975,7 @@ namespace Azure.ResourceManager.Network
         #region PublicIPPrefix
         private static PublicIPPrefixesRestOperations GetPublicIPPrefixesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new PublicIPPrefixesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new PublicIPPrefixesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the PublicIPPrefixes for this <see cref="Subscription" />. </summary>
@@ -3100,7 +3100,7 @@ namespace Azure.ResourceManager.Network
         #region RouteFilter
         private static RouteFiltersRestOperations GetRouteFiltersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new RouteFiltersRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new RouteFiltersRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the RouteFilters for this <see cref="Subscription" />. </summary>
@@ -3225,7 +3225,7 @@ namespace Azure.ResourceManager.Network
         #region RouteTable
         private static RouteTablesRestOperations GetRouteTablesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new RouteTablesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new RouteTablesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the RouteTables for this <see cref="Subscription" />. </summary>
@@ -3350,7 +3350,7 @@ namespace Azure.ResourceManager.Network
         #region SecurityPartnerProvider
         private static SecurityPartnerProvidersRestOperations GetSecurityPartnerProvidersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new SecurityPartnerProvidersRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new SecurityPartnerProvidersRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the SecurityPartnerProviders for this <see cref="Subscription" />. </summary>
@@ -3475,7 +3475,7 @@ namespace Azure.ResourceManager.Network
         #region ServiceEndpointPolicy
         private static ServiceEndpointPoliciesRestOperations GetServiceEndpointPoliciesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ServiceEndpointPoliciesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ServiceEndpointPoliciesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the ServiceEndpointPolicies for this <see cref="Subscription" />. </summary>
@@ -3600,7 +3600,7 @@ namespace Azure.ResourceManager.Network
         #region VirtualNetwork
         private static VirtualNetworksRestOperations GetVirtualNetworksRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new VirtualNetworksRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new VirtualNetworksRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the VirtualNetworks for this <see cref="Subscription" />. </summary>
@@ -3725,7 +3725,7 @@ namespace Azure.ResourceManager.Network
         #region VirtualNetworkTap
         private static VirtualNetworkTapsRestOperations GetVirtualNetworkTapsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new VirtualNetworkTapsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new VirtualNetworkTapsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the VirtualNetworkTaps for this <see cref="Subscription" />. </summary>
@@ -3850,7 +3850,7 @@ namespace Azure.ResourceManager.Network
         #region VirtualRouter
         private static VirtualRoutersRestOperations GetVirtualRoutersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new VirtualRoutersRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new VirtualRoutersRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the VirtualRouters for this <see cref="Subscription" />. </summary>
@@ -3975,7 +3975,7 @@ namespace Azure.ResourceManager.Network
         #region VirtualWAN
         private static VirtualWansRestOperations GetVirtualWansRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new VirtualWansRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new VirtualWansRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the VirtualWANs for this <see cref="Subscription" />. </summary>
@@ -4100,7 +4100,7 @@ namespace Azure.ResourceManager.Network
         #region VpnSite
         private static VpnSitesRestOperations GetVpnSitesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new VpnSitesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new VpnSitesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the VpnSites for this <see cref="Subscription" />. </summary>
@@ -4225,7 +4225,7 @@ namespace Azure.ResourceManager.Network
         #region VpnServerConfiguration
         private static VpnServerConfigurationsRestOperations GetVpnServerConfigurationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new VpnServerConfigurationsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new VpnServerConfigurationsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the VpnServerConfigurations for this <see cref="Subscription" />. </summary>
@@ -4350,7 +4350,7 @@ namespace Azure.ResourceManager.Network
         #region VirtualHub
         private static VirtualHubsRestOperations GetVirtualHubsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new VirtualHubsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new VirtualHubsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the VirtualHubs for this <see cref="Subscription" />. </summary>
@@ -4475,7 +4475,7 @@ namespace Azure.ResourceManager.Network
         #region VpnGateway
         private static VpnGatewaysRestOperations GetVpnGatewaysRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new VpnGatewaysRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new VpnGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the VpnGateways for this <see cref="Subscription" />. </summary>
@@ -4600,7 +4600,7 @@ namespace Azure.ResourceManager.Network
         #region P2SVpnGateway
         private static P2SVpnGatewaysRestOperations GetP2SVpnGatewaysRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new P2SVpnGatewaysRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new P2SVpnGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the P2SVpnGateways for this <see cref="Subscription" />. </summary>
@@ -4725,7 +4725,7 @@ namespace Azure.ResourceManager.Network
         #region ExpressRouteGateway
         private static ExpressRouteGatewaysRestOperations GetExpressRouteGatewaysRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ExpressRouteGatewaysRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ExpressRouteGatewaysRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists ExpressRoute gateways under a given subscription. </summary>
@@ -4810,7 +4810,7 @@ namespace Azure.ResourceManager.Network
         #region WebApplicationFirewallPolicy
         private static WebApplicationFirewallPoliciesRestOperations GetWebApplicationFirewallPoliciesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new WebApplicationFirewallPoliciesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new WebApplicationFirewallPoliciesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the WebApplicationFirewallPolicies for this <see cref="Subscription" />. </summary>
@@ -4935,7 +4935,7 @@ namespace Azure.ResourceManager.Network
         #region ApplicationGatewayAvailableServiceVariable
         private static ApplicationGatewayAvailableServiceVariablesRestOperations GetApplicationGatewayAvailableServiceVariablesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ApplicationGatewayAvailableServiceVariablesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ApplicationGatewayAvailableServiceVariablesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists all available server variables. </summary>
@@ -4993,7 +4993,7 @@ namespace Azure.ResourceManager.Network
         #region ApplicationGatewayAvailableRequestHeader
         private static ApplicationGatewayAvailableRequestHeadersRestOperations GetApplicationGatewayAvailableRequestHeadersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ApplicationGatewayAvailableRequestHeadersRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ApplicationGatewayAvailableRequestHeadersRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists all available request headers. </summary>
@@ -5051,7 +5051,7 @@ namespace Azure.ResourceManager.Network
         #region AppicationGatewayAvailableResponseHeader
         private static AppicationGatewayAvailableResponseHeadersRestOperations GetAppicationGatewayAvailableResponseHeadersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new AppicationGatewayAvailableResponseHeadersRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new AppicationGatewayAvailableResponseHeadersRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists all available response headers. </summary>
@@ -5109,7 +5109,7 @@ namespace Azure.ResourceManager.Network
         #region ApplicationGatewayAvailableWafRuleSet
         private static ApplicationGatewayAvailableWafRuleSetsRestOperations GetApplicationGatewayAvailableWafRuleSetsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ApplicationGatewayAvailableWafRuleSetsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ApplicationGatewayAvailableWafRuleSetsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists all available web application firewall rule sets. </summary>
@@ -5167,7 +5167,7 @@ namespace Azure.ResourceManager.Network
         #region ApplicationGatewayAvailableSslOption
         private static ApplicationGatewayAvailableSslOptionsRestOperations GetApplicationGatewayAvailableSslOptionsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ApplicationGatewayAvailableSslOptionsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ApplicationGatewayAvailableSslOptionsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists available Ssl options for configuring Ssl policy. </summary>
@@ -5225,7 +5225,7 @@ namespace Azure.ResourceManager.Network
         #region ApplicationGatewayAvailableSslPredefinedPolicy
         private static ApplicationGatewayAvailableSslPredefinedPoliciesRestOperations GetApplicationGatewayAvailableSslPredefinedPoliciesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ApplicationGatewayAvailableSslPredefinedPoliciesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ApplicationGatewayAvailableSslPredefinedPoliciesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the ApplicationGatewaySslPredefinedPolicies for this <see cref="Subscription" />. </summary>
@@ -5387,7 +5387,7 @@ namespace Azure.ResourceManager.Network
         #region AzureFirewallFqdnTag
         private static AzureFirewallFqdnTagsRestOperations GetAzureFirewallFqdnTagsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new AzureFirewallFqdnTagsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new AzureFirewallFqdnTagsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the AzureFirewallFqdnTags for this <see cref="Subscription" />. </summary>
@@ -5485,7 +5485,7 @@ namespace Azure.ResourceManager.Network
         #region WebCategory
         private static WebCategoriesRestOperations GetWebCategoriesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new WebCategoriesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new WebCategoriesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the AzureWebCategories for this <see cref="Subscription" />. </summary>
@@ -5649,7 +5649,7 @@ namespace Azure.ResourceManager.Network
         #region DnsNameAvailability
         private static DnsNameAvailabilitiesRestOperations GetDnsNameAvailabilitiesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new DnsNameAvailabilitiesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new DnsNameAvailabilitiesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Checks whether a domain name in the cloudapp.azure.com zone is available for use. </summary>
@@ -5731,7 +5731,7 @@ namespace Azure.ResourceManager.Network
         #region AvailableEndpointService
         private static AvailableEndpointServicesRestOperations GetAvailableEndpointServicesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new AvailableEndpointServicesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new AvailableEndpointServicesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the EndpointServiceResults for this <see cref="Subscription" />. </summary>
@@ -5843,7 +5843,7 @@ namespace Azure.ResourceManager.Network
         #region ExpressRouteServiceProvider
         private static ExpressRouteServiceProvidersRestOperations GetExpressRouteServiceProvidersRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ExpressRouteServiceProvidersRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ExpressRouteServiceProvidersRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the ExpressRouteServiceProviders for this <see cref="Subscription" />. </summary>
@@ -5941,7 +5941,7 @@ namespace Azure.ResourceManager.Network
         #region ExpressRoutePortsLocation
         private static ExpressRoutePortsLocationsRestOperations GetExpressRoutePortsLocationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ExpressRoutePortsLocationsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ExpressRoutePortsLocationsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the ExpressRoutePortsLocations for this <see cref="Subscription" />. </summary>
@@ -6103,7 +6103,7 @@ namespace Azure.ResourceManager.Network
         #region VirtualApplianceSku
         private static VirtualApplianceSkusRestOperations GetVirtualApplianceSkusRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new VirtualApplianceSkusRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new VirtualApplianceSkusRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the NetworkVirtualApplianceSkus for this <see cref="Subscription" />. </summary>
@@ -6265,7 +6265,7 @@ namespace Azure.ResourceManager.Network
         #region AvailablePrivateEndpointType
         private static AvailablePrivateEndpointTypesRestOperations GetAvailablePrivateEndpointTypesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new AvailablePrivateEndpointTypesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new AvailablePrivateEndpointTypesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the AvailablePrivateEndpointTypes for this <see cref="Subscription" />. </summary>
@@ -6491,7 +6491,7 @@ namespace Azure.ResourceManager.Network
         #region BgpServiceCommunity
         private static BgpServiceCommunitiesRestOperations GetBgpServiceCommunitiesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new BgpServiceCommunitiesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new BgpServiceCommunitiesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the BgpServiceCommunities for this <see cref="Subscription" />. </summary>
@@ -6589,7 +6589,7 @@ namespace Azure.ResourceManager.Network
         #region ServiceTag
         private static ServiceTagsRestOperations GetServiceTagsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ServiceTagsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ServiceTagsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Gets a list of service tag information resources. </summary>
@@ -6661,7 +6661,7 @@ namespace Azure.ResourceManager.Network
         #region Usage
         private static UsagesRestOperations GetUsagesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new UsagesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new UsagesRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the Usages for this <see cref="Subscription" />. </summary>

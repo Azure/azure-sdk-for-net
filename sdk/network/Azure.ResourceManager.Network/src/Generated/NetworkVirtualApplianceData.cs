@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkVirtualAppliance data model. </summary>
-    public partial class NetworkVirtualApplianceData : Models.Resource
+    public partial class NetworkVirtualApplianceData : Resource
     {
         /// <summary> Initializes a new instance of NetworkVirtualApplianceData. </summary>
         public NetworkVirtualApplianceData()

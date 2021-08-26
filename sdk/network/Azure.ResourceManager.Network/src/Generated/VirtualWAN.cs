@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VirtualWansRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _supportedSecurityProvidersRestClient = new SupportedSecurityProvidersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _virtualWanVpnServerConfigurationVpnProfilesRestClient = new VirtualWanVpnServerConfigurationVpnProfilesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new VirtualWansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _supportedSecurityProvidersRestClient = new SupportedSecurityProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualWanVpnServerConfigurationVpnProfilesRestClient = new VirtualWanVpnServerConfigurationVpnProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualWAN"/> class. </summary>
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Network
         internal VirtualWAN(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new VirtualWansRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _supportedSecurityProvidersRestClient = new SupportedSecurityProvidersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _virtualWanVpnServerConfigurationVpnProfilesRestClient = new VirtualWanVpnServerConfigurationVpnProfilesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new VirtualWansRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _supportedSecurityProvidersRestClient = new SupportedSecurityProvidersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _virtualWanVpnServerConfigurationVpnProfilesRestClient = new VirtualWanVpnServerConfigurationVpnProfilesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>

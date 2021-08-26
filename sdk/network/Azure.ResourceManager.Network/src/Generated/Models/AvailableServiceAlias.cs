@@ -6,12 +6,12 @@
 #nullable disable
 
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The available service alias. </summary>
-    public partial class AvailableServiceAlias : Resources.Models.Resource
+    public partial class AvailableServiceAlias : ResourceManager.Models.Resource
     {
         /// <summary> Initializes a new instance of AvailableServiceAlias. </summary>
         internal AvailableServiceAlias()

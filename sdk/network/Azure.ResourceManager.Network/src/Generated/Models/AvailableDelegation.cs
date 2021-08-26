@@ -8,12 +8,12 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The serviceName of an AvailableDelegation indicates a possible delegation for a subnet. </summary>
-    public partial class AvailableDelegation : Resources.Models.Resource
+    public partial class AvailableDelegation : ResourceManager.Models.Resource
     {
         /// <summary> Initializes a new instance of AvailableDelegation. </summary>
         internal AvailableDelegation()

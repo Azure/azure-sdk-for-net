@@ -6,12 +6,12 @@
 #nullable disable
 
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Azure Web Category Resource. </summary>
-    public partial class AzureWebCategory : Resources.Models.Resource
+    public partial class AzureWebCategory : ResourceManager.Models.Resource
     {
         /// <summary> Initializes a new instance of AzureWebCategory. </summary>
         internal AzureWebCategory()

@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Network
         #region AvailableDelegation
         private static AvailableDelegationsRestOperations GetAvailableDelegationsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new AvailableDelegationsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new AvailableDelegationsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the AvailableDelegations for this <see cref="ResourceGroup" />. </summary>

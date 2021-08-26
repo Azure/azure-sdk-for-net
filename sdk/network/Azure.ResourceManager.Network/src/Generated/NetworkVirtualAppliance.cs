@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkVirtualAppliance"/> class. </summary>
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Network
         internal NetworkVirtualAppliance(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new NetworkVirtualAppliancesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>

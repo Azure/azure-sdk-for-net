@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Network
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new NetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetworkInterface"/> class. </summary>
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Network
         internal NetworkInterface(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new NetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-            _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+            _restClient = new NetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurationsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
+            _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Id.SubscriptionId, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
