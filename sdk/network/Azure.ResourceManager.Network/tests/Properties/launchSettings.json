@@ -1,4 +1,7 @@
 {
-  "Entries": [],
-  "Variables": {}
+  "profiles": {
+    "Azure.Management.Network.Tests": {
+      "commandName": "Project"
+    }
+  }
 }
