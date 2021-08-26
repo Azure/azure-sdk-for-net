@@ -6,12 +6,12 @@
 #nullable disable
 
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The DeletedManagedHsm. </summary>
-    public partial class DeletedManagedHsm : Resources.Models.Resource
+    public partial class DeletedManagedHsm : ResourceManager.Models.Resource
     {
         /// <summary> Initializes a new instance of DeletedManagedHsm. </summary>
         internal DeletedManagedHsm()

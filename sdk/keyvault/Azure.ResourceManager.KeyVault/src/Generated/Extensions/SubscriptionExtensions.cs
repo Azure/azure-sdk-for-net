@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault
         #region Vault
         private static VaultsRestOperations GetVaultsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new VaultsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new VaultsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the Vaults for this <see cref="Subscription" />. </summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.KeyVault
         #region ManagedHsm
         private static ManagedHsmsRestOperations GetManagedHsmsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new ManagedHsmsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new ManagedHsmsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the ManagedHsms for this <see cref="Subscription" />. </summary>

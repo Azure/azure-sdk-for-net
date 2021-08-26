@@ -8,12 +8,12 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Key Vault resource. </summary>
-    public partial class Resource : Resources.Models.Resource
+    public partial class Resource : ResourceManager.Models.Resource
     {
         /// <summary> Initializes a new instance of Resource. </summary>
         public Resource()

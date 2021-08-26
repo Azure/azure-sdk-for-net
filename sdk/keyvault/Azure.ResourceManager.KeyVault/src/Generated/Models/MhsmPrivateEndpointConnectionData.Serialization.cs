@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Optional<string> etag = default;
             Optional<ManagedHsmSku> sku = default;
-            Optional<Models.SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             Location location = default;
             ResourceIdentifier id = default;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.KeyVault
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = Models.SystemData.DeserializeSystemData(property.Value);
+                    systemData = SystemData.DeserializeSystemData(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

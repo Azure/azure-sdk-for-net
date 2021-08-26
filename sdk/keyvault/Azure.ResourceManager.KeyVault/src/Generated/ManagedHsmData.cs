@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="sku"> SKU details. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the key vault resource. </param>
         /// <param name="properties"> Properties of the managed HSM. </param>
-        internal ManagedHsmData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ManagedHsmSku sku, Models.SystemData systemData, ManagedHsmProperties properties) : base(id, name, type, tags, location, sku, systemData)
+        internal ManagedHsmData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, Location location, ManagedHsmSku sku, SystemData systemData, ManagedHsmProperties properties) : base(id, name, type, tags, location, sku, systemData)
         {
             Properties = properties;
         }

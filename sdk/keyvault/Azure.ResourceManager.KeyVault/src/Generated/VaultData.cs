@@ -10,12 +10,12 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the Vault data model. </summary>
-    public partial class VaultData : Resources.Models.Resource
+    public partial class VaultData : ResourceManager.Models.Resource
     {
         /// <summary> Initializes a new instance of VaultData. </summary>
         /// <param name="properties"> Properties of the vault. </param>
