@@ -88,10 +88,10 @@ namespace Azure.Management.EventHub.Tests
             var disasterRecoveryName = Recording.GenerateAssetName(Helper.DisasterRecoveryPrefix);
             //CheckNameavaliability for Alias
             var checknameAlias = await DisasterRecoveryConfigsOperations.CheckNameAvailabilityAsync(resourceGroup, namespaceName, new CheckNameAvailabilityParameter(disasterRecoveryName));
-            Assert.True(checknameAlias.Value.NameAvailable, "The Alias Name: '" + disasterRecoveryName + "' is not avilable");
+            Assert.True(checknameAlias.Value.NameAvailable, "The Alias Name: '" + disasterRecoveryName + "' is not available");
             //CheckNameAvaliability for Alias with same as namespace name (alternateName will be used in this case)
             var checknameAliasSame =await DisasterRecoveryConfigsOperations.CheckNameAvailabilityAsync(resourceGroup, namespaceName, new CheckNameAvailabilityParameter(namespaceName));
-            // Assert.True(checknameAliasSame.NameAvailable, "The Alias Name: '" + namespaceName + "' is not avilable");
+            // Assert.True(checknameAliasSame.NameAvailable, "The Alias Name: '" + namespaceName + "' is not available");
             var DisasterRecoveryResponse = await DisasterRecoveryConfigsOperations.CreateOrUpdateAsync(resourceGroup, namespaceName, disasterRecoveryName, new ArmDisasterRecovery()
             {
                 PartnerNamespace = np2.Id

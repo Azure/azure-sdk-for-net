@@ -17,7 +17,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             AddJsonPathSanitizer("$..certificatePassword");
             AddJsonPathSanitizer("$..clientSecret");
             AddJsonPathSanitizer("$..keyVaultClientSecret");
-            AddJsonPathSanitizer("$..connectionString");
             AddJsonPathSanitizer("$..apiKey");
             AddJsonPathSanitizer("$..accountKey");
             AddJsonPathSanitizer("$..authHeader");

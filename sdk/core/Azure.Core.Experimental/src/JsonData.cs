@@ -242,7 +242,7 @@ namespace Azure.Core
         /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
         public T To<T>(JsonSerializerOptions options)
         {
-            return JsonSerializer.Deserialize<T>(ToString(), options);
+            return JsonSerializer.Deserialize<T>(ToJsonString(), options);
         }
 
         /// <summary>

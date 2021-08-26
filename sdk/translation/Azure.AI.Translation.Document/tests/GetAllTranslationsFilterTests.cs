@@ -38,7 +38,7 @@ namespace Azure.AI.Translation.Document.Tests
                 else if (jobTerminalStatus == DocumentTranslationStatus.Canceled)
                 {
                     await translationOp.CancelAsync(default);
-                    Thread.Sleep(3000); // wait for cancel status to propagate!
+                    Thread.Sleep(6000); // wait for cancel status to propagate!
                 }
             }
 

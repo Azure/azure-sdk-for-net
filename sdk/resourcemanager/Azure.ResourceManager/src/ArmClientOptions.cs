@@ -11,7 +11,9 @@ namespace Azure.ResourceManager
     /// <summary>
     /// A class representing Azure resource manager client options.
     /// </summary>
+#pragma warning disable AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     public sealed class ArmClientOptions : ClientOptions
+#pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
         private readonly ConcurrentDictionary<Type, object> _overrides = new ConcurrentDictionary<Type, object>();
 
