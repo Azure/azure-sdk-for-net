@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Resources
             _data = tenantData;
             HasData = true;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, Guid.Empty.ToString(), BaseUri);
-            _policyDefinitionsRestOperations = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
-            _policySetDefinitionsRestOperations = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Guid.Empty.ToString(), BaseUri);
+            _policyDefinitionsRestOperations = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _policySetDefinitionsRestOperations = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Resources
             : base(new ClientContext(options, credential, baseUri, pipeline), ResourceIdentifier.RootResourceIdentifier)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, Guid.Empty.ToString(), BaseUri);
-            _policyDefinitionsRestOperations = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
-            _policySetDefinitionsRestOperations = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _providerRestOperations = new ProviderRestOperations(_clientDiagnostics, Pipeline, ClientOptions, Guid.Empty.ToString(), BaseUri);
+            _policyDefinitionsRestOperations = new PolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _policySetDefinitionsRestOperations = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary>

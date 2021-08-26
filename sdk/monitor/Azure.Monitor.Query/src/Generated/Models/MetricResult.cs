@@ -12,16 +12,16 @@ using System.Linq;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The result data of a query. </summary>
-    public partial class Metric
+    public partial class MetricResult
     {
-        /// <summary> Initializes a new instance of Metric. </summary>
+        /// <summary> Initializes a new instance of MetricResult. </summary>
         /// <param name="id"> the metric Id. </param>
         /// <param name="type"> the resource type of the metric resource. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="type"/>, <paramref name="localizedName"/>, or <paramref name="timeSeries"/> is null. </exception>
-        internal Metric(string id, string type, LocalizableString localizedName, MetricUnit unit, IEnumerable<TimeSeriesElement> timeSeries)
+        internal MetricResult(string id, string type, LocalizableString localizedName, MetricUnit unit, IEnumerable<TimeSeriesElement> timeSeries)
         {
             if (id == null)
             {
@@ -47,7 +47,7 @@ namespace Azure.Monitor.Query.Models
             TimeSeries = timeSeries.ToList();
         }
 
-        /// <summary> Initializes a new instance of Metric. </summary>
+        /// <summary> Initializes a new instance of MetricResult. </summary>
         /// <param name="id"> the metric Id. </param>
         /// <param name="type"> the resource type of the metric resource. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
@@ -56,7 +56,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
-        internal Metric(string id, string type, LocalizableString localizedName, string displayDescription, string errorCode, string errorMessage, MetricUnit unit, IReadOnlyList<TimeSeriesElement> timeSeries)
+        internal MetricResult(string id, string type, LocalizableString localizedName, string displayDescription, string errorCode, string errorMessage, MetricUnit unit, IReadOnlyList<TimeSeriesElement> timeSeries)
         {
             Id = id;
             Type = type;

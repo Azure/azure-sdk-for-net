@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class LogsQueryResultColumn
+    public partial class LogsTableColumn
     {
-        internal static LogsQueryResultColumn DeserializeLogsQueryResultColumn(JsonElement element)
+        internal static LogsTableColumn DeserializeLogsTableColumn(JsonElement element)
         {
             string name = default;
             LogsColumnType type = default;
@@ -29,7 +29,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new LogsQueryResultColumn(name, type);
+            return new LogsTableColumn(name, type);
         }
     }
 }

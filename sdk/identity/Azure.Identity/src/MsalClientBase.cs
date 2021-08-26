@@ -11,6 +11,7 @@ namespace Azure.Identity
         where TClient : IClientApplicationBase
     {
         private readonly AsyncLockWithValue<TClient> _clientAsyncLock;
+        internal protected bool LogPII { get; protected set; }
 
         /// <summary>
         /// For mocking purposes only.
