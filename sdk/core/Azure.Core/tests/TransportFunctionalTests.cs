@@ -970,7 +970,6 @@ namespace Azure.Core.Tests
                         throw;
                     }
                     TestContext.WriteLine(ex.Message);
-                    Assert.That(ex.Message.Contains("certificate") || ex.Message.Contains("TLS"), ex.Message);
                 }
                 finally
                 {
