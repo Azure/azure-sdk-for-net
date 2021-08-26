@@ -11,6 +11,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
+using System.Net;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 {
@@ -320,6 +321,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
 
             Assert.Null(telemetryItem.Tags["ai.user.userAgent"]);
+        }
+
+        [Fact]
+        public void RoleInstanceIsSetToHostNameByDefault()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource();
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+        }
+
+        [Fact]
+        public void RoleInstanceIsNotOverwrittenIfSetViaServiceInstanceId()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                null,
+                startTime: DateTime.UtcNow);
+            var resource = CreateTestResource(null, null, "serviceinstance");
+
+            var monitorTags = AzureMonitorConverter.EnumerateActivityTags(activity);
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, ref monitorTags, resource, null);
+
+            Assert.Equal("serviceinstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
 
         /// <summary>

@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-
+using System.Net;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry.Logs;
@@ -154,6 +155,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             else
             {
                 RoleName = serviceName;
+            }
+
+            // This will happen in two cases
+            // 1) AddService() is not called on resource.
+            // 2) AddService is called with autoGenerateServiceInstanceId set to false and serviceInstanceId is not passed.
+            if (RoleInstance == null)
+            {
+                try
+                {
+                    RoleInstance = Dns.GetHostName();
+                }
+                catch (Exception e)
+                {
+                    AzureMonitorExporterEventSource.Log.Write($"ErrorInitializingRoleInstanceToHostName{EventLevelSuffix.Error}", $"{e.ToInvariantString()}");
+                }
             }
         }
 
