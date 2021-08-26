@@ -1,8 +1,0 @@
-﻿{
-  "identity": {
-    "principalId": "de29bab1-49e1-4705-819b-4dfddceaaa98",
-    "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-    "type": "SystemAssigned",
-    "userAssignedIdentities": null
-  }
-}
