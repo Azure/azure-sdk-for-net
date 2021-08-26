@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
@@ -35,10 +36,8 @@ namespace Azure.ResourceManager.Tests
 
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
-            var data = new GenericResourceData();
-            data.Location = Location.WestUS2;
-            data.Sku = new Sku();
-            data.Sku.Name = "Aligned";
+            var data = new GenericResourceData(Location.WestUS2);
+            data.Sku = new Sku("Aligned");
             var propertyBag = new Dictionary<string, object>();
             propertyBag.Add("platformUpdateDomainCount", 5);
             propertyBag.Add("platformFaultDomainCount", 2);
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.Tests
             return await genericResources.CreateOrUpdateAsync(asetId, data);
         }
 
-        protected async Task<ResourcesCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
+        protected async Task<ResourceCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
             var genericResources = Client.DefaultSubscription.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();

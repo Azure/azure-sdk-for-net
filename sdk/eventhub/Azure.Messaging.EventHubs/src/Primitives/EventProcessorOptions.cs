@@ -81,6 +81,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   it is empty.
         /// </value>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested wait time is negative.</exception>
+        ///
         public TimeSpan? MaximumWaitTime
         {
             get => _maximumWaitTime;
@@ -123,6 +125,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   times as large as the number of events in a batch to allow for efficient buffering of service operations.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested count is negative.</exception>
+        ///
         public int PrefetchCount
         {
             get => _prefetchCount;
@@ -152,6 +156,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   as traffic passes through the system.  Consequently, the resulting resource use will fluctuate as well.</para>
         /// </value>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested size is negative.</exception>
+        ///
         public long? PrefetchSizeInBytes
         {
             get => _prefetchSizeInBytes;
@@ -178,6 +184,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   with higher priority may cause a minor delay longer than this interval for load balancing.
         /// </remarks>
         ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested interval is negative.</exception>
+        ///
         public TimeSpan LoadBalancingUpdateInterval
         {
             get => _loadBalancingUpdateInterval;
@@ -196,6 +204,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <value>If not specified, an ownership interval of 30 seconds will be assumed.</value>
+        ///
+        /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested interval is negative.</exception>
         ///
         public TimeSpan PartitionOwnershipExpirationInterval
         {

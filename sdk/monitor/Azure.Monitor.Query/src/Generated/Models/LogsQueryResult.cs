@@ -16,32 +16,29 @@ namespace Azure.Monitor.Query.Models
     public partial class LogsQueryResult
     {
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
-        /// <param name="tables"> The list of tables, columns and rows. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tables"/> is null. </exception>
-        internal LogsQueryResult(IEnumerable<LogsQueryResultTable> tables)
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
+        internal LogsQueryResult(IEnumerable<LogsTable> allTables)
         {
-            if (tables == null)
+            if (allTables == null)
             {
-                throw new ArgumentNullException(nameof(tables));
+                throw new ArgumentNullException(nameof(allTables));
             }
 
-            Tables = tables.ToList();
+            AllTables = allTables.ToList();
         }
 
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
-        /// <param name="tables"> The list of tables, columns and rows. </param>
-        /// <param name="Statistics"> Any object. </param>
-        /// <param name="Visualization"> Any object. </param>
-        /// <param name="Error"> Any object. </param>
-        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables, JsonElement Statistics, JsonElement Visualization, JsonElement Error)
+        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <param name="statistics"> Any object. </param>
+        /// <param name="visualization"> Any object. </param>
+        /// <param name="error"> Any object. </param>
+        internal LogsQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error)
         {
-            Tables = tables;
-            _statistics = Statistics;
-            _visualization = Visualization;
-            _error = Error;
+            AllTables = allTables;
+            _statistics = statistics;
+            _visualization = visualization;
+            _error = error;
         }
-
-        /// <summary> The list of tables, columns and rows. </summary>
-        public IReadOnlyList<LogsQueryResultTable> Tables { get; }
     }
 }

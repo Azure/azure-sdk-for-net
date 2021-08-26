@@ -51,7 +51,7 @@ namespace Azure.Identity.Tests
             var mockMsalClient = new MockMsalPublicClient
             {
                 Accounts = new List<IAccount> { new MockAccount("nonexpecteduser@mockdomain.com") },
-                ExtendedSilentAuthFactory = (_, account, _, _, _) =>
+                ExtendedSilentAuthFactory = (_, _, account, _, _, _) =>
                 {
                     Assert.AreEqual(expectedUsername, account.Username);
 
@@ -70,6 +70,15 @@ namespace Azure.Identity.Tests
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
             Assert.IsTrue(acquireTokenSilentCalled);
+        }
+
+        [Test]
+        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
+        {
+            var credential = new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions{ IsLoggingPIIEnabled = isLoggingPIIEnabled});
+
+            Assert.NotNull(credential.Client);
+            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.LogPII);
         }
 
         [Test]
@@ -616,7 +625,7 @@ namespace Azure.Identity.Tests
                 Guid.NewGuid(),
                 null,
                 "Bearer");
-            mockMsal.ExtendedSilentAuthFactory = (_, _, tenant, _, _) =>
+            mockMsal.ExtendedSilentAuthFactory = (_, _, _, tenant, _, _) =>
             {
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;
