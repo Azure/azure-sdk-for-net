@@ -11,16 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The result of a request to retrieve a key-value from the specified configuration store. </summary>
+    /// <summary> The key-value resource along with all resource properties. </summary>
     public partial class KeyValue
     {
         /// <summary> Initializes a new instance of KeyValue. </summary>
-        internal KeyValue()
+        public KeyValue()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of KeyValue. </summary>
+        /// <param name="id"> The resource ID. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. </param>
         /// <param name="key">
         /// The primary identifier of a key-value.
         /// 
@@ -45,8 +48,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// A locked key-value may not be modified until it is unlocked.
         /// </param>
         /// <param name="tags"> A dictionary of tags that can help identify what a key-value may be applicable for. </param>
-        internal KeyValue(string key, string label, string value, string contentType, string eTag, DateTimeOffset? lastModified, bool? locked, IReadOnlyDictionary<string, string> tags)
+        internal KeyValue(string id, string name, string type, string key, string label, string value, string contentType, string eTag, DateTimeOffset? lastModified, bool? locked, IDictionary<string, string> tags)
         {
+            Id = id;
+            Name = name;
+            Type = type;
             Key = key;
             Label = label;
             Value = value;
@@ -57,6 +63,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             Tags = tags;
         }
 
+        /// <summary> The resource ID. </summary>
+        public string Id { get; }
+        /// <summary> The name of the resource. </summary>
+        public string Name { get; }
+        /// <summary> The type of the resource. </summary>
+        public string Type { get; }
         /// <summary>
         /// The primary identifier of a key-value.
         /// 
@@ -70,13 +82,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// </summary>
         public string Label { get; }
         /// <summary> The value of the key-value. </summary>
-        public string Value { get; }
+        public string Value { get; set; }
         /// <summary>
         /// The content type of the key-value&apos;s value.
         /// 
         /// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </summary>
-        public string ContentType { get; }
+        public string ContentType { get; set; }
         /// <summary> An ETag indicating the state of a key-value within a configuration store. </summary>
         public string ETag { get; }
         /// <summary> The last time a modifying operation was performed on the given key-value. </summary>
@@ -88,6 +100,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// </summary>
         public bool? Locked { get; }
         /// <summary> A dictionary of tags that can help identify what a key-value may be applicable for. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags { get; }
     }
 }

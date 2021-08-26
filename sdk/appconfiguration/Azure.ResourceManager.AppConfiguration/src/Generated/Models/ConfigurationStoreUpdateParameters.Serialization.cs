@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
             }
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                writer.WritePropertyName("disableLocalAuth");
+                writer.WriteBooleanValue(DisableLocalAuth.Value);
+            }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess");

@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             writer.WritePropertyName("sku");
             writer.WriteObjectValue(Sku);
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -37,6 +35,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Encryption))
@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                writer.WritePropertyName("disableLocalAuth");
+                writer.WriteBooleanValue(DisableLocalAuth.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -57,17 +62,19 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         {
             Optional<ResourceIdentity> identity = default;
             Sku sku = default;
+            Optional<SystemData> systemData = default;
+            Optional<IDictionary<string, string>> tags = default;
+            string location = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            string location = default;
-            Optional<IDictionary<string, string>> tags = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> endpoint = default;
             Optional<EncryptionProperties> encryption = default;
             Optional<IReadOnlyList<PrivateEndpointConnectionReference>> privateEndpointConnections = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<bool> disableLocalAuth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -85,24 +92,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("systemData"))
                 {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = SystemData.DeserializeSystemData(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -118,6 +115,26 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -189,11 +206,21 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                             publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("disableLocalAuth"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            disableLocalAuth = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ConfigurationStore(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), identity.Value, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
+            return new ConfigurationStore(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, sku, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth));
         }
     }
 }

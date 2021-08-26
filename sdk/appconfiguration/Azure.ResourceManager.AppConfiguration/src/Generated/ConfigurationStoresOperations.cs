@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal ConfigurationStoresOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-06-01")
+        internal ConfigurationStoresOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-03-01-preview")
         {
             RestClient = new ConfigurationStoresRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -110,46 +110,6 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 return RestClient.RegenerateKey(resourceGroupName, configStoreName, regenerateKeyParameters, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists a configuration store key-value. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<KeyValue>> ListKeyValueAsync(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoresOperations.ListKeyValue");
-            scope.Start();
-            try
-            {
-                return await RestClient.ListKeyValueAsync(resourceGroupName, configStoreName, listKeyValueParameters, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists a configuration store key-value. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="configStoreName"> The name of the configuration store. </param>
-        /// <param name="listKeyValueParameters"> The parameters for retrieving a key-value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<KeyValue> ListKeyValue(string resourceGroupName, string configStoreName, ListKeyValueParameters listKeyValueParameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ConfigurationStoresOperations.ListKeyValue");
-            scope.Start();
-            try
-            {
-                return RestClient.ListKeyValue(resourceGroupName, configStoreName, listKeyValueParameters, cancellationToken);
             }
             catch (Exception e)
             {

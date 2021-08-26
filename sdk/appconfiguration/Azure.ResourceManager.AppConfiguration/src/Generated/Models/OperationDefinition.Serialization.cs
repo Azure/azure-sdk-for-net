@@ -15,12 +15,25 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         internal static OperationDefinition DeserializeOperationDefinition(JsonElement element)
         {
             Optional<string> name = default;
+            Optional<bool> isDataAction = default;
             Optional<OperationDefinitionDisplay> display = default;
+            Optional<string> origin = default;
+            Optional<OperationProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isDataAction"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isDataAction = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("display"))
@@ -33,8 +46,23 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     display = OperationDefinitionDisplay.DeserializeOperationDefinitionDisplay(property.Value);
                     continue;
                 }
+                if (property.NameEquals("origin"))
+                {
+                    origin = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = OperationProperties.DeserializeOperationProperties(property.Value);
+                    continue;
+                }
             }
-            return new OperationDefinition(name.Value, display.Value);
+            return new OperationDefinition(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value);
         }
     }
 }

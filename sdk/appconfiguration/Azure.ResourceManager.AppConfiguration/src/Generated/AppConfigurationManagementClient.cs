@@ -64,5 +64,8 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> Returns an instance of PrivateLinkResourcesOperations. </summary>
         public virtual PrivateLinkResourcesOperations PrivateLinkResources => new PrivateLinkResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of KeyValuesOperations. </summary>
+        public virtual KeyValuesOperations KeyValues => new KeyValuesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }

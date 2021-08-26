@@ -17,16 +17,28 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Initializes a new instance of OperationDefinition. </summary>
         /// <param name="name"> Operation name: {provider}/{resource}/{operation}. </param>
+        /// <param name="isDataAction"> Indicates whether the operation is a data action. </param>
         /// <param name="display"> The display information for the configuration store operation. </param>
-        internal OperationDefinition(string name, OperationDefinitionDisplay display)
+        /// <param name="origin"> Origin of the operation. </param>
+        /// <param name="properties"> Properties of the operation. </param>
+        internal OperationDefinition(string name, bool? isDataAction, OperationDefinitionDisplay display, string origin, OperationProperties properties)
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
+            Origin = origin;
+            Properties = properties;
         }
 
         /// <summary> Operation name: {provider}/{resource}/{operation}. </summary>
         public string Name { get; }
+        /// <summary> Indicates whether the operation is a data action. </summary>
+        public bool? IsDataAction { get; }
         /// <summary> The display information for the configuration store operation. </summary>
         public OperationDefinitionDisplay Display { get; }
+        /// <summary> Origin of the operation. </summary>
+        public string Origin { get; }
+        /// <summary> Properties of the operation. </summary>
+        public OperationProperties Properties { get; }
     }
 }

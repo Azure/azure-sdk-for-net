@@ -12,10 +12,43 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class KeyValue
+    public partial class KeyValue : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value");
+                writer.WriteStringValue(Value);
+            }
+            if (Optional.IsDefined(ContentType))
+            {
+                writer.WritePropertyName("contentType");
+                writer.WriteStringValue(ContentType);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
+
         internal static KeyValue DeserializeKeyValue(JsonElement element)
         {
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             Optional<string> key = default;
             Optional<string> label = default;
             Optional<string> value = default;
@@ -23,71 +56,98 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             Optional<string> eTag = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<bool> locked = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("id"))
                 {
-                    key = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("name"))
                 {
-                    label = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("type"))
                 {
-                    value = property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentType"))
-                {
-                    contentType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("eTag"))
-                {
-                    eTag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastModified"))
+                if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastModified = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("locked"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    locked = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (property0.NameEquals("key"))
+                        {
+                            key = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("label"))
+                        {
+                            label = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("value"))
+                        {
+                            value = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("contentType"))
+                        {
+                            contentType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("eTag"))
+                        {
+                            eTag = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("lastModified"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastModified = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("locked"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            locked = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("tags"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            tags = dictionary;
+                            continue;
+                        }
                     }
-                    tags = dictionary;
                     continue;
                 }
             }
-            return new KeyValue(key.Value, label.Value, value.Value, contentType.Value, eTag.Value, Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags));
+            return new KeyValue(id.Value, name.Value, type.Value, key.Value, label.Value, value.Value, contentType.Value, eTag.Value, Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags));
         }
     }
 }

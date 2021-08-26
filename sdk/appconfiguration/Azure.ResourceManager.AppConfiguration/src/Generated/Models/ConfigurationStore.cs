@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The configuration store along with all resource properties. The Configuration Store will have all information to begin utilizing it. </summary>
-    public partial class ConfigurationStore : Resource
+    public partial class ConfigurationStore : TrackedResource
     {
         /// <summary> Initializes a new instance of ConfigurationStore. </summary>
-        /// <param name="location"> The location of the resource. This cannot be changed after the resource is created. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The sku of the configuration store. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="sku"/> is null. </exception>
         public ConfigurationStore(string location, Sku sku) : base(location)
@@ -34,35 +34,41 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of ConfigurationStore. </summary>
-        /// <param name="id"> The resource ID. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. </param>
-        /// <param name="location"> The location of the resource. This cannot be changed after the resource is created. </param>
-        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed identity information, if configured. </param>
         /// <param name="sku"> The sku of the configuration store. </param>
+        /// <param name="systemData"> Resource system metadata. </param>
         /// <param name="provisioningState"> The provisioning state of the configuration store. </param>
         /// <param name="creationDate"> The creation date of configuration store. </param>
         /// <param name="endpoint"> The DNS endpoint where the configuration store API will be available. </param>
         /// <param name="encryption"> The encryption settings of the configuration store. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        internal ConfigurationStore(string id, string name, string type, string location, IDictionary<string, string> tags, ResourceIdentity identity, Sku sku, ProvisioningState? provisioningState, DateTimeOffset? creationDate, string endpoint, EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, location, tags)
+        /// <param name="disableLocalAuth"> Disables all authentication methods other than AAD authentication. </param>
+        internal ConfigurationStore(string id, string name, string type, IDictionary<string, string> tags, string location, ResourceIdentity identity, Sku sku, SystemData systemData, ProvisioningState? provisioningState, DateTimeOffset? creationDate, string endpoint, EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth) : base(id, name, type, tags, location)
         {
             Identity = identity;
             Sku = sku;
+            SystemData = systemData;
             ProvisioningState = provisioningState;
             CreationDate = creationDate;
             Endpoint = endpoint;
             Encryption = encryption;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
+            DisableLocalAuth = disableLocalAuth;
         }
 
         /// <summary> The managed identity information, if configured. </summary>
         public ResourceIdentity Identity { get; set; }
         /// <summary> The sku of the configuration store. </summary>
         public Sku Sku { get; set; }
+        /// <summary> Resource system metadata. </summary>
+        public SystemData SystemData { get; }
         /// <summary> The provisioning state of the configuration store. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The creation date of configuration store. </summary>
@@ -75,5 +81,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public IReadOnlyList<PrivateEndpointConnectionReference> PrivateEndpointConnections { get; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Disables all authentication methods other than AAD authentication. </summary>
+        public bool? DisableLocalAuth { get; set; }
     }
 }
