@@ -481,7 +481,7 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareDirectoryGetFilesAndDirectoriesOptions() { }
         public bool? IncludeExtendedInfo { get { throw null; } set { } }
         public string Prefix { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.ShareFileTraits? Traits { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareFileTraits Traits { get { throw null; } set { } }
     }
     public partial class ShareDirectoryInfo
     {
