@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task NetworkInterfaceApiTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -178,6 +179,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task NetworkInterfaceWithAcceleratedNetworkingTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -266,6 +268,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task NetworkInterfaceMultiIpConfigTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -407,6 +410,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task AssertMultiIpConfigOnDifferentSubnetFails()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -488,6 +492,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task NetworkInterfaceDnsSettingsTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -574,6 +579,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         /// currently this test is failing because of nrp valdiation check:cannot have multiple IPv4 IpConfigurations if it specifies a Ipv6 IpConfigurations. Ipv4 Ipconfig Count: 2
         /// will remove ignore tag once the check in nrp is removed.
         [Test]
+        [RecordedTest]
         public async Task NetworkInterfaceApiIPv6MultiCATest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -724,6 +730,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task NetworkInterfaceDnsSettingsTestIdnsSuffix()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -811,6 +818,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task NetworkInterfaceEnableIPForwardingTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -891,6 +899,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         public async Task NetworkInterfaceNetworkSecurityGroupTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -997,6 +1006,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         [Ignore("Track2: Need to use an existing virtual machine, but not create it in test case ")]
         public async Task NetworkInterfaceEffectiveNetworkSecurityGroupTest()
         {
@@ -1110,6 +1120,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         }
 
         [Test]
+        [RecordedTest]
         [Ignore("Track2: Need to use an existing virtual machine, but not create it in test case ")]
         public async Task NetworkInterfaceEffectiveRouteTableTest()
         {
