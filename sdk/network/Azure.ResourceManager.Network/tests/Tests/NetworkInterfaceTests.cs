@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Verify Get IpConfiguration in NetworkInterface
             // TODO: Update after ADO 5975
-            Response<NetworkInterfaceIPConfiguration> getNicIpConfiguration = await networkInterfaceOperations.GetNetworkInterfaceIPConfigurationAsync();
-            Assert.AreEqual(ipConfigName, getNicIpConfiguration.Value.Name);
-            Assert.NotNull(getNicIpConfiguration.Value.Etag);
+            //Response<NetworkInterfaceIPConfiguration> getNicIpConfiguration = await networkInterfaceOperations.GetNetworkInterfaceIPConfigurationAsync();
+            //Assert.AreEqual(ipConfigName, getNicIpConfiguration.Value.Name);
+            //Assert.NotNull(getNicIpConfiguration.Value.Etag);
 
             // Verify List LoadBalancers in NetworkInterface
             AsyncPageable<LoadBalancerData> listNicLoadBalancersAP = getNicResponse.Value.GetNetworkInterfaceLoadBalancersAsync();

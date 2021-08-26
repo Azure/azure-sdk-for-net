@@ -319,10 +319,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Response<Subnet> getSubnetResponse = await putVnetResponse.Value.GetSubnets().GetAsync(subnetName);
 
             // Get Vnet usage
-            // TODO ADO 6030
-            //AsyncPageable<VirtualNetworkUsage> listUsageResponseAP = putVnetResponse.Value.Get
-            //List<VirtualNetworkUsage> listUsageResponse = await listUsageResponseAP.ToEnumerableAsync();
-            //Assert.AreEqual(0.0, listUsageResponse[0].CurrentValue);
+            var usage = await putVnetResponse.Value.GetUsageAsync().ToEnumerableAsync();
+            Assert.AreEqual(0.0, usage[0].CurrentValue);
 
             // Create Nic
             string nicName = Recording.GenerateAssetName("azsmnet");
@@ -349,11 +347,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var networkInterfaceContainer = resourceGroup.GetNetworkInterfaces();
             var putNicResponseOperation = await networkInterfaceContainer.CreateOrUpdateAsync(nicName, nicParameters);
             var nicResponse = await putNicResponseOperation.WaitForCompletionAsync();;
+
             // Get Vnet usage again
-            // TODO: ADO 6030
-            //listUsageResponseAP = virtualNetworkContainer.GetUsageAsync(vnetName);
-            //listUsageResponse = await listUsageResponseAP.ToEnumerableAsync();
-            //Assert.AreEqual(1.0, listUsageResponse[0].CurrentValue);
+            usage = await putVnetResponse.Value.GetUsageAsync().ToEnumerableAsync();
+            Assert.AreEqual(1.0, usage[0].CurrentValue);
 
             // Delete Vnet and Nic
             await nicResponse.Value.DeleteAsync();

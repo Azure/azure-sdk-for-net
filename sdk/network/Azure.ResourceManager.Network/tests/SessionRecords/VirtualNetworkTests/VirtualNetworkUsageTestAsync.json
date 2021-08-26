@@ -16,15 +16,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:29:48 GMT",
+        "Date": "Thu, 26 Aug 2021 04:48:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9541bb6f-0027-4791-bafb-e73342664d69",
-        "x-ms-ratelimit-remaining-subscription-reads": "11896",
-        "x-ms-request-id": "9541bb6f-0027-4791-bafb-e73342664d69",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T032948Z:9541bb6f-0027-4791-bafb-e73342664d69"
+        "x-ms-correlation-request-id": "168c670c-4455-4176-8558-5ee21c4462cb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "168c670c-4455-4176-8558-5ee21c4462cb",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044820Z:168c670c-4455-4176-8558-5ee21c4462cb"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -53,7 +53,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "21",
         "Content-Type": "application/json",
-        "traceparent": "00-dab50b195bdb13469b1faf709b7d49b4-5efc59c37eb0db43-00",
+        "traceparent": "00-d16f2ee07b30724a972127fe039745c6-994b74799339e843-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "5dacb8099dc8682c078e3f9bdb3dd4f8",
         "x-ms-return-client-request-id": "true"
@@ -66,15 +66,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "215",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:29:48 GMT",
+        "Date": "Thu, 26 Aug 2021 04:48:20 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b5bbcb55-4738-4f10-9d3a-9c37f3df8e76",
-        "x-ms-ratelimit-remaining-subscription-writes": "1178",
-        "x-ms-request-id": "b5bbcb55-4738-4f10-9d3a-9c37f3df8e76",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T032949Z:b5bbcb55-4738-4f10-9d3a-9c37f3df8e76"
+        "x-ms-correlation-request-id": "03c09319-50b2-4e1e-8653-d034adf2d446",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "03c09319-50b2-4e1e-8653-d034adf2d446",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044820Z:03c09319-50b2-4e1e-8653-d034adf2d446"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589",
@@ -127,11 +127,11 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/0a0af027-7716-40ab-8bc8-89a08b27a8be?api-version=2021-02-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/e29324cb-8c7e-4f76-b24c-4261c33f63ea?api-version=2021-02-01",
         "Cache-Control": "no-cache",
         "Content-Length": "1331",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:29:52 GMT",
+        "Date": "Thu, 26 Aug 2021 04:48:23 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "3",
@@ -141,23 +141,23 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "bc50af72-5b57-4368-bde4-d9c8a18b1a7c",
+        "x-ms-arm-service-request-id": "82e0e441-576b-4eb2-a5c9-62459e42c899",
         "x-ms-client-request-id": "7fbe1ed99d2f46bd7a6ffe03d6dbfeb5",
-        "x-ms-correlation-request-id": "be23f16a-5d46-4b70-b522-e84f13208ae1",
-        "x-ms-ratelimit-remaining-subscription-writes": "1177",
-        "x-ms-request-id": "0a0af027-7716-40ab-8bc8-89a08b27a8be",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T032952Z:be23f16a-5d46-4b70-b522-e84f13208ae1"
+        "x-ms-correlation-request-id": "4904b9c0-1449-4770-85f4-897e841a5412",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "e29324cb-8c7e-4f76-b24c-4261c33f63ea",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044824Z:4904b9c0-1449-4770-85f4-897e841a5412"
       },
       "ResponseBody": [
         "{\r\n",
         "  \u0022name\u0022: \u0022azsmnet4809\u0022,\r\n",
         "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/virtualNetworks/azsmnet4809\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022a2796143-9520-4e6b-9179-a3dd91ba17a4\\\u0022\u0022,\r\n",
+        "  \u0022etag\u0022: \u0022W/\\\u00225caa2000-f2a8-4c18-90f9-160020148420\\\u0022\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022821c8247-e704-48a5-ac84-ae015d6dc645\u0022,\r\n",
+        "    \u0022resourceGuid\u0022: \u0022e3877984-0c96-49d5-84e5-11998cd97f34\u0022,\r\n",
         "    \u0022addressSpace\u0022: {\r\n",
         "      \u0022addressPrefixes\u0022: [\r\n",
         "        \u002210.0.0.0/16\u0022\r\n",
@@ -173,7 +173,7 @@
         "      {\r\n",
         "        \u0022name\u0022: \u0022azsmnet8627\u0022,\r\n",
         "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/virtualNetworks/azsmnet4809/subnets/azsmnet8627\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022a2796143-9520-4e6b-9179-a3dd91ba17a4\\\u0022\u0022,\r\n",
+        "        \u0022etag\u0022: \u0022W/\\\u00225caa2000-f2a8-4c18-90f9-160020148420\\\u0022\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
         "          \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
         "          \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
@@ -191,7 +191,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/0a0af027-7716-40ab-8bc8-89a08b27a8be?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/e29324cb-8c7e-4f76-b24c-4261c33f63ea?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -203,9 +203,47 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "Content-Length": "30",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Aug 2021 04:48:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "48563f66-e28d-4849-a94a-049c9a5693d6",
+        "x-ms-client-request-id": "8481fe3a8a180e89a08122bc6903b763",
+        "x-ms-correlation-request-id": "de8d17c2-7ca9-4555-9e57-0d27060c1564",
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "e3741bac-d769-485d-a221-1fbdb08eeda4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044824Z:de8d17c2-7ca9-4555-9e57-0d27060c1564"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/e29324cb-8c7e-4f76-b24c-4261c33f63ea?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "400c259c78ebccbf8f7d34920c969337",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
         "Content-Length": "29",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:29:52 GMT",
+        "Date": "Thu, 26 Aug 2021 04:48:25 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -214,12 +252,12 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "b8c5fa4a-adff-42c7-9f49-72ccb8f6f46a",
-        "x-ms-client-request-id": "8481fe3a8a180e89a08122bc6903b763",
-        "x-ms-correlation-request-id": "1bfccbf5-3c60-4a82-b76d-fee258b1e827",
-        "x-ms-ratelimit-remaining-subscription-reads": "11895",
-        "x-ms-request-id": "ac65ee89-3a29-45d1-9429-dc52578a701c",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T032953Z:1bfccbf5-3c60-4a82-b76d-fee258b1e827"
+        "x-ms-arm-service-request-id": "5ba6e4e5-78d2-459f-bfe8-23b592d76036",
+        "x-ms-client-request-id": "400c259c78ebccbf8f7d34920c969337",
+        "x-ms-correlation-request-id": "e09c65b3-e8fb-4ad1-8eb3-9e84217fd328",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "ad8a2bf9-8cfe-4532-9c71-53c43f1b993c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044826Z:e09c65b3-e8fb-4ad1-8eb3-9e84217fd328"
       },
       "ResponseBody": [
         "{\r\n",
@@ -233,7 +271,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "400c259c78ebccbf8f7d34920c969337",
+        "x-ms-client-request-id": "d8c8ea0b7a5aa69c0bfe9038ead1d747",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -242,8 +280,8 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1333",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:29:53 GMT",
-        "ETag": "W/\u0022b9d848a9-0b3a-47a2-93b9-06ddb0b83d03\u0022",
+        "Date": "Thu, 26 Aug 2021 04:48:25 GMT",
+        "ETag": "W/\u0022f0e63ad6-17dd-472a-90ee-b05a299aad65\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -252,23 +290,23 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "360db1a0-ae51-46bf-b440-1f5513669277",
-        "x-ms-client-request-id": "400c259c78ebccbf8f7d34920c969337",
-        "x-ms-correlation-request-id": "5f43ffac-2151-428e-beff-5cb48b6fafad",
-        "x-ms-ratelimit-remaining-subscription-reads": "11894",
-        "x-ms-request-id": "42e773a8-cbb6-413e-8088-c2934abef290",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T032953Z:5f43ffac-2151-428e-beff-5cb48b6fafad"
+        "x-ms-arm-service-request-id": "774aa7c0-dade-452b-a124-c88060d61ab4",
+        "x-ms-client-request-id": "d8c8ea0b7a5aa69c0bfe9038ead1d747",
+        "x-ms-correlation-request-id": "60b8e66d-c718-4950-9f5c-96faf334ba9e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "a4232d07-b32c-4092-8c64-07e4b539ead6",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044826Z:60b8e66d-c718-4950-9f5c-96faf334ba9e"
       },
       "ResponseBody": [
         "{\r\n",
         "  \u0022name\u0022: \u0022azsmnet4809\u0022,\r\n",
         "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/virtualNetworks/azsmnet4809\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022b9d848a9-0b3a-47a2-93b9-06ddb0b83d03\\\u0022\u0022,\r\n",
+        "  \u0022etag\u0022: \u0022W/\\\u0022f0e63ad6-17dd-472a-90ee-b05a299aad65\\\u0022\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Network/virtualNetworks\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u0022821c8247-e704-48a5-ac84-ae015d6dc645\u0022,\r\n",
+        "    \u0022resourceGuid\u0022: \u0022e3877984-0c96-49d5-84e5-11998cd97f34\u0022,\r\n",
         "    \u0022addressSpace\u0022: {\r\n",
         "      \u0022addressPrefixes\u0022: [\r\n",
         "        \u002210.0.0.0/16\u0022\r\n",
@@ -284,7 +322,7 @@
         "      {\r\n",
         "        \u0022name\u0022: \u0022azsmnet8627\u0022,\r\n",
         "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/virtualNetworks/azsmnet4809/subnets/azsmnet8627\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022b9d848a9-0b3a-47a2-93b9-06ddb0b83d03\\\u0022\u0022,\r\n",
+        "        \u0022etag\u0022: \u0022W/\\\u0022f0e63ad6-17dd-472a-90ee-b05a299aad65\\\u0022\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
         "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "          \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
@@ -308,7 +346,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "d8c8ea0b7a5aa69c0bfe9038ead1d747",
+        "x-ms-client-request-id": "8d892de52336c2283fb4f49b55f7020a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -317,8 +355,8 @@
         "Cache-Control": "no-cache",
         "Content-Length": "534",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:29:53 GMT",
-        "ETag": "W/\u0022b9d848a9-0b3a-47a2-93b9-06ddb0b83d03\u0022",
+        "Date": "Thu, 26 Aug 2021 04:48:26 GMT",
+        "ETag": "W/\u0022f0e63ad6-17dd-472a-90ee-b05a299aad65\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -327,18 +365,18 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "fe503a2f-6942-4081-8e98-47700969656e",
-        "x-ms-client-request-id": "d8c8ea0b7a5aa69c0bfe9038ead1d747",
-        "x-ms-correlation-request-id": "1495ce17-2672-49cc-a43b-a4c586399880",
-        "x-ms-ratelimit-remaining-subscription-reads": "11893",
-        "x-ms-request-id": "cc70d129-5bfc-40c6-a832-906c4ed948e7",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T032953Z:1495ce17-2672-49cc-a43b-a4c586399880"
+        "x-ms-arm-service-request-id": "d32a405b-c877-467e-b458-ff033f151927",
+        "x-ms-client-request-id": "8d892de52336c2283fb4f49b55f7020a",
+        "x-ms-correlation-request-id": "fc34a937-b828-4cbc-b441-a1d62f7773c9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "6b1120eb-b90c-4dfc-a059-86ae57c32a5d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044826Z:fc34a937-b828-4cbc-b441-a1d62f7773c9"
       },
       "ResponseBody": [
         "{\r\n",
         "  \u0022name\u0022: \u0022azsmnet8627\u0022,\r\n",
         "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/virtualNetworks/azsmnet4809/subnets/azsmnet8627\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022b9d848a9-0b3a-47a2-93b9-06ddb0b83d03\\\u0022\u0022,\r\n",
+        "  \u0022etag\u0022: \u0022W/\\\u0022f0e63ad6-17dd-472a-90ee-b05a299aad65\\\u0022\u0022,\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022addressPrefix\u0022: \u002210.0.1.0/24\u0022,\r\n",
@@ -351,15 +389,64 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet5395?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/virtualNetworks/azsmnet4809/usages?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "7fb1ebeedf3a2209886634ede787e2bd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "387",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Aug 2021 04:48:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "a8bdd27b-eead-4d8c-a7d5-330f63019279",
+        "x-ms-client-request-id": "7fb1ebeedf3a2209886634ede787e2bd",
+        "x-ms-correlation-request-id": "86a6a6c6-9d8c-43f3-8050-334be9dcfc2c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11979",
+        "x-ms-request-id": "7a1fd755-fbdf-442b-b2c3-449d3fa0b148",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044827Z:86a6a6c6-9d8c-43f3-8050-334be9dcfc2c"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022value\u0022: [\r\n",
+        "    {\r\n",
+        "      \u0022currentValue\u0022: 0,\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/virtualNetworks/azsmnet4809/subnets/azsmnet8627\u0022,\r\n",
+        "      \u0022limit\u0022: 251,\r\n",
+        "      \u0022name\u0022: {\r\n",
+        "        \u0022localizedValue\u0022: \u0022Subnet size and usage\u0022,\r\n",
+        "        \u0022value\u0022: \u0022SubnetSpace\u0022\r\n",
+        "      },\r\n",
+        "      \u0022unit\u0022: \u0022Count\u0022\r\n",
+        "    }\r\n",
+        "  ]\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet9149?api-version=2021-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "391",
+        "Content-Length": "392",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "23368d89c228b43ff49b55f7020aeeeb",
+        "x-ms-client-request-id": "050cdface70006c198a585015114fc86",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -371,7 +458,7 @@
         "properties": {
           "ipConfigurations": [
             {
-              "name": "azsmnet232",
+              "name": "azsmnet5652",
               "id": null,
               "properties": {
                 "privateIPAddress": "10.0.1.9",
@@ -388,11 +475,11 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/721ce041-fed3-4daa-a248-dd201cfd69f8?api-version=2021-02-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/251e9612-087e-4245-8e6b-b36b984247c2?api-version=2021-02-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "1708",
+        "Content-Length": "1710",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:29:56 GMT",
+        "Date": "Thu, 26 Aug 2021 04:48:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -401,30 +488,30 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "d662bc3a-4957-44cb-9133-233f86fcf1e8",
-        "x-ms-client-request-id": "23368d89c228b43ff49b55f7020aeeeb",
-        "x-ms-correlation-request-id": "cdd9bad4-2b45-4f81-b3e6-9c1747410e25",
-        "x-ms-ratelimit-remaining-subscription-writes": "1176",
-        "x-ms-request-id": "721ce041-fed3-4daa-a248-dd201cfd69f8",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T032957Z:cdd9bad4-2b45-4f81-b3e6-9c1747410e25"
+        "x-ms-arm-service-request-id": "f5074070-88bc-4e0a-89d2-4f71ccb51058",
+        "x-ms-client-request-id": "050cdface70006c198a585015114fc86",
+        "x-ms-correlation-request-id": "63adbb46-f123-4be5-b89c-b57e0d381dbe",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "251e9612-087e-4245-8e6b-b36b984247c2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044830Z:63adbb46-f123-4be5-b89c-b57e0d381dbe"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet5395\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet5395\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022367c1de4-4b64-4a49-a1bc-df1b5927c5e8\\\u0022\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet9149\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet9149\u0022,\r\n",
+        "  \u0022etag\u0022: \u0022W/\\\u0022c817ec9a-1247-4fd9-9b03-6d2b867da6b7\\\u0022\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "  \u0022tags\u0022: {\r\n",
         "    \u0022key\u0022: \u0022value\u0022\r\n",
         "  },\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002263aa28d5-7794-4c14-ac6d-fa7bc069a468\u0022,\r\n",
+        "    \u0022resourceGuid\u0022: \u00224b96094f-d1e4-4b69-9e88-409505d12815\u0022,\r\n",
         "    \u0022ipConfigurations\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet232\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet5395/ipConfigurations/azsmnet232\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022367c1de4-4b64-4a49-a1bc-df1b5927c5e8\\\u0022\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet5652\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet9149/ipConfigurations/azsmnet5652\u0022,\r\n",
+        "        \u0022etag\u0022: \u0022W/\\\u0022c817ec9a-1247-4fd9-9b03-6d2b867da6b7\\\u0022\u0022,\r\n",
         "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
         "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
@@ -441,7 +528,7 @@
         "    \u0022dnsSettings\u0022: {\r\n",
         "      \u0022dnsServers\u0022: [],\r\n",
         "      \u0022appliedDnsServers\u0022: [],\r\n",
-        "      \u0022internalDomainNameSuffix\u0022: \u0022i4bbzaqe24surleevyav01ogif.bx.internal.cloudapp.net\u0022\r\n",
+        "      \u0022internalDomainNameSuffix\u0022: \u0022qr2ypy2wbtkutbhfcgmyzwl5ge.bx.internal.cloudapp.net\u0022\r\n",
         "    },\r\n",
         "    \u0022enableAcceleratedNetworking\u0022: false,\r\n",
         "    \u0022vnetEncryptionSupported\u0022: false,\r\n",
@@ -455,12 +542,12 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/721ce041-fed3-4daa-a248-dd201cfd69f8?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/251e9612-087e-4245-8e6b-b36b984247c2?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "050cdface70006c198a585015114fc86",
+        "x-ms-client-request-id": "224a67f5e9fdc9eabd3446639d871420",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -469,7 +556,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "29",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:29:57 GMT",
+        "Date": "Thu, 26 Aug 2021 04:48:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -478,12 +565,12 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "b38b3460-41a8-4f80-b2e3-fe1e0c4fe793",
-        "x-ms-client-request-id": "050cdface70006c198a585015114fc86",
-        "x-ms-correlation-request-id": "ca3de9d4-a640-4598-a51e-7bd22abd0690",
-        "x-ms-ratelimit-remaining-subscription-reads": "11892",
-        "x-ms-request-id": "479e358c-3504-4688-b703-5190f808bb5f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T032957Z:ca3de9d4-a640-4598-a51e-7bd22abd0690"
+        "x-ms-arm-service-request-id": "6f6e1187-a527-4e80-b27a-bb36bb705f6e",
+        "x-ms-client-request-id": "224a67f5e9fdc9eabd3446639d871420",
+        "x-ms-correlation-request-id": "f463380b-05b1-4f76-b0d5-6ee86e364219",
+        "x-ms-ratelimit-remaining-subscription-reads": "11978",
+        "x-ms-request-id": "7c8874d5-39bb-47e7-b63d-5f7956ecc796",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044830Z:f463380b-05b1-4f76-b0d5-6ee86e364219"
       },
       "ResponseBody": [
         "{\r\n",
@@ -492,22 +579,22 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet5395?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet9149?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "5820fe49060c672305d0ee3bdbb8d136",
+        "x-ms-client-request-id": "e43d60f14d9da6e1bca5ff30f9862be0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1708",
+        "Content-Length": "1710",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:29:57 GMT",
-        "ETag": "W/\u0022367c1de4-4b64-4a49-a1bc-df1b5927c5e8\u0022",
+        "Date": "Thu, 26 Aug 2021 04:48:30 GMT",
+        "ETag": "W/\u0022c817ec9a-1247-4fd9-9b03-6d2b867da6b7\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -516,30 +603,30 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "c9c4bc73-1cea-44c9-afe8-e7787c4e98d7",
-        "x-ms-client-request-id": "5820fe49060c672305d0ee3bdbb8d136",
-        "x-ms-correlation-request-id": "18993033-c710-42f4-becd-a344bc58b57e",
-        "x-ms-ratelimit-remaining-subscription-reads": "11891",
-        "x-ms-request-id": "8c3d6071-151f-4a65-843f-98b4875d0838",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T032957Z:18993033-c710-42f4-becd-a344bc58b57e"
+        "x-ms-arm-service-request-id": "b6d9f90c-07c2-4809-a830-fe315107c1ef",
+        "x-ms-client-request-id": "e43d60f14d9da6e1bca5ff30f9862be0",
+        "x-ms-correlation-request-id": "a7bf308f-550b-4d9c-a39c-9342748e3716",
+        "x-ms-ratelimit-remaining-subscription-reads": "11977",
+        "x-ms-request-id": "63e78771-9ee7-4dab-a338-dd7ee3ed6b5a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044831Z:a7bf308f-550b-4d9c-a39c-9342748e3716"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022azsmnet5395\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet5395\u0022,\r\n",
-        "  \u0022etag\u0022: \u0022W/\\\u0022367c1de4-4b64-4a49-a1bc-df1b5927c5e8\\\u0022\u0022,\r\n",
+        "  \u0022name\u0022: \u0022azsmnet9149\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet9149\u0022,\r\n",
+        "  \u0022etag\u0022: \u0022W/\\\u0022c817ec9a-1247-4fd9-9b03-6d2b867da6b7\\\u0022\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "  \u0022tags\u0022: {\r\n",
         "    \u0022key\u0022: \u0022value\u0022\r\n",
         "  },\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022resourceGuid\u0022: \u002263aa28d5-7794-4c14-ac6d-fa7bc069a468\u0022,\r\n",
+        "    \u0022resourceGuid\u0022: \u00224b96094f-d1e4-4b69-9e88-409505d12815\u0022,\r\n",
         "    \u0022ipConfigurations\u0022: [\r\n",
         "      {\r\n",
-        "        \u0022name\u0022: \u0022azsmnet232\u0022,\r\n",
-        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet5395/ipConfigurations/azsmnet232\u0022,\r\n",
-        "        \u0022etag\u0022: \u0022W/\\\u0022367c1de4-4b64-4a49-a1bc-df1b5927c5e8\\\u0022\u0022,\r\n",
+        "        \u0022name\u0022: \u0022azsmnet5652\u0022,\r\n",
+        "        \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet9149/ipConfigurations/azsmnet5652\u0022,\r\n",
+        "        \u0022etag\u0022: \u0022W/\\\u0022c817ec9a-1247-4fd9-9b03-6d2b867da6b7\\\u0022\u0022,\r\n",
         "        \u0022type\u0022: \u0022Microsoft.Network/networkInterfaces/ipConfigurations\u0022,\r\n",
         "        \u0022properties\u0022: {\r\n",
         "          \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
@@ -556,7 +643,7 @@
         "    \u0022dnsSettings\u0022: {\r\n",
         "      \u0022dnsServers\u0022: [],\r\n",
         "      \u0022appliedDnsServers\u0022: [],\r\n",
-        "      \u0022internalDomainNameSuffix\u0022: \u0022i4bbzaqe24surleevyav01ogif.bx.internal.cloudapp.net\u0022\r\n",
+        "      \u0022internalDomainNameSuffix\u0022: \u0022qr2ypy2wbtkutbhfcgmyzwl5ge.bx.internal.cloudapp.net\u0022\r\n",
         "    },\r\n",
         "    \u0022enableAcceleratedNetworking\u0022: false,\r\n",
         "    \u0022vnetEncryptionSupported\u0022: false,\r\n",
@@ -570,46 +657,10 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet5395?api-version=2021-02-01",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "224a67f5e9fdc9eabd3446639d871420",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/d793166e-731e-4da2-8b64-c1667c4ad8f6?api-version=2021-02-01",
-        "Cache-Control": "no-cache",
-        "Content-Length": "0",
-        "Date": "Tue, 24 Aug 2021 03:29:58 GMT",
-        "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operationResults/d793166e-731e-4da2-8b64-c1667c4ad8f6?api-version=2021-02-01",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "67341a97-8070-47e6-a020-0e8a2ed28fe2",
-        "x-ms-client-request-id": "224a67f5e9fdc9eabd3446639d871420",
-        "x-ms-correlation-request-id": "7779dfe9-0139-4cdf-89bd-0468d9957e46",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14978",
-        "x-ms-request-id": "d793166e-731e-4da2-8b64-c1667c4ad8f6",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T032958Z:7779dfe9-0139-4cdf-89bd-0468d9957e46"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/d793166e-731e-4da2-8b64-c1667c4ad8f6?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/virtualNetworks/azsmnet4809/usages?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "e90b4ed4d9c9608813569ad8bfbfc97e",
@@ -619,9 +670,9 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "29",
+        "Content-Length": "387",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:29:58 GMT",
+        "Date": "Thu, 26 Aug 2021 04:48:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -630,12 +681,97 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "3005ead7-4590-4228-a2b6-0cdccd9a5000",
+        "x-ms-arm-service-request-id": "a07f3e16-0863-40a8-8c76-760841543c71",
         "x-ms-client-request-id": "e90b4ed4d9c9608813569ad8bfbfc97e",
-        "x-ms-correlation-request-id": "03807f5d-e430-47e7-b588-c4cb3017c368",
-        "x-ms-ratelimit-remaining-subscription-reads": "11890",
-        "x-ms-request-id": "edf21e6d-bde7-4086-85fe-9cfeb9cf5684",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T032959Z:03807f5d-e430-47e7-b588-c4cb3017c368"
+        "x-ms-correlation-request-id": "1eae1b48-d27b-480a-9417-c92a52f1d5b2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11976",
+        "x-ms-request-id": "7220a3a9-1107-4170-b50e-5aa683eec0a6",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044831Z:1eae1b48-d27b-480a-9417-c92a52f1d5b2"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022value\u0022: [\r\n",
+        "    {\r\n",
+        "      \u0022currentValue\u0022: 1,\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/virtualNetworks/azsmnet4809/subnets/azsmnet8627\u0022,\r\n",
+        "      \u0022limit\u0022: 251,\r\n",
+        "      \u0022name\u0022: {\r\n",
+        "        \u0022localizedValue\u0022: \u0022Subnet size and usage\u0022,\r\n",
+        "        \u0022value\u0022: \u0022SubnetSpace\u0022\r\n",
+        "      },\r\n",
+        "      \u0022unit\u0022: \u0022Count\u0022\r\n",
+        "    }\r\n",
+        "  ]\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4589/providers/Microsoft.Network/networkInterfaces/azsmnet9149?api-version=2021-02-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "7a4acdbbec7ba79986a36658e9bad036",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncNotification": "Enabled",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/15e525fb-36a2-44a7-aa27-a0283456b337?api-version=2021-02-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Thu, 26 Aug 2021 04:48:31 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operationResults/15e525fb-36a2-44a7-aa27-a0283456b337?api-version=2021-02-01",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "5ccc321f-a2df-467b-9e7e-fbe2e83a2ff8",
+        "x-ms-client-request-id": "7a4acdbbec7ba79986a36658e9bad036",
+        "x-ms-correlation-request-id": "b83c44d5-63e6-4b63-bf81-770fa3153eeb",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14996",
+        "x-ms-request-id": "15e525fb-36a2-44a7-aa27-a0283456b337",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044832Z:b83c44d5-63e6-4b63-bf81-770fa3153eeb"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/15e525fb-36a2-44a7-aa27-a0283456b337?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "2b7581dbb13ce765b563622573307659",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "29",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Aug 2021 04:48:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "e856aaba-8030-4d2a-bd92-11b432108162",
+        "x-ms-client-request-id": "2b7581dbb13ce765b563622573307659",
+        "x-ms-correlation-request-id": "32915d26-6ff0-4e1c-85f6-054e0c9edf02",
+        "x-ms-ratelimit-remaining-subscription-reads": "11975",
+        "x-ms-request-id": "52abf6df-0938-4cd0-b623-6a57c19f154a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044832Z:32915d26-6ff0-4e1c-85f6-054e0c9edf02"
       },
       "ResponseBody": [
         "{\r\n",
@@ -650,19 +786,19 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "7a4acdbbec7ba79986a36658e9bad036",
+        "x-ms-client-request-id": "59ce64867a2f8f027632a19e1b52f57d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/399ee3df-df48-4c81-ae95-5fa989a4715e?api-version=2021-02-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/b085ce9c-a659-4278-9ce3-d9fa4c659657?api-version=2021-02-01",
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Tue, 24 Aug 2021 03:29:59 GMT",
+        "Date": "Thu, 26 Aug 2021 04:48:32 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operationResults/399ee3df-df48-4c81-ae95-5fa989a4715e?api-version=2021-02-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operationResults/b085ce9c-a659-4278-9ce3-d9fa4c659657?api-version=2021-02-01",
         "Pragma": "no-cache",
         "Retry-After": "10",
         "Server": [
@@ -671,136 +807,60 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "2c52abaf-e92b-43ff-98a3-97c8f0edb67a",
-        "x-ms-client-request-id": "7a4acdbbec7ba79986a36658e9bad036",
-        "x-ms-correlation-request-id": "0ff31c9f-e2e6-48c8-8059-723519b67e89",
-        "x-ms-ratelimit-remaining-subscription-deletes": "14977",
-        "x-ms-request-id": "399ee3df-df48-4c81-ae95-5fa989a4715e",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T032959Z:0ff31c9f-e2e6-48c8-8059-723519b67e89"
+        "x-ms-arm-service-request-id": "d61fecb7-cb51-4360-8786-99adb6407cd6",
+        "x-ms-client-request-id": "59ce64867a2f8f027632a19e1b52f57d",
+        "x-ms-correlation-request-id": "1d291ee6-6337-4fd9-ab12-8db0b600ff19",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14995",
+        "x-ms-request-id": "b085ce9c-a659-4278-9ce3-d9fa4c659657",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044833Z:1d291ee6-6337-4fd9-ab12-8db0b600ff19"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/399ee3df-df48-4c81-ae95-5fa989a4715e?api-version=2021-02-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "2b7581dbb13ce765b563622573307659",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "30",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:29:59 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "10",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "993ad0a8-dfa8-4bcc-a7d6-c589711c940e",
-        "x-ms-client-request-id": "2b7581dbb13ce765b563622573307659",
-        "x-ms-correlation-request-id": "7871eed8-f6ae-4fa4-b48d-26d88c8a6391",
-        "x-ms-ratelimit-remaining-subscription-reads": "11889",
-        "x-ms-request-id": "e26f7786-7af0-473a-a74d-6567104e599f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T033000Z:7871eed8-f6ae-4fa4-b48d-26d88c8a6391"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/399ee3df-df48-4c81-ae95-5fa989a4715e?api-version=2021-02-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "59ce64867a2f8f027632a19e1b52f57d",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "30",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:30:00 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "20",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "0ae047b4-cd28-4cc2-9233-1fa1f7369488",
-        "x-ms-client-request-id": "59ce64867a2f8f027632a19e1b52f57d",
-        "x-ms-correlation-request-id": "96e7bedf-f937-4ca2-8573-18bd87f146d3",
-        "x-ms-ratelimit-remaining-subscription-reads": "11888",
-        "x-ms-request-id": "c9e81993-cfa3-4e63-aa43-7c4d5a4e5a4f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T033000Z:96e7bedf-f937-4ca2-8573-18bd87f146d3"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/399ee3df-df48-4c81-ae95-5fa989a4715e?api-version=2021-02-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "677c69bca44458fa01a89917c931a3a7",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "30",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:30:00 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Retry-After": "20",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "fffb178b-f280-42cc-8f91-26511013ab9b",
-        "x-ms-client-request-id": "677c69bca44458fa01a89917c931a3a7",
-        "x-ms-correlation-request-id": "2722e1ce-6634-48a9-bffc-2be9179ff713",
-        "x-ms-ratelimit-remaining-subscription-reads": "11887",
-        "x-ms-request-id": "0f4a8463-b7f5-4afe-9fcb-1f857e273d69",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T033000Z:2722e1ce-6634-48a9-bffc-2be9179ff713"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/399ee3df-df48-4c81-ae95-5fa989a4715e?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/b085ce9c-a659-4278-9ce3-d9fa4c659657?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "4ec078658e3a61cd7ee5b5090fc6cb62",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "30",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 26 Aug 2021 04:48:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "a4abbee2-ae74-4720-a93f-58c59c0c7e83",
+        "x-ms-client-request-id": "4ec078658e3a61cd7ee5b5090fc6cb62",
+        "x-ms-correlation-request-id": "3afb7972-27ad-4098-84ea-9462c7686095",
+        "x-ms-ratelimit-remaining-subscription-reads": "11974",
+        "x-ms-request-id": "f5208533-7da9-49a4-a813-1bbeeac9a458",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044833Z:3afb7972-27ad-4098-84ea-9462c7686095"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022status\u0022: \u0022InProgress\u0022\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/b085ce9c-a659-4278-9ce3-d9fa4c659657?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20210823.1 (.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "0a69e46e0fb3e11469765787e0ebc645",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -809,7 +869,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "29",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Aug 2021 03:30:00 GMT",
+        "Date": "Thu, 26 Aug 2021 04:48:34 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -818,12 +878,12 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-arm-service-request-id": "d6db8972-a91a-4de4-94a5-bf526f0393b0",
-        "x-ms-client-request-id": "4ec078658e3a61cd7ee5b5090fc6cb62",
-        "x-ms-correlation-request-id": "44d743c5-7f11-4d80-8b99-4d699c4dc89f",
-        "x-ms-ratelimit-remaining-subscription-reads": "11886",
-        "x-ms-request-id": "cfc6fa00-f2bd-4b81-8bee-7375ac947677",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20210824T033001Z:44d743c5-7f11-4d80-8b99-4d699c4dc89f"
+        "x-ms-arm-service-request-id": "bc61f7e6-cedc-4804-8eab-51745c4a0f6e",
+        "x-ms-client-request-id": "0a69e46e0fb3e11469765787e0ebc645",
+        "x-ms-correlation-request-id": "91e6c302-3734-47b5-8fef-ce9252f82ee5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11973",
+        "x-ms-request-id": "db6893aa-18db-4ab7-8657-d87ceef80b60",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20210826T044835Z:91e6c302-3734-47b5-8fef-ce9252f82ee5"
       },
       "ResponseBody": [
         "{\r\n",

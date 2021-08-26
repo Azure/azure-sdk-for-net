@@ -1107,9 +1107,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.Null(getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite);
             Console.WriteLine("Default site removal from Virtual network gateway is successful.", getVirtualNetworkGatewayResponse.Value.Data.GatewayDefaultSite);
 
-            // 3A. UpdateVirtualNetworkGatewayConnection API :- RoutingWeight = 3 => 4, SharedKey = "abc"=> "xyz"
-            // TODO: ADO 6005
-            //await await virtualNetworkGatewayConnectionContainer.Get(VirtualNetworkGatewayConnectionName).Value.StartResetSharedKey(new ConnectionSharedKey("xyz")).WaitForCompletionAsync();;
+            // 3A. UpdateVirtualNetworkGatewayConnection API :- RoutingWeight = 3 => 4, SharedKey length => 64
+            await getVirtualNetworkGatewayConnectionResponse.Value.ResetSharedKey(new ConnectionResetSharedKey(64)).WaitForCompletionAsync();
             virtualNetworkGatewayConneciton.RoutingWeight = 4;
 
             putVirtualNetworkGatewayConnectionResponseOperation = await virtualNetworkGatewayConnectionContainer.CreateOrUpdateAsync(VirtualNetworkGatewayConnectionName, virtualNetworkGatewayConneciton);
@@ -1137,11 +1136,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Has.One.EqualTo(listVirtualNetworkGatewayConectionResponse);
 
             // 4B. VirtualNetworkGateway ListConnections API
-            // TODO: ADO 6030
-            //AsyncPageable<VirtualNetworkGatewayConnectionListEntity> virtualNetworkGatewayListConnectionsResponseAP = virtualNetworkGatewayContainer.Get(virtualNetworkGatewayName).Value.ListConnections();
-            //List<VirtualNetworkGatewayConnectionListEntity> virtualNetworkGatewayListConnectionsResponse = await virtualNetworkGatewayListConnectionsResponseAP.ToEnumerableAsync();
-            //Has.One.EqualTo(virtualNetworkGatewayListConnectionsResponse);
-            //Assert.AreEqual(VirtualNetworkGatewayConnectionName, virtualNetworkGatewayListConnectionsResponse.First().Name);
+            var connections = await putVirtualNetworkGatewayResponse.Value.GetConnectionsAsync().ToEnumerableAsync();
+            Has.One.EqualTo(connections);
+            Assert.AreEqual(VirtualNetworkGatewayConnectionName, connections.First().Name);
 
             // 5A. DeleteVirtualNetworkGatewayConnection API
             // TODO: use specif delete ADO 5998
@@ -1274,9 +1271,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // 3A.SetVirtualNetworkGatewayConnectionSharedKey API on created connection above:- virtualNetworkGatewayConneciton
             ConnectionSharedKey connectionSharedKey = new ConnectionSharedKey("TestSharedKeyValue");
-            // TODO: ADO 6005
-            //VirtualNetworkGatewayConnectionsSetSharedKeyOperation putConnectionSharedKeyResponseOperation = await getVirtualNetworkGatewayConnectionResponse.Value.SetSharedKeyAsync(connectionSharedKeyName, connectionSharedKey);
-            //await putConnectionSharedKeyResponseOperation.WaitForCompletionAsync();;
+            var setSharedKeyOperation = await getVirtualNetworkGatewayConnectionResponse.Value.SetSharedKeyAsync(connectionSharedKey);
+            await setSharedKeyOperation.WaitForCompletionAsync();
+            ;
 
             // 3B. GetVirtualNetworkGatewayConnectionSharedKey API
             getconnectionSharedKeyResponse = await getVirtualNetworkGatewayConnectionResponse.Value.GetSharedKeyAsync();

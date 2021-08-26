@@ -104,9 +104,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.IsEmpty(ddosProtectionPlans);
 
             // list all
-            // TODO: ADO 6080
-            //ddosProtectionPlans = await ArmClient.DefaultSubscription.GetDdosProtectionPlanAsync();
-            //Assert.IsEmpty(ddosProtectionPlans);
+            ddosProtectionPlans = await ArmClient.DefaultSubscription.GetDdosProtectionPlansAsync().ToEnumerableAsync();
+            Assert.IsEmpty(ddosProtectionPlans);
         }
 
         private void ValidateCommon(DdosProtectionPlanData data, string name)
