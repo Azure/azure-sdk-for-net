@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -20,6 +21,8 @@ namespace Azure.ResourceManager.Sql.Models
             PrivateEndpointConnections = new ChangeTrackingList<ServerPrivateEndpointConnection>();
         }
 
+        /// <summary> Server identity. </summary>
+        public ResourceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Administrator username for the server. Once created it cannot be changed. </summary>
@@ -37,6 +40,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Minimal TLS version. Allowed values: &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
         public string MinimalTlsVersion { get; set; }
         /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
-        public ServerPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public ServerNetworkAccessFlag? PublicNetworkAccess { get; set; }
+        /// <summary> Whether or not existing server has a workspace created and if it allows connection from workspace. </summary>
+        public ServerWorkspaceFeature? WorkspaceFeature { get; }
+        /// <summary> The resource id of a user assigned identity to be used by default. </summary>
+        public string PrimaryUserAssignedIdentityId { get; set; }
+        /// <summary> The Client id used for cross tenant CMK scenario. </summary>
+        public Guid? FederatedClientId { get; set; }
+        /// <summary> A CMK URI of the key to use for encryption. </summary>
+        public string KeyId { get; set; }
+        /// <summary> The Azure Active Directory identity of the server. </summary>
+        public ServerExternalAdministrator Administrators { get; set; }
+        /// <summary> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        public ServerNetworkAccessFlag? RestrictOutboundNetworkAccess { get; set; }
     }
 }

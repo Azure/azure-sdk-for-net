@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> uri = default;
             Optional<string> thumbprint = default;
             Optional<DateTimeOffset> creationDate = default;
+            Optional<bool> autoRotationEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -103,11 +104,21 @@ namespace Azure.ResourceManager.Sql.Models
                             creationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("autoRotationEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            autoRotationEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ManagedInstanceKey(id.Value, name.Value, type.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate));
+            return new ManagedInstanceKey(id.Value, name.Value, type.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled));
         }
     }
 }

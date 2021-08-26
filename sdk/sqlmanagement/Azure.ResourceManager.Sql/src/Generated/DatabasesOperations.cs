@@ -290,9 +290,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of databases. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
+        /// <param name="skipToken"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
-        public virtual AsyncPageable<Database> ListByServerAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Database> ListByServerAsync(string resourceGroupName, string serverName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -309,7 +310,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListByServerAsync(resourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListByServerAsync(resourceGroupName, serverName, skipToken, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,7 +325,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListByServerNextPageAsync(nextLink, resourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListByServerNextPageAsync(nextLink, resourceGroupName, serverName, skipToken, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -339,9 +340,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a list of databases. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
+        /// <param name="skipToken"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
-        public virtual Pageable<Database> ListByServer(string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public virtual Pageable<Database> ListByServer(string resourceGroupName, string serverName, string skipToken = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -358,7 +360,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListByServer(resourceGroupName, serverName, cancellationToken);
+                    var response = RestClient.ListByServer(resourceGroupName, serverName, skipToken, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -373,7 +375,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListByServerNextPage(nextLink, resourceGroupName, serverName, cancellationToken);
+                    var response = RestClient.ListByServerNextPage(nextLink, resourceGroupName, serverName, skipToken, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -493,13 +495,12 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Imports a bacpac into a new database. </summary>
+        /// <summary> Gets a list of inaccessible databases in a logical server. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="parameters"> The required parameters for importing a Bacpac into a database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<DatabasesImportOperation> StartImportAsync(string resourceGroupName, string serverName, ImportRequest parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
+        public virtual AsyncPageable<Database> ListInaccessibleByServerAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -509,32 +510,46 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(serverName));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartImport");
-            scope.Start();
-            try
+            async Task<Page<Database>> FirstPageFunc(int? pageSizeHint)
             {
-                var originalResponse = await RestClient.ImportAsync(resourceGroupName, serverName, parameters, cancellationToken).ConfigureAwait(false);
-                return new DatabasesImportOperation(_clientDiagnostics, _pipeline, RestClient.CreateImportRequest(resourceGroupName, serverName, parameters).Request, originalResponse);
+                using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.ListInaccessibleByServer");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListInaccessibleByServerAsync(resourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<Database>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.ListInaccessibleByServer");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListInaccessibleByServerNextPageAsync(nextLink, resourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Imports a bacpac into a new database. </summary>
+        /// <summary> Gets a list of inaccessible databases in a logical server. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="parameters"> The required parameters for importing a Bacpac into a database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="parameters"/> is null. </exception>
-        public virtual DatabasesImportOperation StartImport(string resourceGroupName, string serverName, ImportRequest parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
+        public virtual Pageable<Database> ListInaccessibleByServer(string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -544,185 +559,38 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(serverName));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartImport");
-            scope.Start();
-            try
+            Page<Database> FirstPageFunc(int? pageSizeHint)
             {
-                var originalResponse = RestClient.Import(resourceGroupName, serverName, parameters, cancellationToken);
-                return new DatabasesImportOperation(_clientDiagnostics, _pipeline, RestClient.CreateImportRequest(resourceGroupName, serverName, parameters).Request, originalResponse);
+                using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.ListInaccessibleByServer");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListInaccessibleByServer(resourceGroupName, serverName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<Database> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.ListInaccessibleByServer");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListInaccessibleByServerNextPage(nextLink, resourceGroupName, serverName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-        }
-
-        /// <summary> Creates an import operation that imports a bacpac into an existing database. The existing database must be empty. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to import into. </param>
-        /// <param name="extensionName"> The name of the operation to perform. </param>
-        /// <param name="parameters"> The required parameters for importing a Bacpac into a database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<DatabasesCreateImportOperationOperation> StartCreateImportOperationAsync(string resourceGroupName, string serverName, string databaseName, ExtensionName extensionName, ImportExtensionRequest parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartCreateImportOperation");
-            scope.Start();
-            try
-            {
-                var originalResponse = await RestClient.CreateImportOperationAsync(resourceGroupName, serverName, databaseName, extensionName, parameters, cancellationToken).ConfigureAwait(false);
-                return new DatabasesCreateImportOperationOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateImportOperationRequest(resourceGroupName, serverName, databaseName, extensionName, parameters).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates an import operation that imports a bacpac into an existing database. The existing database must be empty. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to import into. </param>
-        /// <param name="extensionName"> The name of the operation to perform. </param>
-        /// <param name="parameters"> The required parameters for importing a Bacpac into a database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public virtual DatabasesCreateImportOperationOperation StartCreateImportOperation(string resourceGroupName, string serverName, string databaseName, ExtensionName extensionName, ImportExtensionRequest parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartCreateImportOperation");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.CreateImportOperation(resourceGroupName, serverName, databaseName, extensionName, parameters, cancellationToken);
-                return new DatabasesCreateImportOperationOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateImportOperationRequest(resourceGroupName, serverName, databaseName, extensionName, parameters).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Exports a database to a bacpac. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to be exported. </param>
-        /// <param name="parameters"> The required parameters for exporting a database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<DatabasesExportOperation> StartExportAsync(string resourceGroupName, string serverName, string databaseName, ExportRequest parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartExport");
-            scope.Start();
-            try
-            {
-                var originalResponse = await RestClient.ExportAsync(resourceGroupName, serverName, databaseName, parameters, cancellationToken).ConfigureAwait(false);
-                return new DatabasesExportOperation(_clientDiagnostics, _pipeline, RestClient.CreateExportRequest(resourceGroupName, serverName, databaseName, parameters).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Exports a database to a bacpac. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to be exported. </param>
-        /// <param name="parameters"> The required parameters for exporting a database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
-        public virtual DatabasesExportOperation StartExport(string resourceGroupName, string serverName, string databaseName, ExportRequest parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartExport");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.Export(resourceGroupName, serverName, databaseName, parameters, cancellationToken);
-                return new DatabasesExportOperation(_clientDiagnostics, _pipeline, RestClient.CreateExportRequest(resourceGroupName, serverName, databaseName, parameters).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Creates a new database or updates an existing database. </summary>
@@ -955,6 +823,78 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary> Failovers a database. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database to failover. </param>
+        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public virtual async Task<DatabasesFailoverOperation> StartFailoverAsync(string resourceGroupName, string serverName, string databaseName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartFailover");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.FailoverAsync(resourceGroupName, serverName, databaseName, replicaType, cancellationToken).ConfigureAwait(false);
+                return new DatabasesFailoverOperation(_clientDiagnostics, _pipeline, RestClient.CreateFailoverRequest(resourceGroupName, serverName, databaseName, replicaType).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Failovers a database. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database to failover. </param>
+        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
+        public virtual DatabasesFailoverOperation StartFailover(string resourceGroupName, string serverName, string databaseName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartFailover");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.Failover(resourceGroupName, serverName, databaseName, replicaType, cancellationToken);
+                return new DatabasesFailoverOperation(_clientDiagnostics, _pipeline, RestClient.CreateFailoverRequest(resourceGroupName, serverName, databaseName, replicaType).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Pauses a database. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -1165,14 +1105,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Failovers a database. </summary>
+        /// <summary> Imports a bacpac into a new database. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to failover. </param>
-        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public virtual async Task<DatabasesFailoverOperation> StartFailoverAsync(string resourceGroupName, string serverName, string databaseName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<DatabasesImportOperation> StartImportAsync(string resourceGroupName, string serverName, string databaseName, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1186,13 +1126,17 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(databaseName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartFailover");
+            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartImport");
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.FailoverAsync(resourceGroupName, serverName, databaseName, replicaType, cancellationToken).ConfigureAwait(false);
-                return new DatabasesFailoverOperation(_clientDiagnostics, _pipeline, RestClient.CreateFailoverRequest(resourceGroupName, serverName, databaseName, replicaType).Request, originalResponse);
+                var originalResponse = await RestClient.ImportAsync(resourceGroupName, serverName, databaseName, parameters, cancellationToken).ConfigureAwait(false);
+                return new DatabasesImportOperation(_clientDiagnostics, _pipeline, RestClient.CreateImportRequest(resourceGroupName, serverName, databaseName, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -1201,14 +1145,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Failovers a database. </summary>
+        /// <summary> Imports a bacpac into a new database. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="databaseName"> The name of the database to failover. </param>
-        /// <param name="replicaType"> The type of replica to be failed over. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="databaseName"/> is null. </exception>
-        public virtual DatabasesFailoverOperation StartFailover(string resourceGroupName, string serverName, string databaseName, ReplicaType? replicaType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual DatabasesImportOperation StartImport(string resourceGroupName, string serverName, string databaseName, ImportExistingDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -1222,13 +1166,97 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(databaseName));
             }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartFailover");
+            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartImport");
             scope.Start();
             try
             {
-                var originalResponse = RestClient.Failover(resourceGroupName, serverName, databaseName, replicaType, cancellationToken);
-                return new DatabasesFailoverOperation(_clientDiagnostics, _pipeline, RestClient.CreateFailoverRequest(resourceGroupName, serverName, databaseName, replicaType).Request, originalResponse);
+                var originalResponse = RestClient.Import(resourceGroupName, serverName, databaseName, parameters, cancellationToken);
+                return new DatabasesImportOperation(_clientDiagnostics, _pipeline, RestClient.CreateImportRequest(resourceGroupName, serverName, databaseName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Exports a database. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The database export request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<DatabasesExportOperation> StartExportAsync(string resourceGroupName, string serverName, string databaseName, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartExport");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.ExportAsync(resourceGroupName, serverName, databaseName, parameters, cancellationToken).ConfigureAwait(false);
+                return new DatabasesExportOperation(_clientDiagnostics, _pipeline, RestClient.CreateExportRequest(resourceGroupName, serverName, databaseName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Exports a database. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="parameters"> The database export request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual DatabasesExportOperation StartExport(string resourceGroupName, string serverName, string databaseName, ExportDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatabasesOperations.StartExport");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.Export(resourceGroupName, serverName, databaseName, parameters, cancellationToken);
+                return new DatabasesExportOperation(_clientDiagnostics, _pipeline, RestClient.CreateExportRequest(resourceGroupName, serverName, databaseName, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {

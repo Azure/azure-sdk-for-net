@@ -16,7 +16,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> Creates a server dns alias. </summary>
+    /// <summary> Creates a server DNS alias. </summary>
     public partial class ServerDnsAliasesCreateOrUpdateOperation : Operation<ServerDnsAlias>, IOperationSource<ServerDnsAlias>
     {
         private readonly ArmOperationHelpers<ServerDnsAlias> _operation;

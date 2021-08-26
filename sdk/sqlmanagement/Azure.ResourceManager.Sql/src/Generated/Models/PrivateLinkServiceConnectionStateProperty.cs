@@ -15,13 +15,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of PrivateLinkServiceConnectionStateProperty. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="description"/> is null. </exception>
-        public PrivateLinkServiceConnectionStateProperty(string status, string description)
+        /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
+        public PrivateLinkServiceConnectionStateProperty(PrivateLinkServiceConnectionStateStatus status, string description)
         {
-            if (status == null)
-            {
-                throw new ArgumentNullException(nameof(status));
-            }
             if (description == null)
             {
                 throw new ArgumentNullException(nameof(description));
@@ -35,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
-        internal PrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired)
+        internal PrivateLinkServiceConnectionStateProperty(PrivateLinkServiceConnectionStateStatus status, string description, PrivateLinkServiceConnectionStateActionsRequire? actionsRequired)
         {
             Status = status;
             Description = description;
@@ -43,10 +39,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The private link service connection status. </summary>
-        public string Status { get; set; }
+        public PrivateLinkServiceConnectionStateStatus Status { get; set; }
         /// <summary> The private link service connection description. </summary>
         public string Description { get; set; }
         /// <summary> The actions required for private link service connection. </summary>
-        public string ActionsRequired { get; }
+        public PrivateLinkServiceConnectionStateActionsRequire? ActionsRequired { get; }
     }
 }

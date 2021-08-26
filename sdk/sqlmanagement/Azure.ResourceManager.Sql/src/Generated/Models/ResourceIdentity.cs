@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,19 +17,24 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ResourceIdentity. </summary>
         public ResourceIdentity()
         {
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserIdentity>();
         }
 
         /// <summary> Initializes a new instance of ResourceIdentity. </summary>
+        /// <param name="userAssignedIdentities"> The resource ids of the user assigned identities to use. </param>
         /// <param name="principalId"> The Azure Active Directory principal id. </param>
         /// <param name="type"> The identity type. Set this to &apos;SystemAssigned&apos; in order to automatically create and assign an Azure Active Directory principal for the resource. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant id. </param>
-        internal ResourceIdentity(Guid? principalId, IdentityType? type, Guid? tenantId)
+        internal ResourceIdentity(IDictionary<string, UserIdentity> userAssignedIdentities, Guid? principalId, IdentityType? type, Guid? tenantId)
         {
+            UserAssignedIdentities = userAssignedIdentities;
             PrincipalId = principalId;
             Type = type;
             TenantId = tenantId;
         }
 
+        /// <summary> The resource ids of the user assigned identities to use. </summary>
+        public IDictionary<string, UserIdentity> UserAssignedIdentities { get; }
         /// <summary> The Azure Active Directory principal id. </summary>
         public Guid? PrincipalId { get; }
         /// <summary> The identity type. Set this to &apos;SystemAssigned&apos; in order to automatically create and assign an Azure Active Directory principal for the resource. </summary>

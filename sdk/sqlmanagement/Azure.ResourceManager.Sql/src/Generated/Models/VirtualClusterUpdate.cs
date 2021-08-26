@@ -28,5 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string Family { get; set; }
         /// <summary> List of resources in this virtual cluster. </summary>
         public IReadOnlyList<string> ChildResources { get; }
+        /// <summary> Specifies maintenance configuration id to apply to this virtual cluster. </summary>
+        public string MaintenanceConfigurationId { get; set; }
     }
 }

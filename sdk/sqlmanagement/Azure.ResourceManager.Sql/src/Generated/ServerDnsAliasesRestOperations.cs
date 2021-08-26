@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/dnsAliases/", false);
             uri.AppendPath(dnsAliasName, true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server DNS alias. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
-        /// <param name="dnsAliasName"> The name of the server DNS alias. </param>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
         public async Task<Response<ServerDnsAlias>> GetAsync(string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a server DNS alias. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
-        /// <param name="dnsAliasName"> The name of the server DNS alias. </param>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
         public Response<ServerDnsAlias> Get(string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
@@ -153,16 +153,16 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/dnsAliases/", false);
             uri.AppendPath(dnsAliasName, true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Creates a server dns alias. </summary>
+        /// <summary> Creates a server DNS alias. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
-        /// <param name="dnsAliasName"> The name of the server DNS alias. </param>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
@@ -193,10 +193,10 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Creates a server dns alias. </summary>
+        /// <summary> Creates a server DNS alias. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
-        /// <param name="dnsAliasName"> The name of the server DNS alias. </param>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/dnsAliases/", false);
             uri.AppendPath(dnsAliasName, true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes the server DNS alias with the given name. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
-        /// <param name="dnsAliasName"> The name of the server DNS alias. </param>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Deletes the server DNS alias with the given name. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
-        /// <param name="dnsAliasName"> The name of the server DNS alias. </param>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, or <paramref name="dnsAliasName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/dnsAliases", false);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -415,8 +415,9 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/dnsAliases/", false);
             uri.AppendPath(dnsAliasName, true);
             uri.AppendPath("/acquire", false);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);

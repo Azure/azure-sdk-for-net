@@ -26,7 +26,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverKeyType"> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
-        internal EncryptionProtector(string id, string name, string type, string kind, string location, string subregion, string serverKeyName, ServerKeyType? serverKeyType, string uri, string thumbprint) : base(id, name, type)
+        /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
+        internal EncryptionProtector(string id, string name, string type, string kind, string location, string subregion, string serverKeyName, ServerKeyType? serverKeyType, string uri, string thumbprint, bool? autoRotationEnabled) : base(id, name, type)
         {
             Kind = kind;
             Location = location;
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
             ServerKeyType = serverKeyType;
             Uri = uri;
             Thumbprint = thumbprint;
+            AutoRotationEnabled = autoRotationEnabled;
         }
 
         /// <summary> Kind of encryption protector. This is metadata used for the Azure portal experience. </summary>
@@ -51,5 +53,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string Uri { get; }
         /// <summary> Thumbprint of the server key. </summary>
         public string Thumbprint { get; }
+        /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
+        public bool? AutoRotationEnabled { get; set; }
     }
 }

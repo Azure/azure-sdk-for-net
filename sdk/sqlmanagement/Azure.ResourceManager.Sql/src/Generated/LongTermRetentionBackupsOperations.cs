@@ -40,6 +40,48 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a long term retention backup. </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<LongTermRetentionBackup>> GetAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.Get");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a long term retention backup. </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<LongTermRetentionBackup> Get(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.Get");
+            scope.Start();
+            try
+            {
+                return RestClient.Get(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a long term retention backup. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
@@ -83,46 +125,310 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a long term retention backup. </summary>
+        /// <summary> Lists all long term retention backups for a database. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
-        /// <param name="backupName"> The backup name. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LongTermRetentionBackup>> GetAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, or <paramref name="longTermRetentionDatabaseName"/> is null. </exception>
+        public virtual AsyncPageable<LongTermRetentionBackup> ListByDatabaseAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.Get");
-            scope.Start();
-            try
+            if (locationName == null)
             {
-                return await RestClient.GetAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken).ConfigureAwait(false);
+                throw new ArgumentNullException(nameof(locationName));
             }
-            catch (Exception e)
+            if (longTermRetentionServerName == null)
             {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentNullException(nameof(longTermRetentionServerName));
             }
+            if (longTermRetentionDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
+            }
+
+            async Task<Page<LongTermRetentionBackup>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByDatabase");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByDatabaseAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<LongTermRetentionBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByDatabase");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByDatabaseNextPageAsync(nextLink, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a long term retention backup. </summary>
+        /// <summary> Lists all long term retention backups for a database. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
-        /// <param name="backupName"> The backup name. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LongTermRetentionBackup> Get(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, or <paramref name="longTermRetentionDatabaseName"/> is null. </exception>
+        public virtual Pageable<LongTermRetentionBackup> ListByDatabase(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.Get");
-            scope.Start();
-            try
+            if (locationName == null)
             {
-                return RestClient.Get(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken);
+                throw new ArgumentNullException(nameof(locationName));
             }
-            catch (Exception e)
+            if (longTermRetentionServerName == null)
             {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentNullException(nameof(longTermRetentionServerName));
             }
+            if (longTermRetentionDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
+            }
+
+            Page<LongTermRetentionBackup> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByDatabase");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByDatabase(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<LongTermRetentionBackup> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByDatabase");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByDatabaseNextPage(nextLink, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Lists the long term retention backups for a given location. </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
+        public virtual AsyncPageable<LongTermRetentionBackup> ListByLocationAsync(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+
+            async Task<Page<LongTermRetentionBackup>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByLocation");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<LongTermRetentionBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByLocation");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByLocationNextPageAsync(nextLink, locationName, onlyLatestPerDatabase, databaseState, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Lists the long term retention backups for a given location. </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
+        public virtual Pageable<LongTermRetentionBackup> ListByLocation(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+
+            Page<LongTermRetentionBackup> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByLocation");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<LongTermRetentionBackup> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByLocation");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByLocationNextPage(nextLink, locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Lists the long term retention backups for a given server. </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
+        public virtual AsyncPageable<LongTermRetentionBackup> ListByServerAsync(string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (longTermRetentionServerName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionServerName));
+            }
+
+            async Task<Page<LongTermRetentionBackup>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByServer");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<LongTermRetentionBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByServer");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByServerNextPageAsync(nextLink, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Lists the long term retention backups for a given server. </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
+        public virtual Pageable<LongTermRetentionBackup> ListByServer(string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (longTermRetentionServerName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionServerName));
+            }
+
+            Page<LongTermRetentionBackup> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByServer");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<LongTermRetentionBackup> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByServer");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByServerNextPage(nextLink, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Lists all long term retention backups for a database. </summary>
@@ -134,7 +440,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, or <paramref name="longTermRetentionDatabaseName"/> is null. </exception>
-        public virtual AsyncPageable<LongTermRetentionBackup> ListByResourceGroupDatabaseAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, LongTermRetentionDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LongTermRetentionBackup> ListByResourceGroupDatabaseAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -195,7 +501,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, or <paramref name="longTermRetentionDatabaseName"/> is null. </exception>
-        public virtual Pageable<LongTermRetentionBackup> ListByResourceGroupDatabase(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, LongTermRetentionDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<LongTermRetentionBackup> ListByResourceGroupDatabase(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -254,7 +560,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="locationName"/> is null. </exception>
-        public virtual AsyncPageable<LongTermRetentionBackup> ListByResourceGroupLocationAsync(string resourceGroupName, string locationName, bool? onlyLatestPerDatabase = null, LongTermRetentionDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LongTermRetentionBackup> ListByResourceGroupLocationAsync(string resourceGroupName, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -305,7 +611,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="locationName"/> is null. </exception>
-        public virtual Pageable<LongTermRetentionBackup> ListByResourceGroupLocation(string resourceGroupName, string locationName, bool? onlyLatestPerDatabase = null, LongTermRetentionDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<LongTermRetentionBackup> ListByResourceGroupLocation(string resourceGroupName, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -357,7 +663,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, or <paramref name="longTermRetentionServerName"/> is null. </exception>
-        public virtual AsyncPageable<LongTermRetentionBackup> ListByResourceGroupServerAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, LongTermRetentionDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LongTermRetentionBackup> ListByResourceGroupServerAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -413,7 +719,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, or <paramref name="longTermRetentionServerName"/> is null. </exception>
-        public virtual Pageable<LongTermRetentionBackup> ListByResourceGroupServer(string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, LongTermRetentionDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<LongTermRetentionBackup> ListByResourceGroupServer(string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -461,15 +767,15 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all long term retention backups for a database. </summary>
+        /// <summary> Copy an existing long term retention backup. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="parameters"> The parameters needed for long term retention copy request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, or <paramref name="longTermRetentionDatabaseName"/> is null. </exception>
-        public virtual AsyncPageable<LongTermRetentionBackup> ListByDatabaseAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, LongTermRetentionDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<LongTermRetentionBackupsCopyOperation> StartCopyAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -483,49 +789,38 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
             }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            async Task<Page<LongTermRetentionBackup>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.StartCopy");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListByDatabaseAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var originalResponse = await RestClient.CopyAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters, cancellationToken).ConfigureAwait(false);
+                return new LongTermRetentionBackupsCopyOperation(_clientDiagnostics, _pipeline, RestClient.CreateCopyRequest(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters).Request, originalResponse);
             }
-            async Task<Page<LongTermRetentionBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListByDatabaseNextPageAsync(nextLink, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists all long term retention backups for a database. </summary>
+        /// <summary> Copy an existing long term retention backup. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="parameters"> The parameters needed for long term retention copy request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, or <paramref name="longTermRetentionDatabaseName"/> is null. </exception>
-        public virtual Pageable<LongTermRetentionBackup> ListByDatabase(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, LongTermRetentionDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual LongTermRetentionBackupsCopyOperation StartCopy(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -539,140 +834,38 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
             }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            Page<LongTermRetentionBackup> FirstPageFunc(int? pageSizeHint)
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.StartCopy");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListByDatabase(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var originalResponse = RestClient.Copy(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters, cancellationToken);
+                return new LongTermRetentionBackupsCopyOperation(_clientDiagnostics, _pipeline, RestClient.CreateCopyRequest(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters).Request, originalResponse);
             }
-            Page<LongTermRetentionBackup> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListByDatabaseNextPage(nextLink, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists the long term retention backups for a given location. </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public virtual AsyncPageable<LongTermRetentionBackup> ListByLocationAsync(string locationName, bool? onlyLatestPerDatabase = null, LongTermRetentionDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-
-            async Task<Page<LongTermRetentionBackup>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByLocation");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LongTermRetentionBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByLocation");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListByLocationNextPageAsync(nextLink, locationName, onlyLatestPerDatabase, databaseState, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists the long term retention backups for a given location. </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public virtual Pageable<LongTermRetentionBackup> ListByLocation(string locationName, bool? onlyLatestPerDatabase = null, LongTermRetentionDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-
-            Page<LongTermRetentionBackup> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByLocation");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LongTermRetentionBackup> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByLocation");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListByLocationNextPage(nextLink, locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Lists the long term retention backups for a given server. </summary>
+        /// <summary> Updates an existing long term retention backup. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="parameters"> The requested backup resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
-        public virtual AsyncPageable<LongTermRetentionBackup> ListByServerAsync(string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, LongTermRetentionDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<LongTermRetentionBackupsUpdateOperation> StartUpdateAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -682,48 +875,42 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(longTermRetentionServerName));
             }
+            if (longTermRetentionDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
+            }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            async Task<Page<LongTermRetentionBackup>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.StartUpdate");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByServer");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListByServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var originalResponse = await RestClient.UpdateAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters, cancellationToken).ConfigureAwait(false);
+                return new LongTermRetentionBackupsUpdateOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateRequest(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters).Request, originalResponse);
             }
-            async Task<Page<LongTermRetentionBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByServer");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListByServerNextPageAsync(nextLink, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists the long term retention backups for a given server. </summary>
+        /// <summary> Updates an existing long term retention backup. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="parameters"> The requested backup resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
-        public virtual Pageable<LongTermRetentionBackup> ListByServer(string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, LongTermRetentionDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual LongTermRetentionBackupsUpdateOperation StartUpdate(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
         {
             if (locationName == null)
             {
@@ -733,38 +920,311 @@ namespace Azure.ResourceManager.Sql
             {
                 throw new ArgumentNullException(nameof(longTermRetentionServerName));
             }
+            if (longTermRetentionDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
+            }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
-            Page<LongTermRetentionBackup> FirstPageFunc(int? pageSizeHint)
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.StartUpdate");
+            scope.Start();
+            try
             {
-                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByServer");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListByServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var originalResponse = RestClient.Update(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters, cancellationToken);
+                return new LongTermRetentionBackupsUpdateOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateRequest(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters).Request, originalResponse);
             }
-            Page<LongTermRetentionBackup> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.ListByServer");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListByServerNextPage(nextLink, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Deletes a long term retention backup. </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, or <paramref name="backupName"/> is null. </exception>
+        public virtual async Task<LongTermRetentionBackupsDeleteOperation> StartDeleteAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (longTermRetentionServerName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionServerName));
+            }
+            if (longTermRetentionDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
+            }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.StartDelete");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.DeleteAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken).ConfigureAwait(false);
+                return new LongTermRetentionBackupsDeleteOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteRequest(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a long term retention backup. </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, or <paramref name="backupName"/> is null. </exception>
+        public virtual LongTermRetentionBackupsDeleteOperation StartDelete(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (longTermRetentionServerName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionServerName));
+            }
+            if (longTermRetentionDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
+            }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.StartDelete");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.Delete(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken);
+                return new LongTermRetentionBackupsDeleteOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteRequest(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Copy an existing long term retention backup to a different server. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="parameters"> The parameters needed for long term retention copy request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<LongTermRetentionBackupsCopyByResourceGroupOperation> StartCopyByResourceGroupAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (longTermRetentionServerName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionServerName));
+            }
+            if (longTermRetentionDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
+            }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.StartCopyByResourceGroup");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CopyByResourceGroupAsync(resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters, cancellationToken).ConfigureAwait(false);
+                return new LongTermRetentionBackupsCopyByResourceGroupOperation(_clientDiagnostics, _pipeline, RestClient.CreateCopyByResourceGroupRequest(resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Copy an existing long term retention backup to a different server. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="parameters"> The parameters needed for long term retention copy request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual LongTermRetentionBackupsCopyByResourceGroupOperation StartCopyByResourceGroup(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (longTermRetentionServerName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionServerName));
+            }
+            if (longTermRetentionDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
+            }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.StartCopyByResourceGroup");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CopyByResourceGroup(resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters, cancellationToken);
+                return new LongTermRetentionBackupsCopyByResourceGroupOperation(_clientDiagnostics, _pipeline, RestClient.CreateCopyByResourceGroupRequest(resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates an existing long term retention backup. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="parameters"> The requested backup resource state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<LongTermRetentionBackupsUpdateByResourceGroupOperation> StartUpdateByResourceGroupAsync(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (longTermRetentionServerName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionServerName));
+            }
+            if (longTermRetentionDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
+            }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.StartUpdateByResourceGroup");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.UpdateByResourceGroupAsync(resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters, cancellationToken).ConfigureAwait(false);
+                return new LongTermRetentionBackupsUpdateByResourceGroupOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateByResourceGroupRequest(resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates an existing long term retention backup. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="parameters"> The requested backup resource state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, <paramref name="backupName"/>, or <paramref name="parameters"/> is null. </exception>
+        public virtual LongTermRetentionBackupsUpdateByResourceGroupOperation StartUpdateByResourceGroup(string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupParameters parameters, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (longTermRetentionServerName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionServerName));
+            }
+            if (longTermRetentionDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
+            }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.StartUpdateByResourceGroup");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.UpdateByResourceGroup(resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters, cancellationToken);
+                return new LongTermRetentionBackupsUpdateByResourceGroupOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateByResourceGroupRequest(resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a long term retention backup. </summary>
@@ -849,86 +1309,6 @@ namespace Azure.ResourceManager.Sql
             {
                 var originalResponse = RestClient.DeleteByResourceGroup(resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken);
                 return new LongTermRetentionBackupsDeleteByResourceGroupOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteByResourceGroupRequest(resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a long term retention backup. </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
-        /// <param name="backupName"> The backup name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, or <paramref name="backupName"/> is null. </exception>
-        public virtual async Task<LongTermRetentionBackupsDeleteOperation> StartDeleteAsync(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
-        {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.StartDelete");
-            scope.Start();
-            try
-            {
-                var originalResponse = await RestClient.DeleteAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken).ConfigureAwait(false);
-                return new LongTermRetentionBackupsDeleteOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteRequest(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a long term retention backup. </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
-        /// <param name="backupName"> The backup name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/>, or <paramref name="backupName"/> is null. </exception>
-        public virtual LongTermRetentionBackupsDeleteOperation StartDelete(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
-        {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LongTermRetentionBackupsOperations.StartDelete");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.Delete(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken);
-                return new LongTermRetentionBackupsDeleteOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteRequest(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName).Request, originalResponse);
             }
             catch (Exception e)
             {

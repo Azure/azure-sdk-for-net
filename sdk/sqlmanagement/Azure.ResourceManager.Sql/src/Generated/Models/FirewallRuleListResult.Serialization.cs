@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         internal static FirewallRuleListResult DeserializeFirewallRuleListResult(JsonElement element)
         {
             Optional<IReadOnlyList<FirewallRule>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -33,8 +34,13 @@ namespace Azure.ResourceManager.Sql.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
             }
-            return new FirewallRuleListResult(Optional.ToList(value));
+            return new FirewallRuleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

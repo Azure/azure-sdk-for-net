@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/backupShortTermRetentionPolicies/", false);
             uri.AppendPath(policyName.ToString(), true);
-            uri.AppendQuery("api-version", "2020-02-02-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/backupShortTermRetentionPolicies/", false);
             uri.AppendPath(policyName.ToString(), true);
-            uri.AppendQuery("api-version", "2020-02-02-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/backupShortTermRetentionPolicies/", false);
             uri.AppendPath(policyName.ToString(), true);
-            uri.AppendQuery("api-version", "2020-02-02-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/backupShortTermRetentionPolicies", false);
-            uri.AppendQuery("api-version", "2020-02-02-preview", true);
+            uri.AppendQuery("api-version", "2021-02-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

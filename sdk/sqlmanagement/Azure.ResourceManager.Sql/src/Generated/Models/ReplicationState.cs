@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The replication state for the replication link. </summary>
+    /// <summary> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </summary>
     public readonly partial struct ReplicationState : IEquatable<ReplicationState>
     {
         private readonly string _value;

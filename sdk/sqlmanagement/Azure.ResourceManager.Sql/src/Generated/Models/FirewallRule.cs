@@ -7,8 +7,8 @@
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Represents a server firewall rule. </summary>
-    public partial class FirewallRule : ProxyResource
+    /// <summary> A server firewall rule. </summary>
+    public partial class FirewallRule : ProxyResourceWithWritableName
     {
         /// <summary> Initializes a new instance of FirewallRule. </summary>
         public FirewallRule()
@@ -19,25 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        /// <param name="kind"> Kind of server that contains this firewall rule. </param>
-        /// <param name="location"> Location of the server that contains this firewall rule. </param>
-        /// <param name="startIpAddress"> The start IP address of the firewall rule. Must be IPv4 format. Use value &apos;0.0.0.0&apos; to represent all Azure-internal IP addresses. </param>
-        /// <param name="endIpAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value &apos;0.0.0.0&apos; to represent all Azure-internal IP addresses. </param>
-        internal FirewallRule(string id, string name, string type, string kind, string location, string startIpAddress, string endIpAddress) : base(id, name, type)
+        /// <param name="startIpAddress"> The start IP address of the firewall rule. Must be IPv4 format. Use value &apos;0.0.0.0&apos; for all Azure-internal IP addresses. </param>
+        /// <param name="endIpAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value &apos;0.0.0.0&apos; for all Azure-internal IP addresses. </param>
+        internal FirewallRule(string id, string name, string type, string startIpAddress, string endIpAddress) : base(id, name, type)
         {
-            Kind = kind;
-            Location = location;
             StartIpAddress = startIpAddress;
             EndIpAddress = endIpAddress;
         }
 
-        /// <summary> Kind of server that contains this firewall rule. </summary>
-        public string Kind { get; }
-        /// <summary> Location of the server that contains this firewall rule. </summary>
-        public string Location { get; }
-        /// <summary> The start IP address of the firewall rule. Must be IPv4 format. Use value &apos;0.0.0.0&apos; to represent all Azure-internal IP addresses. </summary>
+        /// <summary> The start IP address of the firewall rule. Must be IPv4 format. Use value &apos;0.0.0.0&apos; for all Azure-internal IP addresses. </summary>
         public string StartIpAddress { get; set; }
-        /// <summary> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value &apos;0.0.0.0&apos; to represent all Azure-internal IP addresses. </summary>
+        /// <summary> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value &apos;0.0.0.0&apos; for all Azure-internal IP addresses. </summary>
         public string EndIpAddress { get; set; }
     }
 }

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
             uri.AppendPath("/cancel", false);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/elasticPools/", false);
             uri.AppendPath(elasticPoolName, true);
             uri.AppendPath("/operations", false);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

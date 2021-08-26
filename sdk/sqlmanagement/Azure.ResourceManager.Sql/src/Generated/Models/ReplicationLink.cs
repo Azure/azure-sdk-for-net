@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Represents a database replication link. </summary>
+    /// <summary> A replication link. </summary>
     public partial class ReplicationLink : ProxyResource
     {
         /// <summary> Initializes a new instance of ReplicationLink. </summary>
@@ -21,53 +21,53 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Location of the server that contains this firewall rule. </param>
-        /// <param name="isTerminationAllowed"> Legacy value indicating whether termination is allowed.  Currently always returns true. </param>
-        /// <param name="replicationMode"> Replication mode of this replication link. </param>
-        /// <param name="partnerServer"> The name of the server hosting the partner database. </param>
-        /// <param name="partnerDatabase"> The name of the partner database. </param>
-        /// <param name="partnerLocation"> The Azure Region of the partner database. </param>
-        /// <param name="role"> The role of the database in the replication link. </param>
-        /// <param name="partnerRole"> The role of the partner database in the replication link. </param>
-        /// <param name="startTime"> The start time for the replication link. </param>
-        /// <param name="percentComplete"> The percentage of seeding complete for the replication link. </param>
-        /// <param name="replicationState"> The replication state for the replication link. </param>
-        internal ReplicationLink(string id, string name, string type, string location, bool? isTerminationAllowed, string replicationMode, string partnerServer, string partnerDatabase, string partnerLocation, ReplicationRole? role, ReplicationRole? partnerRole, DateTimeOffset? startTime, int? percentComplete, ReplicationState? replicationState) : base(id, name, type)
+        /// <param name="partnerServer"> Resource partner server. </param>
+        /// <param name="partnerDatabase"> Resource partner database. </param>
+        /// <param name="partnerLocation"> Resource partner location. </param>
+        /// <param name="role"> Local replication role. </param>
+        /// <param name="partnerRole"> Partner replication role. </param>
+        /// <param name="replicationMode"> Replication mode. </param>
+        /// <param name="startTime"> Time at which the link was created. </param>
+        /// <param name="percentComplete"> Seeding completion percentage for the link. </param>
+        /// <param name="replicationState"> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </param>
+        /// <param name="isTerminationAllowed"> Whether the user is currently allowed to terminate the link. </param>
+        /// <param name="linkType"> Link type (GEO, NAMED). </param>
+        internal ReplicationLink(string id, string name, string type, string partnerServer, string partnerDatabase, string partnerLocation, ReplicationRole? role, ReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startTime, int? percentComplete, ReplicationState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType) : base(id, name, type)
         {
-            Location = location;
-            IsTerminationAllowed = isTerminationAllowed;
-            ReplicationMode = replicationMode;
             PartnerServer = partnerServer;
             PartnerDatabase = partnerDatabase;
             PartnerLocation = partnerLocation;
             Role = role;
             PartnerRole = partnerRole;
+            ReplicationMode = replicationMode;
             StartTime = startTime;
             PercentComplete = percentComplete;
             ReplicationState = replicationState;
+            IsTerminationAllowed = isTerminationAllowed;
+            LinkType = linkType;
         }
 
-        /// <summary> Location of the server that contains this firewall rule. </summary>
-        public string Location { get; }
-        /// <summary> Legacy value indicating whether termination is allowed.  Currently always returns true. </summary>
-        public bool? IsTerminationAllowed { get; }
-        /// <summary> Replication mode of this replication link. </summary>
-        public string ReplicationMode { get; }
-        /// <summary> The name of the server hosting the partner database. </summary>
+        /// <summary> Resource partner server. </summary>
         public string PartnerServer { get; }
-        /// <summary> The name of the partner database. </summary>
+        /// <summary> Resource partner database. </summary>
         public string PartnerDatabase { get; }
-        /// <summary> The Azure Region of the partner database. </summary>
+        /// <summary> Resource partner location. </summary>
         public string PartnerLocation { get; }
-        /// <summary> The role of the database in the replication link. </summary>
+        /// <summary> Local replication role. </summary>
         public ReplicationRole? Role { get; }
-        /// <summary> The role of the partner database in the replication link. </summary>
+        /// <summary> Partner replication role. </summary>
         public ReplicationRole? PartnerRole { get; }
-        /// <summary> The start time for the replication link. </summary>
+        /// <summary> Replication mode. </summary>
+        public string ReplicationMode { get; }
+        /// <summary> Time at which the link was created. </summary>
         public DateTimeOffset? StartTime { get; }
-        /// <summary> The percentage of seeding complete for the replication link. </summary>
+        /// <summary> Seeding completion percentage for the link. </summary>
         public int? PercentComplete { get; }
-        /// <summary> The replication state for the replication link. </summary>
+        /// <summary> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </summary>
         public ReplicationState? ReplicationState { get; }
+        /// <summary> Whether the user is currently allowed to terminate the link. </summary>
+        public bool? IsTerminationAllowed { get; }
+        /// <summary> Link type (GEO, NAMED). </summary>
+        public ReplicationLinkType? LinkType { get; }
     }
 }

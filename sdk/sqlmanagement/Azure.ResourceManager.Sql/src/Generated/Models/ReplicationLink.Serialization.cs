@@ -24,27 +24,22 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ReplicationLink DeserializeReplicationLink(JsonElement element)
         {
-            Optional<string> location = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<bool> isTerminationAllowed = default;
-            Optional<string> replicationMode = default;
             Optional<string> partnerServer = default;
             Optional<string> partnerDatabase = default;
             Optional<string> partnerLocation = default;
             Optional<ReplicationRole> role = default;
             Optional<ReplicationRole> partnerRole = default;
+            Optional<string> replicationMode = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<int> percentComplete = default;
             Optional<ReplicationState> replicationState = default;
+            Optional<bool> isTerminationAllowed = default;
+            Optional<ReplicationLinkType> linkType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -69,21 +64,6 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("isTerminationAllowed"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            isTerminationAllowed = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("replicationMode"))
-                        {
-                            replicationMode = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("partnerServer"))
                         {
                             partnerServer = property0.Value.GetString();
@@ -119,6 +99,11 @@ namespace Azure.ResourceManager.Sql.Models
                             partnerRole = property0.Value.GetString().ToReplicationRole();
                             continue;
                         }
+                        if (property0.NameEquals("replicationMode"))
+                        {
+                            replicationMode = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("startTime"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -149,11 +134,31 @@ namespace Azure.ResourceManager.Sql.Models
                             replicationState = new ReplicationState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("isTerminationAllowed"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            isTerminationAllowed = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("linkType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            linkType = new ReplicationLinkType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ReplicationLink(id.Value, name.Value, type.Value, location.Value, Optional.ToNullable(isTerminationAllowed), replicationMode.Value, partnerServer.Value, partnerDatabase.Value, partnerLocation.Value, Optional.ToNullable(role), Optional.ToNullable(partnerRole), Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState));
+            return new ReplicationLink(id.Value, name.Value, type.Value, partnerServer.Value, partnerDatabase.Value, partnerLocation.Value, Optional.ToNullable(role), Optional.ToNullable(partnerRole), replicationMode.Value, Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState), Optional.ToNullable(isTerminationAllowed), Optional.ToNullable(linkType));
         }
     }
 }

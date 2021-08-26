@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/versions/", false);
             uri.AppendPath(jobVersion, true);
             uri.AppendPath("/steps", false);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(jobVersion, true);
             uri.AppendPath("/steps/", false);
             uri.AppendPath(stepName, true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath("/steps", false);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(jobName, true);
             uri.AppendPath("/steps/", false);
             uri.AppendPath(stepName, true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(jobName, true);
             uri.AppendPath("/steps/", false);
             uri.AppendPath(stepName, true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(jobName, true);
             uri.AppendPath("/steps/", false);
             uri.AppendPath(stepName, true);
-            uri.AppendQuery("api-version", "2017-03-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -22,6 +23,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 throw new ArgumentNullException(nameof(location));
             }
+
+            PrivateEndpointConnections = new ChangeTrackingList<ManagedInstancePecProperty>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstance. </summary>
@@ -74,8 +77,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="instancePoolId"> The Id of the instance pool this managed server belongs to. </param>
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections on a managed instance. </param>
         /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </param>
-        internal ManagedInstance(string id, string name, string type, string location, IDictionary<string, string> tags, ResourceIdentity identity, Sku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, string subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, string dnsZonePartner, bool? publicDataEndpointEnabled, string sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, string instancePoolId, string maintenanceConfigurationId, string minimalTlsVersion) : base(id, name, type, location, tags)
+        /// <param name="storageAccountType"> The storage account type used to store backups for this instance. The options are LRS (LocallyRedundantStorage), ZRS (ZoneRedundantStorage) and GRS (GeoRedundantStorage). </param>
+        /// <param name="zoneRedundant"> Whether or not the multi-az is enabled. </param>
+        /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
+        /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
+        /// <param name="administrators"> The Azure Active Directory administrator of the server. </param>
+        internal ManagedInstance(string id, string name, string type, string location, IDictionary<string, string> tags, ResourceIdentity identity, Sku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, string subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, string dnsZonePartner, bool? publicDataEndpointEnabled, string sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, string instancePoolId, string maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, StorageAccountType? storageAccountType, bool? zoneRedundant, string primaryUserAssignedIdentityId, string keyId, ManagedInstanceExternalAdministrator administrators) : base(id, name, type, location, tags)
         {
             Identity = identity;
             Sku = sku;
@@ -99,7 +108,13 @@ namespace Azure.ResourceManager.Sql.Models
             TimezoneId = timezoneId;
             InstancePoolId = instancePoolId;
             MaintenanceConfigurationId = maintenanceConfigurationId;
+            PrivateEndpointConnections = privateEndpointConnections;
             MinimalTlsVersion = minimalTlsVersion;
+            StorageAccountType = storageAccountType;
+            ZoneRedundant = zoneRedundant;
+            PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
+            KeyId = keyId;
+            Administrators = administrators;
         }
 
         /// <summary> The Azure Active Directory identity of the managed instance. </summary>
@@ -167,7 +182,19 @@ namespace Azure.ResourceManager.Sql.Models
         public string InstancePoolId { get; set; }
         /// <summary> Specifies maintenance configuration id to apply to this managed instance. </summary>
         public string MaintenanceConfigurationId { get; set; }
+        /// <summary> List of private endpoint connections on a managed instance. </summary>
+        public IReadOnlyList<ManagedInstancePecProperty> PrivateEndpointConnections { get; }
         /// <summary> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
         public string MinimalTlsVersion { get; set; }
+        /// <summary> The storage account type used to store backups for this instance. The options are LRS (LocallyRedundantStorage), ZRS (ZoneRedundantStorage) and GRS (GeoRedundantStorage). </summary>
+        public StorageAccountType? StorageAccountType { get; set; }
+        /// <summary> Whether or not the multi-az is enabled. </summary>
+        public bool? ZoneRedundant { get; set; }
+        /// <summary> The resource id of a user assigned identity to be used by default. </summary>
+        public string PrimaryUserAssignedIdentityId { get; set; }
+        /// <summary> A CMK URI of the key to use for encryption. </summary>
+        public string KeyId { get; set; }
+        /// <summary> The Azure Active Directory administrator of the server. </summary>
+        public ManagedInstanceExternalAdministrator Administrators { get; set; }
     }
 }

@@ -117,20 +117,40 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("readScale");
                 writer.WriteStringValue(ReadScale.Value.ToString());
             }
-            if (Optional.IsDefined(ReadReplicaCount))
+            if (Optional.IsDefined(HighAvailabilityReplicaCount))
             {
-                writer.WritePropertyName("readReplicaCount");
-                writer.WriteNumberValue(ReadReplicaCount.Value);
+                writer.WritePropertyName("highAvailabilityReplicaCount");
+                writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
+            }
+            if (Optional.IsDefined(SecondaryType))
+            {
+                writer.WritePropertyName("secondaryType");
+                writer.WriteStringValue(SecondaryType.Value.ToString());
             }
             if (Optional.IsDefined(AutoPauseDelay))
             {
                 writer.WritePropertyName("autoPauseDelay");
                 writer.WriteNumberValue(AutoPauseDelay.Value);
             }
+            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
+            {
+                writer.WritePropertyName("requestedBackupStorageRedundancy");
+                writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
+            }
             if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity");
                 writer.WriteNumberValue(MinCapacity.Value);
+            }
+            if (Optional.IsDefined(MaintenanceConfigurationId))
+            {
+                writer.WritePropertyName("maintenanceConfigurationId");
+                writer.WriteStringValue(MaintenanceConfigurationId);
+            }
+            if (Optional.IsDefined(IsLedgerOn))
+            {
+                writer.WritePropertyName("isLedgerOn");
+                writer.WriteBooleanValue(IsLedgerOn.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -171,12 +191,18 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<long> maxLogSizeBytes = default;
             Optional<DateTimeOffset> earliestRestoreDate = default;
             Optional<DatabaseReadScale> readScale = default;
-            Optional<int> readReplicaCount = default;
+            Optional<int> highAvailabilityReplicaCount = default;
+            Optional<SecondaryType> secondaryType = default;
             Optional<Sku> currentSku = default;
             Optional<int> autoPauseDelay = default;
+            Optional<CurrentBackupStorageRedundancy> currentBackupStorageRedundancy = default;
+            Optional<RequestedBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             Optional<double> minCapacity = default;
             Optional<DateTimeOffset> pausedDate = default;
             Optional<DateTimeOffset> resumedDate = default;
+            Optional<string> maintenanceConfigurationId = default;
+            Optional<bool> isLedgerOn = default;
+            Optional<bool> isInfraEncryptionEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -438,14 +464,24 @@ namespace Azure.ResourceManager.Sql.Models
                             readScale = new DatabaseReadScale(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("readReplicaCount"))
+                        if (property0.NameEquals("highAvailabilityReplicaCount"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            readReplicaCount = property0.Value.GetInt32();
+                            highAvailabilityReplicaCount = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("secondaryType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            secondaryType = new SecondaryType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("currentSku"))
@@ -466,6 +502,26 @@ namespace Azure.ResourceManager.Sql.Models
                                 continue;
                             }
                             autoPauseDelay = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("currentBackupStorageRedundancy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            currentBackupStorageRedundancy = new CurrentBackupStorageRedundancy(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("requestedBackupStorageRedundancy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            requestedBackupStorageRedundancy = new RequestedBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("minCapacity"))
@@ -498,11 +554,36 @@ namespace Azure.ResourceManager.Sql.Models
                             resumedDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("maintenanceConfigurationId"))
+                        {
+                            maintenanceConfigurationId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isLedgerOn"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            isLedgerOn = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isInfraEncryptionEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            isInfraEncryptionEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new Database(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), sku.Value, kind.Value, managedBy.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, defaultSecondaryLocation.Value, failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(readReplicaCount), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate));
+            return new Database(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), sku.Value, kind.Value, managedBy.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, defaultSecondaryLocation.Value, failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled));
         }
     }
 }

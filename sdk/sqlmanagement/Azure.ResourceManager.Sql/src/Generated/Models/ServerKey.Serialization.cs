@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerKeyType))
@@ -32,16 +27,6 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("uri");
                 writer.WriteStringValue(Uri);
-            }
-            if (Optional.IsDefined(Thumbprint))
-            {
-                writer.WritePropertyName("thumbprint");
-                writer.WriteStringValue(Thumbprint);
-            }
-            if (Optional.IsDefined(CreationDate))
-            {
-                writer.WritePropertyName("creationDate");
-                writer.WriteStringValue(CreationDate.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -59,6 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> uri = default;
             Optional<string> thumbprint = default;
             Optional<DateTimeOffset> creationDate = default;
+            Optional<bool> autoRotationEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -130,11 +116,21 @@ namespace Azure.ResourceManager.Sql.Models
                             creationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("autoRotationEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            autoRotationEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ServerKey(id.Value, name.Value, type.Value, kind.Value, location.Value, subregion.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate));
+            return new ServerKey(id.Value, name.Value, type.Value, kind.Value, location.Value, subregion.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled));
         }
     }
 }

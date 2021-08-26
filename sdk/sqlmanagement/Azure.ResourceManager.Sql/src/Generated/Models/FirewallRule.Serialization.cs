@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(StartIpAddress))
@@ -33,8 +38,6 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static FirewallRule DeserializeFirewallRule(JsonElement element)
         {
-            Optional<string> kind = default;
-            Optional<string> location = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
@@ -42,16 +45,6 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> endIpAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -90,7 +83,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new FirewallRule(id.Value, name.Value, type.Value, kind.Value, location.Value, startIpAddress.Value, endIpAddress.Value);
+            return new FirewallRule(id.Value, name.Value, type.Value, startIpAddress.Value, endIpAddress.Value);
         }
     }
 }

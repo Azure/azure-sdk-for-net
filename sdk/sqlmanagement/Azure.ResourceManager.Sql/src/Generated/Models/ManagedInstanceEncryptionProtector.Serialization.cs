@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("serverKeyType");
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
+            if (Optional.IsDefined(AutoRotationEnabled))
+            {
+                writer.WritePropertyName("autoRotationEnabled");
+                writer.WriteBooleanValue(AutoRotationEnabled.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -41,6 +46,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<ServerKeyType> serverKeyType = default;
             Optional<string> uri = default;
             Optional<string> thumbprint = default;
+            Optional<bool> autoRotationEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -97,11 +103,21 @@ namespace Azure.ResourceManager.Sql.Models
                             thumbprint = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("autoRotationEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            autoRotationEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ManagedInstanceEncryptionProtector(id.Value, name.Value, type.Value, kind.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value);
+            return new ManagedInstanceEncryptionProtector(id.Value, name.Value, type.Value, kind.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled));
         }
     }
 }

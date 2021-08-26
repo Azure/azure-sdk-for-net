@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/keys/", false);
             uri.AppendPath(keyName, true);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/keys/", false);
             uri.AppendPath(keyName, true);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/keys/", false);
             uri.AppendPath(keyName, true);
-            uri.AppendQuery("api-version", "2017-10-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }

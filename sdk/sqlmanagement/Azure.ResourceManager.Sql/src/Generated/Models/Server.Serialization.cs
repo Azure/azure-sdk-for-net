@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -61,6 +62,31 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
+            {
+                writer.WritePropertyName("primaryUserAssignedIdentityId");
+                writer.WriteStringValue(PrimaryUserAssignedIdentityId);
+            }
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                writer.WritePropertyName("federatedClientId");
+                writer.WriteStringValue(FederatedClientId.Value);
+            }
+            if (Optional.IsDefined(KeyId))
+            {
+                writer.WritePropertyName("keyId");
+                writer.WriteStringValue(KeyId);
+            }
+            if (Optional.IsDefined(Administrators))
+            {
+                writer.WritePropertyName("administrators");
+                writer.WriteObjectValue(Administrators);
+            }
+            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
+            {
+                writer.WritePropertyName("restrictOutboundNetworkAccess");
+                writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -81,7 +107,13 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> fullyQualifiedDomainName = default;
             Optional<IReadOnlyList<ServerPrivateEndpointConnection>> privateEndpointConnections = default;
             Optional<string> minimalTlsVersion = default;
-            Optional<ServerPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<ServerNetworkAccessFlag> publicNetworkAccess = default;
+            Optional<ServerWorkspaceFeature> workspaceFeature = default;
+            Optional<string> primaryUserAssignedIdentityId = default;
+            Optional<Guid> federatedClientId = default;
+            Optional<string> keyId = default;
+            Optional<ServerExternalAdministrator> administrators = default;
+            Optional<ServerNetworkAccessFlag> restrictOutboundNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -195,14 +227,64 @@ namespace Azure.ResourceManager.Sql.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new ServerPublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("workspaceFeature"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            workspaceFeature = new ServerWorkspaceFeature(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("primaryUserAssignedIdentityId"))
+                        {
+                            primaryUserAssignedIdentityId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("federatedClientId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            federatedClientId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("keyId"))
+                        {
+                            keyId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("administrators"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("restrictOutboundNetworkAccess"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            restrictOutboundNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new Server(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), identity.Value, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess));
+            return new Server(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), identity.Value, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess));
         }
     }
 }

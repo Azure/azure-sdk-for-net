@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
+            if (Optional.IsDefined(MaintenanceConfigurationId))
+            {
+                writer.WritePropertyName("maintenanceConfigurationId");
+                writer.WriteStringValue(MaintenanceConfigurationId);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<ElasticPoolPerDatabaseSettings> perDatabaseSettings = default;
             Optional<bool> zoneRedundant = default;
             Optional<ElasticPoolLicenseType> licenseType = default;
+            Optional<string> maintenanceConfigurationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -197,11 +203,16 @@ namespace Azure.ResourceManager.Sql.Models
                             licenseType = new ElasticPoolLicenseType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("maintenanceConfigurationId"))
+                        {
+                            maintenanceConfigurationId = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ElasticPool(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType));
+            return new ElasticPool(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value);
         }
     }
 }

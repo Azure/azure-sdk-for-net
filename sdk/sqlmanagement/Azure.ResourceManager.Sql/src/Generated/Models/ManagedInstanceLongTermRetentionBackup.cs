@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="databaseDeletionTime"> The delete time of the database. </param>
         /// <param name="backupTime"> The time the backup was taken. </param>
         /// <param name="backupExpirationTime"> The time the long term retention backup will expire. </param>
-        internal ManagedInstanceLongTermRetentionBackup(string id, string name, string type, string managedInstanceName, DateTimeOffset? managedInstanceCreateTime, string databaseName, DateTimeOffset? databaseDeletionTime, DateTimeOffset? backupTime, DateTimeOffset? backupExpirationTime) : base(id, name, type)
+        /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
+        internal ManagedInstanceLongTermRetentionBackup(string id, string name, string type, string managedInstanceName, DateTimeOffset? managedInstanceCreateTime, string databaseName, DateTimeOffset? databaseDeletionTime, DateTimeOffset? backupTime, DateTimeOffset? backupExpirationTime, BackupStorageRedundancy? backupStorageRedundancy) : base(id, name, type)
         {
             ManagedInstanceName = managedInstanceName;
             ManagedInstanceCreateTime = managedInstanceCreateTime;
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
             DatabaseDeletionTime = databaseDeletionTime;
             BackupTime = backupTime;
             BackupExpirationTime = backupExpirationTime;
+            BackupStorageRedundancy = backupStorageRedundancy;
         }
 
         /// <summary> The managed instance that the backup database belongs to. </summary>
@@ -49,5 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
         public DateTimeOffset? BackupTime { get; }
         /// <summary> The time the long term retention backup will expire. </summary>
         public DateTimeOffset? BackupExpirationTime { get; }
+        /// <summary> The storage redundancy type of the backup. </summary>
+        public BackupStorageRedundancy? BackupStorageRedundancy { get; }
     }
 }

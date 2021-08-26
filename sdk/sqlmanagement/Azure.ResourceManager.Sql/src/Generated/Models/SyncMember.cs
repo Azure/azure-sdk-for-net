@@ -26,19 +26,21 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="sqlServerDatabaseId"> SQL Server database id of the sync member. </param>
         /// <param name="syncMemberAzureDatabaseResourceId"> ARM resource id of the sync member logical database, for sync members in Azure. </param>
         /// <param name="usePrivateLinkConnection"> Whether to use private link connection. </param>
+        /// <param name="privateEndpointName"> Private endpoint name of the sync member if use private link connection is enabled, for sync members in Azure. </param>
         /// <param name="serverName"> Server name of the member database in the sync member. </param>
         /// <param name="databaseName"> Database name of the member database in the sync member. </param>
         /// <param name="userName"> User name of the member database in the sync member. </param>
         /// <param name="password"> Password of the member database in the sync member. </param>
         /// <param name="syncDirection"> Sync direction of the sync member. </param>
         /// <param name="syncState"> Sync state of the sync member. </param>
-        internal SyncMember(string id, string name, string type, SyncMemberDbType? databaseType, string syncAgentId, Guid? sqlServerDatabaseId, string syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState) : base(id, name, type)
+        internal SyncMember(string id, string name, string type, SyncMemberDbType? databaseType, string syncAgentId, Guid? sqlServerDatabaseId, string syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState) : base(id, name, type)
         {
             DatabaseType = databaseType;
             SyncAgentId = syncAgentId;
             SqlServerDatabaseId = sqlServerDatabaseId;
             SyncMemberAzureDatabaseResourceId = syncMemberAzureDatabaseResourceId;
             UsePrivateLinkConnection = usePrivateLinkConnection;
+            PrivateEndpointName = privateEndpointName;
             ServerName = serverName;
             DatabaseName = databaseName;
             UserName = userName;
@@ -57,6 +59,8 @@ namespace Azure.ResourceManager.Sql.Models
         public string SyncMemberAzureDatabaseResourceId { get; set; }
         /// <summary> Whether to use private link connection. </summary>
         public bool? UsePrivateLinkConnection { get; set; }
+        /// <summary> Private endpoint name of the sync member if use private link connection is enabled, for sync members in Azure. </summary>
+        public string PrivateEndpointName { get; }
         /// <summary> Server name of the member database in the sync member. </summary>
         public string ServerName { get; set; }
         /// <summary> Database name of the member database in the sync member. </summary>

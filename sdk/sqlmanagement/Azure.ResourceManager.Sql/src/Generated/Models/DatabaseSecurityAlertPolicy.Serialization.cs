@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,11 +17,6 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
@@ -27,20 +24,30 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("state");
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DisabledAlerts))
+            if (Optional.IsCollectionDefined(DisabledAlerts))
             {
                 writer.WritePropertyName("disabledAlerts");
-                writer.WriteStringValue(DisabledAlerts);
+                writer.WriteStartArray();
+                foreach (var item in DisabledAlerts)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EmailAddresses))
+            if (Optional.IsCollectionDefined(EmailAddresses))
             {
                 writer.WritePropertyName("emailAddresses");
-                writer.WriteStringValue(EmailAddresses);
+                writer.WriteStartArray();
+                foreach (var item in EmailAddresses)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(EmailAccountAdmins))
             {
                 writer.WritePropertyName("emailAccountAdmins");
-                writer.WriteStringValue(EmailAccountAdmins.Value.ToSerialString());
+                writer.WriteBooleanValue(EmailAccountAdmins.Value);
             }
             if (Optional.IsDefined(StorageEndpoint))
             {
@@ -57,40 +64,34 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("retentionDays");
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (Optional.IsDefined(UseServerDefault))
-            {
-                writer.WritePropertyName("useServerDefault");
-                writer.WriteStringValue(UseServerDefault.Value.ToSerialString());
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static DatabaseSecurityAlertPolicy DeserializeDatabaseSecurityAlertPolicy(JsonElement element)
         {
-            Optional<string> location = default;
-            Optional<string> kind = default;
+            Optional<SystemData> systemData = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<SecurityAlertPolicyState> state = default;
-            Optional<string> disabledAlerts = default;
-            Optional<string> emailAddresses = default;
-            Optional<SecurityAlertPolicyEmailAccountAdmins> emailAccountAdmins = default;
+            Optional<SecurityAlertsPolicyState> state = default;
+            Optional<IList<string>> disabledAlerts = default;
+            Optional<IList<string>> emailAddresses = default;
+            Optional<bool> emailAccountAdmins = default;
             Optional<string> storageEndpoint = default;
             Optional<string> storageAccountAccessKey = default;
             Optional<int> retentionDays = default;
-            Optional<SecurityAlertPolicyUseServerDefault> useServerDefault = default;
+            Optional<DateTimeOffset> creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("systemData"))
                 {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("kind"))
-                {
-                    kind = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = SystemData.DeserializeSystemData(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -124,17 +125,37 @@ namespace Azure.ResourceManager.Sql.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = property0.Value.GetString().ToSecurityAlertPolicyState();
+                            state = property0.Value.GetString().ToSecurityAlertsPolicyState();
                             continue;
                         }
                         if (property0.NameEquals("disabledAlerts"))
                         {
-                            disabledAlerts = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            disabledAlerts = array;
                             continue;
                         }
                         if (property0.NameEquals("emailAddresses"))
                         {
-                            emailAddresses = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            emailAddresses = array;
                             continue;
                         }
                         if (property0.NameEquals("emailAccountAdmins"))
@@ -144,7 +165,7 @@ namespace Azure.ResourceManager.Sql.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            emailAccountAdmins = property0.Value.GetString().ToSecurityAlertPolicyEmailAccountAdmins();
+                            emailAccountAdmins = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("storageEndpoint"))
@@ -167,21 +188,21 @@ namespace Azure.ResourceManager.Sql.Models
                             retentionDays = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("useServerDefault"))
+                        if (property0.NameEquals("creationTime"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            useServerDefault = property0.Value.GetString().ToSecurityAlertPolicyUseServerDefault();
+                            creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DatabaseSecurityAlertPolicy(id.Value, name.Value, type.Value, location.Value, kind.Value, Optional.ToNullable(state), disabledAlerts.Value, emailAddresses.Value, Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(useServerDefault));
+            return new DatabaseSecurityAlertPolicy(id.Value, name.Value, type.Value, systemData.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(creationTime));
         }
     }
 }

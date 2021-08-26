@@ -16,7 +16,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> Sets a database&apos;s long term retention policy. </summary>
+    /// <summary> Sets a database&apos;s short term retention policy. </summary>
     public partial class ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesUpdateOperation : Operation<ManagedBackupShortTermRetentionPolicy>, IOperationSource<ManagedBackupShortTermRetentionPolicy>
     {
         private readonly ArmOperationHelpers<ManagedBackupShortTermRetentionPolicy> _operation;

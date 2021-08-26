@@ -39,6 +39,44 @@ namespace Azure.ResourceManager.Sql
             _pipeline = pipeline;
         }
 
+        /// <summary> Synchronizes the DNS server settings used by the managed instances inside the given virtual cluster. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<UpdateManagedInstanceDnsServersOperation>> UpdateDnsServersAsync(string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualClustersOperations.UpdateDnsServers");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpdateDnsServersAsync(resourceGroupName, virtualClusterName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Synchronizes the DNS server settings used by the managed instances inside the given virtual cluster. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<UpdateManagedInstanceDnsServersOperation> UpdateDnsServers(string resourceGroupName, string virtualClusterName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualClustersOperations.UpdateDnsServers");
+            scope.Start();
+            try
+            {
+                return RestClient.UpdateDnsServers(resourceGroupName, virtualClusterName, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Gets a virtual cluster. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
@@ -302,7 +340,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Updates a virtual cluster. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
-        /// <param name="parameters"> The requested managed instance resource state. </param>
+        /// <param name="parameters"> The requested virtual cluster resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualClusterName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<VirtualClustersUpdateOperation> StartUpdateAsync(string resourceGroupName, string virtualClusterName, VirtualClusterUpdate parameters, CancellationToken cancellationToken = default)
@@ -337,7 +375,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Updates a virtual cluster. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
-        /// <param name="parameters"> The requested managed instance resource state. </param>
+        /// <param name="parameters"> The requested virtual cluster resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualClusterName"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual VirtualClustersUpdateOperation StartUpdate(string resourceGroupName, string virtualClusterName, VirtualClusterUpdate parameters, CancellationToken cancellationToken = default)

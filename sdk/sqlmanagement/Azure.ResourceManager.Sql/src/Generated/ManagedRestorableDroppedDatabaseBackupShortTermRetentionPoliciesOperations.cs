@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Sets a database&apos;s long term retention policy. </summary>
+        /// <summary> Sets a database&apos;s short term retention policy. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
-        /// <param name="parameters"> The long term retention policy info. </param>
+        /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="restorableDroppedDatabaseId"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default)
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Sets a database&apos;s long term retention policy. </summary>
+        /// <summary> Sets a database&apos;s short term retention policy. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
-        /// <param name="parameters"> The long term retention policy info. </param>
+        /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="restorableDroppedDatabaseId"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesCreateOrUpdateOperation StartCreateOrUpdate(string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default)
@@ -271,12 +271,12 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Sets a database&apos;s long term retention policy. </summary>
+        /// <summary> Sets a database&apos;s short term retention policy. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
-        /// <param name="parameters"> The long term retention policy info. </param>
+        /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="restorableDroppedDatabaseId"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual async Task<ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesUpdateOperation> StartUpdateAsync(string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default)
@@ -312,12 +312,12 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Sets a database&apos;s long term retention policy. </summary>
+        /// <summary> Sets a database&apos;s short term retention policy. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
-        /// <param name="parameters"> The long term retention policy info. </param>
+        /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/>, <paramref name="restorableDroppedDatabaseId"/>, or <paramref name="parameters"/> is null. </exception>
         public virtual ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesUpdateOperation StartUpdate(string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default)

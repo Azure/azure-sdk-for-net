@@ -127,6 +127,31 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("minimalTlsVersion");
                 writer.WriteStringValue(MinimalTlsVersion);
             }
+            if (Optional.IsDefined(StorageAccountType))
+            {
+                writer.WritePropertyName("storageAccountType");
+                writer.WriteStringValue(StorageAccountType.Value.ToString());
+            }
+            if (Optional.IsDefined(ZoneRedundant))
+            {
+                writer.WritePropertyName("zoneRedundant");
+                writer.WriteBooleanValue(ZoneRedundant.Value);
+            }
+            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
+            {
+                writer.WritePropertyName("primaryUserAssignedIdentityId");
+                writer.WriteStringValue(PrimaryUserAssignedIdentityId);
+            }
+            if (Optional.IsDefined(KeyId))
+            {
+                writer.WritePropertyName("keyId");
+                writer.WriteStringValue(KeyId);
+            }
+            if (Optional.IsDefined(Administrators))
+            {
+                writer.WritePropertyName("administrators");
+                writer.WriteObjectValue(Administrators);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -160,7 +185,13 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> timezoneId = default;
             Optional<string> instancePoolId = default;
             Optional<string> maintenanceConfigurationId = default;
+            Optional<IReadOnlyList<ManagedInstancePecProperty>> privateEndpointConnections = default;
             Optional<string> minimalTlsVersion = default;
+            Optional<StorageAccountType> storageAccountType = default;
+            Optional<bool> zoneRedundant = default;
+            Optional<string> primaryUserAssignedIdentityId = default;
+            Optional<string> keyId = default;
+            Optional<ManagedInstanceExternalAdministrator> administrators = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -367,16 +398,71 @@ namespace Azure.ResourceManager.Sql.Models
                             maintenanceConfigurationId = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("privateEndpointConnections"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ManagedInstancePecProperty> array = new List<ManagedInstancePecProperty>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ManagedInstancePecProperty.DeserializeManagedInstancePecProperty(item));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
                         if (property0.NameEquals("minimalTlsVersion"))
                         {
                             minimalTlsVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("storageAccountType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountType = new StorageAccountType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("zoneRedundant"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            zoneRedundant = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("primaryUserAssignedIdentityId"))
+                        {
+                            primaryUserAssignedIdentityId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("keyId"))
+                        {
+                            keyId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("administrators"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            administrators = ManagedInstanceExternalAdministrator.DeserializeManagedInstanceExternalAdministrator(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ManagedInstance(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), identity.Value, sku.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(managedInstanceCreateMode), fullyQualifiedDomainName.Value, administratorLogin.Value, administratorLoginPassword.Value, subnetId.Value, state.Value, Optional.ToNullable(licenseType), Optional.ToNullable(vCores), Optional.ToNullable(storageSizeInGB), collation.Value, dnsZone.Value, dnsZonePartner.Value, Optional.ToNullable(publicDataEndpointEnabled), sourceManagedInstanceId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(proxyOverride), timezoneId.Value, instancePoolId.Value, maintenanceConfigurationId.Value, minimalTlsVersion.Value);
+            return new ManagedInstance(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), identity.Value, sku.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(managedInstanceCreateMode), fullyQualifiedDomainName.Value, administratorLogin.Value, administratorLoginPassword.Value, subnetId.Value, state.Value, Optional.ToNullable(licenseType), Optional.ToNullable(vCores), Optional.ToNullable(storageSizeInGB), collation.Value, dnsZone.Value, dnsZonePartner.Value, Optional.ToNullable(publicDataEndpointEnabled), sourceManagedInstanceId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(proxyOverride), timezoneId.Value, instancePoolId.Value, maintenanceConfigurationId.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(storageAccountType), Optional.ToNullable(zoneRedundant), primaryUserAssignedIdentityId.Value, keyId.Value, administrators.Value);
         }
     }
 }

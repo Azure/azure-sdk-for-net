@@ -6,60 +6,67 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A restorable dropped database. </summary>
+    /// <summary> A restorable dropped database resource. </summary>
     public partial class RestorableDroppedDatabase : ProxyResource
     {
         /// <summary> Initializes a new instance of RestorableDroppedDatabase. </summary>
         public RestorableDroppedDatabase()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of RestorableDroppedDatabase. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sku"> The name and tier of the SKU. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="edition"> The edition of the database. </param>
-        /// <param name="maxSizeBytes"> The max size in bytes of the database. </param>
-        /// <param name="serviceLevelObjective"> The service level objective name of the database. </param>
-        /// <param name="elasticPoolName"> The elastic pool name of the database. </param>
+        /// <param name="maxSizeBytes"> The max size of the database expressed in bytes. </param>
+        /// <param name="elasticPoolId"> DEPRECATED: The resource name of the elastic pool containing this database. This property is deprecated and the value will always be null. </param>
         /// <param name="creationDate"> The creation date of the database (ISO8601 format). </param>
         /// <param name="deletionDate"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreDate"> The earliest restore date of the database (ISO8601 format). </param>
-        internal RestorableDroppedDatabase(string id, string name, string type, string location, string databaseName, string edition, string maxSizeBytes, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? creationDate, DateTimeOffset? deletionDate, DateTimeOffset? earliestRestoreDate) : base(id, name, type)
+        /// <param name="backupStorageRedundancy"> The storage account type used to store backups for this database. </param>
+        internal RestorableDroppedDatabase(string id, string name, string type, Sku sku, string location, IDictionary<string, string> tags, string databaseName, long? maxSizeBytes, string elasticPoolId, DateTimeOffset? creationDate, DateTimeOffset? deletionDate, DateTimeOffset? earliestRestoreDate, RestorableDroppedDatabasePropertiesBackupStorageRedundancy? backupStorageRedundancy) : base(id, name, type)
         {
+            Sku = sku;
             Location = location;
+            Tags = tags;
             DatabaseName = databaseName;
-            Edition = edition;
             MaxSizeBytes = maxSizeBytes;
-            ServiceLevelObjective = serviceLevelObjective;
-            ElasticPoolName = elasticPoolName;
+            ElasticPoolId = elasticPoolId;
             CreationDate = creationDate;
             DeletionDate = deletionDate;
             EarliestRestoreDate = earliestRestoreDate;
+            BackupStorageRedundancy = backupStorageRedundancy;
         }
 
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
+        /// <summary> The name and tier of the SKU. </summary>
+        public Sku Sku { get; set; }
+        /// <summary> Resource location. </summary>
+        public string Location { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The name of the database. </summary>
         public string DatabaseName { get; }
-        /// <summary> The edition of the database. </summary>
-        public string Edition { get; }
-        /// <summary> The max size in bytes of the database. </summary>
-        public string MaxSizeBytes { get; }
-        /// <summary> The service level objective name of the database. </summary>
-        public string ServiceLevelObjective { get; }
-        /// <summary> The elastic pool name of the database. </summary>
-        public string ElasticPoolName { get; }
+        /// <summary> The max size of the database expressed in bytes. </summary>
+        public long? MaxSizeBytes { get; }
+        /// <summary> DEPRECATED: The resource name of the elastic pool containing this database. This property is deprecated and the value will always be null. </summary>
+        public string ElasticPoolId { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
         public DateTimeOffset? CreationDate { get; }
         /// <summary> The deletion date of the database (ISO8601 format). </summary>
         public DateTimeOffset? DeletionDate { get; }
         /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
         public DateTimeOffset? EarliestRestoreDate { get; }
+        /// <summary> The storage account type used to store backups for this database. </summary>
+        public RestorableDroppedDatabasePropertiesBackupStorageRedundancy? BackupStorageRedundancy { get; }
     }
 }

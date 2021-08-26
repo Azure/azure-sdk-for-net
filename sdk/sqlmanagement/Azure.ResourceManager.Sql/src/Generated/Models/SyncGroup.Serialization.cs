@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku");
+                writer.WriteObjectValue(Sku);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Interval))
@@ -48,6 +53,16 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("schema");
                 writer.WriteObjectValue(Schema);
             }
+            if (Optional.IsDefined(EnableConflictLogging))
+            {
+                writer.WritePropertyName("enableConflictLogging");
+                writer.WriteBooleanValue(EnableConflictLogging.Value);
+            }
+            if (Optional.IsDefined(ConflictLoggingRetentionInDays))
+            {
+                writer.WritePropertyName("conflictLoggingRetentionInDays");
+                writer.WriteNumberValue(ConflictLoggingRetentionInDays.Value);
+            }
             if (Optional.IsDefined(UsePrivateLinkConnection))
             {
                 writer.WritePropertyName("usePrivateLinkConnection");
@@ -59,6 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SyncGroup DeserializeSyncGroup(JsonElement element)
         {
+            Optional<Sku> sku = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
@@ -70,9 +86,22 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> hubDatabasePassword = default;
             Optional<SyncGroupState> syncState = default;
             Optional<SyncGroupSchema> schema = default;
+            Optional<bool> enableConflictLogging = default;
+            Optional<int> conflictLoggingRetentionInDays = default;
             Optional<bool> usePrivateLinkConnection = default;
+            Optional<string> privateEndpointName = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sku"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sku = Sku.DeserializeSku(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -162,6 +191,26 @@ namespace Azure.ResourceManager.Sql.Models
                             schema = SyncGroupSchema.DeserializeSyncGroupSchema(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("enableConflictLogging"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enableConflictLogging = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("conflictLoggingRetentionInDays"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            conflictLoggingRetentionInDays = property0.Value.GetInt32();
+                            continue;
+                        }
                         if (property0.NameEquals("usePrivateLinkConnection"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -172,11 +221,16 @@ namespace Azure.ResourceManager.Sql.Models
                             usePrivateLinkConnection = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("privateEndpointName"))
+                        {
+                            privateEndpointName = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SyncGroup(id.Value, name.Value, type.Value, Optional.ToNullable(interval), Optional.ToNullable(lastSyncTime), Optional.ToNullable(conflictResolutionPolicy), syncDatabaseId.Value, hubDatabaseUserName.Value, hubDatabasePassword.Value, Optional.ToNullable(syncState), schema.Value, Optional.ToNullable(usePrivateLinkConnection));
+            return new SyncGroup(id.Value, name.Value, type.Value, sku.Value, Optional.ToNullable(interval), Optional.ToNullable(lastSyncTime), Optional.ToNullable(conflictResolutionPolicy), syncDatabaseId.Value, hubDatabaseUserName.Value, hubDatabasePassword.Value, Optional.ToNullable(syncState), schema.Value, Optional.ToNullable(enableConflictLogging), Optional.ToNullable(conflictLoggingRetentionInDays), Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value);
         }
     }
 }

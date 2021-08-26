@@ -48,9 +48,13 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SensitivityLabel DeserializeSensitivityLabel(JsonElement element)
         {
+            Optional<string> managedBy = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
+            Optional<string> schemaName = default;
+            Optional<string> tableName = default;
+            Optional<string> columnName = default;
             Optional<string> labelName = default;
             Optional<string> labelId = default;
             Optional<string> informationType = default;
@@ -59,6 +63,11 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<SensitivityLabelRank> rank = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("managedBy"))
+                {
+                    managedBy = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -83,6 +92,21 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("schemaName"))
+                        {
+                            schemaName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("tableName"))
+                        {
+                            tableName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("columnName"))
+                        {
+                            columnName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("labelName"))
                         {
                             labelName = property0.Value.GetString();
@@ -127,7 +151,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SensitivityLabel(id.Value, name.Value, type.Value, labelName.Value, labelId.Value, informationType.Value, informationTypeId.Value, Optional.ToNullable(isDisabled), Optional.ToNullable(rank));
+            return new SensitivityLabel(id.Value, name.Value, type.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, labelId.Value, informationType.Value, informationTypeId.Value, Optional.ToNullable(isDisabled), Optional.ToNullable(rank));
         }
     }
 }

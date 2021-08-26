@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.Sql
             _pipeline = pipeline;
         }
 
-        /// <summary> Gets a deleted database that can be restored. </summary>
+        /// <summary> Gets a restorable dropped database. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="restorableDroppededDatabaseId"> The id of the deleted database in the form of databaseName,deletionTimeInFileTimeFormat. </param>
+        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RestorableDroppedDatabase>> GetAsync(string resourceGroupName, string serverName, string restorableDroppededDatabaseId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorableDroppedDatabase>> GetAsync(string resourceGroupName, string serverName, string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RestorableDroppedDatabasesOperations.Get");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(resourceGroupName, serverName, restorableDroppededDatabaseId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetAsync(resourceGroupName, serverName, restorableDroppedDatabaseId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -59,18 +59,18 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a deleted database that can be restored. </summary>
+        /// <summary> Gets a restorable dropped database. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="restorableDroppededDatabaseId"> The id of the deleted database in the form of databaseName,deletionTimeInFileTimeFormat. </param>
+        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RestorableDroppedDatabase> Get(string resourceGroupName, string serverName, string restorableDroppededDatabaseId, CancellationToken cancellationToken = default)
+        public virtual Response<RestorableDroppedDatabase> Get(string resourceGroupName, string serverName, string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RestorableDroppedDatabasesOperations.Get");
             scope.Start();
             try
             {
-                return RestClient.Get(resourceGroupName, serverName, restorableDroppededDatabaseId, cancellationToken);
+                return RestClient.Get(resourceGroupName, serverName, restorableDroppedDatabaseId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a list of deleted databases that can be restored. </summary>
+        /// <summary> Gets a list of restorable dropped databases. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await RestClient.ListByServerAsync(resourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -110,10 +110,25 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            async Task<Page<RestorableDroppedDatabase>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("RestorableDroppedDatabasesOperations.ListByServer");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByServerNextPageAsync(nextLink, resourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets a list of deleted databases that can be restored. </summary>
+        /// <summary> Gets a list of restorable dropped databases. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -136,7 +151,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = RestClient.ListByServer(resourceGroupName, serverName, cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -144,7 +159,22 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            Page<RestorableDroppedDatabase> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("RestorableDroppedDatabasesOperations.ListByServer");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByServerNextPage(nextLink, resourceGroupName, serverName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

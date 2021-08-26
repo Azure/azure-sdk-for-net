@@ -39,6 +39,46 @@ namespace Azure.ResourceManager.Sql
             _pipeline = pipeline;
         }
 
+        /// <summary> Gets a firewall rule. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<FirewallRule>> GetAsync(string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("FirewallRulesOperations.Get");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetAsync(resourceGroupName, serverName, firewallRuleName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a firewall rule. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<FirewallRule> Get(string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("FirewallRulesOperations.Get");
+            scope.Start();
+            try
+            {
+                return RestClient.Get(resourceGroupName, serverName, firewallRuleName, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Creates or updates a firewall rule. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -121,18 +161,18 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a firewall rule. </summary>
+        /// <summary> Replaces all firewall rules on the server. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
+        /// <param name="parameters"> The FirewallRuleList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FirewallRule>> GetAsync(string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirewallRule>> ReplaceAsync(string resourceGroupName, string serverName, FirewallRuleList parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FirewallRulesOperations.Get");
+            using var scope = _clientDiagnostics.CreateScope("FirewallRulesOperations.Replace");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(resourceGroupName, serverName, firewallRuleName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.ReplaceAsync(resourceGroupName, serverName, parameters, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -141,18 +181,18 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a firewall rule. </summary>
+        /// <summary> Replaces all firewall rules on the server. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
+        /// <param name="parameters"> The FirewallRuleList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FirewallRule> Get(string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<FirewallRule> Replace(string resourceGroupName, string serverName, FirewallRuleList parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FirewallRulesOperations.Get");
+            using var scope = _clientDiagnostics.CreateScope("FirewallRulesOperations.Replace");
             scope.Start();
             try
             {
-                return RestClient.Get(resourceGroupName, serverName, firewallRuleName, cancellationToken);
+                return RestClient.Replace(resourceGroupName, serverName, parameters, cancellationToken);
             }
             catch (Exception e)
             {
@@ -161,7 +201,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Returns a list of firewall rules. </summary>
+        /// <summary> Gets a list of firewall rules. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -184,7 +224,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = await RestClient.ListByServerAsync(resourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -192,10 +232,25 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            async Task<Page<FirewallRule>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("FirewallRulesOperations.ListByServer");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListByServerNextPageAsync(nextLink, resourceGroupName, serverName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Returns a list of firewall rules. </summary>
+        /// <summary> Gets a list of firewall rules. </summary>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -218,7 +273,7 @@ namespace Azure.ResourceManager.Sql
                 try
                 {
                     var response = RestClient.ListByServer(resourceGroupName, serverName, cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -226,7 +281,22 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            Page<FirewallRule> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("FirewallRulesOperations.ListByServer");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListByServerNextPage(nextLink, resourceGroupName, serverName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

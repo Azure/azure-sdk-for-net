@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/syncMembers/", false);
             uri.AppendPath(syncMemberName, true);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/syncMembers/", false);
             uri.AppendPath(syncMemberName, true);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/syncMembers/", false);
             uri.AppendPath(syncMemberName, true);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/syncMembers/", false);
             uri.AppendPath(syncMemberName, true);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/syncGroups/", false);
             uri.AppendPath(syncGroupName, true);
             uri.AppendPath("/syncMembers", false);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/syncMembers/", false);
             uri.AppendPath(syncMemberName, true);
             uri.AppendPath("/schemas", false);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/syncMembers/", false);
             uri.AppendPath(syncMemberName, true);
             uri.AppendPath("/refreshSchema", false);
-            uri.AppendQuery("api-version", "2019-06-01-preview", true);
+            uri.AppendQuery("api-version", "2020-11-01-preview", true);
             request.Uri = uri;
             return message;
         }

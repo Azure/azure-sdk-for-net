@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("status");
-            writer.WriteStringValue(Status);
+            writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("description");
             writer.WriteStringValue(Description);
             writer.WriteEndObject();
@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static PrivateLinkServiceConnectionStateProperty DeserializePrivateLinkServiceConnectionStateProperty(JsonElement element)
         {
-            string status = default;
+            PrivateLinkServiceConnectionStateStatus status = default;
             string description = default;
-            Optional<string> actionsRequired = default;
+            Optional<PrivateLinkServiceConnectionStateActionsRequire> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    status = property.Value.GetString();
+                    status = new PrivateLinkServiceConnectionStateStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -41,11 +41,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("actionsRequired"))
                 {
-                    actionsRequired = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    actionsRequired = new PrivateLinkServiceConnectionStateActionsRequire(property.Value.GetString());
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnectionStateProperty(status, description, actionsRequired.Value);
+            return new PrivateLinkServiceConnectionStateProperty(status, description, Optional.ToNullable(actionsRequired));
         }
     }
 }
