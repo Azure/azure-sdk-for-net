@@ -1061,6 +1061,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Public));
             Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%metric/%datafeed"));
             Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
+            Assert.That(dataFeed.Creator, Is.EqualTo("foo@contoso.com"));
 
             Assert.That(dataFeed.Administrators, Is.Not.Null);
             Assert.That(dataFeed.Administrators.Count, Is.EqualTo(2));
@@ -1131,6 +1132,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.AccessMode, Is.EqualTo(DataFeedAccessMode.Public));
             Assert.That(dataFeed.ActionLinkTemplate, Is.EqualTo("https://fakeurl.com/%datafeed/%metric"));
             Assert.That(dataFeed.Creator, Is.Not.Null.And.Not.Empty);
+            Assert.That(dataFeed.Creator, Is.EqualTo("foo@contoso.com"));
 
             // In the SetOptionalMembers method, we may or may not add a new admin (fake@admin.com) depending on whether
             // the data feed instance used for the Update call was created from scratch or from a GetDataFeed operation:
