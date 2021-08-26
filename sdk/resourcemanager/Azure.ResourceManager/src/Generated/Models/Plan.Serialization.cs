@@ -10,7 +10,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(PlanConverter))]
     public partial class Plan : IUtf8JsonSerializable

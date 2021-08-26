@@ -134,7 +134,16 @@ namespace Azure.Identity
 
             ClientCertificateCredentialOptions certCredOptions = (options as ClientCertificateCredentialOptions);
 
-            Client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, certificateProvider, certCredOptions?.SendCertificateChain ?? false, options as ITokenCacheOptions, certCredOptions?.RegionalAuthority);
+            Client = client ??
+                     new MsalConfidentialClient(
+                         _pipeline,
+                         tenantId,
+                         clientId,
+                         certificateProvider,
+                         certCredOptions?.SendCertificateChain ?? false,
+                         options as ITokenCacheOptions,
+                         certCredOptions?.RegionalAuthority,
+                         options?.IsLoggingPIIEnabled ?? false);
         }
 
         /// <summary>

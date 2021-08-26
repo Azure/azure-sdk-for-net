@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _nameSpace = nameSpace;
-            _restClient = new RestOperations(_nameSpace, ClientOptions.ApiVersions.GetApiVersionForNamespace(nameSpace), _clientDiagnostics, Pipeline, BaseUri);
+            _restClient = new RestOperations(_nameSpace, ClientOptions.ApiVersions.GetApiVersionForNamespace(nameSpace), _clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the valid resource type for this object. </summary>
