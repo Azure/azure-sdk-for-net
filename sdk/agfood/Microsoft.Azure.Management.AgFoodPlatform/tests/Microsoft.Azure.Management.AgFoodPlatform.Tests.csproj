@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.AgFoodPlatform.Tests</PackageId>
     <Description>Microsoft.Azure.Management.AgFoodPlatform.Tests Class Library</Description>
-    <Authors>Microsoft Corporation</Authors>
+    <Authors>Microsoft Corporation.</Authors>
     <AssemblyName>Microsoft.Azure.Management.AgFoodPlatform.Tests</AssemblyName>
     <ExcludeFromBuild>true</ExcludeFromBuild>
     <ExcludeFromTest>true</ExcludeFromTest>
