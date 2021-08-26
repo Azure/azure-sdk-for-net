@@ -289,7 +289,7 @@ try {
                 $AzureTestPrincipal
             } else {
                 Log "TestApplicationId was not specified; creating a new service principal in subscription '$SubscriptionId'"
-                $global:AzureTestPrincipal = New-AzADServicePrincipal -Role Owner -Scope "/subscriptions/$SubscriptionId"
+                $global:AzureTestPrincipal = New-AzADServicePrincipal -Role Owner -Scope "/subscriptions/$SubscriptionId" -DisplayName "test-resources-$($baseName).microsoft.com"
                 $global:AzureTestSubscription = $SubscriptionId
 
                 Log "Created service principal '$($AzureTestPrincipal.ApplicationId)'"
