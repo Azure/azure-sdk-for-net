@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static GremlinGraphGetPropertiesResource DeserializeGremlinGraphGetPropertiesResource(JsonElement element)
         {
             Optional<string> Rid = default;
-            Optional<object> Ts = default;
+            Optional<float> Ts = default;
             Optional<string> Etag = default;
             string id = default;
             Optional<IndexingPolicy> indexingPolicy = default;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Ts = property.Value.GetObject();
+                    Ts = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("_etag"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new GremlinGraphGetPropertiesResource(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Rid.Value, Ts.Value, Etag.Value);
+            return new GremlinGraphGetPropertiesResource(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Rid.Value, Optional.ToNullable(Ts), Etag.Value);
         }
     }
 }

@@ -15,21 +15,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Initializes a new instance of SqlTriggerCreateUpdateParameters. </summary>
         /// <param name="resource"> The standard JSON format of a trigger. </param>
-        /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resource"/> or <paramref name="options"/> is null. </exception>
-        public SqlTriggerCreateUpdateParameters(SqlTriggerResource resource, CreateUpdateOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
+        public SqlTriggerCreateUpdateParameters(SqlTriggerResource resource)
         {
             if (resource == null)
             {
                 throw new ArgumentNullException(nameof(resource));
             }
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
 
             Resource = resource;
-            Options = options;
         }
 
         /// <summary> Initializes a new instance of SqlTriggerCreateUpdateParameters. </summary>

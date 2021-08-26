@@ -110,10 +110,31 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Returns an instance of NotebookWorkspacesOperations. </summary>
         public virtual NotebookWorkspacesOperations NotebookWorkspaces => new NotebookWorkspacesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
+        /// <summary> Returns an instance of PrivateEndpointConnectionsOperations. </summary>
+        public virtual PrivateEndpointConnectionsOperations PrivateEndpointConnections => new PrivateEndpointConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
         /// <summary> Returns an instance of PrivateLinkResourcesOperations. </summary>
         public virtual PrivateLinkResourcesOperations PrivateLinkResources => new PrivateLinkResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Returns an instance of PrivateEndpointConnectionsOperations. </summary>
-        public virtual PrivateEndpointConnectionsOperations PrivateEndpointConnections => new PrivateEndpointConnectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+        /// <summary> Returns an instance of RestorableDatabaseAccountsOperations. </summary>
+        public virtual RestorableDatabaseAccountsOperations RestorableDatabaseAccounts => new RestorableDatabaseAccountsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RestorableSqlDatabasesOperations. </summary>
+        public virtual RestorableSqlDatabasesOperations RestorableSqlDatabases => new RestorableSqlDatabasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RestorableSqlContainersOperations. </summary>
+        public virtual RestorableSqlContainersOperations RestorableSqlContainers => new RestorableSqlContainersOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RestorableSqlResourcesOperations. </summary>
+        public virtual RestorableSqlResourcesOperations RestorableSqlResources => new RestorableSqlResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RestorableMongodbDatabasesOperations. </summary>
+        public virtual RestorableMongodbDatabasesOperations RestorableMongodbDatabases => new RestorableMongodbDatabasesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RestorableMongodbCollectionsOperations. </summary>
+        public virtual RestorableMongodbCollectionsOperations RestorableMongodbCollections => new RestorableMongodbCollectionsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
+
+        /// <summary> Returns an instance of RestorableMongodbResourcesOperations. </summary>
+        public virtual RestorableMongodbResourcesOperations RestorableMongodbResources => new RestorableMongodbResourcesOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }

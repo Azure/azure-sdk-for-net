@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static SqlUserDefinedFunctionGetPropertiesResource DeserializeSqlUserDefinedFunctionGetPropertiesResource(JsonElement element)
         {
             Optional<string> Rid = default;
-            Optional<object> Ts = default;
+            Optional<float> Ts = default;
             Optional<string> Etag = default;
             string id = default;
             Optional<string> body = default;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Ts = property.Value.GetObject();
+                    Ts = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("_etag"))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new SqlUserDefinedFunctionGetPropertiesResource(id, body.Value, Rid.Value, Ts.Value, Etag.Value);
+            return new SqlUserDefinedFunctionGetPropertiesResource(id, body.Value, Rid.Value, Optional.ToNullable(Ts), Etag.Value);
         }
     }
 }

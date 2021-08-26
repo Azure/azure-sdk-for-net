@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static MongoDBDatabaseGetPropertiesResource DeserializeMongoDBDatabaseGetPropertiesResource(JsonElement element)
         {
             Optional<string> Rid = default;
-            Optional<object> Ts = default;
+            Optional<float> Ts = default;
             Optional<string> Etag = default;
             string id = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Ts = property.Value.GetObject();
+                    Ts = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("_etag"))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new MongoDBDatabaseGetPropertiesResource(id, Rid.Value, Ts.Value, Etag.Value);
+            return new MongoDBDatabaseGetPropertiesResource(id, Rid.Value, Optional.ToNullable(Ts), Etag.Value);
         }
     }
 }

@@ -27,6 +27,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("privateLinkServiceConnectionState");
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
+            if (Optional.IsDefined(GroupId))
+            {
+                writer.WritePropertyName("groupId");
+                writer.WriteStringValue(GroupId);
+            }
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState");
+                writer.WriteStringValue(ProvisioningState);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -38,6 +48,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> type = default;
             Optional<PrivateEndpointProperty> privateEndpoint = default;
             Optional<PrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
+            Optional<string> groupId = default;
+            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -84,11 +96,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             privateLinkServiceConnectionState = PrivateLinkServiceConnectionStateProperty.DeserializePrivateLinkServiceConnectionStateProperty(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("groupId"))
+                        {
+                            groupId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new PrivateEndpointConnection(id.Value, name.Value, type.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value);
+            return new PrivateEndpointConnection(id.Value, name.Value, type.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, groupId.Value, provisioningState.Value);
         }
     }
 }

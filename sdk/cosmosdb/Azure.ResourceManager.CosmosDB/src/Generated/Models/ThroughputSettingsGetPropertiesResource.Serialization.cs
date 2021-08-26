@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static ThroughputSettingsGetPropertiesResource DeserializeThroughputSettingsGetPropertiesResource(JsonElement element)
         {
             Optional<string> Rid = default;
-            Optional<object> Ts = default;
+            Optional<float> Ts = default;
             Optional<string> Etag = default;
             Optional<int> throughput = default;
             Optional<AutoscaleSettingsResource> autoscaleSettings = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Ts = property.Value.GetObject();
+                    Ts = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("_etag"))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ThroughputSettingsGetPropertiesResource(Optional.ToNullable(throughput), autoscaleSettings.Value, minimumThroughput.Value, offerReplacePending.Value, Rid.Value, Ts.Value, Etag.Value);
+            return new ThroughputSettingsGetPropertiesResource(Optional.ToNullable(throughput), autoscaleSettings.Value, minimumThroughput.Value, offerReplacePending.Value, Rid.Value, Optional.ToNullable(Ts), Etag.Value);
         }
     }
 }

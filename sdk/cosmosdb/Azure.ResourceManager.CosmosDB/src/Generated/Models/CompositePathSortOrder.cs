@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AscendingValue = "Ascending";
-        private const string DescendingValue = "Descending";
+        private const string AscendingValue = "ascending";
+        private const string DescendingValue = "descending";
 
-        /// <summary> Ascending. </summary>
+        /// <summary> ascending. </summary>
         public static CompositePathSortOrder Ascending { get; } = new CompositePathSortOrder(AscendingValue);
-        /// <summary> Descending. </summary>
+        /// <summary> descending. </summary>
         public static CompositePathSortOrder Descending { get; } = new CompositePathSortOrder(DescendingValue);
         /// <summary> Determines if two <see cref="CompositePathSortOrder"/> values are the same. </summary>
         public static bool operator ==(CompositePathSortOrder left, CompositePathSortOrder right) => left.Equals(right);

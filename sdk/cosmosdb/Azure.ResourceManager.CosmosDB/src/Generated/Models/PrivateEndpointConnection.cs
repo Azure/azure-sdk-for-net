@@ -16,20 +16,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnection. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
-        internal PrivateEndpointConnection(string id, string name, string type, PrivateEndpointProperty privateEndpoint, PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState) : base(id, name, type)
+        /// <param name="groupId"> Group id of the private endpoint. </param>
+        /// <param name="provisioningState"> Provisioning state of the private endpoint. </param>
+        internal PrivateEndpointConnection(string id, string name, string type, PrivateEndpointProperty privateEndpoint, PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string groupId, string provisioningState) : base(id, name, type)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            GroupId = groupId;
+            ProvisioningState = provisioningState;
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>
         public PrivateEndpointProperty PrivateEndpoint { get; set; }
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
         public PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
+        /// <summary> Group id of the private endpoint. </summary>
+        public string GroupId { get; set; }
+        /// <summary> Provisioning state of the private endpoint. </summary>
+        public string ProvisioningState { get; set; }
     }
 }

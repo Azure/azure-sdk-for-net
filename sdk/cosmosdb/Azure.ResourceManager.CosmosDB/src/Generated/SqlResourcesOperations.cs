@@ -32,9 +32,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        internal SqlResourcesOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        internal SqlResourcesOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-06-15")
         {
-            RestClient = new SqlResourcesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            RestClient = new SqlResourcesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -327,6 +328,86 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 return RestClient.GetSqlTrigger(resourceGroupName, accountName, databaseName, containerName, triggerName, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves the properties of an existing Azure Cosmos DB SQL Role Definition with the given Id. </summary>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SqlRoleDefinitionGetResults>> GetSqlRoleDefinitionAsync(string roleDefinitionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.GetSqlRoleDefinition");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetSqlRoleDefinitionAsync(roleDefinitionId, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves the properties of an existing Azure Cosmos DB SQL Role Definition with the given Id. </summary>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SqlRoleDefinitionGetResults> GetSqlRoleDefinition(string roleDefinitionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.GetSqlRoleDefinition");
+            scope.Start();
+            try
+            {
+                return RestClient.GetSqlRoleDefinition(roleDefinitionId, resourceGroupName, accountName, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves the properties of an existing Azure Cosmos DB SQL Role Assignment with the given Id. </summary>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SqlRoleAssignmentGetResults>> GetSqlRoleAssignmentAsync(string roleAssignmentId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.GetSqlRoleAssignment");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetSqlRoleAssignmentAsync(roleAssignmentId, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves the properties of an existing Azure Cosmos DB SQL Role Assignment with the given Id. </summary>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SqlRoleAssignmentGetResults> GetSqlRoleAssignment(string roleAssignmentId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.GetSqlRoleAssignment");
+            scope.Start();
+            try
+            {
+                return RestClient.GetSqlRoleAssignment(roleAssignmentId, resourceGroupName, accountName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -734,6 +815,142 @@ namespace Azure.ResourceManager.CosmosDB
                 try
                 {
                     var response = RestClient.ListSqlTriggers(resourceGroupName, accountName, databaseName, containerName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the list of all Azure Cosmos DB SQL Role Definitions. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        public virtual AsyncPageable<SqlRoleDefinitionGetResults> ListSqlRoleDefinitionsAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+
+            async Task<Page<SqlRoleDefinitionGetResults>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.ListSqlRoleDefinitions");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListSqlRoleDefinitionsAsync(resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the list of all Azure Cosmos DB SQL Role Definitions. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        public virtual Pageable<SqlRoleDefinitionGetResults> ListSqlRoleDefinitions(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+
+            Page<SqlRoleDefinitionGetResults> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.ListSqlRoleDefinitions");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListSqlRoleDefinitions(resourceGroupName, accountName, cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the list of all Azure Cosmos DB SQL Role Assignments. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        public virtual AsyncPageable<SqlRoleAssignmentGetResults> ListSqlRoleAssignmentsAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+
+            async Task<Page<SqlRoleAssignmentGetResults>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.ListSqlRoleAssignments");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListSqlRoleAssignmentsAsync(resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Retrieves the list of all Azure Cosmos DB SQL Role Assignments. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        public virtual Pageable<SqlRoleAssignmentGetResults> ListSqlRoleAssignments(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+
+            Page<SqlRoleAssignmentGetResults> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.ListSqlRoleAssignments");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListSqlRoleAssignments(resourceGroupName, accountName, cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2097,6 +2314,396 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var originalResponse = RestClient.DeleteSqlTrigger(resourceGroupName, accountName, databaseName, containerName, triggerName, cancellationToken);
                 return new SqlResourcesDeleteSqlTriggerOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSqlTriggerRequest(resourceGroupName, accountName, databaseName, containerName, triggerName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates an Azure Cosmos DB SQL Role Definition. </summary>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="createUpdateSqlRoleDefinitionParameters"> The properties required to create or update a Role Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="createUpdateSqlRoleDefinitionParameters"/> is null. </exception>
+        public virtual async Task<SqlResourcesCreateUpdateSqlRoleDefinitionOperation> StartCreateUpdateSqlRoleDefinitionAsync(string roleDefinitionId, string resourceGroupName, string accountName, SqlRoleDefinitionCreateUpdateParameters createUpdateSqlRoleDefinitionParameters, CancellationToken cancellationToken = default)
+        {
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (createUpdateSqlRoleDefinitionParameters == null)
+            {
+                throw new ArgumentNullException(nameof(createUpdateSqlRoleDefinitionParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.StartCreateUpdateSqlRoleDefinition");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CreateUpdateSqlRoleDefinitionAsync(roleDefinitionId, resourceGroupName, accountName, createUpdateSqlRoleDefinitionParameters, cancellationToken).ConfigureAwait(false);
+                return new SqlResourcesCreateUpdateSqlRoleDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateUpdateSqlRoleDefinitionRequest(roleDefinitionId, resourceGroupName, accountName, createUpdateSqlRoleDefinitionParameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates an Azure Cosmos DB SQL Role Definition. </summary>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="createUpdateSqlRoleDefinitionParameters"> The properties required to create or update a Role Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="createUpdateSqlRoleDefinitionParameters"/> is null. </exception>
+        public virtual SqlResourcesCreateUpdateSqlRoleDefinitionOperation StartCreateUpdateSqlRoleDefinition(string roleDefinitionId, string resourceGroupName, string accountName, SqlRoleDefinitionCreateUpdateParameters createUpdateSqlRoleDefinitionParameters, CancellationToken cancellationToken = default)
+        {
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (createUpdateSqlRoleDefinitionParameters == null)
+            {
+                throw new ArgumentNullException(nameof(createUpdateSqlRoleDefinitionParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.StartCreateUpdateSqlRoleDefinition");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CreateUpdateSqlRoleDefinition(roleDefinitionId, resourceGroupName, accountName, createUpdateSqlRoleDefinitionParameters, cancellationToken);
+                return new SqlResourcesCreateUpdateSqlRoleDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateUpdateSqlRoleDefinitionRequest(roleDefinitionId, resourceGroupName, accountName, createUpdateSqlRoleDefinitionParameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes an existing Azure Cosmos DB SQL Role Definition. </summary>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public virtual async Task<SqlResourcesDeleteSqlRoleDefinitionOperation> StartDeleteSqlRoleDefinitionAsync(string roleDefinitionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.StartDeleteSqlRoleDefinition");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.DeleteSqlRoleDefinitionAsync(roleDefinitionId, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+                return new SqlResourcesDeleteSqlRoleDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSqlRoleDefinitionRequest(roleDefinitionId, resourceGroupName, accountName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes an existing Azure Cosmos DB SQL Role Definition. </summary>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public virtual SqlResourcesDeleteSqlRoleDefinitionOperation StartDeleteSqlRoleDefinition(string roleDefinitionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.StartDeleteSqlRoleDefinition");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.DeleteSqlRoleDefinition(roleDefinitionId, resourceGroupName, accountName, cancellationToken);
+                return new SqlResourcesDeleteSqlRoleDefinitionOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSqlRoleDefinitionRequest(roleDefinitionId, resourceGroupName, accountName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates an Azure Cosmos DB SQL Role Assignment. </summary>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="createUpdateSqlRoleAssignmentParameters"> The properties required to create or update a Role Assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="createUpdateSqlRoleAssignmentParameters"/> is null. </exception>
+        public virtual async Task<SqlResourcesCreateUpdateSqlRoleAssignmentOperation> StartCreateUpdateSqlRoleAssignmentAsync(string roleAssignmentId, string resourceGroupName, string accountName, SqlRoleAssignmentCreateUpdateParameters createUpdateSqlRoleAssignmentParameters, CancellationToken cancellationToken = default)
+        {
+            if (roleAssignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(roleAssignmentId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (createUpdateSqlRoleAssignmentParameters == null)
+            {
+                throw new ArgumentNullException(nameof(createUpdateSqlRoleAssignmentParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.StartCreateUpdateSqlRoleAssignment");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.CreateUpdateSqlRoleAssignmentAsync(roleAssignmentId, resourceGroupName, accountName, createUpdateSqlRoleAssignmentParameters, cancellationToken).ConfigureAwait(false);
+                return new SqlResourcesCreateUpdateSqlRoleAssignmentOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateUpdateSqlRoleAssignmentRequest(roleAssignmentId, resourceGroupName, accountName, createUpdateSqlRoleAssignmentParameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates an Azure Cosmos DB SQL Role Assignment. </summary>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="createUpdateSqlRoleAssignmentParameters"> The properties required to create or update a Role Assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="createUpdateSqlRoleAssignmentParameters"/> is null. </exception>
+        public virtual SqlResourcesCreateUpdateSqlRoleAssignmentOperation StartCreateUpdateSqlRoleAssignment(string roleAssignmentId, string resourceGroupName, string accountName, SqlRoleAssignmentCreateUpdateParameters createUpdateSqlRoleAssignmentParameters, CancellationToken cancellationToken = default)
+        {
+            if (roleAssignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(roleAssignmentId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (createUpdateSqlRoleAssignmentParameters == null)
+            {
+                throw new ArgumentNullException(nameof(createUpdateSqlRoleAssignmentParameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.StartCreateUpdateSqlRoleAssignment");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.CreateUpdateSqlRoleAssignment(roleAssignmentId, resourceGroupName, accountName, createUpdateSqlRoleAssignmentParameters, cancellationToken);
+                return new SqlResourcesCreateUpdateSqlRoleAssignmentOperation(_clientDiagnostics, _pipeline, RestClient.CreateCreateUpdateSqlRoleAssignmentRequest(roleAssignmentId, resourceGroupName, accountName, createUpdateSqlRoleAssignmentParameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes an existing Azure Cosmos DB SQL Role Assignment. </summary>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public virtual async Task<SqlResourcesDeleteSqlRoleAssignmentOperation> StartDeleteSqlRoleAssignmentAsync(string roleAssignmentId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            if (roleAssignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(roleAssignmentId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.StartDeleteSqlRoleAssignment");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.DeleteSqlRoleAssignmentAsync(roleAssignmentId, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+                return new SqlResourcesDeleteSqlRoleAssignmentOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSqlRoleAssignmentRequest(roleAssignmentId, resourceGroupName, accountName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes an existing Azure Cosmos DB SQL Role Assignment. </summary>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/>, <paramref name="resourceGroupName"/>, or <paramref name="accountName"/> is null. </exception>
+        public virtual SqlResourcesDeleteSqlRoleAssignmentOperation StartDeleteSqlRoleAssignment(string roleAssignmentId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            if (roleAssignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(roleAssignmentId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.StartDeleteSqlRoleAssignment");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.DeleteSqlRoleAssignment(roleAssignmentId, resourceGroupName, accountName, cancellationToken);
+                return new SqlResourcesDeleteSqlRoleAssignmentOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteSqlRoleAssignmentRequest(roleAssignmentId, resourceGroupName, accountName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves continuous backup information for a container resource. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="databaseName"> Cosmos DB database name. </param>
+        /// <param name="containerName"> Cosmos DB container name. </param>
+        /// <param name="location"> The name of the continuous backup restore location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="location"/> is null. </exception>
+        public virtual async Task<SqlResourcesRetrieveContinuousBackupInformationOperation> StartRetrieveContinuousBackupInformationAsync(string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.StartRetrieveContinuousBackupInformation");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.RetrieveContinuousBackupInformationAsync(resourceGroupName, accountName, databaseName, containerName, location, cancellationToken).ConfigureAwait(false);
+                return new SqlResourcesRetrieveContinuousBackupInformationOperation(_clientDiagnostics, _pipeline, RestClient.CreateRetrieveContinuousBackupInformationRequest(resourceGroupName, accountName, databaseName, containerName, location).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves continuous backup information for a container resource. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="databaseName"> Cosmos DB database name. </param>
+        /// <param name="containerName"> Cosmos DB container name. </param>
+        /// <param name="location"> The name of the continuous backup restore location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, or <paramref name="location"/> is null. </exception>
+        public virtual SqlResourcesRetrieveContinuousBackupInformationOperation StartRetrieveContinuousBackupInformation(string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SqlResourcesOperations.StartRetrieveContinuousBackupInformation");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.RetrieveContinuousBackupInformation(resourceGroupName, accountName, databaseName, containerName, location, cancellationToken);
+                return new SqlResourcesRetrieveContinuousBackupInformationOperation(_clientDiagnostics, _pipeline, RestClient.CreateRetrieveContinuousBackupInformationRequest(resourceGroupName, accountName, databaseName, containerName, location).Request, originalResponse);
             }
             catch (Exception e)
             {

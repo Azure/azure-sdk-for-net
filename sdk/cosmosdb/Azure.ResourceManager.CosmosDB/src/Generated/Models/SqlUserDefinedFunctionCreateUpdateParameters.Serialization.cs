@@ -36,8 +36,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resource");
             writer.WriteObjectValue(Resource);
-            writer.WritePropertyName("options");
-            writer.WriteObjectValue(Options);
+            if (Optional.IsDefined(Options))
+            {
+                writer.WritePropertyName("options");
+                writer.WriteObjectValue(Options);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             SqlUserDefinedFunctionResource resource = default;
-            CreateUpdateOptions options = default;
+            Optional<CreateUpdateOptions> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -104,6 +107,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         }
                         if (property0.NameEquals("options"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             options = CreateUpdateOptions.DeserializeCreateUpdateOptions(property0.Value);
                             continue;
                         }
@@ -111,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new SqlUserDefinedFunctionCreateUpdateParameters(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), resource, options);
+            return new SqlUserDefinedFunctionCreateUpdateParameters(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), resource, options.Value);
         }
     }
 }
