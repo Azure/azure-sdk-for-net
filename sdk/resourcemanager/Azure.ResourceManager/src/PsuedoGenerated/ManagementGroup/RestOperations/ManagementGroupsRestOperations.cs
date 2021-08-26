@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management.Models;
 
 namespace Azure.ResourceManager.Management
@@ -21,14 +22,16 @@ namespace Azure.ResourceManager.Management
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
+        private readonly string _userAgent;
 
         /// <summary> Initializes a new instance of ManagementGroupsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="options"> The client options used to construct the current client. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public ManagementGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2021-04-01")
+        public ManagementGroupsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, Uri endpoint = null, string apiVersion = "2021-04-01")
         {
             endpoint ??= new Uri("https://management.azure.com");
             if (apiVersion == null)
@@ -40,6 +43,7 @@ namespace Azure.ResourceManager.Management
             this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
         internal HttpMessage CreateListRequest(string cacheControl, string skiptoken)
@@ -61,6 +65,7 @@ namespace Azure.ResourceManager.Management
                 request.Headers.Add("Cache-Control", cacheControl);
             }
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -150,6 +155,7 @@ namespace Azure.ResourceManager.Management
                 request.Headers.Add("Cache-Control", cacheControl);
             }
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -241,6 +247,7 @@ namespace Azure.ResourceManager.Management
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(createManagementGroupOptions);
             request.Content = content;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -332,6 +339,7 @@ namespace Azure.ResourceManager.Management
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(patchGroupOptions);
             request.Content = content;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -423,6 +431,7 @@ namespace Azure.ResourceManager.Management
                 request.Headers.Add("Cache-Control", cacheControl);
             }
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -505,6 +514,7 @@ namespace Azure.ResourceManager.Management
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -594,6 +604,7 @@ namespace Azure.ResourceManager.Management
                 request.Headers.Add("Cache-Control", cacheControl);
             }
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -679,6 +690,7 @@ namespace Azure.ResourceManager.Management
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -779,6 +791,7 @@ namespace Azure.ResourceManager.Management
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(checkNameAvailabilityRequest);
             request.Content = content;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
