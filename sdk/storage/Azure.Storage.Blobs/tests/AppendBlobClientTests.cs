@@ -1118,8 +1118,13 @@ namespace Azure.Storage.Blobs.Test
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
                 await destBlob.CreateIfNotExistsAsync();
 
+                AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+                {
+                    SourceRange = new HttpRange(0, Constants.KB)
+                };
+
                 // Act
-                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, new HttpRange(0, Constants.KB));
+                await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, options);
             }
         }
 
@@ -1190,10 +1195,15 @@ namespace Azure.Storage.Blobs.Test
                 destBlob = InstrumentClient(destBlob.WithCustomerProvidedKey(customerProvidedKey));
                 await destBlob.CreateIfNotExistsAsync();
 
+                AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+                {
+                    SourceRange = new HttpRange(0, Constants.KB)
+                };
+
                 // Act
                 Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
                     sourceBlob.Uri,
-                    new HttpRange(0, Constants.KB));
+                    options);
 
                 Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
             }
@@ -1220,10 +1230,15 @@ namespace Azure.Storage.Blobs.Test
                 destBlob = InstrumentClient(destBlob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
                 await destBlob.CreateIfNotExistsAsync();
 
+                AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+                {
+                    SourceRange = new HttpRange(0, Constants.KB)
+                };
+
                 // Act
                 Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
                     sourceBlob.Uri,
-                    new HttpRange(0, Constants.KB));
+                    options);
 
                 Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
             }

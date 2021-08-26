@@ -90,7 +90,15 @@ namespace Azure.Identity
             ClientSecret = clientSecret;
             _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            Client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, clientSecret, options as ITokenCacheOptions, (options as ClientSecretCredentialOptions)?.RegionalAuthority);
+            Client = client ??
+                     new MsalConfidentialClient(
+                         _pipeline,
+                         tenantId,
+                         clientId,
+                         clientSecret,
+                         options as ITokenCacheOptions,
+                         (options as ClientSecretCredentialOptions)?.RegionalAuthority,
+                         options?.IsLoggingPIIEnabled ?? false);
         }
 
         /// <summary>
