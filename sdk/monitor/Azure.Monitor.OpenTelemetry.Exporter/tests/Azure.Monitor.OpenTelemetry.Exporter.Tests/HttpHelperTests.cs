@@ -579,11 +579,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public void DbDependencyTargetIsSetToDbNameWhenNetAttributesAreNotPresent()
         {
             var PartBTags = AzMonList.Initialize();
-            AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributePeerService, "servicename"));
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeDbName, "DbName"));
-            string expectedTarget = "servicename/DbName";
             string target = PartBTags.GetDbDependencyTarget();
-            Assert.Equal(expectedTarget, target);
+            Assert.Equal("DbName", target);
         }
 
         [Fact]
@@ -591,9 +589,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             var PartBTags = AzMonList.Initialize();
             AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeDbSystem, "DbSystem"));
-            string expectedTarget = "DbSystem";
             string target = PartBTags.GetDbDependencyTarget();
-            Assert.Equal(expectedTarget, target);
+            Assert.Equal("DbSystem", target);
         }
 
         [Fact]
