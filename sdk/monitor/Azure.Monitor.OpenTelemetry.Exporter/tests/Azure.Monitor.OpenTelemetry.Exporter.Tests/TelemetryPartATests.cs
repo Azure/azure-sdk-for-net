@@ -57,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             TelemetryPartA.InitRoleInfo(resource);
 
             Assert.StartsWith("unknown_service", TelemetryPartA.RoleName);
-            Assert.Null(TelemetryPartA.RoleInstance);
+            Assert.Equal(Dns.GetHostName(), TelemetryPartA.RoleInstance);
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             TelemetryPartA.InitRoleInfo(resource);
 
             Assert.Equal("my-service", TelemetryPartA.RoleName);
-            Assert.Null(TelemetryPartA.RoleInstance);
+            Assert.Equal(Dns.GetHostName(), TelemetryPartA.RoleInstance);
         }
 
         [Fact]
@@ -87,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             TelemetryPartA.InitRoleInfo(resource);
 
             Assert.StartsWith("my-namespace.unknown_service", TelemetryPartA.RoleName);
-            Assert.Null(TelemetryPartA.RoleInstance);
+            Assert.Equal(Dns.GetHostName(), TelemetryPartA.RoleInstance);
         }
 
         [Fact]
@@ -129,7 +129,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
             Assert.StartsWith("unknown_service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
-            Assert.Null(telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
             Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
             Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
             Assert.Throws<KeyNotFoundException>(() => telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
@@ -178,7 +178,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(TelemetryPartA.FormatUtcTimestamp(activity.StartTimeUtc), telemetryItem.Time);
             Assert.StartsWith("unknown_service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
-            Assert.Null(telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
             Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
             Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
             Assert.Equal(activity.ParentSpanId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
