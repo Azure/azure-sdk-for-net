@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.Resources
                 return new ResourcesRestOperations(
                     Diagnostics,
                     Pipeline,
+                    ClientOptions,
                     subscription,
                     BaseUri);
             }
