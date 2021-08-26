@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Storage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new BlobInventoryPolicyData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), policy.Value);
+            return new BlobInventoryPolicyData(id, name, type, systemData, Optional.ToNullable(lastModifiedTime), policy.Value);
         }
     }
 }
