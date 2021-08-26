@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
