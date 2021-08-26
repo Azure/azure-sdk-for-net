@@ -47,20 +47,20 @@ stages:
             - job: InstallationCheck
               displayName: "Installation Check"
               steps:
-                - download: current
-                  artifact: ${{parameters.ArtifactName}}
+                # - download: current
+                #   artifact: ${{parameters.ArtifactName}}
                 - pwsh:
                     mkdir InstallationCheck
                   displayName: Create Testing Directory
                 - pwsh: |
                     Write-Host "dotnet new console"
                     dotnet new console
-                    $localFeed = "$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}"
+                    $localFeed = "$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}"
                     Write-Host "dotnet nuget add source $($localFeed)"
                     dotnet nuget add source $localFeed
 
                     $version = (Get-ChildItem "$($localFeed)/*.nupkg" -Exclude "*.symbols.nupkg" -Name).replace(".nupkg","").replace("${{artifact.name}}.","")
-                    Write-Host "dotnet add package ${{artifact.name}} --version $($version) --no-restore"
+                    Write-Host "dotnet add package ${{artifact.name}} --version $version --no-restore"
                     dotnet add package ${{artifact.name}} --version $version --no-restore
                     if ($LASTEXITCODE) {
                       exit $LASTEXITCODE
@@ -69,7 +69,7 @@ stages:
                     Write-Host "dotnet nuget locals all --clear"
                     dotnet nuget locals all --clear
 
-                    Write-Host "dotnet restore -s https://api.nuget.org/v3/index.json -s $($localFeed) --no-cache --verbosity detailed"
+                    Write-Host "dotnet restore -s https://api.nuget.org/v3/index.json -s $localFeed --no-cache --verbosity detailed"
                     dotnet restore -s https://api.nuget.org/v3/index.json -s $localFeed --no-cache --verbosity detailed
                     if ($LASTEXITCODE) {
                       exit $LASTEXITCODE
