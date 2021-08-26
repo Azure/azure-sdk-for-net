@@ -14,7 +14,6 @@ namespace Azure.Identity
     internal class MsalPublicClient : MsalClientBase<IPublicClientApplication>
     {
         internal string RedirectUrl { get; }
-        internal bool LogPII { get; }
 
         protected MsalPublicClient()
         { }

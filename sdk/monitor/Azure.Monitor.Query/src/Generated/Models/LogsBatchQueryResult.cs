@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
         /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
-        internal LogsBatchQueryResult(IEnumerable<LogsQueryResultTable> allTables) : base(allTables)
+        internal LogsBatchQueryResult(IEnumerable<LogsTable> allTables) : base(allTables)
         {
             if (allTables == null)
             {
@@ -30,7 +30,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
-        internal LogsBatchQueryResult(IReadOnlyList<LogsQueryResultTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error) : base(allTables, statistics, visualization, error)
+        internal LogsBatchQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error) : base(allTables, statistics, visualization, error)
         {
         }
     }

@@ -8,7 +8,7 @@
 using System;
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Models
 {
     /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
     [PropertyReferenceType]
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The identity that created the resource. </summary>
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; }
         /// <summary> The type of identity that created the resource. </summary>
-        public CreatedByType? CreatedByType { get; set; }
+        public CreatedByType? CreatedByType { get; }
         /// <summary> The timestamp of resource creation (UTC). </summary>
-        public DateTimeOffset? CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; }
         /// <summary> The identity that last modified the resource. </summary>
-        public string LastModifiedBy { get; set; }
+        public string LastModifiedBy { get; }
         /// <summary> The type of identity that last modified the resource. </summary>
-        public CreatedByType? LastModifiedByType { get; set; }
+        public CreatedByType? LastModifiedByType { get; }
         /// <summary> The timestamp of resource last modification (UTC). </summary>
-        public DateTimeOffset? LastModifiedAt { get; set; }
+        public DateTimeOffset? LastModifiedAt { get; }
     }
 }
