@@ -74,6 +74,7 @@ namespace Azure.ResourceManager.Dns.Models
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<long> maxNumberOfRecordSets = default;
+            Optional<long> maxNumberOfRecordsPerRecordSet = default;
             Optional<long> numberOfRecordSets = default;
             Optional<IReadOnlyList<string>> nameServers = default;
             Optional<ZoneType> zoneType = default;
@@ -138,6 +139,16 @@ namespace Azure.ResourceManager.Dns.Models
                                 continue;
                             }
                             maxNumberOfRecordSets = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("maxNumberOfRecordsPerRecordSet"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            maxNumberOfRecordsPerRecordSet = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("numberOfRecordSets"))
@@ -209,7 +220,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new Zone(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), etag.Value, Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(numberOfRecordSets), Optional.ToList(nameServers), Optional.ToNullable(zoneType), Optional.ToList(registrationVirtualNetworks), Optional.ToList(resolutionVirtualNetworks));
+            return new Zone(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), etag.Value, Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(maxNumberOfRecordsPerRecordSet), Optional.ToNullable(numberOfRecordSets), Optional.ToList(nameServers), Optional.ToNullable(zoneType), Optional.ToList(registrationVirtualNetworks), Optional.ToList(resolutionVirtualNetworks));
         }
     }
 }
