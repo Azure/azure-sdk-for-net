@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Azure.ResourceManager.Resources;
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
                     }
                 });
         }
+
         public static void VerifyAccountProperties(StorageAccount account,bool useDefaults)
         {
             Assert.NotNull(account);
@@ -89,7 +91,129 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
                 Assert.AreEqual("value2", account.Data.Tags["key2"]);
             }
         }
+        public static AccountSasParameters ParseAccountSASToken(string accountSasToken)
+        {
+            string[] sasProperties = accountSasToken.Substring(1).Split(new char[] { '&' });
 
+            string serviceParameters = string.Empty;
+            string resourceTypesParameters = string.Empty;
+            string permissionsParameters = string.Empty;
+            string ipAddressOrRangeParameters = string.Empty;
+            DateTimeOffset sharedAccessStartTimeParameters = new DateTimeOffset();
+            DateTimeOffset sharedAccessExpiryTimeParameters = new DateTimeOffset();
+            HttpProtocol? protocolsParameters = null;
+
+            foreach (var property in sasProperties)
+            {
+                string[] keyValue = property.Split(new char[] { '=' });
+                switch (keyValue[0])
+                {
+                    case "ss":
+                        serviceParameters = keyValue[1];
+                        break;
+                    case "srt":
+                        resourceTypesParameters = keyValue[1];
+                        break;
+                    case "sp":
+                        permissionsParameters = keyValue[1];
+                        break;
+                    case "st":
+                        sharedAccessStartTimeParameters = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        break;
+                    case "se":
+                        sharedAccessExpiryTimeParameters = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        break;
+                    case "sip":
+                        ipAddressOrRangeParameters = keyValue[1];
+                        break;
+                    case "spr":
+                        if (keyValue[1] == "https")
+                            protocolsParameters = HttpProtocol.Https;
+                        else if (keyValue[1] == "https,http")
+                            protocolsParameters = HttpProtocol.HttpsHttp;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            AccountSasParameters parameters = new AccountSasParameters(serviceParameters, resourceTypesParameters, permissionsParameters, sharedAccessExpiryTimeParameters)
+            {
+                IPAddressOrRange = ipAddressOrRangeParameters,
+                Protocols = protocolsParameters,
+                SharedAccessStartTime = sharedAccessStartTimeParameters
+            };
+
+            return parameters;
+        }
+        public static ServiceSasParameters ParseServiceSASToken(string serviceSAS, string canonicalizedResource)
+        {
+            string[] sasProperties = serviceSAS.Substring(1).Split(new char[] { '&' });
+
+            ServiceSasParameters parameters = new ServiceSasParameters(canonicalizedResource);
+
+            foreach (var property in sasProperties)
+            {
+                string[] keyValue = property.Split(new char[] { '=' });
+                switch (keyValue[0])
+                {
+                    case "sr":
+                        parameters.Resource = keyValue[1];
+                        break;
+                    case "sp":
+                        parameters.Permissions = keyValue[1];
+                        break;
+                    case "st":
+                        parameters.SharedAccessStartTime = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        break;
+                    case "se":
+                        parameters.SharedAccessExpiryTime = DateTime.Parse(keyValue[1].Replace("%3A", ":").Replace("%3a", ":")).ToUniversalTime();
+                        break;
+                    case "sip":
+                        parameters.IPAddressOrRange = keyValue[1];
+                        break;
+                    case "spr":
+                        if (keyValue[1] == "https")
+                            parameters.Protocols = HttpProtocol.Https;
+                        else if (keyValue[1] == "https,http")
+                            parameters.Protocols = HttpProtocol.HttpsHttp;
+                        break;
+                    case "si":
+                        parameters.Identifier = keyValue[1];
+                        break;
+                    case "spk":
+                        parameters.PartitionKeyStart = keyValue[1];
+                        break;
+                    case "epk":
+                        parameters.PartitionKeyEnd = keyValue[1];
+                        break;
+                    case "srk":
+                        parameters.RowKeyStart = keyValue[1];
+                        break;
+                    case "erk":
+                        parameters.RowKeyEnd = keyValue[1];
+                        break;
+                    case "rscc":
+                        parameters.CacheControl = keyValue[1];
+                        break;
+                    case "rscd":
+                        parameters.ContentDisposition = keyValue[1];
+                        break;
+                    case "rsce":
+                        parameters.ContentEncoding = keyValue[1];
+                        break;
+                    case "rscl":
+                        parameters.ContentLanguage = keyValue[1];
+                        break;
+                    case "rsct":
+                        parameters.ContentType = keyValue[1];
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return parameters;
+        }
         public static void AssertStorageAccountEqual(StorageAccount account1, StorageAccount account2)
         {
             Assert.AreEqual(account1.Id.Name, account2.Id.Name);

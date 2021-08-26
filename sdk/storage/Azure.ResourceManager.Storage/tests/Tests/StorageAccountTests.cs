@@ -9,6 +9,8 @@ using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage.Tests.Helpers;
+using Azure.ResourceManager.Resources.Models;
+using Sku = Azure.ResourceManager.Storage.Models.Sku;
 namespace Azure.ResourceManager.Storage.Tests.Tests
 {
     public class StorageAccountTests : StorageTestBase
@@ -428,6 +430,123 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             //revoke user delegation keys
             await account.RevokeUserDelegationKeysAsync();
+        }
+        [Test]
+        [RecordedTest]
+        public async Task ListStorageAccountAvailableLocations()
+        {
+            //create storage account
+            string accountName = Recording.GenerateAssetName("storage");
+            resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+
+            //get available locations
+            IEnumerable<Location> locationList =await account.GetAvailableLocationsAsync();
+            Assert.NotNull(locationList);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task ListStorageAccountSASWithDefaultProperties()
+        {
+            //create storage account
+            string accountName = Recording.GenerateAssetName("storage");
+            resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+
+            // Test for default values of sas credentials.
+            AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryTime: Recording.UtcNow.AddHours(1));
+            Response<ListAccountSasResponse> result =await account.GetAccountSASAsync(accountSasParameters);
+            AccountSasParameters resultCredentials = ParseAccountSASToken(result.Value.AccountSasToken);
+
+            Assert.AreEqual(accountSasParameters.Services, resultCredentials.Services);
+            Assert.AreEqual(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
+            Assert.AreEqual(accountSasParameters.Permissions, resultCredentials.Permissions);
+            Assert.NotNull(accountSasParameters.SharedAccessExpiryTime);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task ListStorageAccountSAS()
+        {
+            //create storage account
+            string accountName = Recording.GenerateAssetName("storage");
+            resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+
+            AccountSasParameters accountSasParameters = new AccountSasParameters(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryTime: Recording.UtcNow.AddHours(1))
+            {
+                Protocols = HttpProtocol.HttpsHttp,
+                SharedAccessStartTime = Recording.UtcNow,
+                KeyToSign = "key1"
+            };
+            Response<ListAccountSasResponse> result = await account.GetAccountSASAsync(accountSasParameters);
+            AccountSasParameters resultCredentials = ParseAccountSASToken(result.Value.AccountSasToken);
+
+            Assert.AreEqual(accountSasParameters.Services, resultCredentials.Services);
+            Assert.AreEqual(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
+            Assert.AreEqual(accountSasParameters.Permissions, resultCredentials.Permissions);
+            Assert.AreEqual(accountSasParameters.Protocols, resultCredentials.Protocols);
+            Assert.NotNull(accountSasParameters.SharedAccessStartTime);
+            Assert.NotNull(accountSasParameters.SharedAccessExpiryTime);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task ListServiceSASWithDefaultProperties()
+        {
+            //create storage account
+            string accountName = Recording.GenerateAssetName("storage");
+            resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+
+            string canonicalizedResourceParameter = "/blob/" + accountName + "/music";
+            ServiceSasParameters serviceSasParameters = new ServiceSasParameters(canonicalizedResource: canonicalizedResourceParameter)
+            {
+                Resource = "c",
+                Permissions = "rl",
+                SharedAccessExpiryTime = Recording.UtcNow.AddHours(1),
+            };
+            Response<ListServiceSasResponse> result = await account.GetServiceSASAsync(serviceSasParameters);
+            ServiceSasParameters resultCredentials = ParseServiceSASToken(result.Value.ServiceSasToken, canonicalizedResourceParameter);
+            Assert.AreEqual(serviceSasParameters.Resource, resultCredentials.Resource);
+            Assert.AreEqual(serviceSasParameters.Permissions, resultCredentials.Permissions);
+            Assert.NotNull(serviceSasParameters.SharedAccessExpiryTime);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task ListServiceSAS()
+        {
+            //create storage account
+            string accountName = Recording.GenerateAssetName("storage");
+            resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountContainer storageAccountContainer = resourceGroup.GetStorageAccounts();
+            StorageAccountCreateParameters parameters = GetDefaultStorageAccountParameters();
+            StorageAccount account = (await storageAccountContainer.CreateOrUpdateAsync(accountName, parameters)).Value;
+
+            string canonicalizedResourceParameter = "/blob/" + accountName + "/music";
+            ServiceSasParameters serviceSasParameters = new ServiceSasParameters(canonicalizedResource: canonicalizedResourceParameter)
+            {
+                Resource = "c",
+                Permissions = "rdwlacup",
+                Protocols = HttpProtocol.HttpsHttp,
+                SharedAccessStartTime = Recording.UtcNow,
+                SharedAccessExpiryTime = Recording.UtcNow.AddHours(1),
+                KeyToSign = "key1"
+            };
+
+            Response<ListServiceSasResponse> result = await account.GetServiceSASAsync(serviceSasParameters);
+            ServiceSasParameters resultCredentials = ParseServiceSASToken(result.Value.ServiceSasToken, canonicalizedResourceParameter);
+            Assert.AreEqual(serviceSasParameters.Resource, resultCredentials.Resource);
+            Assert.AreEqual(serviceSasParameters.Permissions, resultCredentials.Permissions);
+            Assert.AreEqual(serviceSasParameters.Protocols, resultCredentials.Protocols);
+            Assert.NotNull(serviceSasParameters.SharedAccessStartTime);
+            Assert.NotNull(serviceSasParameters.SharedAccessExpiryTime);
         }
     }
 }

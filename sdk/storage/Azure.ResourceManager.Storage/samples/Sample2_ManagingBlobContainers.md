@@ -46,7 +46,7 @@ StorageAccount storageAccount = await accountCreateOperation.WaitForCompletionAs
 ```
 
 
-Then we need to get the blob service, which is a singletion resource and the name is "default"
+Then we need to get the blob service, which is a singleton resource and the name is "default"
 
 ```C# Snippet:Managing_BlobContainers_GetBlobService
 BlobServiceContainer blobServiceContainer = storageAccount.GetBlobServices();
