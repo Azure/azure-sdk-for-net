@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> This operation deletes the policy definition in the given subscription with the given name. </summary>
-    public partial class PolicyDefinitionDeleteOperation : Azure.Operation
+    public partial class PolicyDefinitionDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _restClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="PolicySetDefinition"/> class. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources
         internal PolicySetDefinition(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _restClient = new PolicySetDefinitionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>

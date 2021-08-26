@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Delete a management lock by scope. </summary>
-    public partial class ManagementLockDeleteByScopeOperation : Azure.Operation
+    public partial class ManagementLockDeleteByScopeOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deletes a resource link with the specified ID. </summary>
-    public partial class ResourceLinkDeleteOperation : Azure.Operation
+    public partial class ResourceLinkDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

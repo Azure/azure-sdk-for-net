@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
             HasData = true;
             _data = resource;
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new PolicyExemptionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _restClient = new PolicyExemptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Initializes a new instance of the <see cref="PolicyExemption"/> class. </summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
         internal PolicyExemption(ArmResource options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _restClient = new PolicyExemptionsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
+            _restClient = new PolicyExemptionsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
         }
 
         /// <summary> Gets the resource type for the operations. </summary>

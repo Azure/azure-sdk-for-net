@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> This operation deletes the policy definition in the given management group with the given name. </summary>
-    public partial class PolicyDefinitionDeleteAtManagementGroupOperation : Azure.Operation
+    public partial class PolicyDefinitionDeleteAtManagementGroupOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 

@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> This operation deletes a policy exemption, given its name and the scope it was created in. The scope of a policy exemption is the part of its ID preceding &apos;/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}&apos;. </summary>
-    public partial class PolicyExemptionDeleteOperation : Azure.Operation
+    public partial class PolicyExemptionDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
