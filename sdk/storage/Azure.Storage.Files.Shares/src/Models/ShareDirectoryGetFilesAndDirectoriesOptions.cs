@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Optional.  Specifies traits to include in the <see cref="ShareFileItem"/>.
         /// </summary>
-        public ShareFileTraits? Traits { get; set; }
+        public ShareFileTraits Traits { get; set; } = ShareFileTraits.None;
 
         /// <summary>
         /// Optional.  Specified that extended info should be included in the <see cref="ShareFileItem"/>.
