@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.DeletedVault> GetIfExists(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.DeletedVault>> GetIfExistsAsync(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DeletedVaultData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class DeletedVaultData : Azure.ResourceManager.Models.Resource
     {
         internal DeletedVaultData() { }
         public Azure.ResourceManager.KeyVault.Models.DeletedVaultProperties Properties { get { throw null; } }
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.Models.VaultAccessPolicyParameters> ReplaceAccessPolicy(Azure.ResourceManager.KeyVault.Models.VaultAccessPolicyProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.VaultAccessPolicyParameters>> ReplaceAccessPolicyAsync(Azure.ResourceManager.KeyVault.Models.VaultAccessPolicyProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VaultData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class VaultData : Azure.ResourceManager.Models.Resource
     {
         internal VaultData() { }
         public string Location { get { throw null; } }
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         Recover = 0,
         Default = 1,
     }
-    public partial class DeletedManagedHsm : Azure.ResourceManager.Resources.Models.Resource
+    public partial class DeletedManagedHsm : Azure.ResourceManager.Models.Resource
     {
         internal DeletedManagedHsm() { }
         public Azure.ResourceManager.KeyVault.Models.DeletedManagedHsmProperties Properties { get { throw null; } }
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ManagedHsmResource : Azure.ResourceManager.Resources.Models.TrackedResource
+    public partial class ManagedHsmResource : Azure.ResourceManager.Models.TrackedResource
     {
         public ManagedHsmResource(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmSku Sku { get { throw null; } set { } }
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         AccountNameInvalid = 0,
         AlreadyExists = 1,
     }
-    public partial class Resource : Azure.ResourceManager.Resources.Models.Resource
+    public partial class Resource : Azure.ResourceManager.Models.Resource
     {
         public Resource() { }
         public string Location { get { throw null; } }
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public string LastModifiedBy { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.IdentityType? LastModifiedByType { get { throw null; } }
     }
-    public partial class VaultAccessPolicyParameters : Azure.ResourceManager.Resources.Models.Resource
+    public partial class VaultAccessPolicyParameters : Azure.ResourceManager.Models.Resource
     {
         public VaultAccessPolicyParameters(Azure.ResourceManager.KeyVault.Models.VaultAccessPolicyProperties properties) { }
         public string Location { get { throw null; } }
