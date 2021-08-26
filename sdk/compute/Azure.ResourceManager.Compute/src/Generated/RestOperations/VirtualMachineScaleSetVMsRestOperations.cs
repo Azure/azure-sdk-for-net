@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -22,19 +23,22 @@ namespace Azure.ResourceManager.Compute
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
+        private readonly string _userAgent;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="options"> The client options used to construct the current client. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public VirtualMachineScaleSetVMsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        public VirtualMachineScaleSetVMsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ClientOptions options, string subscriptionId, Uri endpoint = null)
         {
             this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             this.endpoint = endpoint ?? new Uri("https://management.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            _userAgent = HttpMessageUtilities.GetUserAgentName(this, options);
         }
 
         internal HttpMessage CreateGetAllRequest(string resourceGroupName, string virtualMachineScaleSetName, string filter, string select, string expand)
@@ -66,6 +70,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -157,6 +162,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/simulateEviction", false);
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -249,6 +255,7 @@ namespace Azure.ResourceManager.Compute
                 content.JsonWriter.WriteObjectValue(vmScaleSetVMReimageInput);
                 request.Content = content;
             }
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -338,6 +345,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/reimageall", false);
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -425,6 +433,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/deallocate", false);
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -516,6 +525,7 @@ namespace Azure.ResourceManager.Compute
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -616,6 +626,7 @@ namespace Azure.ResourceManager.Compute
             }
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -711,6 +722,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -813,6 +825,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -912,6 +925,7 @@ namespace Azure.ResourceManager.Compute
             }
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -1001,6 +1015,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/restart", false);
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -1088,6 +1103,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -1175,6 +1191,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/redeploy", false);
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -1267,6 +1284,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -1364,6 +1382,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/performMaintenance", false);
             uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -1456,6 +1475,7 @@ namespace Azure.ResourceManager.Compute
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
@@ -1545,6 +1565,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            message.SetProperty("UserAgentOverride", _userAgent);
             return message;
         }
 
