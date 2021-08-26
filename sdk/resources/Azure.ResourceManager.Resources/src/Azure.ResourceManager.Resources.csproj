@@ -17,4 +17,8 @@
     <PackageReference Include="Azure.ResourceManager" VersionOverride="1.0.0-alpha.20210824.1" />
     <PackageReference Include="Azure.Core" VersionOverride="1.18.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>

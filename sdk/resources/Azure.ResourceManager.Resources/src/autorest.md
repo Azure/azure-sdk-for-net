@@ -4,8 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-csharp: true
 library-name: Resources
+use: D:/Autorest-Dev/autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 tag: package-track2-preview
@@ -53,10 +53,11 @@ directive:
     transform: delete $["/providers/Microsoft.Features/operations"]
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
+  # Keep the get method at each scope so that generator can know the possible values of container's parent
   - remove-operation: Deployments_DeleteAtTenantScope
   - remove-operation: Deployments_CheckExistenceAtTenantScope
   - remove-operation: Deployments_CreateOrUpdateAtTenantScope
-  - remove-operation: Deployments_GetAtTenantScope
+#   - remove-operation: Deployments_GetAtTenantScope
   - remove-operation: Deployments_CancelAtTenantScope
   - remove-operation: Deployments_ValidateAtTenantScope
   - remove-operation: Deployments_ExportTemplateAtTenantScope
@@ -64,7 +65,7 @@ directive:
   - remove-operation: Deployments_DeleteAtManagementGroupScope
   - remove-operation: Deployments_CheckExistenceAtManagementGroupScope
   - remove-operation: Deployments_CreateOrUpdateAtManagementGroupScope
-  - remove-operation: Deployments_GetAtManagementGroupScope
+#   - remove-operation: Deployments_GetAtManagementGroupScope
   - remove-operation: Deployments_CancelAtManagementGroupScope
   - remove-operation: Deployments_ValidateAtManagementGroupScope
   - remove-operation: Deployments_ExportTemplateAtManagementGroupScope
@@ -72,7 +73,7 @@ directive:
   - remove-operation: Deployments_DeleteAtSubscriptionScope
   - remove-operation: Deployments_CheckExistenceAtSubscriptionScope
   - remove-operation: Deployments_CreateOrUpdateAtSubscriptionScope
-  - remove-operation: Deployments_GetAtSubscriptionScope
+#   - remove-operation: Deployments_GetAtSubscriptionScope
   - remove-operation: Deployments_CancelAtSubscriptionScope
   - remove-operation: Deployments_ValidateAtSubscriptionScope
   - remove-operation: Deployments_ExportTemplateAtSubscriptionScope
@@ -80,7 +81,7 @@ directive:
   - remove-operation: Deployments_Delete
   - remove-operation: Deployments_CheckExistence
   - remove-operation: Deployments_CreateOrUpdate
-  - remove-operation: Deployments_Get
+#   - remove-operation: Deployments_Get
   - remove-operation: Deployments_Cancel
   - remove-operation: Deployments_Validate
   - remove-operation: Deployments_ExportTemplate

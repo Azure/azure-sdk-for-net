@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);RESOURCES_RP</DefineConstants>
-    <UseNewMgmtFramework>false</UseNewMgmtFramework>
+    <UseNewMgmtFramework>true</UseNewMgmtFramework>
     <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
   <PropertyGroup>
@@ -12,8 +12,7 @@
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="ScenarioTests\*.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Folder Include="Scenario\" />
+    <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>
