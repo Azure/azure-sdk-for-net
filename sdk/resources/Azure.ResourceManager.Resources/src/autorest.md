@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 library-name: Resources
-use: D:/Autorest-Dev/autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
+c-sharp: true
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 tag: package-track2-preview
@@ -39,18 +39,6 @@ operation-groups-to-omit:
 merge-operations:
   WhatIf: Deployments_WhatIf_POST;Deployments_WhatIfAtTenantScope_POST;Deployments_WhatIfAtManagementGroupScope_POST;Deployments_WhatIfAtSubscriptionScope_POST
 directive:
-  - from: swagger-document
-    where: $.paths
-    transform: delete $["/providers/Microsoft.Resources/operations"]
-  - from: swagger-document
-    where: $.paths
-    transform: delete $["/providers/Microsoft.Authorization/operations"]
-  - from: swagger-document
-    where: $.paths
-    transform: delete $["/providers/Microsoft.Solutions/operations"]
-  - from: features.json
-    where: $.paths
-    transform: delete $["/providers/Microsoft.Features/operations"]
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
   # Keep the get method at each scope so that generator can know the possible values of container's parent
@@ -104,6 +92,9 @@ directive:
     where: $["x-ms-paths"]
     transform: delete $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy"]
     reason: The operations duplicate with the ones in /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}
+  - rename-operation:
+      from: ListOperations
+      to: Operations_ListOps
 
   - rename-operation:
       from: DeploymentScripts_GetLogs
