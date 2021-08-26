@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.BlobInventoryPolicy> GetIfExists(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyName blobInventoryPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.BlobInventoryPolicy>> GetIfExistsAsync(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyName blobInventoryPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class BlobInventoryPolicyData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class BlobInventoryPolicyData : Azure.ResourceManager.Models.Resource
     {
         public BlobInventoryPolicyData() { }
         public System.DateTimeOffset? LastModifiedTime { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchema Policy { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.SystemData SystemData { get { throw null; } }
+        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
     }
     public partial class BlobService : Azure.ResourceManager.Core.ArmResource
     {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.BlobService> GetIfExists(string blobServicesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.BlobService>> GetIfExistsAsync(string blobServicesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class BlobServiceData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class BlobServiceData : Azure.ResourceManager.Models.Resource
     {
         public BlobServiceData() { }
         public bool? AutomaticSnapshotPolicyEnabled { get { throw null; } set { } }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.DeletedAccount> GetIfExists(string deletedAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.DeletedAccount>> GetIfExistsAsync(string deletedAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DeletedAccountData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class DeletedAccountData : Azure.ResourceManager.Models.Resource
     {
         public DeletedAccountData() { }
         public string CreationTime { get { throw null; } }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.EncryptionScope> GetIfExists(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.EncryptionScope>> GetIfExistsAsync(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EncryptionScopeData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class EncryptionScopeData : Azure.ResourceManager.Models.Resource
     {
         public EncryptionScopeData() { }
         public System.DateTimeOffset? CreationTime { get { throw null; } }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.FileService> GetIfExists(string fileServicesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.FileService>> GetIfExistsAsync(string fileServicesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class FileServiceData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class FileServiceData : Azure.ResourceManager.Models.Resource
     {
         public FileServiceData() { }
         public Azure.ResourceManager.Storage.Models.CorsRules Cors { get { throw null; } set { } }
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.ManagementPolicy> GetIfExists(Azure.ResourceManager.Storage.Models.ManagementPolicyName managementPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.ManagementPolicy>> GetIfExistsAsync(Azure.ResourceManager.Storage.Models.ManagementPolicyName managementPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ManagementPolicyData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class ManagementPolicyData : Azure.ResourceManager.Models.Resource
     {
         public ManagementPolicyData() { }
         public System.DateTimeOffset? LastModifiedTime { get { throw null; } }
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.ObjectReplicationPolicy> GetIfExists(string objectReplicationPolicyId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.ObjectReplicationPolicy>> GetIfExistsAsync(string objectReplicationPolicyId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ObjectReplicationPolicyData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class ObjectReplicationPolicyData : Azure.ResourceManager.Models.Resource
     {
         public ObjectReplicationPolicyData() { }
         public string DestinationAccount { get { throw null; } set { } }
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.PrivateEndpointConnection> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.PrivateEndpointConnection>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class PrivateEndpointConnectionData : Azure.ResourceManager.Models.Resource
     {
         public PrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Storage.Models.PrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.QueueService> GetIfExists(string queueServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.QueueService>> GetIfExistsAsync(string queueServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class QueueServiceData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class QueueServiceData : Azure.ResourceManager.Models.Resource
     {
         public QueueServiceData() { }
         public Azure.ResourceManager.Storage.Models.CorsRules Cors { get { throw null; } set { } }
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccount> GetIfExists(string accountName, Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccount>> GetIfExistsAsync(string accountName, Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class StorageAccountData : Azure.ResourceManager.Resources.Models.TrackedResource
+    public partial class StorageAccountData : Azure.ResourceManager.Models.TrackedResource
     {
         public StorageAccountData(Azure.ResourceManager.Resources.Models.Location location) : base (default(Azure.ResourceManager.Resources.Models.Location)) { }
         public Azure.ResourceManager.Storage.Models.AccessTier? AccessTier { get { throw null; } }
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.StorageQueue> GetIfExists(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageQueue>> GetIfExistsAsync(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class StorageQueueData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class StorageQueueData : Azure.ResourceManager.Models.Resource
     {
         public StorageQueueData() { }
         public int? ApproximateMessageCount { get { throw null; } }
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.Table> GetIfExists(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.Table>> GetIfExistsAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TableData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class TableData : Azure.ResourceManager.Models.Resource
     {
         public TableData() { }
         public string TableName { get { throw null; } }
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.TableService> GetIfExists(string tableServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.TableService>> GetIfExistsAsync(string tableServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TableServiceData : Azure.ResourceManager.Resources.Models.Resource
+    public partial class TableServiceData : Azure.ResourceManager.Models.Resource
     {
         public TableServiceData() { }
         public Azure.ResourceManager.Storage.Models.CorsRules Cors { get { throw null; } set { } }
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Storage.Models
         public string ForestName { get { throw null; } set { } }
         public string NetBiosDomainName { get { throw null; } set { } }
     }
-    public partial class AzureEntityResource : Azure.ResourceManager.Resources.Models.Resource
+    public partial class AzureEntityResource : Azure.ResourceManager.Models.Resource
     {
         public AzureEntityResource() { }
         public string Etag { get { throw null; } }
@@ -1820,7 +1820,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ListContainersInclude left, Azure.ResourceManager.Storage.Models.ListContainersInclude right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ListQueue : Azure.ResourceManager.Resources.Models.Resource
+    public partial class ListQueue : Azure.ResourceManager.Models.Resource
     {
         public ListQueue() { }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
@@ -2152,7 +2152,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator !=(Azure.ResourceManager.Storage.Models.PrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.Storage.Models.PrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PrivateLinkResource : Azure.ResourceManager.Resources.Models.Resource
+    public partial class PrivateLinkResource : Azure.ResourceManager.Models.Resource
     {
         public PrivateLinkResource() { }
         public string GroupId { get { throw null; } }
@@ -2710,16 +2710,6 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.SasPolicy SasPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.Sku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class SystemData
-    {
-        internal SystemData() { }
-        public System.DateTimeOffset? CreatedAt { get { throw null; } }
-        public string CreatedBy { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.CreatedByType? CreatedByType { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedAt { get { throw null; } }
-        public string LastModifiedBy { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.CreatedByType? LastModifiedByType { get { throw null; } }
     }
     public partial class TableCreateOperation : Azure.Operation<Azure.ResourceManager.Storage.Table>
     {
