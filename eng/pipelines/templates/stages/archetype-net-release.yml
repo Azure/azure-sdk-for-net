@@ -71,7 +71,7 @@ stages:
                     dotnet nuget locals all --clear
 
                     Write-Host "Restoring dependencies"
-                    dotnet restore -s $localFeed --no-cache
+                    dotnet restore -s https://api.nuget.org/v3/index.json -s $localFeed --no-cache
                   displayName: Blank Slate Installation
                   workingDirectory: $(System.DefaultWorkingDirectory)/InstallationCheck
           - deployment: TagRepository
