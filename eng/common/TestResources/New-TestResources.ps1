@@ -477,7 +477,12 @@ try {
             &$preDeploymentScript -ResourceGroupName $ResourceGroupName @PSBoundParameters
         }
 
-        Log "Deploying template '$($templateFile.originalFilePath)' to resource group '$($resourceGroup.ResourceGroupName)'"
+        $msg = if ($templateFile.jsonFilePath -ne $templateFile.originalFilePath) {
+            "Deployment template $($templateFile.jsonFilePath) $($templateFile.originalFilePath) to resource group $($resourceGroup.ResourceGroupName)"} else {
+            "Deployment template $($templateFile.jsonFilePath) to resource group $($resourceGroup.ResourceGroupName)"
+        }
+        Log $msg
+        
         $deployment = Retry {
             $lastDebugPreference = $DebugPreference
             try {
@@ -538,7 +543,7 @@ try {
                 Write-Host 'File option is supported only on Windows'
             }
 
-            $outputFile = "$($templateFile.jsonFilePath).env"
+            $outputFile = "$($templateFile.originalFilePath).env"
 
             $environmentText = $deploymentOutputs | ConvertTo-Json;
             $bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
