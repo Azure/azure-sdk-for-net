@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage
         #region StorageAccount
         private static StorageAccountsRestOperations GetStorageAccountsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new StorageAccountsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new StorageAccountsRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the StorageAccounts for this <see cref="Subscription" />. </summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Storage
         #region Sku
         private static SkusRestOperations GetSkusRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new SkusRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new SkusRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Lists the SkuInformations for this <see cref="Subscription" />. </summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Storage
         #region StorageAccountName
         private static StorageAccountNameRestOperations GetStorageAccountNameRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
-            return new StorageAccountNameRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+            return new StorageAccountNameRestOperations(clientDiagnostics, pipeline, clientOptions, subscriptionId, endpoint);
         }
 
         /// <summary> Checks that the storage account name is valid and is not already in use. </summary>
