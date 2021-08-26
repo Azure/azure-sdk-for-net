@@ -804,6 +804,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.ResourceManager.Resources.ResourcesOperations Resources { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.SubscriptionsOperations Subscriptions { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.TagsOperations Tags { get { throw null; } }
+        public virtual Azure.ResourceManager.Resources.TemplateSpecsOperations TemplateSpecs { get { throw null; } }
+        public virtual Azure.ResourceManager.Resources.TemplateSpecVersionsOperations TemplateSpecVersions { get { throw null; } }
         public virtual Azure.ResourceManager.Resources.TenantsOperations Tenants { get { throw null; } }
     }
     public partial class ResourcesManagementClientOptions : Azure.Core.ClientOptions
@@ -925,6 +927,36 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.TagDetails> ListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.Models.TagsResource> UpdateAtScope(string scope, Azure.ResourceManager.Resources.Models.TagsPatchResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TagsResource>> UpdateAtScopeAsync(string scope, Azure.ResourceManager.Resources.Models.TagsPatchResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TemplateSpecsOperations
+    {
+        protected TemplateSpecsOperations() { }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Models.TemplateSpec> CreateOrUpdate(string resourceGroupName, string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpec templateSpec, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TemplateSpec>> CreateOrUpdateAsync(string resourceGroupName, string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpec templateSpec, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Delete(string resourceGroupName, string templateSpecName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string resourceGroupName, string templateSpecName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Models.TemplateSpec> Get(string resourceGroupName, string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TemplateSpec>> GetAsync(string resourceGroupName, string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.TemplateSpec> ListByResourceGroup(string resourceGroupName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.TemplateSpec> ListByResourceGroupAsync(string resourceGroupName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.TemplateSpec> ListBySubscription(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.TemplateSpec> ListBySubscriptionAsync(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Models.TemplateSpec> Update(string resourceGroupName, string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecUpdateModel templateSpec = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TemplateSpec>> UpdateAsync(string resourceGroupName, string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecUpdateModel templateSpec = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TemplateSpecVersionsOperations
+    {
+        protected TemplateSpecVersionsOperations() { }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Models.TemplateSpecVersion> CreateOrUpdate(string resourceGroupName, string templateSpecName, string templateSpecVersion, Azure.ResourceManager.Resources.Models.TemplateSpecVersion templateSpecVersionModel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TemplateSpecVersion>> CreateOrUpdateAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, Azure.ResourceManager.Resources.Models.TemplateSpecVersion templateSpecVersionModel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Delete(string resourceGroupName, string templateSpecName, string templateSpecVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Models.TemplateSpecVersion> Get(string resourceGroupName, string templateSpecName, string templateSpecVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TemplateSpecVersion>> GetAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.TemplateSpecVersion> List(string resourceGroupName, string templateSpecName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.TemplateSpecVersion> ListAsync(string resourceGroupName, string templateSpecName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Models.TemplateSpecVersion> Update(string resourceGroupName, string templateSpecName, string templateSpecVersion, Azure.ResourceManager.Resources.Models.TemplateSpecVersionUpdateModel templateSpecVersionUpdateModel = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TemplateSpecVersion>> UpdateAsync(string resourceGroupName, string templateSpecName, string templateSpecVersion, Azure.ResourceManager.Resources.Models.TemplateSpecVersionUpdateModel templateSpecVersionUpdateModel = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TenantsOperations
     {
@@ -1071,6 +1103,14 @@ namespace Azure.ResourceManager.Resources.Models
         public AzureResourceBase() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
+        public string Type { get { throw null; } }
+    }
+    public partial class AzureResourceBaseAutoGenerated
+    {
+        public AzureResourceBaseAutoGenerated() { }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.SystemDataAutoGenerated SystemData { get { throw null; } }
         public string Type { get { throw null; } }
     }
     public partial class BasicDependency
@@ -1376,6 +1416,12 @@ namespace Azure.ResourceManager.Resources.Models
         public IdentityUserAssignedIdentitiesValue() { }
         public string ClientId { get { throw null; } }
         public string PrincipalId { get { throw null; } }
+    }
+    public partial class LinkedTemplateArtifact
+    {
+        public LinkedTemplateArtifact(string path, object template) { }
+        public string Path { get { throw null; } set { } }
+        public object Template { get { throw null; } set { } }
     }
     public partial class Location
     {
@@ -2016,6 +2062,16 @@ namespace Azure.ResourceManager.Resources.Models
         public string LastModifiedBy { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.CreatedByType? LastModifiedByType { get { throw null; } }
     }
+    public partial class SystemDataAutoGenerated
+    {
+        internal SystemDataAutoGenerated() { }
+        public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public string CreatedBy { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.CreatedByType? CreatedByType { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedAt { get { throw null; } }
+        public string LastModifiedBy { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.CreatedByType? LastModifiedByType { get { throw null; } }
+    }
     public partial class TagCount
     {
         internal TagCount() { }
@@ -2093,6 +2149,61 @@ namespace Azure.ResourceManager.Resources.Models
         public TemplateLink(string uri) { }
         public string ContentVersion { get { throw null; } set { } }
         public string Uri { get { throw null; } set { } }
+    }
+    public partial class TemplateSpec : Azure.ResourceManager.Resources.Models.AzureResourceBaseAutoGenerated
+    {
+        public TemplateSpec(string location) { }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
+        public object Metadata { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo> Versions { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TemplateSpecExpandKind : System.IEquatable<Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TemplateSpecExpandKind(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind Versions { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind left, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind left, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class TemplateSpecUpdateModel : Azure.ResourceManager.Resources.Models.AzureResourceBaseAutoGenerated
+    {
+        public TemplateSpecUpdateModel() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class TemplateSpecVersion : Azure.ResourceManager.Resources.Models.AzureResourceBaseAutoGenerated
+    {
+        public TemplateSpecVersion(string location) { }
+        public string Description { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact> LinkedTemplates { get { throw null; } }
+        public string Location { get { throw null; } set { } }
+        public string MainTemplate { get { throw null; } set { } }
+        public object Metadata { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public object UiFormDefinition { get { throw null; } set { } }
+    }
+    public partial class TemplateSpecVersionInfo
+    {
+        internal TemplateSpecVersionInfo() { }
+        public string Description { get { throw null; } }
+        public System.DateTimeOffset? TimeCreated { get { throw null; } }
+        public System.DateTimeOffset? TimeModified { get { throw null; } }
+    }
+    public partial class TemplateSpecVersionUpdateModel : Azure.ResourceManager.Resources.Models.AzureResourceBaseAutoGenerated
+    {
+        public TemplateSpecVersionUpdateModel() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public enum TenantCategory
     {
